@@ -8,6 +8,7 @@ book:
   date: today
   chapters:
     - index.qmd
+    - 05_simulation-and-sampling.qmd
     - references.qmd
 
 bibliography: references.bib
