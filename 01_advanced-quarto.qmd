@@ -409,7 +409,7 @@ exercise_number <- exercise_number + 1
 
 [Zotero](https://www.zotero.org/) is a free and open-source software for organizing research and managing citations.
 
-::: callout-note
+::: {.callout-tip}
 ## Digital Object Identifier (DOI)
 
 DOIs are persistent identifiers that uniquely identify objects including many academic papers. For example, `10.1198/jcgs.2009.07098` identifies "A Layered Grammar of Graphics" by Hadley Wickham.
