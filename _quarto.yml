@@ -8,6 +8,7 @@ book:
   date: today
   chapters:
     - index.qmd
+    - 02_advanced-data-cleaning.qmd
     - references.qmd
 
 bibliography: references.bib
@@ -17,8 +18,4 @@ format:
     theme: cosmo
     number-depth: 3
     css: www/styles.css
-  pdf:
-    documentclass: scrreprt
-
-
 
