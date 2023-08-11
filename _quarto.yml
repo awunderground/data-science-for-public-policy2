@@ -8,6 +8,7 @@ book:
   date: today
   chapters:
     - index.qmd
+    - 01_advanced-quarto.qmd
     - references.qmd
 
 bibliography: references.bib
