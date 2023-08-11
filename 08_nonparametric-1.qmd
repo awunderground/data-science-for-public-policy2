@@ -1,0 +1,636 @@
+---
+title: "Nonparametric Curve Fitting"
+date: today
+abstract: "This set of notes defines nonparametric statistics and then focuses on nonparametric curve fitting, which is a major collection of nonparametric statistical methods."
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+execute: 
+  messages: false
+editor_options: 
+  chunk_output_type: console
+fig-cap-location: top
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+```
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Review {#sec-review8}
+
+-   Statistical models serve three major purposes
+    1.  Summary
+    2.  Inference
+    3.  Prediction
+-   We adopted nonparametric techniques like KNN, decision trees, and random forests for making accurate predictions.
+-   In certain applications, these data-driven approaches work well.
+
+## Nonparametric Statistics
+
+::: {.callout-tip}
+## Parametric Statistics
+
+**Parametric statistics** requires the form of the population distribution to be completely specified except for a finite number of parameters.
+
+For example, the population is normally distributed with two parameters: mean ($\mu$) and standard deviation ($\sigma$).
+:::
+
+::: {.callout-tip}
+## Nonparametric Statistics
+
+**Nonparametric statistics**[^08_nonparametric-1-1] require a minimal number of assumptions about the form of the population distribution.
+
+@higgins2004 offers two key examples of minimal assumptions:
+
+1.  The data are from a population with a continuous distribution.
+2.  The population depends on location and scale parameters.
+:::
+
+[^08_nonparametric-1-1]: R.A. Fisher, a key developer of frequentist statistics, developed an early nonparametric test called [Fisher's Exact Test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test). The use of nonparametric statistics has increased with swelling computing power.
+
+There are nonparametric test for many common families of statistical inference. For example,
+
+-   1-sample location parameter test (like a 1-sample t-test).
+-   2-sample location parameter test (like a 2-sample t-test).
+-   K-sample location parameter test (like ANOVA).
+-   2-sample scale parameter test (like a 2-sample F-test).
+
+Nonparametric statistics can also be grouped by their statistical ideas[^08_nonparametric-1-2]. Many of these ideas are incredibly simple and could be, as my professor used to say, derived while sitting on the beach.
+
+[^08_nonparametric-1-2]: Methods based on binomial distribution are also common but we will skip them.
+
+1.  **Smoothing:** Fitting curves without specifying the functional forms of the curves. This can be done in one-dimension to estimate a probability distribution function and in multiple dimension for estimating smoothed conditional means.
+2.  **Permutation:** Exhaustively reconfigure the data to create a sampling distribution for a statistic.
+3.  **Bootstrap:** Repeatedly sample from the data and calculate a statistical to create a sampling distribution for a statistic.
+
+This set of notes focuses on techniques for estimating probability density functions (PDFs) with smoothing when the data don't conform to a common PDF like the normal distribution or exponential distribution. The next set of notes with focus on the permutation and bootstrap for estimating sampling distributions (PDFs for statistics).
+
+## Estimating Probability Density Functions
+
+So far, we've explored parametric techniques for estimating densities and probability density functions. We looked at data and fit common probability distributions with a finite number of parameters to the data. For instance, for a normal distribution the sufficient statistics or finite number of parameters are the mean and standard deviation. Unfortunately, common distributions may not fit the data.
+
+In this section, we will look at data-driven nonparametric approaches to estimating probability density functions.
+
+Suppose we have have a random sample of data $x_1, x_2, ..., x_n$ for one variable and the data come from a population with a continuous probability density function. We represent the PDF as $f_X(x)$. Our goal is to estimate $f_X(x)$ with $\hat{f_X}(x)$ using a data-driven approach and without specify a model or functional form.
+
+We will discuss two approaches to this problem:
+
+1.  Relative frequency histogram
+2.  Kernel density estimators (KDEs)
+
+We can use relative frequency histograms and KDEs to 1. visualize data and 2. generate new data with random sampling.
+
+### Relative Frequency Histograms
+
+::: {.callout-tip}
+## Relative Frequency Histogram
+
+**Relative frequency histograms** are histograms normalized such that the bars sum to 1 that can be used to estimate PDFs. 
+
+**Note:** PDFs must integrate to 1. 
+:::
+
+The procedure for creating a relative frequency histogram is fairly simple:
+
+1.  Partition the range of the data into $k$ bins with equal width. The widths are called binwidths.
+2.  Count the number of observations in each bin.
+3.  Divide the counts by n \* binwidth to normalize the histogram
+
+Let's consider a formal definition from [@higgins2004].
+
+Partition the range of the data into bins such that $a_1 < a_2 < ... < a_k$. Let $a_{i + 1} - a_i$ be the binwidth. The density estimate for a value $x$ in an interval $a_i < x \le a_{i + 1}$ is
+
+$$\hat{f}(x) = \frac{\text{number of observations} \in (a_i, a_{i + 1}]}{n \cdot (a_{i + 1} - a_i)}$$
+
+#### Example
+
+Consider three random samples of varying sizes from standard normal distributions.
+
+```{r}
+set.seed(20230617)
+data <- tibble(
+  set = c(
+    rep("n=40", times = 40), 
+    rep("n=100", times = 100), 
+    rep("n=10,000", times = 10000)
+  ),
+  x = c(rnorm(n = 40), rnorm(n = 100), rnorm(n = 10000))
+) |>
+  mutate(set = factor(set, levels = c("n=40", "n=100", "n=10,000")))
+
+```
+
+Let's use `library(ggplot2)` and the `after_stat()` function to create relative frequency histograms for the three random samples. Remember, the relative frequency histograms are $\hat{f}(x)$.
+
+In this example, we know $f_X(x)$. It is the PDF for $X \sim N(\mu = 0, \sigma = 1)$. Next, superimpose the known PDF on top of $\hat{f_X}(x)$.
+
+```{r}
+#| label: fig-histogram
+#| fig-cap: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.  
+
+data |>
+  ggplot(aes(x)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  stat_function(fun = dnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  facet_wrap(~ set)
+
+```
+
+#### Number of Bins and Binwidth
+
+Histograms and relative frequency histograms are very sensitive to the selection of binwidths. `geom_histogram()` defaults to 30 bins, but this can be overridden with the `binwidth` and `bins` argument.
+
+Several papers have developed rules for determining the number of bins or binwidth including @scott2005.
+
+An important takeaway is that increasing $k$, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing $k$ results in less noisy bars but imprecise estimates. @fig-histogram-fewer-bins recreates @fig-histogram with fewer bins. 
+
+```{r}
+#| label: fig-histogram-fewer-bins
+#| fig-cap: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.  
+
+data |>
+  ggplot(aes(x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 10) +
+  stat_function(fun = dnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  facet_wrap(~ set)
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Run `hist(cars$speed, plot = FALSE)` and look at the results. 
+2. Write R code to convert `$counts` into `$density` based on the process outlined above. 
+
+```{r}
+#| echo: false
+#| eval: false
+
+hist_speed <- hist(cars$speed, plot = FALSE)
+
+hist_speed$counts / (sum(hist_speed$counts) * 5)
+
+```
+
+:::
+
+### Kernel Density Estimation
+
+We will introduce kernel density estimators by considering two related concepts.
+
+#### Concept #1
+
+We were able to simplify and fit complex probability densities using mixture distributions. In fact, as $k$, the number of mixture distributions increased, we were able to fit increasingly complex probability densities. Unfortunately, this process created overparameterized models.
+
+Kernel density estimation, a nonparametric approach, takes a slightly different approach. It places a normal distribution on every observation in the data set and then combines these normal distributions into a complex probability density. We no longer need to estimate many parameters and specify the number of clusters, but the KDE is computationally expensive and requires storing all of the original data.
+
+#### Concept #2
+
+Relative frequency histograms have a couple of issues:
+
+1.  They are very sensitive to binwidths
+2.  They are not smooth
+
+::: {.callout-tip}
+## Kernel Density Estimators
+
+**Kernel Density Estimators** are weighted relative frequencies of the number of values near some value. The counts are normalized so the entire KDE integrates to 1. KDEs are a data-driven method for estimating PDFs. 
+
+Kernel density estimators are smoothed histograms. Fundamentally, they use a weighted average of data points near $x_0$ to generate $\hat{f}(x_0)$. Here, $x_0$ is the point where we are estimating the probability density.
+:::
+
+#### KDE Process
+
+::: {.callout-tip}
+**Kernel:** A kernel (more precisely density kernel) is a function that maps real values to real positive values. The kernel must be symmetric and integrate to 1.
+
+In many ways, density kernels are a subset of probability density functions. Often, we will use the normal or Gaussian PDF as a kernel.
+:::
+
+Let $w(z)$ be a kernel (symmetric probability distribution) centered at $0$. This kernel can give more weight to observations near $x_0$ and less weight to observations far from $x_0$. Common choices include the Normal kernel and boxcar kernel.
+
+Let $\triangle$ be a bandwidth. Bandwidths are like binwidths in relative frequency histograms. The bandwidth controls how much weight data points near
+
+The kernel density estimate (KDE) is
+
+$$
+\hat{f}(x) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
+$$ {#eq-kde}
+
+Based on @eq-kde, we need to pick a weighting function ($W(z)$) and a bandwidth ($\triangle$). We will almost always use the normal distribution and `bw.nrd0` bandwidth[^08_nonparametric-1-3]. This means we can define a much simpler process:
+
+[^08_nonparametric-1-3]: $\text{bandwidth} = 0.9 min\left(\hat{\sigma}, \frac{IQR}{1.34}\right)$
+
+1.  Place a normal distribution on each observation in the data
+2.  Sum up the densities at $x_0$
+3.  Divide by $n$ to normalize the distribution
+
+Consider an example where `x = c(1, 4, 4.5, 5, 6, 8, 10)`. @fig-kde visually shows the creation of the KDE for `x`.
+
+```{r}
+#| echo: false
+#| label: fig-kde
+#| fig-cap: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+
+data <- expand_grid(
+  x = c(1, 4, 4.5, 5, 6, 8, 10),
+  grid = seq(-1, 13, 0.1)
+)
+
+data_simple <- distinct(data, x)
+
+bw <- stats::bw.nrd0(data_simple$x)
+
+data <- data |>
+  mutate(density = dnorm(x = grid, mean = x, sd = bw) / nrow(data_simple))
+
+data |>
+  ggplot() +
+  geom_line(
+    data = data,
+    aes(x = grid, y = density, group = factor(x)),
+    alpha = 0.5,
+    color = "red"
+  ) +
+  geom_density(
+    data = data_simple,
+    aes(x = x)
+  ) +
+  labs(
+    x = "x"
+  )
+
+```
+
+#### KDE's in R
+
+There are several ways to use kernel density estimators in R. We will explore `geom_density()` and `density()`.
+
+The use of `geom_density()` is nearly identical to `geom_histogram()`. The function has a `bw` argument to change the bandwidth and a `kernel` argument to change the kernel.
+
+```{r}
+#| label: fig-kernels
+#| fig-cap: "geom_density() with different kernels"
+#| fig-subcap:
+#|   - "Gaussian kernel"
+#|   - "Triangular kernel" 
+#| layout-nrow: 2
+
+data <- expand_grid(
+  x = c(1, 4, 4.5, 5, 6, 8, 10)
+)
+
+data |>
+  ggplot(aes(x = x)) +
+  geom_density()
+
+data |>
+  ggplot(aes(x = x)) +
+  geom_density(kernel = "triangular")
+
+```
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+The [log-normal distribution](https://en.wikipedia.org/wiki/Log-normal_distribution) is a distribution whose natural log is normally distributed. It is useful for modeling variables with a right skew like income and wealth.
+
+1.  Sample 100 observations from a log-normal distribution using `rlnorm()` with `meanlog = 0` and `sdlog = 1`.
+2.  Create a relative frequency histogram for the variable.
+3.  Add a KDE with `geom_density()` in red.
+4.  Use `stat_function()`, like in @fig-histogram, to add the theoretical PDF to the visualization in blue. You should now have three layers.
+5.  Duplicate the code and set `n` to `10000`. Is something off?
+
+```{r}
+#| eval: false
+#| echo: false
+
+tibble(x = rlnorm(n = 100, meanlog = 0, sdlog = 1)) |>
+  ggplot(aes(x)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  stat_function(fun = dlnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  geom_density(color = "blue")
+
+tibble(x = rlnorm(n = 10000, meanlog = 0, sdlog = 1)) |>
+  ggplot(aes(x)) +
+  geom_histogram(aes(y = after_stat(density))) +
+  stat_function(fun = dlnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  geom_density(color = "blue")
+
+```
+
+:::
+
+## Nonparametric Curve Smoothing
+
+We now move to bivariate data where we have $x_1, x_2, ..., x_n$ and $y_1, y_2, ..., y_n$. Our goal is to *flexibly* estimate $f(x)$ with $\hat{f}(x)$.[^08_nonparametric-1-4]
+
+[^08_nonparametric-1-4]: Note that $f_x(x)$ above meant a probability density function. In this case, $f(x)$ is a function that relates $y_1, y_2, ..., y_n$ to $x_1, x_2, ..., x_n$.
+
+$\hat{f}(x)$ is an estimate of the conditional mean $E\left[Y|X=x\right]$. Recall that linear regression is a parametric approach, with a finite number of parameters, for estimating this conditional mean. When we plug in a specific value, $x_0$, we get back the conditional mean for $y$ at the specific value $x_0$.
+
+We're focused on nonparametric approaches to estimate $E\left[Y|X=x\right]$. We want to make a minimal number of assumptions and we don't want to specify a functional form. This is a very data-driven approach, which is advantageous when the data follow a clear pattern but the functional form isn't easy to specify with just main effects or low-order polynomials.
+
+### Approaches
+
+There are three major nonparametric approaches to curve smoothing.
+
+1.  **Kernel methods**. Kernel methods are related to kernel density estimation for estimating probability density functions. Here, we need to estimate the joint PDF $f_{X,Y}(x, y)$ and the marginal PDF $f_X(x)$. Next, integrate out $f_X(x)$ to approximate $E\left[Y|X=x\right]$. This approach can be highly biased in the tails of $x$ and in sparse regions of $x$.[@hastie2009]
+2.  **Regression splines**. Regression splines break $x$ into ordered regions and then fit $\hat{f}(x)$ as a series of piece-wise low-order polynomial regressions. Special conditions ensure that $\hat{f}(x)$ is continuous where splines meet.
+3.  **Local linear regression** and **locally estimated scatter plot smoothing (LOESS)**. These methods use weighted linear regression estimated on observations near $x_0$, where $x_0$ is a specific point in the domain where we want to estimate $\hat{f}$
+
+### K-Nearest Neighbors
+
+K-Nearest Neighbors (KNN) average is an estimate of the regression function/conditional mean $E\left[Y|X=x\right]$.
+
+Let $N_k(x_0)$ be the $k$ closest observations to $x_0$. Closeness is often measured with Euclidean distance. Let $Ave$ denote the mean. Then
+
+$$
+\hat{f}(x_0) = Ave\left(y_i | x_i \in N_k(x_0)\right)
+$$ {#eq-knn}
+
+is an estimate of the conditional mean of $y$ at point $x_0$.
+
+Consider an example with simulated data.
+
+```{r}
+set.seed(20201004)
+
+x <- runif(n = 100, min = 0, max = 10)
+
+data1 <- bind_cols(
+  x = x,
+  y = 10 * sin(x) + x + 20 + rnorm(n = length(x), mean = 0, sd = 2)
+)
+
+```
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-knn
+#| fig-cap: KNN average on simulated data with $k = 3$. 
+
+library(tidymodels)
+
+# create a recipe
+knn_rec <-
+  recipe(formula = y ~ x, data = data1)
+
+# create a knn model specification
+knn_mod <- 
+  nearest_neighbor(neighbors = 3) %>%
+  set_engine(engine = "kknn") %>%
+  set_mode(mode = "regression")
+
+# create a workflow
+knn_wf <-
+  workflow() %>%
+  add_recipe(knn_rec) %>%
+  add_model(knn_mod)
+
+# fit the knn model specification on the training data
+knn_fit <- knn_wf %>%
+  fit(data = data1)
+
+predictions_grid <- tibble(
+  x = seq(0, 10, 0.1),
+  predict(object = knn_fit, new_data = tibble(x = seq(0, 10, 0.1)))
+)
+
+# visualize the data
+ggplot() +
+  geom_point(data = data1, aes(x = x, y = y), alpha = 0.25) +
+  geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
+  labs(
+    title = "Example 1",
+    subtitle = "Training Data with Predictions"
+  )
+
+```
+
+KNN Average has a couple of issues.
+
+1.  $\hat{f}(x)$ is often a discontinuous stepwise function.
+2.  All observations in $N_k(x_0)$ are given the same weight even though some values are nearer to $x_0$ than other values.
+
+### Local Linear Regression and LOESS
+
+Local linear regression fits a separate weighted linear regression model for each $x_0$ on a subset of the data. Only the closest observations are used. LOESS, a specific local linear regression model, is a curve smoothing approach for data visualization.
+
+The conditional mean for LOESS is a fairly simple weighted linear regression model.
+
+$$
+\hat{f}(x_0) = \hat{l}(x_0)
+$$
+
+All we need to do is calculate weights for the weighted linear regression. Span, the $k$ closest observations considered for each linear regression model is the only hyperparameter for LOESS. We will use the tricube weight function using the following procedure:
+
+1.  Calculate the distance from $x_0$ to all observations in the data.
+2.  Pick the $k$ closest values.
+3.  Divide all chosen distances by the maximum distance so that all distances are in $[0, 1]$.
+4.  Apply the tricube function, $(1 - u ^ 3) ^ 3$ to the scaled distances.
+
+Once the weights are calculated, simply plug them into a linear regression model using the $k$ closest observations to $x_0$.
+
+Let's look at the math that explains the algorithm. The LOESS conditional mean uses weighted least squares to find $\hat{l}(x_0)$ that minimizes
+
+$$
+\sum_{x_i \in N_k(x_o)} \left[y_i - l(x_i)\right]^2W\left(\frac{|x_0 - x_i|}{\triangle_{x_o}}\right)
+$$
+
+-   $x_i \in N_k(x_o)$ is the $k$ closest observations to $x_0$
+-   $l(x_i)$ is a weighted linear regression model
+-   $|x_0 - x_i|$ is a vector of distances
+-   $\triangle_{x_o}$ is the maximum distance in the vector $|x_0 - x_i|$
+-   $W()$ is a kernel
+
+@fig-loess demonstrates LOESS on simulated data.
+
+```{r}
+#| echo: false
+#| message: false
+#| label: fig-loess
+#| fig-cap: LOESS fit on simulated data. Red points are predicted values a $x_0 \in \{2, 4, 8\}$. Dashed lines are fitted local linear regression models. 
+
+tricube <- function(u) {
+  
+  (1 - u ^ 3) ^ 3
+  
+}
+
+distance <- function(x, x0, k) {
+  
+  distances <- abs(x - x0)
+
+  sorted_distances <- distances |>
+    sort()
+  
+  ids <- which(distances <= max(sorted_distances[1:k]))
+  
+  chosen_distances <- distances[ids]
+  
+  scaled_distances <- chosen_distances / max(chosen_distances)
+  
+  list(
+    scaled_distances = scaled_distances,
+    ids = ids
+  )
+  
+}
+
+my_loess <- function(data, k, x0) {
+  
+  distances <- distance(x = data$x, x0 = x0, k = k)
+  
+  weights <- tricube(u = distances$scaled_distances)
+  
+  fit <- lm(y ~ x, data[distances$ids, ], weights = weights)
+  
+  # return coefficient 
+  list(
+    coefficient = coef(fit),
+    y_0 = predict(fit, newdata = tibble(x = x0))
+  )
+  
+}
+
+points <- tibble(
+  x = c(2, 4, 8),
+  y = map_dbl(x, ~my_loess(data1, k = 10, x0 = .x)$y_0)
+)
+line2 <- tibble(
+  x = seq(0, 4, 0.1),
+  y = map_dbl(x, ~sum(c(1, .x) * my_loess(data1, k = 10, x0 = 2)$coefficient))
+)
+line4 <- tibble(
+  x = seq(2, 6, 0.1),
+  y = map_dbl(x, ~sum(c(1, .x) * my_loess(data1, k = 10, x0 = 4)$coefficient))
+)
+line8 <- tibble(
+  x = seq(6, 10, 0.1),
+  y = map_dbl(x, ~sum(c(1, .x) * my_loess(data1, k = 10, x0 = 8)$coefficient))
+)
+
+
+data1 |> 
+  ggplot(aes(x, y)) + 
+  geom_point() +
+  geom_smooth(method = "loess", span = 0.1, method.args = list(degree = 1, surface = "direct"), se = FALSE) +
+  geom_point(
+    data = points,
+    aes(x, y),
+    color = "red"
+  ) +
+  geom_line(data = line2, aes(x, y), linetype = 2) +
+  geom_line(data = line4, aes(x, y), linetype = 2) +
+  geom_line(data = line8, aes(x, y), linetype = 2)
+  
+```
+
+In general, LOESS is very poor for extrapolating beyond the range of $x$ and even in places where data are sparse. In practice, local linear regression models and LOESS are mostly used for visualizing trends in scatter plots using a smoothed conditional mean line.
+
+### Code
+
+#### `geom_smooth()`
+
+LOESS is not limited to simple linear regression models. For example, `geom_smooth()` includes a 2nd-order polynomial for each local regression model by default. Let's fit a
+
+```{r}
+#| label: fig-geom_smooth
+#| caption: geom_smooth() demonstrated on simulated data
+
+data1 |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point() +
+  geom_smooth(se = FALSE)
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Use `geom_smooth()` to fit a LOESS model to the `cars` data with `x = speed` and `y = dist`.
+2. Use `geom_smooth()` to fit a linear regression model to the `cars` data with `x = speed` and `y = dist`. Make the line red. 
+
+:::
+
+#### `loess()`
+
+`loess()` can be used to fit a local linear regression model. It contains many arguments than be used to fine-tune the fit include `span`, `degree`, and `surface`.
+
+```{r}
+data1_loess <- loess(formula = y ~ x, data = data1, degree = 1)
+
+data1_loess
+
+```
+
+Once we have a LOESS object, we can use `predict()` to calculate the conditional mean.
+
+```{r}
+predict(data1_loess, newdata = tibble(x = c(1, 5, 8)))
+
+```
+
+LOESS is nonparametric and fits a new model for each unique $x_0$. LOESS is *memory-based* meaning that almost all computation is done when `predict()` is run. This is computationally expensive and LOESS will not work well with large data sets.
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Generate the simulated data from above.
+2.  Generate the plot @fig-geom_smooth.
+3.  Use `loess()` and `predict()` to generate a conditional mean for $x_0 = 6$.
+4.  Add the predicted values to the data visualization using `geom_point()` and `color = "red"`.
+
+```{r}
+#| echo: false
+#| eval: false
+
+
+```
+
+:::
