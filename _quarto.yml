@@ -1,0 +1,24 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "Data Science for Public Policy Part II"
+  author: "Aaron R. Williams"
+  date: today
+  chapters:
+    - index.qmd
+    - references.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+    number-depth: 3
+    css: www/styles.css
+  pdf:
+    documentclass: scrreprt
+
+
+
