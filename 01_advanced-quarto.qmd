@@ -35,9 +35,14 @@ Quarto, a literate statistical programming framework for R, Python, and Julia he
 -   `library(knitr)`
 -   [pandoc](https://pandoc.org/)
 
-Quarto converts these plain text documents into rich output documents like these class notes. The "Render" button appears in RStudio with a `.qmd` file is open in the editor window.
+::: {.callout-note}
+Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their [About Page](https://pandoc.org/index.html). 
+:::
 
-Clicking the "Render" button begins the process of rednering `.qmd` files.
+
+Quarto converts these plain text documents into rich output documents like these class notes. The "Render" button appears in RStudio when a `.qmd` file is open in the editor window.
+
+Clicking the "Render" button begins the process of rendering `.qmd` files.
 
 ```{r}
 #| echo: false
@@ -84,7 +89,7 @@ Quarto has three main ingredients:
 2.  [Markdown text](#markdown-text)
 3.  [Code chunks](#code-chunks)
 
-### 1. YAML Header {#yaml-header}
+### (1) YAML Header {#yaml-header}
 
 YAML stands for "yet another markup language". The YAML header contains meta information about the document including output type, document settings, and parameters that can be passed to the document. The YAML header starts with `---` and ends with `---`.
 
@@ -121,10 +126,12 @@ params:
 Now state can be referred to anywhere in R code as `params$state`.
 
 ::: callout-warning
-Unlike R Markdown, images and other content are not embedded in .html from Quarto by default. Be sure to include `embed-resources: true` in YAML headers to embed content and make documents easier to share.
+Unlike R Markdown, images and other content are not embedded in .html from Quarto by default. Be sure to include `embed-resources: true` in YAML headers to embed content and make documents easier to share. 
+
+To be more explicit, suppose we have a quarto file `example.qmd` that contains an image `image.png`, and `example.qmd` does **not** set `embed-resources:true`. To share the rendered `example.html` file with the image included, one would need to share both  `example.html` file and `image.png`. 
 :::
 
-### 2. Markdown text {#markdown-text}
+### (2) Markdown text {#markdown-text}
 
 Markdown is a shortcut for HyperText Markup Language (HTML). Essentially, simple meta characters corresponding to formatting are added to plain text.
 
@@ -163,9 +170,10 @@ Links and images
 ------------------------------------------------------------
 
 [text](http://link.com)
+
 ```
 
-### 3. Code chunks {#code-chunks}
+### (3) Code chunks {#code-chunks}
 
 ```{r}
 #| echo: false
@@ -217,6 +225,11 @@ In this case, `eval` makes the code not run. Other chunk-specific settings can b
 | message: false | Turns off messages    |
 | fig-height: 8  | Changes figure width  |
 | fig-width: 8   | Changes figure height |
+
+::: {.callout-note}
+Note that `fig-height` and `fig-width` are by default expressed in inches. You can see the quarto defaults for figure dimensions by format [here](https://quarto.org/docs/computations/execution-options.html#figure-options). 
+:::
+
 
 Default settings for the entire document can be changed in the YAML header with the `execute` option:
 
