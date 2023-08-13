@@ -18,8 +18,6 @@ format:
     theme: cosmo
     number-depth: 3
     css: www/styles.css
-  pdf:
-    documentclass: scrreprt
 
 
 
