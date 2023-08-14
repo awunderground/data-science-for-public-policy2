@@ -128,7 +128,7 @@ Now state can be referred to anywhere in R code as `params$state`. Parameters ar
 ::: {.callout-warning}
 Unlike R Markdown, images and other content are not embedded in .html from Quarto by default. Be sure to include `embed-resources: true` in YAML headers to embed content and make documents easier to share.
 
-Suppose we embed an image called `image.png` in a Quarto document called `example.qmd` and render as `example.html`. If we don't include `embed-resources: true`, then we will need to share `image.png` and `example.html` to see the embedded image. This is also true for other files like `.css`. 
+Suppose we embed an image called `image.png` in a Quarto document called `example.qmd`, which, when rendered, creates `example.html`. If we don't include `embed-resources: true`, then we will need to share `image.png` and `example.html` to see the embedded image. This is also true for other files like `.css`. 
 :::
 
 ### (2) Markdown text {#markdown-text}
