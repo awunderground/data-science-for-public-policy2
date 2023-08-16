@@ -1,0 +1,305 @@
+---
+title: "Web Scraping"
+date: today
+abstract: "This section contains guidelines and processes for gathering information from the web using web scraping. We will focus on two approaches. First, we will learn to download many files. Second, we will learn to gather information from the bodies of websites."
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+---
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Review {#sec-review4}
+
+APIS
+
+Some read_excel content in **02**
+
+## Introduction and Motivation
+
+The Internet is an immense source of information for research. Sometimes we can easily download data of interest in an ideal format with the click of a download button or a single API call.
+
+But it probably won't be long until we need data that require many download button clicks. Or worse, we may want data from web pages that don't have a download button.
+
+Consider a few examples.
+
+-   The Urban Institute's Boosting Upward Mobility from Poverty project programmatically downloaded 51 .xslx workbookswhen building the [Upward Mobility Data Tables](https://upward-mobility.urban.org/measuring-upward-mobility-counties-and-cities-across-us)
+-   We worked with the text of executive orders going back to the Clinton Administration when learning text analysis in DSPP1. Unfortunately, the Federal Register doesn't publish a massive file of executive orders. So we iterated through websites for each executive order, scraped the text, and cleaned the data.
+-   The Urban Institute [scraped course descriptions from Florida community colleges to understand opportunities for work-based learning](https://urban-institute.medium.com/how-web-scraping-powered-our-analysis-of-work-based-learning-opportunities-in-community-colleges-3452320dc345).
+
+We will explore two approaches for gathering information from the web.
+
+1.  **Iteratively downloading files:** Sometimes websites contain useful information across many files that need to be separately downloaded. We will use code to download these files. Ultimately, these files can be combined into one larger data set for research.
+2.  **Scraping content from the body of websites:** Sometimes useful information is stored as tables or lists in the body of websites. We will use code to scrape this information and then parse and clean the result. This is similar to using web APIs, only the information is not desired to be read by code.
+
+Sometimes we download many PDF files using the first approach. A related method that we will not cover that is useful for gathering information from the web is [extracting text data PDFs](https://urban-institute.medium.com/choosing-the-right-ocr-service-for-extracting-text-data-d7830399ec5).
+
+## Legal and Ethical Considerations
+
+It is important to consider the legal and ethical implications of *any* data collection. Collecting data from the web through methods like web scraping raises serious ethical and legal considerations. We will use these methods for good, not evil, and sometimes we will decide to not collect the data even when it would be useful. The Internet is full of scrapers and crawlers with nefarious intentions. We will not take our lead from the worst actors.
+
+### Legal[^04_web-scraping-1]
+
+[^04_web-scraping-1]: We are not lawyers. This is not official legal advise. If in-doubt, please contact a legal professional.
+
+Different countries have different laws that affect web scraping. The United States has different laws and legal interpretations than countries in Europe, which are largely regulated by the European Union. In general, the United States has more relaxed policies than the European when it comes to gathering data from the web.
+
+[R for Data Science (2e)](https://r4ds.hadley.nz/webscraping#scraping-ethics-and-legalities) contains a clear and approachable rundown of legal consideration for gathering information for the web. We adopt their three-part standard of "public, non-personal, and factual", which relate to terms of service, personally identifiable information, and copyright.
+
+**We will focus solely on laws in the United States.**
+
+#### Terms of Service
+
+The legal environment for web scraping is in flux, but US Courts have created an environment that is legally supportive of gathering **public** information from the web.
+
+First, we need to understand how many websites bar webscraping. Second, we need to understand when we can ignore these rules.
+
+::: callout-tip
+## Terms of Service
+
+A **terms of service** is a list of rules posted by the provider of a website, web server, or software.
+:::
+
+Terms of Service for many websites bar web scraping.
+
+For example, [LinkedIn's Terms of Service](https://www.linkedin.com/legal/user-agreement) says users agree to **not** "Develop, support or use software, devices, scripts, robots or any other means or processes (including crawlers, browser plugins and add-ons or any other technology) to scrape the Services or otherwise copy profiles and other data from the Services;"
+
+This sounds like the end of web scraping, but as @wickham_r_2023 note, Terms of Service end up being a "legal land grab" for companies. It isn't clear how LinkedIn would legally enforce this. [HiQ Labs v. LinkedIn](https://cdn.ca9.uscourts.gov/datastore/opinions/2022/04/18/17-16783.pdf) from the United States Court of Appeals for the Ninth Circuit bars Computer Fraud and Abuse Act (CFAA) claims against web scraping **public** information.[^04_web-scraping-2]
+
+[^04_web-scraping-2]: [This blog](https://www.polsinelli.com/publications/data-scraping-update-linkedin-v-hiq-answers-some-questions-but-leaves-many-more-open) and [this blog](https://www.fbm.com/publications/what-recent-rulings-in-hiq-v-linkedin-and-other-cases-say-about-the-legality-of-data-scraping/) support this statement. Again, we are not lawyers and the HiQ Labs v. LinkedIn decision is complicated because of its long history and conclusion in settlement.
+
+**We follow a simple guideline: it is acceptable to scrape information when we don't need to create an account or click a box.**
+
+### PII
+
+::: callout-tip
+## Personal Identifiable Information
+
+**Personal Identifiable Information** (PII) is any information that can be used to directly identify an individual.
+:::
+
+Public information on the Internet often contains PII, which raises legal and ethical challenges. We will discuss the ethics of PII later.
+
+The legal considerations are trans-Atlantic. The General Data Protection Regulation (GDPR) is a European Union regulation about information privacy. It contains strict rules about the collection and storage of PII. It applies to almost everyone collecting data inside the EU. The GDPR is also extraterritorial, which means its rules *can* apply outside of the EU under certain circumstances like when an American company gathers information about EU individuals.
+
+**We will avoid gathering PII so we don't need to consider PII**
+
+#### Copyright
+
+::: callout-tip
+## Copyright Law
+
+(a) Copyright protection subsists, in accordance with this title, in original works of authorship fixed in any tangible medium of expression, now known or later developed, from which they can be perceived, reproduced, or otherwise communicated, either directly or with the aid of a machine or device. Works of authorship include the following categories:
+
+    -   
+
+        (1) literary works;
+
+    -   
+
+        (2) musical works, including any accompanying words;
+
+    -   
+
+        (3) dramatic works, including any accompanying music;
+
+    -   
+
+        (4) pantomimes and choreographic works;
+
+    -   
+
+        (5) pictorial, graphic, and sculptural works;
+
+    -   
+
+        (6) motion pictures and other audiovisual works;
+
+    -   
+
+        (7) sound recordings; and
+
+    -   
+
+        (8) architectural works.
+
+(b) In no case does copyright protection for an original work of authorship extend to any idea, procedure, process, system, method of operation, concept, principle, or discovery, regardless of the form in which it is described, explained, illustrated, or embodied in such work.
+
+[17 U.S.C.](https://www.govinfo.gov/content/pkg/USCODE-2021-title17/html/USCODE-2021-title17-chap1-sec102.htm)
+:::
+
+Our final legal concern for gathering information from the Internet is copyright law. We have two main options for avoiding copyright limitations.
+
+1.  We can avoid copyright protections by avoiding authorship in the protected categories (i.e. literary works and sound recordings). Fortunately, this include most data, which @wickham_r_2023 call "facts".
+2.  We can scrape information that is fair use. This is important if we want to use images, films, music, or extended text as data.
+
+**We will focus on data that are not copyrighted.**
+
+### Ethical
+
+We now turn to ethical considerations and some of the best-practices for gathering information from the web. In general, we will aim to be polite, give credit, and respect individual information.
+
+#### Be polite
+
+It is expensive and time-consuming to host data on the web. Hosts experience a small burden every time we access a website. This burden is small but can quickly grow with repeated queries. Just like with web APIs, we want to pace the burden of our access to be polite.
+
+::: callout-tip
+## Rate Limiting
+
+**Rate limiting** is the intentional slowing of web traffic for a user or users.
+:::
+
+If we use a custom function to pull information from the web, simply add `Sys.sleep()` to ease the burden on web hosts.
+
+::: callout-tip
+## robots.txt
+
+**robots.txt** tells web crawlers and scrapers which URLs the crawler is allowed to access on a website.
+:::
+
+Many websites contain a [robots.txt](https://en.wikipedia.org/wiki/Robots.txt) file. Consider examples from the [Urban Institute](https://www.urban.org/robots.txt) and [White House](https://www.whitehouse.gov/robots.txt)
+
+We can manually look at the robots.txt. For example, just visit `https://www.urban.org/robots.txt` or `https://www.whitehouse.gov/robots.txt`. We can also use `library(polite)`, which will automatically look at the robots.txt.
+
+#### Give Credit
+
+Academia and the research profession undervalue the collection and curation of data. Generally speaking, no one gets tenure for constructing even the most important data sets. It is important to give credit for data accessed from the web. Ideally, add the citation to Zotero and then easily add it to your manuscript in Quarto.
+
+Be sure to make it easy for others to cite data sets that you create. Include an example citation like IPUMS or create a DOI for your data.
+
+The rise of generative AI models like GPT-3, Stable Diffusion, DALL-E 2 makes urgent considerations of giving credit. These models consume massive amounts of training data and it isn't clear who sources all of the training data and the legal and ethical implications.[^04_web-scraping-3]
+
+[^04_web-scraping-3]: The scale of crawling is so great that there is concern about models converging once all models use the same massive training data. [Common Crawl]() is one example. This isn't a major issue for generating image but [model homogeneity](https://www.axios.com/2023/08/12/artificial-intelligent-stock-market-algorithms) is a big concern in finance.
+
+Consider a few current events:
+
+-   [Sarah Silverman is suing OpenAI](https://apnews.com/article/sarah-silverman-suing-chatgpt-openai-ai-8927025139a8151e26053249d1aeec20) because she "never gave permission for OpenAI to ingest the digital version of her 2010 book to train its AI models, and it was likely stolen from a 'shadow library' of pirated works."
+-   @somepalli2023 use state-of-the-art image retrieval models to find that generative AI models for image like the popular the popular Stable Diffusion model "blatantly copy from their training data." This is a major problem if the training data are copyrighted. The first page of their paper ([here](https://openaccess.thecvf.com/content/CVPR2023/papers/Somepalli_Diffusion_Art_or_Digital_Forgery_Investigating_Data_Replication_in_Diffusion_CVPR_2023_paper.pdf)) contains some dramatic examples.
+-   Finally, [this HBR article](https://hbr.org/2023/04/generative-ai-has-an-intellectual-property-problem) discusses the intellectual property problem facing generative AI.
+
+#### Respect Individual Information
+
+Data science methods should adhere to the same ethical standards as any research method. The social sciences have ethical norms about protecting privacy (discussed later) and informed consent.
+
+::: callout
+#### [Discussion]{style="color:#1696d2;"}
+
+Is it appropriate to collect and share public PII?
+
+*Do these norms apply to data that is already public on the Internet?*
+:::
+
+Let's consider an example. In 2016, researchers posted data about 70,000 OkCupid accounts.[^04_web-scraping-4] The data didn't contain names, but it did contain usernames. The data also contained many sensitive variables including topics like sexual habits and politics.
+
+[^04_web-scraping-4]: Every year, newspapers across the country FOIA information about government employees and publish their full names, job titles, and salaries.
+
+The release drew strong reactions from some research ethicists including [Michael Zimmer](https://www.wired.com/2016/05/okcupid-study-reveals-perils-big-data-science/) and [Os Keyes](https://www.vox.com/2016/5/12/11666116/70000-okcupid-users-data-release).
+
+@fellegi1972 defines data privacy as the ability "to determine what information about ourselves we will share with others". Maybe OkCupid users made the decision to forego confidentiality when they publsihed their accounts. Many institutional ethics committees do not require informed consent for public data.
+
+@ravn2020 do a good of trying to bridge the gap with a case study on Instagram.
+
+It's possible to conceive of a web scraping research project that is purely observational that adheres to the ethical standards of research and contains potentially disclosive information about individuals. Fortunately, researchers can typically use Institutional Review Boards and research ethicists to navigate these questions.
+
+**As a basic standard, we will avoid collecting PII and use anonymization techniques to limit the risk of re-identification.**
+
+We will also focus on applications where the host of information crudely shares the information. There are ample opportunities to create value by gathering information from government sources and converting it into more useful formats. For example, the government too often shares information in `.xls` and `.xlsx` files, clunky web interfaces, and PDFs.
+
+## Programatically Downloading Data
+
+*The [County Health Rankings & Roadmaps](https://www.countyhealthrankings.org/explore-health-rankings) is a source of state and local information. 
+
+Suppose we are interested in [Injury Deaths](https://www.countyhealthrankings.org/explore-health-rankings/county-health-rankings-model/health-factors/social-economic-factors/community-safety/injury-deaths?year=2023) at the state level. We can click through the interface and download a .xlsx file for each state. 
+
+1. Start [here](https://www.countyhealthrankings.org/explore-health-rankings/county-health-rankings-model/health-factors/social-economic-factors/community-safety/injury-deaths?year=2023).
+2. Using the interface at the bottom of the page, we can navigate to the page for "Virginia."
+3. Next, we can click "View State Data."
+4. Next, we can click "Download Virginia data sets."
+
+That's a lot of clicks to get [here](https://www.countyhealthrankings.org/explore-health-rankings/virginia/data-and-resources).
+
+If we want to download "2023 Virginia Data", we can typically right click on the link and select "Copy Link Address". This should return one of the following two URLS:
+
+* `https://www.countyhealthrankings.org/sites/default/files/media/document/2023%20County%20Health%20Rankings%20Virginia%20Data%20-%20v2.xlsx`
+* `https://www.countyhealthrankings.org/sites/default/files/media/document/2023 County Health Rankings Virginia Data - v2.xlsx`
+
+If we plug that URL into a web browser it will automatically download the file. Alternatively, we can use `download.file()` to download the file provided we include a `destfile`. 
+
+```{r}
+#| eval: false
+
+download.file(
+  url = "https://www.countyhealthrankings.org/sites/default/files/media/document/2023%20County%20Health%20Rankings%20Virginia%20Data%20-%20v2.xlsx", 
+  destfile = "data/virginia-injury-deaths.xlsx"
+)
+
+```
+
+If we poke around, we can see that all of the state data follows a common pattern. For example, the URL for Vermont is
+* `https://www.countyhealthrankings.org/sites/default/files/media/document/2023 County Health Rankings Vermont Data - v2.xlsx`
+
+The names only differ by `"Virginia"` and `"Vermont"`. Now we can iterate downloading the pages. We will only download data for two states, but we can imagine downloading data for many states or many counties. 
+
+* A couple of tips:
+    * `paste0()` and `str_glue()` from `library(stringr)` are useful for creating URLs and destination files. 
+    * `walk()` from `library(purrr)` can iterate functions. It's like `map()`, but we use it when we are interested int he side-effect of a function. 
+    * Sometimes data are messy and we want to be polite. Custom functions can help with rate limiting and cleaning data. 
+
+* Bonus: `read_csv()` can directly read .csvs from the Internet. However, I still like to download the data because the Internet is a moving target. 
+
+```{r}
+#| eval: false
+
+states <- c("Virginia", "Vermont")
+
+urls <- paste0(
+  "https://www.countyhealthrankings.org/sites/default/files/",
+  "media/document/2023 County Health Rankings ",
+  states,
+  " Data - v2.xlsx"
+)
+
+output_files <- paste0("data/", states, ".csv")
+
+download_chr <- function(url, destfil) {
+
+  download.file(url, destfile)
+
+  Sys.Sleep(0.5)
+
+}
+
+walk(.x = urls, .y = output_files, .f = download_chr)
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+[SOI Tax Stats - Historic Table 2](https://www.irs.gov/statistics/soi-tax-stats-historic-table-2) provides individual income and tax data, by state and size of adjusted gross income. The website contains a bulleted list of URLs and each URL downloads a `.xlsx` file. 
+
+1. Use `download.file()` to download the file for Alabama.
+2. Explore the URLs using "Copy Link Address".
+3. Iterate pulling the data for Alabama, Alaska, and Arizona. 
+:::
+
+```{r}
+#| eval: false
+#| echo: false
+
+
+```
+

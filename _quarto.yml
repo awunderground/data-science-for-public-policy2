@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - 01_advanced-quarto.qmd
+    - 04_web-scraping.qmd
     - references.qmd
 
 bibliography: references.bib
