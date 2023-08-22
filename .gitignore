@@ -46,3 +46,5 @@ po/*~
 /.quarto/
 /_site/
 
+# cache files
+*_files/

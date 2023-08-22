@@ -31,7 +31,7 @@ exercise_number <- 1
 
 ## Review {#sec-review2}
 
-R for Data Science (2e) [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Data for Public Policy introduced important techniques for data import like `read_csv()` and web APIs, for tidying like `pivot_longer()`, and for transformation like `mutate()`.
+R for Data Science (2e) [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". DSPP1 introduced important techniques for importing data like `read_csv()` and querying web APIs, for tidying data like `pivot_longer()`, and for transforming data like `mutate()`.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -50,7 +50,7 @@ exercise_number <- exercise_number + 1
 
 ### `library(here)`
 
-Developing Quarto documents in subdirectories is a pain. In interactive mode, file paths are read as if the `.qmd` file is in the same folder as the `.Rproj`. When clicking render, paths are treated as if they are in the subdirectory.  
+Developing Quarto documents in subdirectories is a pain. When interactively running code in the console, file paths are read as if the `.qmd` file is in the same folder as the `.Rproj`. When clicking render, paths are treated as if they are in the subdirectory where the `.qmd` file is.  
 
 [`library(here)`](https://here.r-lib.org/) resolves headaches around file referencing in [project-oriented workflows](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/). 
 
@@ -148,7 +148,7 @@ readxl_example("clippy.xlsx") |>
 exercise_number <- exercise_number + 1
 ```
 
-The [IRS Statistics of Income Division](https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income) is one of the US's 13 principal statistical agencies. They publish rich information derived from tax returns. We will focus on [Adjusted Gross Income (AGI) percentiles by state](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state) Table 2.
+The [IRS Statistics of Income Division](https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income) is one of the US's 13 principal statistical agencies. They publish rich information derived from tax returns. We will focus on Table 2, [Adjusted Gross Income (AGI) percentiles by state](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
 
 1.  Read in the 52 cells in the first column that contain "United States", all 50 states, and the "District of Columbia".
 2.  Identify the cells containing data for "Adjusted gross income floor on percentiles". Read in the data with `read_excel()`. Either programmatically read in the column names (i.e. "Top 1 Percent", ...) or assign them with `col_names()`.
@@ -186,15 +186,17 @@ data <- bind_cols(states, data)
 
 ## Tidy {#sec-tidy}
 
-The defining opinion of the tidyverse is its wholehearted adoption of tidy data. Tidy data has three features:
+The defining opinion of the tidyverse is its wholehearted adoption of tidy data. [Tidy data has three features](https://r4ds.hadley.nz/data-tidy#fig-tidy-structure):
 
 1. Each variable forms a column.
 2. Each observation forms a row.
 3. Each type of observational unit forms a dataframe.
 
+> Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.had.co.nz/tidy-data.html)
+
 `library(tidyr)` is the main package for tidying untidy data. We'll practice some skills using examples from three workbooks from the [IRS SOI](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
 
-`pivot_longer()` is commonly used for tidying data and for making data longer for `library(ggplot2)`. `pivot_longer()` has three essential arguments:
+`pivot_longer()` is commonly used for tidying data and for making data longer for `library(ggplot2)`. `pivot_longer()` reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. `pivot_longer()` has three essential arguments:
 
 1. `cols` is a vector of columns to pivot (or not pivot).
 2. `names_to` is a string for the name of the column where the old column names will go (i.e. "series" in the figure).
@@ -225,6 +227,8 @@ table1 <- tribble(
   "Arizona", 146307, 181691, 245258
 )
 
+table1
+
 ```
 
 #### Cleaned
@@ -238,6 +242,8 @@ table1 <- tribble(
   "Alaska", 17458, 23645, 26445,
   "Arizona", 146307, 181691, 245258
 )
+
+table1
 
 pivot_longer(
   data = table1, 
@@ -277,6 +283,8 @@ table2 <- tribble(
   "Arizona", "146307|181691|245258"
 )
 
+table2
+
 ```
 
 #### Cleaned
@@ -290,6 +298,8 @@ table2 <- tribble(
   "Alaska", "17458|23645|26445",
   "Arizona", "146307|181691|245258"
 )
+
+table2
 
 separate_wider_delim(
   data = table2, 
@@ -309,7 +319,54 @@ separate_wider_delim(
 
 <br>
 
-`bind_rows()` combines data frames by stacking the rows. `bind_cols()` combines data frames by appending columns. When possible, we recommend using relational joins like `left_join()` to combine by columns because it is easy to miss-align rows with `bind_cols()`. 
+`bind_rows()` combines data frames by stacking the rows.
+
+```{r}
+one <- tribble(
+  ~id, ~var,
+  "1", 3.14,
+  "2", 3.15,
+)
+
+two <- tribble(
+  ~id, ~var,
+  "3", 3.16,
+  "4", 3.17,
+)
+
+bind_rows(one, two)
+
+```
+
+`bind_cols()` combines data frames by appending columns. 
+
+```{r}
+three <- tribble(
+  ~id, ~var1,
+  "1", 3.14,
+  "2", 3.15,
+)
+
+four <- tribble(
+  ~id, ~var2,
+  "1", 3.16,
+  "2", 3.17,
+)
+
+bind_cols(three, four)
+
+```
+
+When possible, we recommend using relational joins like `left_join()` to combine by columns because it is easy to miss-align rows with `bind_cols()`. 
+
+```{r}
+left_join(
+  x = three,
+  y = four,
+  by = "id"
+)
+
+```
 
 #### Tidying Example 3
 
@@ -327,6 +384,8 @@ table3_2006 <- tribble(
   "Arizona", "146307"
 )
 
+table3_2006
+
 table3_2016 <- tribble(
   ~state, ~agi,
   "Alabama", "114510",
@@ -334,12 +393,16 @@ table3_2016 <- tribble(
   "Arizona", "181691"
 )
 
+table3_2016
+
 table3_2020 <- tribble(
   ~state, ~`agi`,
   "Alabama", "138244",
   "Alaska", "26445",
   "Arizona", "245258"
 )
+
+table3_2020
 
 ```
 
@@ -355,6 +418,8 @@ table3_2006 <- tribble(
   "Arizona", 146307
 )
 
+table3_2006
+
 table3_2016 <- tribble(
   ~state, ~agi,
   "Alabama", 114510,
@@ -362,12 +427,16 @@ table3_2016 <- tribble(
   "Arizona", 181691
 )
 
+table3_2016
+
 table3_2020 <- tribble(
   ~state, ~`agi`,
   "Alabama", 138244,
   "Alaska", 26445,
   "Arizona", 245258
 )
+
+table3_2020
 
 bind_rows(
   `2006` = table3_2006,
@@ -402,11 +471,11 @@ For example, we may have a list of students in detention and a list of all stude
 
 For now, we will focus on mutating joins. Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. 
 
-* `left_join()` appends variables from `y` on to `x` but only keeps observations from `x`. 
-* `full_join()` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
-* `anti_join()` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
+* `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
+* `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
+* `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
 
-To learn more, read the [Joins chapter of R for Data Science (2e)](https://r4ds.hadley.nz/joins.html).
+To learn more, read the [Joins chapter of R for Data Science (2e)](https://r4ds.hadley.nz/joins.html). [`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful function for monitoring the behavior of joins.
 
 #### Tidying Example 4
 
@@ -424,12 +493,16 @@ table4a <- tribble(
   "Arizona", 146307
 )
 
+table4a
+
 table4b <- tribble(
   ~state, ~returns,
   "Alabama", 1929941,
   "Alaska", 322369,
   "Arizona", 2454951
 )
+
+table4b
 
 ```
 
@@ -445,12 +518,16 @@ table4a <- tribble(
   "Arizona", 146307
 )
 
+table4a
+
 table4b <- tribble(
   ~state, ~returns,
   "Alabama", 1929941,
   "Alaska", 322369,
   "Arizona", 2454951
 )
+
+table4b
 
 full_join(table4a, table4b, by = "state")
 
@@ -474,8 +551,6 @@ exercise_number <- exercise_number + 1
 1. Use `pivot_longer()` to make the SOI percentile data from the earlier exercise longer. After the transformation, there should be one row per percentile per state.
 
 :::
-
-> Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.had.co.nz/tidy-data.html)
 
 To see more examples, read the [tidy data section in R for Data Science (2e)](https://r4ds.hadley.nz/data-tidy.html)
 
@@ -527,7 +602,9 @@ tibble(fips = c(1, 2, 4)) |>
 
 #### Modifying Strings
 
-`str_replace()`, `str_replace_all()`, `str_remove()`, and `str_remove_all()` can delete or **modify** parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits. 
+`str_replace()`, `str_replace_all()`, `str_remove()`, and `str_remove_all()` can delete or **modify** parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits.[^regex]
+
+[^regex]: This example uses regular expressions (regex). Visit [R4DS (2e)](https://r4ds.hadley.nz/regexps) for a review of regex.
 
 ```{r}
 tibble(course = c("PPOL 670", "GOVT 8009", "PPOL 6819")) |>
@@ -543,7 +620,16 @@ tibble(fruit = c("apple", "banana", "cantelope")) |>
 
 ```
 
-This workflow is useful for building up URLs when accessing APIs, scraping information from the Internet, and downloading many files. 
+```{r}
+tibble(fruit = c("apple", "banana", "cantelope")) |>
+  mutate(
+    another_sentence = 
+      str_c("Who doesn't like a good ", fruit, ".")
+    )
+
+```
+
+This workflow is useful for building up URLs when accessing APIs, scraping information from the Internet, and downloading many files.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -713,7 +799,7 @@ storms |>
 
 storms |>
   count(month, .drop = FALSE) |>
-  mutate(month = fct_reorder(.f = month, .x = n, .fun = median)) |>  
+  mutate(month = fct_reorder(.f = month, .x = n, .fun = median)) |>
   ggplot(aes(x = n, y = month)) +
   geom_col()
 
@@ -866,7 +952,7 @@ difftime(today(), as_date("1776-07-04"), units = "mins")
 
 #### Periods
 
-**Periods** track time like a clock or a calendar. We use periods when we set a recurring meetings on a calendar and when we set an alarm to wake up in the morning. 
+**Periods** track clock time or a calendar time. We use periods when we set a recurring meetings on a calendar and when we set an alarm to wake up in the morning. 
 
 This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn't true. Sometimes we add 366 days during leap years. For example,
 
@@ -882,7 +968,7 @@ end - start
 
 #### Durations
 
-**Durations** track time in physical time. Duration functions start with `d` like `dyears()` and `dminutes()`. 
+**Durations** track the passage of physical time in exact seconds. Durations are like sand falling into an hourglass. Duration functions start with `d` like `dyears()` and `dminutes()`. 
 
 ```{r}
 start <- as_date("1999-03-14")
@@ -909,7 +995,7 @@ classes %within% fall_break
 
 ```
 
-We focused on dates, but many of the same principles hold for date-dates.
+We focused on dates, but many of the same principles hold for date-times.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
