@@ -8,6 +8,8 @@ format:
     code-line-numbers: true
 editor_options: 
   chunk_output_type: console
+execute:
+  cache: true
 bibliography: references.bib
 ---
 
@@ -37,6 +39,29 @@ sample from a distribution
 
 ## A New Type of Random Variable
 
+We learned about common univariate and multivariate distributions. For each of the distributions, there are well-defined and straightforward ways to sample values from the distribution. We can also manipulate these distributions to calculate probabilities.
+
+The real world is complicated and we will quickly come across data where we struggle to find a common probability distributions.
+
+Consider the following density plot based on real data.
+
+```{r}
+library(MASS)
+
+geyser |>
+  ggplot(aes(duration)) +
+  geom_density()
+
+```
+
+This density looks very complicated. But what if we break this distribution into pieces. In this case, what if we broke it into two normal distributions?
+
+```{r}
+# show geyser as two normal distribution
+
+
+```
+
 ::: {.callout-tip}
 ## Latent Variable
 
@@ -46,7 +71,7 @@ sample from a distribution
 
 define: latent variable
 
-We learned about common univariate and multivariate distributions. For each of the distributions, there are well-defined and straightfoward ways to sample values from the distribution.
+
 
 Let's consider a slightly different "data generation story" where we sample in two stages. (Data generation story from ESL \[273\])
 
@@ -99,7 +124,7 @@ With mixture distributions, we care about the overall distribution and don't car
 
 With mixture modeling, we use the overall distribution to learn about the latent variables/subpopulations/clusters in the data.
 
-ancestral sampling: sample z_hat, sample x_hat\|z_hat
+ancestral sampling: sample z_hat, sample x_hat\|z_hat (Bishop 430)
 
 ## Mixture Distribution
 
@@ -108,6 +133,10 @@ Define mixture density
 "complex marginal distributions can be expressed as the joint distribution of observed and latent variables"
 
 Geysers data (Bishop, Hands On ML in R, )
+
+
+
+
 
 ## Review #2
 
@@ -121,9 +150,7 @@ hard assignments
 
 ### Gaussian Mixture Modeling  (GMM)
 
-parameters: means, covariance matrices, mixture weights/mixture proportions
 
-over parameterized
 
 soft assignments responsibility
 
