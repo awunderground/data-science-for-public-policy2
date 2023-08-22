@@ -35,7 +35,7 @@ msleep |>
 
 ```
 
-Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. For example, pick row number 5 and column number 4. This idea of using the relations in data reduces the chances of making mistakes and leads to clearer code.
+Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from row number 5 and column number 4. This idea of using the relations in data reduces the chances of making mistakes and leads to clearer code.
 
 ## Programming
 
@@ -125,9 +125,9 @@ exercise_number <- exercise_number + 1
 
 #### Lists
 
-`[[]]` and `$` are useful for subetting lists. Both can be used to subset data frames, but I recommending avoiding this.
+`[[]]` and `$` are useful for subsetting lists. Both can be used to subset data frames, but I recommending avoiding this.
 
-Unlike `[]`, which returns multiple elements, `[[]]` and `$` can only return a single element and `[[]]` and `$` simplify objects by removing a later of hierarchy.
+Unlike `[]`, which returns multiple elements, `[[]]` and `$` can only return a single element and `[[]]` and `$` simplify objects by removing a layer of hierarchy.
 
 `[[]]` can select an element by position or name, while `$` can only select an element by name. Consider a list with the first six letters of the alphabet.
 
@@ -365,7 +365,7 @@ alphabet <- list(
 
 #### While Loops
 
-While loops are similar to for loops; however, instead of predetermining the number of iterations in the header while loops determine a condition in the header and run until that condition is met. For loops can be rewritten as while loops. It can be useful to track the iteration number. Consider a simple example where we double `x` every iteration while `x < 1000`.
+While loops are similar to for loops; however, instead of predetermining the number of iterations in the header, while loops determine a condition in the header and run until that condition is met. For loops can be rewritten as while loops. It can be useful to track the iteration number. Consider a simple example where we double `x` every iteration while `x < 1000`.
 
 ```{r}
 iteration <- 1
@@ -399,7 +399,7 @@ exercise_number <- exercise_number + 1
 
 `if_else()` and `case_when()` apply conditional logic to a vector. We most frequently use those functions inside of `mutate()` to create a new variable or manipulate an existing variable.
 
-R also has `if`, `else`, and `else if`, which are used to select sections of code to run. This is incredibly useful when programming outside of data manipulation. For example, we can use `if`\[\^\] to download a file only if it doesn't already exist.
+R also has `if`, `else`, and `else if`, which are used to select sections of code to run. This is incredibly useful when programming outside of data manipulation. For example, we can use `if` to download a file only if it doesn't already exist.
 
 ```{r}
 #| eval: false
@@ -593,7 +593,7 @@ As you can see from the [Roxygen Skeleton](https://jozef.io/r102-addin-roxytags/
 
 Tips for writing functions:
 
--   Function names should be short but effectively describe what the function does. They generally should be verbs while function arguments should be nouns. See the [Tidyverse style guide](https://style.tidyverse.org/functions.html) for more details on function naming and style.
+-   Function names should be short but effectively describe what the function does. Function names should generally be verbs while function arguments should be nouns. See the [Tidyverse style guide](https://style.tidyverse.org/functions.html) for more details on function naming and style.
 -   As a general principle, functions should each do only one task. This makes it much easier to debug your code and reuse functions!
 -   Use `::` (e.g. `dplyr::filter()`) when writing custom functions. This will create stabler code and make it easier to develop R packages.
 
@@ -689,7 +689,9 @@ R code inside of custom functions can be tougher to troubleshoot than R code out
 
 The debugger requires putting custom functions in their own scripts. This is covered in @sec-organizing-an-analysis. 
 
-To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.
+To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.[^environments]
+
+[^environments]: According to Hadley Wickham, "You can think of an environment as a bag of names. Each name points to an object stored elsewhere in memory." For more details, see the [Environments chapter](http://adv-r.had.co.nz/Environments.html#env-basics) of Advanced R.
 
 ::: {#fig-debuggera layout-ncol="2"}
 ![](images/debugger1.png){#fig-debugger1}
@@ -768,7 +770,9 @@ Let's compare `%>%` and `|>` to see if they have comparable computation times. C
 
 1.  Load `library(microbenchmark)` and add the `microbenchmark()` function.
 2.  Create `x1 <- 1:1000000`, `x2 <- 1:1000000`, and `x3 <- 1:1000000`
-3.  Test `median(x1)`, `x2 |> median()`, and `x3 %>% median()`.
+3.  Test `median(x1)`, `x2 |> median()`, and `x3 %>% median()`.[^new-pipe]
+
+[^new-pipe]: Don't be surprised when `microbenchmark::microbenchmark()` returns a row with expr `median(x2)` instead of `x2 |> median()`. This is expected behavior because the base pipe is implemented as a syntax transformation. You can read more about this in [this blog](https://www.r-bloggers.com/2021/05/the-new-r-pipe/).
 
 ```{r}
 #| echo: false
