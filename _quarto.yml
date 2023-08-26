@@ -9,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - 01_advanced-quarto.qmd
+    - 02_advanced-data-cleaning.qmd
     - 03_functions.qmd
     - references.qmd
 
