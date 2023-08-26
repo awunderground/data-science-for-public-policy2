@@ -113,7 +113,7 @@ Public information on the Internet often contains PII, which raises legal and et
 
 The legal considerations are trans-Atlantic. The [General Data Protection Regulation (GDPR)](https://gdpr-info.eu/) is a European Union regulation about information privacy. It contains strict rules about the collection and storage of PII. It applies to almost everyone collecting data inside the EU. The GDPR is also extraterritorial, which means its rules *can* apply outside of the EU under certain circumstances like when an American company gathers information about EU individuals.
 
-**We will avoid gathering PII so we don't need to consider PII**
+**We will avoid gathering PII, so we don't need to consider PII.**
 
 #### Copyright
 
@@ -161,7 +161,7 @@ The legal considerations are trans-Atlantic. The [General Data Protection Regula
 
 Our final legal concern for gathering information from the Internet is copyright law. We have two main options for avoiding copyright limitations.
 
-1.  We can avoid copyright protections by avoiding authorship in the protected categories (i.e. literary works and sound recordings). Fortunately, factual data are not typically protected by copyright. 
+1.  We can avoid copyright protections by not scraping authored content in the protected categories (i.e. literary works and sound recordings). Fortunately, factual data are not typically protected by copyright. 
 2.  We can scrape information that is fair use. This is important if we want to use images, films, music, or extended text as data.
 
 **We will focus on data that are not copyrighted.**
@@ -188,7 +188,7 @@ We will use `Sys.sleep()` in custom functions to slow our web scraping and ease 
 **robots.txt** tells web crawlers and scrapers which URLs the crawler is allowed to access on a website.
 :::
 
-Many websites contain a [robots.txt](https://en.wikipedia.org/wiki/Robots.txt) file. Consider examples from the [Urban Institute](https://www.urban.org/robots.txt) and [White House](https://www.whitehouse.gov/robots.txt)
+Many websites contain a [robots.txt](https://en.wikipedia.org/wiki/Robots.txt) file. Consider examples from the [Urban Institute](https://www.urban.org/robots.txt) and [White House](https://www.whitehouse.gov/robots.txt).
 
 We can manually look at the robots.txt. For example, just visit `https://www.urban.org/robots.txt` or `https://www.whitehouse.gov/robots.txt`. We can also use `library(polite)`, which will automatically look at the robots.txt.
 
@@ -198,7 +198,7 @@ Academia and the research profession undervalue the collection and curation of d
 
 Be sure to make it easy for others to cite data sets that you create. Include an example citation like IPUMS or create a DOI for your data.
 
-The rise of generative AI models like GPT-3, Stable Diffusion, DALL-E 2 makes urgent considerations of giving credit. These models consume massive amounts of training data and it isn't clear where the training data come from or the legal and ethical implications of the training data.[^04_web-scraping-3]
+The rise of generative AI models like GPT-3, Stable Diffusion, DALL-E 2 makes urgent considerations of giving credit. These models consume massive amounts of training data, and it isn't clear where the training data come from or the legal and ethical implications of the training data.[^04_web-scraping-3]
 
 [^04_web-scraping-3]: The scale of crawling is so great that there is concern about models converging once all models use the same massive training data. [Common Crawl](https://commoncrawl.org/) is one example. This isn't a major issue for generating images but [model homogeneity](https://www.axios.com/2023/08/12/artificial-intelligent-stock-market-algorithms) is a big concern in finance.
 
@@ -220,15 +220,15 @@ Is it appropriate to collect and share public PII?
 *Do these norms apply to data that is already public on the Internet?*
 :::
 
-Let's consider an example. In 2016, researchers posted data about 70,000 OkCupid accounts.[^04_web-scraping-4] The data didn't contain names but did contain usernames. The data also contained many sensitive variables including topics like sexual habits and politics.
+Let's consider an example. In 2016, researchers posted data about 70,000 OkCupid accounts. The data didn't contain names but did contain usernames. The data also contained many sensitive variables including topics like sexual habits and politics.
 
-[^04_web-scraping-4]: Every year, newspapers across the country FOIA information about government employees and publish their full names, job titles, and salaries.
+The release drew strong reactions from some research ethicists including [Michael Zimmer](https://www.wired.com/2016/05/okcupid-study-reveals-perils-big-data-science/) and [Os Keyes](https://www.vox.com/2016/5/12/11666116/70000-okcupid-users-data-release).[^04_web-scraping-4]
 
-The release drew strong reactions from some research ethicists including [Michael Zimmer](https://www.wired.com/2016/05/okcupid-study-reveals-perils-big-data-science/) and [Os Keyes](https://www.vox.com/2016/5/12/11666116/70000-okcupid-users-data-release).
+[^04_web-scraping-4]: Who deserves privacy is underdiscussed and inconsistent. Every year, newspapers across the country FOIA information about government employees and publish their full names, job titles, and salaries.
 
 @fellegi1972 defines data privacy as the ability "to determine what information about ourselves we will share with others". Maybe OkCupid users made the decision to forego confidentiality when they published their accounts. Many institutional ethics committees do not require informed consent for public data.
 
-@ravn2020 do a good of trying to bridge the gap between all public data require informed consent and no public data require informed consent. 
+@ravn2020 do a good job developing a conceptual framework that bridges the gap between the view that all public data require informed consent and the view that no public data require informed consent. 
 
 It's possible to conceive of a web scraping research project that is purely observational that adheres to the ethical standards of research and contains potentially disclosive information about individuals. Fortunately, researchers can typically use Institutional Review Boards and research ethicists to navigate these questions.
 
@@ -265,7 +265,7 @@ Spaces are special characters in URLs and they are sometimes encoded as `%20`. B
 
 As we've seen several times before, we could use `read_csv()` to directly download the data from the Internet if the file was a `.csv`.[^read-csv] We need to download this file because it is an Excel file, which we can do with `download.file()` provided we include a `destfile`.
 
-[^read-csv]: We prefer to download data in most cases because the Internet changes.
+[^read-csv]: Consequently, code that may once have worked can break, but using `read_csv(<file_path>)` to access data once it has been downloaded will work consistently.
 
 ```{r}
 #| eval: false
@@ -288,8 +288,10 @@ https://www.countyhealthrankings.org/sites/default/files/media/document/2023 Cou
 The URLs only differ by `"Virginia"` and `"Vermont"`. If we can create a vector of URLs by changing state name, then it is simple to iterate downloading the data. We will only download data for two states, but we can imagine downloading data for many states or many counties. Here are three R tips:
 
 * `paste0()` and `str_glue()` from `library(stringr)` are useful for creating URLs and destination files. 
-* `walk()` from `library(purrr)` can iterate functions. It's like `map()`, but we use it when we are interested in the side-effect of a function. 
+* `walk()` from `library(purrr)` can iterate functions. It's like `map()`, but we use it when we are interested in the side-effect of a function.[^walk]
 * Sometimes data are messy and we want to be polite. Custom functions can help with rate limiting and cleaning data. 
+
+[^walk]: The only difference between `map()` and `walk()` is their outputs. `map()` returns the results of a function in a list. `walk()` returns nothing. `walk()` is useful when we don't care about the output of functions and are only interested in their "side-effects". Common functions to use with `walk()` are `ggsave()` and `write_csv()`. For more information on `walk()`, see [Advanced R](https://adv-r.hadley.nz/functionals.html). 
 
 ```{r}
 #| eval: false
@@ -415,7 +417,7 @@ HTML attributes are name/value pairs that provide additional information about e
 Two HTML attributes, classes and ids, are particularly important for web scraping. 
 
 * HTML classes are HTML attributes that label multiple HTML elements. These classes are useful for styling HTML elements using CSS. Multiple elements can have the same class.
-* HTML ids are HTML attributes that label one HTML element. These classes are useful for styling HTML elements using CSS. Each ID can be used only one time in an HTML document.
+* HTML ids are HTML attributes that label one HTML element. Ids are useful for styling singular HTML elements using CSS. Each ID can be used only one time in an HTML document.
 
 We can view HTML for any website by right clicking in our web browser and selecting "View Page Source."[^chrome]
 
@@ -466,9 +468,13 @@ CSS selectors can reference also reference HTML IDs. For example, the following 
 
 We can explore CSS by right clicking and selecting Inspect. Most modern websites have a lot of HTML and a lot of CSS. We can find the CSS for specific elements in a website with the button at the top left of the new window that just appeared. 
 
+![Inspecting CSS](images/inspector.png)
+
 ### Tables
 
-`library(rvest)` is the main tool for scraping static websites with R. We'll start with examples that contain information in HTML tables. 
+`library(rvest)` is the main tool for scraping static websites with R. We'll start with examples that contain information in HTML tables.[^static]
+
+[^static]: If a website is static, that means that the website is not interactive and will remain the same unless the administrator actively makes changes. [Hello World examples](https://www2.latech.edu/~acm/HelloWorld.shtml) is an example of a static website.
 
 [HTML tables](https://www.w3schools.com/html/html_tables.asp) store information in tables in websites using the `<table>`, `<tr>`, `<th>`, and `<td>`. If the data of interest are stored in tables, then it can be trivial to scrape the information. 
 
@@ -489,7 +495,9 @@ tables[[18]]
 
 Of course, we want to be polite. `library(polite)` makes this very simple. "The three pillars of a polite session are seeking permission, taking slowly and never asking twice."
 
-We'll use `bow()` to start a session and declare our user agent, and `scrape()` instead of `read_html()`
+We'll use `bow()` to start a session and declare our user agent, and `scrape()` instead of `read_html()`.[^bow]
+
+[^bow]: The [polite documentation](https://cran.r-project.org/web/packages/polite/readme/README.html) describes the `bow()` function as being used to "introduce the client to the host and ask for permission to scrape (by inquiring against the host’s robots.txt file)."
 
 ```{r}
 library(polite)
@@ -528,9 +536,9 @@ exercise_number <- exercise_number + 1
 
 Suppose we want to scrape every URL in the body of the 2012 Presidential Election webpage. `html_table()` no longer works. 
 
-We could manually poke through the source code to find the appropriate CSS selectors. Fortunately, [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb) often eliminates this tedious work.
+We could manually poke through the source code to find the appropriate CSS selectors. Fortunately, [SelectorGadget](https://chrome.google.com/webstore/detail/selectorgadget/mhjhnkcfbdhnjickkkdbjoemdmbfginb) often eliminates this tedious work by telling you the name of the html elements that you click on.
 
-1. Click the SelectorGadget gadget browser extension. 
+1. Click the SelectorGadget gadget browser extension. You may need to click the puzzle piece to the right of the address bar and then click the SelectorGadget browser extension.
 2. Select an element you want to scrape. The elements associated with the CSS selector provided at the bottom will be in green and yellow.  
 3. If SelectorGadget selects too few elements, select additional elements. If SelectorGadget selects too many elements, click those elements. They should turn red. 
 
@@ -575,7 +583,7 @@ https://web.archive.org/web/20230702163608/https://en.wikipedia.org/wiki/List_of
 
 3. We are interested in scraping the names of early websites and their URLs. Use SelectorGadget to determine the CSS selectors associated with these HTML elements. 
 4. Create a tibble with a variable called `name` and a variable called `url`. 
-5. Remove duplicate rows with `filter()`. 
+5. Remove duplicate rows with `distinct()` or `filter()`. 
 
 :::
 
