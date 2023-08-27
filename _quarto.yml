@@ -11,6 +11,7 @@ book:
     - 01_advanced-quarto.qmd
     - 02_advanced-data-cleaning.qmd
     - 03_functions.qmd
+    - 04_web-scraping.qmd
     - references.qmd
 
 bibliography: references.bib
