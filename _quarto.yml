@@ -9,6 +9,8 @@ book:
   chapters:
     - index.qmd
     - 01_advanced-quarto.qmd
+    - 02_advanced-data-cleaning.qmd
+    - 03_functions.qmd
     - 04_web-scraping.qmd
     - references.qmd
 
@@ -19,6 +21,3 @@ format:
     theme: cosmo
     number-depth: 3
     css: www/styles.css
-
-
-

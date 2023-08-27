@@ -1,0 +1,1048 @@
+---
+title: "Advanced Data Cleaning"
+date: today
+abstract: "This section covers advanced techniques for cleaning and manipulating data."
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+```
+
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Review {#sec-review2}
+
+R for Data Science (2e) [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". DSPP1 introduced important techniques for importing data like `read_csv()` and querying web APIs, for tidying data like `pivot_longer()`, and for transforming data like `mutate()`.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Use `mutate()` and `case_when()` to a new variable to `cars` where the values are `"slow"` when `speed < 10`, `"moderate"` when `speed < 20`, and `"fast"` otherwise.
+
+:::
+
+## Import {#sec-import}
+
+### `library(here)`
+
+Developing Quarto documents in subdirectories is a pain. When interactively running code in the console, file paths are read as if the `.qmd` file is in the same folder as the `.Rproj`. When clicking render, paths are treated as if they are in the subdirectory where the `.qmd` file is.  
+
+[`library(here)`](https://here.r-lib.org/) resolves headaches around file referencing in [project-oriented workflows](https://www.tidyverse.org/blog/2017/12/workflow-vs-script/). 
+
+Loading `library(here)` will print your working directory. 
+
+```{r}
+library(here)
+
+```
+
+After this, `here()` will use reasonable heuristics to find project files using relative file paths. When placing Quarto documents in a directory below the top-level directory, use `here()` and treat each folder and file as a different string. 
+
+**Before**
+
+```{r}
+#| eval: false
+
+read_csv("data/raw/important-data.csv")
+
+```
+
+**After**
+
+```{r}
+#| eval: false
+
+read_csv(here("data", "raw", "important-data.csv"))
+
+```
+
+### `library(readxl)`
+
+We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it's a dominant tool for storing data and often enters the data science workflow.
+
+`library(readxl)` is the premier package for reading data from `.xls` and `.xlsx` files. `read_excel()`, which works like `read_csv()`, loads data from `.xls` and `.xlsx` files. Consider data from the Urban Institute's [Debt in America](https://apps.urban.org/features/debt-interactive-map/?type=overall&variable=totcoll) feature accessed through the [Urban Institute Data Catalog](https://datacatalog.urban.org/dataset/debt-america-2022).
+
+```{r}
+library(readxl)
+
+read_excel(here("data", "state_dia_delinquency_ 7 Jun 2022.xlsx"))
+
+```
+
+`read_excel()` has several useful arguments:
+
+-   `sheet` selects the sheet to read.
+-   `range` selects the cells to read and can use Excel-style ranges like "C34:D50".
+-   `skip` skips the selected number of rows.
+-   `n_max` selects the maximum number of rows to read.
+
+Excel encourages bad habits and untidy data, so these arguments are useful for extracting data from messy Excel workbooks.
+
+`readxl_example()` contains a perfect example. The workbook contains two sheets, which we can see with `excel_sheets()`.
+
+```{r}
+readxl_example("clippy.xlsx") |>
+  excel_sheets()
+
+```
+
+As is common with many Excel workbooks, the second sheet contains a second row of column names with parenthetical comments about each column.[^02_advanced-data-cleaning-1]
+
+[^02_advanced-data-cleaning-1]: The instinct to include these comments is good. The execution is poor because it creates big headaches for people using programming languages. I suggest using a data dictionary instead.
+
+```{r}
+readxl_example("clippy.xlsx") |>  
+  read_excel(sheet = "two-row-header")
+
+```
+
+[This vignette](https://readxl.tidyverse.org/articles/multiple-header-rows.html) suggests a simple solution to this problem. 
+
+```{r}
+# extract the column names
+col_names <- readxl_example("clippy.xlsx") |>  
+  read_excel(sheet = "two-row-header", n_max = 0) |>
+  names()
+
+# load the data and add the column names
+readxl_example("clippy.xlsx") |>  
+    read_excel(
+      sheet = "two-row-header", 
+      skip = 2,
+      col_names = col_names
+    )
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+The [IRS Statistics of Income Division](https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income) is one of the US's 13 principal statistical agencies. They publish rich information derived from tax returns. We will focus on Table 2, [Adjusted Gross Income (AGI) percentiles by state](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
+
+1.  Read in the 52 cells in the first column that contain "United States", all 50 states, and the "District of Columbia".
+2.  Identify the cells containing data for "Adjusted gross income floor on percentiles". Read in the data with `read_excel()`. Either programmatically read in the column names (i.e. "Top 1 Percent", ...) or assign them with `col_names()`.
+3.  Use `bind_cols()` to combine the data from step 1 and step 2.
+:::
+
+```{r}
+#| echo: false
+#| eval: false
+
+states <- read_excel(
+  here("data", "20in01stateshares.xlsx"),
+  range = "A7:A58",
+  col_names = "state"
+)
+
+names <- read_excel(
+  here("data", "20in01stateshares.xlsx"),
+  range = "J4:O4"
+) |>
+  names()
+
+data <- read_excel(
+  here("data", "20in01stateshares.xlsx"),
+  range = "J7:O58",
+  skip = 5,
+  col_names = names
+)
+
+data <- bind_cols(states, data)
+
+```
+
+[`library(tidyxl)`](https://cran.r-project.org/web/packages/tidyxl/index.html) contains tools for working with messy Excel workbooks, [`library(openxlsx)`](https://cran.r-project.org/web/packages/openxlsx/index.html) contains tools for creating Excel workbooks with R, and [`library(googlesheets4)`](https://cran.r-project.org/web/packages/openxlsx/index.html) contains tools for working with Google Sheets.
+
+## Tidy {#sec-tidy}
+
+The defining opinion of the tidyverse is its wholehearted adoption of tidy data. [Tidy data has three features](https://r4ds.hadley.nz/data-tidy#fig-tidy-structure):
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a dataframe.
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.had.co.nz/tidy-data.html)
+
+`library(tidyr)` is the main package for tidying untidy data. We'll practice some skills using examples from three workbooks from the [IRS SOI](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
+
+`pivot_longer()` is commonly used for tidying data and for making data longer for `library(ggplot2)`. `pivot_longer()` reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. `pivot_longer()` has three essential arguments:
+
+1. `cols` is a vector of columns to pivot (or not pivot).
+2. `names_to` is a string for the name of the column where the old column names will go (i.e. "series" in the figure).
+3. `values_to` is a string for the name of the column where the values will go (i.e. "rate" in the figure).
+
+```{r}
+#| echo: false
+
+knitr::include_graphics(here("images", "pivoting.png"))
+
+```
+
+`pivot_wider()` is the inverse of `pivot_longer()`. 
+
+#### Tidying Example 1
+
+::: {.panel-tabset}
+
+#### Untidy
+
+**Why aren't the data tidy?**
+
+```{r}
+table1 <- tribble(
+  ~state, ~agi2006, ~agi2016, ~agi2020,
+  "Alabama", 95067, 114510, 138244,
+  "Alaska", 17458, 23645, 26445,
+  "Arizona", 146307, 181691, 245258
+)
+
+table1
+
+```
+
+#### Cleaned
+
+Year is a variable. This data is untidy because year is included in the column names. 
+
+```{r}
+table1 <- tribble(
+  ~state, ~agi2006, ~agi2016, ~agi2020,
+  "Alabama", 95067, 114510, 138244,
+  "Alaska", 17458, 23645, 26445,
+  "Arizona", 146307, 181691, 245258
+)
+
+table1
+
+pivot_longer(
+  data = table1, 
+  cols = -state, 
+  names_to = "year", 
+  values_to = "agi"
+)
+
+```
+
+The `year` column isn't useful yet. We'll fix that later.
+
+:::
+
+<br>
+
+`library(tidyr)` contains several functions to split values into multiple cells. 
+
+-   `separate_wider_delim()` separates a value based on a delimeter and creates wider data. 
+-   `separate_wider_position()` separates a value based on position and creates wider data.
+-   `separate_longer_delim()` separates a value based on a delimeter and creates longer data. 
+-   `separate_longer_position()` separates a value based on position and creates longer data.
+
+#### Tidying Example 2
+
+::: {.panel-tabset}
+
+#### Untidy
+
+**Why aren't the data tidy?**
+
+```{r}
+table2 <- tribble(
+  ~state, ~`agi2006|2016|2020`,
+  "Alabama", "95067|114510|138244",
+  "Alaska", "17458|23645|26445",
+  "Arizona", "146307|181691|245258"
+)
+
+table2
+
+```
+
+#### Cleaned
+
+The values for 2006, 2016, and 2020 are all squished into one cell. 
+
+```{r}
+table2 <- tribble(
+  ~state, ~`agi2006|2016|2020`,
+  "Alabama", "95067|114510|138244",
+  "Alaska", "17458|23645|26445",
+  "Arizona", "146307|181691|245258"
+)
+
+table2
+
+separate_wider_delim(
+  data = table2, 
+  cols = `agi2006|2016|2020`, 
+  delim = "|",
+  names = c("2006", "2016", "2020")
+) |>
+  pivot_longer(
+    cols = -state,
+    names_to = "year", 
+    values_to = "agi"
+  )
+
+```
+
+:::
+
+<br>
+
+`bind_rows()` combines data frames by stacking the rows.
+
+```{r}
+one <- tribble(
+  ~id, ~var,
+  "1", 3.14,
+  "2", 3.15,
+)
+
+two <- tribble(
+  ~id, ~var,
+  "3", 3.16,
+  "4", 3.17,
+)
+
+bind_rows(one, two)
+
+```
+
+`bind_cols()` combines data frames by appending columns. 
+
+```{r}
+three <- tribble(
+  ~id, ~var1,
+  "1", 3.14,
+  "2", 3.15,
+)
+
+four <- tribble(
+  ~id, ~var2,
+  "1", 3.16,
+  "2", 3.17,
+)
+
+bind_cols(three, four)
+
+```
+
+When possible, we recommend using relational joins like `left_join()` to combine by columns because it is easy to miss-align rows with `bind_cols()`. 
+
+```{r}
+left_join(
+  x = three,
+  y = four,
+  by = "id"
+)
+
+```
+
+#### Tidying Example 3
+
+::: {.panel-tabset}
+
+#### Untidy
+
+**Why aren't the data tidy?**
+
+```{r}
+table3_2006 <- tribble(
+  ~state, ~agi,
+  "Alabama", "95067",
+  "Alaska", "17458",
+  "Arizona", "146307"
+)
+
+table3_2006
+
+table3_2016 <- tribble(
+  ~state, ~agi,
+  "Alabama", "114510",
+  "Alaska", "23645",
+  "Arizona", "181691"
+)
+
+table3_2016
+
+table3_2020 <- tribble(
+  ~state, ~`agi`,
+  "Alabama", "138244",
+  "Alaska", "26445",
+  "Arizona", "245258"
+)
+
+table3_2020
+
+```
+
+#### Cleaned
+
+The variable year is contained in the data set names. The `.id` argument in `bind_rows()` allows us to create the year variable. 
+
+```{r}
+table3_2006 <- tribble(
+  ~state, ~agi,
+  "Alabama", 95067,
+  "Alaska", 17458,
+  "Arizona", 146307
+)
+
+table3_2006
+
+table3_2016 <- tribble(
+  ~state, ~agi,
+  "Alabama", 114510,
+  "Alaska", 23645,
+  "Arizona", 181691
+)
+
+table3_2016
+
+table3_2020 <- tribble(
+  ~state, ~`agi`,
+  "Alabama", 138244,
+  "Alaska", 26445,
+  "Arizona", 245258
+)
+
+table3_2020
+
+bind_rows(
+  `2006` = table3_2006,
+  `2016` = table3_2016,
+  `2020` = table3_2020,
+  .id = "year"
+)
+
+```
+
+:::
+
+<br>
+
+Relational joins are fundamental to working with tidy data. Tidy data can only contain one unit of observation (e.g. county or state not county and state). When data exist on multiple levels, they must be stored in separate tables that can later be combined. 
+
+::: {.callout-tip}
+## Mutating Joins
+
+Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame. 
+
+:::
+
+::: {.callout-tip}
+## Filtering Joins
+
+Filtering joins drop observations based on the presence of their key (identifier) in another data frame. 
+
+For example, we may have a list of students in detention and a list of all students. We can use a filtering join to create a list of student not in detention. 
+
+:::
+
+For now, we will focus on mutating joins. Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. 
+
+* `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
+* `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
+* `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
+
+To learn more, read the [Joins chapter of R for Data Science (2e)](https://r4ds.hadley.nz/joins.html). [`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful function for monitoring the behavior of joins.
+
+#### Tidying Example 4
+
+::: {.panel-tabset}
+
+#### Untidy
+
+**Why aren't the data tidy?**
+
+```{r}
+table4a <- tribble(
+  ~state, ~agi,
+  "Alabama", 95067,
+  "Alaska", 17458,
+  "Arizona", 146307
+)
+
+table4a
+
+table4b <- tribble(
+  ~state, ~returns,
+  "Alabama", 1929941,
+  "Alaska", 322369,
+  "Arizona", 2454951
+)
+
+table4b
+
+```
+
+#### Cleaned
+
+These data are tidy! But keeping the data in two separate data frames may not make sense. Let's use `full_join()` to combine the data and `anti_join()` to see if there are mismatches. 
+
+```{r}
+table4a <- tribble(
+  ~state, ~agi,
+  "Alabama", 95067,
+  "Alaska", 17458,
+  "Arizona", 146307
+)
+
+table4a
+
+table4b <- tribble(
+  ~state, ~returns,
+  "Alabama", 1929941,
+  "Alaska", 322369,
+  "Arizona", 2454951
+)
+
+table4b
+
+full_join(table4a, table4b, by = "state")
+
+anti_join(table4a, table4b, by = "state")
+
+anti_join(table4b, table4a, by = "state")
+
+```
+
+:::
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Use `pivot_longer()` to make the SOI percentile data from the earlier exercise longer. After the transformation, there should be one row per percentile per state.
+
+:::
+
+To see more examples, read the [tidy data section in R for Data Science (2e)](https://r4ds.hadley.nz/data-tidy.html)
+
+## Transform {#sec-transform}
+
+### Strings
+
+Check out the [stringr cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf). 
+
+`library(stringr)` contains powerful functions for working with strings in R. In data analysis, we may need to detect matches, subset strings, work with the lengths of strings, modify strings, and join and split strings.  
+
+#### Detecting Matches
+
+`str_detect()` is useful for **detecting matches** in strings, which can be useful with `filter()`. Consider the executive orders data set and suppose we want to return executive orders that contain the word `"Virginia"`. 
+
+```{r}
+eos <- read_csv(here("data", "executive-orders.csv")) |>
+  filter(!is.na(text)) |>
+  group_by(executive_order_number) |>
+  summarize(text = list(text)) |>
+  mutate(text = map_chr(text, ~paste(.x, collapse = " ")))
+
+eos
+
+eos |>
+  filter(str_detect(string = text, pattern = "Virginia"))
+
+```
+
+#### Subsetting Strings
+
+`str_sub()` can **subset strings** based on positions within the string. Consider an example where we want to extract state FIPS codes from county FIPS codes. 
+
+```{r}
+tibble(fips = c("01001", "02013", "04001")) |>
+  mutate(state_fips = str_sub(fips, start = 1, end = 2))
+
+```
+
+#### Managing Lengths
+
+`str_pad()` is useful for **managing lengths**. Consider the common situation when zeros are dropped from the beginning of FIPS codes.
+
+```{r}
+tibble(fips = c(1, 2, 4)) |>
+  mutate(fips = str_pad(fips, side = "left", pad = "0", width = 2))
+
+```
+
+#### Modifying Strings
+
+`str_replace()`, `str_replace_all()`, `str_remove()`, and `str_remove_all()` can delete or **modify** parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits.[^regex]
+
+[^regex]: This example uses regular expressions (regex). Visit [R4DS (2e)](https://r4ds.hadley.nz/regexps) for a review of regex.
+
+```{r}
+tibble(course = c("PPOL 670", "GOVT 8009", "PPOL 6819")) |>
+  mutate(course = str_remove(course, pattern = "[:alpha:]*\\s"))
+
+```
+
+`str_c()` and `str_glue()` are useful for **joining** strings. Consider an example where we want to "fill in the blank" with a variable in a data frame.
+
+```{r}
+tibble(fruit = c("apple", "banana", "cantelope")) |>
+  mutate(sentence = str_glue("my favorite fruit is {fruit}"))
+
+```
+
+```{r}
+tibble(fruit = c("apple", "banana", "cantelope")) |>
+  mutate(
+    another_sentence = 
+      str_c("Who doesn't like a good ", fruit, ".")
+    )
+
+```
+
+This workflow is useful for building up URLs when accessing APIs, scraping information from the Internet, and downloading many files.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Use `mutate()` and `library(stringr)` to create a variable for `year` from the earlier SOI exercise. For instance, `"agi2006"` should be `"2006"`.
+2. Use `as.numeric()` to convert the string from step 1 into a numeric value.
+3. Create a data visualization with `year` on the x-axis. 
+
+:::
+
+### Factors
+
+Check out the [forcats cheat sheet](https://forcats.tidyverse.org/).
+
+Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains [augmented vectors](https://r4ds.had.co.nz/vectors.html#augmented-vectors) like factors. 
+
+Factors are categorical data stored as integers with a levels attribute. Character vectors often work well for categorical data and many of R's functions convert character vectors to factors. This happens with `lm()`.
+
+Factors have many applications:
+
+1. Giving the levels of a categorical variable non-alpha numeric order in a ggplot2 data visualization. 
+2. Running calculations on data with empty groups. 
+3. Representing categorical outcome variables in classification models. 
+
+#### Factor Basics
+
+```{r}
+x1 <- factor(c("a", "a", "b", "c"), levels = c("d", "c", "b", "a"))
+
+x1
+
+attributes(x1)
+
+levels(x1)
+
+```
+
+`x1` has order but it isn't ordinal. Sometimes we'll come across ordinal factor variables, like with the `diamonds` data set. Unintentional ordinal variables can cause unexpected errors. For example, including ordinal data as predictors in regression models will lead to different estimated coefficients than other variable types.
+
+```{r}
+glimpse(diamonds)
+
+```
+
+```{r}
+x2 <- factor(
+  c("a", "a", "b", "c"), 
+  levels = c("d", "c", "b", "a"),
+  ordered = TRUE
+)
+
+x2
+
+attributes(x2)
+
+levels(x2)
+
+```
+
+@fig-factors shows how we can use a factor to give a variable a non-alpha numeric order and preserve empty levels. In this case, February and March have zero tropical depressions, tropical storms, and hurricanes and we want to demonstrate that emptiness. 
+
+```{r}
+#| label: fig-factors
+#| fig-cap: "Hurricane Season Peaks in Late Summer and Early Fall"
+#| fig-subcap: 
+#|   - "Figure without a factor" 
+#|   - "Figure with a factor"
+#| layout-ncol: 2
+
+# use case_match to convert integers into month names
+storms <- storms |>
+  mutate(
+    month = case_match(
+      month,
+      1 ~ "Jan",
+      4 ~ "Apr",
+      5 ~ "May",
+      6 ~ "Jun",
+      7 ~ "Jul",
+      8 ~ "Aug",
+      9 ~ "Sep",
+      10 ~ "Oct",
+      11 ~ "Nov",
+      12 ~ "Dec"
+    )
+  )
+
+# create data viz without factors
+storms |>
+  count(month) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+# add factor variable
+months <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+            "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+
+storms <- storms |>
+  mutate(month = factor(month, levels = months)) 
+
+# create data viz with factors
+storms |>
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+```
+
+Factors also change the behavior of summary functions like `count()`. 
+
+```{r}
+storms |>
+  count(month)
+
+storms |>
+  count(month, .drop = FALSE)
+
+```
+
+`library(forcats)` simplifies many common operations on factor vectors. 
+
+#### Changing Order
+
+`fct_relevel()`, `fct_rev()`, and `fct_reorder()` are useful functions for modifying the order of factor variables. @fig-fct_rev demonstrates using `fct_rev()` to flip the order of a categorical axis in ggplot2. 
+
+```{r}
+#| label: fig-fct_rev
+#| fig-cap: "Hurricane Season Peaks in Late Summer and Early Fall"
+#| fig-subcap: 
+#|   - "Descending" 
+#|   - "Ascending"
+#| layout-ncol: 2
+
+storms |>
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+storms |>
+  mutate(month = fct_rev(month)) |>
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+```
+
+@fig-fct_reorder orders the factor variable based on the number of observations in each category using `fct_reorder()`. `fct_reorder()` can order variables based on more sophisticated summaries than just magnitude. For example, it can order box-and-whisker plots based on the median or even something as arbitrary at the 60th percentile.
+
+```{r}
+#| label: fig-fct_reorder
+#| fig-cap: "Hurricane Season Peaks in Late Summer and Early Fall"
+#| fig-subcap: 
+#|   - "Alpha-numeric" 
+#|   - "Magnitude"
+#| layout-ncol: 2
+
+storms |>
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+storms |>
+  count(month, .drop = FALSE) |>
+  mutate(month = fct_reorder(.f = month, .x = n, .fun = median)) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+```
+
+#### Changing Values
+
+Functions like `fct_recode()` and `fct_lump_min()` are useful for changing factor variables. @fig-fct_lump_min combines categories with fewer than 1,000 observations into an `"Other"` group.
+
+```{r}
+#| label: fig-fct_lump_min
+#| fig-cap: "Hurricane Season Peaks in Late Summer and Early Fall"
+#| fig-subcap: 
+#|   - "All" 
+#|   - "Lumped"
+#| layout-ncol: 2
+
+storms |>
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+storms |>
+  mutate(month = fct_lump_min(month, min = 1000)) |>  
+  count(month, .drop = FALSE) |>
+  ggplot(aes(x = n, y = month)) +
+  geom_col()
+
+```
+
+### Dates and Date-Times
+
+Check out the [lubridate cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf). 
+
+There are many ways to store dates.
+
+* March 14, 1992
+* 03/14/1992
+* 14/03/1992
+* 14th of March '92
+
+One way of storing dates is the **best**. The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date format is an international standard with appealing properties like fixed lengths and self ordering. The format is `YYYY-MM-DD`. 
+
+`library(lubridate)` has useful functions that will take dates of any format and convert them to the ISO 8601 standard. 
+
+```{r}
+library(lubridate)
+
+mdy("March 14, 1992")
+mdy("03/14/1992")
+dmy("14/03/1992")
+dmy("14th of March '92")
+
+```
+
+These functions return variables of class `"Date"`. 
+
+```{r}
+class(mdy("March 14, 1992"))
+
+```
+
+`library(lubridate)` also contains functions for parsing date times into ISO 8601 standard. Times are slightly trickier because of time zones. 
+
+```{r}
+mdy_hms("12/02/2021 1:00:00")
+
+mdy_hms("12/02/2021 1:00:00", tz = "EST")
+
+mdy_hms("12/02/2021 1:00:00", tz = "America/Chicago")
+
+```
+
+By default, `library(lubridate)` will put the date times in Coordinated Universal Time (UTC), which is the successor to Greenwich Mean Time (GMT). I recommend carefully reading the data dictionary if time zones are important for your analysis or if your data cross time zones. This is especially important during time changes (e.g. "spring forward" and "fall back"). 
+
+Fortunately, if you encode your dates or date-times correctly, then `library(lubridate)` will automatically account for time changes, time zones, leap years, leap seconds, and all of the quirks of dates and times. 
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+```{r}
+dates <- tribble(
+  ~date,
+  "12/01/1987",
+  "12/02/1987",
+  "12/03/1987"
+)
+
+```
+
+1. Create the `dates` data from above with `tribble()`.
+2. Use `mutate()` to convert the `date` column to the ISO 8601 standard. 
+
+:::
+
+#### Extracting Components
+
+`library(lubridate)` contains functions for extracting components from dates like the year, month, day, and weekday. Conisder the follow data set about [full moons](https://www.timeanddate.com/moon/phases/usa/washington-dc) in Washington, DC in 2023. 
+
+```{r}
+full_moons <- tribble(
+  ~full_moon,
+  "2023-01-06",
+  "2023-02-05",
+  "2023-03-07",
+  "2023-04-06",
+  "2023-05-05",
+  "2023-06-03",
+  "2023-07-03",
+  "2023-08-01",
+  "2023-08-30",
+  "2023-09-29",
+  "2023-10-28",
+  "2023-11-27",
+  "2023-12-26"
+) |>
+  mutate(full_moon = as_date(full_moon))
+
+```
+
+Suppose we want to know the weekday of each full moon. 
+
+```{r}
+full_moons |>
+  mutate(week_day = wday(full_moon, label = TRUE))
+
+```
+
+#### Math
+
+`library(lubridate)` easily handles math with dates and date-times. Suppose we want to calculate the number of days since American Independence Day:
+
+```{r}
+today() - as_date("1776-07-04")
+
+```
+
+In this case, subtraction creates an object of class `difftime` represented in days. We can use the `difftimes()` function to calculate differences in other units. 
+
+```{r}
+difftime(today(), as_date("1776-07-04"), units = "mins")
+
+```
+
+#### Periods
+
+**Periods** track clock time or a calendar time. We use periods when we set a recurring meetings on a calendar and when we set an alarm to wake up in the morning. 
+
+This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn't true. Sometimes we add 366 days during leap years. For example,
+
+```{r}
+start <- as_date("1999-03-14")
+end <- start + years(1)
+
+end
+
+end - start
+
+```
+
+#### Durations
+
+**Durations** track the passage of physical time in exact seconds. Durations are like sand falling into an hourglass. Duration functions start with `d` like `dyears()` and `dminutes()`. 
+
+```{r}
+start <- as_date("1999-03-14")
+end <- start + dyears(1)
+
+end
+
+```
+
+Now we always add 365 days, but we see that March 13th is one year after March 14th. 
+
+#### Intervals
+
+Until now, we've focused on points in time. **Intervals** have length and have a starting point and an ending point. 
+
+Suppose classes start on August 23rd and proceed every week for a while. Do any of these dates conflict with Georgetown's fall break?
+
+```{r}
+classes <- as_date("2023-08-23") + weeks(0:15)
+
+fall_break <- interval(as_date("2023-11-22"), as_date("2023-11-26"))
+
+classes %within% fall_break
+
+```
+
+We focused on dates, but many of the same principles hold for date-times.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Create a date object for your birth date. 
+2. Calculate the number of days since your birth date.
+3. Create a vector of your birthdays from your birth date for the next 120 years. *Do you use periods or durations?* 
+
+:::
+
+### Missing Data
+
+Missing data are ever present in data analysis. R stores missing values as `NA`, which are contagious and are fortunately difficult to ignore. 
+
+`replace_na()` is the quickest function to replace missing values. It is a shortcut for a specific instance of `if_else()`. 
+
+```{r}
+x <- c(1, NA, 3)
+
+if_else(condition = is.na(x), true = 2, false = x)
+
+replace_na(x, replace = 2)
+
+```
+
+We recommend avoiding arguments like `na.rm` and using `filter()` for structurally missing values and `replace_na()` or imputation for nonresponse.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+Let's focus on different data shared by SOI. Now we'll focus on [individual income and tax data by state](https://www.irs.gov/statistics/soi-tax-stats-historic-table-2). 
+
+This Excel workbook is a beast. For instance, it isn't clear how the hierarchy works. I expected all of the rows nested under "Number of returns" to sum up to the number of returns. Unfortunately, the rows are not disjoint. Also, the merged cells for column headers are very difficult to use with programming languages. 
+
+1. Start with `20in01al.xlsx`.
+2. Create a tidy data frame with rows 10 through 12 ("Number of single returns", "Number of joint returns", and "Number of head of household returns") disaggregated by "size of adjusted gross income". 
+
+:::
