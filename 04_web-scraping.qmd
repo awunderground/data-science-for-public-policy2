@@ -291,7 +291,7 @@ The URLs only differ by `"Virginia"` and `"Vermont"`. If we can create a vector 
 * `walk()` from `library(purrr)` can iterate functions. It's like `map()`, but we use it when we are interested in the side-effect of a function.[^walk]
 * Sometimes data are messy and we want to be polite. Custom functions can help with rate limiting and cleaning data. 
 
-[^walk]: The only difference between `map()` and `walk()` is their outputs. `map()` returns the results of a function in a list. `walk()` returns nothing. `walk()` is useful when we don't care about the output of functions and are only interested in their "side-effects". Common functions to use with `walk()` are `ggsave()` and `write_csv()`. For more information on `walk()`, see [Advanced R](https://adv-r.hadley.nz/functionals.html). 
+[^walk]: The only difference between `map()` and `walk()` is their outputs. `map()` returns the results of a function in a list. `walk()` returns nothing when used without assignment, and we never use `walk()` with assignment. `walk()` is useful when we don't care about the output of functions and are only interested in their "side-effects". Common functions to use with `walk()` are `ggsave()` and `write_csv()`. For more information on `walk()`, see [Advanced R](https://adv-r.hadley.nz/functionals.html). 
 
 ```{r}
 #| eval: false
