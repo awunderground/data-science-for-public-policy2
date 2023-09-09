@@ -40,17 +40,17 @@ theme_set(theme_minimal())
 
 It is often important to ask **what would be the policy impact of..."** on a population or subpopulation.
 
-One common approach is to look at representative agents. For example, we could construct one observation that is representative and pass its values into a calculator. Then, we could extrapolate this experience to other observations.
+One common approach is to look at representative units. For example, we could construct one observation that is representative and pass its values into a calculator. Then, we could extrapolate this experience to other observations.
 
 Another common approach is to look at aggregated data. For example, we could look at county-level insurance coverage in Medicaid expansion and non-expansion states and then extrapolate to other health care expansions.
 
-@orcutt1957 suggested a radically different approach. Instead of using a representative agent or aggregated data to project outcomes, model outcomes for individual units and aggregate the results. Potential units-of-analysis include people, households, and firms. Models include anything from simple accounting rules to complex behavioral and demographic models.
+@orcutt1957 suggested a radically different approach. Instead of using a representative unit or aggregated data to project outcomes, model outcomes for individual units and aggregate the results. Potential units-of-analysis include people, households, and firms. Models include anything from simple accounting rules to complex behavioral and demographic models.
 
 It took decades for this approach to see wide adoption because of data and computational limitations, but it is now commonplace in policy evaluation.
 
 # Calculators
 
-We'll first look at calculators, which are an important tool for representative agent methods and microsimulation.
+We'll first look at calculators, which are an important tool for representative unit methods and microsimulation.
 
 -   The Tax Policy Center's [Marriage Calculator](https://tpc-marriage-calculator.urban.org/) can be used to calculate tax marriage penalties and benefits.
 -   [PolicyEngine](https://policyengine.org/us/household?focus=intro) contains scores of calculators for taxes and benefits. For example, [this calculator evaluates marginal tax rates in California](https://policyengine.org/us/household?focus=householdOutput.mtr&household=33433) accounting for taxes and benefits.
@@ -59,7 +59,7 @@ These two examples show the value of using calculators to explore potentially ha
 
 ### Example 1
 
-Suppose we are interested in creating a new tax credit that is very simple. It's only parameters are number of children and total family income. It has the following characteristics:
+Suppose we are interested in creating a new tax credit that is very simple. Its only parameters are number of children and total family income. It has the following characteristics:
 
 -   Ignore the first \$20,000 of family income
 -   Create a maximum benefit of \$3,000 for one child, \$4,500 for two children, and \$6,000 for three or more children
@@ -252,7 +252,7 @@ proposal1
 
 ## Distributional Analysis
 
-Aggregate analysis and representative agent analysis often mask important heterogeneity. The first major advantage of microsimulation is the ability to apply distributional analysis.
+Aggregate analysis and representative unit analysis often mask important heterogeneity. The first major advantage of microsimulation is the ability to apply distributional analysis.
 
 ::: callout-tip
 ## Distributional Analysis
@@ -419,7 +419,7 @@ Most microsimulation models incorporate time. For example, many models look at a
 3.  Apply accounting rules.
 4.  Aggregate.
 
-Some sophisticated models treat time as continuous. More often, microsimulation treats time as discrete. For example, models represent time every month or every year.
+Some microsimulation models treat time as continuous. More often, microsimulation treats time as discrete. For example, models represent time every month or every year.
 
 Extrapolation adds uncertainty and assumptions to microsimulation. It is important to be clear about what microsimulation is and isn't.
 
@@ -454,10 +454,10 @@ Static models typically only deal with one time period or they deal with multipl
 ::: callout-tip
 ## Dynamic Microsimulation
 
-**Dynamic microsimulation** models subject individual units to transitions between time periods $t - 1$ and $t$. This is sometimes referred to as "aging" the population. Or they subject individual units to behavioral responses. 
+**Dynamic microsimulation** models subject individual units to transitions between time periods $t - 1$ and $t$. This is sometimes referred to as "aging" the population. Dynamic microsimulation models sometimes subject individual units to behavioral responses. 
 :::
 
-Transitions from period $t - 1$ to period $t$ are key to dynamic microsimulation. Transitions can be deterministic or stochastic. An example of a deterministic transition is an individual always joining Medicare at age 65. An example of a stochastic transition is an unmarried individual marrying at age 30 with probability $p_1$ and remaining unmarried with probability $p_2$.
+Transitions from period $t - 1$ to period $t$ are key to dynamic microsimulation. Transitions can be deterministic or stochastic. An example of a deterministic transition is an individual always joining Medicare at age 65. An example of a stochastic transition is an unmarried individual marrying at age 30 with probability $p_1$ and remaining unmarried with probability $p_2$. Stochastic transitions are connected to the idea of Monte Carlo simulation.
 
 Transition models are fundamental to stochastic transitions. Transition models include transition probability models (categorical variables) and processes based on probability distributions (continuous variables).
 
@@ -647,7 +647,7 @@ Techniques include post-stratification and calibration. @kolenikov2016 offers a 
 ::: callout-tip
 ## Alignment
 
-**Alignment** is the process of adjusting model coefficient or predicted values so output aligns with specified targets.
+**Alignment** is the process of adjusting model coefficient or predicted values so output aligns with specified targets. These targets are aggregate outcomes like total income or state-level tax revenue.
 :::
 
 Suppose a well-regarded source of information says mean income is \$50,000 but a microsimulation model estimates mean income of \$45,000. We can adjust the intercept in linear regression models or adjust predicted values so mean income is \$50,000. @li2014 offers a good introduction.
@@ -717,6 +717,8 @@ The Markov assumption only considers memory or history to the extent that it is 
 :::
 
 The microsimulation field has a poor track record of quantifying uncertainty. Most estimates do not contain standard errors or even crude distributions of outcomes.
+
+Microsimulation models have *many* sources of uncertainty. The starting data and data used for model estimation are often samples with sampling error. Transition models fail to capture all sources of variation. The models often  intentionally include Monte Carlo error. 
 
 @mcclelland2020 explored adding confidence intervals to microsimulation models using normal approximations and bootstrapping methods[^2]. They find that normal approximations work well in most cases unless policy changes affect a small number of returns.
 
