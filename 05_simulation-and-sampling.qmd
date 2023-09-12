@@ -42,7 +42,7 @@ theme_set(theme_minimal())
 
 A **population** is the entire set of observations of interest.
 
-For example, a population could be everyone residing in France at a point in time. For example, a population could be every American ages 65 or older.
+For example, a population could be everyone residing in France at a point in time. A different population could be every American ages 65 or older.
 :::
 
 ::: {.callout-tip}
@@ -429,7 +429,7 @@ When $\lambda$ is sufficiently large, the normal distribution is a reasonable ap
 
 A **probability density function** is a non-negative, integrable function for each real value $x$ that shows the relative probability of values of $x$ for an absolutely continuous random variable $X$.
 
-We not PDF with $f_X(x)$.
+We note PDF with $f_X(x)$.
 :::
 
 ::: {.callout-tip}
