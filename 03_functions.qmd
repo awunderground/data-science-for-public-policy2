@@ -368,13 +368,13 @@ alphabet <- list(
 While loops are similar to for loops; however, instead of predetermining the number of iterations in the header, while loops determine a condition in the header and run until that condition is met. For loops can be rewritten as while loops. It can be useful to track the iteration number. Consider a simple example where we double `x` every iteration while `x < 1000`.
 
 ```{r}
-iteration <- 1
+iteration <- 0
 x <- 2
 
 while (x < 1000) {
   
-  x <- x * 2
   iteration <- iteration + 1
+  x <- x * 2
   
 }
 
@@ -464,13 +464,13 @@ Division by zero, which returns `NaN`, can be a real pain when comparing confide
 #'
 safe_divide <- function(numerator, denominator) {
   
-  if (den == 0) {
+  if (denominator == 0) {
     
     return(0)
     
   } else {
     
-    return(num / denom)
+    return(numerator / denominator)
     
   }
 }
