@@ -1,6 +1,6 @@
 ---
 title: "Mixture Distributions and Mixture Modeling"
-date: today
+abstract: "This chapter introduces mixture distributions and mixture modeling. This tools use simple probability distributions to model and understand complex empirical distributions."
 format: 
   html:
     toc: true

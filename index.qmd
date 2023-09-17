@@ -1,9 +1,7 @@
-# Preface {.unnumbered}
+# Welcome {.unnumbered}
 
-This is a Quarto book.
+This book is the notes for Advanced Data Science for Public Policy in the McCourt School of Public Policy at Georgetown University. 
 
-To learn more about Quarto books visit <https://quarto.org/docs/books>.
+## Acknowledgements (More to come!)
 
-```{r}
-1 + 1
-```
+This book has benefited from many great teachers, collaborators, and students. First, I want to thank Gabe Morrison for excellent reviews and proofreading. Second, I want to thank Alex Engler and Alena Stern for collaborating on Intro to Data Science for Public Policy during six semesters and eight classes. 

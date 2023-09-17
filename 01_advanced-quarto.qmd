@@ -1,6 +1,5 @@
 ---
 title: "Advanced Quarto"
-date: today
 abstract: "This set of notes reviews Quarto basics and introduces advanced Quarto concepts including mathematical notation, cross references, and citations. The [Quarto website](https://quarto.org/docs/guide/) includes more gems and is an example of high-quality technical documentation."
 format: 
   html:
@@ -227,13 +226,11 @@ In this case, `eval` makes the code not run. Other chunk-specific settings can b
 | fig-height: 8  | Changes figure width in inches[^dimensions] |
 | fig-width: 8   | Changes figure height in inches[^dimensions] |
 
-[^dimensions]: The default dimensions for figures change based on the output format. Visit [here](https://quarto.org/docs/computations/execution-options.html#figure-options) to learn more. 
-
-You can see the quarto defaults for figure dimensions by format here.
+[^dimensions]: The default dimensions for figures change based on the output format. Visit [here](https://quarto.org/docs/computations/execution-options.html#figure-options) to learn more.
 
 Default settings for the entire document can be changed in the YAML header with the `execute` option:
 
-```         
+```     
 execute:
   warning: false
 ```
@@ -379,7 +376,7 @@ Labels are written in brackets or as arguments in code chunks, and begin with th
 Linking sections helps readers navigate between sections. Use brackets to label sections after headers and always begin labels with `sec-`. Then you can reference that section with `@sec-`.
 
 ``` markdown
-## Review {sec-review}
+## Review {#sec-review}
 
 See @sec-review if you are totally lost.
 ```
