@@ -1,6 +1,5 @@
 ---
 title: "Advanced Quarto"
-date: today
 abstract: "This set of notes reviews Quarto basics and introduces advanced Quarto concepts including mathematical notation, cross references, and citations. The [Quarto website](https://quarto.org/docs/guide/) includes more gems and is an example of high-quality technical documentation."
 format: 
   html:

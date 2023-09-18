@@ -1,6 +1,5 @@
 ---
 title: "Advanced R Programming"
-date: today
 abstract: "We've mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and R packages."
 format: 
   html:
