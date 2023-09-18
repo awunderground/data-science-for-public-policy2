@@ -1,9 +1,7 @@
 ---
 title: "Microsimulation"
-subtitle: "Data Science for Public Policy" 
 author: "Aaron R. Williams - Georgetown University"
 abstract: "This sections covers microsimulation, which is an important technique for policy evaluation."
-date: today
 format: 
   html:
     toc: true
@@ -34,13 +32,11 @@ theme_set(theme_minimal())
 
 ```
 
-# Review {#sec-review}
-
 # Motivation
 
-It is often important to ask **what would be the policy impact of..."** on a population or subpopulation.
+It is often important to ask **"what would be the policy impact of..."** on a population or subpopulation.
 
-One common approach is to look at representative units. For example, we could construct one observation that is representative and pass its values into a calculator. Then, we could extrapolate this experience to other observations.
+One common approach is to look at representative units. For example, we could construct one observation that is representative (e.g. median family structure, median income, etc.) and pass its values into a calculator. Then, we could extrapolate this experience to other observations.
 
 Another common approach is to look at aggregated data. For example, we could look at county-level insurance coverage in Medicaid expansion and non-expansion states and then extrapolate to other health care expansions.
 
@@ -79,13 +75,15 @@ new_tax_credit <- function(num_children, family_income) {
   
   modified_income <- pmax(family_income - 20000, 0)
   
-  dplyr::case_when(
+  benefit <- dplyr::case_when(
     num_children >= 3 ~ pmax(0, 6000 - 0.1 * modified_income),
     num_children == 2 ~ pmax(0, 4500 - 0.1 * modified_income),
     num_children == 1 ~ pmax(0, 3000 - 0.1 * modified_income),
     TRUE ~ 0
   )
 
+  return(benefit)
+  
 }
 
 ```
@@ -139,9 +137,70 @@ exercise_number <- exercise_number + 1
 
 ```
 
-1.  Create `new_tax_credit()`.
-2.  Use `library(ggplot2)`, `expand_grid()`, and `map2_dbl()` to recreate the line for 3 children in @fig-benefit-curve.
+1.  Create a new, well-documented function called `alternative_tax_credit()` based on `new_tax_credit()` that models the following proposed tax credit:
+    * Ignore the first $20,000 if family income.
+    * Create a maximum benefits of \$4,000 for one child, \$4,500 for two children, and \$5,000 for three children.
+    * Reduces the benefit by $.05 for every dollar of income in excess of $20,000.
+2.  Use `library(ggplot2)`, `expand_grid()`, and `map2_dbl()` to create a chart like the one in the notes for this alternative tax credit.
 :::
+
+```{r}
+#| echo: false
+#| eval: false
+
+alternative_tax_credit <- function(num_children, family_income){
+  modified_income <- pmax(family_income - 20000, 0)
+  
+  dplyr::case_when(
+    num_children >= 3 ~ pmax(0, 5000 - 0.05 * modified_income),
+    num_children == 2 ~ pmax(0, 4500 - 0.05 * modified_income),
+    num_children == 1 ~ pmax(0, 4000 - 0.05 * modified_income),
+    TRUE ~ 0
+  )
+}
+
+tax_sim_1 <- expand_grid(
+  family_income = seq(0, 100000, 100),
+  num_children = 1:3
+) |>
+  mutate(
+    benefit = map2_dbl(
+      .x = num_children, 
+      .y = family_income, 
+      .f = new_tax_credit
+    )
+  ) |>
+  mutate(simulation = "new")
+
+tax_sim_2 <- expand_grid(
+  family_income = seq(0, 100000, 100),
+  num_children = 1:3
+) |>
+  mutate(
+    benefit = map2_dbl(
+      .x = num_children, 
+      .y = family_income, 
+      .f = alternative_tax_credit
+    )
+  ) |>
+  mutate(
+    simulation = "alternative"
+  )
+
+bind_rows(tax_sim_1, tax_sim_2) |>
+  ggplot(aes(family_income, benefit, color = factor(num_children), linetype = simulation)) +
+  geom_line() +
+  facet_grid(factor(num_children)~ .) +
+  scale_x_continuous(labels = scales::label_dollar()) +
+  scale_y_continuous(labels = scales::label_dollar()) +
+  labs(
+    x = "Family income",
+    y = "Benefit",
+    color = "Number of children"
+  )
+
+```
+
 
 # Microsimulation
 
@@ -164,7 +223,7 @@ Microsimulation is widely used in government, not-for-profits, and academia:
 
 Microsimulation is also widely cited in popular publications around important debates:
 
-1.  The Urban Institute's HIPSM was cited in the majority opinion of the Supreme Court case King v. Burwell, which upheld the Patient Protection and Affordable Care Act.
+1.  The Urban Institute's HIPSM was cited in the majority opinion of the Supreme Court case *King v. Burwell*, which upheld the Patient Protection and Affordable Care Act.
 2.  TPC's tax model is regularly cited in the New York Times, Wall Street Journal, and Washington Post when TPC evaluates candidates' tax plans.
 
 Microsimulation models range from simple calculators applied to representative microdata to very complex dynamic models.
@@ -187,7 +246,7 @@ Let's start with a very simple algorithm for microsimulation modeling:
 
 The simplest microsimulation models essentially apply tax models similar to TurboTax to a representative set of microdata. 
 
-We can summarize the differences using summary statistics that demonstrate the distribution of outcomes. For example, it is common to look at deciles or key percentiles to understand the heterogeneity of changes.
+We can summarize output from microsimulation models with summary statistics that demonstrate the distribution of outcomes. For example, it is common to look at deciles or key percentiles to understand the heterogeneity of changes.
 
 We can construct a baseline simulation by applying current law for step 2. Next, we can construct an alternative or counterfactual simulation by changing step 2 to a proposed policy. Finally, we can difference current law and the counterfactual to estimate the impact of a policy.
 
@@ -195,7 +254,9 @@ We can construct a baseline simulation by applying current law for step 2. Next,
 
 Let's consider a simple example where we apply the benefit calculator from earlier to families from the 2022 Annual Social and Economic Supplement to the Current Population Survey.
 
-To keep things simple, we only consider families of the respondent to the CPS. Furthermore, we will ignore survey weights.
+To keep things simple, we only consider families related to the head of household (and ignore other families in the household). Furthermore, we will ignore observations weights[^weights].
+
+[^weights]: Most data for microsimulation models are collected through complex surveys. Accordingly, most microsimulation models need to account for weights to calculate estimates that represent the entire population of interest. 
 
 ```{r}
 #| code-fold: true
@@ -246,7 +307,7 @@ proposal1 <- asec |>
     )
   )
 
-proposal1
+arrange(proposal1, desc(benefit))
 
 ```
 
@@ -292,7 +353,7 @@ distributional_table |>
     labels = scales::label_dollar() 
   ) +
   labs(
-    title = "Distribution of Average Benefits Under the Williams Benefit Proposal",
+    title = "Distribution of Average Benefits Under the Benefit Proposal",
     x = "Familiy Income Decile",
     y = "Average Benefit"
   )
@@ -311,7 +372,7 @@ exercise_number <- exercise_number + 1
 
 1.  Apply the calculator from the earlier exercise to the CPS data.
 2.  Aggregate outcomes for the 5th, 15th, and 25th percentiles.
-3.  Aggregate outcomes for the bottom 10 vintiles.
+3.  Aggregate outcomes for the bottom 10 vintiles (a vintile is one twentieth of the population).
 :::
 
 ## Counterfactual Analysis
@@ -446,7 +507,7 @@ Most microsimulation models are projections, not forecasts.
 ::: {.callout-tip}
 ## Static Microsimulation
 
-**Static microsimulation** models do not subject units to individual transitions between time periods $t - 1$ and $t$ or behavioral responses.
+**Static microsimulation** models do not subject units to individual transitions between time periods $t - 1$ and $t$ or to behavioral responses.
 :::
 
 Static models typically only deal with one time period or they deal with multiple time periods but reweight the data to match expected totals and characteristics over time. Basically, individual decisions affect the distribution of outcomes but have little impact on overall outcomes.
@@ -461,7 +522,7 @@ Transitions from period $t - 1$ to period $t$ are key to dynamic microsimulation
 
 Transition models are fundamental to stochastic transitions. Transition models include transition probability models (categorical variables) and processes based on probability distributions (continuous variables).
 
-Here a few examples:
+Here are are few examples of transitions that could be modeled:
 
 -   If an individual will acquire more education.
 -   If an individual will work.
@@ -472,7 +533,7 @@ Here a few examples:
 
 Transition models are often taken from existing literature or estimated on panel data. The data used to estimate these models must have at least two time periods.
 
-It is common to extrapolate backwards, which is also known as backcasting, to evaluate microsimulation models against history. Backcasting can also add important longitudinal information to records like detailed earnings histories for calculating Social Security benefits.
+It is common to extrapolate backwards, which is also known as backcasting, to evaluate microsimulation models against history. Backcasting can add important longitudinal information to records like detailed earnings histories for calculating Social Security benefits. Backcasting also offers opportunities to benchmark model projections against observed history. 
 
 ### Example 5
 
@@ -586,12 +647,14 @@ Even though incomes grew and the number of children declined, it turns out that 
 
 A **behavioral response** is an assumed reaction to changing circumstances in a microsimulation model.
 
-For example, increasing Social Security benefits may crowd out retirement savings [@chetty2014].
+For example, increasing Social Security benefits may crowd out retirement savings [@chetty2014]. In other words, the existence of Social Security may induce a person to save less for retirement. 
 :::
 
 Until now, we've only considered accounting rules within each time period. Accounting rules are appealing because they don't require major assumptions, but they are typically insufficient. It is often necessary to consider how units will respond to a changing environment.
 
 Behavioral responses are often elasticities estimated with econometric analysis. Behavioral responses are also a huge source of assumptions and uncertainty for microsimulation.
+
+Consider a microsimulation model that models retirement savings. When modeling a proposal to expand Social Security benefits, an analyst may use parameters estimated in [@chetty2014] to model reductions in savings in accounts like 401(k) accounts. These are behavioral responses. These estimates are uncertain, so the analyst could add sensitivity analysis to model low, medium, and high rates of crowding out. 
 
 ## Building a Representative Population
 
@@ -647,7 +710,7 @@ Techniques include post-stratification and calibration. @kolenikov2016 offers a 
 ::: callout-tip
 ## Alignment
 
-**Alignment** is the process of adjusting model coefficient or predicted values so output aligns with specified targets. These targets are aggregate outcomes like total income or state-level tax revenue.
+**Alignment** is the process of adjusting model coefficients or predicted values so aggregated outputs align with specified aggregate targets. These targets are aggregate outcomes like total income or state-level tax revenue.
 :::
 
 Suppose a well-regarded source of information says mean income is \$50,000 but a microsimulation model estimates mean income of \$45,000. We can adjust the intercept in linear regression models or adjust predicted values so mean income is \$50,000. @li2014 offers a good introduction.
@@ -718,7 +781,7 @@ The Markov assumption only considers memory or history to the extent that it is 
 
 The microsimulation field has a poor track record of quantifying uncertainty. Most estimates do not contain standard errors or even crude distributions of outcomes.
 
-Microsimulation models have *many* sources of uncertainty. The starting data and data used for model estimation are often samples with sampling error. Transition models fail to capture all sources of variation. The models often  intentionally include Monte Carlo error. 
+Microsimulation models have *many* sources of uncertainty. The starting data and data used for model estimation are often samples with sampling error. Transition models fail to capture all sources of variation. The models often intentionally include Monte Carlo error. 
 
 @mcclelland2020 explored adding confidence intervals to microsimulation models using normal approximations and bootstrapping methods[^2]. They find that normal approximations work well in most cases unless policy changes affect a small number of returns.
 
