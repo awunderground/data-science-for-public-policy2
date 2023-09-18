@@ -12,6 +12,7 @@ book:
     - 02_advanced-data-cleaning.qmd
     - 03_functions.qmd
     - 04_web-scraping.qmd
+    - 05_simulation-and-sampling.qmd
     - references.qmd
 
 bibliography: references.bib
