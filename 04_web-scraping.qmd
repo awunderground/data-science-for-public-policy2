@@ -7,6 +7,8 @@ format:
     toc: true
     embed-resources: true
     code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ```{r}
@@ -338,10 +340,26 @@ exercise_number <- exercise_number + 1
 ```{r}
 #| eval: false
 #| echo: false
+download_soi <- function(url, destfile) {
 
-"https://www.irs.gov/pub/irs-soi/20in01al.xlsx"
-"https://www.irs.gov/pub/irs-soi/20in02ak.xlsx"
-"https://www.irs.gov/pub/irs-soi/20in03az.xlsx"
+  download.file(url = url, destfile = destfile)
+
+  Sys.sleep(0.5)
+
+}
+
+states <- c("01al", "02ak", "03az")
+
+urls <- paste0(
+  "https://www.irs.gov/pub/irs-soi/20in",
+  states,
+  ".xlsx"
+)
+  
+output_files <- paste0("data/", states, ".xlsx")
+
+walk2(.x = urls, .y = output_files, .f = download_soi)
+
 
 ```
 
@@ -531,6 +549,29 @@ exercise_number <- exercise_number + 1
 2. Install and load `library(polite)`.
 3. Scrape the Presidential debates table from the Wikipedia article for the 2008 presidential election.
 :::
+
+```{r}
+#| echo: false
+#| eval: false
+
+session <- bow(
+  url = "https://en.wikipedia.org/wiki/2008_United_States_presidential_election",
+  user_agent = "Georgetown students learning scraping -- arw109@georgetown.edu"
+)
+
+session
+
+election_page <- session |>
+  scrape() 
+  
+tables <- election_page |>
+  html_table()
+
+tables[[20]]
+
+```
+
+
 
 ### Other HTML Content
 
