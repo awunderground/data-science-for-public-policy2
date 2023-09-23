@@ -1,6 +1,5 @@
 ---
 title: "Microsimulation"
-author: "Aaron R. Williams - Georgetown University"
 abstract: "This sections covers microsimulation, which is an important technique for policy evaluation."
 format: 
   html:
@@ -32,7 +31,7 @@ theme_set(theme_minimal())
 
 ```
 
-# Motivation
+## Motivation
 
 It is often important to ask **"what would be the policy impact of..."** on a population or subpopulation.
 
@@ -44,7 +43,7 @@ Another common approach is to look at aggregated data. For example, we could loo
 
 It took decades for this approach to see wide adoption because of data and computational limitations, but it is now commonplace in policy evaluation.
 
-# Calculators
+## Calculators
 
 We'll first look at calculators, which are an important tool for representative unit methods and microsimulation.
 
@@ -201,8 +200,7 @@ bind_rows(tax_sim_1, tax_sim_2) |>
 
 ```
 
-
-# Microsimulation
+## Microsimulation
 
 ::: callout-tip
 ## Microsimulation
@@ -228,7 +226,7 @@ Microsimulation is also widely cited in popular publications around important de
 
 Microsimulation models range from simple calculators applied to representative microdata to very complex dynamic models.
 
-## Basic Microsimulation
+### Basic Microsimulation
 
 ::: callout-tip
 ## Accounting Rules
@@ -254,7 +252,7 @@ We can construct a baseline simulation by applying current law for step 2. Next,
 
 Let's consider a simple example where we apply the benefit calculator from earlier to families from the 2022 Annual Social and Economic Supplement to the Current Population Survey.
 
-To keep things simple, we only consider families related to the head of household (and ignore other families in the household). Furthermore, we will ignore observations weights[^weights].
+To keep things simple, we only consider families related to the head of household (and ignore other families in the household). Furthermore, we will ignore observations weights.[^weights]
 
 [^weights]: Most data for microsimulation models are collected through complex surveys. Accordingly, most microsimulation models need to account for weights to calculate estimates that represent the entire population of interest. 
 
@@ -311,7 +309,7 @@ arrange(proposal1, desc(benefit))
 
 ```
 
-## Distributional Analysis
+### Distributional Analysis
 
 Aggregate analysis and representative unit analysis often mask important heterogeneity. The first major advantage of microsimulation is the ability to apply distributional analysis.
 
@@ -375,7 +373,7 @@ exercise_number <- exercise_number + 1
 3.  Aggregate outcomes for the bottom 10 vintiles (a vintile is one twentieth of the population).
 :::
 
-## Counterfactual Analysis
+### Counterfactual Analysis
 
 ::: callout-tip
 ## Counterfactual
@@ -465,7 +463,7 @@ exercise_number <- exercise_number + 1
 2.  Create a bar chart representing the change in benefits.
 :::
 
-## Extrapolation
+### Extrapolation
 
 ::: callout-tip
 ## Extrapolation
@@ -640,7 +638,7 @@ asec_extrapolated |>
 
 Even though incomes grew and the number of children declined, it turns out that enough families went from zero children to one child under the transition probability model for children that average benefits remained about the same.
 
-## Beyond Accounting Rules
+### Beyond Accounting Rules
 
 ::: callout-tip
 ## Behavioral Responses
@@ -659,7 +657,6 @@ Consider a microsimulation model that models retirement savings. When modeling a
 ## Building a Representative Population
 
 Building a starting sample and constructing data for estimating transition models is difficult. We briefly outline a few techniques of interest.
-
 
 ### Synthetic Starting Data
 
