@@ -41,7 +41,7 @@ R for Data Science (2e) [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diag
 exercise_number <- exercise_number + 1
 ```
 
-1. Use `mutate()` and `case_when()` to a new variable to `cars` where the values are `"slow"` when `speed < 10`, `"moderate"` when `speed < 20`, and `"fast"` otherwise.
+1. Use `mutate()` and `case_when()` to add a new variable called `speed_cat` to `cars` where the values are `"slow"` when `speed < 10`, `"moderate"` when `speed < 20`, and `"fast"` otherwise.
 
 :::
 
@@ -147,7 +147,7 @@ readxl_example("clippy.xlsx") |>
 exercise_number <- exercise_number + 1
 ```
 
-The [IRS Statistics of Income Division](https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income) is one of the US's 13 principal statistical agencies. They publish rich information derived from tax returns. We will focus on Table 2, [Adjusted Gross Income (AGI) percentiles by state](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
+The [IRS Statistics of Income Division](https://www.irs.gov/statistics/soi-tax-stats-statistics-of-income) is one of the US's 13 principal statistical agencies. They publish rich information derived from tax returns. We will focus on Table 1, [Adjusted Gross Income (AGI) percentiles by state](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
 
 1.  Read in the 52 cells in the first column that contain "United States", all 50 states, and the "District of Columbia".
 2.  Identify the cells containing data for "Adjusted gross income floor on percentiles". Read in the data with `read_excel()`. Either programmatically read in the column names (i.e. "Top 1 Percent", ...) or assign them with `col_names()`.
@@ -896,7 +896,7 @@ dates <- tribble(
 ```
 
 1. Create the `dates` data from above with `tribble()`.
-2. Use `mutate()` to convert the `date` column to the ISO 8601 standard. 
+2. Use `mutate()` to convert the `date` column to the ISO 8601 standard (YYYY-MM-DD). 
 
 :::
 

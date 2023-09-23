@@ -33,6 +33,8 @@ exercise_number <- 1
 
 ## Review 1 {#sec-review6a}
 
+We'll start with a review of multivariate normal distributions. In particular, this exercise demonstrates the impact of the variance-covariance matrix on the shape of multivariate normal distributions.
+
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
@@ -43,7 +45,7 @@ exercise_number <- exercise_number + 1
 ```
 
 1.  Load `library(mvtnorm)`.
-2.  Copy and paste the following code.
+2.  Copy and paste the following code. This code will not obviously not run as is. We will add tibbles to `independent`, `sigma1` and `sigma2` in the steps below.
 
 ```{r}
 #| eval: false
@@ -87,7 +89,7 @@ sigma2 <- matrix(
 :::
 
 ```{r}
-#| echo: false
+#| fold: 
 #| eval: false
 
 library(mvtnorm)
@@ -131,23 +133,25 @@ bind_rows(
 
 We learned about common univariate and multivariate distributions. For each of the distributions, there are well-defined and straightforward ways to sample values from the distribution. We can also manipulate these distributions to calculate probabilities.
 
-The real world is complicated and we will quickly come across data where we struggle to find a common probability distributions.
+The real world is complicated, and we will quickly come across data where we struggle to find a common probability distributions.
 
 Figure @fig-geyser-eruptions shows a relative frequency histogram for the duration of eruptions at Old Faithful in Yellowstone National Park.
 
 ```{r}
 #| label: fig-geyser-eruptions
 #| fig-cap: Distribution of waiting times between eruptions at the Old Faithful geyser in Yellowstone National Park. 
+
+# faithful is a data set built into R
 faithful |>
   ggplot(aes(eruptions, y = after_stat(density))) +
   geom_histogram()
 
 ```
 
-This distribution looks very complicated. But what if we break this distribution into pieces. In this case, what if we break it into two normal distributions?
+This distribution looks very complicated. But what if we break this distribution into pieces? In this case, what if we think of the distribution as a combination of two normal distributions?
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| message: false
 
 # show geyser as two normal distribution
@@ -166,7 +170,7 @@ bind_cols(
   ggplot(aes(eruptions, y = after_stat(density), 
              fill = factor(cluster))) +
   geom_histogram() +
-  guides(fill = FALSE)
+  guides(fill = "none")
 
 ```
 
@@ -284,7 +288,7 @@ A **mixing coefficient** is the probability associated with a component with a c
 We'll use $\pi_k$ for population mixing coefficients and $p_k$ for sample mixing coefficients. Mixing coefficients are also called mixing weights and mixing probabilities.
 :::
 
-Mixture distributions are often overparameterized. For a univariate mixture of normals with $k$ components, we have $k$ means, $k$ standard deviations, and $k$ mixing coefficients.
+Mixture distributions are often overparameterized, which means they have an exceesive number of parameters. For a univariate mixture of normals with $k$ components, we have $k$ means, $k$ standard deviations, and $k$ mixing coefficients.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -306,7 +310,7 @@ exercise_number <- exercise_number + 1
 
 ### Example 2
 
-Suppose we used statistical inference to infer some parameters for the geysers example above.
+Suppose we used statistical inference to infer some parameters for the geysers example above. We will describe how to estimate these paramaters later.
 
 -   $p_1 =$ `r gmm_geyser$parameters$pro[1]` and $p_2 =$ `r gmm_geyser$parameters$pro[2]`
 -   $\bar{x_1} =$ `r gmm_geyser$parameters$mean[1]` and $\bar{x_2} =$ `r gmm_geyser$parameters$mean[2]`
@@ -382,7 +386,7 @@ K-Means Clustering is a heuristic-based approach to finding latent groups in dat
 Consider the following data set.
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 6.5
 
@@ -402,7 +406,7 @@ ggplot() +
 **Step 1:** Randomly place K centroids in your n-dimensional vector space
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 6.5
 
@@ -425,7 +429,7 @@ ggplot() +
 **Step 2:** Calculate the nearest centroid for each point using a distance measure
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 6.5
 
@@ -450,7 +454,7 @@ ggplot() +
 **Step 3:** Assign each point to the nearest centroid
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 6.5
 
@@ -471,7 +475,7 @@ ggplot() +
 **Step 4:** Recalculate the position of the centroids based on the means of the assigned points
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-width: 6.5
 #| fig-height: 2.5
 #| message: false
@@ -496,7 +500,7 @@ ggplot() +
 **Step 5:** Repeat steps 2-4 until no points change cluster assignments
 
 ```{r}
-#| echo: false
+#| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 6.5
 data$cluster <- c("a", "a", "a", "a", "b", "b", "b")
@@ -533,7 +537,7 @@ The process of making inferences about latent groups is related to K-Means Clust
 ::: callout-tip
 ## Mixture Modeling
 
-**Mixture modeling** is the process of making inferences about sub-populations made only with pooled data without labels for the sub populations.
+**Mixture modeling** is the process of making inferences about sub populations using data that contain sub population but no labels for the sub populations.
 :::
 
 ## Gaussian Mixture Modeling (GMM)
@@ -581,10 +585,11 @@ gmm2_geyser <- Mclust(faithful, G = 3)
 
 ```
 
-Let's plot the multivariate normal distributions. Large points in @fig-gmm-uncertainty have uncertain assignments between two groups.
+Let's plot the multivariate normal distributions. @fig-gmm-uncertainty shows the centroids (stars) and shapes (ellipses) of the distributions in black. The colors represent hard assignments to groups and the size of the points represent the uncertainty of the assignments with larger points having more uncertainty. 
 
 ```{r}
 #| label: fig-gmm-uncertainty
+#| fig-cap: "Uncertainty plot from a GMM"
 
 # plot fitted model
 plot(gmm2_geyser, what = "uncertainty")
@@ -610,7 +615,7 @@ The previous example uses `library(mclust)`[^06_advanced-unsupervised-ml-1] and 
 
 [^06_advanced-unsupervised-ml-1]: `library(tidyclust)` currently doesn't support mixture modeling. I hope this will change in the future.
 
-`Mclust()` is the main function for fitting Gaussian Mixture Models. The function contains several different types of models for the variances of the multivariate normal distributions. The defaults are sensible. `G` is the number of groups. If `G` isn't specified, then `Mclust()` will try `1:9` and pick the `G` with the lowest BIC.
+`Mclust()` is the main function for fitting Gaussian Mixture Models. The function contains several different types of models for the variances of the multivariate normal distributions. The defaults are sensible. `G` is the number of groups. If `G` isn't specified, then `Mclust()` will try `1:9` and pick the `G` with the lowest BIC (defined below).
 
 `plot()` with `what = "uncertainty"` creates a very useful data visualization for seeing the multivariate normal distributions and classifications for low-dimensional GMM.
 
@@ -618,7 +623,11 @@ The previous example uses `library(mclust)`[^06_advanced-unsupervised-ml-1] and 
 
 ### Estimation
 
-Suppose we have $n$ observations, $k$ groups, and $p$ variables. A single GMM will have a $n x k$ matrix of responsibilities, $k$ vectors of means of length $p$, and $k$ $p x p$ variance-covariance matrices.
+Suppose we have $n$ observations, $k$ groups, and $p$ variables. A single GMM will have 
+
+* an $n$ by $k$ matrix of responsibilities
+* $k$ vectors of means of length $p$
+* $k$ $p$ by $p$ variance-covariance matrices
 
 We want the maximum likelihood estimates for all of the parameters in the model. For technical reasons, it is very difficult to get these estimates using popular methods like stochastic gradient descent.
 
@@ -632,6 +641,8 @@ Instead, we will use expectations maximization (EM) to find the parameters. We a
 :::
 
 This algorithm is computationally efficient, but it is possible for it to find a local maximum log-likelihood without finding the global maximum log-likelihood.
+
+For a more mathematical description of this process, see Elements of Statistical Learning Section 6.8 [@hastie2009]. A highly descriptive comparison to kmeans (with Python code) can be seen [here](https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html).
 
 ### Example 4
 
@@ -738,7 +749,7 @@ glance(uni_mc)
 
 ```
 
-When we compare `.class` to `expansion`, we see that the model does an excellent job of labeling counties expansion status without observing counties expansion status. 
+When we compare `.class` to `expansion`, we see that the model does an good job of labeling counties' expansion status without observing counties' expansion status. 
 
 ```{r}
 bind_cols(
@@ -755,7 +766,7 @@ bind_cols(
 
 We often don't know the exact number of latent groups in the data. We need a way to compare models with varying numbers of groups. Simply picking the model with the maximum likelihood will lead to models with too many groups.
 
-The Bayesian information criterion (BIC) is an alternative to likelihoods that penalizes models for having many parameters. Let $L$ be the likelihood, $m4$ the number of free parameters, and $n$ the number of observations.
+The Bayesian information criterion (BIC) is an alternative to likelihoods that penalizes models for having many parameters. Let $L$ be the likelihood, $m$ the number of free parameters, and $n$ the number of observations.
 
 $$
 BIC = -2log(L) + mlog(n)
@@ -971,7 +982,7 @@ mnist_clust <- flexmix(
 
 ```
 
-The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the "soft assignments" to "hard assignments". Note that most applications won't have labels.
+The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the "soft assignments" to "hard assignments". Note that most applications won't have labels. The rows of the table are the digits. The columns of the table are the clusters. We can see, for example, that most of the 0's are clustered in cluster 5.
 
 ```{r}
 labels <- mnist |>
