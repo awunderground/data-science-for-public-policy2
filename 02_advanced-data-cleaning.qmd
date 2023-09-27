@@ -1,6 +1,5 @@
 ---
 title: "Advanced Data Cleaning"
-date: today
 abstract: "This section covers advanced techniques for cleaning and manipulating data."
 format: 
   html:

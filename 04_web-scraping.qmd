@@ -1,6 +1,5 @@
 ---
 title: "Web Scraping"
-date: today
 abstract: "This section contains guidelines and processes for gathering information from the web using web scraping. We will focus on two approaches. First, we will learn to download many files. Second, we will learn to gather information from the bodies of websites."
 format: 
   html:

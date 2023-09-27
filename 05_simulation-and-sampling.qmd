@@ -1,6 +1,5 @@
 ---
 title: "Simulation and Sampling"
-date: today
 format: 
   html:
     toc: true
