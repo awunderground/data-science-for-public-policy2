@@ -14,6 +14,7 @@ book:
     - 04_web-scraping.qmd
     - 05_simulation-and-sampling.qmd
     - 06_advanced-unsupervised-ml.qmd
+    - 07_microsimulation.qmd    
     - references.qmd
 
 bibliography: references.bib
