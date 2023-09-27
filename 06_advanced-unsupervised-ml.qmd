@@ -51,8 +51,8 @@ exercise_number <- exercise_number + 1
 #| eval: false
 bind_rows(
   independent = ,
-  sigma1 = ,
-  sigma2 = ,
+  var_covar1 = ,
+  var_covar2 = ,
   .id = "source"
 )
 
@@ -288,7 +288,7 @@ A **mixing coefficient** is the probability associated with a component with a c
 We'll use $\pi_k$ for population mixing coefficients and $p_k$ for sample mixing coefficients. Mixing coefficients are also called mixing weights and mixing probabilities.
 :::
 
-Mixture distributions are often overparameterized, which means they have an exceesive number of parameters. For a univariate mixture of normals with $k$ components, we have $k$ means, $k$ standard deviations, and $k$ mixing coefficients.
+Mixture distributions are often overparameterized, which means they have an excessive number of parameters. For a univariate mixture of normals with $k$ components, we have $k$ means, $k$ standard deviations, and $k$ mixing coefficients.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
