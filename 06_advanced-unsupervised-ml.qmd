@@ -89,7 +89,7 @@ sigma2 <- matrix(
 :::
 
 ```{r}
-#| fold: 
+#| fold: true
 #| eval: false
 
 library(mvtnorm)
