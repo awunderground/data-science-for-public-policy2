@@ -297,11 +297,12 @@ exercise_number <- exercise_number + 1
 
 dbinom(x = 0, size = 10, prob = 0.5) + dbinom(x = 1, size = 10, prob = 0.5) + dbinom(x = 2, size = 10, prob = 0.5)
 
-pbinom(2, size = 10, prob = 0.5)
+pbinom(q = 2, size = 10, prob = 0.5)
 
-qbinom(pbinom(2, size = 10, prob = 0.5), size = 10, prob = 0.5)
+qbinom(pbinom(q = 2, size = 10, prob = 0.5), size = 10, prob = 0.5)
 
-mean(rbinom(n = 10000, size = 10, prob = 0.5) <= 2)
+x <- rbinom(n = 10000, size = 10, prob = 0.5)
+mean(x <= 2)
 
 ```
 
