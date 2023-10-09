@@ -48,7 +48,7 @@ exercise_number <- 1
 
 **Parametric statistics** requires the form of the population distribution to be completely specified except for a finite number of parameters.
 
-For example, the population is normally distributed with two parameters: mean ($\mu$) and standard deviation ($\sigma$).
+For example, for a given analysis, an analyst could require/assume that the population be normally distributed. The normal distribution has two parameters: mean ($\mu$) and standard deviation ($\sigma$).
 :::
 
 ::: {.callout-tip}
@@ -59,27 +59,31 @@ For example, the population is normally distributed with two parameters: mean ($
 @higgins2004 offers two key examples of minimal assumptions:
 
 1.  The data are from a population with a continuous distribution.
-2.  The population depends on location and scale parameters.
+2.  The population depends on location[^location] and scale[^scale] parameters.
 :::
 
 [^08_nonparametric-1-1]: R.A. Fisher, a key developer of frequentist statistics, developed an early nonparametric test called [Fisher's Exact Test](https://en.wikipedia.org/wiki/Fisher%27s_exact_test). The use of nonparametric statistics has increased with swelling computing power.
 
-There are nonparametric test for many common families of statistical inference. For example,
+[^location]: A **location parameter** controls the horizontal shift of a distribution. Location parameters include the mean, median, and mode.
+
+[^scale]: A **scale parameter** controls the spread of a distribution. Scale parameters include variance and standard deviation.
+
+There are nonparametric tests for many common types of statistical inference. For example,
 
 -   1-sample location parameter test (like a 1-sample t-test).
 -   2-sample location parameter test (like a 2-sample t-test).
 -   K-sample location parameter test (like ANOVA).
 -   2-sample scale parameter test (like a 2-sample F-test).
 
-Nonparametric statistics can also be grouped by their statistical ideas[^08_nonparametric-1-2]. Many of these ideas are incredibly simple and could be, as my professor used to say, derived while sitting on the beach.
+Nonparametric statistics can also be grouped by their statistical ideas.[^08_nonparametric-1-2] Many of these ideas are incredibly simple and could be, as my professor used to say, derived while sitting on the beach.
 
 [^08_nonparametric-1-2]: Methods based on binomial distribution are also common but we will skip them.
 
-1.  **Smoothing:** Fitting curves without specifying the functional forms of the curves. This can be done in one-dimension to estimate a probability distribution function and in multiple dimension for estimating smoothed conditional means.
+1.  **Smoothing:** Fitting curves without specifying the functional forms of the curves. This can be done in one dimension to estimate a probability distribution function and in multiple dimensions for estimating smoothed conditional means.
 2.  **Permutation:** Exhaustively reconfigure the data to create a sampling distribution for a statistic.
-3.  **Bootstrap:** Repeatedly sample from the data and calculate a statistical to create a sampling distribution for a statistic.
+3.  **Bootstrap:** Repeatedly sample from the data and calculate a statistic to create a sampling distribution for a statistic.
 
-This set of notes focuses on techniques for estimating probability density functions (PDFs) with smoothing when the data don't conform to a common PDF like the normal distribution or exponential distribution. The next set of notes with focus on the permutation and bootstrap for estimating sampling distributions (PDFs for statistics).
+This set of notes focuses on techniques for estimating probability density functions (PDFs) with smoothing when the data don't conform to common PDFs like the normal distribution or exponential distribution. The next set of notes will focus on the permutation and bootstrap for estimating sampling distributions (PDFs for statistics).
 
 ## Estimating Probability Density Functions
 
@@ -108,7 +112,7 @@ We can use relative frequency histograms and KDEs to 1. visualize data and 2. ge
 
 The procedure for creating a relative frequency histogram is fairly simple:
 
-1.  Partition the range of the data into $k$ bins with equal width. The widths are called binwidths.
+1.  Partition the range of the data into $k$ bins. The widths are called binwidths and typically the bins have equal binwidths.
 2.  Count the number of observations in each bin.
 3.  Divide the counts by n \* binwidth to normalize the histogram
 
@@ -116,21 +120,21 @@ Let's consider a formal definition from [@higgins2004].
 
 Partition the range of the data into bins such that $a_1 < a_2 < ... < a_k$. Let $a_{i + 1} - a_i$ be the binwidth. The density estimate for a value $x$ in an interval $a_i < x \le a_{i + 1}$ is
 
-$$\hat{f}(x) = \frac{\text{number of observations} \in (a_i, a_{i + 1}]}{n \cdot (a_{i + 1} - a_i)}$$
+$$
+\hat{f}(x) = \frac{\text{number of observations} \in (a_i, a_{i + 1}]}{n \cdot (a_{i + 1} - a_i)}
+$$ {#eq-histogram}
 
 #### Example
 
-Consider three random samples of varying sizes from standard normal distributions.
+Consider three random samples of sizes $n = 40$, $n = 100$, and $n = 10,000$ from standard normal distribution. In the code below, we store these samples in an a tibble with two columns, one for the sample set and one for the observation in the sample.
 
 ```{r}
 set.seed(20230617)
-data <- tibble(
-  set = c(
-    rep("n=40", times = 40), 
-    rep("n=100", times = 100), 
-    rep("n=10,000", times = 10000)
-  ),
-  x = c(rnorm(n = 40), rnorm(n = 100), rnorm(n = 10000))
+data <- bind_rows(
+  `n=40` = tibble(x = rnorm(n = 40)),
+  `n=100` = tibble(x = rnorm(n = 100)),
+  `n=10,000` = tibble(x = rnorm(n = 10000)),
+  .id = "set"
 ) |>
   mutate(set = factor(set, levels = c("n=40", "n=100", "n=10,000")))
 
@@ -152,7 +156,7 @@ data |>
 
 ```
 
-#### Number of Bins and Binwidth
+#### Number of Bins and Binwidth {#sec-binwdith}
 
 Histograms and relative frequency histograms are very sensitive to the selection of binwidths. `geom_histogram()` defaults to 30 bins, but this can be overridden with the `binwidth` and `bins` argument.
 
@@ -182,7 +186,7 @@ exercise_number <- exercise_number + 1
 ```
 
 1.  Run `hist(cars$speed, plot = FALSE)` and look at the results. 
-2. Write R code to convert `$counts` into `$density` based on the process outlined above. 
+2. Write R code to convert `$counts` into `$density` based on the process of generating a relative frequency histogram described above.
 
 ```{r}
 #| echo: false
@@ -202,9 +206,9 @@ We will introduce kernel density estimators by considering two related concepts.
 
 #### Concept #1
 
-We were able to simplify and fit complex probability densities using mixture distributions. In fact, as $k$, the number of mixture distributions increased, we were able to fit increasingly complex probability densities. Unfortunately, this process created overparameterized models.
+We were able to simplify and fit complex PDFs using mixture distributions. In fact, as $k$, the number of mixtures in the mixture distribution increased, we were able to fit increasingly complex probability distributions. Unfortunately, this process created overparameterized models.
 
-Kernel density estimation, a nonparametric approach, takes a slightly different approach. It places a normal distribution on every observation in the data set and then combines these normal distributions into a complex probability density. We no longer need to estimate many parameters and specify the number of clusters, but the KDE is computationally expensive and requires storing all of the original data.
+Kernel density estimation, a nonparametric approach for estimating PDFs, takes a slightly different approach. It places a simple PDF (called a kernel) at every data point in the data and then combines these simple PDFs into a complex PDF. We no longer need to estimate many parameters and specify the number of clusters, but the KDE is computationally expensive and requires storing all of the original data.
 
 #### Concept #2
 
@@ -221,38 +225,99 @@ Relative frequency histograms have a couple of issues:
 Kernel density estimators are smoothed histograms. Fundamentally, they use a weighted average of data points near $x_0$ to generate $\hat{f}(x_0)$. Here, $x_0$ is the point where we are estimating the probability density.
 :::
 
-#### KDE Process
-
 ::: {.callout-tip}
-**Kernel:** A kernel (more precisely density kernel) is a function that maps real values to real positive values. The kernel must be symmetric and integrate to 1.
+## Kernel
 
-In many ways, density kernels are a subset of probability density functions. Often, we will use the normal or Gaussian PDF as a kernel.
+A **kernel** is a weighting function that maps real values to real positive values. Kernels typically integrate to 1 and are symmetric. 
+
+Under this definition, kernels are PDFs like the normal density function and uniform density function.
 :::
 
-Let $w(z)$ be a kernel (symmetric probability distribution) centered at $0$. This kernel can give more weight to observations near $x_0$ and less weight to observations far from $x_0$. Common choices include the Normal kernel and boxcar kernel.
+#### Visual KDE Process
 
-Let $\triangle$ be a bandwidth. Bandwidths are like binwidths in relative frequency histograms. The bandwidth controls how much weight data points near
+Kernel density estimation is a data-driven approach to fitting non-parametric PDFs. Let's walk through a visual demonstration of a KDE where `x = c(1, 4, 4.5, 5, 6, 8, 10)`. 
 
-The kernel density estimate (KDE) is
+1. Pick a kernel type (normal, triangle, uniform)
+2. Add kernels centered at every observation with a specified bandwidth
+3. Divide each kernel by $n$ so the distribution is normalized
+4. To find the KDE at value $x_0$, sum the normalized kernels at $x_0$
 
-$$
-\hat{f}(x) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
-$$ {#eq-kde}
-
-Based on @eq-kde, we need to pick a weighting function ($W(z)$) and a bandwidth ($\triangle$). We will almost always use the normal distribution and `bw.nrd0` bandwidth[^08_nonparametric-1-3]. This means we can define a much simpler process:
-
-[^08_nonparametric-1-3]: $\text{bandwidth} = 0.9 min\left(\hat{\sigma}, \frac{IQR}{1.34}\right)$
-
-1.  Place a normal distribution on each observation in the data
-2.  Sum up the densities at $x_0$
-3.  Divide by $n$ to normalize the distribution
-
-Consider an example where `x = c(1, 4, 4.5, 5, 6, 8, 10)`. @fig-kde visually shows the creation of the KDE for `x`.
+First, we need to pick a kernel. We will mostly use normal kernels, but there are [many potential kernels](https://en.wikipedia.org/wiki/Kernel_%28statistics%29) including the triangular kernel and uniform kernel. @fig-kernels shows the PDFs for a few kernels.
 
 ```{r}
-#| echo: false
-#| label: fig-kde
+#| label: fig-kernels
+#| fig-cap: "Simple Kernels for Kernel Desnity Estimation"
+#| fig-subcap:
+#|   - "Normal kernel"
+#|   - "Uniform kernel (Boxcar function)"
+#|   - "Triangular kernel" 
+#| layout-ncol: 2
+#| code-fold: true
+
+tibble(x = 0) |>
+  ggplot() +
+  stat_function(fun = dnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  scale_x_continuous(limits = c(-3, 3)) +
+  scale_y_continuous(limits = c(0, 0.6))
+
+tibble(x = 0) |>
+  ggplot() +
+  stat_function(fun = dunif, color = "red", args = list(min = -0.5, max = 0.5)) +
+  scale_x_continuous(limits = c(-3, 3)) +
+  scale_y_continuous(limits = c(0, 1.2))
+
+tibble(x = seq(-3, 3, 0.1)) |>
+  mutate(d = 1 - abs(x)) |>
+  mutate(d = pmax(d, 0)) |>
+  ggplot() +
+  geom_line(aes(x, d), color = "red") +
+  scale_x_continuous(limits = c(-3, 3)) +
+  scale_y_continuous(limits = c(0, 1.2))
+
+```
+
+Second, we add kernels centered at every observation with a specified bandwidth. @fignorm-kernels shows seven normal PDFs centered at our example data points. 
+
+We'll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in @sec-binwdith. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision.
+
+```{r}
+#| label: fig-norm-kernels
+#| fig-cap: Add PDFs centered at each observation in the data
+#| code-fold: true
+
+data <- expand_grid(
+  x = c(1, 4, 4.5, 5, 6, 8, 10),
+  grid = seq(-1, 13, 0.1)
+)
+
+data_simple <- distinct(data, x)
+
+bw <- stats::bw.nrd0(data_simple$x)
+
+data <- data |>
+  mutate(density = dnorm(x = grid, mean = x, sd = bw))
+
+data |>
+  ggplot() +
+  geom_line(
+    data = data,
+    aes(x = grid, y = density, group = factor(x)),
+    alpha = 0.5,
+    color = "red"
+  ) +
+  scale_y_continuous(limits = c(0, 0.35)) +
+  labs(
+    x = "x"
+  )
+
+```
+
+Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. @fig-normalized-norm-kernels shows each kernel divided by 7.
+
+```{r}
+#| label: fig-normalized-norm-kernels
 #| fig-cap: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+#| code-fold: true
 
 data <- expand_grid(
   x = c(1, 4, 4.5, 5, 6, 8, 10),
@@ -274,13 +339,114 @@ data |>
     alpha = 0.5,
     color = "red"
   ) +
+  scale_y_continuous(limits = c(0, 0.35)) +  
+  labs(
+    x = "x"
+  )
+
+```
+
+Finally, for any observation $x_0$, sum up the red lines. This sum is the KDE at point $x_0$. 
+
+Typically, we calculate the KDE for many values of $x_0$ (e.g. a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in @fig-kde-visually is the estimated KDE across the range of the data. 
+
+```{r}
+#| label: fig-kde-visually
+#| fig-cap: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+#| code-fold: true
+
+data <- expand_grid(
+  x = c(1, 4, 4.5, 5, 6, 8, 10),
+  grid = seq(-1, 13, 0.1)
+)
+
+data_simple <- distinct(data, x)
+
+bw <- stats::bw.nrd0(data_simple$x)
+
+data <- data |>
+  mutate(density = dnorm(x = grid, mean = x, sd = bw) / nrow(data_simple))
+
+kde_x0 <- tibble(
+  x0 = density(x = data_simple$x, n = 10000)$x,
+  f_hat_x0 = density(x = data_simple$x, n = 10000)$y
+) |>
+  slice_min(abs(x0 - 4))
+  
+kde_plot <- data |>
+  ggplot() +
+  geom_line(
+    data = data,
+    aes(x = grid, y = density, group = factor(x)),
+    alpha = 0.5,
+    color = "red"
+  ) +
   geom_density(
     data = data_simple,
     aes(x = x)
   ) +
+  geom_point(
+    data = kde_x0,
+    aes(x = x0, y = f_hat_x0)
+  ) +
+  geom_segment(
+    data = kde_x0,
+    aes(x = 4, y = 0, xend = 4, yend = f_hat_x0),
+    linetype = "dashed"
+  ) +
+  annotate("text", x = 3, y = 0.15,
+           label = "hat(f)(x[0])", parse = TRUE) +
+  scale_y_continuous(limits = c(0, 0.35)) +
   labs(
     x = "x"
   )
+
+kde_plot
+
+```
+
+#### Mathematical KDE Process
+
+1. Pick a kernel type (normal, triangle, uniform)
+2. Pick a bandwidth
+3. Add kernels centered at every observation
+4. Divide each kernel by $n$ so the distribution is normalized
+5. To find the KDE at value $x_0$, sum the normalized kernels at $x_0$
+
+Let $w(z)$ be a kernel (symmetric probability density function) centered at $z$. This kernel can give more weight to observations near $z$ and less weight to observations far from $z$.
+
+Suppose we use a normal kernel and one data point $x_i$. $\mu = 0$ because the kernel is centered at $z$. We'll always use $\sigma = 1$. If we assume $x_0 = x_i$, then our weighting function is $W(x_0) = \frac{1} {\sqrt{2\pi}} exp(-\frac{x_0^2}{2})$.
+
+When we evaluate the KDE at point $x_0$, $x_0 = x_i$ won't necessarily be true. So we will need to shift our weighting function. We simply need to modify our function to be $W(x_0 - x_i) = \frac{1} {\sqrt{2\pi}} exp(-\frac{(x_0 - x_i)^2}{2})$.[^algebra1] 
+
+[^algebra1]: Recall your algebra class where, to move the vertex of a parabola in the x-axis some distance $h$, you updated the formula $y = x^2$ to $y = (x-h)^2$. The change to the Gaussian function is analogous. 
+
+We may also want to adjust the widths of our kernels. Typically, we leave $\sigma^2 = 1$ and adjust the bandwidth. The bandwidth controls the weight given to points near $x_0$ when estimating the density. Bandwidths are like binwidths in relative frequency histograms. If $\triangle$ is the bandwidth, then our weighting function is $W(\frac{x_0 -x_i}{\triangle})$. 
+
+Recall that a kernel must integrate to 1. Because $\triangle$ changes the shape of the curve, and therefore the area under the curve, we must account for that by dividing the curve by $\triangle$. This makes our weight function $\frac{1}{\triangle} W(\frac{x - x_i}{\triangle})$. Note that as $\triangle$ increases, the PDF curves become wider with less density at any given point.
+
+We now have a building block $\frac{1}{\triangle} W(\frac{x-x_i}{\triangle})$. Let's finally relax our assumption that we have one observation and assume we have $n$ values of $x_i$.We can take the summation of $n$ of these distributions to create a kernel density estimate. Again, because the KDE must integrate to 1, we must divide the function by $n$. 
+
+Thus, the kernel density estimate (KDE) is
+
+$$
+\hat{f}(x_0) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
+$$ {#eq-kde}
+
+Based on @eq-kde, we need to pick a weighting function ($W(z)$) and a bandwidth ($\triangle$). We will almost always use the normal distribution and `bw.nrd0` bandwidth[^08_nonparametric-1-3]. This means we can define a much simpler process:
+
+[^08_nonparametric-1-3]: $\text{bandwidth} = 0.9 min\left(\hat{\sigma}, \frac{IQR}{1.34}\right)$
+
+1. Place a normal distribution on each observation in the data with a bandwidth determined by `bw.nrd0`
+2. Divide each kernel by $n$ so the distribution is normalized
+3. To find the KDE at value $x_0$, sum the normalized kernels at $x_0$
+
+```{r}
+#| label: fig-kde
+#| fig-cap: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+#| code-fold: true
+
+kde_plot
 
 ```
 
@@ -291,7 +457,7 @@ There are several ways to use kernel density estimators in R. We will explore `g
 The use of `geom_density()` is nearly identical to `geom_histogram()`. The function has a `bw` argument to change the bandwidth and a `kernel` argument to change the kernel.
 
 ```{r}
-#| label: fig-kernels
+#| label: fig-applied-kernels
 #| fig-cap: "geom_density() with different kernels"
 #| fig-subcap:
 #|   - "Gaussian kernel"
@@ -312,6 +478,7 @@ data |>
 
 ```
 
+[This blog post](https://towardsdatascience.com/kernel-density-estimation-explained-step-by-step-7cc5b5bc4517) offers a good walkthrough of the KDE process in plain language. 
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -395,11 +562,11 @@ data1 <- bind_cols(
 ```
 
 ```{r}
-#| echo: false
 #| message: false
 #| warning: false
 #| label: fig-knn
 #| fig-cap: KNN average on simulated data with $k = 3$. 
+#| code-fold: true
 
 library(tidymodels)
 
@@ -478,10 +645,10 @@ $$
 @fig-loess demonstrates LOESS on simulated data.
 
 ```{r}
-#| echo: false
 #| message: false
 #| label: fig-loess
-#| fig-cap: LOESS fit on simulated data. Red points are predicted values a $x_0 \in \{2, 4, 8\}$. Dashed lines are fitted local linear regression models. 
+#| fig-cap: LOESS fit on simulated data. Red points are predicted values a $x_0 \in \{2, 4, 8\}$. Dashed lines are fitted local linear regression models.
+#| code-fold: true
 
 tricube <- function(u) {
   
@@ -568,7 +735,7 @@ LOESS is not limited to simple linear regression models. For example, `geom_smoo
 
 ```{r}
 #| label: fig-geom_smooth
-#| caption: geom_smooth() demonstrated on simulated data
+#| fig-cap: geom_smooth() demonstrated on simulated data
 
 data1 |>
   ggplot(aes(x = x, y = y)) +
