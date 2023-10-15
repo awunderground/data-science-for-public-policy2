@@ -115,7 +115,7 @@ Next, let's implement a two-sample t-test to test if the population means from g
 
 $$H_0: \mu_1 = \mu_2$$
 
-$$H_0: \mu_1 \ne \mu_2$$
+$$H_a: \mu_1 \ne \mu_2$$
 
 ```{r}
 sim_data |>
@@ -130,12 +130,12 @@ sim_data |>
 Based on the p-value and t-statistic, there is sufficient evidence to reject the null hypothesis at the $\alpha = 0.05$ significance level. It is likely that the population means are different.
 
 ::: callout-warning
-Important assumptions support the inferences in example 1. We will unpack these assumptions later.
+Important assumptions support the inferences in Example 1. We will unpack these assumptions later.
 :::
 
 ### Example 2
 
-Let's consider a real example from @ashraf2006. They created a commitment savings product for a Philippine bank called SEED (Save, Earn, Enjoy Deposits). They evaluated the effect of the commitment savings product using a randomized control trial (RCT). The authors shared their data on the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27854). [J-PAL offers a brief summary.](https://www.povertyactionlab.org/evaluation/commitment-savings-products-philippines#:~:text=The%20SEED%20account%20provides%20individuals,until%20the%20goal%20is%20reached.)
+Let's consider a real example from @ashraf2006. They created a commitment savings product for a Philippine bank called SEED (Save, Earn, Enjoy Deposits). They evaluated the effect of the commitment savings product on the level of household savings (among other outcomes) using a randomized control trial (RCT). The authors shared their data on the [Harvard Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27854). [J-PAL offers a brief summary.](https://www.povertyactionlab.org/evaluation/commitment-savings-products-philippines#:~:text=The%20SEED%20account%20provides%20individuals,until%20the%20goal%20is%20reached.)
 
 `seed.csv` contains simplified data from their analysis data.
 
@@ -169,7 +169,11 @@ We make inferences with data and assumptions. Did our assumptions hold in this c
 1.  $x_1, x_2, ..., x_n$ is an IID random sample from a population.
 2.  The population is normally distributed or the sample size is large enough for the Central Limit Theorem to apply.
 
-Both assumptions hold! The average doesn't represent the experience of the average person. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn't give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:
+Both assumptions are reasonable. We can assume that the sample is identically distributed because the sample was drawn from one population: clients of the Green Bank of Caraga. It also seems reasonable to assume that a household that received the commitment savings product did not somehow influence a control household's level of savings. Thus the IID assumption is reasonable.
+
+The study assessed more than 1,000 households, suggesting that we need not be concerned with the distribution's normality.
+
+The average doesn't represent the experience of the average person. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn't give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:
 
 ```{r}
 #| warning: false
@@ -190,7 +194,7 @@ Next, let's run a 2-sample t-test to compare the means from the control and trea
 
 $$H_0: \mu_{control} = \mu_{treatment}$$
 
-$$H_0: \mu_{control} \ne \mu_{treatment}$$
+$$H_a: \mu_{control} \ne \mu_{treatment}$$
 
 ```{r}
 seed |>
@@ -261,17 +265,24 @@ Consider the objects A, B, C, D. Suppose we want to combine them into two groups
 
 :::
 
-The permutation test is typically used to compare parameters from two or more distributions.
+The permutation test is typically used to compare parameters from two or more populations. The algorithm for a permutation test is as follows:
 
-In general, we will calculate the difference between the two groups to get our **test statistic**. Next, we will calculate the test statistic using every combination of the two groups to get a permutation distribution or sampling distribution for the test statistics. Finally, we will compare the test statistic to the permutation distribution to calculate a p-value.
+1. Determine some parameter of interest for two or more populations (like the mean or median). The groups can be treatment and control groups.
+2. Calculate the difference in statistics for each group. This is the **test statistic** or observed statistic.
+3. Determine every possible combination of assignment of each observation to the groups (e.g. treatment and control group). 
+4. For each combination:
+    - Calculate the difference in the determined statistic (e.g. mean or median) between the two groups.
+    - Store that difference in a vector. This vector is called the **permutation distribution**.
+5. Determine the p-value by comparing the test statistic to the permutation distribution.
 
-::: {.callout-tip}
+For a gentle (and alpaca-themed) visualized introduction to this content, see [this blog](https://www.jwilber.me/permutationtest/).
+
 ## Permutation Distribution
 
 The **permutation distribution** is a vector of statistics calculated on combinations[^combos] of the data.
 :::
 
-[^combos]: A permutation is the exhaustive reshuffling of $n$ objects into two groups *with regard for order*. We should probably call the permutation test the combination test. Fortunately, permutations will gives the same result as combinations but it will take much longer to calculate. 
+[^combos]: A permutation is the exhaustive reshuffling of $n$ objects into $m$ groups *with regard for order*. We should probably call the permutation test the combination test. Combinations are the exhaustive reshuffling of $n$ objects into $m$ groups *without regard for order*. Using permutations generates the same results as combinations but takes much longer because many of the configurations are duplicated. 
 
 ::: {.callout-tip}
 ## Permutation principle
@@ -287,7 +298,7 @@ If the data used in a permutation test are selected randomly or come from a desi
 
 ### Example 1 (Revisited)
 
-Let's revisit example 1 using permutation methods. We will implement permutation tests using `library(infer)`. Here we implement the method from scratch for demonstration.
+Let's revisit Example 1 using permutation methods. In general we use `library(infer)` to implement permutations tests. Here we implement the method from scratch for demonstration.
 
 #### 2-Sample Difference of Means
 
@@ -301,10 +312,15 @@ Let's revisit example 1 using permutation methods. We will implement permutation
 #' 
 permute_means <- function(x, group_size = 8) {
   
-  indices <- combn(1:length(x), group_size)
+  # combn() returns a matrix with group_size rows
+  # and a column for every combination of integers associated with x
+  indices <- combn(x = 1:length(x), m = group_size)
   
   index <- 1:ncol(indices)
 
+  # 1. extract a vector of indices stored as a column in the indices matrix
+  # 2. extract only the observations in x included in the vector of indices
+  # 3. take the mean of those observations
   dist <- map_dbl(
     .x = index, 
     .f = ~ mean(x[indices[, .x]]) - mean(x[-indices[, .x]])
@@ -313,6 +329,12 @@ permute_means <- function(x, group_size = 8) {
   return(dist)
   
 }
+
+```
+
+`permute_means()` permutes the indices of the values in `x` to permute the values of `x`. In this case, with `group_size = 8` the first column has indices `1, 2, 3, 4, 5, 6, 7, 8` and the last column has indices `9, 10, 11, 12, 13, 14, 15, 16`. The remaining columns express every possible permutation of the values `1:16` into two groups of size 8. 
+
+```{r}
 
 # create the permutation distribution
 permutation_dist <- permute_means(sim_data$x, 8)
@@ -398,7 +420,7 @@ Recall our null and alternative hypotheses.
 
 $$H_0: \mu_{control} = \mu_{treatment}$$
 
-$$H_0: \mu_{control} \ne \mu_{treatment}$$
+$$H_a: \mu_{control} \ne \mu_{treatment}$$
 
 ```{r}
 # calculate the test statistic
@@ -529,7 +551,7 @@ Sampling distributions are fundamental to statistics. We frequently use the norm
 Given a sampling procedure and a population, the target parameter is in the confidence interval X% of the time over many random samples.[^09_nonparametric-2-5]
 :::
 
-[^09_nonparametric-2-5]: Confidence intervals are about a process. There is a distinct different between confidence and probabilities. It is incorrect to say, "the true parameter is in the interval X% of the time." This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.
+[^09_nonparametric-2-5]: Confidence intervals are about a process. There is a distinct difference between confidence and probabilities. It is incorrect to say, "the true parameter is in the interval X% of the time." This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.
 
 The idea of **repeated sampling** is fundamental to sampling distributions, confidence intervals, and statistical inference in frequentist statistics. The nonparametric bootstrap leverages the idea of repeated sampling to allow for statistical inference under a *minimal number of assumptions*. This makes it possible to perform inference:
 
@@ -604,7 +626,7 @@ Historically, the bootstrap was used to estimate the standard errors of estimate
 
 ### Example
 
-First, let's repeat the SEED example from above using the `boot()` function. `boot()` expects a custom function with the argument `x` for the data and the argument `i` for the index for statistics. We use`R = 5000`for`B \<- 5000\` in the earlier example.
+First, let's repeat the SEED example from above using the `boot()` function. `boot()` expects a custom function with the argument `x` for the data and the argument `i` for the index for statistics. We use`R = 5000` for `B <- 5000` in the earlier example.
 
 ```{r}
 library(boot)
@@ -650,7 +672,7 @@ Approach three doesn't always work but probably has the most desirable propertie
 For each bootstrap sample indexed by $b = 1, ..., B$,
 
 1.  Compute $\hat\theta$ from the original data.
-2.  Take $B$ bootstrap bootstrap samples of size $n$ from the data.
+2.  Take $B$ bootstrap samples of size $n$ from the data.
 3.  Compute $\hat\theta_b$ for each bootstrap sample.
 4.  For $\alpha = 0.05$, find the 2.5th and 97.th percentiles of $\hat{\vec\theta}$.
 
