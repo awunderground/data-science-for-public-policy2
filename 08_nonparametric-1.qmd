@@ -70,10 +70,10 @@ For example, for a given analysis, an analyst could require/assume that the popu
 
 There are nonparametric tests for many common types of statistical inference. For example,
 
--   1-sample location parameter test (like a 1-sample t-test).
--   2-sample location parameter test (like a 2-sample t-test).
--   K-sample location parameter test (like ANOVA).
--   2-sample scale parameter test (like a 2-sample F-test).
+-   1-sample location parameter test (a non-parametric analog to a 1-sample t-test).
+-   2-sample location parameter test (a non-parametric analog to a 2-sample t-test).
+-   K-sample location parameter test (a non-parametric analog to ANOVA).
+-   2-sample scale parameter test (a non-parametric analog to a 2-sample F-test).
 
 Nonparametric statistics can also be grouped by their statistical ideas.[^08_nonparametric-1-2] Many of these ideas are incredibly simple and could be, as my professor used to say, derived while sitting on the beach.
 
@@ -126,7 +126,7 @@ $$ {#eq-histogram}
 
 #### Example
 
-Consider three random samples of sizes $n = 40$, $n = 100$, and $n = 10,000$ from standard normal distribution. In the code below, we store these samples in an a tibble with two columns, one for the sample set and one for the observation in the sample.
+Consider three random samples of sizes $n = 40$, $n = 100$, and $n = 10,000$ from standard normal distribution. In the code below, we store these samples in an a tibble with two columns, one for the name of the sample set and one for the observation in the sample.
 
 ```{r}
 set.seed(20230617)
@@ -158,7 +158,7 @@ data |>
 
 #### Number of Bins and Binwidth {#sec-binwdith}
 
-Histograms and relative frequency histograms are very sensitive to the selection of binwidths. `geom_histogram()` defaults to 30 bins, but this can be overridden with the `binwidth` and `bins` argument.
+Histograms and relative frequency histograms are very sensitive to the selection of binwidths. `geom_histogram()` defaults to 30 bins, but this can be overridden with the `binwidth` and `bins` arguments.
 
 Several papers have developed rules for determining the number of bins or binwidth including @scott2005.
 
@@ -276,9 +276,9 @@ tibble(x = seq(-3, 3, 0.1)) |>
 
 ```
 
-Second, we add kernels centered at every observation with a specified bandwidth. @fignorm-kernels shows seven normal PDFs centered at our example data points. 
+Second, we add kernels centered at every observation with a specified bandwidth. @fig-norm-kernels shows seven normal PDFs centered at our example data points. 
 
-We'll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in @sec-binwdith. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision.
+For the sake of simplicity and demonstration, we'll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in @sec-binwdith. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The [KDE Wikipedia page](https://en.wikipedia.org/wiki/Kernel_density_estimation) provides a more in depth discussion of bandwidth selection.
 
 ```{r}
 #| label: fig-norm-kernels
@@ -419,9 +419,9 @@ Suppose we use a normal kernel and one data point $x_i$. $\mu = 0$ because the k
 
 When we evaluate the KDE at point $x_0$, $x_0 = x_i$ won't necessarily be true. So we will need to shift our weighting function. We simply need to modify our function to be $W(x_0 - x_i) = \frac{1} {\sqrt{2\pi}} exp(-\frac{(x_0 - x_i)^2}{2})$.[^algebra1] 
 
-[^algebra1]: Recall your algebra class where, to move the vertex of a parabola in the x-axis some distance $h$, you updated the formula $y = x^2$ to $y = (x-h)^2$. The change to the Gaussian function is analogous. 
+[^algebra1]: Recall your algebra class where, to move the vertex of a parabola in the x-axis some distance $h$, you updated the formula $y = x^2$ to $y = (x-h)^2$. The change to the normal function is analogous. In fact, we can use this idea to shift any kernel. 
 
-We may also want to adjust the widths of our kernels. Typically, we leave $\sigma^2 = 1$ and adjust the bandwidth. The bandwidth controls the weight given to points near $x_0$ when estimating the density. Bandwidths are like binwidths in relative frequency histograms. If $\triangle$ is the bandwidth, then our weighting function is $W(\frac{x_0 -x_i}{\triangle})$. 
+We may also want to adjust the widths of our kernels. When using the normal kernel, we leave $\sigma = 1$ and adjust the bandwidth. The bandwidth controls the weight given to points near $x_0$ when estimating the density. Bandwidths are like binwidths in relative frequency histograms. If $\triangle$ is the bandwidth, then our weighting function is $W(\frac{x_0 -x_i}{\triangle})$. 
 
 Recall that a kernel must integrate to 1. Because $\triangle$ changes the shape of the curve, and therefore the area under the curve, we must account for that by dividing the curve by $\triangle$. This makes our weight function $\frac{1}{\triangle} W(\frac{x - x_i}{\triangle})$. Note that as $\triangle$ increases, the PDF curves become wider with less density at any given point.
 
@@ -433,7 +433,7 @@ $$
 \hat{f}(x_0) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
 $$ {#eq-kde}
 
-Based on @eq-kde, we need to pick a weighting function ($W(z)$) and a bandwidth ($\triangle$). We will almost always use the normal distribution and `bw.nrd0` bandwidth[^08_nonparametric-1-3]. This means we can define a much simpler process:
+Based on @eq-kde, we need to pick a weighting function ($W(z)$) and a bandwidth ($\triangle$). We will almost always use the normal distribution and `bw.nrd0` bandwidth.[^08_nonparametric-1-3] This means we can define a much simpler process:
 
 [^08_nonparametric-1-3]: $\text{bandwidth} = 0.9 min\left(\hat{\sigma}, \frac{IQR}{1.34}\right)$
 
