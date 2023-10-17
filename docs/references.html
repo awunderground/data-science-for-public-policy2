@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,15 +17,14 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
-/* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
 }
-.hanging-indent div.csl-entry {
+.hanging div.csl-entry {
   margin-left:2em;
   text-indent:-2em;
 }
@@ -39,7 +38,8 @@ div.csl-right-inline {
 }
 div.csl-indent {
   margin-left: 2em;
-}</style>
+}
+</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -49,7 +49,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_microsimulation.html" rel="prev">
+<link href="./08_nonparametric-1.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -75,8 +75,7 @@ div.csl-indent {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -88,16 +87,11 @@ div.csl-indent {
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./references.html">References</a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
+  <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+    <div class="container-fluid d-flex justify-content-between">
+      <h1 class="quarto-secondary-nav-title">References</h1>
+      <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
+        <i class="bi bi-chevron-right"></i>
       </button>
     </div>
   </nav>
@@ -105,77 +99,72 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy Part II</a> 
     </div>
       </div>
-        <div class="mt-2 flex-shrink-0 align-items-center">
+      <div class="mt-2 flex-shrink-0 align-items-center">
         <div class="sidebar-search">
         <div id="quarto-search" class="" title="Search"></div>
         </div>
-        </div>
+      </div>
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Welcome</span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link">Welcome</a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+  <a href="./01_advanced-quarto.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  <a href="./02_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  <a href="./03_functions.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  <a href="./04_web-scraping.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Web Scraping</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+  <a href="./05_simulation-and-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  <a href="./06_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+  <a href="./07_microsimulation.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Microsimulation</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./references.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text">References</span></a>
+  <a href="./08_nonparametric-1.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link active">References</a>
   </div>
 </li>
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         
@@ -185,7 +174,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">References</h1>
+<h1 class="title d-none d-lg-block">References</h1>
 </div>
 
 
@@ -193,95 +182,102 @@ div.csl-indent {
 <div class="quarto-title-meta">
 
     
-  
     
   </div>
   
 
 </header>
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list">
-<div id="ref-aruoba2018" class="csl-entry" role="listitem">
+<div id="refs" class="references csl-bib-body hanging-indent" role="doc-bibliography">
+<div id="ref-aruoba2018" class="csl-entry" role="doc-biblioentry">
 Aruoba, S. Boragan, and Jesus Fernndez-Villaverde. 2018. <span>“A
 Comparison of Programming Languages in Economics: An Update.”</span> <a href="https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf">https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf</a>.
 </div>
-<div id="ref-barrientos2021" class="csl-entry" role="listitem">
+<div id="ref-barrientos2021" class="csl-entry" role="doc-biblioentry">
 Barrientos, Andrés F., Aaron R. Williams, Joshua Snoke, and Claire McKay
 Bowen. 2021. <span>“A Feasibility Study of Differentially Private
 Summary Statistics and Regression Analyses with Evaluations on
 Administrative and Survey Data.”</span> <a href="https://doi.org/10.48550/ARXIV.2110.12055">https://doi.org/10.48550/ARXIV.2110.12055</a>.
 </div>
-<div id="ref-bishop2006" class="csl-entry" role="listitem">
+<div id="ref-bishop2006" class="csl-entry" role="doc-biblioentry">
 Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine
 Learning</em>. Information Science and Statistics. New York: Springer.
 </div>
-<div id="ref-casella2002" class="csl-entry" role="listitem">
+<div id="ref-casella2002" class="csl-entry" role="doc-biblioentry">
 Casella, George, and Roger L. Berger. 2002. <em>Statistical
 Inference</em>. 2nd ed. Australia ; Pacific Grove, CA: Thomson Learning.
 </div>
-<div id="ref-chetty2014" class="csl-entry" role="listitem">
+<div id="ref-chetty2014" class="csl-entry" role="doc-biblioentry">
 Chetty, Raj, John N. Friedman, Søren Leth-Petersen, Torben Heien
 Nielsen, and Tore Olsen. 2014. <span>“Active Vs. Passive Decisions and
 Crowd-Out in Retirement Savings Accounts: Evidence from
 Denmark*.”</span> <em>The Quarterly Journal of Economics</em> 129 (3):
 1141–1219. <a href="https://doi.org/10.1093/qje/qju013">https://doi.org/10.1093/qje/qju013</a>.
 </div>
-<div id="ref-fellegi1972" class="csl-entry" role="listitem">
+<div id="ref-fellegi1972" class="csl-entry" role="doc-biblioentry">
 Fellegi, I. P. 1972. <span>“On the Question of Statistical
 Confidentiality.”</span> <em>Journal of the American Statistical
 Association</em> 67 (337): 7–18. <a href="https://www.jstor.org/stable/2284695?seq=1#metadata_info_tab_contents">https://www.jstor.org/stable/2284695?seq=1#metadata_info_tab_contents</a>.
 </div>
-<div id="ref-hastie2009" class="csl-entry" role="listitem">
+<div id="ref-hastie2009" class="csl-entry" role="doc-biblioentry">
 Hastie, Trevor, Robert Tibshirani, and J. H. Friedman. 2009. <em>The
 Elements of Statistical Learning: Data Mining, Inference, and
 Prediction</em>. 2nd ed. Springer Series in Statistics. New York, NY:
 Springer.
 </div>
-<div id="ref-kolenikov2016" class="csl-entry" role="listitem">
+<div id="ref-higgins2004" class="csl-entry" role="doc-biblioentry">
+Higgins, James J. 2004. <em>An Introduction to Modern Nonparametric
+Statistics</em>. Pacific Grove, CA: Brooks/Cole.
+</div>
+<div id="ref-kolenikov2016" class="csl-entry" role="doc-biblioentry">
 Kolenikov, Stas J. 2016. <span>“Post-Stratification or a Non-Response
 Adjustment?”</span> <em>Survey Practice</em> 9 (3): 1–12. <a href="https://doi.org/10.29115/SP-2016-0014">https://doi.org/10.29115/SP-2016-0014</a>.
 </div>
-<div id="ref-leisch2004" class="csl-entry" role="listitem">
+<div id="ref-leisch2004" class="csl-entry" role="doc-biblioentry">
 Leisch, Friedrich. 2004. <span>“FlexMix: A General Framework for Finite
 Mixture Models and Latent Class Regression in
 <span><em>R</em></span>.”</span> <em>Journal of Statistical
 Software</em> 11 (8). <a href="https://doi.org/10.18637/jss.v011.i08">https://doi.org/10.18637/jss.v011.i08</a>.
 </div>
-<div id="ref-li2014" class="csl-entry" role="listitem">
+<div id="ref-li2014" class="csl-entry" role="doc-biblioentry">
 Li, Jinjing, and Cathal O’Donoghue. 2014. <span>“Evaluating Binary
 Alignment Methods in Microsimulation Models.”</span> <em>Journal of
 Artificial Societies and Social Simulation</em> 17 (1): 15. <a href="https://doi.org/10.18564/jasss.2334">https://doi.org/10.18564/jasss.2334</a>.
 </div>
-<div id="ref-mcclelland2020" class="csl-entry" role="listitem">
+<div id="ref-mcclelland2020" class="csl-entry" role="doc-biblioentry">
 McClelland, Robert, Surachai Khitatrakun, and Chenxi Lu. 2020.
 <span>“Estimating Confidence Intervals in a Tax Microsimulation
 Model.”</span> <em>International Journal of Microsimulation</em> 13 (2):
 2–20. <a href="https://doi.org/10.34196/IJM.00216">https://doi.org/10.34196/IJM.00216</a>.
 </div>
-<div id="ref-murphy2022" class="csl-entry" role="listitem">
+<div id="ref-murphy2022" class="csl-entry" role="doc-biblioentry">
 Murphy, Kevin P. 2022. <em>Probabilistic Machine Learning: An
 Introduction</em>. Adaptive Computation and Machine Learning Series.
 Cambridge, Massachusetts: The MIT Press.
 </div>
-<div id="ref-orcutt1957" class="csl-entry" role="listitem">
+<div id="ref-orcutt1957" class="csl-entry" role="doc-biblioentry">
 Orcutt, Guy H. 1957. <span>“A New Type of Socio-Economic System.”</span>
 <em>The Review of Economics and Statistics</em> 39 (2): 116. <a href="https://doi.org/10.2307/1928528">https://doi.org/10.2307/1928528</a>.
 </div>
-<div id="ref-ravn2020" class="csl-entry" role="listitem">
+<div id="ref-ravn2020" class="csl-entry" role="doc-biblioentry">
 Ravn, Signe, Ashley Barnwell, and Barbara Barbosa Neves. 2020.
 <span>“What Is <span>“</span>Publicly Available Data<span>”</span>?
 Exploring Blurred Public<span></span>Private Boundaries and Ethical
 Practices Through a Case Study on Instagram.”</span> <em>Journal of
 Empirical Research on Human Research Ethics</em> 15 (1-2): 40–45. <a href="https://doi.org/10.1177/1556264619850736">https://doi.org/10.1177/1556264619850736</a>.
 </div>
-<div id="ref-somepalli2023" class="csl-entry" role="listitem">
+<div id="ref-scott2005" class="csl-entry" role="doc-biblioentry">
+Scott, David W., and Stephan R. Sain. 2005. <span>“Multidimensional
+Density Estimation.”</span> In, 24:229–61. Elsevier. <a href="https://doi.org/10.1016/S0169-7161(04)24009-3">https://doi.org/10.1016/S0169-7161(04)24009-3</a>.
+</div>
+<div id="ref-somepalli2023" class="csl-entry" role="doc-biblioentry">
 Somepalli, Gowthami, Singla, Micah Goldblum, Jonas Geiping, and Tom
 Goldstein. 2023. <span>“Diffusion Art or Digital Forgery? Investigating
 Data Replication in Diffusion Models.”</span> <em>Proceedings of the
 IEEE/CVF Conference on Computer Vision and Pattern Recognition
 (CVPR)</em>, 6048–58. <a href="https://openaccess.thecvf.com/content/CVPR2023/html/Somepalli_Diffusion_Art_or_Digital_Forgery_Investigating_Data_Replication_in_Diffusion_CVPR_2023_paper.html">https://openaccess.thecvf.com/content/CVPR2023/html/Somepalli_Diffusion_Art_or_Digital_Forgery_Investigating_Data_Replication_in_Diffusion_CVPR_2023_paper.html</a>.
 </div>
-<div id="ref-wickham_r_2023" class="csl-entry" role="listitem">
+<div id="ref-wickham_r_2023" class="csl-entry" role="doc-biblioentry">
 Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023.
 <em>R for Data Science: Import, Tidy, Transform, Visualie, and Model
 Data</em>. 2nd edition. Sebastopol, CA: O’Reilly.
@@ -318,23 +314,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
+    target: function(trigger) {
+      return trigger.previousElementSibling;
     }
   });
   clipboard.on('success', function(e) {
@@ -346,24 +328,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
     setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -399,135 +364,31 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
+    tippyHover(ref, function() {
+      var popup = window.document.createElement('div');
+      cites.forEach(function(cite) {
+        var citeDiv = window.document.createElement('div');
+        citeDiv.classList.add('hanging-indent');
+        citeDiv.classList.add('csl-entry');
+        var biblioDiv = window.document.getElementById('ref-' + cite);
+        if (biblioDiv) {
+          citeDiv.innerHTML = biblioDiv.innerHTML;
+        }
+        popup.appendChild(citeDiv);
       });
-    }
+      return popup.innerHTML;
+    });
   }
 });
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./07_microsimulation.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Microsimulation</span></span>
+      <a href="./08_nonparametric-1.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
