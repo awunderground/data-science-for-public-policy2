@@ -52,7 +52,7 @@ Different tests apply in different applied situations. For example, @higgins2004
 3.  **Use tests based on other common distributions like the exponential distribution.** There may be insufficient data to determine the form or the data may come from a difficult distribution with unknown parameters or characteristics.
 4.  **Use nonparametric statistics.**
 
-We use [`library(infer)`](https://infer.netlify.app/) for statistical inference in R[^09_nonparametric-2-1].
+We use [`library(infer)`](https://infer.netlify.app/) for statistical inference in R.[^09_nonparametric-2-1]
 
 [^09_nonparametric-2-1]: Base R has excellent tools for statistical inference. `library(infer)` is useful because it plays well with `library(tidyverse)`. We can just use `t_test()` for a one-sample t-test.
 
@@ -208,7 +208,7 @@ seed |>
 
 There is insufficient evidence to reject the null hypothesis at the $\alpha = 0.05$ significance level. The mean change in account balance is not statistically significantly different for the treatment and control groups.
 
-We make inferences with data and assumptions? Did our assumptions hold in this case? The assumptions for a 2-sample T-Test are
+We make inferences with data and assumptions. Did our assumptions hold in this case? The assumptions for a 2-sample T-Test are
 
 1.  $x_1, x_2, ..., x_n$ is an IID random sample from population 1. $y_1, y_2, ..., y_n$ is an IID random sample from a population 2.
 2.  The populations are normally distributed or the sample size is large enough for the Central Limit Theorem to apply.
@@ -277,6 +277,7 @@ The permutation test is typically used to compare parameters from two or more po
 
 For a gentle (and alpaca-themed) visualized introduction to this content, see [this blog](https://www.jwilber.me/permutationtest/).
 
+::: {.callout-tip}
 ## Permutation Distribution
 
 The **permutation distribution** is a vector of statistics calculated on combinations[^combos] of the data.
@@ -592,7 +593,7 @@ We can use this permutation distribution to calculate bias (@sec-bias), standard
 
 ### Bias {#sec-bias}
 
-Sometimes estimators of population parameters are biased[^09_nonparametric-2-6]. Bootstrapping can be used to estimate the bias in an estimator.
+Sometimes estimators of population parameters are biased.[^09_nonparametric-2-6] Bootstrapping can be used to estimate the bias in an estimator.
 
 [^09_nonparametric-2-6]: Recall that $\bar{X}$ is an unbiased estimator of the population mean $\mu$. On the other hand, $\hat\sigma^2$ is a biased estimator of variance $\sigma^2$.
 
@@ -665,7 +666,7 @@ There are several ways to calculate confidence intervals using bootstrapping:
 2.  BCA
 3.  t-pivot
 
-Approach three doesn't always work but probably has the most desirable properties. Approach 2 is a suitable backup. Approach 1 often has the worst properties, but is simple and will be sufficient in many applications.
+Approach three doesn't always work but probably has the most desirable properties. Approach two is a suitable backup. Approach one often has the worst properties, but is simple and will be sufficient in many applications.
 
 #### Percentile Method
 
@@ -704,11 +705,6 @@ The confidence intervals are comparable. We're good to go.
 Students can take multiple statistics classes and never learn how to calculate a 95% confidence interval for a median. It's simple with bootstrapping.
 
 In this case, it's striking that the balance for the median SEED account declined over the period and there is sufficient evidence that the median is statistically significantly different than \$0. In fact, it's negative!
-
-
-
-
-
 
 ## More Methods
 
