@@ -1,5 +1,5 @@
 ---
-title: "Nonparametric Statistics 2"
+title: "Nonparametric Inference"
 date: today
 abstract: "This section extends nonparametric statistics to inference and hypothesis tests using a minimal number of assumptions."
 format: 
