@@ -35,11 +35,11 @@ theme_set(theme_minimal())
 
 There are many policy applications where it is useful to make accurate predictions on "unseen" data. Unseen data means any data not used to develop a model for predictions.
 
-The broad process of developing models to make predictions of a pre-defined variable is predictive modeling or supervised machine learning. The narrower process of developing a specific model with data is called fitting a model, learning a model, or estimating a model. The pre-defined variable of interest is the **outcome variable** and the remaining variables used to predict the outcome variable are **predictors**.[^names]
+The broad process of developing models to make predictions of a pre-defined variable is predictive modeling or supervised machine learning. The narrower process of developing a specific model with data is called fitting a model, learning a model, or estimating a model. The pre-defined variable the model is intended to predict is the **outcome variable** and the remaining variables used to predict the outcome variable are **predictors**.[^names]
 
 [^names]: The are many names for outcome variables including targets and dependent variable. There are many names for predictors including features and independent variables.
 
-In most applications we have **modeling data** that include the outcome of interest and **implementation data** that do not include the outcome of interest. Our objective is to fit, or estimate, some $\hat{f}(\vec{x})$ using the modeling data to predict the missing outcome in the implementation data using.
+In most applications we have **modeling data** that include the outcome of interest and **implementation data** that do not include the outcome of interest. Our objective is to fit, or estimate, some $\hat{f}(\vec{x})$ using the modeling data to predict the missing outcome in the implementation data.
 
 ![Modeling Data and Implementation Data for predicting the presence of lead in homes](images/data.png){#fig-data}
 
@@ -54,26 +54,26 @@ Modeling data are often historical data or high-cost data.
 ::: callout-tip
 ## Implementation Data
 
-Implementation data contain predictors for predicting the outcome of interest, but don't necessarily contain the outcome of interest.
+Implementation data contain predictors for predicting the outcome of interest but don't necessarily contain the outcome of interest.
 
-The implementation data needs to contain all of the predictors used in the modeling data and the implementation data can't be too different from the modeling data.
+The implementation data needs to contain all of the predictors used in the modeling data, and the implementation data can't be too different from the modeling data.
 :::
 
 ### Examples
 
-Predictive modeling is used in public policy for targeting interventions, amplified asking, scaled labeling, and forecasting and nowcasting.
+Predictive modeling is used in public policy for targeting interventions, amplified asking, scaled labeling, and forecasting and nowcasting. We explore each of these topics in more depth below.
 
 ::: callout-tip
 ## Targeting Interventions
 
-Using predictive modeling to target the person, household, or place most in need of a policy intervention. Effective targeting of interventions can make the intervention more efficient and cost effective.
+Using predictive modeling to target the person, household, or place most in need of a policy intervention. Effective targeting can maximize the impact of a limited intervention.
 :::
 
 Consider "[Predictive Modeling for Public Health: Preventing Childhood Lead Poisoning](https://www.dssgfellowship.org/wp-content/uploads/2016/01/p2039-potash.pdf)" by @potash2015.
 
 The authors use historical data in Chicago from home lead inspectors and observable characteristics about homes and neighborhoods to predict if homes contain lead.
 
--   **Motivation:** Lead poisoning is terrible for children but Chicago has limited lead inspectors.
+-   **Motivation:** Lead poisoning is terrible for children, but Chicago has limited lead inspectors.
 -   **Implementation data:** Observed characteristics about homes and neighborhoods in Chicago.
 -   **Modeling data:** Historical characteristics about homes and neighborhoods in Chicago and results from home lead inspections.
 -   **Objective:** Predict the probability of a home containing lead. 1. Prioritize sending inspectors to the homes of the most at-risk children before the child suffers from elevated BLL. 2. Create a risk score for children that can be used by parents and health providers.
@@ -83,17 +83,17 @@ The authors use historical data in Chicago from home lead inspectors and observa
 ::: callout-tip
 ## Amplified Asking
 
-Amplified asking [@salganik2018] uses predictive modeling trained on a small amount of survey data from one data source and applies it to a larger data source to produce estimates at a scale or geographic granularity not possible with either data set one its own.
+Amplified asking [@salganik2018] uses predictive modeling trained on a small amount of survey data from one data source and applies it to a larger data source to produce estimates at a scale or geographic granularity not possible with either data set on its own.
 :::
 
 Consider "Calling for Better Measurement: Estimating an Individual's Wealth and Well-Being from Mobile Phone Transaction Records" by @blumenstock and "Predicting poverty and wealth from mobile phone metadata" by @blumenstock2015.
 
 -   **Motivation:** Measuring wealth and poverty in developing nations is challenging and expensive.
--   **Implementation data:** 2005-2009 phone metadata about 1.5 million phone customers in Rwanda.
+-   **Implementation data:** 2005-2009 phone metadata from about 1.5 million phone customers in Rwanda.
 -   **Modeling data:** A follow-up phone stratified survey of 856 phone customers with questions about asset ownership, home ownership, and basic welfare indicators linked to the phone metadata.
 -   **Objective:** Use the phone metadata to accurately predict variables about asset ownership, home ownership, and basic welfare indicators. One of their outcomes variables is the first principal component of asset variables.
 -   **Tools:** 5-fold cross-validation, elastic net regression and regularized logistic regression, deterministic finite automation.
--   **Results:** The results in the first paper were poor but follow work resulted in models with AUC as high as 0.88 and $R^2$ as high as 0.46.
+-   **Results:** The results in the first paper were poor, but follow-up work resulted in models with AUC as high as 0.88 and $R^2$ as high as 0.46.
 
 ::: callout-tip
 ## Scaled Labeling
@@ -125,7 +125,7 @@ Consider the high-profile Google Flu Trends model by @ginsberg2009.
 -   **Modeling data:** 2003-2008 CDC data about flu-like illnesses and counts for 50 million of the most common Google search queries in each state.
 -   **Objective:** Predict regional-level flu outbreaks on a one-day lag using Google searches to make predictions.
 -   **Tools:** Logistic regression and the top 45 influenza related illness query terms.
--   **Results:** The in-sample results were very promising. Unfortunately, the model performed poorly when implemented. Google implemented Google Flu Trends but later discontinued the mode. The two major issues were:
+-   **Results:** The in-sample results were very promising. Unfortunately, the model performed poorly when implemented. Google implemented Google Flu Trends but later discontinued the model. The two major issues were:
     1.  **Drift:** The model decayed over time because of changes to search
     2.  **Algorithmic confounding:** The model overestimated the 2009 flu season because of fear-induced search traffic during the Swine flu outbreak
 
@@ -284,7 +284,7 @@ ggplot() +
   geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
   facet_wrap(~model) +
   labs(
-    title = "Example 1 Data with Predictions (Linear Regression)",
+    title = "Example 1: Data with Predictions (Linear Regression)",
     subtitle = "Prediction in red"
   ) +
   theme_minimal()
@@ -293,7 +293,7 @@ ggplot() +
 
 ### KNN
 
-1.  Find the $k$ closest observation using only the predictors. Closeness is typically measured with Euclidean distance.
+1.  Find the $k$ closest observations using only the predictors. Closeness is typically measured with Euclidean distance.
 2.  Take the mean of the outcome variables for the $k$ closest observations.
 
 ```{r}
@@ -344,7 +344,7 @@ ggplot() +
   geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
   facet_wrap(~model) +
   labs(
-    title = "Example 1 Data with Predictions (KNN)",
+    title = "Example 1: Data with Predictions (KNN)",
     subtitle = "Prediction in red"
   ) +
   theme_minimal()
@@ -405,7 +405,7 @@ ggplot() +
   geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
   facet_wrap(~model) +
   labs(
-    title = "Example 1 Data with Predictions (Regression Trees)",
+    title = "Example 1: Data with Predictions (Regression Trees)",
     subtitle = "Prediction in red"
   ) +
   theme_minimal()
@@ -427,6 +427,8 @@ rpart.plot(reg_tree_mod1$fit, roundint = FALSE)
 Linear regression is a parameteric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.
 
 KNN and regression trees are nonparametric approaches to predictive modeling because they do not require an assumption about the functional form of the model. The data-driven approach of nonparametric models is appealing because it requires fewer assumptions, but it often requires more data and care to not overfit the modeling data.
+
+Regression trees are the simplest tree-based algorithms. Other tree-based algorithms, like gradient-boosted trees and random forests, often have far better performance than regression trees.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -651,6 +653,8 @@ A subset of data used to estimate model performance. The testing set usually inc
 ## $v$-fold Cross-Validation
 
 Break the data into $v$ equal-sized, exclusive groups. Train the model on data from $v - 1$ folds (analysis data) and measure the error metric (i.e. RMSE) on the left-out fold (assessment data). Repeat this process $v$ times, each time leaving out a different fold. Average the $v$ error metrics.
+
+$v$-fold cross-validation is sometimes called $k$-fold cross-validation.
 :::
 
 Strategies for spending data differ based on the application and the size and nature of the data. Ideally, the training-testing split is made at the beginning of the modeling process. The $v$-fold cross-validation is used on the testing data for comparing
@@ -666,7 +670,9 @@ When information that won't be available when the model makes out-of-sample pred
 :::
 
 ::: {.callout-warning}
-Feature and target engineering is a common source of data leakage. For example, regularized regression models expect variables to be normalized (divide each predictor by the sample mean and divide by the sample standard deviation). 
+Feature and target engineering is a common source of data leakage. 
+
+For example, regularized regression models expect variables to be normalized (divide each predictor by the sample mean and divide by the sample standard deviation). A naive approach would be to calculate the means and standard deviations once one the full data set and use them on the testing data or use them in cross validation. This causes data leakage and biased underestimates of the out-of-sample error rate.
 
 New means and standard deviations need to be estimated every time a model is fit including within each iteration of a resampling method! This is a lot of work, but `library(tidymodels)` makes this simple.
 :::
@@ -748,7 +754,7 @@ knn_recipe <-
 
 ```
 
-We use `nearest_neighbor()` to create a KNN model and we use `tune()` as a placeholder for `k`.
+We use `nearest_neighbor()` to create a KNN model and we use `tune()` as a placeholder for `k`. Note that we can tune many hyperparameters for a given model. The Regression Tree example later in this chapter illustrates this concept.
 
 ```{r}
 knn_mod <-
@@ -832,7 +838,7 @@ final_fit <-
 
 `select_best()` takes a narrow view of model selection and picks the model with the lowest error rate. 
 
-It is important to consider other elements when picking a "best". Other considerations include parsimony, cost, and equity. 
+It is important to consider other elements when picking a "best." Other considerations include parsimony, cost, and equity. 
 
 :::
 
@@ -899,7 +905,7 @@ chicago_small <- Chicago |>
 
 #### 0. Problem Formulation
 
-The variable `ridership` is the outcome of interest. It measures ridership at the Clark/Lake L station in Chicago. The variables `Clark_Lake`, `Quincy_Wells`, `Irving_Park`, `Monroe`, and `Polk` measure ridership at several stations *14 days before* the `ridership` variable. 
+The variable `ridership` is the outcome variable. It measures ridership at the Clark/Lake L station in Chicago. The variables `Clark_Lake`, `Quincy_Wells`, `Irving_Park`, `Monroe`, and `Polk` measure ridership at several stations *14 days before* the `ridership` variable. 
 
 The objective is predict `ridership` to better allocate staff and resources to the Clark/Lake L station. 
 
@@ -919,7 +925,7 @@ chicago_test  <- testing(x = chicago_split)
 
 #### 2. Exploratory Data Analysis
 
-[This chapter](https://bookdown.org/max/FES/visualizations-for-numeric-data-exploring-train-ridership-data.html) in "Feature and Target Engineering" contains EDA for the data set of interest.
+[This chapter](https://bookdown.org/max/FES/visualizations-for-numeric-data-exploring-train-ridership-data.html) in "**Feature and Target Engineering**" contains EDA for the data set of interest.
 
 #### 3. Set up Resampling for Model Selection
 
@@ -932,7 +938,7 @@ chicago_folds <- vfold_cv(data = chicago_train, v = 10)
 
 #### 4. Create Candidate Models
 
-We will use regression trees for this example. 
+We will use regression trees for this example. For feature and target engineering, we will simply remove the date column.
 
 ```{r}
 rpart_recipe <-
@@ -1040,6 +1046,6 @@ final_fit |>
 
 If we think an expected error of around 2,340 people is appropriate, we can implement this model for the Chicago Transit Authority. 
 
-Instead, we're going back to the drawing board in our class lab to see if we can do better[^testing-data].
+Instead, we're going back to the drawing board in our class lab to see if we can do better.[^testing-data]
 
 [^testing-data]: Pretend we haven't already touched the testing data!
