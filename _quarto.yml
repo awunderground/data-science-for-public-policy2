@@ -16,7 +16,8 @@ book:
     - 06_advanced-unsupervised-ml.qmd
     - 07_microsimulation.qmd   
     - 08_nonparametric-1.qmd
-    - 09_nonparametric-2.qmd    
+    - 09_nonparametric-2.qmd   
+    - 10_predictive-modeling-review.qmd
     - references.qmd
 
 bibliography: references.bib

@@ -758,6 +758,17 @@ exercise_number <- exercise_number + 1
 
 :::
 
+```{r}
+#| echo: false
+cars |>
+  ggplot(aes(speed, dist)) +
+  geom_point() +
+  geom_smooth(se = FALSE) +
+  geom_smooth(method = "lm", color = "red", se = FALSE)
+
+```
+
+
 #### `loess()`
 
 `loess()` can be used to fit a local linear regression model. It contains many arguments than be used to fine-tune the fit include `span`, `degree`, and `surface`.
@@ -796,6 +807,21 @@ exercise_number <- exercise_number + 1
 ```{r}
 #| echo: false
 #| eval: false
+
+loess1 <- loess(formula = y ~ x, degree = 2, data = data1)
+
+yhat <- tibble(
+  x = 6,
+  y = predict(loess1, newdata = tibble(x = 6))
+)
+
+data1 |>
+  ggplot(aes(x, y)) +
+  geom_point() +
+  geom_smooth() +
+  geom_point(data = yhat, color = "red")
+
+
 
 
 ```
