@@ -6,6 +6,8 @@ format:
     toc: true
     embed-resources: true
     code-line-numbers: true
+execute: 
+  cache: true    
 bibliography: references.bib
 editor_options: 
   chunk_output_type: console
