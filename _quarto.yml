@@ -19,6 +19,7 @@ book:
     - 09_nonparametric-2.qmd   
     - 10_predictive-modeling-review.qmd
     - 11_ensembling.qmd
+    - 12_regularization.qmd
     - references.qmd
 
 bibliography: references.bib
