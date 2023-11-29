@@ -126,7 +126,7 @@ fit_ridge <- function(data, penalty) {
   
   ridge_wf |>
     fit(data = pdb_train) |>
-    extract_fit_parsnip() %>%
+    extract_fit_parsnip() |>
     tidy() |>
     mutate(penalty = penalty)
   
@@ -181,7 +181,7 @@ fit_lasso <- function(data, penalty) {
   
   lasso_wf |>
     fit(data = pdb_train) |>
-    extract_fit_parsnip() %>%
+    extract_fit_parsnip() |>
     tidy() |>
     mutate(penalty = penalty)
   
