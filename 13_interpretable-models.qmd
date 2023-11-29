@@ -1,0 +1,1082 @@
+---
+title: "Interpretable Models"
+abstract: ""
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+execute: 
+  cache: true    
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(here)
+library(tidymodels)
+
+theme_set(theme_minimal())
+
+options(scipen = 999)
+
+```
+
+## Planning Database
+
+-   **Motivation:** The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.
+-   **Implementation data:** Demographic and housing information for the American Community Survey at the census tract and census block group levels.
+-   **Modeling data:** Demographic and housing information for the American Community Survey and the low-response score for the 2010 Decennial Census at the census tract and census block group levels.
+-   **Objective:** Predict which areas will have the lowest response rates to the 2020 Decennial Census.
+-   **Tools:** Linear regression based on the top 25 predictors from gradient-boosted trees.
+-   **Results:** Unclear but we'll see more in these notes!
+
+### LRS Set Up
+
+We will work with the tract-level PDB instead of the block-group level PDB to simplify computation. The PDB contains more than 500 variables. For now, we only consider the top 25 variables to further simplify computation.
+
+```{r}
+pdb_small <- read_csv(here::here("data", "pdb_small.csv"))
+
+set.seed(20231114)
+pdb_split <- initial_split(pdb_small, prop = 0.8)
+
+pdb_train <- training(pdb_split)
+
+```
+
+```{r}
+#| eval: false
+#| echo: false
+
+pdb_test <- testing(pdb_split)
+
+pdb_test |>
+  select(-non_return_rate) |>
+  write_csv(here("data", "pdb_small_test.csv"))
+  
+pdb_test |>
+  write_csv(here("data", "pdb_small_evaluation.csv"))
+
+```
+
+Lastly, we set up $v$-fold cross validation. We only use five folds because some of the models take a long time to fit to the data.
+
+```{r}
+pdb_folds <- vfold_cv(data = pdb_train, v = 5)
+
+```
+
+## Motivation
+
+The model's that won the planning database Kaggle competition all used ensembled trees. They had high predictive power but were difficult to interpret and difficult to use for inference.
+
+In the end, the Census Bureau used the ensembled trees to inform a linear regression model that was easier to interpret. In other words, the Census Bureau sacrificed predictive power to gain interpretability.
+
+This section will introduce extensions of linear regression models that aim to improve predictive power without quickly becoming difficult to interpret or "black box."
+
+Like in earlier sections, we will use the simulated example 1 data to demonstrate some model fits.
+
+```{r}
+#| warning: false
+#| code-fold: true
+#| fig-cap: Simulated data
+
+library(tidymodels)
+
+set.seed(20201004)
+
+x <- runif(n = 1000, min = 0, max = 10)
+
+data1 <- bind_cols(
+  x = x,
+  y = 10 * sin(x) + x + 20 + rnorm(n = length(x), mean = 0, sd = 2)
+)
+
+set.seed(20201007)
+
+# create a split object
+data1_split <- initial_split(data = data1, prop = 0.75)
+
+# create the training and testing data
+data1_train <- training(x = data1_split)
+data1_test  <- testing(x = data1_split)
+
+```
+
+## Polynomial Regression
+
+::: callout-tip
+## Polynomial Regression
+
+Polynomial regression includes higher-degree predictors in the design matrix. For example, a regression model will include $x$ and $x^2$ as predictors.
+:::
+
+Polynomials extend linear regression to include transformations of predictors such that
+
+$$
+y_i = \beta_0 + \beta_1x_i + \beta_2x_i^2 + \cdot\cdot\cdot \beta_dx_i^d + \epsilon_i
+$$
+
+where $d$ is referred to as the degree of the polynomial.
+
+Polynomial regression is still linear regression because the model is linear in its coefficients but can fit non-linear patterns in the data
+
+@fig-simulated-regression shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.
+
+```{r}
+#| label: fig-simulated-regression
+#| code-fold: true
+
+lin_reg_model1 <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ x, data = data1_train)
+
+lin_reg_model2 <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ poly(x, degree = 2, raw = TRUE), data = data1_train)
+
+lin_reg_model3 <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ poly(x, degree = 3, raw = TRUE), data = data1_train)
+
+lin_reg_model4 <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ poly(x, degree = 4, raw = TRUE), data = data1_train)
+
+# create a grid of predictions
+new_data <- tibble(x = seq(0, 10, 0.1))
+
+predictions_grid <- tibble(
+  x = seq(0, 10, 0.1),
+  `Degree = 1` = predict(object = lin_reg_model1, new_data = new_data)$.pred,
+  `Degree = 2` = predict(object = lin_reg_model2, new_data = new_data)$.pred,
+  `Degree = 3` = predict(object = lin_reg_model3, new_data = new_data)$.pred,
+  `Degree = 4` = predict(object = lin_reg_model4, new_data = new_data)$.pred
+) |>
+  pivot_longer(-x, names_to = "model", values_to = ".pred")
+
+ggplot() +
+  geom_point(data = data1_train, aes(x = x, y = y), alpha = 0.25) +
+  geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
+  facet_wrap(~model) +
+  labs(
+    title = "Example 1: Data with Predictions (Linear Regression)",
+    subtitle = "Prediction in red"
+  ) +
+  theme_minimal()
+
+```
+
+## Interactions
+
+::: callout-tip
+## Interactions
+
+Interactions include the product of predictors in the design matrix for linear regression. For example, a regression model will include $x_1$, $x_2$, and $x_1x_2$ as predictors.
+:::
+
+Interactions extend polynomials to consider multiplying predictors by other predictors in addition to multiplying them by themselves. Including pairwise or triplewise interactions complicates interpretation but can improve the fit of the model to the data.
+
+::: callout-tip
+## Hierarchal Principle
+
+The hierarchical principle states that main effects should be included in regression models when interactions are included even if the main effects are not statistically significant. This includes polynomial regression.
+:::
+
+Outside of applications where a small number of interactions is included because of theory, interactions can explode the number of parameters that require estimation.
+
+> "A key problem in the estimation of two-way interaction models is the explosion in the number of unknown parameters." [@ibrahim2021]
+
+Simple pairwise interactions for the small planning database example explodes the number of predictors from 23 to 276.
+
+```{r}
+recipe(formula =  ~ ., data = pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_interact(terms = ~ all_predictors():all_predictors()) |>
+  prep(new_data = pdb_train) |>
+  bake(NULL)
+
+```
+
+Regularization with methods like LASSO regression and cross validation can help in the presence of many predictors.
+
+## Step Functions
+
+Step functions are not often used directly in predictive modeling but they are an important building block for other methods.
+
+Step functions break the range of a predictor into bins and then fit different constant (intercept only models) in each bin. @fig-piecewise-constant-regression shows piecewise constant regression fit to the simulated example 1 data. The example uses 9 separate regressions (8 knots).
+
+```{r}
+#| label: fig-piecewise-constant-regression
+#| code-fold: true
+#| warning: false
+
+# create a simple linear regression model
+lin_reg_model <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") 
+
+# specify a piecewise constant model
+step_function_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_spline_b(all_predictors(), degree = 0, deg_free = 8)
+
+# fit the model
+step_function_mod <- workflow() |>
+  add_model(spec = lin_reg_model) |>
+  add_recipe(recipe = step_function_rec) |>
+  fit(data = data1_train) 
+
+# create a grid of predictions
+new_data <- tibble(x = seq(0, 10, 0.1))
+
+predictions_grid <- tibble(
+  x = seq(0, 10, 0.1),
+  `Piecewise Constant Regression` = predict(object = step_function_mod, new_data = new_data)$.pred
+) |>
+  pivot_longer(-x, names_to = "model", values_to = ".pred")
+
+ggplot() +
+  geom_point(data = data1_train, aes(x = x, y = y), alpha = 0.25) +
+  geom_line(
+    data = filter(predictions_grid, model != "Continuous, Cubic"),
+    mapping = aes(x = x, y = .pred), 
+    color = "red"
+  ) +
+  facet_wrap(~model) +
+  labs(
+    title = "Example 1: Data with Predictions (Piecewise Constant Regression)",
+    subtitle = "Prediction in red"
+  ) +
+  theme_minimal()
+
+```
+
+We can now see the connection between piecewise constant regression and regression trees. Regression trees picks the knots, where we must specify the knots for piecewise constant regression.
+
+## Basis Functions
+
+::: callout-tip
+## Basis Functions
+
+Basis functions are fixed and known transformations applied to a variable $x$ before modeling. We can denote the basis functions as $b_1(), b_2(), ..., b_K()$. Basis functions result in "derived features."
+:::
+
+Consider a few simple basis function:
+
+-   Linear: $b_j(x_i) = x_i$
+-   Polynomial: $b_j(x_i) = x_i^j$
+-   Piecewise constant: $b_j(x_i) = I(c_j \leq x_i < c_{j + 1})$
+
+Basis functions are advantageous because if we fit a model like
+
+$$
+y_i = \beta_0 + \beta_1b_1(x_i) + \beta_1b_1(x_i) + \cdot\cdot\cdot + \beta_kb_K(x_i) + \epsilon_i
+$$
+
+then we can use least squares estimation and we have access to all of the tools available to linear regression like standard errors and statistical tests. Next, we will explore a few more basis functions.
+
+## Regression Splines
+
+::: callout-tip
+## Regression Splines
+
+Regression splines are piecewise polynomial basis functions with a constraint that the fitted curve must be continuous and have continuous first and second derivatives.
+
+Regression splines have a degree, which determines the order of the polynomials (e.g. 1 is linear and and 3 is cubic). Regression splines also have knots, which are the break points between regions.
+:::
+
+Regression splines combine piecewise step functions and polynomial regression with certain constraints using basis functions. Regression splines are called nonparametric even though they result in estimated regression coefficients.
+
+Knots are where the regions meet with regression splines. Regression splines are continuous at knots and have continuous first and second derivatives at knots. This ensures the fitted line.
+
+We won't show the basis functions for simplicity. Just recall, basis functions transform the variable $x$ before fitting the regression model.
+
+@fig-developing-splines shows several piecewise polynomial regression models fit to the simulated example 1 data. The first panel shows a piecewise linear model. Note the discontinuity. The second panel shows a piecewise square model. Again, note the discontinuity. The bottom two panels shows linear and square models with an added continuity conditions.
+
+```{r}
+#| label: fig-developing-splines
+#| code-fold: true
+#| warning: false
+
+# create a simple linear regression model
+lin_reg_model <- linear_reg() |>
+  set_engine(engine = "lm") |>
+  set_mode(mode = "regression") 
+
+# create a workflow with a model but no recipe
+base_workflow <- workflow() |>
+  add_model(spec = lin_reg_model)
+
+# create a series of custom recipes
+piecewise_linear_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_mutate(ntile = factor(ntile(x, n = 4))) |>
+  step_dummy(ntile) |>
+  step_interact(terms = ~ x:starts_with("ntile"))
+
+piecewise_square_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_mutate(ntile = factor(ntile(x, n = 4))) |>
+  step_dummy(ntile) |>
+  step_poly(x, options = list(raw = FALSE)) |>
+  step_interact(terms = ~ starts_with("x"):starts_with("n"))
+
+continuous_linear_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_spline_b(all_predictors(), degree = 1, deg_free = 5)
+
+continuous_square_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_spline_b(all_predictors(), degree = 2, deg_free = 6)
+
+continuous_cubic_rec <- recipe(formula = y ~ x, data = data1_train) |>
+  step_spline_b(all_predictors(), degree = 3, deg_free = 7)
+
+# add the custom recipes and fit the models
+piecewise_linear_mod <- base_workflow |>
+  add_recipe(recipe = piecewise_linear_rec) |>
+  fit(data = data1_train) 
+
+piecewise_square_mod <- base_workflow |>
+  add_recipe(recipe = piecewise_square_rec) |>
+  fit(data = data1_train) 
+
+continuous_linear_mod <- base_workflow |>
+  add_recipe(recipe = continuous_linear_rec) |>
+  fit(data = data1_train)
+
+continuous_square_mod <- base_workflow |>
+  add_recipe(recipe = continuous_square_rec) |>
+  fit(data = data1_train)
+
+continuous_cubic_mod <- base_workflow |>
+  add_recipe(recipe = continuous_cubic_rec) |>
+  fit(data = data1_train)
+
+# create a grid of predictions
+new_data <- tibble(x = seq(0, 10, 0.1))
+
+predictions_grid <- tibble(
+  x = seq(0, 10, 0.1),
+  `Piecewise, Linear` = predict(object = piecewise_linear_mod, new_data = new_data)$.pred,
+  `Piecewise, Square` = predict(object = piecewise_square_mod, new_data = new_data)$.pred,
+  `Continuous, Linear` = predict(object = continuous_linear_mod, new_data = new_data)$.pred,
+  `Continuous, Square` = predict(object = continuous_square_mod, new_data = new_data)$.pred,
+  `Continuous, Cubic` = predict(object = continuous_cubic_mod, new_data = new_data)$.pred
+) |>
+  pivot_longer(-x, names_to = "model", values_to = ".pred") |>
+  mutate(model = factor(model, levels = c("Piecewise, Linear", "Piecewise, Square", "Continuous, Linear", "Continuous, Square", "Continuous, Cubic")))
+
+ggplot() +
+  geom_point(data = data1_train, aes(x = x, y = y), alpha = 0.25) +
+  geom_line(
+    data = filter(predictions_grid, model != "Continuous, Cubic"),
+    mapping = aes(x = x, y = .pred), 
+    color = "red"
+  ) +
+  facet_wrap(~model) +
+  labs(
+    title = "Example 1: Data with Predictions (Piecewise Polynomials)",
+    subtitle = "Prediction in red"
+  ) +
+  theme_minimal()
+
+```
+
+Finally, @fig-cubic-spline shows a cubic spline model fit to the data. The model uses cubic polynomials and four knots. Recall that it took a 4th-degree polynomial to fit the pattern in the data.
+
+```{r}
+#| label: fig-cubic-spline
+#| fig-cap: Regression splines with cubic polynomials and four knots. Recall that it took a 4th-degree polynomial to fit the pattern in the data.
+#| code-fold: true
+
+ggplot() +
+  geom_point(data = data1_train, aes(x = x, y = y), alpha = 0.25) +
+  geom_line(
+    data = filter(predictions_grid, model == "Continuous, Cubic"),
+    mapping = aes(x = x, y = .pred), 
+    color = "red"
+  ) +
+  facet_wrap(~model) +
+  labs(
+    title = "Example 1: Data with Predictions (Cubic Regression splines)",
+    subtitle = "Prediction in red"
+  ) +
+  theme_minimal()
+
+```
+
+Higher degrees and more knots will fit the training data better but run the risk of resulting in an overfit model.
+
+Most data scientists don't use degree \> 3 because it is said that the human eye can't detect discontinuity for any degree $\geq$ 3.
+
+This leaves picking the number and location of the knots. The location of knots is typically evenly spaced out (e.g. three knots will be placed at the 25th, 50th, and 75th percentiles). The number of knots is limited by the number of observations in the data set. One popular approach is to propose many knots and then use regularization methods like LASSO regression with cross validation to drop unnecessary knots.
+
+::: callout-tip
+## Basis splines
+
+Basis splines are regression splines where every region has the same polynomial.
+:::
+
+::: callout-tip
+## Natural splines
+
+Natural splines are basis splines with the added constraint that the minimum region and maximum region (the area outside the most extreme knots) are constrained to be linear.
+:::
+
+High-degree polynomials have high variance in sparse regions of the data and at the extremes of data. This means minor changes in the data can dramatically change the fitted line.[^13_interpretable-models-1]
+
+[^13_interpretable-models-1]: The [Council of Economic Advisers "cubic model" of Covid-19 cases](https://www.vox.com/2020/5/8/21250641/kevin-hassett-cubic-model-smoothing) is one high profile example of extrapolating cubic models gone awry.
+
+## Generalized Additive Models
+
+::: callout-tip
+## Additive assumption
+
+The additive assumption of linear regression states that the contribution of each predictor to the outcome variable is independent of the other predictors.
+
+Interactions are one approach to address violations of the additivity assumption.
+:::
+
+We only considered basis functions in simple linear regression applications (starting with exactly one predictor) until now. Generalized additive models (GAMs) allow us to use non-linear functions of multiple predictors while maintaining additivity.
+
+::: callout-tip
+## Generalized Additive Models
+
+Generalized additive models are of the form
+
+$$
+y_i = \beta_0 + \sum_{j = 1}^pf_j(x_{ij}) + \epsilon_i
+$$
+
+In other words, the fitted line/conditional mean is the sum of the contributions of each of the predictors. The contributions can be modeled as non-linear functions (basis functions) of each predictor (polynomials, splines, etc.)
+:::
+
+## Multivariate Adaptive Regression Splines (MARS)
+
+Multivariate Adaptive Regression Splines (MARS) are an alternative to GAMs for capturing non-linear partners in data using linear regression and splines.
+
+::: callout-tip
+## Hinge Function
+
+$$
+h(x) = 
+\begin{cases}
+x & x > 0 \\
+0 & x \leq 0
+\end{cases}
+$$
+
+or
+
+$$
+h(x) = 
+\begin{cases}
+max(0, x - c) & x > c\\
+max(0, c - x) & x \leq c
+\end{cases}
+$$
+:::
+
+::: callout-tip
+## Multivariate Adaptive Regression Splines (MARS)
+
+MARS is an additive model of the form
+
+$$
+y_i = \sum_{j= 1}^pc_jB_j(x_i) + \epsilon_i
+$$
+
+where $c_j$ is a linear regression coefficient and $B_j(x_i)$ is
+
+1.  1
+2.  A hinge function
+3.  A product of hinge functions
+:::
+
+MARS proceeds in three steps
+
+1.  Find the knot that creates a piecewise regression model of the following form with the lowest SSE.
+
+$$
+y = \beta_0 + \beta_1h(x)
+$$
+
+2.  Repeat this process recursively until some stopping parameter is achieved. For example, the second step will have the form.
+
+$$
+y = \beta_0 + \beta_1h_1(x) + \beta_2h_2(x)
+$$
+
+3.  Prune with cross-validation.
+
+@fig-mars demonstrates MARS with 1, 2, 3, and 4 knots using the simulated example 1 data.
+
+```{r}
+#| label: fig-mars
+#| code-fold: true
+#| message: false
+
+# fit MARS with an increasing number of knots
+mars1 <- mars(num_terms = 2) |>
+  set_engine(engine = "earth") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ x, data = data1_train)
+
+mars2 <- mars(num_terms = 3) |>
+  set_engine(engine = "earth") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ x, data = data1_train)
+
+mars3 <- mars(num_terms = 4) |>
+  set_engine(engine = "earth") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ x, data = data1_train)
+
+mars4 <- mars(num_terms = 5) |>
+  set_engine(engine = "earth") |>
+  set_mode(mode = "regression") |>
+  fit(formula = y ~ x, data = data1_train)
+
+# create a grid of predictions
+new_data <- tibble(x = seq(0, 10, 0.1))
+
+predictions_grid <- tibble(
+  x = seq(0, 10, 0.1),
+  `Knots = 1` = predict(object = mars1, new_data = new_data)$.pred,
+  `Knots = 2` = predict(object = mars2, new_data = new_data)$.pred,
+  `Knots = 3` = predict(object = mars3, new_data = new_data)$.pred,
+  `Knots = 4` = predict(object = mars4, new_data = new_data)$.pred
+) |>
+  pivot_longer(-x, names_to = "model", values_to = ".pred")
+
+ggplot() +
+  geom_point(data = data1_train, aes(x = x, y = y), alpha = 0.25) +
+  geom_path(data = predictions_grid, aes(x = x, y = .pred), color = "red") +
+  facet_wrap(~model) +
+  labs(
+    title = "Example 1: Data with Predictions (MARS)",
+    subtitle = "Prediction in red"
+  ) +
+  theme_minimal()
+
+```
+
+We can print the table of hinges and coefficients for the four models like this:
+
+```{r}
+mars1$fit$coefficients
+mars2$fit$coefficients
+mars3$fit$coefficients
+mars4$fit$coefficients
+```
+
+## Case Study
+
+We now return to the PDB example with 25 variables and five fold cross validation.
+
+### Linear Regression
+
+We first consider multiple linear regression. We need a recipe, a model, and a workflow to fit the model five times and evaluate its predictive accuracy.
+
+The data set contains a few variables that shouldn't be included in the model. We use `update_role()` to turn them into "ids" to remove them from consideration.
+
+```{r}
+lm1_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id")
+
+lm1_mod <- linear_reg() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "lm")
+
+lm1_wf <- workflow() |>
+  add_recipe(lm1_rec) |>
+  add_model(lm1_mod)
+
+lm1_resamples <- lm1_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+lm1_resamples |>
+  collect_metrics()
+```
+
+We can use `last_fit()` to fit the model to all of the training data and `extract_fit_parsnip()` to examine the estimated coefficients.
+
+```{r}
+lm1_wf |>
+  last_fit(pdb_split) |>
+  extract_fit_parsnip()
+
+```
+
+### Linear Regression
+
+@erdman2017 included square root and logit transformations in their final specification. We next update the recipe to include their functional form.
+
+```{r}
+# create a complex recipe with square root, log, and logit transformations
+lm2_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_sqrt(
+    Pop_18_24_ACS_13_17,
+    Female_No_HB_ACS_13_17,
+    Pop_65plus_ACS_13_17,
+    Rel_Child_Under_6_ACS_13_17,
+    Pop_25_44_ACS_13_17,
+    Pop_45_64_ACS_13_17,
+    HHD_Moved_in_ACS_13_17,
+    Diff_HU_1yr_Ago_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Sngl_Prns_HHD_ACS_13_17,
+    Not_HS_Grad_ACS_13_17
+  ) |>
+  step_log(
+    Med_HHD_Inc_ACS_13_17,
+    Med_House_Value_ACS_13_17
+  ) |>
+  step_log(
+    Tot_Vacant_Units_ACS_13_17,
+    offset = 0.1
+  ) |>
+  add_role(
+    Renter_Occp_HU_ACS_13_17,
+    NH_White_alone_ACS_13_17,
+    College_ACS_13_17,
+    Hispanic_ACS_13_17,
+    Single_Unit_ACS_13_17,
+    NH_Blk_alone_ACS_13_17,
+    new_role = "logit"
+  ) |>
+step_range(
+    has_role("logit")
+  ) |>
+  step_logit(
+    has_role("logit"),
+    offset = 0.01
+  )
+
+# create a linear regression model
+lm2_mod <- linear_reg() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "lm")
+
+# combine the recipe and model into a workflow
+lm2_wf <- workflow() |>
+  add_recipe(lm2_rec) |>
+  add_model(lm2_mod)
+
+# fit the model
+lm2_resamples <- lm2_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+```
+
+Changing the functional form improves the model predictions.
+
+```{r}
+lm2_resamples |>
+  collect_metrics()
+```
+
+We can use `last_fit()` to fit the model to all of the training data and `extract_fit_parsnip()` to examine the estimated coefficients.
+
+```{r}
+lm2_wf |>
+  last_fit(pdb_split) |>
+  extract_fit_parsnip()
+
+```
+
+### Elastic Net
+
+Let's try the [@erdman2017] functional form with elastic net regularization. 
+
+```{r}
+enet_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_sqrt(
+    Pop_18_24_ACS_13_17,
+    Female_No_HB_ACS_13_17,
+    Pop_65plus_ACS_13_17,
+    Rel_Child_Under_6_ACS_13_17,
+    Pop_25_44_ACS_13_17,
+    Pop_45_64_ACS_13_17,
+    HHD_Moved_in_ACS_13_17,
+    Diff_HU_1yr_Ago_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Sngl_Prns_HHD_ACS_13_17,
+    Not_HS_Grad_ACS_13_17
+  ) |>
+  step_log(
+    Med_HHD_Inc_ACS_13_17,
+    Med_House_Value_ACS_13_17
+  ) |>
+  step_log(
+    Tot_Vacant_Units_ACS_13_17,
+    offset = 0.1
+  ) |>
+  add_role(
+    Renter_Occp_HU_ACS_13_17,
+    NH_White_alone_ACS_13_17,
+    College_ACS_13_17,
+    Hispanic_ACS_13_17,
+    Single_Unit_ACS_13_17,
+    NH_Blk_alone_ACS_13_17,
+    new_role = "logit"
+  ) |>
+  step_range(
+    has_role("logit")
+  ) |>
+  step_logit(
+    has_role("logit"),
+    offset = 0.01
+  ) |>
+  step_normalize(all_predictors())
+
+enet_mod <- linear_reg(penalty = tune(), mixture = tune()) |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "glmnet")  
+
+enet_wf <- workflow() |>
+  add_recipe(recipe = enet_rec) |>
+  add_model(spec = enet_mod)
+  
+enet_grid <- grid_regular(
+  penalty(), 
+  mixture(),
+  levels = 20
+)
+
+enet_tuning <- tune_grid(
+  enet_wf,
+  resamples = pdb_folds,
+  grid = enet_grid
+)
+
+show_best(enet_tuning)
+
+autoplot(enet_tuning)
+
+enet_tuned_wf <-
+  enet_wf |>
+  tune::finalize_workflow(tune::select_best(x = enet_tuning, metric = "rmse"))
+
+enet_resamples <- enet_tuned_wf |>
+  fit_resamples(resamples = pdb_folds)
+```
+
+Regularization doesn't help much in this case. This makes sense because the regression specification is parsimonious and deliberate. 
+
+```{r}
+enet_resamples |>
+  collect_metrics()
+
+```
+
+### Polynomial Regression
+
+Next we add a 2nd-degree polynomial for all predictors. 
+
+```{r}
+polynomial_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_poly(all_predictors())
+
+lm_mod <- linear_reg() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "lm")
+
+polynomial_wf <- workflow() |>
+  add_recipe(polynomial_rec) |>
+  add_model(lm_mod)
+
+polynomial_resamples <- polynomial_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+```
+
+The results are terrible. It's possible the polynomials are poorly behaved and the model has issues with multicollinearity. In particular, look at the `std_err` of the mean RMSE. The inconsistently of the RMSE is troubling. 
+
+```{r}
+polynomial_resamples |>
+  collect_metrics()
+```
+
+### Polynomial Regression with Elastic Net
+
+Let's try adding 2nd degree polynomials and interactions to create a huge design matrix and then use elastic net regression for regularization. 
+
+```{r}
+poly_enet_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_sqrt(
+    Pop_18_24_ACS_13_17,
+    Female_No_HB_ACS_13_17,
+    Pop_65plus_ACS_13_17,
+    Rel_Child_Under_6_ACS_13_17,
+    Pop_25_44_ACS_13_17,
+    Pop_45_64_ACS_13_17,
+    HHD_Moved_in_ACS_13_17,
+    Diff_HU_1yr_Ago_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    Sngl_Prns_HHD_ACS_13_17,
+    Not_HS_Grad_ACS_13_17
+  ) |>
+  step_log(
+    Med_HHD_Inc_ACS_13_17,
+    Med_House_Value_ACS_13_17
+  ) |>
+  step_log(
+    Tot_Vacant_Units_ACS_13_17,
+    offset = 0.1
+  ) |>
+  add_role(
+    Renter_Occp_HU_ACS_13_17,
+    NH_White_alone_ACS_13_17,
+    College_ACS_13_17,
+    Hispanic_ACS_13_17,
+    Single_Unit_ACS_13_17,
+    NH_Blk_alone_ACS_13_17,
+    new_role = "logit"
+  ) |>
+  step_range(
+    has_role("logit")
+  ) |>
+  step_logit(
+    has_role("logit"),
+    offset = 0.01
+  ) |>
+  step_normalize(all_predictors()) |>
+  step_poly(all_predictors(), degree = 3) |>
+  step_interact(terms = ~starts_with("Renter"):all_predictors())
+
+poly_enet_mod <- linear_reg(penalty = tune(), mixture = tune()) |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "glmnet")  
+
+poly_enet_wf <- workflow() |>
+  add_recipe(recipe = poly_enet_rec) |>
+  add_model(spec = poly_enet_mod)
+  
+poly_enet_grid <- grid_regular(
+  penalty(), 
+  mixture(),
+  levels = 20
+)
+
+poly_enet_tuning <- tune_grid(
+  poly_enet_wf,
+  resamples = pdb_folds,
+  grid = poly_enet_grid
+)
+
+show_best(poly_enet_tuning)
+
+autoplot(poly_enet_tuning)
+
+poly_enet_tuned_wf <-
+  poly_enet_wf |>
+  tune::finalize_workflow(tune::select_best(x = poly_enet_tuning, metric = "rmse"))
+
+poly_enet_resamples <- poly_enet_tuned_wf |>
+  fit_resamples(resamples = pdb_folds)
+```
+
+Here, elastic net regularization dramatically improves the model performance over the simple model and the saturated model with regularization.
+
+```{r}
+poly_enet_resamples |>
+  collect_metrics()
+
+```
+
+### GAM/Regression Splines
+
+Let's explore regression splines and a GAM. The syntax for regression splines in GAMs is slightly different because the tuning isn't a hyperparameter. 
+
+Also, the model takes a long time to fit. To keep things simple, we only consider a few splines. Choosing the correct predictors for splines requires EDA and theory. 
+
+```{r}
+gam_spec <- gen_additive_mod(adjust_deg_free = tune()) |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "mgcv")
+
+gam_wf <- workflow() |>
+  add_recipe(lm1_rec) |>
+  add_model(
+    gam_spec,
+    formula = non_return_rate ~ 
+      s(Renter_Occp_HU_ACS_13_17) +
+      s(Pop_18_24_ACS_13_17) +
+      s(Female_No_HB_ACS_13_17) +
+      s(NH_White_alone_ACS_13_17) +
+      s(Pop_65plus_ACS_13_17) +
+      s(Rel_Child_Under_6_ACS_13_17) +
+      s(Males_ACS_13_17) +
+      s(MrdCple_Fmly_HHD_ACS_13_17) +
+      s(Pop_25_44_ACS_13_17) +
+      s(Tot_Vacant_Units_ACS_13_17) +
+      s(College_ACS_13_17) +
+      s(Med_HHD_Inc_ACS_13_17) +
+      s(Pop_45_64_ACS_13_17) +
+      s(HHD_Moved_in_ACS_13_17) +
+      Hispanic_ACS_13_17 +
+      Single_Unit_ACS_13_17 +
+      Diff_HU_1yr_Ago_ACS_13_17 +
+      Pop_5_17_ACS_13_17 +
+      NH_Blk_alone_ACS_13_17 +
+      Sngl_Prns_HHD_ACS_13_17 +
+      Not_HS_Grad_ACS_13_17 +
+      Med_House_Value_ACS_13_17
+  )
+
+gam_grid <-
+  grid_regular(adjust_deg_free(range = c(0.25, 5)), levels = 5)
+
+gam_tune <-
+  tune_grid(
+    gam_wf, 
+    resamples = pdb_folds,
+    grid = gam_grid
+  )
+
+autoplot(gam_tune)
+
+show_best(gam_tune)
+
+gam_final_wf <-
+  finalize_workflow(gam_wf,
+                    select_best(gam_tune, metric = "rmse"))
+
+gam_resamples <- gam_final_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+show_best(gam_resamples)
+
+```
+
+### MARS
+
+Finally, let's explore MARS with hyperparameter tuning. Note the simplicity of the recipe. 
+
+```{r}
+#| label: tune-mars
+#| eval: false
+#| code-fold: true
+
+mars_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id")
+
+# we will tune the number of knots and the degree of the polynomials in each
+# piecewise region
+mars_mod <- mars(
+  num_terms = tune(), 
+  prod_degree = tune()
+) |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "earth")
+
+mars_wf <- workflow() |>
+  add_recipe(recipe = mars_rec) |>
+  add_model(spec = mars_mod)
+
+mars_grid <- grid_regular(
+  num_terms(range = c(20, 100)),
+  prod_degree(),
+  levels = 10
+)
+
+mars_resamples <- tune_grid(
+  mars_wf,
+  resamples = pdb_folds,
+  grid = mars_grid
+)
+
+collect_metrics(mars_resamples)
+
+show_best(mars_resamples)
+
+autoplot(mars_resamples)
+
+```
+
+```{r}
+#| label: mars
+
+mars_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  update_role(State_name, County_name, Low_Response_Score, new_role = "id")
+
+# the best parameters were chosen using hyperparameter tuning
+mars_mod <- mars(
+  num_terms = 46,
+  prod_degree = 2
+) |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "earth")
+
+mars_wf <- workflow() |>
+  add_recipe(recipe = mars_rec) |>
+  add_model(spec = mars_mod)
+
+mars_resamples <- mars_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+collect_metrics(mars_resamples)
+
+```
+
+### Final Comparison
+
+Finally, let's compare the RMSE and $r$-squared for linear regression and MARS (with hyperparameter tuning).
+
+```{r}
+bind_rows(
+  `Linear regression` = collect_metrics(lm1_resamples) |>
+    filter(.metric == "rmse"),
+  `Linear regression (Prepped)` = collect_metrics(lm2_resamples) |>
+    filter(.metric == "rmse"),  
+  `Elastic Net` = collect_metrics(enet_resamples) |>
+    filter(.metric == "rmse"),  
+  `Polynomial ENet regression` = collect_metrics(poly_enet_resamples) |>
+    filter(.metric == "rmse"),
+  `GAM` = collect_metrics(gam_resamples) |>
+    filter(.metric == "rmse"),  
+  `MARS` = collect_metrics(mars_resamples) |>
+    filter(.metric == "rmse"),
+  .id = "model"
+)
+
+bind_rows(
+  `Linear regression` = collect_metrics(lm1_resamples) |>
+    filter(.metric == "rsq"),
+  `Linear regression (Prepped)` = collect_metrics(lm2_resamples) |>
+    filter(.metric == "rsq"),    
+  `Elastic Net` = collect_metrics(enet_resamples) |>
+    filter(.metric == "rsq"),   
+  `Polynomial ENet regression` = collect_metrics(poly_enet_resamples) |>
+    filter(.metric == "rsq"), 
+  `GAM` = collect_metrics(gam_resamples) |>
+    filter(.metric == "rsq"),  
+  `MARS` = collect_metrics(mars_resamples) |>
+    filter(.metric == "rsq"),
+  .id = "model"
+)
+
+```
