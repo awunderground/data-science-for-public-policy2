@@ -18,6 +18,9 @@ book:
     - 08_nonparametric-1.qmd
     - 09_nonparametric-2.qmd   
     - 10_predictive-modeling-review.qmd
+    - 11_ensembling.qmd
+    - 12_regularization.qmd
+    - 13_interpretable-models.qmd
     - references.qmd
 
 bibliography: references.bib
