@@ -5,7 +5,6 @@ abstract: "This section extends nonparametric statistics to inference and hypoth
 format: 
   html:
     toc: true
-    embed-resources: true
     code-line-numbers: true
 execute: 
   messages: false
