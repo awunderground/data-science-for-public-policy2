@@ -50,9 +50,9 @@ This chapter introduces ensembling, the process of combining predictions from mu
 
 This chapter also introduces an extended example of predicting a low response rate on the US Census Bureau's decennial census planning database.
 
-## Planning Database
+## Introduction to the Prediction Problem
 
--   **Motivation:** The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.
+-   **Motivation:** The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count for the decennial census is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.
 -   **Implementation data:** Demographic and housing information for the American Community Survey at the census tract and census block group levels.
 -   **Modeling data:** Demographic and housing information for the American Community Survey and the low-response score for the 2010 Decennial Census at the census tract and census block group levels.
 -   **Objective:** Predict which areas will have the lowest response rates to the 2020 Decennial Census.
@@ -63,7 +63,7 @@ This chapter also introduces an extended example of predicting a low response ra
 
 The US Census Bureau develops [planning databases](https://www.census.gov/data/developers/data-sets/planning-database.html) to prepare for decennial censuses. This database has many uses, but one use is to predict the census tracts and census block groups that will have the worst response rates for the decennial census.
 
-This exercise began with the Hard to Count Score [@bruce2001; @bruce2003]. The authors used theory to develop an index of twelve variables correlated with non response and under counting to sort census tracts and plan for the next decennial census.
+This exercise began with the Hard to Count Score [@bruce2001; @bruce2003]. The authors used theory to develop an index of twelve variables correlated with nonresponse and under counting to sort census tracts and plan for the next decennial census.
 
 -   Renter occupied units
 -   Unmarried
@@ -78,19 +78,19 @@ This exercise began with the Hard to Count Score [@bruce2001; @bruce2003]. The a
 -   Linguistically isolated households
 -   No phone service
 
-This is clearly a predictive task but the authors brought a traditional social sciences approach.
+This is clearly a predictive task, but the authors brought a traditional social sciences approach.
 
 ### Kaggle Competition
 
-In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle [@erdman2014; @erdman2017]. The competition was motivated by the America COMPETES act. [Kaggle competitions](https://www.kaggle.com/competitions) allow teams to compete in predictive modeling tasks for cash prizes.
+In 2012, the US Census Bureau crowdsourced a predictive modeling competition on Kaggle [@erdman2014; @erdman2017]. The competition was motivated by the America COMPETES act. [Kaggle competitions](https://www.kaggle.com/competitions) allow teams to compete in predictive modeling tasks for cash prizes.
 
 The [Census Bureau's Kaggle Competition](https://www.kaggle.com/competitions/us-census-bureau-ndsu-and-umn/overview) tried to answer the question, "Which statistical model best predicts 2010 Census mail return rates?"
 
 Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.[^11_ensembling-1]
 
-[^11_ensembling-1]: The Kaggle competition website says mean absolute error weighed by 2010 population.
+[^11_ensembling-1]: The Kaggle competition website says mean absolute error weighted by 2010 population, which we believe is incorrect.
 
-244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees [@erdman201].
+244 teams and individuals competed. Bill Bame, a software developer from Maryland, won the competition with a mean squared error of 2.60. The top three finishers used ensembled tree-based models like random forests and boosted trees [@erdman201].
 
 ### The Low-Response Score
 
@@ -140,7 +140,7 @@ pdb_folds <- vfold_cv(data = pdb_train, v = 5)
 
 We first consider multiple linear regression. We need a recipe, a model, and a workflow to fit the model five times and evaluate its predictive accuracy.
 
-The data set contains a few variables that shouldn't be included in the model. We use `add_role()` to turn them into "ids" and then `step_rm(has_role("id"))` to remove them from consideration.
+The data set contains a few variables that shouldn't be included in the model. For example, `Low_Response_Score` is the index created by the modeling process and it doesn't make sense to include it as a predictor. We use `add_role()` to turn them into "ids" and then `step_rm(has_role("id"))` to remove them from consideration.
 
 ```{r}
 lm_rec <- recipe(non_return_rate ~ ., pdb_train) |>
@@ -224,7 +224,7 @@ Bagging, boosting, and stacking are three strategies for ensembling. We will cov
 
 Bagging, short for bootstrap aggregation, is a general purpose ensembling method that reduces the variance of a predictive model by training the model on many bootstrap samples[^11_ensembling-2] and then ensembling the predictions.
 
-The mean is typically used to ensemble in regression applications and majority vote is typically use to ensemble in classification applications.
+The mean is typically used to ensemble in regression applications, and majority vote is typically use to ensemble in classification applications.
 :::
 
 [^11_ensembling-2]: This is the same bootstrap sampling used for nonparametric statistical inference.
@@ -386,7 +386,7 @@ The models fit on bootstrap samples of data are often highly correlated. Random 
 Random forests are identical to bagged trees, except each time a split is considered in a regression tree, RF only considers a subset of predictors instead of all predictors. By intentionally making each tree a little worse, the algorithm typically makes better predictions.
 
 ::: callout-note
-## Random Forests Algorithm
+## Random Forest Algorithm
 
 1.  Bootstrap sampling from the data $trees$ times.
 2.  For the $i^{th}$ bootstrap sample, fit a regression tree.
@@ -404,7 +404,7 @@ Regularization is a change to a loss function or algorithm intended to intention
 LASSO regression (L-1 regularization) and Ridge regression (L-2 regularization) are two popular regularization techniques.
 :::
 
-Random forests are regularized models, and have similarities to linear regression with ridge regression, even though it is a non-parametric model.
+Random forests are regularized models. Though they are non-parametric, they have similarities to linear regression with ridge regression.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -520,7 +520,9 @@ The ability to understand overall model behavior for a fitted predictive modelin
 The ability to understand individual predictions for a fitted predictive modeling algorithm.
 :::
 
-Linear regression is easy to interpret because the fitting process is simple and linear regression models have a finite number of clear regression coefficients. Regression trees result in a clear tree that often simple enough to include in the New York Times.
+Linear regression is easy to interpret because the fitting process is simple, and linear regression models have a finite number of clear regression coefficients. Regression trees result in a clear tree that often simple enough to include in the New York Times[^NYT].
+
+[^NYT]: https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?action=click&module=RelatedCoverage&pgtype=Article&region=Footer
 
 The shift from linear regression and regression trees, which are locally and globally interpretable to ensembled models sacrifices model interpretability. Random forests return neither simple regression coefficients or a clear, visualized tree.
 
@@ -536,9 +538,9 @@ Linear regression returns coefficients and regression trees return trees that ca
 Variable importance is the contribution each predictor has to a fitted model.
 :::
 
-Variable importance is an alternative approach that aims to capture the why of a model and prediction. For linear regression, variable importance is typically just the absolute value of the estimated coefficient. 
+Variable importance is an alternative approach that aims to capture the why of a model and prediction. For linear regression fitted on standardized variables, variable importance is typically just the absolute value of the estimated coefficient. 
 
-For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but is a valuable tool for understanding a random forest model.
+For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but it is a valuable tool for understanding a random forest model.
 
 Here we fit the random forest model on all of the training data and then visualize the variable importance.
 
@@ -575,7 +577,7 @@ rf_final |>
 
 Parallelization breaks large computing tasks into smaller computing tasks and then executes those tasks on separate processors or cores at the same time.
 
-Coordinating the parallelization requires extra computation but concurrently running the task on multiple cores can often save time.
+Coordinating the parallelization requires extra computation, but concurrently running the task on multiple cores can often save time.
 :::
 
 Computers have a limited number of cores. The following code counts the number of available cores.
@@ -589,7 +591,7 @@ parallel::detectCores()
 Do not use all available cores. Only use a subset of available cores so other computations (e.g. Spotify and email) can continue on your computer.
 :::
 
-We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grow. Simply include `num.threads` in the `set_engine()` call. 
+We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grown. Simply include `num.threads` in the `set_engine()` call. 
 
 ```{r}
 #| eval: false
@@ -601,7 +603,7 @@ set_engine(
   )
 ```
 
-Parallelization is more difficult with boosted models, which are sequentially trained. The hyperparameter tuning later in this chapter uses a more complex socket parallelization with the following setup. This should detect a backend built into `library(tidymodels)` and parallelize the hyperparameter tuning with an entire model fit allocated to each core.
+Parallelization is more difficult with boosted models, which are sequentially trained. We will consider parallelization for boosted models later in the chapter. The hyperparameter tuning later in this chapter uses a more complex socket parallelization with the following setup. This should detect a backend built into `library(tidymodels)` and parallelize the hyperparameter tuning with an entire model fit allocated to each core.
 
 ```{r}
 #| eval: false
@@ -640,11 +642,8 @@ Boosting is a general purpose ensembling method that reduces the bias of a predi
 2.  For $b = 1, 2, ..., B$,
     (a) Fit a predictive model $\hat{f}^b$ to the data $(\mathbf{X}, \vec{r})$.
     (b) Update $\hat{f}$ by adding a weighted model
-
 $$\hat{f}(\vec{x}) \leftarrow \hat{f}(\vec{x}) + \lambda\hat{f}^b(\vec{x})$$
-
     (c) Update the residuals
-
 $$r_i \leftarrow r_i - \lambda\hat{f}^b(\vec{x})$$
 
 3.  Output the final model
@@ -663,11 +662,8 @@ XGBoost is a specific, tree-based boosting algorithm that frequently wins predic
 2.  For $b = 1, 2, ..., B$,
     (a) Fit a tree with $d$ splits $\hat{f}^b$ to the data $(\mathbf{X}, \vec{r})$.
     (b) Update $\hat{f}$ by adding a new tree
-
 $$\hat{f}(\vec{x}) \leftarrow \hat{f}(\vec{x}) + \lambda\hat{f}^b(\vec{x})$$
-
     (c) Update the residuals
-
 $$r_i \leftarrow r_i - \lambda\hat{f}^b(\vec{x})$$
 
 3.  Output the final model

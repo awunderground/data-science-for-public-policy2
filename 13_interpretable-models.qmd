@@ -35,7 +35,7 @@ options(scipen = 999)
 
 ```
 
-## Planning Database
+## Introduction to the Prediction Problem
 
 -   **Motivation:** The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.
 -   **Implementation data:** Demographic and housing information for the American Community Survey at the census tract and census block group levels.
@@ -133,7 +133,7 @@ $$
 
 where $d$ is referred to as the degree of the polynomial.
 
-Polynomial regression is still linear regression because the model is linear in its coefficients but can fit non-linear patterns in the data
+Polynomial regression is still linear regression because the model is linear in its coefficients but can fit non-linear patterns in the data.
 
 @fig-simulated-regression shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.
 
@@ -193,7 +193,9 @@ ggplot() +
 Interactions include the product of predictors in the design matrix for linear regression. For example, a regression model will include $x_1$, $x_2$, and $x_1x_2$ as predictors.
 :::
 
-Interactions extend polynomials to consider multiplying predictors by other predictors in addition to multiplying them by themselves. Including pairwise or triplewise interactions complicates interpretation but can improve the fit of the model to the data.
+Interactions extend polynomials to consider multiplying predictors by other predictors in addition to multiplying them by themselves. Including pairwise or triplewise interactions complicates interpretation but can improve the fit of the model to the data. To read more about how to interpret interaction term regression coefficients, see [section 11.2](https://book.stat420.org/categorical-predictors-and-interactions.html) of an online textbook for a University of Illinois regression class.
+
+
 
 ::: callout-tip
 ## Hierarchal Principle
@@ -205,7 +207,9 @@ Outside of applications where a small number of interactions is included because
 
 > "A key problem in the estimation of two-way interaction models is the explosion in the number of unknown parameters." [@ibrahim2021]
 
-Simple pairwise interactions for the small planning database example explodes the number of predictors from 23 to 276.
+Simple pairwise interactions for the small planning database example explodes the number of predictors from 23 to 276.[^pairwise]
+
+[^pairwise]: We now have two types of predictors: the initial 23 predictors and all 2-way interactions between them. To calculate all of the unique combinations, we can use the [combination formula](https://en.wikipedia.org/wiki/Combination). Applying this to our case, we have ${23 \choose 2} = \frac{23!}{(23 - 2)!2!} = 253$. 23 original predictors and 253 interactions together makes 276 total predictors.
 
 ```{r}
 recipe(formula =  ~ ., data = pdb_train) |>
@@ -222,7 +226,7 @@ Regularization with methods like LASSO regression and cross validation can help 
 
 Step functions are not often used directly in predictive modeling but they are an important building block for other methods.
 
-Step functions break the range of a predictor into bins and then fit different constant (intercept only models) in each bin. @fig-piecewise-constant-regression shows piecewise constant regression fit to the simulated example 1 data. The example uses 9 separate regressions (8 knots).
+Step functions break the range of a predictor into bins and then fit different constant (intercept only models) in each bin. @fig-piecewise-constant-regression shows piecewise constant regression fit to the simulated example 1 data. The example uses 9 separate regressions. We can also say that this example has 8 knots, or the number of break points between regions.
 
 ```{r}
 #| label: fig-piecewise-constant-regression

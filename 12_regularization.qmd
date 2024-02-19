@@ -52,7 +52,7 @@ $$\min(SSE) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2\right)$$
 
 It is impossible to solve for OLS when $p > n$ where $p$ is the number of predictors and $n$ is the number of observations. Additionally, OLS is unstable when data contain multicollinearity. 
 
-Let's fit a linear regression model on the PDB data set. 
+Let's fit a linear regression model on the PDB data set. We will compare the results of multiple types of regularization throughout the course of this chapter. This see their effects, we will fit an OLS model of the PBD data set as a "baseline."
 
 ```{r}
 pdb_small <- read_csv(here::here("data", "pdb_small.csv"))
@@ -80,7 +80,6 @@ lm_wf <- workflow() |>
 lm_wf |>
   fit(data = pdb_train) |>
   extract_fit_parsnip() |>
-  # vi() |>
   tidy() |>
   print(n = Inf)
   
@@ -96,7 +95,7 @@ For regression, the idea is to add a penalty $P$ to the optimization routine:
 
 $$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + P\right)$$
 
-## Ridge Regression
+### Ridge Regression
 
 $$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p\beta_j^2\right)$$
 
@@ -106,7 +105,7 @@ All variables should be centered and scaled (standardized) before estimation. Th
 
 Ridge regression reduces coefficients but it does not eliminate coefficients. 
 
-### Ridge regression reduces but does not eliminate coefficients
+#### Ridge regression reduces but does not eliminate coefficients
 
 ```{r}
 fit_ridge <- function(data, penalty) {
@@ -151,7 +150,7 @@ ggplot() +
 
 Note that regularized regression models expect standardized predictors (mean = 0 and standard deviation = 1). This changes this starting estimated parameters.
 
-## LASSO Regression
+### LASSO Regression
 
 $$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p|\beta_j|\right)$$
 
@@ -161,7 +160,7 @@ All variables should be centered and scaled (standardized) before estimation. Th
 
 LASSO regression can regularize coefficients all the way to zero.
 
-### LASSO regression eliminates coefficients
+#### LASSO regression eliminates coefficients
 
 ```{r}
 fit_lasso <- function(data, penalty) {
@@ -204,7 +203,7 @@ ggplot() +
 
 ```
 
-## Elastic Net Regression
+### Elastic Net Regression
 
 $$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda_1\sum_{j = 1}^p\beta_j^2 + \lambda_2\sum_{j = 1}^p|\beta_j|\right)$$
 
@@ -213,6 +212,4 @@ Elastic net regression combines ridge regression and LASSO regression. It has tw
 All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.
 
 Elastic net regression can perform feature selection, but in a less dramatic fashion than LASSO regression.
-
-### Elastic net blends Ridge regression and LASSO regression
 

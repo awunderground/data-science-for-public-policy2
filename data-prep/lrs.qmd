@@ -1,0 +1,279 @@
+---
+title: "Gradient Boosted Trees"
+abstract: ""
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(here)
+library(vip)
+
+```
+
+## Load Data
+
+```{r}
+pdb <- read_csv(here("data", "pdb2019trv6_us.csv"))
+
+```
+
+> Some responses are deliberately suppressed by the US Census Bureau for privacy considerations, to limit the disclosure of information about individual respondents and to reduce the number of estimates with unacceptable levels of statistical reliability (US Census Bureau, 2016)
+
+```{r}
+pdb <- pdb |>
+  filter(!is.na(Mail_Return_Rate_CEN_2010))
+
+```
+
+> The response is the ACS self-response rate. We exclude the following covariates from our model: spatial covariates (“State”, “County”, “Tract”, “Flag”, “AIAN Land”) and variables that serve as a proxy to the response (for example, “Low response score”, “Number of housing units that returned first forms”, “Replacement forms” or “Bilingual forms” in Census 2010). We also remove the margin of error variables corresponding to the ACS. After excluding these variables, we are left with p = 295 covariates
+
+https://www.census.gov/content/dam/Census/topics/research/2019_Tract_PDBDocumentationV6.pdf
+
+```{r}
+pdb <- pdb |>
+  select(-State, -County, -Tract, -Flag, -AIAN_LAND) |>
+  select(
+    # Number of housing units that returned first forms
+    -FRST_FRMS_CEN_2010,
+    -pct_FRST_FRMS_CEN_2010,
+    # replacement forms
+    -RPLCMNT_FRMS_CEN_2010, 
+    -pct_RPLCMNT_FRMS_CEN_2010,
+    # bilingual forms
+    -BILQ_Mailout_count_CEN_2010,
+    -BILQ_Frms_CEN_2010,
+    -pct_BILQ_Mailout_count_CEN_2010,
+    
+    # other operational variables
+    -MailBack_Area_Count_CEN_2010,
+    -TEA_Mail_Out_Mail_Back_CEN_2010,
+    -TEA_Update_Leave_CEN_2010,
+    -Census_Mail_Returns_CEN_2010,
+    -Vacants_CEN_2010,
+    -Deletes_CEN_2010,
+    -Census_UAA_CEN_2010,
+    -Valid_Mailback_Count_CEN_2010,
+    -Segmentation_Profile
+  ) |>
+  select(-contains("ACSMOE"))
+
+
+pdb <- pdb |>
+  mutate(
+    Med_HHD_Inc_ACS_13_17 = str_remove(Med_HHD_Inc_ACS_13_17, "\\$"),
+    Med_House_Value_ACS_13_17 = str_remove(Med_House_Value_ACS_13_17, "\\$"),
+  ) |>
+  mutate(
+    Med_HHD_Inc_ACS_13_17 = as.numeric(str_remove(Med_HHD_Inc_ACS_13_17, ",")),
+    Med_House_Value_ACS_13_17 = as.numeric(str_remove(Med_House_Value_ACS_13_17, ",")),
+  )
+
+```
+
+We create a tract-level data set for all examples. We construct `non_return_rate`, the outcome of interest. This is based on [the line](https://www.census.gov/content/dam/Census/library/working-papers/2014/adrm/rrs2014-08.pdf), "we use 100 minus return rate – “non-return rate” – as the dependent variable."
+
+We then select the top 25 predictors from the winning model included in [table 2](https://www.census.gov/content/dam/Census/library/working-papers/2014/adrm/rrs2014-08.pdf).
+
+```{r}
+pdb_assignment <- pdb |>
+  mutate(non_return_rate = 100 - Mail_Return_Rate_CEN_2010) |>
+  select(-Mail_Return_Rate_CEN_2010)
+
+set.seed(20231115)
+assignment_split <- initial_split(data = pdb_assignment, prop = 0.8)
+
+training(assignment_split) |>
+  write_csv(here::here("data", "assignment_training.csv"))
+
+testing(assignment_split) |>
+  select(-non_return_rate) |>
+  write_csv(here::here("data", "assignment_testing.csv"))
+
+testing(assignment_split) |>
+  write_csv(here::here("data", "assignment_evaluate.csv"))
+
+```
+
+
+
+```{r}
+pdb_small <- pdb |>
+  mutate(non_return_rate = 100 - Mail_Return_Rate_CEN_2010) |>
+  select(-Mail_Return_Rate_CEN_2010) |>
+  select(
+    State_name,
+    County_name,
+    Low_Response_Score,
+    non_return_rate,
+    Renter_Occp_HU_ACS_13_17,
+    Pop_18_24_ACS_13_17,
+    Female_No_HB_ACS_13_17,
+    NH_White_alone_ACS_13_17,
+    Pop_65plus_ACS_13_17,
+    Rel_Child_Under_6_ACS_13_17,
+    Males_ACS_13_17,
+    MrdCple_Fmly_HHD_ACS_13_17,
+    Pop_25_44_ACS_13_17,
+    Tot_Vacant_Units_ACS_13_17,
+    College_ACS_13_17,
+    Med_HHD_Inc_ACS_13_17,
+    Pop_45_64_ACS_13_17,
+    # persons per household
+    HHD_Moved_in_ACS_13_17,
+    Hispanic_ACS_13_17,
+    Single_Unit_ACS_13_17,
+    # density
+    Diff_HU_1yr_Ago_ACS_13_17,
+    Pop_5_17_ACS_13_17,
+    NH_Blk_alone_ACS_13_17,
+    Sngl_Prns_HHD_ACS_13_17,
+    Not_HS_Grad_ACS_13_17,
+    Med_House_Value_ACS_13_17
+  ) |>
+  drop_na()
+
+write_csv(pdb_small, here::here("data", "pdb_small.csv"))
+
+
+```
+
+## Split Data
+
+* training-testing split
+* 10-fold cross validation
+
+```{r}
+pdb_split <- initial_split(pdb_small, prop = 0.8)
+
+pdb_train <- training(pdb_split)
+
+pdb_test <- testing(pdb_split)
+
+pdb_folds <- vfold_cv(data = pdb_train, v = 5)
+
+```
+
+## EDA
+
+```{r}
+pdb_train |>
+  ggplot(aes(Renter_Occp_HU_ACS_13_17, non_return_rate)) +
+  geom_point(alpha = 0.1)
+
+pdb_train |>
+  ggplot(aes(Renter_Occp_HU_ACS_13_17, Low_Response_Score)) +
+  geom_point(alpha = 0.1)
+
+cor(pdb_train$Renter_Occp_HU_ACS_13_17, pdb_train$non_return_rate)
+cor(pdb_train$Renter_Occp_HU_ACS_13_17, pdb_train$Low_Response_Score)
+
+lm(non_return_rate ~ Renter_Occp_HU_ACS_13_17, data = pdb_train)
+
+
+```
+
+## Linear Regression
+
+```{r}
+lm_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_rm(has_role("id"))
+
+lm_mod <- linear_reg() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "lm")
+
+lm_wf <- workflow() |>
+  add_recipe(lm_rec) |>
+  add_model(lm_mod)
+
+lm_resamples <- lm_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+lm_resamples
+
+lm_wf |>
+  last_fit(pdb_split) |>
+  extract_fit_parsnip()
+
+collect_metrics(lm_resamples)
+
+lm_resamples |>
+  extract_fit_parsnip() |> 
+  vip()
+
+```
+
+## Regression Trees
+
+```{r}
+dt_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_rm(has_role("id"))
+
+dt_mod <- decision_tree() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "rpart")
+
+dt_wf <- workflow() |>
+  add_recipe(dt_rec) |>
+  add_model(dt_mod)
+
+boom <- dt_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+collect_metrics(boom)
+
+```
+
+## Bagged Trees
+
+```{r}
+bagged_trees_mod <- bag_tree(cost_complexity = 0.001) |>
+  set_engine("rpart", times = 100) |> # 25 ensemble members 
+  set_mode("regression") 
+
+library(baguette)
+
+bagged_trees_mod_wf <- workflow() |>
+  add_recipe(dt_rec) |>
+  add_model(bagged_trees_mod)
+
+bagged_trees_resamples <- bagged_trees_mod_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+collect_metrics(bagged_trees_resamples)
+
+```
+
+## Random Forests
+
+```{r}
+rf_rec <- recipe(non_return_rate ~ ., pdb_train) |>
+  add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_rm(has_role("id"))
+
+rf_mod <- rand_forest() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "ranger")
+
+rf_wf <- workflow() |>
+  add_recipe(rf_rec) |>
+  add_model(rf_mod)
+
+boom <- rf_wf |>
+  fit_resamples(resamples = pdb_folds)
+
+collect_metrics(boom)
+
+```
+
