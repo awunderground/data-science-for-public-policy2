@@ -43,3 +43,6 @@ po/*~
 # quarto files
 /.quarto/
 /_site/
+
+# cached_files:
+*_cache*

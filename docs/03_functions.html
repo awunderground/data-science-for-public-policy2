@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -162,18 +162,29 @@ div.csl-indent {
  <span class="menu-text">Welcome</span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./01_advanced-quarto.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
-        <li class="sidebar-item">
+          <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
   </div>
 </li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./03_functions.html" class="sidebar-item-text sidebar-link active">
@@ -508,7 +519,7 @@ Caution
 </div>
 <p>Referring to objects by name should make for code that is more robust to changing data.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
-<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true">Before</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">After</a></li></ul>
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Before</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">After</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <div class="cell">
@@ -807,7 +818,7 @@ Don’t grow vectors!
 </section>
 <section id="examples" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.3.2</span> Examples</h3>
-<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="references.html#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
+<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
 <p>Division by zero, which returns <code>NaN</code>, can be a real pain when comparing confidential and noisy results when the confidential value is <code>zero</code>. This function simply returns <code>0</code> when the denominator is <code>0</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co">#' Safely divide number. When zero is in the denominator, return 0. </span></span>
@@ -1046,7 +1057,7 @@ $median
 <section id="debugging" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">3.4</span> Debugging</h2>
 <p>R code inside of custom functions can be tougher to troubleshoot than R code outside of custom functions. Fortunately, R has a powerful debugging tool.</p>
-<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis"><span>Section&nbsp;3.6</span></a>.</p>
+<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis"><span class="quarto-unresolved-ref">sec-organizing-an-analysis</span></a>.</p>
 <p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="fig-debuggera" class="quarto-layout-panel">
 <figure class="figure">
@@ -1142,12 +1153,12 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
-                     expr      min       lq     mean   median       uq      max
-                median(x) 6.950238 7.345909 8.898511 7.648981 9.445601 46.82745
- quantile(x, probs = 0.5) 4.104797 4.363056 5.334475 4.524657 6.064618 12.64542
- neval cld
-   100  a 
-   100   b</code></pre>
+                     expr      min       lq     mean   median       uq
+                median(x) 6.600098 6.942960 7.901448 7.023218 8.536241
+ quantile(x, probs = 0.5) 3.732968 3.931572 4.515484 3.993666 5.209419
+       max neval
+ 42.985507   100
+  6.851756   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1264,7 +1275,7 @@ RoxygenNote: 7.2.3</code></pre>
 <h2 data-number="3.10" class="anchored" data-anchor-id="references"><span class="header-section-number">3.10</span> References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-barrientos2021" class="csl-entry" role="listitem">
 Barrientos, Andrés F., Aaron R. Williams, Joshua Snoke, and Claire McKay Bowen. 2021. <span>“A Feasibility Study of Differentially Private Summary Statistics and Regression Analyses with Evaluations on Administrative and Survey Data.”</span> <a href="https://doi.org/10.48550/ARXIV.2110.12055">https://doi.org/10.48550/ARXIV.2110.12055</a>.
 </div>

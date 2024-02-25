@@ -6,6 +6,7 @@ format:
     toc: true
     embed-resources: true
     code-line-numbers: true
+    self-contained: true
 editor_options: 
   chunk_output_type: console
 execute:
