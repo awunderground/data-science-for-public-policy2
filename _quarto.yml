@@ -10,50 +10,50 @@ book:
     - index.qmd
     - part: Basics
       chapters:
-        # - intro_to_r
-        # - intro_to_tidyverse
-        - 02_advanced-data-cleaning.qmd
-        # data visualization with ggplot2
-        # exploratory data analysis
+        # - PART 1: intro_to_r
+        # - PART 1: intro_to_tidyverse
+        - 03_advanced-data-cleaning.qmd
+        # PART 1: data visualization with ggplot2
+        # PART 1: exploratory data analysis
 
     - part: Reproducible Research
       chapters: 
-        # - reproducible research with Quarto
-        - 01_advanced-quarto.qmd
-        # - reproducible research with git 1
-        # - advanced git
+        # - PART 1:reproducible research with Quarto
+        - 07_advanced-quarto.qmd
+        # - PART 1: reproducible research with git 1
+        # - PART 1: advanced git
     - part: Programming
       chapters:
-        - 03_functions.qmd
-        # - r packages
-        # - apis
-        - 04_web-scraping.qmd
+        - 10_functions.qmd
+        # - r packages to be developed??
+        # - PART 1: apis
+        - 13_web-scraping.qmd
     - part: Statistics
       chapters:
-        # P1 simulation and sampling??
-        - 05_simulation-and-sampling.qmd
-        - 07_microsimulation.qmd   
-        - 08_nonparametric-1.qmd
-        - 09_nonparametric-2.qmd   
-        # - data imputation
+        # PART 1: simulation and sampling??
+        - 15_simulation-and-sampling.qmd
+        - 16_microsimulation.qmd   
+        - 17_nonparametric-1.qmd
+        - 18_nonparametric-2.qmd   
+        # - PART 1:data imputation
     - part: Supervised Machine Learning
       chapters:
-        - 10_predictive-modeling-review.qmd # + predictive modeling review
-        # - supervised classification
-        # - 11_ensembling.qmd - NEED pdb_small.csv
-        # - 12_regularization.qmd - NEED pdb_small.csv
+        - 20_predictive-modeling-review.qmd # + PART 1: predictive modeling review
+        # - PART 1: supervised classification
+        # - 22_ensembling.qmd - NEED pdb_small.csv
+        # - 23_regularization.qmd - NEED pdb_small.csv
     - part: Unsupervised Machine Learning
       chapters:
-        # - 13_interpretable-models.qmd
-        # - dimension reduction
-        # - cluster analysis
-        - 06_advanced-unsupervised-ml.qmd 
-        # - text analysis
-        # - text modeling
+        # - interpretable-models.qmd
+        # - PART 1: dimension reduction
+        # - PART 1: cluster analysis
+        - 27_advanced-unsupervised-ml.qmd 
+        # - PART 1: text analysis
+        # - PART 1: text modeling
     - part: Other Topics
-        # - geospatial analysis
-        # - cloud computing S3
-        # - parallel programming
+        # - PART 1: geospatial analysis
+        # - PART 1:cloud computing S3
+        # - parallel programming to be deeloped
     - references.qmd
 
 bibliography: references.bib
