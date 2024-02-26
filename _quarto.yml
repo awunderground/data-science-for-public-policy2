@@ -30,30 +30,28 @@ book:
         - 13_web-scraping.qmd
     - part: Statistics
       chapters:
-        # PART 1: simulation and sampling??
-        - 15_simulation-and-sampling.qmd
-        - 16_microsimulation.qmd   
-        - 17_nonparametric-1.qmd
-        - 18_nonparametric-2.qmd   
+        - 14_simulation-and-sampling.qmd
+        - 15_microsimulation.qmd   
+        - 16_nonparametric-1.qmd
+        - 17_nonparametric-2.qmd   
         # - PART 1:data imputation
     - part: Supervised Machine Learning
       chapters:
-        - 20_predictive-modeling-review.qmd # + PART 1: predictive modeling review
+        - 19_predictive-modeling-review.qmd # + PART 1: predictive modeling review
         # - PART 1: supervised classification
-        # - 22_ensembling.qmd - NEED pdb_small.csv
-        # - 23_regularization.qmd - NEED pdb_small.csv
+        # - 21_ensembling.qmd - NEED pdb_small.csv
+        # - 22_regularization.qmd - NEED pdb_small.csv
     - part: Unsupervised Machine Learning
       chapters:
         # - interpretable-models.qmd
         # - PART 1: dimension reduction
         # - PART 1: cluster analysis
-        - 27_advanced-unsupervised-ml.qmd 
+        - 26_advanced-unsupervised-ml.qmd 
         # - PART 1: text analysis
         # - PART 1: text modeling
     - part: Other Topics
         # - PART 1: geospatial analysis
-        # - PART 1:cloud computing S3
-        # - parallel programming to be deeloped
+        # - parallel programming to be developed
     - references.qmd
 
 bibliography: references.bib
