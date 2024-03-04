@@ -1,5 +1,5 @@
 ---
-title: "Data viz with ggplot2"
+title: "Data Visualization with ggplot2"
 format: 
   html:
     toc: true

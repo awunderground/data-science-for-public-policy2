@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Science for Public Policy - 4&nbsp; Data Visualization with ggplot2</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./07_advanced-quarto.html" rel="next">
+<link href="./03_advanced-data-cleaning.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="www/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./04_data-viz.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Policy</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Reproducible Research</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Supervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Unsupervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <span class="sidebar-item-text sidebar-link text-start">
+ <span class="menu-text">Other Topics</span></span>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">5</span> Motivation</a></li>
+  <li><a href="#motivation-going-beyond-excel" id="toc-motivation-going-beyond-excel" class="nav-link" data-scroll-target="#motivation-going-beyond-excel"><span class="header-section-number">6</span> Motivation (going beyond Excel)</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">7</span> Background</a>
+  <ul class="collapse">
+  <li><a href="#exercise-0" id="toc-exercise-0" class="nav-link" data-scroll-target="#exercise-0"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 0</span></a></li>
+  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">7.0.2</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 1</span></a></li>
+  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">7.0.3</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 2</span></a></li>
+  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">7.0.4</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 3</span></a></li>
+  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">7.0.5</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 4</span></a></li>
+  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">7.0.6</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 5</span></a></li>
+  <li><a href="#facet-wrap" id="toc-facet-wrap" class="nav-link" data-scroll-target="#facet-wrap"><span class="header-section-number">7.0.7</span> Facet wrap</a></li>
+  <li><a href="#facet-grid" id="toc-facet-grid" class="nav-link" data-scroll-target="#facet-grid"><span class="header-section-number">7.0.8</span> Facet grid</a></li>
+  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">7.0.9</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 6</span></a></li>
+  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7"><span class="header-section-number">7.0.10</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 7</span></a></li>
+  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8"><span class="header-section-number">7.0.11</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 8</span></a></li>
+  <li><a href="#default-theme" id="toc-default-theme" class="nav-link" data-scroll-target="#default-theme"><span class="header-section-number">7.0.12</span> Default theme</a></li>
+  <li><a href="#fivethirtyeight-theme" id="toc-fivethirtyeight-theme" class="nav-link" data-scroll-target="#fivethirtyeight-theme"><span class="header-section-number">7.0.13</span> fivethirtyeight theme</a></li>
+  <li><a href="#urbnthemes" id="toc-urbnthemes" class="nav-link" data-scroll-target="#urbnthemes"><span class="header-section-number">7.0.14</span> urbnthemes</a></li>
+  <li><a href="#exercise-9-layers" id="toc-exercise-9-layers" class="nav-link" data-scroll-target="#exercise-9-layers"><span class="header-section-number">7.0.15</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 9 (layers!)</span></a></li>
+  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10"><span class="header-section-number">7.0.16</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 10</span></a></li>
+  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11"><span class="header-section-number">7.0.17</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 11</span></a></li>
+  </ul></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">8</span> Functions</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">9</span> Theory</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">10</span> Resources</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./04_data-viz.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="motivation" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Motivation</h1>
+<ol type="1">
+<li>Data visualization is exploratory data analysis (EDA)</li>
+<li>Data visualization is diagnosis and validation</li>
+<li>Data visualization is communication</li>
+</ol>
+</section>
+<section id="motivation-going-beyond-excel" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Motivation (going beyond Excel)</h1>
+<ul>
+<li>Flexibility</li>
+<li>Reproducibility</li>
+<li>Scalability</li>
+<li>Relational data vs.&nbsp;positional data</li>
+</ul>
+</section>
+<section id="background" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Background</h1>
+<ul>
+<li>The toughest part of data visualization is data munging.</li>
+<li>Data frames are the only appropriate input for <code>library(ggplot2)</code>.</li>
+</ul>
+<p>ggplot2 is an R package for data visualization that was developed during Hadley Wickham’s graduate studies at Iowa State University. ggplot2 is formalized in <a href="https://vita.had.co.nz/papers/layered-grammar.html">“A Layered Grammar of Graphics”</a> by Hadley Wickham, which was published in the Journal of Statistical Software in 2010.</p>
+<p>The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson’s grammar of graphics and implements it in R. The cohesion is impressive and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.</p>
+<p>There are <strong>eight</strong> main ingredients to the grammar of graphics. We will work our way through the ingredients with many hands-on examples.</p>
+<section id="exercise-0" class="level3" data-number="7.0.1">
+<h3 data-number="7.0.1" class="anchored" data-anchor-id="exercise-0"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 0</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Open your <code>.Rproj</code>.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Create a new <code>.R</code> script in your directory called <code>03_data-visualization.R</code>.</p>
+</section>
+<section id="exercise-1" class="level3" data-number="7.0.2">
+<h3 data-number="7.0.2" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">7.0.2</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 1</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> <strong>Type</strong> (don’t copy &amp; paste) the following code below <code>library(tidyverse)</code> in <code>03_data-visualization.R</code>.</p>
+<pre><code>ggplot(data = storms) + 
+  geom_point(mapping = aes(x = pressure, y = wind))</code></pre>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add a comment above the ggplot2 code that describes the plot we created.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>1 Data</strong> are the values represented in the visualization.</p>
+</div>
+</div>
+<p><code>ggplot(data = )</code> or <code>data %&gt;% ggplot()</code></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>storms <span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">select</span>(name, year, category, lat, long, wind, pressure) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<table class="table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">name</th>
+<th style="text-align: right;">year</th>
+<th style="text-align: right;">category</th>
+<th style="text-align: right;">lat</th>
+<th style="text-align: right;">long</th>
+<th style="text-align: right;">wind</th>
+<th style="text-align: right;">pressure</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Chris</td>
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">32.6</td>
+<td style="text-align: right;">-74.6</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">1005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edouard</td>
+<td style="text-align: right;">2014</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">23.0</td>
+<td style="text-align: right;">-47.9</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">994</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Edouard</td>
+<td style="text-align: right;">1990</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">38.5</td>
+<td style="text-align: right;">-19.3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">1010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Chantal</td>
+<td style="text-align: right;">2013</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">16.7</td>
+<td style="text-align: right;">-71.2</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cristobal</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">53.2</td>
+<td style="text-align: right;">-80.4</td>
+<td style="text-align: right;">35</td>
+<td style="text-align: right;">987</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Humberto</td>
+<td style="text-align: right;">2001</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">42.2</td>
+<td style="text-align: right;">-54.6</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">987</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gaston</td>
+<td style="text-align: right;">2016</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">32.0</td>
+<td style="text-align: right;">-53.5</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">968</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">AL042000</td>
+<td style="text-align: right;">2000</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">28.3</td>
+<td style="text-align: right;">-79.3</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">1010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alicia</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">40.0</td>
+<td style="text-align: right;">-98.0</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1010</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Michael</td>
+<td style="text-align: right;">2012</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">26.7</td>
+<td style="text-align: right;">-43.5</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1007</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>2 Aesthetic mappings</strong> are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size.</p>
+</div>
+</div>
+<p><code>aes(x = , y = , color = )</code></p>
+<p><strong>X or Y</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Continuous Color or Fill</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Discrete Color or Fill</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Size</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Shape</strong></p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because more
+than 6 becomes difficult to discriminate
+ℹ you have requested 7 values. Consider specifying shapes manually if you need
+  that many have them.</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Others: transparency, line type</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>3 Geometric objects</strong> are representations of the data, including points, lines, and polygons.</p>
+</div>
+</div>
+<p><code>geom_bar()</code> or <code>geom_col()</code></p>
+<p><em>Plots are often called their geometric object(s).</em></p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 42 rows containing non-finite outside the scale range
+(`stat_count()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="192"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>geom_line()</code></p>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_line()`).</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="192"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>geom_point()</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="192"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-2" class="level3" data-number="7.0.3">
+<h3 data-number="7.0.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">7.0.3</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 2</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate the code from exercise 1. Add comments below the data visualization code that describes the argument or function that corresponds to each of the first three components of the grammar of graphics.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Inside <code>aes()</code>, add <code>color = category</code>. Run the code.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Replace <code>color = category</code> with <code>color = "green"</code>. Run the code. What changed? Is this unexpected?</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 4:</span></strong> Remove <code>color = "green"</code> from <code>aes()</code> and add it inside inside of <code>geom_point()</code> but outside of <code>aes()</code>. Run the code.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 5:</span></strong> This is a little cluttered. Add <code>alpha = 0.2</code> inside <code>geom_point()</code> but outside of <code>aes()</code>.</p>
+<p>Aesthetic mappings like x and y almost always vary with the data. Aesthetic mappings like color, fill, shape, transparency, and size can vary with the data. But those arguments can also be added as styles that don’t vary with the data. If you include those arguments in <code>aes()</code>, they will show up in the legend (which can be annoying! and is also a sign that something should be changed!).</p>
+</section>
+<section id="exercise-3" class="level3" data-number="7.0.4">
+<h3 data-number="7.0.4" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">7.0.4</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 3</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Create a new scatter plot using the <code>msleep</code> data set. Use <code>bodywt</code> on the x-axis and <code>sleep_total</code> on the y-axis.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> The y-axis doesn’t contain zero. Below <code>geom_point()</code>, add <code>scale_y_continuous(limits = c(0, NA))</code>. Hint: add <code>+</code> after <code>geom_point()</code>.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> The x-axis is clustered near zero. Add <code>scale_x_log10()</code> above <code>scale_y_continuous(limits = c(0, NA))</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>4 Scales</strong> turn data values, which are continuous, discrete, or categorical into aesthetic values. <code>scale_*_*()</code> functions control the specific behaviors of aesthetic mappings. This includes not only the x-axis and y-axis, but the ranges of sizes, types of shapes, and specific colors of aesthetics.</p>
+</div>
+</div>
+<section id="before" class="level4">
+<h4 class="anchored" data-anchor-id="before">Before</h4>
+<p><code>scale_x_continuous()</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="after" class="level4">
+<h4 class="anchored" data-anchor-id="after">After</h4>
+<p><code>scale_x_reverse()</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="before-1" class="level4">
+<h4 class="anchored" data-anchor-id="before-1">Before</h4>
+<p><code>scale_size_continuous(breaks = c(25, 75, 125))</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="after-1" class="level4">
+<h4 class="anchored" data-anchor-id="after-1">After</h4>
+<p><code>scale_size_continuous(range = c(0.5, 20), breaks = c(25, 75, 125))</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-4" class="level3" data-number="7.0.5">
+<h3 data-number="7.0.5" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">7.0.5</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 4</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Type the following code in your script.</p>
+<pre><code>data &lt;- tibble(x = 1:10, y = 1:10)
+ggplot(data = data) +
+  geom_blank(mapping = aes(x = x, y = y))</code></pre>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>coord_polar()</code> to your plot.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Add <code>labs(title = "Polar coordinate system")</code> to your plot.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>5 Coordinate systems</strong> map scaled geometric objects to the position of objects on the plane of a plot. The two most popular coordinate systems are the Cartesian coordinate system and the polar coordinate system.</p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p><code>coord_polar()</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-5" class="level3" data-number="7.0.6">
+<h3 data-number="7.0.6" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">7.0.6</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 5</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Create a scatter plot of the <code>storms</code> data set with <code>pressure</code> on the x-axis and <code>wind</code> on the y-axis.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>facet_wrap(~ category)</code></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>6 Facets (optional)</strong> break data into meaningful subsets. <code>facet_wrap()</code>, <code>facet_grid()</code>, and <code>facet_geo()</code>.</p>
+</div>
+</div>
+</section>
+<section id="facet-wrap" class="level3" data-number="7.0.7">
+<h3 data-number="7.0.7" class="anchored" data-anchor-id="facet-wrap"><span class="header-section-number">7.0.7</span> Facet wrap</h3>
+<p><code>facet_wrap(~ category)</code></p>
+</section>
+<section id="facet-grid" class="level3" data-number="7.0.8">
+<h3 data-number="7.0.8" class="anchored" data-anchor-id="facet-grid"><span class="header-section-number">7.0.8</span> Facet grid</h3>
+<p><code>facet_grid(month ~ year)</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="exercise-6" class="level3" data-number="7.0.9">
+<h3 data-number="7.0.9" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">7.0.9</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 6</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following code to your script. Submit it!</p>
+<pre><code>ggplot(storms) +
+  geom_bar(mapping = aes(x = category))</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>7 Statistical transformations (optional)</strong> transform the data, typically through summary statistics and functions, before aesthetic mapping.</p>
+<p>Before transformations, each observation in data is represented by one geometric object (i.e.&nbsp;a scatter plot). After a transformation, a geometric object can represent more than one observation (i.e.&nbsp;a bar in a histogram).</p>
+</div>
+</div>
+<p><strong>Note:</strong> <code>geom_bar()</code> performs statistical transformation. Use <code>geom_col()</code> to create a column chart with bars that encode individual observations in the data set.</p>
+</section>
+<section id="exercise-7" class="level3" data-number="7.0.10">
+<h3 data-number="7.0.10" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">7.0.10</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 7</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate Exercise 6.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>theme_minimal()</code> to the plot.</p>
+</section>
+<section id="exercise-8" class="level3" data-number="7.0.11">
+<h3 data-number="7.0.11" class="anchored" data-anchor-id="exercise-8"><span class="header-section-number">7.0.11</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 8</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate Exercise 6.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Run <code>install.packages("remotes")</code> and <code>remotes::install_github("UrbanInstitute/urbnthemes")</code> in the console.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> In the lines preceding the chart add and run the following code:</p>
+<pre><code>library(urbnthemes)
+set_urbn_defaults(style = "print")</code></pre>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 4:</span></strong> Run the code to make the chart.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 5:</span></strong> Add <code>scale_y_continuous(expand = expansion(mult = c(0, 0.1)))</code> and rerun the code.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>8 Themes</strong> control the visual style of plots with font types, font sizes, background colors, margins, and positioning.</p>
+</div>
+</div>
+</section>
+<section id="default-theme" class="level3" data-number="7.0.12">
+<h3 data-number="7.0.12" class="anchored" data-anchor-id="default-theme"><span class="header-section-number">7.0.12</span> Default theme</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fivethirtyeight-theme" class="level3" data-number="7.0.13">
+<h3 data-number="7.0.13" class="anchored" data-anchor-id="fivethirtyeight-theme"><span class="header-section-number">7.0.13</span> fivethirtyeight theme</h3>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="urbnthemes" class="level3" data-number="7.0.14">
+<h3 data-number="7.0.14" class="anchored" data-anchor-id="urbnthemes"><span class="header-section-number">7.0.14</span> urbnthemes</h3>
+</section>
+<section id="exercise-9-layers" class="level3" data-number="7.0.15">
+<h3 data-number="7.0.15" class="anchored" data-anchor-id="exercise-9-layers"><span class="header-section-number">7.0.15</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 9 (layers!)</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following exercise to you script. Run it!</p>
+<pre><code>storms %&gt;%  
+  filter(category &gt; 0) %&gt;%
+  distinct(name, year) %&gt;%
+  count(year) %&gt;%
+  ggplot() + 
+  geom_line(mapping = aes(x = year, y = n))</code></pre>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>geom_point()</code> after <code>geom_line()</code> with the same aesthetic mappings.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Layers</strong> allow for multiple geometric objects to be plotted in the same data visualization.</p>
+</div>
+</div>
+</section>
+<section id="exercise-10" class="level3" data-number="7.0.16">
+<h3 data-number="7.0.16" class="anchored" data-anchor-id="exercise-10"><span class="header-section-number">7.0.16</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 10</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following exercise to you script. Run it!</p>
+<pre><code>ggplot(data = storms, mapping = aes(x = pressure, y = wind)) + 
+  geom_point() +
+  geom_smooth()</code></pre>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Inheritances</strong> pass aesthetic mappings from <code>ggplot()</code> to later <code>geom_*()</code> functions.</p>
+</div>
+</div>
+<p> <code>ggplot()</code> </p>
+</section>
+<section id="exercise-11" class="level3" data-number="7.0.17">
+<h3 data-number="7.0.17" class="anchored" data-anchor-id="exercise-11"><span class="header-section-number">7.0.17</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 11</span></h3>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Pick your favorite plot from exercises 1 through 10 and duplicate the code.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>ggsave(filename = "favorite-plot.png")</code> on a new line without <code>+</code> and then save the file. Look at the saved file.</p>
+<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Add <code>width = 6</code> and <code>height = 4</code> to <code>ggsave()</code>. Run the code and then look at the saved file.</p>
+</section>
+</section>
+<section id="functions" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Functions</h1>
+<ul>
+<li><code>ggplot()</code></li>
+<li><code>aes()</code></li>
+<li><code>geom_*()</code>
+<ul>
+<li><code>geom_point()</code></li>
+<li><code>geom_line()</code></li>
+<li><code>geom_col()</code><br>
+</li>
+</ul></li>
+<li><code>scale_*()</code>
+<ul>
+<li><code>scale_y_continuous()</code></li>
+</ul></li>
+<li><code>coord_*()</code></li>
+<li><code>facet_*()</code></li>
+<li><code>labs()</code></li>
+</ul>
+</section>
+<section id="theory" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Theory</h1>
+<ol type="1">
+<li><em>Data</em></li>
+<li><em>Aesthetic mappings</em></li>
+<li><em>Geometric objects</em></li>
+<li><em>Scales</em></li>
+<li><em>Coordinate systems</em></li>
+<li><em>Facets</em></li>
+<li><em>Statistical transformations</em></li>
+<li><em>Theme</em></li>
+</ol>
+</section>
+<section id="resources" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Resources</h1>
+<ul>
+<li><a href="https://urbaninstitute.github.io/r-at-urban/graphics-guide.html">Urban Institute R Users Group website</a></li>
+<li><a href="https://medium.com/@urban_institute/why-the-urban-institute-visualizes-data-with-ggplot2-46d8cfc7ee67">Why the Urban Institute visualizes data with ggplot2</a></li>
+<li><a href="http://r4ds.had.co.nz/data-visualisation.html">R for Data Science: data visualization</a></li>
+<li><a href="https://awunderground.github.io/ggplot2-themes/">awunderground themes</a></li>
+<li><a href="https://www.r-graph-gallery.com/">R Graph Gallery</a></li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./03_advanced-data-cleaning.html" class="pagination-link" aria-label="Advanced Data Cleaning">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./07_advanced-quarto.html" class="pagination-link" aria-label="Advanced Quarto">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
