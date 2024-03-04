@@ -10,11 +10,11 @@ book:
     - index.qmd
     - part: Basics
       chapters:
-        # - PART 1: intro_to_r
-        # - PART 1: intro_to_tidyverse
+        - 01_intro-r.qmd
+        - 02_tidyverse.qmd
         - 03_advanced-data-cleaning.qmd
-        # PART 1: data visualization with ggplot2
-        # PART 1: exploratory data analysis
+        - 04_data-viz.qmd
+        # - 05_exploratory-data-analysis.qmd Need ppol 6670 data/pulse2021_puf_40.csv
 
     - part: Reproducible Research
       chapters: 

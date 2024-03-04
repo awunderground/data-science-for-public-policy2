@@ -1,0 +1,562 @@
+---
+title: "Introduction to the tidyverse"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r rmarkdown-setup, echo = FALSE}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+```
+
+# Review
+
+### Assignment operator
+
+`<-` is the assignment operator. An object created on the right side of an assignment operator is assigned to a name on the left side of an assignment operator. Assignment operators are important for saving the consequences of operations and functions. Without assignment, the result of a calculation is not saved for use in future calculations. Operations without assignment operators will typically be printed to the console but not saved for future use.
+
+# Functions
+
+Functions are collections of code that take inputs, perform operations, and return outputs. R functions are similar to mathematical functions. 
+
+R functions typically contain arguments. For example, `mean()` has `x`, `trim`, and `na.rm`. Many arguments have default values and don't need to be included in function calls. Default values can be seen in the documentation. `trim = 0` and `na.rm = FALSE` are the defaults for `mean()`. 
+
+### `==` vs. `=`
+
+`==` is a binary comparison operator. 
+
+```{r}
+1 == 1
+1 == 2
+
+```
+
+`=` is an equals sign, it is most frequently used for passing arguments to functions. 
+
+```{r}
+#| eval: false
+mean(x = c(1, 2, 3))
+
+```
+
+
+# Tidy data
+
+### tidyverse
+
+> The [tidyverse](https://www.tidyverse.org/) is an opinionated collection of R packages designed for data science. All packages share an underlying design philosophy, grammar, and data structures. ~ tidyverse.org
+
+`library(tidyverse)` contains:
+
+  * [ggplot2](https://ggplot2.tidyverse.org), for data visualization.
+  * [dplyr](https://dplyr.tidyverse.org), for data manipulation.
+  * [tidyr](https://tidyr.tidyverse.org), for data tidying.
+  * [readr](https://readr.tidyverse.org), for data import.
+  * [purrr](https://purrr.tidyverse.org), for functional programming.
+  * [tibble](https://tibble.tidyverse.org), for tibbles, a modern
+    re-imagining of data frames.
+  * [stringr](https://github.com/tidyverse/stringr), for strings.
+  * [forcats](https://github.com/hadley/forcats), for factors.
+
+### Opinionated software
+
+> *Opinionated software* is a software product that believes a certain way of approaching a business process is inherently better and provides software crafted around that approach. ~ [Stuart Eccles](https://medium.com/@stueccles/the-rise-of-opinionated-software-ca1ba0140d5b)
+
+### Tidy data
+
+The defining opinion of the tidyverse is its wholehearted adoption of tidy data. Tidy data has three features:
+
+1. Each variable forms a column.
+2. Each observation forms a row.
+3. Each type of observational unit forms a dataframe. (This is from the paper, not the book)
+
+![Source: [R4DS](https://r4ds.had.co.nz/tidy-data.html)](`r here::here("tutorials", "images", "tidy-data.png")`){width=400}
+
+Tidy data was formalized by Hadley Wickham in ["Tidy Data"](https://www.jstatsoft.org/article/view/v059i10) in the Journal of Statistical Software in 2014. It is equivalent to Codd's 3rd normal form ([Codd, 1990](https://pdfs.semanticscholar.org/fed7/727e4864406ad69362f9500c93011dac7005.pdf)) for relational databases.
+
+> Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.had.co.nz/tidy-data.html)
+
+The tidy approach to data science is powerful because it breaks data work into two distinct parts. First, get the data into a tidy format. Second, use tools optimized for tidy data. By standardizing the data structure for most community-created tools, the framework oriented diffuse development and reduced the friction of data work. 
+
+# dplyr
+
+`library(dplyr)` contains workhorse functions for manipulating and summarizing data once it is in a tidy format. `library(tidyr)` contains functions for getting data into a tidy format. 
+
+dplyr can be explicitly loaded with `library(dplyr)` or loaded with `library(tidyverse)`:
+
+
+
+```{r load-tidyverse, warning = FALSE}
+library(tidyverse)
+```
+
+
+
+We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the Current Population Survey (CPS). Run the following code to load the data.
+
+```{r}
+#| label: load-asec
+#| messgae: false
+
+asec <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/awunderground/awunderground-data/",
+    "main/cps/cps-asec.csv"
+  )
+)
+
+```
+
+
+
+We can use `glimpse(asec)` to quickly view the data. We can also use `View(asec)` to open up `asec` in RStudio. 
+
+
+
+```{r glimpse-asec}
+glimpse(x = asec)
+
+```
+
+
+
+We're going to learn seven functions and one new piece of syntax from `library(dplyr)` that will be our main tools for manipulating tidy frames. These functions and a few extensions outlined in the [Data Transformation Cheat Sheet](https://rstudio.com/resources/cheatsheets/) are the core of data analysis in the Tidyverse. 
+
+## 1. `select()`
+
+`select()` drops columns from a dataframe and/or reorders the columns in a dataframe. The arguments after the name of the dataframe should be the names of columns you wish to keep, without quotes. All other columns not listed are dropped.
+
+
+
+```{r select-example}
+select(.data = asec, year, month, serial)
+
+```
+
+
+
+This works great until the goal is to select 99 of 100 variables. Fortunately, `-` can be used to remove variables. You can also select all but multiple variables by listing them with the `-` symbol separated by commas. 
+
+
+
+```{r select-substract-example}
+select(.data = asec, -asecflag)
+```
+
+
+
+Tidy data generally results in longer, wider data sets than other programming languages so iteratively selecting by column names is less important than in Stata or SAS. Still, dplyr contains powerful helper functions that can select variables based on patterns in column names:
+
+* `contains()`: Contains a given string
+* `starts_with()`: Starts with a prefix
+* `ends_with()`: Ends with a suffix
+* `matches()`: Matches a regular expression
+* `num_range()`: Matches a numerical range
+
+These are a subset of the `tidyselect` [selection language and helpers](https://tidyselect.r-lib.org/reference/language.html) which enable users to apply `library(dplyr)` functions to select variables. 
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. Select `pernum` and `inctot` from `asec`.
+2. `pull()` is related to `select()` but can only select one variable. What is the other difference with `pull()`?
+
+$$\cdots$$
+
+## 2. `rename()`
+
+`rename()` renames columns in a data frame. The pattern is `new_name = old_name`. 
+
+
+
+```{r rename-example}
+rename(.data = asec, serial_number = serial)
+
+```
+
+
+
+You can also rename a selection of variables using `rename_with()`. The `.cols` argument is used to select the columns to rename and takes a `tidyselect` statement like those we introduced above. Here, we're using the `where()` selection helper which selects all columns where a given condition is TRUE. The default value for the `.cols` argument is `everything()` which selects all columns in the dataset.
+
+
+
+```{r rename_all-example}
+rename_with(.data = asec, .fn = toupper, .cols = where(is.numeric))
+
+```
+
+
+
+Most `dplyr` functions can rename columns simply by prefacing the operation with `new_name =`. For example, this can be done with `select()`:
+
+
+
+```{r select-with-rename}
+select(.data = asec, year, month, serial_number = serial)
+
+```
+
+
+
+## 3. `filter()`
+
+`filter()` reduces the number of observations in a dataframe. Every column in a dataframe has a name. Rows do not necessarily have names in a dataframe, so rows need to be filtered based on logical conditions. 
+
+`==`, `<`, `>`, `<=`, `>=`, `!=`, `%in%`, and `is.na()` are all operators that can be used for logical conditions. `!` can be used to negate a condition and `&` and `|` can be used to combine conditions. `|` means or. 
+
+
+
+```{r filter-example}
+# return rows with pernum of 1 and incwage > $100,000
+filter(.data = asec, pernum == 1 & incwage > 100000)
+
+```
+
+[IPUMS CPS](https://cps.ipums.org/cps-action/variables/group) contains full documentation with information about `pernum` and `incwage`. 
+
+
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. Filter `asec` to rows with `month` equal to `"March"`.
+2. Filter `asec` to rows with `inctot` less than `999999999`. 
+3. Filter `asec` to rows with `pernum` equal to `3` and `inctot` less than `999999999`. 
+
+$$\cdots$$
+
+## 4. `arrange()`
+
+`arrange()` sorts the rows of a data frame in alpha-numeric order based on the values of a variable or variables. The dataframe is sorted by the first variable first and each subsequent variable is used to break ties. `desc()` is used to reverse the sort order for a given variable. 
+
+
+
+```{r arrange-example}
+# sort pernum is descending order because high pernums are interesting
+arrange(.data = asec, desc(pernum))
+
+```
+
+
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. Sort `asec` in descending order by `pernum` and ascending order by `inctot`. 
+
+$$\cdots$$
+
+## 5. `mutate()`
+
+`mutate()` creates new variables or edits existing variables. We can use arithmetic arguments, such as `+`, `-`, `*`, `/`, and `^`. We can also custom functions and functions from packages. For example, we can use `library(stringr)` for string manipulation and `library(lubridate)` for date manipulation. 
+
+
+
+Variables are created by adding a new column name, like `inctot_adjusted`, to the left of `=` in `mutate()`. 
+
+```{r mutate-example-new-var}
+# adjust inctot for underreporting
+mutate(.data = asec, inctot_adjusted = inctot * 1.1)
+
+```
+
+
+
+Variables are edited by including an existing column name, like `inctot`, to the left of `=` in `mutate()`. 
+
+```{r mutate-example-overwrite}
+# adjust income because of underreporting
+mutate(.data = asec, inctot = inctot * 1.1)
+
+```
+
+
+
+Conditional logic inside of `mutate()` with functions like `if_else()` and `case_when()` is key to mastering data munging in R. 
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`. *Hint:* `if_else()` is useful and works like the IF command in Microsoft Excel.
+
+$$\cdots$$
+
+## `%>%`
+
+Data munging is tiring when each operation needs to be assigned to a name with `<-`. The pipe, `%>%`, allows lines of code to be chained together so the assignment operator only needs to be used once.
+
+`%>%` passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:
+
+
+
+```{r pipe-example, eval = FALSE}
+# old way
+mutate(.data = asec, inctot_adjusted = inctot * 1.1)
+
+# new way
+asec %>%
+  mutate(inctot_adjusted = inctot * 1.1)
+
+```
+
+
+
+See the power:
+
+
+
+```{r pipe-data-cleaning}
+new_asec <- asec %>%
+  filter(pernum == 1) %>%
+  select(year, month, pernum, inctot) %>%
+  mutate(inctot_adjusted = inctot * 1.1) %>%
+  select(-inctot)
+
+new_asec
+
+```
+
+
+
+## 6. `summarize()`
+
+`summarize()` collapses many rows in a dataframe into fewer rows with summary statistics of the many rows. `n()`, `mean()`, and `sum()` are common summary statistics. Renaming is useful with `summarize()`!
+
+
+
+```{r summarize-example}
+# summarize without renaming the statistics
+asec %>%
+  summarize(mean(ftotval), mean(inctot))
+
+# summarize and rename the statistics
+asec %>%
+  summarize(mean_ftotval = mean(ftotval), mean_inctot = mean(inctot))
+
+```
+
+
+
+`summarize()` returns a data frame. This means all dplyr functions can be used on the output of `summarize()`. This is powerful! Manipulating summary statistics in Stata and SAS can be a chore. Here, it's just another dataframe that can be manipulated with a tool set optimized for dataframes: dplyr.
+
+## 7. `group_by()`
+
+`group_by()` groups a dataframe based on specified variables. `summarize()` with grouped dataframes creates subgroup summary statistics. `mutate()` with `group_by()` calculates grouped summaries for each row.
+
+
+
+```{r group_by-example}
+asec %>%
+  group_by(pernum) %>%
+  summarize(
+    n = n(),
+    mean_ftotval = mean(ftotval), 
+    mean_inctot = mean(inctot)
+  )
+
+```
+
+
+
+Dataframes can be grouped by multiple variables. 
+
+Grouped tibbles include metadata about groups. For example, `Groups:   pernum, offpov [40]`. One grouping is dropped each time `summarize()` is used. It is easy to forget if a dataframe is grouped, so it is safe to include `ungroup()` at the end of a section of functions. 
+
+
+
+```{r group_by-example-many-groups}
+asec %>%
+  group_by(pernum, offpov) %>%
+  summarize(
+    n = n(),
+    mean_ftotval = mean(ftotval), 
+    mean_inctot = mean(inctot)
+  ) %>%
+  arrange(offpov) %>%
+  ungroup()
+
+```
+
+
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. `filter()` to only include observations with `"In Poverty Universe"` in `offpovuniv`.
+2. `group_by()` `offpov`. 
+3. Use `summarize()` and `n()` to count the number of observations in poverty. 
+
+```{r echo = FALSE, eval = FALSE}
+asec %>%
+  filter(offpovuniv == "In Poverty Universe") %>%
+  group_by(offpov) %>%
+  summarize(n())
+
+```
+
+### `r kableExtra::text_spec("Exercise", color = "#1696d2")`
+
+1. `filter()` to only include observations with `"In Poverty Universe"`.
+2. `group_by()` `cpsid`.
+3. Use `mutate(family_size = n())` to calculate the family size for each observation in `asec`.
+4. `ungroup()`
+5. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`.
+6. `group_by()` `family_size`, `offpov`, and `in_poverty`
+7. Use `summarize()` and `n()` to see if you get the same result for `offpov` and `in_poverty`. You should only get two rows per family size if your poverty calculation is correct.
+
+```{r echo = FALSE, eval = FALSE}
+asec %>%
+  filter(offpovuniv == "In Poverty Universe") %>%
+  group_by(cpsid) %>%
+  mutate(family_size = n()) %>%
+  ungroup() %>%
+  mutate(in_poverty = offtotval < offcutoff) %>%
+  group_by(family_size, offpov, in_poverty) %>%
+  summarize(n())
+
+```
+
+* `offcutoff` comes from [Census Bureau poverty tables](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html) with 48 unique thresholds based on family composition. Do not confuse the tables with HHS poverty tables. 
+* These data come from IPUMS CPS. IPUMS has cleaned and pre-processed the data to include variables like `offcutoff`.
+
+**Are the estimates from the previous two exercises correct?**
+
+Let's look at a [Census Report](https://www.census.gov/library/publications/2020/demo/p60-270.html) to see how many people were in poverty in 2019. We estimated about 16,500 people. The Census Bureau says 34.0 million people. 
+
+No! We did not account for sampling weights, so our estimates are incorrect. Assignment 3 will demonstrate how to incorporate sampling weights into an analysis.
+
+$$\cdots$$
+
+## BONUS: `count()`
+
+`count()` is a shortcut to `df %>% group_by(var) %>% summarize(n())`. `count()` counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:
+
+
+
+```{r count-example1}
+count(asec, pernum)
+
+```
+
+
+
+```{r count-example2}
+count(x = asec, pernum, offpov)
+
+```
+
+\newpage
+
+# Mutating joins
+
+Mutating joins join one dataframe to columns from another dataframe by matching values common in both dataframes. The syntax is derived from *Structured Query Language* (SQL).
+
+Each function requires an `x` (or left) dataframe, a `y` (or right) data frame, and `by` variables that exist in both dataframes. Note that below we're creating dataframes using the `tribble()` function, which creates a tibble using a row-wise layout. 
+
+\vspace{0.2in}
+
+```{r create-join-frames}
+math_scores <- tribble(
+  ~name, ~math_score,
+  "Alec", 95,
+  "Bart", 97,
+  "Carrie", 100
+)
+
+reading_scores <- tribble(
+  ~name, ~reading_score,
+  "Alec", 88,
+  "Bart", 67,
+  "Carrie", 100,
+  "Zeta", 100
+)
+
+```
+
+\vspace{0.1in}
+
+## `left_join()`
+
+`left_join()` matches observations from the `y` dataframe to the `x` dataframe. It only keeps observations from the `y` data frame that have a match in the `x` dataframe. 
+
+\vspace{0.1in}
+
+```{r left_join-example}
+left_join(x = math_scores, y = reading_scores, by = "name")
+
+```
+
+
+
+Observations that exist in the `x` (left) dataframe but not in the `y` (right) dataframe result in `NA`s.
+
+
+
+```{r left_join-reverse-example}
+left_join(x = reading_scores, y = math_scores, by = "name")
+
+```
+
+
+
+## `inner_join()`
+
+`inner_join()` matches observations from the `y` dataframe to the `x` dataframe. It only keeps observations from either data frame that have a match. 
+
+
+
+
+```{r inner-_join-example}
+inner_join(x = reading_scores, y = math_scores, by = "name")
+
+```
+
+
+
+## `full_join()`
+
+`full_join()` matches observations from the `y` dataframe to the `x` dataframe. It keeps observations from both dataframes.
+
+
+
+```{r fill_join-example}
+full_join(x = reading_scores, y = math_scores, by = "name")
+
+```
+
+## `anti_join()`
+
+`anti_join()` returns all rows from `x` where there are not matching values in `y`. `anti_join()` complements `inner_join()`. Together, they should exhaust the `x` dataframe.
+
+\vspace{0.25in}
+
+```{r anti_join-example}
+anti_join(x = reading_scores, y = math_scores, by = "name")
+
+```
+
+The Combine Tables column in the [Data Transformation Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) is an invaluable resource for navigating joins. The "column matching for joins" section of that cheat sheet outlines how to join tables by matching on multiple columns or match on columns with different names in each table.
+
+\vspace{0.25in}
+
+# readr
+
+`readr` is a core tidyverse package for reading and parsing rectangular data from text files (.csv, .tsv, etc.). `read_csv()` reads `.csv` files and has a bevy of advantages versus `read.csv()`. We recommend never using `read.csv()`. 
+
+Many `.csv`s can be read without issue with simple syntax `read_csv(file = "relative/path/to/data")`.
+
+`readr` and `read_csv()` have powerful tools for resolving parsing issues. More can be learned in the [data import section in R4DS](https://r4ds.had.co.nz/data-import.html).
+
+# readxl
+
+[readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session. 
+
+The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
+
+# Next Skills
+
+* `across()` can be used with `library(dplyr)` functions such as `summarise()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
+* `pivot_wider()` and `pivot_longer()` can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization. 
