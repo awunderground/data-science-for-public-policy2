@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_advanced-quarto.html" rel="next">
+<link href="./06_reproducible-research-with-quarto.html" rel="next">
 <link href="./04_data-viz.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -199,8 +199,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./06_reproducible-research-with-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -217,13 +223,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -240,25 +246,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -275,7 +281,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,7 +298,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -317,43 +323,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#reading-in-data" id="toc-reading-in-data" class="nav-link active" data-scroll-target="#reading-in-data"><span class="header-section-number">6</span> Reading in Data</a>
+  <li><a href="#reading-in-data" id="toc-reading-in-data" class="nav-link active" data-scroll-target="#reading-in-data"><span class="header-section-number">5.1</span> Reading in Data</a>
   <ul class="collapse">
-  <li><a href="#excel-spreadsheets" id="toc-excel-spreadsheets" class="nav-link" data-scroll-target="#excel-spreadsheets"><span class="header-section-number">6.1</span> Excel Spreadsheets</a></li>
-  <li><a href="#stata-sas-and-spss-files" id="toc-stata-sas-and-spss-files" class="nav-link" data-scroll-target="#stata-sas-and-spss-files"><span class="header-section-number">6.2</span> STATA, SAS, and SPSS files</a></li>
-  <li><a href="#zip-files" id="toc-zip-files" class="nav-link" data-scroll-target="#zip-files"><span class="header-section-number">6.3</span> Zip Files</a>
+  <li><a href="#excel-spreadsheets" id="toc-excel-spreadsheets" class="nav-link" data-scroll-target="#excel-spreadsheets"><span class="header-section-number">5.1.1</span> Excel Spreadsheets</a></li>
+  <li><a href="#stata-sas-and-spss-files" id="toc-stata-sas-and-spss-files" class="nav-link" data-scroll-target="#stata-sas-and-spss-files"><span class="header-section-number">5.1.2</span> STATA, SAS, and SPSS files</a></li>
+  <li><a href="#zip-files" id="toc-zip-files" class="nav-link" data-scroll-target="#zip-files"><span class="header-section-number">5.1.3</span> Zip Files</a></li>
+  </ul></li>
+  <li><a href="#column-names" id="toc-column-names" class="nav-link" data-scroll-target="#column-names"><span class="header-section-number">5.2</span> Column Names</a></li>
+  <li><a href="#data-overview" id="toc-data-overview" class="nav-link" data-scroll-target="#data-overview"><span class="header-section-number">5.3</span> Data Overview</a></li>
+  <li><a href="#are-my-columns-the-right-types" id="toc-are-my-columns-the-right-types" class="nav-link" data-scroll-target="#are-my-columns-the-right-types"><span class="header-section-number">5.4</span> Are my columns the right types?</a>
   <ul class="collapse">
-  <li><a href="#exercise-01" id="toc-exercise-01" class="nav-link" data-scroll-target="#exercise-01"><span class="header-section-number">6.3.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 01</span></a></li>
+  <li><a href="#string-manipulation-with-stringr" id="toc-string-manipulation-with-stringr" class="nav-link" data-scroll-target="#string-manipulation-with-stringr"><span class="header-section-number">5.4.1</span> String manipulation with <code>stringr</code></a></li>
+  <li><a href="#date-manipulation-with-lubridate" id="toc-date-manipulation-with-lubridate" class="nav-link" data-scroll-target="#date-manipulation-with-lubridate"><span class="header-section-number">5.4.2</span> Date manipulation with <code>lubridate</code></a></li>
+  <li><a href="#categorical-and-factor-variables" id="toc-categorical-and-factor-variables" class="nav-link" data-scroll-target="#categorical-and-factor-variables"><span class="header-section-number">5.4.3</span> Categorical and Factor Variables</a></li>
   </ul></li>
-  </ul></li>
-  <li><a href="#column-names" id="toc-column-names" class="nav-link" data-scroll-target="#column-names"><span class="header-section-number">7</span> Column Names</a>
+  <li><a href="#is-there-missing-data" id="toc-is-there-missing-data" class="nav-link" data-scroll-target="#is-there-missing-data"><span class="header-section-number">5.5</span> Is there missing data?</a></li>
+  <li><a href="#do-i-have-outliers-or-unexpected-values" id="toc-do-i-have-outliers-or-unexpected-values" class="nav-link" data-scroll-target="#do-i-have-outliers-or-unexpected-values"><span class="header-section-number">5.6</span> Do I have outliers or unexpected values?</a>
   <ul class="collapse">
-  <li><a href="#exercise-02" id="toc-exercise-02" class="nav-link" data-scroll-target="#exercise-02"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 02</span></a></li>
+  <li><a href="#identifying-outliersunexpected-values" id="toc-identifying-outliersunexpected-values" class="nav-link" data-scroll-target="#identifying-outliersunexpected-values"><span class="header-section-number">5.6.1</span> Identifying Outliers/Unexpected Values</a></li>
+  <li><a href="#unit-tests" id="toc-unit-tests" class="nav-link" data-scroll-target="#unit-tests"><span class="header-section-number">5.6.2</span> Unit Tests</a></li>
+  <li><a href="#handling-outliersunexpected-values" id="toc-handling-outliersunexpected-values" class="nav-link" data-scroll-target="#handling-outliersunexpected-values"><span class="header-section-number">5.6.3</span> Handling Outliers/Unexpected Values</a></li>
   </ul></li>
-  <li><a href="#data-overview" id="toc-data-overview" class="nav-link" data-scroll-target="#data-overview"><span class="header-section-number">8</span> Data Overview</a></li>
-  <li><a href="#are-my-columns-the-right-types" id="toc-are-my-columns-the-right-types" class="nav-link" data-scroll-target="#are-my-columns-the-right-types"><span class="header-section-number">9</span> Are my columns the right types?</a>
-  <ul class="collapse">
-  <li><a href="#string-manipulation-with-stringr" id="toc-string-manipulation-with-stringr" class="nav-link" data-scroll-target="#string-manipulation-with-stringr"><span class="header-section-number">9.1</span> String manipulation with <code>stringr</code></a>
-  <ul class="collapse">
-  <li><a href="#exercise-03" id="toc-exercise-03" class="nav-link" data-scroll-target="#exercise-03"><span class="header-section-number">9.1.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 03</span></a></li>
-  </ul></li>
-  <li><a href="#date-manipulation-with-lubridate" id="toc-date-manipulation-with-lubridate" class="nav-link" data-scroll-target="#date-manipulation-with-lubridate"><span class="header-section-number">9.2</span> Date manipulation with <code>lubridate</code></a></li>
-  <li><a href="#categorical-and-factor-variables" id="toc-categorical-and-factor-variables" class="nav-link" data-scroll-target="#categorical-and-factor-variables"><span class="header-section-number">9.3</span> Categorical and Factor Variables</a></li>
-  </ul></li>
-  <li><a href="#is-there-missing-data" id="toc-is-there-missing-data" class="nav-link" data-scroll-target="#is-there-missing-data"><span class="header-section-number">10</span> Is there missing data?</a>
-  <ul class="collapse">
-  <li><a href="#exercise-04" id="toc-exercise-04" class="nav-link" data-scroll-target="#exercise-04"><span class="header-section-number">10.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 04</span></a></li>
-  </ul></li>
-  <li><a href="#do-i-have-outliers-or-unexpected-values" id="toc-do-i-have-outliers-or-unexpected-values" class="nav-link" data-scroll-target="#do-i-have-outliers-or-unexpected-values"><span class="header-section-number">11</span> Do I have outliers or unexpected values?</a>
-  <ul class="collapse">
-  <li><a href="#identifying-outliersunexpected-values" id="toc-identifying-outliersunexpected-values" class="nav-link" data-scroll-target="#identifying-outliersunexpected-values"><span class="header-section-number">11.1</span> Identifying Outliers/Unexpected Values</a></li>
-  <li><a href="#unit-tests" id="toc-unit-tests" class="nav-link" data-scroll-target="#unit-tests"><span class="header-section-number">11.2</span> Unit Tests</a></li>
-  <li><a href="#handling-outliersunexpected-values" id="toc-handling-outliersunexpected-values" class="nav-link" data-scroll-target="#handling-outliersunexpected-values"><span class="header-section-number">11.3</span> Handling Outliers/Unexpected Values</a>
-  <ul class="collapse">
-  <li><a href="#exercise-05" id="toc-exercise-05" class="nav-link" data-scroll-target="#exercise-05"><span class="header-section-number">11.3.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 05</span></a></li>
-  </ul></li>
-  </ul></li>
-  <li><a href="#data-quality-assurance" id="toc-data-quality-assurance" class="nav-link" data-scroll-target="#data-quality-assurance"><span class="header-section-number">12</span> Data Quality Assurance</a></li>
+  <li><a href="#data-quality-assurance" id="toc-data-quality-assurance" class="nav-link" data-scroll-target="#data-quality-assurance"><span class="header-section-number">5.7</span> Data Quality Assurance</a></li>
   </ul>
 </nav>
     </div>
@@ -379,22 +370,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="reading-in-data" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Reading in Data</h1>
+<section id="reading-in-data" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="reading-in-data"><span class="header-section-number">5.1</span> Reading in Data</h2>
 <p>We’ve already covered reading in csv files using the <code>read_csv()</code> function from the <code>readr</code> package, but you may also need to read in data that is stored in a number of other common file formats:</p>
-<section id="excel-spreadsheets" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="excel-spreadsheets"><span class="header-section-number">6.1</span> Excel Spreadsheets</h2>
-<p><a href="https://readxl.tidyverse.org/">readxl</a> is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session.</p>
+<section id="excel-spreadsheets" class="level3" data-number="5.1.1">
+<h3 data-number="5.1.1" class="anchored" data-anchor-id="excel-spreadsheets"><span class="header-section-number">5.1.1</span> Excel Spreadsheets</h3>
+<p><a href="https://readxl.tidyverse.org/">readxl</a> is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package, so it needs to be explicitly loaded in each R session.</p>
 <p>The <a href="https://readxl.tidyverse.org/">tidyverse website</a> has a good tutorial on readxl.</p>
-<p>Many excel files can be read with the simple syntax <code>data &lt;- read_excel(path = "relative/file/path/to/data")</code>. In cases where the Excel spreadsheet contains multiple sheets, you can use the <code>sheet</code> argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet).</p>
+<p>Many excel files can be read with the simple syntax <code>data &lt;- read_excel(path = "relative/file/path/to/data")</code>. In cases where the Excel spreadsheet contains multiple sheets, you can use the <code>sheet</code> argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet). You can also read only components of a sheet using Excel-style cell-ranges (ex: <code>A3:L44</code>).</p>
 </section>
-<section id="stata-sas-and-spss-files" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="stata-sas-and-spss-files"><span class="header-section-number">6.2</span> STATA, SAS, and SPSS files</h2>
+<section id="stata-sas-and-spss-files" class="level3" data-number="5.1.2">
+<h3 data-number="5.1.2" class="anchored" data-anchor-id="stata-sas-and-spss-files"><span class="header-section-number">5.1.2</span> STATA, SAS, and SPSS files</h3>
 <p><a href="https://haven.tidyverse.org/">haven</a> is a tidyverse package for reading data from SAS (<code>read_sas()</code>), STATA (<code>read_dta()</code>), and SPSS (<code>read_sav()</code>) files. Like the <code>readxl</code> package, it is not a core tidyverse package and also needs to be explicitly loaded in each R session.</p>
 <p>Note that the haven package can only read and write STATA <code>.dta</code> files through version 15 of STATA. For files created in more recent versions of STATA, the <code>readstat13</code> package’s <code>read.dta13</code> file can be used.</p>
 </section>
-<section id="zip-files" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="zip-files"><span class="header-section-number">6.3</span> Zip Files</h2>
+<section id="zip-files" class="level3" data-number="5.1.3">
+<h3 data-number="5.1.3" class="anchored" data-anchor-id="zip-files"><span class="header-section-number">5.1.3</span> Zip Files</h3>
 <p>You may also want to read in data that is saved in a zip file. In order to do this, you can use the <code>unzip()</code> function to unzip the files using the following syntax: <code>unzip(zipfile = "path/to/zip/file", exdir = "path/to/directory/for/unzipped/files")</code>.</p>
 <p>Often times, you may want to read in a zip file from a website into R. In order to do this, you will need to first download the zip file to your computer using the <code>download.file()</code> function, unzip the file using <code>unzip()</code> and then read in the data using the appropriate function for the given file type.</p>
 <p>To download the week 40 public use file data for the Census Household Pulse Survey, run the following code:</p>
@@ -422,32 +413,50 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-21"><a href="#cb1-21"></a>  <span class="at">mode =</span> <span class="st">"wb"</span></span>
 <span id="cb1-22"><a href="#cb1-22"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="exercise-01" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="exercise-01"><span class="header-section-number">6.3.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 01</span></h3>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 1</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Copy and paste the code chunk above and keep the appropriate <code>download.file</code> command for your computer.</li>
 <li>Write code using the <code>unzip()</code> function to unzip the zip file downloaded. Set <code>zipfile</code> to be the same the <code>destfile</code> parameter you used in part 1. Set <code>exdir</code> to be the same directory where you just downloaded the zip file. Run both of these commands.</li>
 <li>Examine the unzipped files and select the appropriate function to read in the <code>pulse2021_puf_40</code> file. Write code to read that file into R, assigning the output to the <code>pulse</code> object.</li>
 </ol>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="column-names" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Column Names</h1>
-<p>As we discussed in week 1, dataframe columns - like other objects - should be given names that are <a href="https://style.tidyverse.org/syntax.html#object-names">“concise and meaningful”</a>. Generally column names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case). You should not include white space in column names (e.g “Birth Month” = bad, “birth_month” = good). It is also best practice for column names to be singular (use “birth_month” instead of “birth_months”).</p>
-<p>The <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">janitor package</a> is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the <code>clean_names()</code> function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The <code>clean_names()</code> function works well with the <code>%&gt;%</code> operator.</p>
-<section id="exercise-02" class="level3" data-number="7.0.1">
-<h3 data-number="7.0.1" class="anchored" data-anchor-id="exercise-02"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 02</span></h3>
+<section id="column-names" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="column-names"><span class="header-section-number">5.2</span> Column Names</h2>
+<p>As we discussed in week 1, dataframe columns - like other objects - should be given names that are <a href="https://style.tidyverse.org/syntax.html#object-names">“concise and meaningful”</a>. Generally column names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g “Birth Month” = bad, “birth_month” = good). It is also best practice for column names to be singular (use “birth_month” instead of “birth_months”).</p>
+<p>The <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">janitor package</a> is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the <code>clean_names()</code> function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The <code>clean_names()</code> function works well with the <code>|&gt;</code> operator.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 1</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Take a look at the column names in the Pulse data file you read in for the exercise earlier.</li>
 <li>Then edit the command in the R script that you wrote to read in the CSV file to pipe the results of that command to the <code>janitor::clean_names()</code> function. Note that you may have to install and import the janitor package first.</li>
 <li>Now look at the column names again after running the modified command. How have they changed?</li>
 </ol>
+</div>
+</div>
 <p>As discussed in the introduction to the tidyverse, you can also directly rename columns using the <code>rename()</code> function from the <code>dplyr</code> package as follows: <code>rename(data, new_col = old_col)</code>.</p>
 </section>
-</section>
-<section id="data-overview" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Data Overview</h1>
+<section id="data-overview" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="data-overview"><span class="header-section-number">5.3</span> Data Overview</h2>
 <p>Once you’ve imported your data, a common first step is to get a very high-level summary of your data.</p>
 <p>As introduced in the introduction to the tidyverse, the <code>glimpse()</code> function provides a quick view of your data, printing the type and first several values of each column in the dataset to the console.</p>
 <div class="cell">
@@ -481,8 +490,8 @@ $ hurricane_force_diameter     &lt;int&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, N
 <p>The <code>str()</code> function compactly displays the internal structure of any R object. If you pass a dataframe to <code>str</code> it will print the column type and first several values for each column in the dataframe, similar to the <code>glimpse()</code> function.</p>
 <p>Getting a high-level overview of the data can help you identify what questions you need to ask of your data during the exploratory data analysis process. The rest of this lecture will outline several questions that you should always ask when exploring your data - though this list is not exhaustive and will be informed by your specific data and analysis!</p>
 </section>
-<section id="are-my-columns-the-right-types" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Are my columns the right types?</h1>
+<section id="are-my-columns-the-right-types" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="are-my-columns-the-right-types"><span class="header-section-number">5.4</span> Are my columns the right types?</h2>
 <p>We’ll read in the population-weighted centroids for the District of Columbia exported from the Missouri Census Data Center’s <a href="https://mcdc.missouri.edu/applications/geocorr2014.html">geocorr2014 tool</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>dc_centroids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
@@ -584,8 +593,8 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 <pre><code>[1] 20 10 NA 25 NA</code></pre>
 </div>
 </div>
-<section id="string-manipulation-with-stringr" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="string-manipulation-with-stringr"><span class="header-section-number">9.1</span> String manipulation with <code>stringr</code></h2>
+<section id="string-manipulation-with-stringr" class="level3" data-number="5.4.1">
+<h3 data-number="5.4.1" class="anchored" data-anchor-id="string-manipulation-with-stringr"><span class="header-section-number">5.4.1</span> String manipulation with <code>stringr</code></h3>
 <p>Before converting column types, it is critical to clean the column values to ensure that NA values aren’t accidentally introduced by coercion. The <code>stringr</code> package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with <code>library(tidyverse)</code>. The <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringr cheat sheet</a> offers a great guide to the <code>stringr</code> functions.</p>
 <p>To demonstrate some of the <code>stringr</code> functions, let’s create a <code>state</code> column with the two digit state FIPS code for DC and a <code>geoid</code> column in the <code>dc_centroid</code> dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the <code>tract</code> column and then concatenate the <code>county</code> and <code>tract</code> columns into a <code>geoid</code> column. We can do that using <code>stringr</code> as follows:</p>
 <div class="cell">
@@ -597,16 +606,25 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 <span id="cb19-6"><a href="#cb19-6"></a>    <span class="at">geoid =</span> <span class="fu">str_c</span>(county, tract, <span class="at">sep =</span> <span class="st">""</span>)</span>
 <span id="cb19-7"><a href="#cb19-7"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="exercise-03" class="level3" data-number="9.1.1">
-<h3 data-number="9.1.1" class="anchored" data-anchor-id="exercise-03"><span class="header-section-number">9.1.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 03</span></h3>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 2</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Copy the code above into an R script and edit it to add the creation of a variable called <code>state</code> that is equal to the first two characters of the <code>county</code> variable using the <code>str_sub()</code> function.</li>
 </ol>
-<p>Note that the <code>str_replace()</code> function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it’s syntax can be complex and not particularly intuitive. <a href="https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html">This vignette</a> provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. </p>
+</div>
+</div>
+<p>Note that the <code>str_replace()</code> function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it’s syntax can be complex and not particularly intuitive. <a href="https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html">This vignette</a> provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. ChatGPT is often effective at writing regular expressions, but recall our warnings about using ChatGPT in Chapter 1.</p>
 </section>
-</section>
-<section id="date-manipulation-with-lubridate" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="date-manipulation-with-lubridate"><span class="header-section-number">9.2</span> Date manipulation with <code>lubridate</code></h2>
+<section id="date-manipulation-with-lubridate" class="level3" data-number="5.4.2">
+<h3 data-number="5.4.2" class="anchored" data-anchor-id="date-manipulation-with-lubridate"><span class="header-section-number">5.4.2</span> Date manipulation with <code>lubridate</code></h3>
 <p>The <code>lubridate</code> package makes it much easier to work with dates and times in R. While also part of the tidyverse, it is not a core tidyverse package and must be explicitly loaded in each session with <code>library(lubridate)</code>.</p>
 <p>We’ll use a dataset on political violence and protest events across the continent of Africa in 2022 from the <a href="https://acleddata.com/">Armed Conflict Location &amp; Event Data Project (ACLED)</a> to illustrate the power of <code>lubridate</code>. The <code>lubridate</code> package allows users to easily and quickly parse date-time variables in a range of different formats. For example, the <code>ymd()</code> function takes a date variable in year-month-day format (e.g.&nbsp;2022-01-31) and converts it to a date-time format. The different formats are outlined in the <a href="https://lubridate.tidyverse.org/">lubridate documentation</a>.</p>
 <div class="cell">
@@ -704,7 +722,7 @@ dttm  (1): EVENT_DATE
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -712,8 +730,8 @@ dttm  (1): EVENT_DATE
 <p>For more information on lubridate, see the <a href="https://www.rstudio.com/resources/cheatsheets/">lubridate cheat sheet</a>.</p>
 <p><a href="https://r4ds.had.co.nz/dates-and-times.html">Source: R for Data Science, Ch 16</a></p>
 </section>
-<section id="categorical-and-factor-variables" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="categorical-and-factor-variables"><span class="header-section-number">9.3</span> Categorical and Factor Variables</h2>
+<section id="categorical-and-factor-variables" class="level3" data-number="5.4.3">
+<h3 data-number="5.4.3" class="anchored" data-anchor-id="categorical-and-factor-variables"><span class="header-section-number">5.4.3</span> Categorical and Factor Variables</h3>
 <p>Categorical variables can be stored as characters in R. The <code>case_when()</code> function makes it very easy to create categorical variables based on other columns. For example:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pulse <span class="ot">&lt;-</span> pulse <span class="sc">%&gt;%</span></span>
@@ -764,17 +782,27 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 </div>
 </section>
 </section>
-<section id="is-there-missing-data" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Is there missing data?</h1>
+<section id="is-there-missing-data" class="level2" data-number="5.5">
+<h2 data-number="5.5" class="anchored" data-anchor-id="is-there-missing-data"><span class="header-section-number">5.5</span> Is there missing data?</h2>
 <p>Before you work with any dataset, you should understand how missing values are encoded. The best place to find this information is the data dictionary - which you should always read before working with any new dataset!</p>
-<p>This is particularly important because while R automatically recognizes standard missing values as NA, it doesn’t recognize non-standard encodings like numbers, “missing”, “na”, “N/A”, etc.</p>
+<p>This is particularly important because while R automatically recognizes standard missing values as NA, it doesn’t recognize non-standard encodings like numbers representing missing values, “missing”, “na”, “N/A”, etc.</p>
 <p>Non-standard missing values should be converted to NA before conducting analysis. One way of doing this is with <code>mutate</code> and the <code>if_else</code> or <code>case_when</code> functions.</p>
-<section id="exercise-04" class="level3" data-number="10.0.1">
-<h3 data-number="10.0.1" class="anchored" data-anchor-id="exercise-04"><span class="header-section-number">10.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 04</span></h3>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 3</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Go to the folder where you unzipped the Pulse data from earlier and open the data dictionary file. How does this dataset represent missing values for the <code>RECVDVACC</code> variable?</li>
 <li>Using <code>mutate</code> and <code>if_else</code> or <code>case_when</code>, replace the missing values in the <code>recvdvacc</code> column with NA.</li>
 </ol>
+</div>
+</div>
 <p>Once you have converted all missing value encodings to NA, the next question you need to ask is how you want to handle missing values in your analysis. The right approach will depend on what the missing value represents and the goals of your analysis.</p>
 <ul>
 <li><p><em>Leave as NA</em>: This can be the best choice when the missing value truly represents a case when the true value is unknown. You will need to handle NAs by setting <code>na.rm = TRUE</code> in functions or filtering using <code>is.na()</code>. One drawback of this approach is that if the values aren’t missing at random (e.g.&nbsp;smokers may be less likely to answer survey questions about smoking habits), your results may be biased. Additionally, this can cause you to lose observations and reduce power of analyses.</p></li>
@@ -824,11 +852,10 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 </div>
 </div>
 </section>
-</section>
-<section id="do-i-have-outliers-or-unexpected-values" class="level1" data-number="11">
-<h1 data-number="11"><span class="header-section-number">11</span> Do I have outliers or unexpected values?</h1>
-<section id="identifying-outliersunexpected-values" class="level2" data-number="11.1">
-<h2 data-number="11.1" class="anchored" data-anchor-id="identifying-outliersunexpected-values"><span class="header-section-number">11.1</span> Identifying Outliers/Unexpected Values</h2>
+<section id="do-i-have-outliers-or-unexpected-values" class="level2" data-number="5.6">
+<h2 data-number="5.6" class="anchored" data-anchor-id="do-i-have-outliers-or-unexpected-values"><span class="header-section-number">5.6</span> Do I have outliers or unexpected values?</h2>
+<section id="identifying-outliersunexpected-values" class="level3" data-number="5.6.1">
+<h3 data-number="5.6.1" class="anchored" data-anchor-id="identifying-outliersunexpected-values"><span class="header-section-number">5.6.1</span> Identifying Outliers/Unexpected Values</h3>
 <p>Using R to examine the distribution of your data is one way to identify outliers or unexpected values. For example, we can examine the distribution of the <code>bodywt</code> variable in the <code>msleep</code> dataset both by examining the mathematical distribution using the <code>summary()</code> function and visually using <code>ggplot</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">summary</span>(msleep<span class="sc">$</span>bodywt)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -848,14 +875,14 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="unit-tests" class="level2" data-number="11.2">
-<h2 data-number="11.2" class="anchored" data-anchor-id="unit-tests"><span class="header-section-number">11.2</span> Unit Tests</h2>
+<section id="unit-tests" class="level3" data-number="5.6.2">
+<h3 data-number="5.6.2" class="anchored" data-anchor-id="unit-tests"><span class="header-section-number">5.6.2</span> Unit Tests</h3>
 <p>Writing tests in R is a great way to test that your data does not have unexpected/incorrect values. These tests can also be used to catch mistakes that can be introduced by errors in the data cleaning process. There are a number of R packages that have tools for writing tests, including:</p>
 <ul>
 <li><a href="https://testthat.r-lib.org/index.html">testthat</a></li>
@@ -883,8 +910,8 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 </div>
 <p>Critically, adding the test caused the code to return an error <strong>before</strong> calculating the mean of the age variable. This is a feature, not a bug! It can prevent you from introducing errors into your analyses. Moreover, by writing a set of tests in your analysis code, you can run the same checks every time you perform the analysis which can help you catch errors caused by changes in the input data.</p>
 </section>
-<section id="handling-outliersunexpected-values" class="level2" data-number="11.3">
-<h2 data-number="11.3" class="anchored" data-anchor-id="handling-outliersunexpected-values"><span class="header-section-number">11.3</span> Handling Outliers/Unexpected Values</h2>
+<section id="handling-outliersunexpected-values" class="level3" data-number="5.6.3">
+<h3 data-number="5.6.3" class="anchored" data-anchor-id="handling-outliersunexpected-values"><span class="header-section-number">5.6.3</span> Handling Outliers/Unexpected Values</h3>
 <p>When you identify outliers or unexpected values, you will have to decide how you want to handle those values in your data. The proper way to handle those values will depend on the reason for the outlier value and the objectives of your analysis.</p>
 <ul>
 <li>If the outlier is caused by data errors, such as an implausible age or population value, you can replace the outlier values with <code>NA</code> using <code>mutate</code> and <code>if_else</code> or <code>case_when</code> as described above.</li>
@@ -892,18 +919,27 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <li>You can transform the data, such as taking the natural log to reduce the variation caused by outliers.</li>
 <li>You can select a different analysis method that is less sensitive to outliers, such as using the median rather than the mean to measure central tendency.</li>
 </ul>
-<section id="exercise-05" class="level3" data-number="11.3.1">
-<h3 data-number="11.3.1" class="anchored" data-anchor-id="exercise-05"><span class="header-section-number">11.3.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 05</span></h3>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 4</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ol type="1">
 <li>Read the column descriptions in the <a href="&quot;https://raw.githubusercontent.com/awunderground/awunderground-data/main/geocorr/geocorr2014_dc.csv&quot;">csv file for the DC centroids</a>.</li>
 <li>Use one of the methods above to identify whether the <code>pop10</code> column contains any outliers. According to the <a href="https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_13">Census Bureau</a>, tracts generally have a population between 1,200 and 8,000 people.</li>
 <li>Calculate the mean of the <code>pop10</code> column in the <code>dc_centroids</code> dataframe, but first write one test using <code>assertr::verify()</code> to test for invalid values based on the column definition.</li>
 </ol>
+</div>
+</div>
 </section>
 </section>
-</section>
-<section id="data-quality-assurance" class="level1" data-number="12">
-<h1 data-number="12"><span class="header-section-number">12</span> Data Quality Assurance</h1>
+<section id="data-quality-assurance" class="level2" data-number="5.7">
+<h2 data-number="5.7" class="anchored" data-anchor-id="data-quality-assurance"><span class="header-section-number">5.7</span> Data Quality Assurance</h2>
 <p>Data quality assurance is the foundation of high quality analysis. Four key questions that you should always ask when considering using a dataset for analysis are:</p>
 <ol type="1">
 <li>Does the data suit the research question? Examine the data quality (missingness, accuracy) of key columns, the number of observations in subgroups of interest, etc.</li>
@@ -1310,8 +1346,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_advanced-quarto.html" class="pagination-link" aria-label="Advanced Quarto">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./06_reproducible-research-with-quarto.html" class="pagination-link" aria-label="Reproducible Research with Quarto">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

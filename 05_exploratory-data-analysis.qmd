@@ -105,7 +105,7 @@ if (!file.exists(dest_path)){
 unzip(
   zipfile = here("data", 
                  "pulse40.zip"), 
-  exdir = here("tutorials/07_exploratory-data-analysis/data")
+  exdir = here("data/")
 )
 
 pulse <- read_csv(
