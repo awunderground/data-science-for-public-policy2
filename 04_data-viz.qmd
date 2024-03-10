@@ -4,7 +4,7 @@ format:
   html:
     toc: true
     code-line-numbers: true
-    embed-resource: true
+    embed-resources: true
 editor_options: 
   chunk_output_type: console
 ---
