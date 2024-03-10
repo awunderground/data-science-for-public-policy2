@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -64,7 +84,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./07_advanced-quarto.html" rel="next">
+<link href="./05_exploratory-data-analysis.html" rel="next">
 <link href="./03_advanced-data-cleaning.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -180,6 +200,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -193,8 +219,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./06_reproducible-research-with-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -211,13 +243,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -234,25 +266,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -269,7 +301,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
   </div>
 </li>
       </ul>
@@ -286,7 +318,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -311,31 +343,28 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">5</span> Motivation</a></li>
-  <li><a href="#motivation-going-beyond-excel" id="toc-motivation-going-beyond-excel" class="nav-link" data-scroll-target="#motivation-going-beyond-excel"><span class="header-section-number">6</span> Motivation (going beyond Excel)</a></li>
-  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">7</span> Background</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">4.1</span> Motivation</a></li>
+  <li><a href="#motivation-going-beyond-excel" id="toc-motivation-going-beyond-excel" class="nav-link" data-scroll-target="#motivation-going-beyond-excel"><span class="header-section-number">4.2</span> Motivation (going beyond Excel)</a></li>
+  <li><a href="#background" id="toc-background" class="nav-link" data-scroll-target="#background"><span class="header-section-number">4.3</span> Background</a></li>
+  <li><a href="#eight-ingredients-in-the-grammar-of-graphics" id="toc-eight-ingredients-in-the-grammar-of-graphics" class="nav-link" data-scroll-target="#eight-ingredients-in-the-grammar-of-graphics"><span class="header-section-number">4.4</span> Eight Ingredients in the Grammar of Graphics:</a>
   <ul class="collapse">
-  <li><a href="#exercise-0" id="toc-exercise-0" class="nav-link" data-scroll-target="#exercise-0"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 0</span></a></li>
-  <li><a href="#exercise-1" id="toc-exercise-1" class="nav-link" data-scroll-target="#exercise-1"><span class="header-section-number">7.0.2</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 1</span></a></li>
-  <li><a href="#exercise-2" id="toc-exercise-2" class="nav-link" data-scroll-target="#exercise-2"><span class="header-section-number">7.0.3</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 2</span></a></li>
-  <li><a href="#exercise-3" id="toc-exercise-3" class="nav-link" data-scroll-target="#exercise-3"><span class="header-section-number">7.0.4</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 3</span></a></li>
-  <li><a href="#exercise-4" id="toc-exercise-4" class="nav-link" data-scroll-target="#exercise-4"><span class="header-section-number">7.0.5</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 4</span></a></li>
-  <li><a href="#exercise-5" id="toc-exercise-5" class="nav-link" data-scroll-target="#exercise-5"><span class="header-section-number">7.0.6</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 5</span></a></li>
-  <li><a href="#facet-wrap" id="toc-facet-wrap" class="nav-link" data-scroll-target="#facet-wrap"><span class="header-section-number">7.0.7</span> Facet wrap</a></li>
-  <li><a href="#facet-grid" id="toc-facet-grid" class="nav-link" data-scroll-target="#facet-grid"><span class="header-section-number">7.0.8</span> Facet grid</a></li>
-  <li><a href="#exercise-6" id="toc-exercise-6" class="nav-link" data-scroll-target="#exercise-6"><span class="header-section-number">7.0.9</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 6</span></a></li>
-  <li><a href="#exercise-7" id="toc-exercise-7" class="nav-link" data-scroll-target="#exercise-7"><span class="header-section-number">7.0.10</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 7</span></a></li>
-  <li><a href="#exercise-8" id="toc-exercise-8" class="nav-link" data-scroll-target="#exercise-8"><span class="header-section-number">7.0.11</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 8</span></a></li>
-  <li><a href="#default-theme" id="toc-default-theme" class="nav-link" data-scroll-target="#default-theme"><span class="header-section-number">7.0.12</span> Default theme</a></li>
-  <li><a href="#fivethirtyeight-theme" id="toc-fivethirtyeight-theme" class="nav-link" data-scroll-target="#fivethirtyeight-theme"><span class="header-section-number">7.0.13</span> fivethirtyeight theme</a></li>
-  <li><a href="#urbnthemes" id="toc-urbnthemes" class="nav-link" data-scroll-target="#urbnthemes"><span class="header-section-number">7.0.14</span> urbnthemes</a></li>
-  <li><a href="#exercise-9-layers" id="toc-exercise-9-layers" class="nav-link" data-scroll-target="#exercise-9-layers"><span class="header-section-number">7.0.15</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 9 (layers!)</span></a></li>
-  <li><a href="#exercise-10" id="toc-exercise-10" class="nav-link" data-scroll-target="#exercise-10"><span class="header-section-number">7.0.16</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 10</span></a></li>
-  <li><a href="#exercise-11" id="toc-exercise-11" class="nav-link" data-scroll-target="#exercise-11"><span class="header-section-number">7.0.17</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 11</span></a></li>
+  <li><a href="#data" id="toc-data" class="nav-link" data-scroll-target="#data"><span class="header-section-number">4.4.1</span> Data</a></li>
+  <li><a href="#aesthetic-mappings" id="toc-aesthetic-mappings" class="nav-link" data-scroll-target="#aesthetic-mappings"><span class="header-section-number">4.4.2</span> Aesthetic Mappings:</a></li>
+  <li><a href="#geometric-objects" id="toc-geometric-objects" class="nav-link" data-scroll-target="#geometric-objects"><span class="header-section-number">4.4.3</span> Geometric Objects:</a></li>
+  <li><a href="#scales" id="toc-scales" class="nav-link" data-scroll-target="#scales"><span class="header-section-number">4.4.4</span> Scales:</a></li>
+  <li><a href="#coordinate-systems" id="toc-coordinate-systems" class="nav-link" data-scroll-target="#coordinate-systems"><span class="header-section-number">4.4.5</span> Coordinate Systems:</a></li>
+  <li><a href="#facets" id="toc-facets" class="nav-link" data-scroll-target="#facets"><span class="header-section-number">4.4.6</span> Facets:</a></li>
+  <li><a href="#statistical-transformations" id="toc-statistical-transformations" class="nav-link" data-scroll-target="#statistical-transformations"><span class="header-section-number">4.4.7</span> Statistical Transformations:</a></li>
+  <li><a href="#themes" id="toc-themes" class="nav-link" data-scroll-target="#themes"><span class="header-section-number">4.4.8</span> Themes:</a></li>
+  <li><a href="#layers-bonus" id="toc-layers-bonus" class="nav-link" data-scroll-target="#layers-bonus"><span class="header-section-number">4.4.9</span> Layers (bonus!):</a></li>
+  <li><a href="#inheritances-bonus" id="toc-inheritances-bonus" class="nav-link" data-scroll-target="#inheritances-bonus"><span class="header-section-number">4.4.10</span> Inheritances (bonus!):</a></li>
   </ul></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">8</span> Functions</a></li>
-  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">9</span> Theory</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">10</span> Resources</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">4.5</span> Summary</a>
+  <ul class="collapse">
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">4.5.1</span> Functions</a></li>
+  <li><a href="#theory" id="toc-theory" class="nav-link" data-scroll-target="#theory"><span class="header-section-number">4.5.2</span> Theory</a></li>
+  </ul></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">4.6</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -361,16 +390,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
-<section id="motivation" class="level1" data-number="5">
-<h1 data-number="5"><span class="header-section-number">5</span> Motivation</h1>
+<section id="motivation" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">4.1</span> Motivation</h2>
 <ol type="1">
 <li>Data visualization is exploratory data analysis (EDA)</li>
 <li>Data visualization is diagnosis and validation</li>
 <li>Data visualization is communication</li>
 </ol>
 </section>
-<section id="motivation-going-beyond-excel" class="level1" data-number="6">
-<h1 data-number="6"><span class="header-section-number">6</span> Motivation (going beyond Excel)</h1>
+<section id="motivation-going-beyond-excel" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="motivation-going-beyond-excel"><span class="header-section-number">4.2</span> Motivation (going beyond Excel)</h2>
 <ul>
 <li>Flexibility</li>
 <li>Reproducibility</li>
@@ -378,26 +407,42 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Relational data vs.&nbsp;positional data</li>
 </ul>
 </section>
-<section id="background" class="level1" data-number="7">
-<h1 data-number="7"><span class="header-section-number">7</span> Background</h1>
+<section id="background" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="background"><span class="header-section-number">4.3</span> Background</h2>
 <ul>
 <li>The toughest part of data visualization is data munging.</li>
 <li>Data frames are the only appropriate input for <code>library(ggplot2)</code>.</li>
 </ul>
-<p>ggplot2 is an R package for data visualization that was developed during Hadley Wickham’s graduate studies at Iowa State University. ggplot2 is formalized in <a href="https://vita.had.co.nz/papers/layered-grammar.html">“A Layered Grammar of Graphics”</a> by Hadley Wickham, which was published in the Journal of Statistical Software in 2010.</p>
-<p>The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson’s grammar of graphics and implements it in R. The cohesion is impressive and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.</p>
+<p>ggplot2 is an R package for data visualization that was developed during Hadley Wickham’s graduate studies at Iowa State University. ggplot2 is formalized in <em>A Layered Grammar of Graphics</em> by Hadley Wickham <span class="citation" data-cites="layered-grammar">Wickham (<a href="references.html#ref-layered-grammar" role="doc-biblioref">2010</a>)</span>.</p>
+<p>The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson’s grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.</p>
 <p>There are <strong>eight</strong> main ingredients to the grammar of graphics. We will work our way through the ingredients with many hands-on examples.</p>
-<section id="exercise-0" class="level3" data-number="7.0.1">
-<h3 data-number="7.0.1" class="anchored" data-anchor-id="exercise-0"><span class="header-section-number">7.0.1</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 0</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Open your <code>.Rproj</code>.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Create a new <code>.R</code> script in your directory called <code>03_data-visualization.R</code>.</p>
-</section>
-<section id="exercise-1" class="level3" data-number="7.0.2">
-<h3 data-number="7.0.2" class="anchored" data-anchor-id="exercise-1"><span class="header-section-number">7.0.2</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 1</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> <strong>Type</strong> (don’t copy &amp; paste) the following code below <code>library(tidyverse)</code> in <code>03_data-visualization.R</code>.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 1</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Open your <code>.Rproj</code>.</li>
+<li>Create a new <code>.R</code> script in your directory called <code>03_data-visualization.R</code>.</li>
+<li><strong>Type</strong> (don’t copy &amp; paste) the following code below <code>library(tidyverse)</code> in <code>03_data-visualization.R</code>.</li>
+</ol>
 <pre><code>ggplot(data = storms) + 
   geom_point(mapping = aes(x = pressure, y = wind))</code></pre>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add a comment above the ggplot2 code that describes the plot we created.</p>
+<ol start="4" type="1">
+<li>Add a comment above the ggplot2 code that describes the plot we created.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="eight-ingredients-in-the-grammar-of-graphics" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="eight-ingredients-in-the-grammar-of-graphics"><span class="header-section-number">4.4</span> Eight Ingredients in the Grammar of Graphics:</h2>
+<section id="data" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="data"><span class="header-section-number">4.4.1</span> Data</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -408,7 +453,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>1 Data</strong> are the values represented in the visualization.</p>
+<p><strong>Data</strong> are the values represented in the visualization.</p>
 </div>
 </div>
 <p><code>ggplot(data = )</code> or <code>data %&gt;% ggplot()</code></p>
@@ -432,99 +477,102 @@ Note
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Chris</td>
-<td style="text-align: right;">2018</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">32.6</td>
-<td style="text-align: right;">-74.6</td>
-<td style="text-align: right;">45</td>
-<td style="text-align: right;">1005</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Edouard</td>
-<td style="text-align: right;">2014</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">23.0</td>
-<td style="text-align: right;">-47.9</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">994</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Edouard</td>
-<td style="text-align: right;">1990</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">38.5</td>
-<td style="text-align: right;">-19.3</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1010</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Chantal</td>
-<td style="text-align: right;">2013</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">16.7</td>
-<td style="text-align: right;">-71.2</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">1011</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Cristobal</td>
-<td style="text-align: right;">2020</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">53.2</td>
-<td style="text-align: right;">-80.4</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">987</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Humberto</td>
-<td style="text-align: right;">2001</td>
+<td style="text-align: left;">Franklin</td>
+<td style="text-align: right;">2017</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">42.2</td>
-<td style="text-align: right;">-54.6</td>
-<td style="text-align: right;">70</td>
-<td style="text-align: right;">987</td>
+<td style="text-align: right;">20.3</td>
+<td style="text-align: right;">-95.5</td>
+<td style="text-align: right;">75</td>
+<td style="text-align: right;">981</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td style="text-align: left;">Gaston</td>
-<td style="text-align: right;">2016</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">32.0</td>
-<td style="text-align: right;">-53.5</td>
-<td style="text-align: right;">85</td>
-<td style="text-align: right;">968</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">AL042000</td>
-<td style="text-align: right;">2000</td>
+<td style="text-align: right;">2004</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">28.3</td>
-<td style="text-align: right;">-79.3</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1010</td>
+<td style="text-align: right;">31.6</td>
+<td style="text-align: right;">-78.0</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1014</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Alicia</td>
-<td style="text-align: right;">1983</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">40.0</td>
-<td style="text-align: right;">-98.0</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">1010</td>
+<td style="text-align: left;">Dennis</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">23.8</td>
+<td style="text-align: right;">-73.1</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">995</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Michael</td>
-<td style="text-align: right;">2012</td>
+<td style="text-align: left;">Dorian</td>
+<td style="text-align: right;">2019</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">27.0</td>
+<td style="text-align: right;">-78.5</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">950</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arlene</td>
+<td style="text-align: right;">1987</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">26.7</td>
-<td style="text-align: right;">-43.5</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">1007</td>
+<td style="text-align: right;">39.0</td>
+<td style="text-align: right;">-4.0</td>
+<td style="text-align: right;">10</td>
+<td style="text-align: right;">1008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Erin</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">29.7</td>
+<td style="text-align: right;">-45.2</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">983</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cindy</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">36.7</td>
+<td style="text-align: right;">-88.1</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: right;">1002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hortense</td>
+<td style="text-align: right;">1984</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">30.5</td>
+<td style="text-align: right;">-63.2</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">999</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alex</td>
+<td style="text-align: right;">2010</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">17.5</td>
+<td style="text-align: right;">-88.2</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">995</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beryl</td>
+<td style="text-align: right;">1982</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">17.0</td>
+<td style="text-align: right;">-35.0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">993</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
+</section>
+<section id="aesthetic-mappings" class="level3" data-number="4.4.2">
+<h3 data-number="4.4.2" class="anchored" data-anchor-id="aesthetic-mappings"><span class="header-section-number">4.4.2</span> Aesthetic Mappings:</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -535,21 +583,11 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>2 Aesthetic mappings</strong> are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size.</p>
+<p><strong>Aesthetic mappings</strong> are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size.</p>
 </div>
 </div>
 <p><code>aes(x = , y = , color = )</code></p>
 <p><strong>X or Y</strong></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><strong>Continuous Color or Fill</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -559,7 +597,7 @@ Note
 </div>
 </div>
 </div>
-<p><strong>Discrete Color or Fill</strong></p>
+<p><strong>Continuous Color or Fill</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -569,7 +607,7 @@ Note
 </div>
 </div>
 </div>
-<p><strong>Size</strong></p>
+<p><strong>Discrete Color or Fill</strong></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -579,18 +617,8 @@ Note
 </div>
 </div>
 </div>
-<p><strong>Shape</strong></p>
+<p><strong>Size</strong></p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: The shape palette can deal with a maximum of 6 discrete values because more
-than 6 becomes difficult to discriminate
-ℹ you have requested 7 values. Consider specifying shapes manually if you need
-  that many have them.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 18 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -599,7 +627,20 @@ than 6 becomes difficult to discriminate
 </div>
 </div>
 </div>
+<p><strong>Shape</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 <p>Others: transparency, line type</p>
+</section>
+<section id="geometric-objects" class="level3" data-number="4.4.3">
+<h3 data-number="4.4.3" class="anchored" data-anchor-id="geometric-objects"><span class="header-section-number">4.4.3</span> Geometric Objects:</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -610,20 +651,16 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>3 Geometric objects</strong> are representations of the data, including points, lines, and polygons.</p>
+<p><strong>Geometric objects</strong> are representations of the data, including points, lines, and polygons.</p>
 </div>
 </div>
 <p><code>geom_bar()</code> or <code>geom_col()</code></p>
 <p><em>Plots are often called their geometric object(s).</em></p>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 42 rows containing non-finite outside the scale range
-(`stat_count()`).</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="192"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -637,7 +674,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="192"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -647,26 +684,51 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="192"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 2</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Duplicate the code from Exercise 1. Add comments below the data visualization code that describes the argument or function that corresponds to each of the first three components of the grammar of graphics.</p></li>
+<li><p>Inside <code>aes()</code>, add <code>color = category</code>. Run the code.</p></li>
+<li><p>Replace <code>color = category</code> with <code>color = "green"</code>. Run the code. What changed? Is this unexpected?</p></li>
+<li><p>Remove <code>color = "green"</code> from <code>aes()</code> and add it inside inside of <code>geom_point()</code> but outside of <code>aes()</code>. Run the code.</p></li>
+<li><p>This is a little cluttered. Add <code>alpha = 0.2</code> inside <code>geom_point()</code> but outside of <code>aes()</code>.</p></li>
+</ol>
+</div>
+</div>
+<p>Aesthetic mappings like x and y almost always vary with the data. Aesthetic mappings like color, fill, shape, transparency, and size <em>can</em> vary with the data. But those arguments can also be added as styles that don’t vary with the data. If you include those arguments in <code>aes()</code>, they will show up in the legend (which can be annoying! and is also a sign that something should be changed!).</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 3</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create a new scatter plot using the <code>msleep</code> data set. Use <code>bodywt</code> on the x-axis and <code>sleep_total</code> on the y-axis.</li>
+<li>The y-axis doesn’t contain zero. Below <code>geom_point()</code>, add <code>scale_y_continuous(limits = c(0, NA))</code>. Hint: add <code>+</code> after <code>geom_point()</code>.</li>
+<li>The x-axis is clustered near zero. Add <code>scale_x_log10()</code> above <code>scale_y_continuous(limits = c(0, NA))</code>.</li>
+</ol>
+</div>
+</div>
 </section>
-<section id="exercise-2" class="level3" data-number="7.0.3">
-<h3 data-number="7.0.3" class="anchored" data-anchor-id="exercise-2"><span class="header-section-number">7.0.3</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 2</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate the code from exercise 1. Add comments below the data visualization code that describes the argument or function that corresponds to each of the first three components of the grammar of graphics.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Inside <code>aes()</code>, add <code>color = category</code>. Run the code.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Replace <code>color = category</code> with <code>color = "green"</code>. Run the code. What changed? Is this unexpected?</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 4:</span></strong> Remove <code>color = "green"</code> from <code>aes()</code> and add it inside inside of <code>geom_point()</code> but outside of <code>aes()</code>. Run the code.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 5:</span></strong> This is a little cluttered. Add <code>alpha = 0.2</code> inside <code>geom_point()</code> but outside of <code>aes()</code>.</p>
-<p>Aesthetic mappings like x and y almost always vary with the data. Aesthetic mappings like color, fill, shape, transparency, and size can vary with the data. But those arguments can also be added as styles that don’t vary with the data. If you include those arguments in <code>aes()</code>, they will show up in the legend (which can be annoying! and is also a sign that something should be changed!).</p>
-</section>
-<section id="exercise-3" class="level3" data-number="7.0.4">
-<h3 data-number="7.0.4" class="anchored" data-anchor-id="exercise-3"><span class="header-section-number">7.0.4</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 3</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Create a new scatter plot using the <code>msleep</code> data set. Use <code>bodywt</code> on the x-axis and <code>sleep_total</code> on the y-axis.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> The y-axis doesn’t contain zero. Below <code>geom_point()</code>, add <code>scale_y_continuous(limits = c(0, NA))</code>. Hint: add <code>+</code> after <code>geom_point()</code>.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> The x-axis is clustered near zero. Add <code>scale_x_log10()</code> above <code>scale_y_continuous(limits = c(0, NA))</code>.</p>
+<section id="scales" class="level3" data-number="4.4.4">
+<h3 data-number="4.4.4" class="anchored" data-anchor-id="scales"><span class="header-section-number">4.4.4</span> Scales:</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -677,7 +739,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>4 Scales</strong> turn data values, which are continuous, discrete, or categorical into aesthetic values. <code>scale_*_*()</code> functions control the specific behaviors of aesthetic mappings. This includes not only the x-axis and y-axis, but the ranges of sizes, types of shapes, and specific colors of aesthetics.</p>
+<p><strong>Scales</strong> turn data values, which are continuous, discrete, or categorical into aesthetic values. <code>scale_*_*()</code> functions control the specific behaviors of aesthetic mappings. This includes not only the x-axis and y-axis, but the ranges of sizes, types of shapes, and specific colors of aesthetics.</p>
 </div>
 </div>
 <section id="before" class="level4">
@@ -687,7 +749,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -700,7 +762,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -713,7 +775,7 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -726,21 +788,37 @@ Note
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</section>
-</section>
-<section id="exercise-4" class="level3" data-number="7.0.5">
-<h3 data-number="7.0.5" class="anchored" data-anchor-id="exercise-4"><span class="header-section-number">7.0.5</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 4</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Type the following code in your script.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 4</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Type the following code in your script.</li>
+</ol>
 <pre><code>data &lt;- tibble(x = 1:10, y = 1:10)
 ggplot(data = data) +
   geom_blank(mapping = aes(x = x, y = y))</code></pre>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>coord_polar()</code> to your plot.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Add <code>labs(title = "Polar coordinate system")</code> to your plot.</p>
+<ol start="2" type="1">
+<li><p>Add <code>coord_polar()</code> to your plot.</p></li>
+<li><p>Add <code>labs(title = "Polar coordinate system")</code> to your plot.</p></li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="coordinate-systems" class="level3" data-number="4.4.5">
+<h3 data-number="4.4.5" class="anchored" data-anchor-id="coordinate-systems"><span class="header-section-number">4.4.5</span> Coordinate Systems:</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -751,115 +829,9 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>5 Coordinate systems</strong> map scaled geometric objects to the position of objects on the plane of a plot. The two most popular coordinate systems are the Cartesian coordinate system and the polar coordinate system.</p>
+<p><strong>Coordinate systems</strong> map scaled geometric objects to the position of objects on the plane of a plot. The two most popular coordinate systems are the Cartesian coordinate system and the polar coordinate system.</p>
 </div>
 </div>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<p><code>coord_polar()</code></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="exercise-5" class="level3" data-number="7.0.6">
-<h3 data-number="7.0.6" class="anchored" data-anchor-id="exercise-5"><span class="header-section-number">7.0.6</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 5</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Create a scatter plot of the <code>storms</code> data set with <code>pressure</code> on the x-axis and <code>wind</code> on the y-axis.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>facet_wrap(~ category)</code></p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>6 Facets (optional)</strong> break data into meaningful subsets. <code>facet_wrap()</code>, <code>facet_grid()</code>, and <code>facet_geo()</code>.</p>
-</div>
-</div>
-</section>
-<section id="facet-wrap" class="level3" data-number="7.0.7">
-<h3 data-number="7.0.7" class="anchored" data-anchor-id="facet-wrap"><span class="header-section-number">7.0.7</span> Facet wrap</h3>
-<p><code>facet_wrap(~ category)</code></p>
-</section>
-<section id="facet-grid" class="level3" data-number="7.0.8">
-<h3 data-number="7.0.8" class="anchored" data-anchor-id="facet-grid"><span class="header-section-number">7.0.8</span> Facet grid</h3>
-<p><code>facet_grid(month ~ year)</code></p>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="04_data-viz_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-</section>
-<section id="exercise-6" class="level3" data-number="7.0.9">
-<h3 data-number="7.0.9" class="anchored" data-anchor-id="exercise-6"><span class="header-section-number">7.0.9</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 6</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following code to your script. Submit it!</p>
-<pre><code>ggplot(storms) +
-  geom_bar(mapping = aes(x = category))</code></pre>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>7 Statistical transformations (optional)</strong> transform the data, typically through summary statistics and functions, before aesthetic mapping.</p>
-<p>Before transformations, each observation in data is represented by one geometric object (i.e.&nbsp;a scatter plot). After a transformation, a geometric object can represent more than one observation (i.e.&nbsp;a bar in a histogram).</p>
-</div>
-</div>
-<p><strong>Note:</strong> <code>geom_bar()</code> performs statistical transformation. Use <code>geom_col()</code> to create a column chart with bars that encode individual observations in the data set.</p>
-</section>
-<section id="exercise-7" class="level3" data-number="7.0.10">
-<h3 data-number="7.0.10" class="anchored" data-anchor-id="exercise-7"><span class="header-section-number">7.0.10</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 7</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate Exercise 6.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>theme_minimal()</code> to the plot.</p>
-</section>
-<section id="exercise-8" class="level3" data-number="7.0.11">
-<h3 data-number="7.0.11" class="anchored" data-anchor-id="exercise-8"><span class="header-section-number">7.0.11</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 8</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Duplicate Exercise 6.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Run <code>install.packages("remotes")</code> and <code>remotes::install_github("UrbanInstitute/urbnthemes")</code> in the console.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> In the lines preceding the chart add and run the following code:</p>
-<pre><code>library(urbnthemes)
-set_urbn_defaults(style = "print")</code></pre>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 4:</span></strong> Run the code to make the chart.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 5:</span></strong> Add <code>scale_y_continuous(expand = expansion(mult = c(0, 0.1)))</code> and rerun the code.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Note
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>8 Themes</strong> control the visual style of plots with font types, font sizes, background colors, margins, and positioning.</p>
-</div>
-</div>
-</section>
-<section id="default-theme" class="level3" data-number="7.0.12">
-<h3 data-number="7.0.12" class="anchored" data-anchor-id="default-theme"><span class="header-section-number">7.0.12</span> Default theme</h3>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -869,9 +841,7 @@ Note
 </div>
 </div>
 </div>
-</section>
-<section id="fivethirtyeight-theme" class="level3" data-number="7.0.13">
-<h3 data-number="7.0.13" class="anchored" data-anchor-id="fivethirtyeight-theme"><span class="header-section-number">7.0.13</span> fivethirtyeight theme</h3>
+<p><code>coord_polar()</code></p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -881,20 +851,224 @@ Note
 </div>
 </div>
 </div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 5</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Create a scatter plot of the <code>storms</code> data set with <code>pressure</code> on the x-axis and <code>wind</code> on the y-axis.</p></li>
+<li><p>Add <code>facet_wrap(~ category)</code></p></li>
+</ol>
+</div>
+</div>
 </section>
-<section id="urbnthemes" class="level3" data-number="7.0.14">
-<h3 data-number="7.0.14" class="anchored" data-anchor-id="urbnthemes"><span class="header-section-number">7.0.14</span> urbnthemes</h3>
+<section id="facets" class="level3" data-number="4.4.6">
+<h3 data-number="4.4.6" class="anchored" data-anchor-id="facets"><span class="header-section-number">4.4.6</span> Facets:</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Facets (optional)</strong> break data into meaningful subsets. <code>facet_wrap()</code>, <code>facet_grid()</code>, and <code>facet_geo()</code>.</p>
+</div>
+</div>
+<p><code>facet_wrap</code> and <code>facet_grid</code> are similar but have distinct functions. As the diagram below illustrates, <code>facet_wrap</code> organizes a 1 dimensional set of charts, but wraps the charts in two dimensions to preserve space. <code>facet_grid</code> organizes a set of charts in two dimensions. <code>facet_geo</code> organizes charts in a way that attempts to preserve some geographic component of the data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/position-facets.png" class="img-fluid figure-img"></p>
+<figcaption>Source: <a href="https://ggplot2-book.org/facet">ggplot2: Elegant Graphics for Data Analysis (3e)</a></figcaption>
+</figure>
+</div>
+<section id="facet-wrap" class="level4">
+<h4 class="anchored" data-anchor-id="facet-wrap">Facet wrap</h4>
+<p><code>facet_wrap(~ category)</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
-<section id="exercise-9-layers" class="level3" data-number="7.0.15">
-<h3 data-number="7.0.15" class="anchored" data-anchor-id="exercise-9-layers"><span class="header-section-number">7.0.15</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 9 (layers!)</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following exercise to you script. Run it!</p>
+<section id="facet-grid" class="level4">
+<h4 class="anchored" data-anchor-id="facet-grid">Facet grid</h4>
+<p><code>facet_grid(month ~ year)</code></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 6</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add the following code to your script. Submit it!</li>
+</ol>
+<pre><code>ggplot(storms) +
+  geom_bar(mapping = aes(x = category))</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="statistical-transformations" class="level3" data-number="4.4.7">
+<h3 data-number="4.4.7" class="anchored" data-anchor-id="statistical-transformations"><span class="header-section-number">4.4.7</span> Statistical Transformations:</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Statistical transformations (optional)</strong> transform the data, typically through summary statistics and functions, before aesthetic mapping.</p>
+<p>Before transformations, each observation in data is represented by one geometric object (i.e.&nbsp;a scatter plot). After a transformation, a geometric object can represent more than one observation (i.e.&nbsp;a bar in a histogram).</p>
+</div>
+</div>
+<p><strong>Note:</strong> <code>geom_bar()</code> performs statistical transformation. Use <code>geom_col()</code> to create a column chart with bars that encode individual observations in the data set.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 7</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Duplicate Exercise 6.</p></li>
+<li><p>Add <code>theme_minimal()</code> to the plot.</p></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 8</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Duplicate Exercise 6.</li>
+<li>Run <code>install.packages("remotes")</code> and <code>remotes::install_github("UrbanInstitute/urbnthemes")</code> in the console.</li>
+<li>In the lines preceding the chart add and run the following code:</li>
+</ol>
+<pre><code>library(urbnthemes)
+set_urbn_defaults(style = "print")</code></pre>
+<ol start="4" type="1">
+<li><p>Run the code to make the chart.</p></li>
+<li><p>Add <code>scale_y_continuous(expand = expansion(mult = c(0, 0.1)))</code> and rerun the code.</p></li>
+</ol>
+</div>
+</div>
+</section>
+<section id="themes" class="level3" data-number="4.4.8">
+<h3 data-number="4.4.8" class="anchored" data-anchor-id="themes"><span class="header-section-number">4.4.8</span> Themes:</h3>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Themes</strong> control the visual style of plots with font types, font sizes, background colors, margins, and positioning.</p>
+</div>
+</div>
+<section id="default-theme" class="level4">
+<h4 class="anchored" data-anchor-id="default-theme">Default theme</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="fivethirtyeight-theme" class="level4">
+<h4 class="anchored" data-anchor-id="fivethirtyeight-theme">fivethirtyeight theme</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="urbnthemes" class="level4">
+<h4 class="anchored" data-anchor-id="urbnthemes">urbnthemes</h4>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="04_data-viz_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 9</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add the following exercise to you script. Run it!</li>
+</ol>
 <pre><code>storms %&gt;%  
   filter(category &gt; 0) %&gt;%
   distinct(name, year) %&gt;%
   count(year) %&gt;%
   ggplot() + 
   geom_line(mapping = aes(x = year, y = n))</code></pre>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>geom_point()</code> after <code>geom_line()</code> with the same aesthetic mappings.</p>
+<ol start="2" type="1">
+<li>Add <code>geom_point()</code> after <code>geom_line()</code> with the same aesthetic mappings.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="layers-bonus" class="level3" data-number="4.4.9">
+<h3 data-number="4.4.9" class="anchored" data-anchor-id="layers-bonus"><span class="header-section-number">4.4.9</span> Layers (bonus!):</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -908,13 +1082,27 @@ Note
 <p><strong>Layers</strong> allow for multiple geometric objects to be plotted in the same data visualization.</p>
 </div>
 </div>
-</section>
-<section id="exercise-10" class="level3" data-number="7.0.16">
-<h3 data-number="7.0.16" class="anchored" data-anchor-id="exercise-10"><span class="header-section-number">7.0.16</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 10</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Add the following exercise to you script. Run it!</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 10</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Add the following exercise to you script. Run it!</li>
+</ol>
 <pre><code>ggplot(data = storms, mapping = aes(x = pressure, y = wind)) + 
   geom_point() +
   geom_smooth()</code></pre>
+</div>
+</div>
+</section>
+<section id="inheritances-bonus" class="level3" data-number="4.4.10">
+<h3 data-number="4.4.10" class="anchored" data-anchor-id="inheritances-bonus"><span class="header-section-number">4.4.10</span> Inheritances (bonus!):</h3>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -928,17 +1116,31 @@ Note
 <p><strong>Inheritances</strong> pass aesthetic mappings from <code>ggplot()</code> to later <code>geom_*()</code> functions.</p>
 </div>
 </div>
-<p> <code>ggplot()</code> </p>
+<p>Notice how the aesthetic mappings are passed to <code>ggplot()</code> in example 10. This is useful when using layers!</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 11</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><p>Pick your favorite plot from exercises 1 through 10 and duplicate the code.</p></li>
+<li><p>Add <code>ggsave(filename = "favorite-plot.png")</code> on a new line without <code>+</code> and then save the file. Look at the saved file.</p></li>
+<li><p>Add <code>width = 6</code> and <code>height = 4</code> to <code>ggsave()</code>. Run the code and then look at the saved file.</p></li>
+</ol>
+</div>
+</div>
 </section>
-<section id="exercise-11" class="level3" data-number="7.0.17">
-<h3 data-number="7.0.17" class="anchored" data-anchor-id="exercise-11"><span class="header-section-number">7.0.17</span> <span style="     color: rgba(22, 150, 210, 255) !important;">Exercise 11</span></h3>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 1:</span></strong> Pick your favorite plot from exercises 1 through 10 and duplicate the code.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 2:</span></strong> Add <code>ggsave(filename = "favorite-plot.png")</code> on a new line without <code>+</code> and then save the file. Look at the saved file.</p>
-<p><strong><span style="     color: rgba(85, 183, 72, 255) !important;">Step 3:</span></strong> Add <code>width = 6</code> and <code>height = 4</code> to <code>ggsave()</code>. Run the code and then look at the saved file.</p>
 </section>
-</section>
-<section id="functions" class="level1" data-number="8">
-<h1 data-number="8"><span class="header-section-number">8</span> Functions</h1>
+<section id="summary" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="summary"><span class="header-section-number">4.5</span> Summary</h2>
+<section id="functions" class="level3" data-number="4.5.1">
+<h3 data-number="4.5.1" class="anchored" data-anchor-id="functions"><span class="header-section-number">4.5.1</span> Functions</h3>
+<p>This is a summary of the functions we discussed in this chapter. While by no means comprehensive, these are an excellent starting point to visualizing data using ggplot2.</p>
 <ul>
 <li><code>ggplot()</code></li>
 <li><code>aes()</code></li>
@@ -958,8 +1160,8 @@ Note
 <li><code>labs()</code></li>
 </ul>
 </section>
-<section id="theory" class="level1" data-number="9">
-<h1 data-number="9"><span class="header-section-number">9</span> Theory</h1>
+<section id="theory" class="level3" data-number="4.5.2">
+<h3 data-number="4.5.2" class="anchored" data-anchor-id="theory"><span class="header-section-number">4.5.2</span> Theory</h3>
 <ol type="1">
 <li><em>Data</em></li>
 <li><em>Aesthetic mappings</em></li>
@@ -971,17 +1173,24 @@ Note
 <li><em>Theme</em></li>
 </ol>
 </section>
-<section id="resources" class="level1" data-number="10">
-<h1 data-number="10"><span class="header-section-number">10</span> Resources</h1>
+</section>
+<section id="resources" class="level2" data-number="4.6">
+<h2 data-number="4.6" class="anchored" data-anchor-id="resources"><span class="header-section-number">4.6</span> Resources</h2>
 <ul>
 <li><a href="https://urbaninstitute.github.io/r-at-urban/graphics-guide.html">Urban Institute R Users Group website</a></li>
 <li><a href="https://medium.com/@urban_institute/why-the-urban-institute-visualizes-data-with-ggplot2-46d8cfc7ee67">Why the Urban Institute visualizes data with ggplot2</a></li>
 <li><a href="http://r4ds.had.co.nz/data-visualisation.html">R for Data Science: data visualization</a></li>
+<li><a href="https://ggplot2-book.org">ggplot2: ELegant Graphics for Data Analysis (3e)</a></li>
 <li><a href="https://awunderground.github.io/ggplot2-themes/">awunderground themes</a></li>
 <li><a href="https://www.r-graph-gallery.com/">R Graph Gallery</a></li>
 </ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-layered-grammar" class="csl-entry" role="listitem">
+Wickham, Hadley. 2010. <span>“A Layered Grammar of Graphics.”</span> <em>Journal of Computational and Graphical Statistics</em> 19 (1): 3–28. <a href="https://doi.org/10.1198/jcgs.2009.07098">https://doi.org/10.1198/jcgs.2009.07098</a>.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -1379,8 +1588,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_advanced-quarto.html" class="pagination-link" aria-label="Advanced Quarto">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./05_exploratory-data-analysis.html" class="pagination-link" aria-label="Exploratory Data Analysis">
+        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -15,27 +15,28 @@ editor_options:
 library(tidyverse)
 library(here)
 
+exercise_number <- 1
 ```
 
-# Reading in Data
+## Reading in Data
 
 We've already covered reading in csv files using the `read_csv()` function from the `readr` package, but you may also need to read in data that is stored in a number of other common file formats:
 
-## Excel Spreadsheets
+### Excel Spreadsheets
 
-[readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session. 
+[readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package, so it needs to be explicitly loaded in each R session. 
 
 The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
 
-Many excel files can be read with the simple syntax `data <- read_excel(path = "relative/file/path/to/data")`. In cases where the Excel spreadsheet contains multiple sheets, you can use the `sheet` argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet).
+Many excel files can be read with the simple syntax `data <- read_excel(path = "relative/file/path/to/data")`. In cases where the Excel spreadsheet contains multiple sheets, you can use the `sheet` argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet). You can also read only components of a sheet using Excel-style cell-ranges (ex: `A3:L44`). 
 
-## STATA, SAS, and SPSS files
+### STATA, SAS, and SPSS files
 
 [haven](https://haven.tidyverse.org/) is a tidyverse package for reading data from SAS (`read_sas()`), STATA (`read_dta()`), and SPSS (`read_sav()`) files. Like the `readxl` package, it is not a core tidyverse package and also needs to be explicitly loaded in each R session.
 
 Note that the haven package can only read and write STATA `.dta` files through version 15 of STATA. For files created in more recent versions of STATA, the `readstat13` package's `read.dta13` file can be used.
 
-## Zip Files
+### Zip Files
 
 You may also want to read in data that is saved in a zip file. In order to do this, you can use the `unzip()` function to unzip the files using the following syntax: `unzip(zipfile = "path/to/zip/file", exdir = "path/to/directory/for/unzipped/files")`.
 
@@ -75,7 +76,7 @@ download.file(
 #| include: false
 pulse_url <- "https://www2.census.gov/programs-surveys/demo/datasets/hhp/2021/wk40/HPS_Week40_PUF_CSV.zip"
 
-dest_path <- here("tutorials/07_exploratory-data-analysis/data", "pulse40.zip")
+dest_path <- here("data", "pulse40.zip")
 
 if (!file.exists(dest_path)){
   # For Mac, *.nix systems:
@@ -88,7 +89,10 @@ if (!file.exists(dest_path)){
 
 
 
-### `r kableExtra::text_spec("Exercise 01", color = "#1696d2")`
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
 1. Copy and paste the code chunk above and keep the appropriate `download.file` command for your computer.
 2. Write code using the `unzip()` function to unzip the zip file downloaded. Set `zipfile` to be the same the `destfile` parameter you used in part 1.  Set `exdir` to be the same directory where you just downloaded the zip file. Run both of these commands.
@@ -99,29 +103,38 @@ if (!file.exists(dest_path)){
 #| include: false
 
 unzip(
-  zipfile = here("tutorials/07_exploratory-data-analysis/data", 
+  zipfile = here("data", 
                  "pulse40.zip"), 
   exdir = here("tutorials/07_exploratory-data-analysis/data")
 )
 
 pulse <- read_csv(
-  here("tutorials/07_exploratory-data-analysis/data", 
+  here("data", 
        "pulse2021_puf_40.csv")
 )
 
 ```
 
+:::
 
 
-# Column Names
+## Column Names
 
-As we discussed in week 1, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
+As we discussed in week 1, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
 
-The [janitor package](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the `clean_names()` function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The `clean_names()` function works well with the `%>%` operator.
+The [janitor package](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the `clean_names()` function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The `clean_names()` function works well with the `|>` operator.
 
 
 
-### `r kableExtra::text_spec("Exercise 02", color = "#1696d2")`
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
 
 1. Take a look at the column names in the Pulse data file you read in for the exercise earlier.
 2. Then edit the command in the R script that you wrote to read in the CSV file to pipe the results of that command to the `janitor::clean_names()` function. Note that you may have to install and import the janitor package first.
@@ -135,19 +148,17 @@ pulse <- pulse %>%
   janitor::clean_names()
 
 ```
-
+:::
 
 As discussed in the introduction to the tidyverse, you can also directly rename columns using the `rename()` function from the `dplyr` package as follows: `rename(data, new_col = old_col)`.
 
 
 
-# Data Overview
+## Data Overview
 
 Once you've imported your data, a common first step is to get a very high-level summary of your data.
 
 As introduced in the introduction to the tidyverse, the `glimpse()` function provides a quick view of your data, printing the type and first several values of each column in the dataset to the console.
-
-\vspace{0.25in}
 
 ```{r}
 #| label: glimpse-storms
@@ -155,32 +166,20 @@ glimpse(x = storms)
 
 ```
 
-\vspace{0.25in}
-
 The `summary()` function enables you to quickly understand the distribution of a numeric or categorical variable. For a numeric variable, summary() will return the minimum, first quartile, median, mean, third quartile, and max values. For a categorical (or factor) variable, summary() will return the number of observations in each category. If you pass a dataframe to summary() it will summarize every column in the dataframe. You can also call summary on a single variable as shown below:
-
-\vspace{0.25in}
 
 ```{r}
 summary(storms$wind)
 
 ```
 
-\vspace{0.25in}
-
 The `str()` function compactly displays the internal structure of any R object. If you pass a dataframe to `str` it will print the column type and first several values for each column in the dataframe, similar to the `glimpse()` function.
 
 Getting a high-level overview of the data can help you identify what questions you need to ask of your data during the exploratory data analysis process. The rest of this lecture will outline several questions that you should always ask when exploring your data - though this list is not exhaustive and will be informed by your specific data and analysis!
 
-\vspace{0.25in}
-
-# Are my columns the right types?
-
-\vspace{0.25in}
+## Are my columns the right types?
 
 We'll read in the population-weighted centroids for the District of Columbia exported from the Missouri Census Data Center's [geocorr2014 tool](https://mcdc.missouri.edu/applications/geocorr2014.html).
-
-\vspace{0.25in}
 
 ```{r}
 dc_centroids <- read_csv(
@@ -193,11 +192,9 @@ dc_centroids <- read_csv(
 glimpse(dc_centroids)
 
 ```
-\vspace{0.25in}
 
 We see that all of the columns have been read in as character vectors because the second line of the csv file has a character description of each column. By default, `read_csv` uses the first 1,000 rows of data to infer the column types of a file. We can avoid this by skipping the first two lines of the csv file and manually setting the column names.
 
-\vspace{0.25in}
 
 ```{r}
 #save the column names from the dataframe
@@ -216,11 +213,7 @@ glimpse(dc_centroids)
 
 ```
 
-\vspace{0.25in}
-
 You can convert column types by using the `as.*` set of functions. For example, we could convert the `county` column to a character vector as follows: `mutate(dc_centroids, county = as.character(county))`. We can also set the column types when reading in the data with `read_csv()` using the `col_types` argument. For example: 
-
-\vspace{0.25in}
 
 ```{r}
 dc_centroids <- read_csv(
@@ -237,24 +230,19 @@ glimpse(dc_centroids)
 
 ```
 
-\vspace{0.25in}
-
 As you remember from week 1, a vector in R can only contain one data type. If R does not know how to convert a value in the vector to the given type, it may introduce NA values by coercion. For example:
 
-\vspace{0.25in}
 
 ```{r}
 as.numeric(c("20", "10", "10+", "25", "~8"))
 ```
-\vspace{0.25in}
 
-## String manipulation with `stringr`
+### String manipulation with `stringr`
 
 Before converting column types, it is critical to clean the column values to ensure that NA values aren't accidentally introduced by coercion. The `stringr` package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with `library(tidyverse)`. The [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) offers a great guide to the `stringr` functions. 
 
 To demonstrate some of the `stringr` functions, let's create a `state` column with the two digit state FIPS code for DC and a `geoid` column in the `dc_centroid` dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the `tract` column and then concatenate the `county` and `tract` columns into a `geoid` column. We can do that using `stringr` as follows:
 
-\vspace{0.25in}
 
 ```{r}
 dc_centroids <- dc_centroids %>%
@@ -269,7 +257,15 @@ dc_centroids <- dc_centroids %>%
 
 
 
-### `r kableExtra::text_spec("Exercise 03", color = "#1696d2")`
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
 
 1. Copy the code above into an R script and edit it to add the creation of a variable called `state` that is equal to the first two characters of the `county` variable using the `str_sub()` function.
 
@@ -287,12 +283,11 @@ dc_centroids <- dc_centroids %>%
 
 ```
 
-\vspace{0.25in}
+:::
 
-Note that the `str_replace()` function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it's syntax can be complex and not particularly intuitive. [This vignette](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html) provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. 
-\vspace{0.25in}
+Note that the `str_replace()` function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it's syntax can be complex and not particularly intuitive. [This vignette](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html) provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. ChatGPT is often effective at writing regular expressions, but recall our warnings about using ChatGPT in Chapter 1. 
 
-## Date manipulation with `lubridate`
+### Date manipulation with `lubridate`
 
 The `lubridate` package makes it much easier to work with dates and times in R. While also part of the tidyverse, it is not a core tidyverse package and must be explicitly loaded in each session with `library(lubridate)`.
 
@@ -314,11 +309,7 @@ acled_2022 <- read_csv(
 
 ```
 
-
-
 Creating datetime columns enables the use of a number of different operations, such as filtering based on date:
-
-
 
 ```{r}
 acled_2022 %>%
@@ -360,7 +351,7 @@ For more information on lubridate, see the [lubridate cheat sheet](https://www.r
 
 [Source: R for Data Science, Ch 16](https://r4ds.had.co.nz/dates-and-times.html)
 
-## Categorical and Factor Variables
+### Categorical and Factor Variables
 
 Categorical variables can be stored as characters in R. The `case_when()` function makes it very easy to create categorical variables based on other columns. For example:
 
@@ -413,17 +404,25 @@ table(y1)
 
 
 
-# Is there missing data?
+## Is there missing data?
 
 Before you work with any dataset, you should understand how missing values are encoded. The best place to find this information is the data dictionary - which you should always read before working with any new dataset! 
 
-This is particularly important because while R automatically recognizes standard missing values as NA, it doesn't recognize non-standard encodings like numbers, "missing", "na", "N/A", etc. 
+This is particularly important because while R automatically recognizes standard missing values as NA, it doesn't recognize non-standard encodings like numbers representing missing values, "missing", "na", "N/A", etc. 
 
 Non-standard missing values should be converted to NA before conducting analysis. One way of doing this is with `mutate` and the `if_else` or `case_when` functions.
 
 
 
-### `r kableExtra::text_spec("Exercise 04", color = "#1696d2")`
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
 
 1. Go to the folder where you unzipped the Pulse data from earlier and open the data dictionary file. How does this dataset represent missing values for the `RECVDVACC` variable?
 2. Using `mutate` and `if_else` or `case_when`, replace the missing values in the `recvdvacc` column with NA. 
@@ -445,7 +444,7 @@ pulse <- pulse %>%
 
 ```
 
-
+:::
 
 Once you have converted all missing value encodings to NA, the next question you need to ask is how you want to handle missing values in your analysis. The right approach will depend on what the missing value represents and the goals of your analysis.
 
@@ -479,9 +478,9 @@ df %>%
 
 
 
-# Do I have outliers or unexpected values?
+## Do I have outliers or unexpected values?
 
-## Identifying Outliers/Unexpected Values
+### Identifying Outliers/Unexpected Values
 
 Using R to examine the distribution of your data is one way to identify outliers or unexpected values. For example, we can examine the distribution of the `bodywt` variable in the `msleep` dataset both by examining the mathematical distribution using the `summary()` function and visually using `ggplot`.
 
@@ -508,7 +507,7 @@ msleep %>%
 
 
 
-## Unit Tests
+### Unit Tests
 
 Writing tests in R is a great way to test that your data does not have unexpected/incorrect values. These tests can also be used to catch mistakes that can be introduced by errors in the data cleaning process. There are a number of R packages that have tools for writing tests, including:
 
@@ -536,7 +535,7 @@ df %>%
 
 Critically, adding the test caused the code to return an error **before** calculating the mean of the age variable. This is a feature, not a bug! It can prevent you from introducing errors into your analyses. Moreover, by writing a set of tests in your analysis code, you can run the same checks every time you perform the analysis which can help you catch errors caused by changes in the input data. 
 
-## Handling Outliers/Unexpected Values
+### Handling Outliers/Unexpected Values
 
 When you identify outliers or unexpected values, you will have to decide how you want to handle those values in your data. The proper way to handle those values will depend on the reason for the outlier value and the objectives of your analysis.
 
@@ -547,7 +546,15 @@ When you identify outliers or unexpected values, you will have to decide how you
 
 
 
-### `r kableExtra::text_spec("Exercise 05", color = "#1696d2")`
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
 
 1. Read the column descriptions in the [csv file for the DC centroids]("https://raw.githubusercontent.com/awunderground/awunderground-data/main/geocorr/geocorr2014_dc.csv"). 
 2. Use one of the methods above to identify whether the `pop10` column contains any outliers. According to the [Census Bureau](https://www.census.gov/programs-surveys/geography/about/glossary.html#par_textimage_13), tracts generally have a population between 1,200 and 8,000 people. 
@@ -565,8 +572,10 @@ dc_centroids %>%
 
 
 ```
+:::
 
-# Data Quality Assurance
+
+## Data Quality Assurance
 
 Data quality assurance is the foundation of high quality analysis. Four key questions that you should always ask when considering using a dataset for analysis are:
 

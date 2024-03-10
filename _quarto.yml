@@ -14,11 +14,11 @@ book:
         - 02_tidyverse.qmd
         - 03_advanced-data-cleaning.qmd
         - 04_data-viz.qmd
-        # - 05_exploratory-data-analysis.qmd Need ppol 6670 data/pulse2021_puf_40.csv
-
+        - 05_exploratory-data-analysis.qmd 
+      
     - part: Reproducible Research
       chapters: 
-        # - PART 1:reproducible research with Quarto
+        - 06_reproducible-research-with-quarto.qmd
         - 07_advanced-quarto.qmd
         # - PART 1: reproducible research with git 1
         # - PART 1: advanced git
