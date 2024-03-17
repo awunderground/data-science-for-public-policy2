@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 9&nbsp; Microsimulation</title>
+<title>Data Science for Public Policy - 10&nbsp; Microsimulation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,7 +109,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -125,33 +117,6 @@ div.csl-indent {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -162,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./15_microsimulation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./15_microsimulation.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -177,7 +142,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -214,7 +179,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -226,7 +191,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data viz with ggplot2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -243,7 +214,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -260,13 +231,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -283,25 +254,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -317,8 +288,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
       </ul>
@@ -335,7 +312,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -353,51 +330,51 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">9.1</span> Motivation</a></li>
-  <li><a href="#calculators" id="toc-calculators" class="nav-link" data-scroll-target="#calculators"><span class="header-section-number">9.2</span> Calculators</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">10.1</span> Motivation</a></li>
+  <li><a href="#calculators" id="toc-calculators" class="nav-link" data-scroll-target="#calculators"><span class="header-section-number">10.2</span> Calculators</a>
   <ul class="collapse">
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">9.2.1</span> Example 1</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">10.2.1</span> Example 1</a></li>
   </ul></li>
-  <li><a href="#microsimulation" id="toc-microsimulation" class="nav-link" data-scroll-target="#microsimulation"><span class="header-section-number">9.3</span> Microsimulation</a>
+  <li><a href="#microsimulation" id="toc-microsimulation" class="nav-link" data-scroll-target="#microsimulation"><span class="header-section-number">10.3</span> Microsimulation</a>
   <ul class="collapse">
-  <li><a href="#basic-microsimulation" id="toc-basic-microsimulation" class="nav-link" data-scroll-target="#basic-microsimulation"><span class="header-section-number">9.3.1</span> Basic Microsimulation</a></li>
-  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">9.3.2</span> Example 2</a></li>
-  <li><a href="#distributional-analysis" id="toc-distributional-analysis" class="nav-link" data-scroll-target="#distributional-analysis"><span class="header-section-number">9.3.3</span> Distributional Analysis</a></li>
-  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">9.3.4</span> Example 3</a></li>
-  <li><a href="#counterfactual-analysis" id="toc-counterfactual-analysis" class="nav-link" data-scroll-target="#counterfactual-analysis"><span class="header-section-number">9.3.5</span> Counterfactual Analysis</a></li>
-  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">9.3.6</span> Example 4</a></li>
-  <li><a href="#extrapolation" id="toc-extrapolation" class="nav-link" data-scroll-target="#extrapolation"><span class="header-section-number">9.3.7</span> Extrapolation</a></li>
-  <li><a href="#transitions" id="toc-transitions" class="nav-link" data-scroll-target="#transitions"><span class="header-section-number">9.3.8</span> Transitions</a></li>
-  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">9.3.9</span> Example 5</a></li>
-  <li><a href="#beyond-accounting-rules" id="toc-beyond-accounting-rules" class="nav-link" data-scroll-target="#beyond-accounting-rules"><span class="header-section-number">9.3.10</span> Beyond Accounting Rules</a></li>
+  <li><a href="#basic-microsimulation" id="toc-basic-microsimulation" class="nav-link" data-scroll-target="#basic-microsimulation"><span class="header-section-number">10.3.1</span> Basic Microsimulation</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">10.3.2</span> Example 2</a></li>
+  <li><a href="#distributional-analysis" id="toc-distributional-analysis" class="nav-link" data-scroll-target="#distributional-analysis"><span class="header-section-number">10.3.3</span> Distributional Analysis</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">10.3.4</span> Example 3</a></li>
+  <li><a href="#counterfactual-analysis" id="toc-counterfactual-analysis" class="nav-link" data-scroll-target="#counterfactual-analysis"><span class="header-section-number">10.3.5</span> Counterfactual Analysis</a></li>
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">10.3.6</span> Example 4</a></li>
+  <li><a href="#extrapolation" id="toc-extrapolation" class="nav-link" data-scroll-target="#extrapolation"><span class="header-section-number">10.3.7</span> Extrapolation</a></li>
+  <li><a href="#transitions" id="toc-transitions" class="nav-link" data-scroll-target="#transitions"><span class="header-section-number">10.3.8</span> Transitions</a></li>
+  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">10.3.9</span> Example 5</a></li>
+  <li><a href="#beyond-accounting-rules" id="toc-beyond-accounting-rules" class="nav-link" data-scroll-target="#beyond-accounting-rules"><span class="header-section-number">10.3.10</span> Beyond Accounting Rules</a></li>
   </ul></li>
-  <li><a href="#building-a-representative-population" id="toc-building-a-representative-population" class="nav-link" data-scroll-target="#building-a-representative-population"><span class="header-section-number">9.4</span> Building a Representative Population</a>
+  <li><a href="#building-a-representative-population" id="toc-building-a-representative-population" class="nav-link" data-scroll-target="#building-a-representative-population"><span class="header-section-number">10.4</span> Building a Representative Population</a>
   <ul class="collapse">
-  <li><a href="#synthetic-starting-data" id="toc-synthetic-starting-data" class="nav-link" data-scroll-target="#synthetic-starting-data"><span class="header-section-number">9.4.1</span> Synthetic Starting Data</a></li>
-  <li><a href="#data-linkage-and-imputation" id="toc-data-linkage-and-imputation" class="nav-link" data-scroll-target="#data-linkage-and-imputation"><span class="header-section-number">9.4.2</span> Data Linkage and Imputation</a></li>
-  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation"><span class="header-section-number">9.4.3</span> Validation</a></li>
-  <li><a href="#reweighting" id="toc-reweighting" class="nav-link" data-scroll-target="#reweighting"><span class="header-section-number">9.4.4</span> Reweighting</a></li>
-  <li><a href="#alignment" id="toc-alignment" class="nav-link" data-scroll-target="#alignment"><span class="header-section-number">9.4.5</span> Alignment</a></li>
+  <li><a href="#synthetic-starting-data" id="toc-synthetic-starting-data" class="nav-link" data-scroll-target="#synthetic-starting-data"><span class="header-section-number">10.4.1</span> Synthetic Starting Data</a></li>
+  <li><a href="#data-linkage-and-imputation" id="toc-data-linkage-and-imputation" class="nav-link" data-scroll-target="#data-linkage-and-imputation"><span class="header-section-number">10.4.2</span> Data Linkage and Imputation</a></li>
+  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation"><span class="header-section-number">10.4.3</span> Validation</a></li>
+  <li><a href="#reweighting" id="toc-reweighting" class="nav-link" data-scroll-target="#reweighting"><span class="header-section-number">10.4.4</span> Reweighting</a></li>
+  <li><a href="#alignment" id="toc-alignment" class="nav-link" data-scroll-target="#alignment"><span class="header-section-number">10.4.5</span> Alignment</a></li>
   </ul></li>
-  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">9.5</span> Assumptions</a>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">10.5</span> Assumptions</a>
   <ul class="collapse">
-  <li><a href="#open-vs.-closed" id="toc-open-vs.-closed" class="nav-link" data-scroll-target="#open-vs.-closed"><span class="header-section-number">9.5.1</span> Open vs.&nbsp;Closed</a></li>
-  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">9.5.2</span> Independence</a></li>
-  <li><a href="#markov-assumption" id="toc-markov-assumption" class="nav-link" data-scroll-target="#markov-assumption"><span class="header-section-number">9.5.3</span> Markov Assumption</a></li>
+  <li><a href="#open-vs.-closed" id="toc-open-vs.-closed" class="nav-link" data-scroll-target="#open-vs.-closed"><span class="header-section-number">10.5.1</span> Open vs.&nbsp;Closed</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">10.5.2</span> Independence</a></li>
+  <li><a href="#markov-assumption" id="toc-markov-assumption" class="nav-link" data-scroll-target="#markov-assumption"><span class="header-section-number">10.5.3</span> Markov Assumption</a></li>
   </ul></li>
-  <li><a href="#uncertainty" id="toc-uncertainty" class="nav-link" data-scroll-target="#uncertainty"><span class="header-section-number">9.6</span> Uncertainty</a></li>
-  <li><a href="#microsimulation-model-examples" id="toc-microsimulation-model-examples" class="nav-link" data-scroll-target="#microsimulation-model-examples"><span class="header-section-number">9.7</span> Microsimulation Model Examples</a>
+  <li><a href="#uncertainty" id="toc-uncertainty" class="nav-link" data-scroll-target="#uncertainty"><span class="header-section-number">10.6</span> Uncertainty</a></li>
+  <li><a href="#microsimulation-model-examples" id="toc-microsimulation-model-examples" class="nav-link" data-scroll-target="#microsimulation-model-examples"><span class="header-section-number">10.7</span> Microsimulation Model Examples</a>
   <ul class="collapse">
-  <li><a href="#simulating-the-2020-census" id="toc-simulating-the-2020-census" class="nav-link" data-scroll-target="#simulating-the-2020-census"><span class="header-section-number">9.7.1</span> Simulating the 2020 Census</a></li>
-  <li><a href="#tpc-microsimulation-in-the-cloud" id="toc-tpc-microsimulation-in-the-cloud" class="nav-link" data-scroll-target="#tpc-microsimulation-in-the-cloud"><span class="header-section-number">9.7.2</span> TPC Microsimulation in the Cloud</a></li>
-  <li><a href="#modeling-income-in-the-near-term-mintmint" id="toc-modeling-income-in-the-near-term-mintmint" class="nav-link" data-scroll-target="#modeling-income-in-the-near-term-mintmint"><span class="header-section-number">9.7.3</span> Modeling Income in the Near Term (MINT)</a></li>
+  <li><a href="#simulating-the-2020-census" id="toc-simulating-the-2020-census" class="nav-link" data-scroll-target="#simulating-the-2020-census"><span class="header-section-number">10.7.1</span> Simulating the 2020 Census</a></li>
+  <li><a href="#tpc-microsimulation-in-the-cloud" id="toc-tpc-microsimulation-in-the-cloud" class="nav-link" data-scroll-target="#tpc-microsimulation-in-the-cloud"><span class="header-section-number">10.7.2</span> TPC Microsimulation in the Cloud</a></li>
+  <li><a href="#modeling-income-in-the-near-term-mintmint" id="toc-modeling-income-in-the-near-term-mintmint" class="nav-link" data-scroll-target="#modeling-income-in-the-near-term-mintmint"><span class="header-section-number">10.7.3</span> Modeling Income in the Near Term (MINT)</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -405,9 +382,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./15_microsimulation.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></h1>
+<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></h1>
 </div>
 
 
@@ -421,33 +398,31 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     This sections covers microsimulation, which is an important technique for policy evaluation.
   </div>
 </div>
 
-
 </header>
 
-
-<section id="motivation" class="level2" data-number="9.1">
-<h2 data-number="9.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">9.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">10.1</span> Motivation</h2>
 <p>It is often important to ask <strong>“what would be the policy impact of…”</strong> on a population or subpopulation.</p>
 <p>One common approach is to look at representative units. For example, we could construct one observation that is representative (e.g.&nbsp;median family structure, median income, etc.) and pass its values into a calculator. Then, we could extrapolate this experience to other observations.</p>
 <p>Another common approach is to look at aggregated data. For example, we could look at county-level insurance coverage in Medicaid expansion and non-expansion states and then extrapolate to other health care expansions.</p>
-<p><span class="citation" data-cites="orcutt1957">Orcutt (<a href="#ref-orcutt1957" role="doc-biblioref">1957</a>)</span> suggested a radically different approach. Instead of using a representative unit or aggregated data to project outcomes, model outcomes for individual units and aggregate the results. Potential units-of-analysis include people, households, and firms. Models include anything from simple accounting rules to complex behavioral and demographic models.</p>
+<p><span class="citation" data-cites="orcutt1957">Orcutt (<a href="references.html#ref-orcutt1957" role="doc-biblioref">1957</a>)</span> suggested a radically different approach. Instead of using a representative unit or aggregated data to project outcomes, model outcomes for individual units and aggregate the results. Potential units-of-analysis include people, households, and firms. Models include anything from simple accounting rules to complex behavioral and demographic models.</p>
 <p>It took decades for this approach to see wide adoption because of data and computational limitations, but it is now commonplace in policy evaluation.</p>
 </section>
-<section id="calculators" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="calculators"><span class="header-section-number">9.2</span> Calculators</h2>
+<section id="calculators" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="calculators"><span class="header-section-number">10.2</span> Calculators</h2>
 <p>We’ll first look at calculators, which are an important tool for representative unit methods and microsimulation.</p>
 <ul>
 <li>The Tax Policy Center’s <a href="https://tpc-marriage-calculator.urban.org/">Marriage Calculator</a> can be used to calculate tax marriage penalties and benefits.</li>
 <li><a href="https://policyengine.org/us/household?focus=intro">PolicyEngine</a> contains scores of calculators for taxes and benefits. For example, <a href="https://policyengine.org/us/household?focus=householdOutput.mtr&amp;household=33433">this calculator evaluates marginal tax rates in California</a> accounting for taxes and benefits.</li>
 </ul>
 <p>These two examples show the value of using calculators to explore potentially harmful marriage disincentives like marriage penalties, benefits cliffs, and extremely high marginal tax rates.</p>
-<section id="example-1" class="level3" data-number="9.2.1">
-<h3 data-number="9.2.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">9.2.1</span> Example 1</h3>
+<section id="example-1" class="level3" data-number="10.2.1">
+<h3 data-number="10.2.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">10.2.1</span> Example 1</h3>
 <p>Suppose we are interested in creating a new tax credit that is very simple. Its only parameters are number of children and total family income. It has the following characteristics:</p>
 <ul>
 <li>Ignore the first $20,000 of family income</li>
@@ -491,7 +466,7 @@ window.Quarto = {
 </div>
 <p>We can also apply the calculator to many potential values and generate benefit plots:</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">expand_grid</span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">family_income =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100000</span>, <span class="dv">100</span>),</span>
@@ -515,14 +490,10 @@ window.Quarto = {
 <span id="cb6-20"><a href="#cb6-20"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-benefit-curve" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-benefit-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="15_microsimulation_files/figure-html/fig-benefit-curve-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-benefit-curve-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;9.1: Benefits for different income levels and numbers of children
-</figcaption>
+<div id="fig-benefit-curve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="15_microsimulation_files/figure-html/fig-benefit-curve-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;10.1: Benefits for different income levels and numbers of children</figcaption>
 </figure>
 </div>
 </div>
@@ -550,8 +521,8 @@ Exercise 1
 </div>
 </section>
 </section>
-<section id="microsimulation" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="microsimulation"><span class="header-section-number">9.3</span> Microsimulation</h2>
+<section id="microsimulation" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="microsimulation"><span class="header-section-number">10.3</span> Microsimulation</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -582,8 +553,8 @@ Microsimulation
 <li>TPC’s tax model is regularly cited in the New York Times, Wall Street Journal, and Washington Post when TPC evaluates candidates’ tax plans.</li>
 </ol>
 <p>Microsimulation models range from simple calculators applied to representative microdata to very complex dynamic models.</p>
-<section id="basic-microsimulation" class="level3" data-number="9.3.1">
-<h3 data-number="9.3.1" class="anchored" data-anchor-id="basic-microsimulation"><span class="header-section-number">9.3.1</span> Basic Microsimulation</h3>
+<section id="basic-microsimulation" class="level3" data-number="10.3.1">
+<h3 data-number="10.3.1" class="anchored" data-anchor-id="basic-microsimulation"><span class="header-section-number">10.3.1</span> Basic Microsimulation</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -608,12 +579,12 @@ Accounting Rules
 <p>We can summarize output from microsimulation models with summary statistics that demonstrate the distribution of outcomes. For example, it is common to look at deciles or key percentiles to understand the heterogeneity of changes.</p>
 <p>We can construct a baseline simulation by applying current law for step 2. Next, we can construct an alternative or counterfactual simulation by changing step 2 to a proposed policy. Finally, we can difference current law and the counterfactual to estimate the impact of a policy.</p>
 </section>
-<section id="example-2" class="level3" data-number="9.3.2">
-<h3 data-number="9.3.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">9.3.2</span> Example 2</h3>
+<section id="example-2" class="level3" data-number="10.3.2">
+<h3 data-number="10.3.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">10.3.2</span> Example 2</h3>
 <p>Let’s consider a simple example where we apply the benefit calculator from earlier to families from the 2022 Annual Social and Economic Supplement to the Current Population Survey.</p>
 <p>To keep things simple, we only consider families related to the head of household (and ignore other families in the household). Furthermore, we will ignore observations weights.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># if file doesn't exist in data, then download</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"cps_microsim.csv"</span>))) {</span>
@@ -687,8 +658,8 @@ dbl (5): serial, year, asecwt, nchild, ftotval
 </div>
 </div>
 </section>
-<section id="distributional-analysis" class="level3" data-number="9.3.3">
-<h3 data-number="9.3.3" class="anchored" data-anchor-id="distributional-analysis"><span class="header-section-number">9.3.3</span> Distributional Analysis</h3>
+<section id="distributional-analysis" class="level3" data-number="10.3.3">
+<h3 data-number="10.3.3" class="anchored" data-anchor-id="distributional-analysis"><span class="header-section-number">10.3.3</span> Distributional Analysis</h3>
 <p>Aggregate analysis and representative unit analysis often mask important heterogeneity. The first major advantage of microsimulation is the ability to apply distributional analysis.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -705,8 +676,8 @@ Distributional Analysis
 </div>
 <p>Here, we expand step 3 from the basic microsimulation algorithm to include a range of statistics. The most common statistics are percentiles or outcomes for ntiles.</p>
 </section>
-<section id="example-3" class="level3" data-number="9.3.4">
-<h3 data-number="9.3.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">9.3.4</span> Example 3</h3>
+<section id="example-3" class="level3" data-number="10.3.4">
+<h3 data-number="10.3.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">10.3.4</span> Example 3</h3>
 <p>Consider the previous example. Let’s summarize the mean benefit by family income decile. We can use the <code>ntile()</code> function to construct <code>ntiles()</code>. We can use <code>min()</code> and <code>max()</code> in <code>summarize()</code> to define the bounds of the ntiles.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>distributional_table <span class="ot">&lt;-</span> proposal1 <span class="sc">|&gt;</span></span>
@@ -736,7 +707,7 @@ Distributional Analysis
 </div>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>distributional_table <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ftotval_decile, mean_benefit)) <span class="sc">+</span></span>
@@ -754,11 +725,7 @@ Distributional Analysis
 <span id="cb14-14"><a href="#cb14-14"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="15_microsimulation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="15_microsimulation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -779,8 +746,8 @@ Exercise 2
 </div>
 </div>
 </section>
-<section id="counterfactual-analysis" class="level3" data-number="9.3.5">
-<h3 data-number="9.3.5" class="anchored" data-anchor-id="counterfactual-analysis"><span class="header-section-number">9.3.5</span> Counterfactual Analysis</h3>
+<section id="counterfactual-analysis" class="level3" data-number="10.3.5">
+<h3 data-number="10.3.5" class="anchored" data-anchor-id="counterfactual-analysis"><span class="header-section-number">10.3.5</span> Counterfactual Analysis</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -808,8 +775,8 @@ Counterfactual
 <li>Aggregate results with a focus on the difference between the baseline microsimulation and the counterfactual simulation.</li>
 </ol>
 </section>
-<section id="example-4" class="level3" data-number="9.3.6">
-<h3 data-number="9.3.6" class="anchored" data-anchor-id="example-4"><span class="header-section-number">9.3.6</span> Example 4</h3>
+<section id="example-4" class="level3" data-number="10.3.6">
+<h3 data-number="10.3.6" class="anchored" data-anchor-id="example-4"><span class="header-section-number">10.3.6</span> Example 4</h3>
 <p>Let’s pretend the <code>new_tax_credit()</code> is <strong>current law</strong>. It is our baseline. Suppose a legislator proposes reforms to the law. This is our <strong>counterfactual</strong>. Here are the proposed changes:</p>
 <ul>
 <li>Eliminate benefits for families with zero income to promote work.</li>
@@ -891,8 +858,8 @@ Exercise 3
 </div>
 </div>
 </section>
-<section id="extrapolation" class="level3" data-number="9.3.7">
-<h3 data-number="9.3.7" class="anchored" data-anchor-id="extrapolation"><span class="header-section-number">9.3.7</span> Extrapolation</h3>
+<section id="extrapolation" class="level3" data-number="10.3.7">
+<h3 data-number="10.3.7" class="anchored" data-anchor-id="extrapolation"><span class="header-section-number">10.3.7</span> Extrapolation</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -945,8 +912,8 @@ Forecast
 </div>
 <p>Most microsimulation models are projections, not forecasts.</p>
 </section>
-<section id="transitions" class="level3" data-number="9.3.8">
-<h3 data-number="9.3.8" class="anchored" data-anchor-id="transitions"><span class="header-section-number">9.3.8</span> Transitions</h3>
+<section id="transitions" class="level3" data-number="10.3.8">
+<h3 data-number="10.3.8" class="anchored" data-anchor-id="transitions"><span class="header-section-number">10.3.8</span> Transitions</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -988,8 +955,8 @@ Dynamic Microsimulation
 <p>Transition models are often taken from existing literature or estimated on panel data. The data used to estimate these models must have at least two time periods.</p>
 <p>It is common to extrapolate backwards, which is also known as backcasting, to evaluate microsimulation models against history. Backcasting can add important longitudinal information to records like detailed earnings histories for calculating Social Security benefits. Backcasting also offers opportunities to benchmark model projections against observed history.</p>
 </section>
-<section id="example-5" class="level3" data-number="9.3.9">
-<h3 data-number="9.3.9" class="anchored" data-anchor-id="example-5"><span class="header-section-number">9.3.9</span> Example 5</h3>
+<section id="example-5" class="level3" data-number="10.3.9">
+<h3 data-number="10.3.9" class="anchored" data-anchor-id="example-5"><span class="header-section-number">10.3.9</span> Example 5</h3>
 <p>Let’s extrapolate our 2022 CPS data to 2023 and 2024 using transition models for number of children and family total income.</p>
 <p>The transition model for number of children is <em>very simple</em>. 15% of families lose a child, 80% of families observe no change, and 5% of families gain one child.</p>
 <div class="cell">
@@ -1085,8 +1052,8 @@ Dynamic Microsimulation
 </div>
 <p>Even though incomes grew and the number of children declined, it turns out that enough families went from zero children to one child under the transition probability model for children that average benefits remained about the same.</p>
 </section>
-<section id="beyond-accounting-rules" class="level3" data-number="9.3.10">
-<h3 data-number="9.3.10" class="anchored" data-anchor-id="beyond-accounting-rules"><span class="header-section-number">9.3.10</span> Beyond Accounting Rules</h3>
+<section id="beyond-accounting-rules" class="level3" data-number="10.3.10">
+<h3 data-number="10.3.10" class="anchored" data-anchor-id="beyond-accounting-rules"><span class="header-section-number">10.3.10</span> Beyond Accounting Rules</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1098,23 +1065,23 @@ Behavioral Responses
 </div>
 <div class="callout-body-container callout-body">
 <p>A <strong>behavioral response</strong> is an assumed reaction to changing circumstances in a microsimulation model.</p>
-<p>For example, increasing Social Security benefits may crowd out retirement savings <span class="citation" data-cites="chetty2014">(<a href="#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span>. In other words, the existence of Social Security may induce a person to save less for retirement.</p>
+<p>For example, increasing Social Security benefits may crowd out retirement savings <span class="citation" data-cites="chetty2014">(<a href="references.html#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span>. In other words, the existence of Social Security may induce a person to save less for retirement.</p>
 </div>
 </div>
 <p>Until now, we’ve only considered accounting rules within each time period. Accounting rules are appealing because they don’t require major assumptions, but they are typically insufficient. It is often necessary to consider how units will respond to a changing environment.</p>
 <p>Behavioral responses are often elasticities estimated with econometric analysis. Behavioral responses are also a huge source of assumptions and uncertainty for microsimulation.</p>
-<p>Consider a microsimulation model that models retirement savings. When modeling a proposal to expand Social Security benefits, an analyst may use parameters estimated in <span class="citation" data-cites="chetty2014">(<a href="#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span> to model reductions in savings in accounts like 401(k) accounts. These are behavioral responses. These estimates are uncertain, so the analyst could add sensitivity analysis to model low, medium, and high rates of crowding out.</p>
+<p>Consider a microsimulation model that models retirement savings. When modeling a proposal to expand Social Security benefits, an analyst may use parameters estimated in <span class="citation" data-cites="chetty2014">(<a href="references.html#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span> to model reductions in savings in accounts like 401(k) accounts. These are behavioral responses. These estimates are uncertain, so the analyst could add sensitivity analysis to model low, medium, and high rates of crowding out.</p>
 </section>
 </section>
-<section id="building-a-representative-population" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="building-a-representative-population"><span class="header-section-number">9.4</span> Building a Representative Population</h2>
+<section id="building-a-representative-population" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="building-a-representative-population"><span class="header-section-number">10.4</span> Building a Representative Population</h2>
 <p>Building a starting sample and constructing data for estimating transition models is difficult. We briefly outline a few techniques of interest.</p>
-<section id="synthetic-starting-data" class="level3" data-number="9.4.1">
-<h3 data-number="9.4.1" class="anchored" data-anchor-id="synthetic-starting-data"><span class="header-section-number">9.4.1</span> Synthetic Starting Data</h3>
+<section id="synthetic-starting-data" class="level3" data-number="10.4.1">
+<h3 data-number="10.4.1" class="anchored" data-anchor-id="synthetic-starting-data"><span class="header-section-number">10.4.1</span> Synthetic Starting Data</h3>
 <p>We’ve adopted a cross-sectional starting population. Some microsimulation models adopt a synthetic<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> approach where every observation is simulated from birth.</p>
 </section>
-<section id="data-linkage-and-imputation" class="level3" data-number="9.4.2">
-<h3 data-number="9.4.2" class="anchored" data-anchor-id="data-linkage-and-imputation"><span class="header-section-number">9.4.2</span> Data Linkage and Imputation</h3>
+<section id="data-linkage-and-imputation" class="level3" data-number="10.4.2">
+<h3 data-number="10.4.2" class="anchored" data-anchor-id="data-linkage-and-imputation"><span class="header-section-number">10.4.2</span> Data Linkage and Imputation</h3>
 <p>Many microsimulation models need more variables than are included in any one source of information. For example, retirement models often need demographic information, longitudinal earnings information, and tax information. Many microsimulation models rely on data linkage and data imputation techniques to augment their starting data.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1143,8 +1110,8 @@ Data imputation
 </div>
 </div>
 </section>
-<section id="validation" class="level3" data-number="9.4.3">
-<h3 data-number="9.4.3" class="anchored" data-anchor-id="validation"><span class="header-section-number">9.4.3</span> Validation</h3>
+<section id="validation" class="level3" data-number="10.4.3">
+<h3 data-number="10.4.3" class="anchored" data-anchor-id="validation"><span class="header-section-number">10.4.3</span> Validation</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1160,8 +1127,8 @@ Validation
 </div>
 <p>Visual and statistical validation are essential to evaluating the quality of a microsimulation model. If validation looks poor, then a modeler can redo other parts of the microsimulation workflow or they can <strong>reweight</strong> or <strong>align</strong> the data.</p>
 </section>
-<section id="reweighting" class="level3" data-number="9.4.4">
-<h3 data-number="9.4.4" class="anchored" data-anchor-id="reweighting"><span class="header-section-number">9.4.4</span> Reweighting</h3>
+<section id="reweighting" class="level3" data-number="10.4.4">
+<h3 data-number="10.4.4" class="anchored" data-anchor-id="reweighting"><span class="header-section-number">10.4.4</span> Reweighting</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1176,10 +1143,10 @@ Reweighting
 </div>
 </div>
 <p>Suppose a well-regarded source of information says mean income is $50,000 but a microsimulation model estimates mean income of $45,000. We can use reweighting to plausibly adjust the weights in the microsimulation model so mean income is $50,000.</p>
-<p>Techniques include post-stratification and calibration. <span class="citation" data-cites="kolenikov2016">Kolenikov (<a href="#ref-kolenikov2016" role="doc-biblioref">2016</a>)</span> offers a good introduction.</p>
+<p>Techniques include post-stratification and calibration. <span class="citation" data-cites="kolenikov2016">Kolenikov (<a href="references.html#ref-kolenikov2016" role="doc-biblioref">2016</a>)</span> offers a good introduction.</p>
 </section>
-<section id="alignment" class="level3" data-number="9.4.5">
-<h3 data-number="9.4.5" class="anchored" data-anchor-id="alignment"><span class="header-section-number">9.4.5</span> Alignment</h3>
+<section id="alignment" class="level3" data-number="10.4.5">
+<h3 data-number="10.4.5" class="anchored" data-anchor-id="alignment"><span class="header-section-number">10.4.5</span> Alignment</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1193,14 +1160,14 @@ Alignment
 <p><strong>Alignment</strong> is the process of adjusting model coefficients or predicted values so aggregated outputs align with specified aggregate targets. These targets are aggregate outcomes like total income or state-level tax revenue.</p>
 </div>
 </div>
-<p>Suppose a well-regarded source of information says mean income is $50,000 but a microsimulation model estimates mean income of $45,000. We can adjust the intercept in linear regression models or adjust predicted values so mean income is $50,000. <span class="citation" data-cites="li2014">Li and O’Donoghue (<a href="#ref-li2014" role="doc-biblioref">2014</a>)</span> offers a good introduction.</p>
+<p>Suppose a well-regarded source of information says mean income is $50,000 but a microsimulation model estimates mean income of $45,000. We can adjust the intercept in linear regression models or adjust predicted values so mean income is $50,000. <span class="citation" data-cites="li2014">Li and O’Donoghue (<a href="references.html#ref-li2014" role="doc-biblioref">2014</a>)</span> offers a good introduction.</p>
 </section>
 </section>
-<section id="assumptions" class="level2" data-number="9.5">
-<h2 data-number="9.5" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">9.5</span> Assumptions</h2>
+<section id="assumptions" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">10.5</span> Assumptions</h2>
 <p>Microsimulation is only as useful as its assumptions. We will review a few key assumptions present in many microsimulation models.</p>
-<section id="open-vs.-closed" class="level3" data-number="9.5.1">
-<h3 data-number="9.5.1" class="anchored" data-anchor-id="open-vs.-closed"><span class="header-section-number">9.5.1</span> Open vs.&nbsp;Closed</h3>
+<section id="open-vs.-closed" class="level3" data-number="10.5.1">
+<h3 data-number="10.5.1" class="anchored" data-anchor-id="open-vs.-closed"><span class="header-section-number">10.5.1</span> Open vs.&nbsp;Closed</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1228,8 +1195,8 @@ Open Model
 </div>
 </div>
 </section>
-<section id="independence" class="level3" data-number="9.5.2">
-<h3 data-number="9.5.2" class="anchored" data-anchor-id="independence"><span class="header-section-number">9.5.2</span> Independence</h3>
+<section id="independence" class="level3" data-number="10.5.2">
+<h3 data-number="10.5.2" class="anchored" data-anchor-id="independence"><span class="header-section-number">10.5.2</span> Independence</h3>
 <p>Another important assumption deals with the relationship between units in the model. Should observations be treated as wholly independent or do they interact? For example, if someone takes a job is it more difficult for another individual to take the job?</p>
 <p>Interactions can be explicit or implicit.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1261,8 +1228,8 @@ Implicit Interaction
 </div>
 </div>
 </section>
-<section id="markov-assumption" class="level3" data-number="9.5.3">
-<h3 data-number="9.5.3" class="anchored" data-anchor-id="markov-assumption"><span class="header-section-number">9.5.3</span> Markov Assumption</h3>
+<section id="markov-assumption" class="level3" data-number="10.5.3">
+<h3 data-number="10.5.3" class="anchored" data-anchor-id="markov-assumption"><span class="header-section-number">10.5.3</span> Markov Assumption</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1279,8 +1246,8 @@ Markov Assumption
 </div>
 </section>
 </section>
-<section id="uncertainty" class="level2" data-number="9.6">
-<h2 data-number="9.6" class="anchored" data-anchor-id="uncertainty"><span class="header-section-number">9.6</span> Uncertainty</h2>
+<section id="uncertainty" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="uncertainty"><span class="header-section-number">10.6</span> Uncertainty</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1309,13 +1276,13 @@ Epistemic Uncertainty
 </div>
 <p>The microsimulation field has a poor track record of quantifying uncertainty. Most estimates do not contain standard errors or even crude distributions of outcomes.</p>
 <p>Microsimulation models have <em>many</em> sources of uncertainty. The starting data and data used for model estimation are often samples with sampling error. Transition models fail to capture all sources of variation. The models often intentionally include Monte Carlo error.</p>
-<p><span class="citation" data-cites="mcclelland2020">McClelland, Khitatrakun, and Lu (<a href="#ref-mcclelland2020" role="doc-biblioref">2020</a>)</span> explored adding confidence intervals to microsimulation models using normal approximations and bootstrapping methods<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. They find that normal approximations work well in most cases unless policy changes affect a small number of returns.</p>
+<p><span class="citation" data-cites="mcclelland2020">McClelland, Khitatrakun, and Lu (<a href="references.html#ref-mcclelland2020" role="doc-biblioref">2020</a>)</span> explored adding confidence intervals to microsimulation models using normal approximations and bootstrapping methods<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. They find that normal approximations work well in most cases unless policy changes affect a small number of returns.</p>
 <p>Across microsimulations for five policy approaches, they estimate modest confidence intervals. This makes sense. First, microsimulation aggregates many units that have their own sources of uncertainty. This is different than earlier examples of Monte Carlo simulation that focused on one observation at a time. Aggregation reduces variance.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 <p>Second, the authors only consider uncertainty because of sampling variation. This fails to capture aleatoric uncertainty from statistical matching, imputation, and projection. Furthermore, these methods fail to capture epistemic uncertainty. The confidence intervals, in other words, assume the model is correct.</p>
 <p>Given these shortcomings, it is important to be clear about assumptions, transparent about implementations, and humble about conclusions. All useful models are wrong. The hope is to be as little wrong as possible.</p>
 </section>
-<section id="microsimulation-model-examples" class="level2" data-number="9.7">
-<h2 data-number="9.7" class="anchored" data-anchor-id="microsimulation-model-examples"><span class="header-section-number">9.7</span> Microsimulation Model Examples</h2>
+<section id="microsimulation-model-examples" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="microsimulation-model-examples"><span class="header-section-number">10.7</span> Microsimulation Model Examples</h2>
 <p>First, let’s outline a few characteristics of microsimulation models.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1345,7 +1312,7 @@ Scripting Programming Languages
 <p>R, Python, and Julia are examples of scripting programming languages.</p>
 </div>
 </div>
-<p><span class="citation" data-cites="aruoba2018">Aruoba and Fernndez-Villaverde (<a href="#ref-aruoba2018" role="doc-biblioref">2018</a>)</span> benchmark several programming languages on the same computing task. Lower-level, compiled programming languages dominate higher-level, scripting programming languages like R and Python. Julia is the lone bright spot that blends usability and performance.</p>
+<p><span class="citation" data-cites="aruoba2018">Aruoba and Fernndez-Villaverde (<a href="references.html#ref-aruoba2018" role="doc-biblioref">2018</a>)</span> benchmark several programming languages on the same computing task. Lower-level, compiled programming languages dominate higher-level, scripting programming languages like R and Python. Julia is the lone bright spot that blends usability and performance.</p>
 <p>Many microsimulation models are written in lower-level, compiled programming languages. Fortran may seem old, but there is a reason it has stuck around for microsimulation.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1373,8 +1340,8 @@ Specialized Microsimulation Models
 <p><strong>Specialized microsimulation models</strong> focus on a limit set of behaviors or population segments. ~ <a href="https://www.statcan.gc.ca/en/microsimulation/modgen/new/chap2/chap2#a3">Stats Canada</a></p>
 </div>
 </div>
-<section id="simulating-the-2020-census" class="level3" data-number="9.7.1">
-<h3 data-number="9.7.1" class="anchored" data-anchor-id="simulating-the-2020-census"><span class="header-section-number">9.7.1</span> Simulating the 2020 Census</h3>
+<section id="simulating-the-2020-census" class="level3" data-number="10.7.1">
+<h3 data-number="10.7.1" class="anchored" data-anchor-id="simulating-the-2020-census"><span class="header-section-number">10.7.1</span> Simulating the 2020 Census</h3>
 <ul>
 <li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/simulating-2020-census-miscounts-and-fairness-outcomes">Simulating the 2020 Census</a></li>
 <li><strong>Authors:</strong> Diana Elliott, Steven Martin, Jessica Shakesprere, Jessica Kelly</li>
@@ -1383,8 +1350,8 @@ Specialized Microsimulation Models
 <li><strong>Purpose:</strong> The authors simulate various Decennial Census response factors and evaluate the distribution of responses to the Decennial Census.</li>
 </ul>
 </section>
-<section id="tpc-microsimulation-in-the-cloud" class="level3" data-number="9.7.2">
-<h3 data-number="9.7.2" class="anchored" data-anchor-id="tpc-microsimulation-in-the-cloud"><span class="header-section-number">9.7.2</span> TPC Microsimulation in the Cloud</h3>
+<section id="tpc-microsimulation-in-the-cloud" class="level3" data-number="10.7.2">
+<h3 data-number="10.7.2" class="anchored" data-anchor-id="tpc-microsimulation-in-the-cloud"><span class="header-section-number">10.7.2</span> TPC Microsimulation in the Cloud</h3>
 <ul>
 <li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/scaling-microsimulation-modeling-cloud-guide">TPC Microsimulation in the Cloud</a></li>
 <li><strong>Authors:</strong> The TPC microsimulation team, Jessica Kelly, Kyle Ueyama, Alyssa Harris</li>
@@ -1393,8 +1360,8 @@ Specialized Microsimulation Models
 <li><strong>Purpose:</strong> The authors take TPC’s tax microsimulation model and move it to the cloud. This allows TPC to reverse the typical microsimulation process. Instead of describing policies and observing the outcomes, they can describe desirable outcomes and then use grid search to back out policies that achieve those outcomes.</li>
 </ul>
 </section>
-<section id="modeling-income-in-the-near-term-mintmint" class="level3" data-number="9.7.3">
-<h3 data-number="9.7.3" class="anchored" data-anchor-id="modeling-income-in-the-near-term-mintmint"><span class="header-section-number">9.7.3</span> Modeling Income in the Near Term (MINT)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></h3>
+<section id="modeling-income-in-the-near-term-mintmint" class="level3" data-number="10.7.3">
+<h3 data-number="10.7.3" class="anchored" data-anchor-id="modeling-income-in-the-near-term-mintmint"><span class="header-section-number">10.7.3</span> Modeling Income in the Near Term (MINT)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></h3>
 <ul>
 <li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/modeling-income-near-term">Modeling Income in the Near Term (MINT)</a></li>
 <li><strong>Authors:</strong> Karen E. Smith and <em>many</em> other people</li>
@@ -1404,7 +1371,7 @@ Specialized Microsimulation Models
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-aruoba2018" class="csl-entry" role="listitem">
 Aruoba, S. Boragan, and Jesus Fernndez-Villaverde. 2018. <span>“A Comparison of Programming Languages in Economics: An Update.”</span> <a href="https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf">https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf</a>.
 </div>
@@ -1518,9 +1485,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1530,17 +1498,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1553,125 +1512,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1715,7 +1555,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1741,32 +1580,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1828,18 +1641,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./14_simulation-and-sampling.html" class="pagination-link" aria-label="Simulation and Sampling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span>
+      <a href="./14_simulation-and-sampling.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./16_nonparametric-1.html" class="pagination-link" aria-label="Nonparametric Curve Fitting">
-        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./16_nonparametric-1.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

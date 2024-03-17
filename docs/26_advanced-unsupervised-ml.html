@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 13&nbsp; Mixture Distributions and Mixture Modeling</title>
+<title>Data Science for Public Policy - 15&nbsp; Mixture Distributions and Mixture Modeling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -85,7 +84,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
-<link href="./19_predictive-modeling-review.html" rel="prev">
+<link href="./20_predictive-modeling-concepts.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,7 +109,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -124,43 +116,7 @@ div.csl-indent {
 }</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  
-  <script>
-    (function () {
-      var script = document.createElement("script");
-      script.type = "text/javascript";
-      script.src  = "https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js";
-      document.getElementsByTagName("head")[0].appendChild(script);
-    })();
-  </script>
-
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -171,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html">Unsupervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html">Unsupervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -186,7 +142,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -223,7 +179,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -235,7 +191,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data viz with ggplot2</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -252,7 +214,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -269,13 +231,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -292,25 +254,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -326,8 +288,14 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
       </ul>
@@ -344,7 +312,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -362,50 +330,50 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-review6a" id="toc-sec-review6a" class="nav-link active" data-scroll-target="#sec-review6a"><span class="header-section-number">13.1</span> Review 1</a></li>
-  <li><a href="#a-new-type-of-random-variable" id="toc-a-new-type-of-random-variable" class="nav-link" data-scroll-target="#a-new-type-of-random-variable"><span class="header-section-number">13.2</span> A New Type of Random Variable</a></li>
-  <li><a href="#mixture-distributions" id="toc-mixture-distributions" class="nav-link" data-scroll-target="#mixture-distributions"><span class="header-section-number">13.3</span> Mixture Distributions</a>
+  <li><a href="#sec-review6a" id="toc-sec-review6a" class="nav-link active" data-scroll-target="#sec-review6a"><span class="header-section-number">15.1</span> Review 1</a></li>
+  <li><a href="#a-new-type-of-random-variable" id="toc-a-new-type-of-random-variable" class="nav-link" data-scroll-target="#a-new-type-of-random-variable"><span class="header-section-number">15.2</span> A New Type of Random Variable</a></li>
+  <li><a href="#mixture-distributions" id="toc-mixture-distributions" class="nav-link" data-scroll-target="#mixture-distributions"><span class="header-section-number">15.3</span> Mixture Distributions</a>
   <ul class="collapse">
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">13.3.1</span> Example 1</a></li>
-  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">13.3.2</span> Example 2</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">15.3.1</span> Example 1</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">15.3.2</span> Example 2</a></li>
   </ul></li>
-  <li><a href="#sec-review6b" id="toc-sec-review6b" class="nav-link" data-scroll-target="#sec-review6b"><span class="header-section-number">13.4</span> Review #2</a>
+  <li><a href="#sec-review6b" id="toc-sec-review6b" class="nav-link" data-scroll-target="#sec-review6b"><span class="header-section-number">15.4</span> Review #2</a>
   <ul class="collapse">
-  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">13.4.1</span> Multivariate Normal Distribution</a></li>
-  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">13.4.2</span> K-Means Clustering</a></li>
+  <li><a href="#multivariate-normal-distribution" id="toc-multivariate-normal-distribution" class="nav-link" data-scroll-target="#multivariate-normal-distribution"><span class="header-section-number">15.4.1</span> Multivariate Normal Distribution</a></li>
+  <li><a href="#k-means-clustering" id="toc-k-means-clustering" class="nav-link" data-scroll-target="#k-means-clustering"><span class="header-section-number">15.4.2</span> K-Means Clustering</a></li>
   </ul></li>
-  <li><a href="#mixture-modelingmodel-based-clustering" id="toc-mixture-modelingmodel-based-clustering" class="nav-link" data-scroll-target="#mixture-modelingmodel-based-clustering"><span class="header-section-number">13.5</span> Mixture Modeling/Model-Based Clustering</a></li>
-  <li><a href="#gaussian-mixture-modeling-gmm" id="toc-gaussian-mixture-modeling-gmm" class="nav-link" data-scroll-target="#gaussian-mixture-modeling-gmm"><span class="header-section-number">13.6</span> Gaussian Mixture Modeling (GMM)</a>
+  <li><a href="#mixture-modelingmodel-based-clustering" id="toc-mixture-modelingmodel-based-clustering" class="nav-link" data-scroll-target="#mixture-modelingmodel-based-clustering"><span class="header-section-number">15.5</span> Mixture Modeling/Model-Based Clustering</a></li>
+  <li><a href="#gaussian-mixture-modeling-gmm" id="toc-gaussian-mixture-modeling-gmm" class="nav-link" data-scroll-target="#gaussian-mixture-modeling-gmm"><span class="header-section-number">15.6</span> Gaussian Mixture Modeling (GMM)</a>
   <ul class="collapse">
-  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">13.6.1</span> Example 3</a></li>
-  <li><a href="#mclust" id="toc-mclust" class="nav-link" data-scroll-target="#mclust"><span class="header-section-number">13.6.2</span> mclust</a></li>
-  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">13.6.3</span> Estimation</a></li>
-  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">13.6.4</span> Example 4</a></li>
-  <li><a href="#bic" id="toc-bic" class="nav-link" data-scroll-target="#bic"><span class="header-section-number">13.6.5</span> BIC</a></li>
-  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">13.6.6</span> Example 5</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">15.6.1</span> Example 3</a></li>
+  <li><a href="#mclust" id="toc-mclust" class="nav-link" data-scroll-target="#mclust"><span class="header-section-number">15.6.2</span> mclust</a></li>
+  <li><a href="#estimation" id="toc-estimation" class="nav-link" data-scroll-target="#estimation"><span class="header-section-number">15.6.3</span> Estimation</a></li>
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">15.6.4</span> Example 4</a></li>
+  <li><a href="#bic" id="toc-bic" class="nav-link" data-scroll-target="#bic"><span class="header-section-number">15.6.5</span> BIC</a></li>
+  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">15.6.6</span> Example 5</a></li>
   </ul></li>
-  <li><a href="#bernoulli-mixture-modeling-bmm" id="toc-bernoulli-mixture-modeling-bmm" class="nav-link" data-scroll-target="#bernoulli-mixture-modeling-bmm"><span class="header-section-number">13.7</span> Bernoulli Mixture Modeling (BMM)</a>
+  <li><a href="#bernoulli-mixture-modeling-bmm" id="toc-bernoulli-mixture-modeling-bmm" class="nav-link" data-scroll-target="#bernoulli-mixture-modeling-bmm"><span class="header-section-number">15.7</span> Bernoulli Mixture Modeling (BMM)</a>
   <ul class="collapse">
-  <li><a href="#two-digit-example" id="toc-two-digit-example" class="nav-link" data-scroll-target="#two-digit-example"><span class="header-section-number">13.7.1</span> Two Digit Example</a></li>
-  <li><a href="#ten-digit-example" id="toc-ten-digit-example" class="nav-link" data-scroll-target="#ten-digit-example"><span class="header-section-number">13.7.2</span> Ten Digit Example</a></li>
+  <li><a href="#two-digit-example" id="toc-two-digit-example" class="nav-link" data-scroll-target="#two-digit-example"><span class="header-section-number">15.7.1</span> Two Digit Example</a></li>
+  <li><a href="#ten-digit-example" id="toc-ten-digit-example" class="nav-link" data-scroll-target="#ten-digit-example"><span class="header-section-number">15.7.2</span> Ten Digit Example</a></li>
   </ul></li>
-  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">13.8</span> Considerations</a></li>
+  <li><a href="#considerations" id="toc-considerations" class="nav-link" data-scroll-target="#considerations"><span class="header-section-number">15.8</span> Considerations</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html">Unsupervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./26_advanced-unsupervised-ml.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></h1>
 </div>
 
 
@@ -419,17 +387,15 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     This chapter introduces mixture distributions and mixture modeling. This tools use simple probability distributions to model and understand complex empirical distributions.
   </div>
 </div>
 
-
 </header>
 
-
-<section id="sec-review6a" class="level2" data-number="13.1">
-<h2 data-number="13.1" class="anchored" data-anchor-id="sec-review6a"><span class="header-section-number">13.1</span> Review 1</h2>
+<section id="sec-review6a" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="sec-review6a"><span class="header-section-number">15.1</span> Review 1</h2>
 <p>We’ll start with a review of multivariate normal distributions. In particular, this exercise demonstrates the impact of the variance-covariance matrix on the shape of multivariate normal distributions.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -516,12 +482,12 @@ window.Quarto = {
 <span id="cb4-34"><a href="#cb4-34"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> source)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="a-new-type-of-random-variable" class="level2" data-number="13.2">
-<h2 data-number="13.2" class="anchored" data-anchor-id="a-new-type-of-random-variable"><span class="header-section-number">13.2</span> A New Type of Random Variable</h2>
+<section id="a-new-type-of-random-variable" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="a-new-type-of-random-variable"><span class="header-section-number">15.2</span> A New Type of Random Variable</h2>
 <p>We learned about common univariate and multivariate distributions. For each of the distributions, there are well-defined and straightforward ways to sample values from the distribution. We can also manipulate these distributions to calculate probabilities.</p>
 <p>The real world is complicated, and we will quickly come across data where we struggle to find a common probability distributions.</p>
-<p>Figure <a href="#fig-geyser-eruptions" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-geyser-eruptions</span></a> shows a relative frequency histogram for the duration of eruptions at Old Faithful in Yellowstone National Park.</p>
-<div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/fig-geyser-eruptions_fa501b5bbf74b74fa8d3adcda119dd80">
+<p>Figure <a href="#fig-geyser-eruptions">Figure&nbsp;<span>15.1</span></a> shows a relative frequency histogram for the duration of eruptions at Old Faithful in Yellowstone National Park.</p>
+<div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/fig-geyser-eruptions_529f9a1f01cf2416cc5e47cca100a0fa">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># faithful is a data set built into R</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>faithful <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(eruptions, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
@@ -530,21 +496,17 @@ window.Quarto = {
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-geyser-eruptions" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-geyser-eruptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-geyser-eruptions-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-geyser-eruptions-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: Distribution of waiting times between eruptions at the Old Faithful geyser in Yellowstone National Park.
-</figcaption>
+<div id="fig-geyser-eruptions" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-geyser-eruptions-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;15.1: Distribution of waiting times between eruptions at the Old Faithful geyser in Yellowstone National Park.</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>This distribution looks very complicated. But what if we break this distribution into pieces? In this case, what if we think of the distribution as a combination of two normal distributions?</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-9_e66c532343cb51202629a296a86e03d6">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># show geyser as two normal distribution</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a><span class="fu">library</span>(mclust)</span>
@@ -565,11 +527,7 @@ Figure&nbsp;13.1: Distribution of waiting times between eruptions at the Old Fai
 <span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -597,12 +555,12 @@ Latent Variable
 <li>Construct mixture distributions</li>
 <li>Cluster data</li>
 </ol>
-<p>Let’s consider a “data generation story” different than anything we considered in Chapter 5. Instead of sampling directly from one known probability distribution, we will sample in two stages <span class="citation" data-cites="hastie2009">(<a href="#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span>.</p>
+<p>Let’s consider a “data generation story” different than anything we considered in Chapter 5. Instead of sampling directly from one known probability distribution, we will sample in two stages <span class="citation" data-cites="hastie2009">(<a href="references.html#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span>.</p>
 <ol type="1">
 <li>Sample from a discrete probability distribution with <span class="math inline">\(k\)</span> unique values (i.e.&nbsp;Bernoulli distribution when <span class="math inline">\(k = 2\)</span> and categorical distribution when <span class="math inline">\(k &gt; 2\)</span>).</li>
 <li>Sample from one of <span class="math inline">\(k\)</span> different distributions conditional on the outcome of step 1.</li>
 </ol>
-<p>This new sampling procedure aligns closely with the idea of hierarchical sampling and hierarchical models. It is also sometimes called ancestral sampling <span class="citation" data-cites="bishop2006">(<a href="#ref-bishop2006" role="doc-biblioref">Bishop 2006, 430</a>)</span>.</p>
+<p>This new sampling procedure aligns closely with the idea of hierarchical sampling and hierarchical models. It is also sometimes called ancestral sampling <span class="citation" data-cites="bishop2006">(<a href="references.html#ref-bishop2006" role="doc-biblioref">Bishop 2006, 430</a>)</span>.</p>
 <p>This two-step approach dramatically increases the types of distributions at our disposal because we are no longer limited to individual common univariate distributions like a single normal distribution or a single uniform distribution. The two-step approach is also the foundation of two related tools:</p>
 <ol type="1">
 <li><strong>Mixture distributions:</strong> Distributions expressed as the linear combination of other distributions. Mixture distributions can be very complicated distributions expressed in terms of simple distributions with known properties.</li>
@@ -611,8 +569,8 @@ Latent Variable
 <p>With mixture distributions, we care about the overall distribution and don’t care about the latent variables.</p>
 <p>With mixture modeling, we use the overall distribution to learn about the latent variables/sub populations/clusters in the data.</p>
 </section>
-<section id="mixture-distributions" class="level2" data-number="13.3">
-<h2 data-number="13.3" class="anchored" data-anchor-id="mixture-distributions"><span class="header-section-number">13.3</span> Mixture Distributions</h2>
+<section id="mixture-distributions" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="mixture-distributions"><span class="header-section-number">15.3</span> Mixture Distributions</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -636,8 +594,8 @@ p_{mixture}(x) = \sum_{k = 1}^K \pi_kf(x)
 <p>where <span class="math inline">\(K\)</span> is the number of mixtures and <span class="math inline">\(\pi_k\)</span> is the weight of each PDF included in the mixture distribution.</p>
 </div>
 </div>
-<section id="example-1" class="level3" data-number="13.3.1">
-<h3 data-number="13.3.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">13.3.1</span> Example 1</h3>
+<section id="example-1" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">15.3.1</span> Example 1</h3>
 <p>Let’s consider a concrete example with a Bernoulli distribution and two normal distributions.</p>
 <ol type="1">
 <li>Sample <span class="math inline">\(X \sim Bern(p = 0.25)\)</span></li>
@@ -672,15 +630,11 @@ p_{mixture}(x) = \sum_{k = 1}^K \pi_kf(x)
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This marginal distribution looks complex but the process of creating the marginal distribution is simple.</p>
-<p>In fact, consider this quote from <span class="citation" data-cites="bishop2006">Bishop (<a href="#ref-bishop2006" role="doc-biblioref">2006</a>)</span> (Page 111):</p>
+<p>In fact, consider this quote from <span class="citation" data-cites="bishop2006">Bishop (<a href="references.html#ref-bishop2006" role="doc-biblioref">2006</a>)</span> (Page 111):</p>
 <blockquote class="blockquote">
 <p>By using a sufficient number of Gaussians, and by adjusting their means and covariances as well as the coefficients in the linear combination, almost any continuous density can be approximated to arbitrary accuracy.</p>
 </blockquote>
@@ -736,8 +690,8 @@ Mixing Coefficient
 </div>
 </div>
 </section>
-<section id="example-2" class="level3" data-number="13.3.2">
-<h3 data-number="13.3.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">13.3.2</span> Example 2</h3>
+<section id="example-2" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">15.3.2</span> Example 2</h3>
 <p>Suppose we used statistical inference to infer some parameters for the geysers example above. We will describe how to estimate these paramaters later.</p>
 <ul>
 <li><span class="math inline">\(p_1 =\)</span> 0.3485696 and <span class="math inline">\(p_2 =\)</span> 0.6514304</li>
@@ -747,7 +701,7 @@ Mixing Coefficient
 <p>The mixture density is</p>
 <p><span id="eq-geyser-mixture"><span class="math display">\[
 f_{mixture}(x) = p_1f(x|\mu = \bar{x_1}, \sigma = s_1) + p_2f(x|\mu = \bar{x_2},\sigma=s_2)
-\tag{13.1}\]</span></span></p>
+\tag{15.1}\]</span></span></p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-12_30e3851c41bb01bcb2b685d26d08d7a0">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>geyser_density <span class="ot">&lt;-</span> <span class="cf">function</span>(x, model) {</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  </span>
@@ -785,31 +739,27 @@ f_{mixture}(x) = p_1f(x|\mu = \bar{x_1}, \sigma = s_1) + p_2f(x|\mu = \bar{x_2},
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
 </section>
-<section id="sec-review6b" class="level2" data-number="13.4">
-<h2 data-number="13.4" class="anchored" data-anchor-id="sec-review6b"><span class="header-section-number">13.4</span> Review #2</h2>
-<section id="multivariate-normal-distribution" class="level3" data-number="13.4.1">
-<h3 data-number="13.4.1" class="anchored" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">13.4.1</span> Multivariate Normal Distribution</h3>
+<section id="sec-review6b" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="sec-review6b"><span class="header-section-number">15.4</span> Review #2</h2>
+<section id="multivariate-normal-distribution" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">15.4.1</span> Multivariate Normal Distribution</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> is a higher-dimensional version of the univariate normal distribution. The MVN distribution has a vector of means of length <span class="math inline">\(k\)</span> and a <span class="math inline">\(k\)</span>-by-<span class="math inline">\(k\)</span> variance-covariance matrix.</p>
 <p>We show that a random vector is multivariate normally distributed with</p>
 <p><span id="eq-multivariate-normal"><span class="math display">\[
 \vec{X} \sim \mathcal{N}(\vec\mu, \boldsymbol\Sigma)
-\tag{13.2}\]</span></span></p>
+\tag{15.2}\]</span></span></p>
 <p>The PDF of a multivariate normally distributed random variable is</p>
 <p><span id="eq-multivariate-normal-pdf"><span class="math display">\[
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
-\tag{13.3}\]</span></span></p>
+\tag{15.3}\]</span></span></p>
 </section>
-<section id="k-means-clustering" class="level3" data-number="13.4.2">
-<h3 data-number="13.4.2" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">13.4.2</span> K-Means Clustering</h3>
+<section id="k-means-clustering" class="level3" data-number="15.4.2">
+<h3 data-number="15.4.2" class="anchored" data-anchor-id="k-means-clustering"><span class="header-section-number">15.4.2</span> K-Means Clustering</h3>
 <p>K-Means Clustering is a heuristic-based approach to finding latent groups in data. The algorithm assigns each observation to one and only one group through a two step iteration that minimizes the Euclidean distance between observations and centroids for each group.</p>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Setup</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Step 1</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false">Step 2</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false">Step 3</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-5" role="tab" aria-controls="tabset-1-5" aria-selected="false">Step 4</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-6-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-6" role="tab" aria-controls="tabset-1-6" aria-selected="false">Step 5</a></li></ul>
@@ -817,7 +767,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p>Consider the following data set.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-13_f98a47896203ffce05c1b4536faebba7">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">8</span>),</span>
 <span id="cb12-2"><a href="#cb12-2"></a>               <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">5</span>))</span>
@@ -830,18 +780,14 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb12-9"><a href="#cb12-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><strong>Step 1:</strong> Randomly place K centroids in your n-dimensional vector space</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-14_5c325ad050e4b6f18bc28ede5f0352ba">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>centroids <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>),</span>
 <span id="cb13-2"><a href="#cb13-2"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
@@ -856,18 +802,14 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb13-11"><a href="#cb13-11"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
 <p><strong>Step 2:</strong> Calculate the nearest centroid for each point using a distance measure</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-15_c90d804443179a4f1f8dacef33c06b09">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>centroids <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">5</span>),</span>
 <span id="cb14-2"><a href="#cb14-2"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">5</span>, <span class="dv">5</span>),</span>
@@ -884,18 +826,14 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb14-13"><a href="#cb14-13"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
 <p><strong>Step 3:</strong> Assign each point to the nearest centroid</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-16_fca03597b5d799a49531663b39064688">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>data<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>)</span>
 <span id="cb15-2"><a href="#cb15-2"></a></span>
@@ -908,18 +846,14 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb15-9"><a href="#cb15-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-5-tab">
 <p><strong>Step 4:</strong> Recalculate the position of the centroids based on the means of the assigned points</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-17_6a609be575c4a48e1c70111cb64eebd0">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>centroids2 <span class="ot">&lt;-</span> data <span class="sc">%&gt;%</span></span>
 <span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">%&gt;%</span></span>
@@ -935,18 +869,14 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb16-12"><a href="#cb16-12"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
 <div id="tabset-1-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-6-tab">
 <p><strong>Step 5:</strong> Repeat steps 2-4 until no points change cluster assignments</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-18_6f132b2317b0847ef567f7d827bd9394">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>data<span class="sc">$</span>cluster <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>, <span class="st">"b"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2"></a></span>
@@ -959,11 +889,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb17-9"><a href="#cb17-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="624"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="624"></p>
 </div>
 </div>
 </div>
@@ -986,8 +912,8 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 </div>
 </section>
 </section>
-<section id="mixture-modelingmodel-based-clustering" class="level2" data-number="13.5">
-<h2 data-number="13.5" class="anchored" data-anchor-id="mixture-modelingmodel-based-clustering"><span class="header-section-number">13.5</span> Mixture Modeling/Model-Based Clustering</h2>
+<section id="mixture-modelingmodel-based-clustering" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="mixture-modelingmodel-based-clustering"><span class="header-section-number">15.5</span> Mixture Modeling/Model-Based Clustering</h2>
 <p>Until now, we’ve assumed that we’ve known all parameters when working with mixture distributions. What if we want to learn these parameters/make inferences about these parameters?</p>
 <p>The process of making inferences about latent groups is related to K-Means Clustering. While K-Means Clustering is heuristic based, mixture modeling formalize the process of making inferences about latent groups using probability models. Gaussian mixture models (GMM) are a popular mixture model.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1004,8 +930,8 @@ Mixture Modeling
 </div>
 </div>
 </section>
-<section id="gaussian-mixture-modeling-gmm" class="level2" data-number="13.6">
-<h2 data-number="13.6" class="anchored" data-anchor-id="gaussian-mixture-modeling-gmm"><span class="header-section-number">13.6</span> Gaussian Mixture Modeling (GMM)</h2>
+<section id="gaussian-mixture-modeling-gmm" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="gaussian-mixture-modeling-gmm"><span class="header-section-number">15.6</span> Gaussian Mixture Modeling (GMM)</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1068,26 +994,22 @@ Responsibilities
 </ul></li>
 <li>Instead of simply updating <span class="math inline">\(k\)</span> group centroids, we must update <span class="math inline">\(k\)</span> multivariate normal distributions. This requires calculating a vector of means and a variance-covariance matrix for each of the <span class="math inline">\(k\)</span> groups.</li>
 </ol>
-<section id="example-3" class="level3" data-number="13.6.1">
-<h3 data-number="13.6.1" class="anchored" data-anchor-id="example-3"><span class="header-section-number">13.6.1</span> Example 3</h3>
+<section id="example-3" class="level3" data-number="15.6.1">
+<h3 data-number="15.6.1" class="anchored" data-anchor-id="example-3"><span class="header-section-number">15.6.1</span> Example 3</h3>
 <p>The parameters in example 2 were estimated using GMM. Let’s repeat a similar exercise with the <code>faithful</code> using <code>eruptions</code> and <code>waiting</code> instead of just <code>eruptions</code>. We’ll assume there are three groups.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-20_f69036b060a449fde2a63862f7c9b509">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># fit GMM</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>gmm2_geyser <span class="ot">&lt;-</span> <span class="fu">Mclust</span>(faithful, <span class="at">G =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s plot the multivariate normal distributions. <a href="#fig-gmm-uncertainty" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-gmm-uncertainty</span></a> shows the centroids (stars) and shapes (ellipses) of the distributions in black. The colors represent hard assignments to groups and the size of the points represent the uncertainty of the assignments with larger points having more uncertainty.</p>
-<div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/fig-gmm-uncertainty_b4db8121573c23bd059894657df4da81">
+<p>Let’s plot the multivariate normal distributions. <a href="#fig-gmm-uncertainty">Figure&nbsp;<span>15.2</span></a> shows the centroids (stars) and shapes (ellipses) of the distributions in black. The colors represent hard assignments to groups and the size of the points represent the uncertainty of the assignments with larger points having more uncertainty.</p>
+<div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/fig-gmm-uncertainty_dde22840d1848f443b2b67e2748dc1d9">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># plot fitted model</span></span>
 <span id="cb19-2"><a href="#cb19-2"></a><span class="fu">plot</span>(gmm2_geyser, <span class="at">what =</span> <span class="st">"uncertainty"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-gmm-uncertainty" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-gmm-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-gmm-uncertainty-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-gmm-uncertainty-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: Uncertainty plot from a GMM
-</figcaption>
+<div id="fig-gmm-uncertainty" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-gmm-uncertainty-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;15.2: Uncertainty plot from a GMM</figcaption>
 </figure>
 </div>
 </div>
@@ -1131,15 +1053,15 @@ Figure&nbsp;13.2: Uncertainty plot from a GMM
 </div>
 </div>
 </section>
-<section id="mclust" class="level3" data-number="13.6.2">
-<h3 data-number="13.6.2" class="anchored" data-anchor-id="mclust"><span class="header-section-number">13.6.2</span> mclust</h3>
+<section id="mclust" class="level3" data-number="15.6.2">
+<h3 data-number="15.6.2" class="anchored" data-anchor-id="mclust"><span class="header-section-number">15.6.2</span> mclust</h3>
 <p>The previous example uses <code>library(mclust)</code><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and <code>library(broom)</code>.</p>
 <p><code>Mclust()</code> is the main function for fitting Gaussian Mixture Models. The function contains several different types of models for the variances of the multivariate normal distributions. The defaults are sensible. <code>G</code> is the number of groups. If <code>G</code> isn’t specified, then <code>Mclust()</code> will try <code>1:9</code> and pick the <code>G</code> with the lowest BIC (defined below).</p>
 <p><code>plot()</code> with <code>what = "uncertainty"</code> creates a very useful data visualization for seeing the multivariate normal distributions and classifications for low-dimensional GMM.</p>
 <p><code>glance()</code>, <code>tidy()</code>, and <code>augment()</code> from <code>library(broom)</code> return important information about the assignments, groups, and model diagnostics.</p>
 </section>
-<section id="estimation" class="level3" data-number="13.6.3">
-<h3 data-number="13.6.3" class="anchored" data-anchor-id="estimation"><span class="header-section-number">13.6.3</span> Estimation</h3>
+<section id="estimation" class="level3" data-number="15.6.3">
+<h3 data-number="15.6.3" class="anchored" data-anchor-id="estimation"><span class="header-section-number">15.6.3</span> Estimation</h3>
 <p>Suppose we have <span class="math inline">\(n\)</span> observations, <span class="math inline">\(k\)</span> groups, and <span class="math inline">\(p\)</span> variables. A single GMM will have</p>
 <ul>
 <li>an <span class="math inline">\(n\)</span> by <span class="math inline">\(k\)</span> matrix of responsibilities</li>
@@ -1164,10 +1086,10 @@ Figure&nbsp;13.2: Uncertainty plot from a GMM
 </div>
 </div>
 <p>This algorithm is computationally efficient, but it is possible for it to find a local maximum log-likelihood without finding the global maximum log-likelihood.</p>
-<p>For a more mathematical description of this process, see Elements of Statistical Learning Section 6.8 <span class="citation" data-cites="hastie2009">(<a href="#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span>. A highly descriptive comparison to kmeans (with Python code) can be seen <a href="https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html">here</a>.</p>
+<p>For a more mathematical description of this process, see Elements of Statistical Learning Section 6.8 <span class="citation" data-cites="hastie2009">(<a href="references.html#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span>. A highly descriptive comparison to kmeans (with Python code) can be seen <a href="https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html">here</a>.</p>
 </section>
-<section id="example-4" class="level3" data-number="13.6.4">
-<h3 data-number="13.6.4" class="anchored" data-anchor-id="example-4"><span class="header-section-number">13.6.4</span> Example 4</h3>
+<section id="example-4" class="level3" data-number="15.6.4">
+<h3 data-number="15.6.4" class="anchored" data-anchor-id="example-4"><span class="header-section-number">15.6.4</span> Example 4</h3>
 <p>Let’s consider a policy-relevant example using data from the <a href="https://www.census.gov/programs-surveys/sahie.html">Small Area Health Insurance Estimates (SAHIE) Program.</a></p>
 <p>First, we pull the 2016 county-level estimates of the uninsured rate. We label a state as an expansion state if it expanded data before 2015-01-01. We use this date with 2016 data because of policy lags.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-23_ae41f5e46f25a3ca69b499cf78c24cd0">
@@ -1260,7 +1182,7 @@ Figure&nbsp;13.2: Uncertainty plot from a GMM
 <pre><code># A tibble: 1 × 7
   model     G     BIC logLik    df hypvol  nobs
   &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
-1 V         2 -18541. -9250.     5     NA  3141</code></pre>
+1 V         2 -18542. -9251.     5     NA  3141</code></pre>
 </div>
 </div>
 <p>When we compare <code>.class</code> to <code>expansion</code>, we see that the model does an good job of labeling counties’ expansion status without observing counties’ expansion status.</p>
@@ -1279,25 +1201,25 @@ Figure&nbsp;13.2: Uncertainty plot from a GMM
 <pre><code># A tibble: 4 × 3
   expanded .class     n
   &lt;lgl&gt;    &lt;fct&gt;  &lt;int&gt;
-1 FALSE    1        452
-2 FALSE    2       1499
-3 TRUE     1       1038
-4 TRUE     2        152</code></pre>
+1 FALSE    1        465
+2 FALSE    2       1486
+3 TRUE     1       1042
+4 TRUE     2        148</code></pre>
 </div>
 </div>
 </section>
-<section id="bic" class="level3" data-number="13.6.5">
-<h3 data-number="13.6.5" class="anchored" data-anchor-id="bic"><span class="header-section-number">13.6.5</span> BIC</h3>
+<section id="bic" class="level3" data-number="15.6.5">
+<h3 data-number="15.6.5" class="anchored" data-anchor-id="bic"><span class="header-section-number">15.6.5</span> BIC</h3>
 <p><strong>Likelihood</strong> quantifies how likely observed data are given a set of parameters. If <span class="math inline">\(\theta\)</span> is a vector of parameters, then <span class="math inline">\(L(\theta |x) = f(x |\theta)\)</span> is the likelihood function.</p>
 <p>We often don’t know the exact number of latent groups in the data. We need a way to compare models with varying numbers of groups. Simply picking the model with the maximum likelihood will lead to models with too many groups.</p>
 <p>The Bayesian information criterion (BIC) is an alternative to likelihoods that penalizes models for having many parameters. Let <span class="math inline">\(L\)</span> be the likelihood, <span class="math inline">\(m\)</span> the number of free parameters, and <span class="math inline">\(n\)</span> the number of observations.</p>
 <p><span id="eq-bic"><span class="math display">\[
 BIC = -2log(L) + mlog(n)
-\tag{13.4}\]</span></span></p>
+\tag{15.4}\]</span></span></p>
 <p>We will choose models that minimize BIC. Ideally, we will use v-fold cross validation for this process.</p>
 </section>
-<section id="example-5" class="level3" data-number="13.6.6">
-<h3 data-number="13.6.6" class="anchored" data-anchor-id="example-5"><span class="header-section-number">13.6.6</span> Example 5</h3>
+<section id="example-5" class="level3" data-number="15.6.6">
+<h3 data-number="15.6.6" class="anchored" data-anchor-id="example-5"><span class="header-section-number">15.6.6</span> Example 5</h3>
 <p>The <code>Mclust()</code> function will try <code>G = 1:9</code> when <code>G</code> isn’t specified. <code>Mclust()</code> will also try 14 different variance models for the mixture models.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1318,11 +1240,7 @@ Important
 <span id="cb33-2"><a href="#cb33-2"></a></span>
 <span id="cb33-3"><a href="#cb33-3"></a><span class="fu">plot</span>(faithful_gmm, <span class="at">what =</span> <span class="st">"BIC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">glance</span>(faithful_gmm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1334,8 +1252,8 @@ Important
 </div>
 </section>
 </section>
-<section id="bernoulli-mixture-modeling-bmm" class="level2" data-number="13.7">
-<h2 data-number="13.7" class="anchored" data-anchor-id="bernoulli-mixture-modeling-bmm"><span class="header-section-number">13.7</span> Bernoulli Mixture Modeling (BMM)</h2>
+<section id="bernoulli-mixture-modeling-bmm" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="bernoulli-mixture-modeling-bmm"><span class="header-section-number">15.7</span> Bernoulli Mixture Modeling (BMM)</h2>
 <p>Let’s consider a data generation story based on the Bernoulli distribution. Now, each variable, <span class="math inline">\(X_1, X_2, ..., X_D\)</span>, is draw from a mixture of <span class="math inline">\(K\)</span> Bernoulli distributions.</p>
 <p><span id="eq-bmm-process"><span class="math display">\[
 X_d  = \begin{cases}
@@ -1344,13 +1262,13 @@ Bern(p_2) \text{ with probability }\pi_2 \\
 \vdots \\
 Bern(p_K) \text{ with probability }\pi_K
 \end{cases}
-\tag{13.5}\]</span></span></p>
+\tag{15.5}\]</span></span></p>
 <p>Let <span class="math inline">\(i\)</span> be an index for each mixture that contributes to the random variable. The probability mass function of the random variable is written as</p>
 <p><span id="eq-bmm-pmf"><span class="math display">\[
 P(X_d) = \Pi_{i = 1}^Kp_i^{x_i} (1 - p_i)^{1 - x_i}
-\tag{13.6}\]</span></span></p>
-<p>Let’s consider a classic example from <span class="citation" data-cites="bishop2006">Bishop (<a href="#ref-bishop2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="murphy2022">Murphy (<a href="#ref-murphy2022" role="doc-biblioref">2022</a>)</span>. The example uses the <a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST</a> database, which contains 70,000 handwritten digits. The digits are stored in 784 variables, from a 28 by 28 grid, with values ranging from 0 to 255, which indicate the darkness of the pixel.</p>
-<p>To prepare the data, we divide each pixel by 255 and then turn the pixels into indicators with values under 0.5 as 0 and values over 0.5 as 1. Figure <a href="#fig-digits" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-digits</span></a> visualizes the first four digits after reading in the data and applying pre-processing.</p>
+\tag{15.6}\]</span></span></p>
+<p>Let’s consider a classic example from <span class="citation" data-cites="bishop2006">Bishop (<a href="references.html#ref-bishop2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="murphy2022">Murphy (<a href="references.html#ref-murphy2022" role="doc-biblioref">2022</a>)</span>. The example uses the <a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST</a> database, which contains 70,000 handwritten digits. The digits are stored in 784 variables, from a 28 by 28 grid, with values ranging from 0 to 255, which indicate the darkness of the pixel.</p>
+<p>To prepare the data, we divide each pixel by 255 and then turn the pixels into indicators with values under 0.5 as 0 and values over 0.5 as 1. Figure <a href="#fig-digits">Figure&nbsp;<span>15.3</span></a> visualizes the first four digits after reading in the data and applying pre-processing.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-29_f617e820231d4b27d6cd1a0bb376c4ab">
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R"</span>, <span class="st">"visualize_digit.R"</span>))</span>
 <span id="cb36-2"><a href="#cb36-2"></a></span>
@@ -1372,104 +1290,84 @@ $ pix_28_8 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 $ pix_28_9 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…</code></pre>
 </div>
 </div>
+<div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">1</span>)</span>
 <span id="cb38-2"><a href="#cb38-2"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">2</span>)</span>
 <span id="cb38-3"><a href="#cb38-3"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">3</span>)</span>
 <span id="cb38-4"><a href="#cb38-4"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-digits" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-digits-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digits" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-digits-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-digits-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-1.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digits-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) 5
-</figcaption>
+<div id="fig-digits" class="cell quarto-layout-panel" data-hash="26_advanced-unsupervised-ml_cache/html/fig-digits_4b3333ecbe1a5fe824fcc7e0f91413be">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-digits-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-1.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672"></p>
+<figcaption class="figure-caption">(a) 5</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digits" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-digits-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-digits-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-2.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digits-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) 0
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-digits-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-2.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672"></p>
+<figcaption class="figure-caption">(b) 0</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digits" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-digits-3" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-digits-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-3.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digits-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) 4
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-digits-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-3.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672"></p>
+<figcaption class="figure-caption">(c) 4</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-digits" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-digits-4" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-digits-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-4.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-digits-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(d) 1
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-digits-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-digits-4.png" class="img-fluid figure-img" data-ref-parent="fig-digits" width="672"></p>
+<figcaption class="figure-caption">(d) 1</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-digits-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.3: First Four Digits
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;15.3: First Four Digits</figcaption><p></p>
 </figure>
+</div>
 </div>
 <p>The digits are labelled in the MNIST data set but we will ignore the labels and use Bernoulli Mixture Modeling to learn the latent labels or groups. We will treat each pixel as its own Bernoulli distribution and cluster observations using mixtures of 784 Bernoulli distributions. This means each cluster will contain <span class="math inline">\(784\)</span> parameters.</p>
-<section id="two-digit-example" class="level3" data-number="13.7.1">
-<h3 data-number="13.7.1" class="anchored" data-anchor-id="two-digit-example"><span class="header-section-number">13.7.1</span> Two Digit Example</h3>
-<p>Let’s start with a simple example using just the digits “1” and “8”. We’ll use <code>library(flexmix)</code> by <span class="citation" data-cites="leisch2004">Leisch (<a href="#ref-leisch2004" role="doc-biblioref">2004</a>)</span>. <code>library(flexmix)</code> is powerful but uses different syntax than we are used to.</p>
+<section id="two-digit-example" class="level3" data-number="15.7.1">
+<h3 data-number="15.7.1" class="anchored" data-anchor-id="two-digit-example"><span class="header-section-number">15.7.1</span> Two Digit Example</h3>
+<p>Let’s start with a simple example using just the digits “1” and “8”. We’ll use <code>library(flexmix)</code> by <span class="citation" data-cites="leisch2004">Leisch (<a href="references.html#ref-leisch2004" role="doc-biblioref">2004</a>)</span>. <code>library(flexmix)</code> is powerful but uses different syntax than we are used to.</p>
 <ol type="1">
 <li>The function <code>flexmix()</code> expects a matrix.</li>
 <li>The formula expects the entire matrix on the left side of the <code>~</code>.</li>
 <li>We specify the distribution used during the maximization (M) step with <code>model = FLXMCmvbinary()</code>.</li>
 </ol>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-31_654af94cc32e28a62a83c6abf49c7f3f">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(flexmix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: lattice</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">as.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(flexmix)</span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">as.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The starting assignments are random, so we set a seed.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-32_778b954eed846ba9f842f5219137f743">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
-<span id="cb42-2"><a href="#cb42-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb40-5"><a href="#cb40-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb40-6"><a href="#cb40-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
+<span id="cb40-7"><a href="#cb40-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-33_28d93ad55f731e345b3770e165d0debd">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>mnist <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
-<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">count</span>(label, cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>mnist <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">count</span>(label, cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   label cluster     n
@@ -1480,77 +1378,67 @@ Figure&nbsp;13.3: First Four Digits
 4     8       2   241</code></pre>
 </div>
 </div>
-<p><a href="#fig-bmm2-parameters" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-bmm2-parameters</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The figure shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1\)</span> and 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 2\)</span>. We see that the estimated parameters closely resemble the digits.</p>
+<p><a href="#fig-bmm2-parameters">Figure&nbsp;<span>15.4</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The figure shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1\)</span> and 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 2\)</span>. We see that the estimated parameters closely resemble the digits.</p>
 <p>Of course, each digit can differ from these images because everyone writes differently. In some ways, these are average digits across many version of the digits.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-34_bd653c4ee3e6deb7c872b3fc2a5370a3">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
-<span id="cb45-4"><a href="#cb45-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
+<span id="cb43-4"><a href="#cb43-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-bmm2-parameters" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-bmm2-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm2-parameters" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-bmm2-parameters-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm2-parameters-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm2-parameters-1.png" class="img-fluid figure-img" data-ref-parent="fig-bmm2-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm2-parameters-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) 8
-</figcaption>
+<div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-bmm2-parameters" class="cell quarto-layout-panel" data-hash="26_advanced-unsupervised-ml_cache/html/fig-bmm2-parameters_1c4450cd24c1ee05aabe40cf4121a798">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-bmm2-parameters-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm2-parameters-1.png" class="img-fluid figure-img" data-ref-parent="fig-bmm2-parameters" width="672"></p>
+<figcaption class="figure-caption">(a) 8</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm2-parameters" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-bmm2-parameters-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm2-parameters-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm2-parameters-2.png" class="img-fluid figure-img" data-ref-parent="fig-bmm2-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm2-parameters-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) 1
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-bmm2-parameters-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm2-parameters-2.png" class="img-fluid figure-img" data-ref-parent="fig-bmm2-parameters" width="672"></p>
+<figcaption class="figure-caption">(b) 1</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bmm2-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.4: Estimated Parameters for Each Cluster
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;15.4: Estimated Parameters for Each Cluster</figcaption><p></p>
 </figure>
+</div>
 </div>
 <p>The BMM does a good job of labeling the digits and recovering the average shape of the digits.</p>
 </section>
-<section id="ten-digit-example" class="level3" data-number="13.7.2">
-<h3 data-number="13.7.2" class="anchored" data-anchor-id="ten-digit-example"><span class="header-section-number">13.7.2</span> Ten Digit Example</h3>
+<section id="ten-digit-example" class="level3" data-number="15.7.2">
+<h3 data-number="15.7.2" class="anchored" data-anchor-id="ten-digit-example"><span class="header-section-number">15.7.2</span> Ten Digit Example</h3>
 <p>Let’s now consider an example that uses all 10 digits.</p>
 <p>In most applications, we won’t know the number of latent variables. First, we sample 1,000<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> digits and run the model with <span class="math inline">\(k = 2, 3, ..., 12\)</span>. We’ll calculate the BIC for each hyperparameter and pick the <span class="math inline">\(k\)</span> with lowest BIC.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-36_5221f37f242494afed6015cfce4c52c2">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
-<span id="cb47-2"><a href="#cb47-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb47-4"><a href="#cb47-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb47-5"><a href="#cb47-5"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb47-6"><a href="#cb47-6"></a></span>
-<span id="cb47-7"><a href="#cb47-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
-<span id="cb47-8"><a href="#cb47-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb47-9"><a href="#cb47-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb47-10"><a href="#cb47-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
-<span id="cb47-11"><a href="#cb47-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
-<span id="cb47-12"><a href="#cb47-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
-<span id="cb47-13"><a href="#cb47-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb45-6"><a href="#cb45-6"></a></span>
+<span id="cb45-7"><a href="#cb45-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
+<span id="cb45-8"><a href="#cb45-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb45-10"><a href="#cb45-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
+<span id="cb45-11"><a href="#cb45-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb45-12"><a href="#cb45-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="math inline">\(k = 7\)</span> provides the lowest BIC. This is probably because digits like 3 and 8 are very similar.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-37_ae05965f46aa6e2001cda7b6dd1acf03">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1573,23 +1461,23 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
 </div>
 <p>Next, we run the BMM on the full data with <span class="math inline">\(k = 7\)</span>.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-38_be822815ef9651762c076f5f93c89da2">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb50-4"><a href="#cb50-4"></a></span>
-<span id="cb50-5"><a href="#cb50-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb50-6"><a href="#cb50-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb50-7"><a href="#cb50-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
-<span id="cb50-8"><a href="#cb50-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb50-9"><a href="#cb50-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
-<span id="cb50-10"><a href="#cb50-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb48-7"><a href="#cb48-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
+<span id="cb48-8"><a href="#cb48-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb48-9"><a href="#cb48-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
+<span id="cb48-10"><a href="#cb48-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels. The rows of the table are the digits. The columns of the table are the clusters. We can see, for example, that most of the 0’s are clustered in cluster 5.</p>
 <div class="cell" data-hash="26_advanced-unsupervised-ml_cache/html/unnamed-chunk-39_56f23ba8feea7e774775fbd85a79cc60">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
-<span id="cb51-3"><a href="#cb51-3"></a></span>
-<span id="cb51-4"><a href="#cb51-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
+<span id="cb49-3"><a href="#cb49-3"></a></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
        1    2    3    4    5    6    7
@@ -1605,128 +1493,98 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
   9 3739 1797  109    5   26  136  137</code></pre>
 </div>
 </div>
-<p><a href="#fig-bmm10-parameters" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-bmm10-parameters</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The following visualize the <span class="math inline">\(784K\)</span> parameters that we estimated. It shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1, 2, ..., 7\)</span> clusters. We see that the estimated parameters closely resemble the digits.</p>
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb53-3"><a href="#cb53-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
-<span id="cb53-4"><a href="#cb53-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
-<span id="cb53-5"><a href="#cb53-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
-<span id="cb53-6"><a href="#cb53-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
-<span id="cb53-7"><a href="#cb53-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
-<span id="cb53-8"><a href="#cb53-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
-<span id="cb53-9"><a href="#cb53-9"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb53-10"><a href="#cb53-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb53-11"><a href="#cb53-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
-<span id="cb53-12"><a href="#cb53-12"></a></span>
-<span id="cb53-13"><a href="#cb53-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
-<span id="cb53-14"><a href="#cb53-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
-<span id="cb53-15"><a href="#cb53-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
-<span id="cb53-16"><a href="#cb53-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
-<span id="cb53-17"><a href="#cb53-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
-<span id="cb53-18"><a href="#cb53-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
-<span id="cb53-19"><a href="#cb53-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-bmm10-parameters" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-bmm10-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-1.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) 3, 7, and 9
-</figcaption>
+<p><a href="#fig-bmm10-parameters">Figure&nbsp;<span>15.5</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The following visualize the <span class="math inline">\(784K\)</span> parameters that we estimated. It shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1, 2, ..., 7\)</span> clusters. We see that the estimated parameters closely resemble the digits.</p>
+<div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
+<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
+<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
+<span id="cb51-6"><a href="#cb51-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
+<span id="cb51-7"><a href="#cb51-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
+<span id="cb51-8"><a href="#cb51-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
+<span id="cb51-9"><a href="#cb51-9"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
+<span id="cb51-12"><a href="#cb51-12"></a></span>
+<span id="cb51-13"><a href="#cb51-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
+<span id="cb51-14"><a href="#cb51-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
+<span id="cb51-15"><a href="#cb51-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
+<span id="cb51-16"><a href="#cb51-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
+<span id="cb51-17"><a href="#cb51-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
+<span id="cb51-18"><a href="#cb51-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
+<span id="cb51-19"><a href="#cb51-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-bmm10-parameters" class="cell quarto-layout-panel" data-hash="26_advanced-unsupervised-ml_cache/html/fig-bmm10-parameters_ec6ae5b5bf7314bb0a88a0a53e2a6010">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-1.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(a) 3, 7, and 9</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-2.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) 5, 7, and 8
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-2.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(b) 5, 7, and 8</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-3" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-3.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) 3
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-3.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(c) 3</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-4" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-4.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(d) 6
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-4.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(d) 6</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-5" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-5.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-5-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(e) 0
-</figcaption>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-5.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(e) 0</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-6" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-6.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-6-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(f) 1
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-6.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(f) 1</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-bmm10-parameters" style="flex-basis: 25.0%;justify-content: flex-start;">
-<div id="fig-bmm10-parameters-7" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-bmm10-parameters-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-7.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-bmm10-parameters-7-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(g) 2
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 25.0%;justify-content: center;">
+<div id="fig-bmm10-parameters-7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="26_advanced-unsupervised-ml_files/figure-html/fig-bmm10-parameters-7.png" class="img-fluid figure-img" data-ref-parent="fig-bmm10-parameters" width="672"></p>
+<figcaption class="figure-caption">(g) 2</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bmm10-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.5: Estimated Parameters for Each Cluster
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;15.5: Estimated Parameters for Each Cluster</figcaption><p></p>
 </figure>
+</div>
 </div>
 <p>The example with all digits doesn’t result in 10 distinct mixtures but it does a fairly good job of structuring finding structure in the data. Without labels and considering the variety of messy handwriting, this is a useful model.</p>
 </section>
 </section>
-<section id="considerations" class="level2" data-number="13.8">
-<h2 data-number="13.8" class="anchored" data-anchor-id="considerations"><span class="header-section-number">13.8</span> Considerations</h2>
+<section id="considerations" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="considerations"><span class="header-section-number">15.8</span> Considerations</h2>
 <p>Mixture modeling is difficult for a couple of reasons:</p>
 <ol type="1">
 <li>We need to assume a model. It can be difficult to assume a multivariate distribution that fits the data in all dimensions of interest.</li>
@@ -1734,7 +1592,7 @@ Figure&nbsp;13.5: Estimated Parameters for Each Cluster
 </ol>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-bishop2006" class="csl-entry" role="listitem">
 Bishop, Christopher M. 2006. <em>Pattern Recognition and Machine Learning</em>. Information Science and Statistics. New York: Springer.
 </div>
@@ -1837,9 +1695,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1849,17 +1708,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1872,125 +1722,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2034,7 +1765,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2060,32 +1790,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2147,18 +1851,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./19_predictive-modeling-review.html" class="pagination-link" aria-label="Predictive Modeling Review">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span>
+      <a href="./20_predictive-modeling-concepts.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
+      <a href="./references.html" class="pagination-link">
         <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
