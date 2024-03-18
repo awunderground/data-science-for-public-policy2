@@ -428,7 +428,7 @@ Opening RStudio automatically loads “base R”, a fundamental collection of co
 
 For years, R was only base R. New paradigms in R have developed over the last fifteen years that are more intuitive and more flexible than base R. Next week, we'll discuss the "tidyverse", the most popular paradigm for R programming. 
 
-All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it's in a paradigm that you have not learned. Chapter 27 of *R for Data Science (2e)* provides a great introduction to base R [@wickham_r_2023]. 
+All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it's in a paradigm that you have not learned. Chapter 27 of *R for Data Science (2e)* (sometimes abreviated R4DS) provides a great introduction to base R [@wickham_r_2023]. 
 
 One other popular R paradigm is `data.table`. We will not discuss `data.table` in this class. 
 
