@@ -1,0 +1,504 @@
+---
+title: "Advanced Quarto"
+abstract: "This set of notes reviews Quarto basics and introduces advanced Quarto concepts including mathematical notation, cross references, and citations. The [Quarto website](https://quarto.org/docs/guide/) includes more gems and is an example of high-quality technical documentation."
+format: 
+  html:
+    toc: true
+    embed-resources: true
+    code-line-numbers: true
+---
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Review {#sec-review}
+
+### Motivation
+
+There are many problems worth avoiding in an analysis:
+
+-   Copying-and-pasting, transposing, and manual repetition
+-   Running code out-of-order
+-   Maintaining parallel documents like a script for analysis and a doc for narrative
+-   Code written for computers that is tough to parse by humans
+
+Not convinced? Maybe we just want to make [cool stuff](https://quarto.org/docs/gallery/) like websites, blogs, books, and slide decks.
+
+Quarto, a literate statistical programming framework for R, Python, and Julia helps us solve many of these problems. Quarto uses
+
+-   plain text files ending in `.qmd` that are similar to `.R` and `.Rmd` files
+-   `library(knitr)`
+-   [pandoc](https://pandoc.org/)[^pandoc]
+
+[^pandoc]: Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their [About Page](https://pandoc.org/index.html).
+
+Quarto uses `library(knitr)` and pandoc to convert plain text `.qmd` documents into rich output documents like these class notes. The "Render" button appears in RStudio with a `.qmd` file is open in the editor window.
+
+Clicking the "Render" button begins the process of rendering `.qmd` files.
+
+```{r}
+#| echo: false
+#| fig-width: 4.5
+#| fig-align: center
+
+knitr::include_graphics(here::here("images", "render.png"))
+
+```
+
+When the button is clicked, Quarto calls `library(knitr)` and renders `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded as the entire process is handled by clicking the "Render" button in RStudio.
+
+```{r echo = FALSE}
+#| echo: false
+#| fig-width: 12
+#| fig-align: center
+
+knitr::include_graphics(here::here("images", "rstudio-qmd-how-it-works.png"))
+
+```
+
+**Source:** [Quarto website](https://quarto.org/docs/get-started/hello/rstudio.html)
+
+Quarto, `library(knitr)`, and Pandoc are all installed with RStudio. You will need to install a LaTeX distribution to render PDFs. We recommend `library(tinytex)` as a LaTeX distribution ([installation instructions](https://yihui.org/tinytex/)).
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Click the new script button in RStudio and add a "Quarto Document".
+2.  Give the document a name, an author, and ensure that HTML is selected.
+3.  Save the document as "hello-quarto.qmd".
+4.  Click "Render".
+:::
+
+Quarto has three main ingredients:
+
+1.  [YAML header](#yaml-header)
+2.  [Markdown text](#markdown-text)
+3.  [Code chunks](#code-chunks)
+
+### (1) YAML Header {#yaml-header}
+
+YAML stands for "yet another markup language". The YAML header contains meta information about the document including output type, document settings, and parameters that can be passed to the document. The YAML header starts with `---` and ends with `---`.
+
+Here is the simplest YAML header for a PDF document:
+
+```         
+---
+format: pdf
+---
+```
+
+YAML headers can contain many output specific settings. This YAML header creates an HTML document with code folding and a floating table of contents:
+
+```         
+---
+format: 
+  html:
+    embed-resources: true
+    code-fold: true
+    toc: true
+---  
+```
+
+Parameters can be specified as follows
+
+```         
+---
+format: pdf
+params:
+  state: "Virginia"
+---
+```
+
+Now state can be referred to anywhere in R code as `params$state`. Parameters are useful for a couple of reasons:
+
+1. We can clearly change key values for a Quarto document in the YAML header.
+2. We can create a template and programmatically iterate the template over a set of values with the `quarto_render()` function and `library(purrr)`. [This blog](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce) outlines the idea. The [Mobility Metrics Data Tables](https://upward-mobility.urban.org/measuring-upward-mobility-counties-and-cities-across-us) and [SLFI State Fiscal Briefs](https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs) are key examples of this workflow. 
+
+::: {.callout-warning}
+Unlike R Markdown, images and other content are not embedded in .html from Quarto by default. Be sure to include `embed-resources: true` in YAML headers to embed content and make documents easier to share.
+
+Suppose we embed an image called `image.png` in a Quarto document called `example.qmd`, which, when rendered, creates `example.html`. If we don't include `embed-resources: true`, then we will need to share `image.png` and `example.html` to see the embedded image. This is also true for other files like `.css`. 
+:::
+
+### (2) Markdown text {#markdown-text}
+
+Markdown is a shortcut for HyperText Markup Language (HTML). Essentially, simple meta characters corresponding to formatting are added to plain text.
+
+```         
+Titles and subtitltes
+------------------------------------------------------------
+
+# Title 1
+
+## Title 2
+
+### Title 3
+
+
+Text formatting 
+------------------------------------------------------------
+
+*italic*  
+
+**bold**   
+
+`code`
+
+Lists
+------------------------------------------------------------
+
+* Bulleted list item 1
+* Item 2
+  * Item 2a
+  * Item 2b
+
+1. Item 1
+2. Item 2
+
+Links and images
+------------------------------------------------------------
+
+[text](http://link.com)
+
+![Penguins](images/penguins.png)
+```
+
+### (3) Code chunks {#code-chunks}
+
+```{r}
+#| echo: false
+
+knitr::include_graphics(here::here("images", "inline-r-code.png"))
+
+```
+
+More frequently, code is added in code chunks:
+
+```{r}
+#| echo: fenced
+
+2 + 2
+
+```
+
+The first argument inline or in a code chunk is the language engine. Most commonly, this will just be a lower case `r`. `knitr` allows for many different language engines:
+
+-   R
+-   Julia
+-   Python
+-   SQL
+-   Bash
+-   Rcpp
+-   Stan
+-   Javascript
+-   CSS
+
+Quarto has a rich set of options that go inside of the chunks and control the behavior of Quarto.
+
+```{r}
+#| echo: fenced
+#| label: important-calculation
+#| eval: false
+
+2 + 2
+
+```
+
+In this case, `eval` makes the code not run. Other chunk-specific settings can be added inside the brackets. Here[^1] are the most important options:
+
+| Option         | Effect                |
+|----------------|-----------------------|
+| echo: false    | Hides code in output  |
+| eval: false    | Turns off evaluation  |
+| output: false  | Hides code output     |
+| warning: false | Turns off warnings    |
+| message: false | Turns off messages    |
+| fig-height: 8  | Changes figure width in inches[^dimensions] |
+| fig-width: 8   | Changes figure height in inches[^dimensions] |
+
+[^dimensions]: The default dimensions for figures change based on the output format. Visit [here](https://quarto.org/docs/computations/execution-options.html#figure-options) to learn more.
+
+Default settings for the entire document can be changed in the YAML header with the `execute` option:
+
+```     
+execute:
+  warning: false
+```
+
+[^1]: This table was typed as Markdown code. But sometimes it is easier to use a code chunk to create and print a table. Pipe any data frame into `knitr::kable()` to create a table that will be formatted in the output of a rendered Quarto document.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1.  Add `date: today` to your YAML header after `title`. This will update every time the document is rendered.
+2.  Copy the Markdown table from [this table generator](https://www.tablesgenerator.com/markdown_tables) and add it to your `.qmd` document.
+3.  Create a scatter plot of the `cars` data with `library(ggplot2)`. Adjust the figure width and height using options within the chunk.
+4.  Click "Render".
+:::
+
+### Organizing a Quarto Document
+
+It is important to clearly organize a Quarto document and the constellation of files that typically support an analysis. 
+
+1. Always use `.Rproj` files. 
+2. Use sub-directories to sort images, `.css`, data.
+
+Later, we will learn how to use `library(here)` to effectively organize sub-directories. 
+
+## Math Notation
+
+This course uses probability and statistics. Occasionally, we want to easily communicate with mathematical notation. For example, it may be convenient to type that $X$ is a random variable that follows a standard normal distribution (mean = 0 and standard deviation = 1).
+
+$$X \sim N(\mu = 0, \sigma = 1)$$
+
+### Math Mode
+
+Use `$` to start and stop in-line math notation and `$$` to start multi-line math notation. Math notation uses LaTeX's syntax for mathematical notation. 
+
+Here's an example with in-line math:
+
+``` markdown
+Consider a binomially distributed random variable, $X \sim binom(n, p)$. 
+```
+
+Consider a binomially distributed random variable, $X \sim binom(n, p)$.
+
+Here's an example with a chunk of math:
+
+``` markdown
+$$
+P(X = x) = {n \choose x} p ^ x (1 - p) ^ {n - x}
+$${#eq-binomial}
+```
+
+$$
+P(X = x) = {n \choose x} p ^ x (1 - p) ^ {n - x}
+$$ {#eq-binomial}
+
+### Important Syntax
+
+Math mode recognizes basic math symbols available on your keyboard including `+`, `-`, `*`, `/`, `>`, `<`, `(`, and `)`.
+
+Math mode contains all greek letters. For example, `\alpha` ($\alpha$) and `\beta` ($\beta$).
+
+| LaTeX      | Symbol     |
+|------------|------------|
+| `\alpha`   | $\alpha$   |
+| `\beta`    | $\beta$    |
+| `\gamma`   | $\gamma$   |
+| `\Delta`   | $\Delta$   |
+| `\epsilon` | $\epsilon$ |
+| `\theta`   | $\theta$   |
+| `\pi`      | $\pi$      |
+| `\sigma`   | $\sigma$   |
+| `\chi`     | $\chi$     |
+
+: My Caption {#tbl-greek}
+
+Math mode also recognizes $\log(x)$ (`\log(x)`) and $\sqrt{x}$ (`\sqrt{x}`).
+
+Superscripts (`^`) are important for exponentiation and subscripts (`_`) are important for adding indices. `y = x ^ 2` renders as $y = x ^ 2$ and `x_1, x_2, x_3` renders as $x_1, x_2, x_3$. Brackets are useful for multi-character superscripts and subscripts like $s_{11}$ (`s_{11}`).
+
+It is useful to add symbols to letters. For example, `\bar{x}` is useful for sample means ($\bar{x}$), `\hat{y}` is useful for predicted values ($\hat{y}$), and `\vec{\beta}` is useful for vectors of coefficients ($\vec{\beta}$).
+
+Math mode supports fractions with `\frac{x}{y}` ($\frac{x}{y}$), big parentheses with `\left(\right)` ($\left(\right)$), and brackets with `\left[\right]` ($\left[\right]$).
+
+Math mode has a symbol for summation. Let's combine it with bars, fractions, subscripts, and superscipts to show sample mean `\bar{x} = \frac{1}{n}\sum_i^n x_i`, which looks like $\bar{x} = \frac{1}{n}\sum_i^n x_i$.
+
+`\sim` is how to add the tilde for distributed as. For example, `X \sim N(\mu = 0, \sigma = 1)` shows the normal distribution $X \sim N(\mu = 0, \sigma = 1)$.
+
+Matrices are are a little bit more work in math mode. Consider the follow variance-covariance matrix:
+
+```         
+\begin{bmatrix}
+s_{11}^2 & s_{12}\\
+s_{21} & s_{22}^2
+\end{bmatrix}
+```
+
+$$
+\begin{bmatrix}
+s_{11}^2 & s_{12}\\
+s_{21} & s_{22}^2
+\end{bmatrix}
+$$
+
+[This guide](https://en.wikibooks.org/wiki/LaTeX/Mathematics) provides and exhaustive look at math options in Quarto.
+
+::: callout-warning
+Math mode is finicky! Small errors like mismatched parentheses or superscript and subscript errors will cause Quarto documents to fail to render. Write math carefully and render early and often.
+:::
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1.  Use math mode to type out the equation for root mean square error (RMSE).
+2.  Do you divide by `n` or `n - 1`?
+:::
+
+## Cross References
+
+[Cross references](https://quarto.org/docs/authoring/cross-references.html) are useful for organizing documents that include sections, figures, tables, and equations. Cross references create hyperlinks within documents that jump to the locations of these elements. Linking sections, figures, tables, or equations helps readers navigate the document. 
+
+Cross references also automatically number the referenced elements. This means that if there are two tables (ie. Table 1 and Table 2) and a table is added between the two tables, all of the table numbers and references to the tables will automatically update.
+
+Cross references require two bits of code within a Quarto document:
+
+1.  A label associated with the section, figure, table, or equation.
+2.  A reference to the labelled section, figure, table, or equation.
+
+Labels are written in brackets or as arguments in code chunks, and begin with the the type object being linked. References begin with `@` followed by the label of object being linked.
+
+### Sections
+
+Linking sections helps readers navigate between sections. Use brackets to label sections after headers and always begin labels with `sec-`. Then you can reference that section with `@sec-`.
+
+``` markdown
+## Review {#sec-review}
+
+See @sec-review if you are totally lost.
+```
+
+The cross references shows up like this: See @sec-review if you are totally lost.
+
+It can be helpful to turn on section numbering with `number-sections: true` in the YAML header. Additionally, [Markdown has a native method](https://linuxhint.com/markdown-link-section/) for linking between sections.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1.  Add a few section headers to your Quarto document.
+2.  Add a cross reference to one of the section headers.
+:::
+
+### Figures
+
+![Penguins](images/penguins.png){#fig-penguins}
+
+We can reference figures like @fig-penguins with `@fig-penguins`.
+
+### Tables
+
+We can link to tables in our documents. For example, we can link to the greek table with `@tbl-greek` @tbl-greek.
+
+### Equations
+
+We can link to equations in our documents. For example, we can link to the binomial distribution earlier with `@eq-binomial` @eq-binomial.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1.  Add a cross reference to your RMSE equation from earlier.
+:::
+
+## Citations
+
+### Zotero
+
+[Zotero](https://www.zotero.org/) is a free and open-source software for organizing research and managing citations.
+
+::: {.callout-tip}
+## Digital Object Identifier (DOI)
+
+DOIs are persistent identifiers that uniquely identify objects including many academic papers. For example, `10.1198/jcgs.2009.07098` identifies "A Layered Grammar of Graphics" by Hadley Wickham.
+:::
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1.  [Install Zotero](https://www.zotero.org/download/).
+2.  Find the DOI for "Tidy Data" by Hadley Wickham.
+3.  Click the magic wand in Zotero and paste the DOI.
+
+```{r}
+#| echo: false
+#| fig-align: "center"
+
+knitr::include_graphics(here::here("images", "magic-wand.png"))
+
+```
+
+4.  Review the new entry in Zotero.
+:::
+
+### Zotero Integration
+
+Zotero has a powerful integration with Quarto. In practice, it's one click to add a DOI to Zotero and then one click to add a citation to Quarto.
+
+RStudio automatically adds **My Library** from Zotero. Simply switch to the Visual Editor (top left in RStudio), click "Insert", and click "Citation". This will open a prompt to insert a citation into the Quarto document. 
+
+The citation is automatically added with parentheses to go at the end of sentences. Delete the square brackets to convert the citation to an in-line citation. 
+
+Inserting the citation automatically adds the citation to the references section. Deleting the reference automatically deletes the citation from the references section. 
+
+Zotero Groups are useful for sharing citations and Zotero Group Libraries need to be added to RStudio. To set this up:
+
+To set this up, in RStudio:
+
+1. Go to Tools and select "Global Options"
+2. Select "RMarkdown" and then click "Citations"
+3. For "Use Libraries" choose "Selected Libraries"
+4. Select the group libraries to add
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1. Cite "Tidy Data" by Hadley Wickham in your Quarto document. 
+2. Click "Render"
+
+:::
+
+## More Resources
+
+- [Quarto Guide](https://quarto.org/docs/guide/)
+- [Iterating fact sheets and web pages with Quarto](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
+
+
+
+
