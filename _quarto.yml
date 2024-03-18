@@ -39,8 +39,8 @@ book:
       chapters:
         - 19_predictive-modeling-review.qmd # + PART 1: predictive modeling review
         # - PART 1: supervised classification
-        # - 21_ensembling.qmd - NEED pdb_small.csv
-        # - 22_regularization.qmd - NEED pdb_small.csv
+        - 21_ensembling.qmd
+        - 22_regularization.qmd
     - part: Unsupervised Machine Learning
       chapters:
         # - interpretable-models.qmd

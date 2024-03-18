@@ -5,9 +5,10 @@ format:
   html:
     toc: true
     code-line-numbers: true
-execution:
+execute:
   message: false
   warning: false
+  cache: true
 bibliography: references.bib
 editor_options: 
   chunk_output_type: console
