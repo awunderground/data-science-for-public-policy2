@@ -62,9 +62,10 @@ For example, we may have a list of students in detention and a list of all stude
 
 :::
 
-For now, we will focus on mutating joins. Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. 
+Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions: 
 
 * `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
+* `inner_join(x, y)` appends variables from `y` onto `x` but only keeps observations for which there is a match between in the `x` and `y`data frames.
 * `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
 * `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
 

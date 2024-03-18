@@ -5642,6 +5642,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h2 data-number="2.5" class="anchored" data-anchor-id="mutating-joins"><span class="header-section-number">2.5</span> Mutating Joins</h2>
 <p>Mutating joins join one dataframe to columns from another dataframe by matching values common in both dataframes. The syntax is derived from <em>Structured Query Language</em> (SQL).</p>
 <p>Each function requires an <code>x</code> (or left) dataframe, a <code>y</code> (or right) data frame, and <code>by</code> variables that exist in both dataframes. Note that below we’re creating dataframes using the <code>tribble()</code> function, which creates a tibble using a row-wise layout.</p>
+<p><a href="https://github.com/elbersb/tidylog"><code>library(tidylog)</code></a> is a useful function for monitoring the behavior of joins. It prints out summaries of the number of rows in each dataframe that successfully join.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>math_scores <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb45-2"><a href="#cb45-2"></a>  <span class="sc">~</span>name, <span class="sc">~</span>math_score,</span>
