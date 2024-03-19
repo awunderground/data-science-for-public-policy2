@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 10&nbsp; Ensembling</title>
+<title>Data Science for Public Policy - 15&nbsp; Ensembling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,8 +84,8 @@ div.csl-indent {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./22_regularization.html" rel="next">
-<link href="./19_predictive-modeling-review.html" rel="prev">
+<link href="./23_regularization.html" rel="next">
+<link href="./20_predictive-modeling-concepts.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -165,7 +165,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-review.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./21_ensembling.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./22_ensembling.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -207,8 +207,32 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./01_intro-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./03_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -225,7 +249,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -242,13 +266,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -265,25 +289,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -299,20 +323,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./21_ensembling.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./22_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+  <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -328,8 +358,8 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -354,36 +384,36 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">10.1</span> Motivation</a></li>
-  <li><a href="#planning-database" id="toc-planning-database" class="nav-link" data-scroll-target="#planning-database"><span class="header-section-number">10.2</span> Planning Database</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">15.1</span> Motivation</a></li>
+  <li><a href="#planning-database" id="toc-planning-database" class="nav-link" data-scroll-target="#planning-database"><span class="header-section-number">15.2</span> Planning Database</a>
   <ul class="collapse">
-  <li><a href="#hard-to-count-score" id="toc-hard-to-count-score" class="nav-link" data-scroll-target="#hard-to-count-score"><span class="header-section-number">10.2.1</span> Hard to Count Score</a></li>
-  <li><a href="#kaggle-competition" id="toc-kaggle-competition" class="nav-link" data-scroll-target="#kaggle-competition"><span class="header-section-number">10.2.2</span> Kaggle Competition</a></li>
-  <li><a href="#the-low-response-score" id="toc-the-low-response-score" class="nav-link" data-scroll-target="#the-low-response-score"><span class="header-section-number">10.2.3</span> The Low-Response Score</a></li>
-  <li><a href="#lrs-set-up" id="toc-lrs-set-up" class="nav-link" data-scroll-target="#lrs-set-up"><span class="header-section-number">10.2.4</span> LRS Set Up</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">10.2.5</span> Linear Regression</a></li>
-  <li><a href="#regression-trees" id="toc-regression-trees" class="nav-link" data-scroll-target="#regression-trees"><span class="header-section-number">10.2.6</span> Regression Trees</a></li>
+  <li><a href="#hard-to-count-score" id="toc-hard-to-count-score" class="nav-link" data-scroll-target="#hard-to-count-score"><span class="header-section-number">15.2.1</span> Hard to Count Score</a></li>
+  <li><a href="#kaggle-competition" id="toc-kaggle-competition" class="nav-link" data-scroll-target="#kaggle-competition"><span class="header-section-number">15.2.2</span> Kaggle Competition</a></li>
+  <li><a href="#the-low-response-score" id="toc-the-low-response-score" class="nav-link" data-scroll-target="#the-low-response-score"><span class="header-section-number">15.2.3</span> The Low-Response Score</a></li>
+  <li><a href="#lrs-set-up" id="toc-lrs-set-up" class="nav-link" data-scroll-target="#lrs-set-up"><span class="header-section-number">15.2.4</span> LRS Set Up</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">15.2.5</span> Linear Regression</a></li>
+  <li><a href="#regression-trees" id="toc-regression-trees" class="nav-link" data-scroll-target="#regression-trees"><span class="header-section-number">15.2.6</span> Regression Trees</a></li>
   </ul></li>
-  <li><a href="#ensembling" id="toc-ensembling" class="nav-link" data-scroll-target="#ensembling"><span class="header-section-number">10.3</span> Ensembling</a></li>
-  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">10.4</span> Bagging</a></li>
-  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">10.5</span> Random Forests</a>
+  <li><a href="#ensembling" id="toc-ensembling" class="nav-link" data-scroll-target="#ensembling"><span class="header-section-number">15.3</span> Ensembling</a></li>
+  <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">15.4</span> Bagging</a></li>
+  <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">15.5</span> Random Forests</a>
   <ul class="collapse">
-  <li><a href="#interpretability" id="toc-interpretability" class="nav-link" data-scroll-target="#interpretability"><span class="header-section-number">10.5.1</span> Interpretability</a></li>
-  <li><a href="#variable-importance" id="toc-variable-importance" class="nav-link" data-scroll-target="#variable-importance"><span class="header-section-number">10.5.2</span> Variable Importance</a></li>
-  <li><a href="#parallelization" id="toc-parallelization" class="nav-link" data-scroll-target="#parallelization"><span class="header-section-number">10.5.3</span> Parallelization</a></li>
+  <li><a href="#interpretability" id="toc-interpretability" class="nav-link" data-scroll-target="#interpretability"><span class="header-section-number">15.5.1</span> Interpretability</a></li>
+  <li><a href="#variable-importance" id="toc-variable-importance" class="nav-link" data-scroll-target="#variable-importance"><span class="header-section-number">15.5.2</span> Variable Importance</a></li>
+  <li><a href="#parallelization" id="toc-parallelization" class="nav-link" data-scroll-target="#parallelization"><span class="header-section-number">15.5.3</span> Parallelization</a></li>
   </ul></li>
-  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"><span class="header-section-number">10.6</span> Boosting</a></li>
-  <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost"><span class="header-section-number">10.7</span> XGBoost</a></li>
-  <li><a href="#final-comparison" id="toc-final-comparison" class="nav-link" data-scroll-target="#final-comparison"><span class="header-section-number">10.8</span> Final Comparison</a></li>
+  <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"><span class="header-section-number">15.6</span> Boosting</a></li>
+  <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost"><span class="header-section-number">15.7</span> XGBoost</a></li>
+  <li><a href="#final-comparison" id="toc-final-comparison" class="nav-link" data-scroll-target="#final-comparison"><span class="header-section-number">15.8</span> Final Comparison</a></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-review.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./21_ensembling.html"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./22_ensembling.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Ensembling</span></h1>
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></h1>
 </div>
 
 
@@ -400,14 +430,14 @@ window.Quarto = {
 </header>
 
 
-<section id="motivation" class="level2" data-number="10.1">
-<h2 data-number="10.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">10.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">15.1</span> Motivation</h2>
 <p>A team of mediocre predictive models can often outperform one excellent predictive model.</p>
 <p>This chapter introduces ensembling, the process of combining predictions from multiple models into one prediction. We will focus on ensembling trees.</p>
 <p>This chapter also introduces an extended example of predicting a low response rate on the US Census Bureau’s decennial census planning database.</p>
 </section>
-<section id="planning-database" class="level2" data-number="10.2">
-<h2 data-number="10.2" class="anchored" data-anchor-id="planning-database"><span class="header-section-number">10.2</span> Planning Database</h2>
+<section id="planning-database" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="planning-database"><span class="header-section-number">15.2</span> Planning Database</h2>
 <ul>
 <li><strong>Motivation:</strong> The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.</li>
 <li><strong>Implementation data:</strong> Demographic and housing information for the American Community Survey at the census tract and census block group levels.</li>
@@ -416,10 +446,10 @@ window.Quarto = {
 <li><strong>Tools:</strong> Linear regression based on the top 25 predictors from gradient-boosted trees.</li>
 <li><strong>Results:</strong> Unclear but we’ll see more in these notes!</li>
 </ul>
-<section id="hard-to-count-score" class="level3" data-number="10.2.1">
-<h3 data-number="10.2.1" class="anchored" data-anchor-id="hard-to-count-score"><span class="header-section-number">10.2.1</span> Hard to Count Score</h3>
+<section id="hard-to-count-score" class="level3" data-number="15.2.1">
+<h3 data-number="15.2.1" class="anchored" data-anchor-id="hard-to-count-score"><span class="header-section-number">15.2.1</span> Hard to Count Score</h3>
 <p>The US Census Bureau develops <a href="https://www.census.gov/data/developers/data-sets/planning-database.html">planning databases</a> to prepare for decennial censuses. This database has many uses, but one use is to predict the census tracts and census block groups that will have the worst response rates for the decennial census.</p>
-<p>This exercise began with the Hard to Count Score <span class="citation" data-cites="bruce2001 bruce2003">(<a href="references.html#ref-bruce2001" role="doc-biblioref">Antonio Bruce, Robinson, and Sanders 2001</a>; <a href="references.html#ref-bruce2003" role="doc-biblioref">Anotnio Bruce and Robinson 2003</a>)</span>. The authors used theory to develop an index of twelve variables correlated with non response and under counting to sort census tracts and plan for the next decennial census.</p>
+<p>This exercise began with the Hard to Count Score <span class="citation" data-cites="bruce2001 bruce2003">(<a href="#ref-bruce2001" role="doc-biblioref">Antonio Bruce, Robinson, and Sanders 2001</a>; <a href="#ref-bruce2003" role="doc-biblioref">Anotnio Bruce and Robinson 2003</a>)</span>. The authors used theory to develop an index of twelve variables correlated with non response and under counting to sort census tracts and plan for the next decennial census.</p>
 <ul>
 <li>Renter occupied units</li>
 <li>Unmarried</li>
@@ -436,21 +466,21 @@ window.Quarto = {
 </ul>
 <p>This is clearly a predictive task but the authors brought a traditional social sciences approach.</p>
 </section>
-<section id="kaggle-competition" class="level3" data-number="10.2.2">
-<h3 data-number="10.2.2" class="anchored" data-anchor-id="kaggle-competition"><span class="header-section-number">10.2.2</span> Kaggle Competition</h3>
-<p>In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle <span class="citation" data-cites="erdman2014 erdman2017">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="references.html#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. The competition was motivated by the America COMPETES act. <a href="https://www.kaggle.com/competitions">Kaggle competitions</a> allow teams to compete in predictive modeling tasks for cash prizes.</p>
+<section id="kaggle-competition" class="level3" data-number="15.2.2">
+<h3 data-number="15.2.2" class="anchored" data-anchor-id="kaggle-competition"><span class="header-section-number">15.2.2</span> Kaggle Competition</h3>
+<p>In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle <span class="citation" data-cites="erdman2014 erdman2017">(<a href="#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. The competition was motivated by the America COMPETES act. <a href="https://www.kaggle.com/competitions">Kaggle competitions</a> allow teams to compete in predictive modeling tasks for cash prizes.</p>
 <p>The <a href="https://www.kaggle.com/competitions/us-census-bureau-ndsu-and-umn/overview">Census Bureau’s Kaggle Competition</a> tried to answer the question, “Which statistical model best predicts 2010 Census mail return rates?”</p>
 <p>Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman201">(<a href="references.html#ref-erdman201" role="doc-biblioref"><strong>erdman201?</strong></a>)</span>.</p>
+<p>244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman201">(<a href="#ref-erdman201" role="doc-biblioref"><strong>erdman201?</strong></a>)</span>.</p>
 </section>
-<section id="the-low-response-score" class="level3" data-number="10.2.3">
-<h3 data-number="10.2.3" class="anchored" data-anchor-id="the-low-response-score"><span class="header-section-number">10.2.3</span> The Low-Response Score</h3>
+<section id="the-low-response-score" class="level3" data-number="15.2.3">
+<h3 data-number="15.2.3" class="anchored" data-anchor-id="the-low-response-score"><span class="header-section-number">15.2.3</span> The Low-Response Score</h3>
 <p>The best models in the Kaggle competition did not directly meet the needs of the US Census Bureau because the models were “black box” and included auxiliary data.</p>
-<p>Instead, the Census Bureau took the 25 “most important” variables from the winning model and used multiple linear regression to construct and evaluate the low response score <span class="citation" data-cites="erdman2014 erdman2017">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="references.html#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. This increased the MSE of the model used to fit the LRS but increased the interpretability.</p>
+<p>Instead, the Census Bureau took the 25 “most important” variables from the winning model and used multiple linear regression to construct and evaluate the low response score <span class="citation" data-cites="erdman2014 erdman2017">(<a href="#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. This increased the MSE of the model used to fit the LRS but increased the interpretability.</p>
 <p><a href="https://arxiv.org/abs/2108.11328">Follow-up work</a> seeks to improve the model performance of an interpretable model for this exact implementation.</p>
 </section>
-<section id="lrs-set-up" class="level3" data-number="10.2.4">
-<h3 data-number="10.2.4" class="anchored" data-anchor-id="lrs-set-up"><span class="header-section-number">10.2.4</span> LRS Set Up</h3>
+<section id="lrs-set-up" class="level3" data-number="15.2.4">
+<h3 data-number="15.2.4" class="anchored" data-anchor-id="lrs-set-up"><span class="header-section-number">15.2.4</span> LRS Set Up</h3>
 <p>We will work with the tract-level PDB instead of the block-group level PDB to simplify computation. The PDB contains more than 500 variables. For now, we only consider the top 25 variables to further simplify computation.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pdb_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"pdb_small.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -474,8 +504,8 @@ dbl (24): Low_Response_Score, non_return_rate, Renter_Occp_HU_ACS_13_17, Pop...
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>pdb_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> pdb_train, <span class="at">v =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="linear-regression" class="level3" data-number="10.2.5">
-<h3 data-number="10.2.5" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">10.2.5</span> Linear Regression</h3>
+<section id="linear-regression" class="level3" data-number="15.2.5">
+<h3 data-number="15.2.5" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">15.2.5</span> Linear Regression</h3>
 <p>We first consider multiple linear regression. We need a recipe, a model, and a workflow to fit the model five times and evaluate its predictive accuracy.</p>
 <p>The data set contains a few variables that shouldn’t be included in the model. We use <code>add_role()</code> to turn them into “ids” and then <code>step_rm(has_role("id"))</code> to remove them from consideration.</p>
 <div class="cell">
@@ -546,8 +576,8 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 </div>
 </div>
 </section>
-<section id="regression-trees" class="level3" data-number="10.2.6">
-<h3 data-number="10.2.6" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">10.2.6</span> Regression Trees</h3>
+<section id="regression-trees" class="level3" data-number="15.2.6">
+<h3 data-number="15.2.6" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">15.2.6</span> Regression Trees</h3>
 <p>Next, we consider regression trees.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dt_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
@@ -579,8 +609,8 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 </div>
 </section>
 </section>
-<section id="ensembling" class="level2" data-number="10.3">
-<h2 data-number="10.3" class="anchored" data-anchor-id="ensembling"><span class="header-section-number">10.3</span> Ensembling</h2>
+<section id="ensembling" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="ensembling"><span class="header-section-number">15.3</span> Ensembling</h2>
 <p>Simple predictive models like linear regression, KNN, and regression trees are intuitive but are often outperformed by more complicated tree-based, ensembled predictive models like random forests and XGBoost.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -597,8 +627,8 @@ Ensembling
 </div>
 <p>Bagging, boosting, and stacking are three strategies for ensembling. We will cover bagging and boosting in this chapter. Random forests are an implementation bagging. XGBoost is an implementation of boosting.</p>
 </section>
-<section id="bagging" class="level2" data-number="10.4">
-<h2 data-number="10.4" class="anchored" data-anchor-id="bagging"><span class="header-section-number">10.4</span> Bagging</h2>
+<section id="bagging" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="bagging"><span class="header-section-number">15.4</span> Bagging</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -696,7 +726,7 @@ Bagged Trees Algorithm
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="21_ensembling_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="22_ensembling_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 <figcaption>Simulated data</figcaption>
 </figure>
 </div>
@@ -751,7 +781,7 @@ Bagged Trees Algorithm
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="21_ensembling_files/figure-html/bagged-trees-data1-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="22_ensembling_files/figure-html/bagged-trees-data1-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -779,10 +809,10 @@ Bagged Trees Algorithm
 </div>
 </div>
 </section>
-<section id="random-forests" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">10.5</span> Random Forests</h2>
+<section id="random-forests" class="level2" data-number="15.5">
+<h2 data-number="15.5" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">15.5</span> Random Forests</h2>
 <blockquote class="blockquote">
-<p>Averaging many highly correlated quantities does not lead to as large a reduction in variance as averaging many uncorrelated quantities. <span class="citation" data-cites="james2017">(<a href="references.html#ref-james2017" role="doc-biblioref">James et al. 2017</a>)</span></p>
+<p>Averaging many highly correlated quantities does not lead to as large a reduction in variance as averaging many uncorrelated quantities. <span class="citation" data-cites="james2017">(<a href="#ref-james2017" role="doc-biblioref">James et al. 2017</a>)</span></p>
 </blockquote>
 <p>The models fit on bootstrap samples of data are often highly correlated. Random forests, one of the most popular bagging algorithms, aims to decorrelate trees and reduce variance error more than simple bagging.</p>
 <p>Random forests are identical to bagged trees, except each time a split is considered in a regression tree, RF only considers a subset of predictors instead of all predictors. By intentionally making each tree a little worse, the algorithm typically makes better predictions.</p>
@@ -916,8 +946,8 @@ Regularization
 2 rsq     standard   0.631     5 0.00571 Preprocessor1_Model1</code></pre>
 </div>
 </div>
-<section id="interpretability" class="level3" data-number="10.5.1">
-<h3 data-number="10.5.1" class="anchored" data-anchor-id="interpretability"><span class="header-section-number">10.5.1</span> Interpretability</h3>
+<section id="interpretability" class="level3" data-number="15.5.1">
+<h3 data-number="15.5.1" class="anchored" data-anchor-id="interpretability"><span class="header-section-number">15.5.1</span> Interpretability</h3>
 <p>It is important to understand the process for fitting models, how the nature of the data affects fitted models, and how fitted models generate predictions. Models that lack these features are often called “black box.”</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -949,8 +979,8 @@ Local Interpretability
 <p>The shift from linear regression and regression trees, which are locally and globally interpretable to ensembled models sacrifices model interpretability. Random forests return neither simple regression coefficients or a clear, visualized tree.</p>
 <p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a> is a good resource for learning more.</p>
 </section>
-<section id="variable-importance" class="level3" data-number="10.5.2">
-<h3 data-number="10.5.2" class="anchored" data-anchor-id="variable-importance"><span class="header-section-number">10.5.2</span> Variable Importance</h3>
+<section id="variable-importance" class="level3" data-number="15.5.2">
+<h3 data-number="15.5.2" class="anchored" data-anchor-id="variable-importance"><span class="header-section-number">15.5.2</span> Variable Importance</h3>
 <p>Linear regression returns coefficients and regression trees return trees that can be visualized. Bagged trees and random forests return neither.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -978,7 +1008,7 @@ Variable Importance
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="21_ensembling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="22_ensembling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -998,14 +1028,14 @@ Variable Importance
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="21_ensembling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="22_ensembling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="parallelization" class="level3" data-number="10.5.3">
-<h3 data-number="10.5.3" class="anchored" data-anchor-id="parallelization"><span class="header-section-number">10.5.3</span> Parallelization</h3>
+<section id="parallelization" class="level3" data-number="15.5.3">
+<h3 data-number="15.5.3" class="anchored" data-anchor-id="parallelization"><span class="header-section-number">15.5.3</span> Parallelization</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1067,10 +1097,10 @@ Warning
 </div>
 </section>
 </section>
-<section id="boosting" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="boosting"><span class="header-section-number">10.6</span> Boosting</h2>
+<section id="boosting" class="level2" data-number="15.6">
+<h2 data-number="15.6" class="anchored" data-anchor-id="boosting"><span class="header-section-number">15.6</span> Boosting</h2>
 <blockquote class="blockquote">
-<p>Boosting appears to dominate bagging on most problems, and became the preferred choice. <span class="citation" data-cites="hastie2009">(<a href="references.html#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span></p>
+<p>Boosting appears to dominate bagging on most problems, and became the preferred choice. <span class="citation" data-cites="hastie2009">(<a href="#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span></p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1113,8 +1143,8 @@ Boosting Algorithm for Regression
 </div>
 </div>
 </section>
-<section id="xgboost" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="xgboost"><span class="header-section-number">10.7</span> XGBoost</h2>
+<section id="xgboost" class="level2" data-number="15.7">
+<h2 data-number="15.7" class="anchored" data-anchor-id="xgboost"><span class="header-section-number">15.7</span> XGBoost</h2>
 <p>XGBoost is a specific, tree-based boosting algorithm that frequently wins predictive modeling competitions.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1143,7 +1173,7 @@ XGBoost Algorithm for Regression
 <p><span class="math display">\[\hat{f}(\vec{x}) = \sum_{b = 1}^B \lambda\hat{f}^b(\vec{x})\]</span></p>
 </div>
 </div>
-<p>Consider a few lessons from <span class="citation" data-cites="james2017">James et al. (<a href="references.html#ref-james2017" role="doc-biblioref">2017</a>)</span>:</p>
+<p>Consider a few lessons from <span class="citation" data-cites="james2017">James et al. (<a href="#ref-james2017" role="doc-biblioref">2017</a>)</span>:</p>
 <ul>
 <li>Setting <span class="math inline">\(B\)</span> too large can slowly lead to overfitting for XGBoost. Bagging and random forests do not overfit with large <span class="math inline">\(B\)</span>.<br>
 </li>
@@ -1237,8 +1267,8 @@ XGBoost Algorithm for Regression
 </div>
 </div>
 </section>
-<section id="final-comparison" class="level2" data-number="10.8">
-<h2 data-number="10.8" class="anchored" data-anchor-id="final-comparison"><span class="header-section-number">10.8</span> Final Comparison</h2>
+<section id="final-comparison" class="level2" data-number="15.8">
+<h2 data-number="15.8" class="anchored" data-anchor-id="final-comparison"><span class="header-section-number">15.8</span> Final Comparison</h2>
 <p>Finally, let’s compare the RMSE and <span class="math inline">\(r\)</span>-squared for linear regression, regression trees, bagged trees, random forests (with hyperparameter tuning), and XGBoost (with hyperparameter tuning).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">bind_rows</span>(</span>
@@ -1290,7 +1320,7 @@ XGBoost Algorithm for Regression
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-bruce2003" class="csl-entry" role="listitem">
 Bruce, Anotnio, and Gregory Robinson. 2003. <span>“The Planning Database: Its Development and Use as an Effective Tool in Census 2000.”</span> <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b">https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b</a>.
 </div>
@@ -1709,13 +1739,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./19_predictive-modeling-review.html" class="pagination-link" aria-label="Predictive Modeling Review">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span>
+      <a href="./20_predictive-modeling-concepts.html" class="pagination-link" aria-label="Predictive Modeling Concepts">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./22_regularization.html" class="pagination-link" aria-label="Regularization">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Regularization</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./23_regularization.html" class="pagination-link" aria-label="Regularization">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Regularization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -656,6 +656,7 @@ library(censusapi)
 
 sahie <- getCensus(
   name = "timeseries/healthins/sahie",
+  key = Sys.getenv("CENSUS_KEY"),
   vars = c("GEOID", "PCTUI_PT"),
   region = "county:*",
   time = 2016
