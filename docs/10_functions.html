@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 3&nbsp; Advanced R Programming</title>
+<title>Data Science for Public Policy - 7&nbsp; Advanced R Programming</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -130,7 +130,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_functions.html">Programming</a></li><li class="breadcrumb-item"><a href="./10_functions.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_functions.html">Programming</a></li><li class="breadcrumb-item"><a href="./10_functions.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -172,8 +172,32 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./01_intro-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./03_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -190,7 +214,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
       </ul>
@@ -207,13 +231,13 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -230,25 +254,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -264,8 +288,14 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
       </ul>
@@ -282,7 +312,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -307,36 +337,36 @@ div.csl-indent {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-review3" id="toc-sec-review3" class="nav-link active" data-scroll-target="#sec-review3"><span class="header-section-number">3.1</span> Review</a>
+  <li><a href="#sec-review3" id="toc-sec-review3" class="nav-link active" data-scroll-target="#sec-review3"><span class="header-section-number">7.1</span> Review</a>
   <ul class="collapse">
-  <li><a href="#relational-data" id="toc-relational-data" class="nav-link" data-scroll-target="#relational-data"><span class="header-section-number">3.1.1</span> Relational Data</a></li>
+  <li><a href="#relational-data" id="toc-relational-data" class="nav-link" data-scroll-target="#relational-data"><span class="header-section-number">7.1.1</span> Relational Data</a></li>
   </ul></li>
-  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming"><span class="header-section-number">3.2</span> Programming</a>
+  <li><a href="#programming" id="toc-programming" class="nav-link" data-scroll-target="#programming"><span class="header-section-number">7.2</span> Programming</a>
   <ul class="collapse">
-  <li><a href="#selecting-data" id="toc-selecting-data" class="nav-link" data-scroll-target="#selecting-data"><span class="header-section-number">3.2.1</span> Selecting Data</a></li>
-  <li><a href="#control-flow" id="toc-control-flow" class="nav-link" data-scroll-target="#control-flow"><span class="header-section-number">3.2.2</span> Control Flow</a></li>
+  <li><a href="#selecting-data" id="toc-selecting-data" class="nav-link" data-scroll-target="#selecting-data"><span class="header-section-number">7.2.1</span> Selecting Data</a></li>
+  <li><a href="#control-flow" id="toc-control-flow" class="nav-link" data-scroll-target="#control-flow"><span class="header-section-number">7.2.2</span> Control Flow</a></li>
   </ul></li>
-  <li><a href="#custom-functions" id="toc-custom-functions" class="nav-link" data-scroll-target="#custom-functions"><span class="header-section-number">3.3</span> Custom Functions</a>
+  <li><a href="#custom-functions" id="toc-custom-functions" class="nav-link" data-scroll-target="#custom-functions"><span class="header-section-number">7.3</span> Custom Functions</a>
   <ul class="collapse">
-  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation"><span class="header-section-number">3.3.1</span> Motivation</a></li>
-  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">3.3.2</span> Examples</a></li>
-  <li><a href="#basics" id="toc-basics" class="nav-link" data-scroll-target="#basics"><span class="header-section-number">3.3.3</span> Basics</a></li>
-  <li><a href="#functions-with-multiple-outputs" id="toc-functions-with-multiple-outputs" class="nav-link" data-scroll-target="#functions-with-multiple-outputs"><span class="header-section-number">3.3.4</span> Functions with Multiple Outputs</a></li>
-  <li><a href="#referential-transparency" id="toc-referential-transparency" class="nav-link" data-scroll-target="#referential-transparency"><span class="header-section-number">3.3.5</span> Referential Transparency</a></li>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link" data-scroll-target="#motivation"><span class="header-section-number">7.3.1</span> Motivation</a></li>
+  <li><a href="#examples" id="toc-examples" class="nav-link" data-scroll-target="#examples"><span class="header-section-number">7.3.2</span> Examples</a></li>
+  <li><a href="#basics" id="toc-basics" class="nav-link" data-scroll-target="#basics"><span class="header-section-number">7.3.3</span> Basics</a></li>
+  <li><a href="#functions-with-multiple-outputs" id="toc-functions-with-multiple-outputs" class="nav-link" data-scroll-target="#functions-with-multiple-outputs"><span class="header-section-number">7.3.4</span> Functions with Multiple Outputs</a></li>
+  <li><a href="#referential-transparency" id="toc-referential-transparency" class="nav-link" data-scroll-target="#referential-transparency"><span class="header-section-number">7.3.5</span> Referential Transparency</a></li>
   </ul></li>
-  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">3.4</span> Debugging</a></li>
-  <li><a href="#benchmarking" id="toc-benchmarking" class="nav-link" data-scroll-target="#benchmarking"><span class="header-section-number">3.5</span> Benchmarking</a></li>
-  <li><a href="#sec-organizing-an-analysis" id="toc-sec-organizing-an-analysis" class="nav-link" data-scroll-target="#sec-organizing-an-analysis"><span class="header-section-number">3.6</span> Organizing an Analysis</a></li>
-  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">3.7</span> Packages</a>
+  <li><a href="#debugging" id="toc-debugging" class="nav-link" data-scroll-target="#debugging"><span class="header-section-number">7.4</span> Debugging</a></li>
+  <li><a href="#benchmarking" id="toc-benchmarking" class="nav-link" data-scroll-target="#benchmarking"><span class="header-section-number">7.5</span> Benchmarking</a></li>
+  <li><a href="#sec-organizing-an-analysis" id="toc-sec-organizing-an-analysis" class="nav-link" data-scroll-target="#sec-organizing-an-analysis"><span class="header-section-number">7.6</span> Organizing an Analysis</a></li>
+  <li><a href="#packages" id="toc-packages" class="nav-link" data-scroll-target="#packages"><span class="header-section-number">7.7</span> Packages</a>
   <ul class="collapse">
-  <li><a href="#use-this" id="toc-use-this" class="nav-link" data-scroll-target="#use-this"><span class="header-section-number">3.7.1</span> Use This</a></li>
-  <li><a href="#package-contents" id="toc-package-contents" class="nav-link" data-scroll-target="#package-contents"><span class="header-section-number">3.7.2</span> Package contents</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">3.7.3</span> Functions</a></li>
+  <li><a href="#use-this" id="toc-use-this" class="nav-link" data-scroll-target="#use-this"><span class="header-section-number">7.7.1</span> Use This</a></li>
+  <li><a href="#package-contents" id="toc-package-contents" class="nav-link" data-scroll-target="#package-contents"><span class="header-section-number">7.7.2</span> Package contents</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">7.7.3</span> Functions</a></li>
   </ul></li>
-  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="header-section-number">3.8</span> Unit testing</a></li>
-  <li><a href="#test-coverage" id="toc-test-coverage" class="nav-link" data-scroll-target="#test-coverage"><span class="header-section-number">3.9</span> Test coverage</a></li>
-  <li><a href="#building-the-package" id="toc-building-the-package" class="nav-link" data-scroll-target="#building-the-package"><span class="header-section-number">3.9.1</span> Building the package</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">3.10</span> References</a></li>
+  <li><a href="#unit-testing" id="toc-unit-testing" class="nav-link" data-scroll-target="#unit-testing"><span class="header-section-number">7.8</span> Unit testing</a></li>
+  <li><a href="#test-coverage" id="toc-test-coverage" class="nav-link" data-scroll-target="#test-coverage"><span class="header-section-number">7.9</span> Test coverage</a></li>
+  <li><a href="#building-the-package" id="toc-building-the-package" class="nav-link" data-scroll-target="#building-the-package"><span class="header-section-number">7.9.1</span> Building the package</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="header-section-number">7.10</span> References</a></li>
   </ul>
 </nav>
     </div>
@@ -345,7 +375,7 @@ div.csl-indent {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></h1>
+<h1 class="title"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></h1>
 </div>
 
 
@@ -366,10 +396,10 @@ div.csl-indent {
 
 </header>
 
-<section id="sec-review3" class="level2" data-number="3.1">
-<h2 data-number="3.1" class="anchored" data-anchor-id="sec-review3"><span class="header-section-number">3.1</span> Review</h2>
-<section id="relational-data" class="level3" data-number="3.1.1">
-<h3 data-number="3.1.1" class="anchored" data-anchor-id="relational-data"><span class="header-section-number">3.1.1</span> Relational Data</h3>
+<section id="sec-review3" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="sec-review3"><span class="header-section-number">7.1</span> Review</h2>
+<section id="relational-data" class="level3" data-number="7.1.1">
+<h3 data-number="7.1.1" class="anchored" data-anchor-id="relational-data"><span class="header-section-number">7.1.1</span> Relational Data</h3>
 <p>We’ve almost exclusively used data frames up to this point. We leveraged relations within our data to pick subsets of the data with functions like <code>filter()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -387,10 +417,10 @@ div.csl-indent {
 <p>Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from row number 5 and column number 4. This idea of using the relations in data reduces the chances of making mistakes and leads to clearer code.</p>
 </section>
 </section>
-<section id="programming" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="programming"><span class="header-section-number">3.2</span> Programming</h2>
-<section id="selecting-data" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="selecting-data"><span class="header-section-number">3.2.1</span> Selecting Data</h3>
+<section id="programming" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="programming"><span class="header-section-number">7.2</span> Programming</h2>
+<section id="selecting-data" class="level3" data-number="7.2.1">
+<h3 data-number="7.2.1" class="anchored" data-anchor-id="selecting-data"><span class="header-section-number">7.2.1</span> Selecting Data</h3>
 <p>There are other ways to subset data, which are important when working with objects other than data frames. We will focus on <code>[]</code>, <code>[[]]</code>, and <code>$</code>.</p>
 <section id="atomic-vectors" class="level4">
 <h4 class="anchored" data-anchor-id="atomic-vectors">Atomic Vectors</h4>
@@ -609,8 +639,8 @@ Caution
 </div>
 </section>
 </section>
-<section id="control-flow" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="control-flow"><span class="header-section-number">3.2.2</span> Control Flow</h3>
+<section id="control-flow" class="level3" data-number="7.2.2">
+<h3 data-number="7.2.2" class="anchored" data-anchor-id="control-flow"><span class="header-section-number">7.2.2</span> Control Flow</h3>
 <section id="for-loops" class="level4">
 <h4 class="anchored" data-anchor-id="for-loops">For Loops</h4>
 <p>Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We previously focused on the Map-Reduce framework and <code>library(purrr)</code> instead of for loops for iteration.</p>
@@ -848,16 +878,16 @@ Don’t grow vectors!
 </section>
 </section>
 </section>
-<section id="custom-functions" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="custom-functions"><span class="header-section-number">3.3</span> Custom Functions</h2>
-<section id="motivation" class="level3" data-number="3.3.1">
-<h3 data-number="3.3.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">3.3.1</span> Motivation</h3>
+<section id="custom-functions" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="custom-functions"><span class="header-section-number">7.3</span> Custom Functions</h2>
+<section id="motivation" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">7.3.1</span> Motivation</h3>
 <p>Custom functions are an essential building block for good analyses. Custom functions are useful for abiding by the DRY (don’t repeat yourself) principle. Under our conception of DRY, we should create a function any time we do something three times.</p>
 <p>Copying-and-pasting is typically bad because it is easy to make mistakes and we typically want a single source source of truth in a script. Custom functions also promote modular code design and testing.</p>
 <p>The bottom line: we want to write clear functions that do one and only one thing that are sufficiently tested so we are confident in their correctness.</p>
 </section>
-<section id="examples" class="level3" data-number="3.3.2">
-<h3 data-number="3.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">3.3.2</span> Examples</h3>
+<section id="examples" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">7.3.2</span> Examples</h3>
 <p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="references.html#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
 <p>Division by zero, which returns <code>NaN</code>, can be a real pain when comparing confidential and noisy results when the confidential value is <code>zero</code>. This function simply returns <code>0</code> when the denominator is <code>0</code>.</p>
 <div class="cell">
@@ -920,8 +950,8 @@ Don’t grow vectors!
 <span id="cb79-31"><a href="#cb79-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="basics" class="level3" data-number="3.3.3">
-<h3 data-number="3.3.3" class="anchored" data-anchor-id="basics"><span class="header-section-number">3.3.3</span> Basics</h3>
+<section id="basics" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="basics"><span class="header-section-number">7.3.3</span> Basics</h3>
 <p>R has a robust system for creating custom functions. To create a custom function, use <code>function()</code>:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a>say_hello <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
@@ -1000,8 +1030,8 @@ Don’t grow vectors!
 <li>Use <code>::</code> (e.g.&nbsp;<code>dplyr::filter()</code>) when writing custom functions. This will create stabler code and make it easier to develop R packages.</li>
 </ul>
 </section>
-<section id="functions-with-multiple-outputs" class="level3" data-number="3.3.4">
-<h3 data-number="3.3.4" class="anchored" data-anchor-id="functions-with-multiple-outputs"><span class="header-section-number">3.3.4</span> Functions with Multiple Outputs</h3>
+<section id="functions-with-multiple-outputs" class="level3" data-number="7.3.4">
+<h3 data-number="7.3.4" class="anchored" data-anchor-id="functions-with-multiple-outputs"><span class="header-section-number">7.3.4</span> Functions with Multiple Outputs</h3>
 <p>When <code>return()</code> is reached in a function, <code>return()</code> is evaluated and evaluation ends and R leaves the function.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>sow_return <span class="ot">&lt;-</span> <span class="cf">function</span>() {</span>
@@ -1046,8 +1076,8 @@ $median
 </div>
 </div>
 </section>
-<section id="referential-transparency" class="level3" data-number="3.3.5">
-<h3 data-number="3.3.5" class="anchored" data-anchor-id="referential-transparency"><span class="header-section-number">3.3.5</span> Referential Transparency</h3>
+<section id="referential-transparency" class="level3" data-number="7.3.5">
+<h3 data-number="7.3.5" class="anchored" data-anchor-id="referential-transparency"><span class="header-section-number">7.3.5</span> Referential Transparency</h3>
 <p>R functions, like mathematical functions, should always return the exact same output for a given set of inputs<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. This is called referential transparency. R will not enforce this idea, so you must write good code.</p>
 <section id="bad" class="level4">
 <h4 class="anchored" data-anchor-id="bad">Bad!</h4>
@@ -1094,10 +1124,10 @@ $median
 </section>
 </section>
 </section>
-<section id="debugging" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">3.4</span> Debugging</h2>
+<section id="debugging" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">7.4</span> Debugging</h2>
 <p>R code inside of custom functions can be tougher to troubleshoot than R code outside of custom functions. Fortunately, R has a powerful debugging tool.</p>
-<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis"><span>Section&nbsp;3.6</span></a>.</p>
+<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis"><span>Section&nbsp;7.6</span></a>.</p>
 <p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="fig-debuggera" class="quarto-layout-panel">
 <figure class="figure">
@@ -1119,7 +1149,7 @@ $median
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Setting up the debugger</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7.1: Setting up the debugger</figcaption><p></p>
 </figure>
 </div>
 <p>Now, when the function is called it will stop at the red dot (the stop point). Importantly, the environment should reflect the environment inside of the function instead of the global environment.</p>
@@ -1143,7 +1173,7 @@ $median
 </div>
 </div>
 </div>
-<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: Using the debugger</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Figure&nbsp;7.2: Using the debugger</figcaption><p></p>
 </figure>
 </div>
 <p>Finally, RStudio gives several controls for the debugger. There is a button to Continue to the end of the function. There is a button to Stop execution.</p>
@@ -1169,8 +1199,8 @@ $median
 </div>
 </div>
 </section>
-<section id="benchmarking" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="benchmarking"><span class="header-section-number">3.5</span> Benchmarking</h2>
+<section id="benchmarking" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="benchmarking"><span class="header-section-number">7.5</span> Benchmarking</h2>
 <p>Benchmarking is the process of estimating the run time of code. Oftentimes, benchmarking is used to compare multiple pieces of code to pick the more performant code. This raises a couple of issues:</p>
 <ol type="1">
 <li>Computing environments differ. My MacBook Pro with Apple M1 chips typically outperforms my work computer.</li>
@@ -1193,12 +1223,12 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
-                     expr      min       lq     mean   median       uq      max
-                median(x) 6.425725 6.918852 7.776702 6.970430 8.232554 43.55143
- quantile(x, probs = 0.5) 3.578644 3.908940 4.464162 3.957074 5.065734 12.11591
- neval
-   100
-   100</code></pre>
+                     expr      min       lq     mean   median       uq
+                median(x) 6.565207 6.980804 7.945544 7.132340 7.904739
+ quantile(x, probs = 0.5) 3.539776 3.967734 4.603046 4.086306 4.838451
+       max neval
+ 41.808192   100
+  7.196033   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1220,14 +1250,14 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 </div>
 </section>
-<section id="sec-organizing-an-analysis" class="level2" data-number="3.6">
-<h2 data-number="3.6" class="anchored" data-anchor-id="sec-organizing-an-analysis"><span class="header-section-number">3.6</span> Organizing an Analysis</h2>
+<section id="sec-organizing-an-analysis" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="sec-organizing-an-analysis"><span class="header-section-number">7.6</span> Organizing an Analysis</h2>
 <p>We recommend writing functions for data analysis. We need a plan for how to add custom functions to our workflow built on RStudio projects and Quarto.</p>
 <p>We typically recommending adding a directory called <code>R</code> or <code>src</code> in a project directory and then sourcing scripts in to Quarto documents. Keeping functions in separate scripts makes the functions easier to use in multiple documents and simplifies the debugging process outlined above.</p>
 <p>We typically only add one function to an R script in the <code>R/</code> directory and name the script after the function (without parentheses). Next, we source function scripts at the top of Quarto documents after loading packages with the <code>source()</code>. <a href="https://here.r-lib.org/"><code>library(here)</code></a> is essential if when sourcing from a Quarto document that is in a subdirectory of the project.</p>
 </section>
-<section id="packages" class="level2" data-number="3.7">
-<h2 data-number="3.7" class="anchored" data-anchor-id="packages"><span class="header-section-number">3.7</span> Packages</h2>
+<section id="packages" class="level2" data-number="7.7">
+<h2 data-number="7.7" class="anchored" data-anchor-id="packages"><span class="header-section-number">7.7</span> Packages</h2>
 <p>At some point, the same scripts or data are used often enough or widely enough to justify moving from sourced R scripts to a full-blown R package. R packages make it easier to</p>
 <ol type="1">
 <li>Make it easier to share and version code.</li>
@@ -1235,16 +1265,16 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <li>Make it easier to test code.</li>
 <li>Often lead to fun hex stickers.</li>
 </ol>
-<section id="use-this" class="level3" data-number="3.7.1">
-<h3 data-number="3.7.1" class="anchored" data-anchor-id="use-this"><span class="header-section-number">3.7.1</span> Use This</h3>
+<section id="use-this" class="level3" data-number="7.7.1">
+<h3 data-number="7.7.1" class="anchored" data-anchor-id="use-this"><span class="header-section-number">7.7.1</span> Use This</h3>
 <p><code>library(usethis)</code> includes an R package template. The following will add all necessary files for an R package to a directory called <code>testpackage/</code> and open an RStudio package.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">library</span>(usethis)</span>
 <span id="cb105-2"><a href="#cb105-2"></a><span class="fu">create_package</span>(<span class="st">"/Users/adam/testpackage"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="package-contents" class="level3" data-number="3.7.2">
-<h3 data-number="3.7.2" class="anchored" data-anchor-id="package-contents"><span class="header-section-number">3.7.2</span> Package contents</h3>
+<section id="package-contents" class="level3" data-number="7.7.2">
+<h3 data-number="7.7.2" class="anchored" data-anchor-id="package-contents"><span class="header-section-number">7.7.2</span> Package contents</h3>
 <p>The template includes a lot of different files and directories. We will focus on the minimum sufficient set of files for building a package.</p>
 <p><code>DESCRIPTION</code> contains the meta information about the package. Important lines include the package version and the license. Package versions are useful for tracking the version of the package used with an analysis. <code>library(usethis)</code> has a helper function for <a href="https://choosealicense.com/licenses/">picking a license</a>.</p>
 <pre><code>Package: testpackage
@@ -1260,8 +1290,8 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3</code></pre>
 </section>
-<section id="functions" class="level3" data-number="3.7.3">
-<h3 data-number="3.7.3" class="anchored" data-anchor-id="functions"><span class="header-section-number">3.7.3</span> Functions</h3>
+<section id="functions" class="level3" data-number="7.7.3">
+<h3 data-number="7.7.3" class="anchored" data-anchor-id="functions"><span class="header-section-number">7.7.3</span> Functions</h3>
 <p>Functions go in the R directory, just like when we sourced functions earlier. Be sure to reference packages directly with <code>::</code> (e.g.&nbsp;<code>stats::lm()</code>).</p>
 <section id="roxygen" class="level4">
 <h4 class="anchored" data-anchor-id="roxygen">Roxygen</h4>
@@ -1281,8 +1311,8 @@ RoxygenNote: 7.2.3</code></pre>
 </section>
 </section>
 </section>
-<section id="unit-testing" class="level2 panel-tip" data-number="3.8">
-<h2 data-number="3.8" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">3.8</span> Unit testing</h2>
+<section id="unit-testing" class="level2 panel-tip" data-number="7.8">
+<h2 data-number="7.8" class="anchored" data-anchor-id="unit-testing"><span class="header-section-number">7.8</span> Unit testing</h2>
 <p><strong>Unit testing</strong> is the systematic testing of functions to ensure correctness.</p>
 </section>
 <p>Unit testing is essential to developing high-quality code–especially for large scale projects. Fortunately, <code>library(testthat)</code> and <code>library(usethis)</code> make unit testing easy in R packages.</p>
@@ -1295,13 +1325,13 @@ RoxygenNote: 7.2.3</code></pre>
 <span id="cb108-3"><a href="#cb108-3"></a>  <span class="fu">expect_equal</span>(<span class="fu">good_function</span>(<span class="at">x =</span> <span class="dv">3</span>, <span class="at">y =</span> <span class="dv">3</span>), <span class="dv">9</span>)</span>
 <span id="cb108-4"><a href="#cb108-4"></a>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="test-coverage" class="level2 panel-tip" data-number="3.9">
-<h2 data-number="3.9" class="anchored" data-anchor-id="test-coverage"><span class="header-section-number">3.9</span> Test coverage</h2>
+<section id="test-coverage" class="level2 panel-tip" data-number="7.9">
+<h2 data-number="7.9" class="anchored" data-anchor-id="test-coverage"><span class="header-section-number">7.9</span> Test coverage</h2>
 <p><strong>Test coverage</strong> is the scope and quality of tests performed on a code base.</p>
 </section>
 <p>The goal to develop tests with good test coverage that will loudly fail when bugs are introduced into code.</p>
-<section id="building-the-package" class="level3" data-number="3.9.1">
-<h3 data-number="3.9.1" class="anchored" data-anchor-id="building-the-package"><span class="header-section-number">3.9.1</span> Building the package</h3>
+<section id="building-the-package" class="level3" data-number="7.9.1">
+<h3 data-number="7.9.1" class="anchored" data-anchor-id="building-the-package"><span class="header-section-number">7.9.1</span> Building the package</h3>
 <p>The package needs to be documented and rebuilt each time the contents of the package are edited. The package should also be tested and checked on a regular basis.</p>
 <ol type="1">
 <li>Run <code>devtools::document()</code> to document all of the functions in the package.</li>
@@ -1311,8 +1341,8 @@ RoxygenNote: 7.2.3</code></pre>
 </ol>
 <p>This section barely scratches the surface of package development. Read <a href="https://r-pkgs.org/">R Packages (2e)</a> to learn more.</p>
 </section>
-<section id="references" class="level2" data-number="3.10">
-<h2 data-number="3.10" class="anchored" data-anchor-id="references"><span class="header-section-number">3.10</span> References</h2>
+<section id="references" class="level2" data-number="7.10">
+<h2 data-number="7.10" class="anchored" data-anchor-id="references"><span class="header-section-number">7.10</span> References</h2>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
@@ -1567,12 +1597,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./07_advanced-quarto.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./13_web-scraping.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Web Scraping</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

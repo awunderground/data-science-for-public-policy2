@@ -1,0 +1,748 @@
+---
+title: "Data Visualization with ggplot2"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+    embed-resources: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(knitr)
+
+exercise_number <- 1
+```
+
+## Motivation
+
+1. Data visualization is exploratory data analysis (EDA)
+2. Data visualization is diagnosis and validation
+3. Data visualization is communication
+
+## Motivation (going beyond Excel)
+
+* Flexibility
+* Reproducibility
+* Scalability
+* Relational data vs. positional data
+
+## Background
+
+* The toughest part of data visualization is data munging. 
+* Data frames are the only appropriate input for `library(ggplot2)`. 
+
+ggplot2 is an R package for data visualization that was developed during Hadley Wickham's graduate studies at Iowa State University. ggplot2 is formalized in *A Layered Grammar of Graphics* by Hadley Wickham @layered-grammar.
+
+The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson's grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.  
+
+There are **eight** main ingredients to the grammar of graphics. We will work our way through the ingredients with many hands-on examples. 
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Open your `.Rproj`.
+2. Create a new `.R` script in your directory called `03_data-visualization.R`. 
+3.  **Type** (don't copy & paste) the following code below `library(tidyverse)` in `03_data-visualization.R`.
+
+```
+ggplot(data = storms) + 
+  geom_point(mapping = aes(x = pressure, y = wind))
+```
+4. Add a comment above the ggplot2 code that describes the plot we created. 
+:::
+
+## Eight Ingredients in the Grammar of Graphics:
+
+### Data 
+
+:::{.callout-note}
+**Data** are the values represented in the visualization.
+:::
+
+
+`ggplot(data = )` or `data %>% ggplot()`
+
+
+```{r}
+#| label: 1-data
+
+storms %>%
+  select(name, year, category, lat, long, wind, pressure) %>%
+  sample_n(10) %>%
+  kable()
+
+```
+
+
+### Aesthetic Mappings:
+
+:::{.callout-note}
+**Aesthetic mappings** are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size. 
+:::
+
+
+`aes(x = , y = , color = )`
+
+**X or Y**
+
+```{r}
+#| fig-height: 2
+#| echo: false
+#| warning: false
+
+recent_storms <- filter(storms, year > 2005) %>%
+  sample_n(50)
+
+recent_storms %>%
+  ggplot(aes(x = pressure, 
+             y = 1)
+         ) +
+  geom_point() +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+**Continuous Color or Fill**
+
+```{r}
+#| fig-height: 2
+#| echo: false
+
+recent_storms %>%
+  ggplot(aes(x = pressure, 
+             y = 1, 
+             color = wind)
+         ) +
+  geom_point(alpha = 0.5) +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+**Discrete Color or Fill**
+
+```{r}
+#| fig-height: 2
+#| echo: false
+
+recent_storms %>%
+  ggplot(aes(pressure, 1, color = status)) +
+  geom_point(alpha = 0.5) +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+**Size**
+
+```{r}
+#| fig-height: 2
+#| echo: false
+
+recent_storms %>%
+  ggplot(aes(x = pressure, 
+             y = 1, 
+             size = wind)
+  ) + 
+  ggplot2::geom_point(alpha = 0.5) +
+  scale_y_continuous(breaks = 0) +
+	scale_radius(range = c(1, 10)) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+**Shape**
+
+```{r}
+#| echo: false
+#| warning: false
+
+recent_storms %>%
+  ggplot(aes(x = pressure, 
+             y = 1, 
+             shape = status)
+         ) +
+  geom_point(alpha = 0.5) +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+Others: transparency, line type
+
+### Geometric Objects:
+
+:::{.callout-note}
+**Geometric objects** are representations of the data, including points, lines, and polygons.
+:::
+
+
+`geom_bar()` or `geom_col()`
+
+
+*Plots are often called their geometric object(s).*
+
+```{r}
+#| echo: false
+#| warning: false
+
+recent_storms %>%
+  ggplot(aes(x = category)) +
+  geom_bar()
+
+```
+
+`geom_line()`
+
+```{r}
+#| echo: false
+
+storms %>%
+  count(name, year) %>%
+  count(year) %>%
+  ggplot(aes(x = year, 
+             y = n)) +
+  geom_line() +
+  scale_x_continuous(limits = c(1970, 2020),
+                     breaks = c(1970, 1990, 2010)) +
+  scale_y_continuous(limits = c(0, NA))
+
+```
+
+`geom_point()`
+
+```{r}
+#| echo: false
+
+recent_storms <- filter(storms, year > 2005)
+
+recent_storms50 <- filter(storms, year > 2005) %>%
+  sample_n(50)
+
+recent_storms %>%
+  ggplot(aes(pressure, wind)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 160))
+
+```
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Duplicate the code from Exercise 1. Add comments below the data visualization code that describes the argument or function that corresponds to each of the first three components of the grammar of graphics.
+
+2.  Inside `aes()`, add `color = category`. Run the code.
+
+3. Replace `color = category` with `color = "green"`. Run the code. What changed? Is this unexpected?
+
+4. Remove `color = "green"` from `aes()` and add it inside inside of `geom_point()` but outside of `aes()`. Run the code.
+
+5. This is a little cluttered. Add `alpha = 0.2` inside `geom_point()` but outside of `aes()`.
+:::
+
+
+Aesthetic mappings like x and y almost always vary with the data. Aesthetic mappings like color, fill, shape, transparency, and size *can* vary with the data. But those arguments can also be added as styles that don't vary with the data. If you include those arguments in `aes()`, they will show up in the legend (which can be annoying! and is also a sign that something should be changed!).
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Create a new scatter plot using the `msleep` data set. Use `bodywt` on the x-axis and `sleep_total` on the y-axis. 
+2. The y-axis doesn't contain zero. Below `geom_point()`, add `scale_y_continuous(limits = c(0, NA))`. Hint: add `+` after `geom_point()`.
+3. The x-axis is clustered near zero. Add `scale_x_log10()` above `scale_y_continuous(limits = c(0, NA))`.
+:::
+
+### Scales:
+
+:::{.callout-note}
+**Scales** turn data values, which are continuous, discrete, or categorical into aesthetic values. `scale_*_*()` functions control the specific behaviors of aesthetic mappings. This includes not only the x-axis and y-axis, but the ranges of sizes, types of shapes, and specific colors of aesthetics.
+:::
+
+#### Before
+
+`scale_x_continuous()`
+
+```{r}
+#| fig-height: 1
+#| echo: false
+
+recent_storms50 %>%
+  ggplot(aes(x = pressure, 
+             y = 1)
+         ) +
+  geom_point(alpha = 0.2) +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+#### After
+
+`scale_x_reverse()`
+
+```{r}
+#| fig-height: 1
+#| echo: false
+
+recent_storms50 %>%
+  ggplot(aes(x = pressure, 
+             y = 1)
+         ) +
+  geom_point(alpha = 0.2) +
+  scale_x_reverse() +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank())
+
+```
+
+#### Before
+
+`scale_size_continuous(breaks = c(25, 75, 125))`
+
+```{r}
+#| fig-height: 1.5
+#| echo: false
+
+recent_storms50 %>%
+  ggplot(aes(x = pressure, 
+             y= 1, 
+             size = wind)
+         ) +
+  ggplot2::geom_point(alpha = 0.5) +
+  scale_size_continuous(breaks = c(25, 75, 125)) +  
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank(),
+        legend.direction = "horizontal")
+
+```
+
+#### After
+
+`scale_size_continuous(range = c(0.5, 20), breaks = c(25, 75, 125))`
+
+```{r}
+#| fig-height: 1.5
+#| echo: false
+
+recent_storms50 %>%
+  ggplot(aes(pressure, 1, size = wind)) +
+  ggplot2::geom_point(alpha = 0.5) +
+  scale_size_continuous(range = c(0.5, 15),
+                        breaks = c(25, 75, 125)) +
+  scale_y_continuous(breaks = 0) +
+  labs(y = NULL) +
+  theme_bw() +
+  theme(panel.border = ggplot2::element_blank(),
+        legend.direction = "horizontal")
+
+```
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Type the following code in your script. 
+
+```
+data <- tibble(x = 1:10, y = 1:10)
+ggplot(data = data) +
+  geom_blank(mapping = aes(x = x, y = y))
+```
+
+2. Add `coord_polar()` to your plot.
+
+3. Add `labs(title = "Polar coordinate system")` to your plot.
+
+:::
+
+### Coordinate Systems:
+
+:::{.callout-note}
+**Coordinate systems** map scaled geometric objects to the position of objects on the plane of a plot. The two most popular coordinate systems are the Cartesian coordinate system and the polar coordinate system.
+:::
+
+
+```{r}
+#| echo: false
+
+ggplot(storms, aes(pressure, wind)) +
+  geom_point(alpha = 0)
+
+```
+
+`coord_polar()`
+
+```{r}
+#| echo: false
+
+tibble(x = 1:100, 
+       y = 1:100) %>%
+  ggplot(aes(x, y)) +
+  geom_point(alpha = 0) +
+  coord_polar()
+
+```
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Create a scatter plot of the `storms` data set with `pressure` on the x-axis and `wind` on the y-axis. 
+
+2. Add `facet_wrap(~ category)`
+
+:::
+
+### Facets:
+
+:::{.callout-note}
+**Facets (optional)** break data into meaningful subsets. `facet_wrap()`, `facet_grid()`, and `facet_geo()`.
+:::
+
+`facet_wrap` and `facet_grid` are similar but have distinct functions. As the diagram below illustrates, `facet_wrap` organizes a 1 dimensional set of charts, but wraps the charts in two dimensions to preserve space. `facet_grid` organizes a set of charts in two dimensions. `facet_geo` organizes charts in a way that attempts to preserve some geographic component of the data. 
+
+![Source: [ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/facet)](images/position-facets.png)
+
+
+
+#### Facet wrap
+
+`facet_wrap(~ category)`
+
+```{r}
+#| echo: false
+#| warning: false
+ library(urbnmapr)
+
+recent_storms %>%
+  ggplot(aes(long, lat, group = name)) +
+  geom_polygon(data = states, aes(long, lat, group = group),
+               fill = "grey", color = "#ffffff", linewidth = 0.05) +
+  geom_path(alpha = 0.3, size = 0.5, color = "#1696d2") +
+  facet_wrap(~category) +
+  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
+  urbnthemes::theme_urbn_map()
+
+```
+
+#### Facet grid
+
+`facet_grid(month ~ year)`
+
+```{r}
+#| echo: false
+
+storms %>%
+  filter(year %in% c(1986, 2005, 2020)) %>%
+  filter(month %in% c(6, 7, 8)) %>%
+  ggplot(aes(pressure, wind, color = status)) +
+  geom_point(alpha = 0.2) +
+  facet_grid(month ~ year)
+
+```
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Add the following code to your script. Submit it!
+
+```
+ggplot(storms) +
+  geom_bar(mapping = aes(x = category))
+```
+
+:::
+
+### Statistical Transformations:
+
+:::{.callout-note}
+**Statistical transformations (optional)** transform the data, typically through summary statistics and functions, before aesthetic mapping.
+
+Before transformations, each observation in data is represented by one geometric object (i.e. a scatter plot). After a transformation, a geometric object can represent more than one observation (i.e. a bar in a histogram). 
+:::
+
+
+**Note:** `geom_bar()` performs statistical transformation. Use `geom_col()` to create a column chart with bars that encode individual observations in the data set. 
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Duplicate Exercise 6.
+
+2. Add `theme_minimal()` to the plot.
+:::
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Duplicate Exercise 6.
+2. Run `install.packages("remotes")` and `remotes::install_github("UrbanInstitute/urbnthemes")` in the console. 
+3. In the lines preceding the chart add and run the following code:
+
+```
+library(urbnthemes)
+set_urbn_defaults(style = "print")
+```
+
+4. Run the code to make the chart. 
+
+5. Add `scale_y_continuous(expand = expansion(mult = c(0, 0.1)))` and rerun the code. 
+:::
+
+### Themes: 
+
+:::{.callout-note}
+**Themes** control the visual style of plots with font types, font sizes, background colors, margins, and positioning.
+:::
+
+
+
+#### Default theme
+
+```{r}
+#| echo: false
+
+recent_storms50 %>%
+  ggplot(aes(x = pressure, 
+             y = wind)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 160)) +
+  labs(title = "Low pressure storms have higher wind speeds")
+```
+
+#### fivethirtyeight theme
+
+```{r}
+#| echo: false
+
+library(ggthemes)
+
+recent_storms50 %>%
+  ggplot(aes(pressure, wind)) +
+  geom_point() +
+  scale_y_continuous(limits = c(0, 160)) +  
+  labs(title = "Low pressure storms have higher wind speeds") +
+  theme_fivethirtyeight(base_size = 12, base_family = "sans")
+
+```
+
+#### urbnthemes
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(urbnthemes)
+
+set_urbn_defaults(style = "print")
+
+recent_storms50 %>%
+  ggplot(aes(pressure, wind)) +
+  geom_point(color = "#1696d2") +
+	scale_x_continuous(limits = c(920, 1020), expand = c(0, 0), breaks = c(920, 940, 960, 980, 1000, 1020)) +
+  scale_y_continuous(limits = c(0, 160), expand = c(0, 0)) +  
+  labs(title = "Low pressure storms have higher wind speeds") +
+	scatter_grid()
+
+```
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Add the following exercise to you script. Run it!
+
+```
+storms %>%  
+  filter(category > 0) %>%
+  distinct(name, year) %>%
+  count(year) %>%
+  ggplot() + 
+  geom_line(mapping = aes(x = year, y = n))
+```
+
+2. Add `geom_point()` after `geom_line()` with the same aesthetic mappings.
+:::
+
+### Layers (bonus!): 
+
+:::{.callout-note}
+**Layers** allow for multiple geometric objects to be plotted in the same data visualization.
+:::
+
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Add the following exercise to you script. Run it!
+
+```
+ggplot(data = storms, mapping = aes(x = pressure, y = wind)) + 
+  geom_point() +
+  geom_smooth()
+```
+:::
+
+### Inheritances (bonus!):
+
+:::{.callout-note}
+**Inheritances** pass aesthetic mappings from `ggplot()` to later `geom_*()` functions.
+:::
+
+
+Notice how the aesthetic mappings are passed to `ggplot()` in example 10. This is useful when using layers!
+
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1. Pick your favorite plot from exercises 1 through 10 and duplicate the code.
+
+2. Add `ggsave(filename = "favorite-plot.png")` on a new line without `+` and then save the file. Look at the saved file. 
+
+3. Add `width = 6` and `height = 4` to `ggsave()`. Run the code and then look at the saved file. 
+:::
+
+## Summary
+
+### Functions
+This is a summary of the functions we discussed in this chapter. While by no means comprehensive, these are an excellent starting point to visualizing data using ggplot2. 
+
+* `ggplot()`
+* `aes()`
+* `geom_*()`
+    * `geom_point()`
+    * `geom_line()`
+    * `geom_col()`    
+* `scale_*()`
+    * `scale_y_continuous()`
+* `coord_*()`
+* `facet_*()`
+* `labs()`
+
+### Theory
+
+1. *Data* 
+2. *Aesthetic mappings* 
+3. *Geometric objects* 
+4. *Scales*
+5. *Coordinate systems* 
+6. *Facets* 
+7. *Statistical transformations* 
+8. *Theme*
+
+## Resources
+
+* [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/graphics-guide.html)
+* [Why the Urban Institute visualizes data with ggplot2](https://medium.com/@urban_institute/why-the-urban-institute-visualizes-data-with-ggplot2-46d8cfc7ee67)
+* [R for Data Science: data visualization](http://r4ds.had.co.nz/data-visualisation.html)
+* [ggplot2: ELegant Graphics for Data Analysis (3e)](https://ggplot2-book.org)
+* [awunderground themes](https://awunderground.github.io/ggplot2-themes/)
+* [R Graph Gallery](https://www.r-graph-gallery.com/)

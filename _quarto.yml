@@ -10,15 +10,15 @@ book:
     - index.qmd
     - part: Basics
       chapters:
-        # - PART 1: intro_to_r
-        # - PART 1: intro_to_tidyverse
+        - 01_intro-r.qmd
+        - 02_tidyverse.qmd
         - 03_advanced-data-cleaning.qmd
-        # PART 1: data visualization with ggplot2
-        # PART 1: exploratory data analysis
-
+        - 04_data-viz.qmd
+        - 05_exploratory-data-analysis.qmd 
+      
     - part: Reproducible Research
       chapters: 
-        # - PART 1:reproducible research with Quarto
+        # - 06_reproducible-research-with-quarto.qmd
         - 07_advanced-quarto.qmd
         # - PART 1: reproducible research with git 1
         # - PART 1: advanced git
@@ -37,16 +37,17 @@ book:
         # - PART 1:data imputation
     - part: Supervised Machine Learning
       chapters:
-        - 19_predictive-modeling-review.qmd # + PART 1: predictive modeling review
+        - 19_predictive-modeling-motivation.qmd 
+        - 20_predictive-modeling-concepts.qmd
         # - PART 1: supervised classification
-        - 21_ensembling.qmd
-        - 22_regularization.qmd
+        - 22_ensembling.qmd
+        - 23_regularization.qmd
     - part: Unsupervised Machine Learning
       chapters:
         # - interpretable-models.qmd
         # - PART 1: dimension reduction
         # - PART 1: cluster analysis
-        - 26_advanced-unsupervised-ml.qmd 
+        - 27_advanced-unsupervised-ml.qmd 
         # - PART 1: text analysis
         # - PART 1: text modeling
     - part: Other Topics
