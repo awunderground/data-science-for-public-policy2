@@ -8,6 +8,7 @@ format:
     code-line-numbers: true
 execute: 
   messages: false
+  cache: true    
 editor_options: 
   chunk_output_type: console
 fig-cap-location: top
