@@ -509,7 +509,7 @@ tibble(x = rlnorm(n = 100, meanlog = 0, sdlog = 1)) |>
 tibble(x = rlnorm(n = 10000, meanlog = 0, sdlog = 1)) |>
   ggplot(aes(x)) +
   geom_histogram(aes(y = after_stat(density))) +
-  stat_function(fun = dlnorm, color = "red", args = list(mean = 0, sd = 1)) +
+  stat_function(fun = dlnorm, color = "red", args = list(meanlog = 0, sdlog = 1)) +
   geom_density(color = "blue")
 
 ```
