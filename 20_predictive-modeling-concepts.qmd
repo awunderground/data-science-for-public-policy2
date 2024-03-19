@@ -5,6 +5,8 @@ format:
   html:
     toc: true
     code-line-numbers: true
+execute:
+  cache: true
 bibliography: references.bib
 editor_options: 
   chunk_output_type: console
@@ -39,7 +41,7 @@ Predictive modeling is split into two approaches: regression and classification.
 
 Predictive modeling with a numeric outcome.
 
-**Note:** Regression and linear regression are different ideas. We will use many algorithms for regression applications that are not linear regression.
+**Note:** Regression and ordinary least squares linear regression (which we often informally refer to simply as "linear regression") are different ideas. We will use many algorithms for regression applications that are not linear regression.
 :::
 
 ::: callout-tip

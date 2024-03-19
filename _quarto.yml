@@ -37,17 +37,17 @@ book:
         # - PART 1:data imputation
     - part: Supervised Machine Learning
       chapters:
-        - 19_predictive-modeling-motivation.qmd # + PART 1: predictive modeling review
+        - 19_predictive-modeling-motivation.qmd 
         - 20_predictive-modeling-concepts.qmd
         # - PART 1: supervised classification
-        # - 21_ensembling.qmd - NEED pdb_small.csv
-        # - 22_regularization.qmd - NEED pdb_small.csv
+        - 22_ensembling.qmd
+        - 23_regularization.qmd
     - part: Unsupervised Machine Learning
       chapters:
         # - interpretable-models.qmd
         # - PART 1: dimension reduction
         # - PART 1: cluster analysis
-        - 26_advanced-unsupervised-ml.qmd 
+        - 27_advanced-unsupervised-ml.qmd 
         # - PART 1: text analysis
         # - PART 1: text modeling
     - part: Other Topics
