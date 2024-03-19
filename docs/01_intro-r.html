@@ -469,7 +469,7 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>The ambiguity [of the S language] is real and goes to a key objective: we wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important.</p>
 </blockquote>
-<p>Source: <span class="citation" data-cites="evolution-s">(<a href="references.html#ref-evolution-s" role="doc-biblioref"><strong>evolution-s?</strong></a>)</span></p>
+<p>Source: <span class="citation" data-cites="evolution-s">Peng (<a href="references.html#ref-evolution-s" role="doc-biblioref">2018</a>)</span></p>
 </section>
 <section id="rstudio" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.3</span> RStudio</h2>
@@ -554,7 +554,7 @@ div.csl-indent {
 </section>
 <section id="style" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="style"><span class="header-section-number">1.7</span> Style</h2>
-<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <span class="citation" data-cites="style">(<a href="references.html#ref-style" role="doc-biblioref"><strong>style?</strong></a>)</span></p>
+<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <span class="citation" data-cites="style">Wickham (<a href="references.html#ref-style" role="doc-biblioref">n.d.</a>)</span></p>
 <p><em>Human interpretability</em> is one of the six principles because clear code can save time and reduce the chance of making errors. After time, eyes can be trained to quickly spot incorrect code if a consistent R style is adopted.</p>
 <p>First, note that R is case-sensitive. Capitalization is rare and deviations from the capitalization will throw errors. For example, <code>mean()</code> is a function but <code>Mean()</code> is not a function.</p>
 <p>The <a href="https://style.tidyverse.org/">tidyverse style guide</a> is a comprehensive style guide that, in general, reflects the style of the plurality of R programmers. For now, just focus on consistency.</p>
@@ -624,7 +624,7 @@ div.csl-indent {
 </div>
 <p><em>Lists</em> are one- or multi-dimensional arrays that are made up of other lists. Lists are <em>heterogeneous</em> - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector.</p>
 <p><code>NULL</code> is the null object in R. It means a value does not exist.</p>
-<p><code>NA</code> is a missing value of length 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations <span class="citation" data-cites="wickham_r_2017">(<a href="references.html#ref-wickham_r_2017" role="doc-biblioref"><strong>wickham_r_2017?</strong></a>)</span>.</p>
+<p><code>NA</code> is a missing value of length 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations <span class="citation" data-cites="Wickham2017R">(<a href="references.html#ref-Wickham2017R" role="doc-biblioref">Wickham and Grolemund 2017, sec. 20.2</a>)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -706,7 +706,7 @@ div.csl-indent {
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
-<p><strong>Style note:</strong> Objects should be given names that are “concise and meaningful” <span class="citation" data-cites="style">(<a href="references.html#ref-style" role="doc-biblioref"><strong>style?</strong></a>)</span>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
+<p><strong>Style note:</strong> Objects should be given names that are “concise and meaningful” <span class="citation" data-cites="style">(<a href="references.html#ref-style" role="doc-biblioref">Wickham, n.d., sec. 2</a>)</span>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -751,7 +751,7 @@ div.csl-indent {
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p><em>Modern R with the tidyverse</em> <span class="citation" data-cites="rodrigues">(<a href="references.html#ref-rodrigues" role="doc-biblioref"><strong>rodrigues?</strong></a>)</span> has a functional programming chapter that contains more information about functional programming in R.</p>
+<p><em>Modern R with the tidyverse</em> <span class="citation" data-cites="rodrigues">(<a href="references.html#ref-rodrigues" role="doc-biblioref">Rodrigues 2022</a>)</span> has a functional programming chapter that contains more information about functional programming in R.</p>
 <section id="section" class="level3" data-number="1.10.1">
 <h3 data-number="1.10.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.10.1</span> ?</h3>
 <p>Documentation for functions can be easily accessed by prefacing the function name with <code>?</code> and dropping the <code>()</code>.</p>
@@ -1018,8 +1018,23 @@ Warning
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-eubank" class="csl-entry" role="listitem">
+Eubank, Nick. 2016. <span>“Embrace Your Fallibility: Thoughts on Code Integrity.”</span> <a href="https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf">https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf</a>.
+</div>
+<div id="ref-evolution-s" class="csl-entry" role="listitem">
+Peng, Roger. 2018. <span>“Teaching r to New Users - from Tapply to the Tidyverse.”</span> <a href="https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/">https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/</a>.
+</div>
+<div id="ref-rodrigues" class="csl-entry" role="listitem">
+Rodrigues, Bruno. 2022. <em>Modern R with the tidyverse</em>. <a href="https://modern-rstats.eu">https://modern-rstats.eu</a>.
+</div>
+<div id="ref-style" class="csl-entry" role="listitem">
+Wickham, Hadley. n.d. <em>The tidyverse style guide</em>. <a href="https://style.tidyverse.org/index.html">https://style.tidyverse.org/index.html</a>.
+</div>
 <div id="ref-wickham_r_2023" class="csl-entry" role="listitem">
 Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualie, and Model Data</em>. 2nd edition. Sebastopol, CA: O’Reilly.
+</div>
+<div id="ref-Wickham2017R" class="csl-entry" role="listitem">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. Paperback; O’Reilly Media. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
 </div>
 </div>
 </section>
@@ -1027,7 +1042,7 @@ Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for 
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><span class="citation" data-cites="eubank">(<a href="references.html#ref-eubank" role="doc-biblioref"><strong>eubank?</strong></a>)</span> influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><span class="citation" data-cites="eubank">(<a href="references.html#ref-eubank" role="doc-biblioref">Eubank 2016</a>)</span> influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Though we do not focus on the Python programming language in this course, Posit <a href="https://posit.co/solutions/python/">appears to be expanding its focus to Python</a> in addition to R. This is an important development to track in the data science landscape. One key update is that, in 2023, Posit <a href="https://posit.co/blog/welcome-wes/">hired Wes McKinney</a>. McKinney developed the Python pandas package which offers similar functionality to the tidyverse, a collection of R packages which we will discuss next week.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>

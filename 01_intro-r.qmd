@@ -239,7 +239,7 @@ class(c(TRUE, 1, "District of Columbia"))
 
 `NULL` is the null object in R. It means a value does not exist.
 
-`NA` is a missing value of length 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations [@wickham_r_2017, Section 20.2].
+`NA` is a missing value of length 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations [@Wickham2017R, Section 20.2].
 
 
 
