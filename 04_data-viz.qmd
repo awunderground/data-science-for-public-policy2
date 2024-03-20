@@ -4,7 +4,6 @@ format:
   html:
     toc: true
     code-line-numbers: true
-    embed-resources: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -69,7 +68,7 @@ ggplot(data = storms) +
 
 ### Data 
 
-:::{.callout-note}
+:::{.callout-tip}
 **Data** are the values represented in the visualization.
 :::
 
@@ -90,7 +89,7 @@ storms %>%
 
 ### Aesthetic Mappings:
 
-:::{.callout-note}
+:::{.callout-tip}
 **Aesthetic mappings** are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size. 
 :::
 
@@ -197,7 +196,7 @@ Others: transparency, line type
 
 ### Geometric Objects:
 
-:::{.callout-note}
+:::{.callout-tip}
 **Geometric objects** are representations of the data, including points, lines, and polygons.
 :::
 
@@ -294,7 +293,7 @@ exercise_number <- exercise_number + 1
 
 ### Scales:
 
-:::{.callout-note}
+:::{.callout-tip}
 **Scales** turn data values, which are continuous, discrete, or categorical into aesthetic values. `scale_*_*()` functions control the specific behaviors of aesthetic mappings. This includes not only the x-axis and y-axis, but the ranges of sizes, types of shapes, and specific colors of aesthetics.
 :::
 
@@ -410,7 +409,7 @@ ggplot(data = data) +
 
 ### Coordinate Systems:
 
-:::{.callout-note}
+:::{.callout-tip}
 **Coordinate systems** map scaled geometric objects to the position of objects on the plane of a plot. The two most popular coordinate systems are the Cartesian coordinate system and the polar coordinate system.
 :::
 
@@ -455,14 +454,15 @@ exercise_number <- exercise_number + 1
 
 ### Facets:
 
-:::{.callout-note}
-**Facets (optional)** break data into meaningful subsets. `facet_wrap()`, `facet_grid()`, and `facet_geo()`.
+:::{.callout-tip}
+**Facets (optional)** break data into meaningful subsets. 
 :::
 
-`facet_wrap` and `facet_grid` are similar but have distinct functions. As the diagram below illustrates, `facet_wrap` organizes a 1 dimensional set of charts, but wraps the charts in two dimensions to preserve space. `facet_grid` organizes a set of charts in two dimensions. `facet_geo` organizes charts in a way that attempts to preserve some geographic component of the data. 
+`facet_wrap` and `facet_grid` are similar but have distinct functions. As the diagram below illustrates, `facet_wrap` organizes a 1 dimensional set of charts, but wraps the charts in two dimensions to preserve space. `facet_grid` organizes a set of charts in two dimensions. [^facet-geo] 
 
-![Source: [ggplot2: Elegant Graphics for Data Analysis (3e)](https://ggplot2-book.org/facet)](images/position-facets.png)
+[^facet-geo]: `facet_geo` organizes charts in a way that attempts to preserve some geographic component of the data. It is beyond the scope of this course. You can learn more  at the [geofacet package vignette](https://cran.r-project.org/web/packages/geofacet/vignettes/geofacet.html) website. 
 
+You can see a helpful chart illustrating these differences [here](https://ggplot2-book.org/facet). 
 
 
 #### Facet wrap
@@ -523,7 +523,7 @@ ggplot(storms) +
 
 ### Statistical Transformations:
 
-:::{.callout-note}
+:::{.callout-tip}
 **Statistical transformations (optional)** transform the data, typically through summary statistics and functions, before aesthetic mapping.
 
 Before transformations, each observation in data is represented by one geometric object (i.e. a scatter plot). After a transformation, a geometric object can represent more than one observation (i.e. a bar in a histogram). 

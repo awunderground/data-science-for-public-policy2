@@ -5,7 +5,6 @@ format:
   html:
     toc: true
     code-line-numbers: true
-    embed-resources: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -30,7 +29,7 @@ exercise_number <- 1
 
 ## Review {#sec-review2}
 
-R for Data Science (2e) [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". DSPP1 introduced important techniques for importing data like `read_csv()` and querying web APIs, for tidying data like `pivot_longer()`, and for transforming data like `mutate()`.
+*R for Data Science (2e)* [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Recall from the previous lecture techniques for importing data like `read_csv()`, for tidying data like `pivot_longer()`, and for transforming data like `mutate()`.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -44,6 +43,32 @@ exercise_number <- exercise_number + 1
 1. Use `mutate()` and `case_when()` to add a new variable called `speed_cat` to `cars` where the values are `"slow"` when `speed < 10`, `"moderate"` when `speed < 20`, and `"fast"` otherwise.
 
 :::
+
+In the last lecture, we introduced mutating joins and filtering joins. 
+
+::: {.callout-tip}
+## Mutating Joins
+
+Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame. 
+:::
+
+::: {.callout-tip}
+## Filtering Joins
+
+Filtering joins drop observations based on the presence of their key (identifier) in another data frame. 
+
+For example, we may have a list of students in detention and a list of all students. We can use a filtering join to create a list of student not in detention. 
+
+:::
+
+Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions: 
+
+* `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
+* `inner_join(x, y)` appends variables from `y` onto `x` but only keeps observations for which there is a match between the `x` and `y`data frames.
+* `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
+* `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
+
+To learn more, read the [joins chapter](https://r4ds.hadley.nz/joins.html) of R for Data Science (2e). 
 
 ## Import {#sec-import}
 
@@ -452,29 +477,7 @@ bind_rows(
 
 Relational joins are fundamental to working with tidy data. Tidy data can only contain one unit of observation (e.g. county or state not county and state). When data exist on multiple levels, they must be stored in separate tables that can later be combined. 
 
-::: {.callout-tip}
-## Mutating Joins
 
-Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame. 
-
-:::
-
-::: {.callout-tip}
-## Filtering Joins
-
-Filtering joins drop observations based on the presence of their key (identifier) in another data frame. 
-
-For example, we may have a list of students in detention and a list of all students. We can use a filtering join to create a list of student not in detention. 
-
-:::
-
-For now, we will focus on mutating joins. Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. 
-
-* `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
-* `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
-* `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
-
-To learn more, read the [Joins chapter of R for Data Science (2e)](https://r4ds.hadley.nz/joins.html). [`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful function for monitoring the behavior of joins.
 
 #### Tidying Example 4
 

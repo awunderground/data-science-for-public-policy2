@@ -4,7 +4,6 @@ format:
   html:
     toc: true
     code-line-numbers: true
-    embed-resources: true
 editor_options: 
   chunk_output_type: console
 ---
@@ -17,16 +16,17 @@ exercise_number <- 1
 
 ```
 
-In this chapter, we introduce 6 key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
+In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
 
 
 ## Six Principles for Data Analysis
 
 ### Accuracy
 
-Deliberate steps *should* be taken to minimize the chance of making an error and maximize the chance of catching errors when errors inevitably occur.
+Deliberate steps *should* be taken to minimize the chance of making an error and maximize the chance of catching errors when errors inevitably occur. [^fallibility]
 
-[Embrace Your Fallibility: Thoughts on Code Integrity](http://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf)
+[^fallibility]: [@eubank] influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming. 
+
 
 ### Computational reproducibility
 
@@ -60,23 +60,25 @@ R is a free, open-source software for statistical computing. It is a fully-funct
 
 R comes from the S programming language and S-PLUS system. In addition to offering [better graphics and more extensibility](https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/) than proprietary languages, R has a pedagogical advantage:
 
-> The ambiguity [of the S language] is real and goes to a key objective: we wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important.
+> The ambiguity [of the S language] is real and goes to a key objective: we wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important. 
 
-Source: "Stages in the Evolution of S" via [Roger Peng](https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/)
+Source: @evolution-s
 
 ## RStudio
 
 RStudio is a free, open-source integrated development environment (IDE) that runs on top of R. In practice, R users almost exclusively open RStudio and rarely directly open R. When we say IDE, we mean a piece of software where you can write, or develop, code in an efficient way. 
 
-RStudio is developed by a for-profit company called [RStudio](https://rstudio.com/). RStudio, the company, employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources.
+RStudio is developed by a for-profit company called [Posit](https://posit.co). Posit used to be called  RStudio. Posit employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources. [^python] 
+
+[^python]:Though we do not focus on the Python programming language in this course, Posit [appears to be expanding its focus to Python](https://posit.co/solutions/python/) in addition to R. This is an important development to track in the data science landscape. One key update is that, in 2023, Posit [hired Wes McKinney](https://posit.co/blog/welcome-wes/). McKinney developed the Python pandas package which offers similar functionality to the tidyverse, a collection of R packages which we will discuss next week.
 
 While R code can be written in any text editor, the RStudio IDE is a powerful tool with a console, syntax-highlighting, and debugging tools. [The RStudio IDE cheatsheet](https://www.rstudio.com/resources/cheatsheets/) outlines some of the power of RStudio.
 
-![](images/rstudio-ide.png){width=400}
+![](images/rstudio-ide.png){width=650}
 
 ## RStudio Console
 
-![](images/rstudio-console.png){width=400}
+![](images/rstudio-console.png){width=650}
 
 The RStudio Console contains the R command line and R output from previously submitted R code. 
 
@@ -99,7 +101,7 @@ R has all of the functionality of a basic calculator. Let's run some simple calc
 
 ## .R Scripts
 
-![](images/rstudio-editor.png){width=400}
+![](images/rstudio-editor.png){width=650}
 
 By default, there isn't a record of code directly typed and submitted into the RStudio Console. So, most R programmers use `.R` scripts to develop R code before submitting code to the console. 
 
@@ -116,11 +118,11 @@ exercise_number <- exercise_number + 1
 ```
 Click the new script button in the top left corner of RStudio to create a new script.
 
-![](images/new-script.png){width=100}
+![](images/new-script.png){width=200}
 
 Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.
 
-![](images/run-button.png){width=100}
+![](images/run-button.png){width=200}
 
 In both cases, the code from your `.R` script should move to the R Console and evaluate.
 
@@ -171,9 +173,9 @@ Add comments to your `.R` that clarify the *why*. Since we only know a few opera
 
 :::
 
-#Style
+## Style
 
-*Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.* ~ [Hadley Wickham](https://style.tidyverse.org/)
+*Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.* ~ @style
 
 *Human interpretability* is one of the six principles because clear code can save time and reduce the chance of making errors. After time, eyes can be trained to quickly spot incorrect code if a consistent R style is adopted. 
 
@@ -235,11 +237,9 @@ class(c(TRUE, 1, "District of Columbia"))
 
 *Lists* are one- or multi-dimensional arrays that are made up of other lists. Lists are *heterogeneous* - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector. 
 
-`NULL` is the null object in R. It means a value does not exist. 
+`NULL` is the null object in R. It means a value does not exist.
 
-![Source: [R4DS](https://r4ds.hadley.nz/rectangling.html#lists){width=200}
-
-`NA` is a missing value of lenth 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations. 
+`NA` is a missing value of length 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations [@Wickham2017R, Section 20.2].
 
 
 
@@ -279,7 +279,7 @@ head(ggplot2::diamonds)
 
 * Only the first ten rows of `tibbles` print by default 
 * Extra meta data are printed with `tibbles`
-* [They have some convenient protections against partial subsetting](https://r4ds.had.co.nz/tibbles.html#tibbles-vs.data.frame)
+* They have some convenient protections against partial subsetting [@wickham_r_2023, Section 3.1.2]
 * They are easier to create from scratch in a `.R` script
 
 ```{r}
@@ -317,7 +317,7 @@ important_calculation <- 2 + 2
 2 + 2
 ```
 
-**Style note:** Objects should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally the names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case).
+**Style note:** Objects should be given names that are "concise and meaningful" [@style, Section 2]. Generally the names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case).
 
 ::: callout
 
@@ -366,7 +366,7 @@ numeric_vector <- c(1, 2, 3)
 mean(x = numeric_vector)
 ```
 
-[This free book chapter contains more information about functional programming in R](https://b-rodrigues.github.io/modern_R/functional-programming.html). 
+*Modern R with the tidyverse*  [@rodrigues] has a functional programming chapter that contains more information about functional programming in R. 
 
 ### ?
 
@@ -427,7 +427,7 @@ Opening RStudio automatically loads “base R”, a fundamental collection of co
 
 For years, R was only base R. New paradigms in R have developed over the last fifteen years that are more intuitive and more flexible than base R. Next week, we'll discuss the "tidyverse", the most popular paradigm for R programming. 
 
-All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it's in a paradigm that you have not learned.
+All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it's in a paradigm that you have not learned. Chapter 27 of *R for Data Science (2e)* (sometimes abbreviated R4DS) provides a great introduction to base R [@wickham_r_2023]. 
 
 One other popular R paradigm is `data.table`. We will not discuss `data.table` in this class. 
 
@@ -460,10 +460,10 @@ Installation need only happen once per computer per package version. It is custo
 exercise_number <- exercise_number + 1
 ```
 
-For practice, let's install the `RXKCD` package so we can view some comics in R. 
+For practice, let's install the `palmerpenguins` package. This package allows us to see some penguins data (our favorite, non-policy dataset!).  
 
 ```
-install.packages("RXKCD")
+install.packages("palmerpenguins")
 ```
 
 :::
@@ -474,6 +474,8 @@ After installation, packages need to be loaded once per R session using the `lib
 
 It is a good idea to include `library()` statements at the top of scripts for each package used in the script. This way it is obvious at the top of the script which packages are necessary.
 
+::: callout
+
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
 ```{r}
@@ -481,27 +483,25 @@ It is a good idea to include `library()` statements at the top of scripts for ea
 
 exercise_number <- exercise_number + 1
 ```
-For practice let's load the `RXKCD` package. 
+For practice let's load the `palmerpenguins` package. 
 
 ```{r}
-library(RXKCD)
+library(palmerpenguins)
 ```
 
-Finally, let's look at some comics!
+The package contains a dataset called `penguins`. We can view that data by simply typing `penguins` in the console or in a .R script.
 
 ```{r}
-meta_data <- getXKCD(which = 327)
+penguins
 ```
+
+Because this is a bit messy, we can get a summary of the data with the `summary()` function. 
 
 ```{r}
-meta_data <- getXKCD(which = 303)
+summary(penguins)
 ```
 
-```{r}
-meta_data <- getXKCD(which = 149)
-```
-
-$$\cdot\cdot\cdot$$
+:::
 
 ### `::`
 
@@ -595,10 +595,6 @@ When Googling for R or data science help, set the search range to the last year 
 
 [CRAN task views](https://cran.r-project.org/web/views/) contains thorough introductions to packages and techniques organized by subject matter. The Econometrics, Reproducible Research, and and Social Sciences task views are good starting places.
 
-### Twitter
-
-Twitter is mostly bad. But the #rstats hashtag and #rstats community are mostly good. They are also generally inclusive and civil. In particular, open sources developers like Hadley Wickham (\@hadleywickham), Jenny Bryan (\@JennyBryan), and Joe Cheng (\@jcheng) are active.
-
 ### Data Science for Public Policy Slack
 
 We've created a Slack workspace for this class (which will be shared across both sections) and encourage you to ask questions in Slack. In general, we ask that you try to answer questions on your own using the sources above *before* posting in Slack. Practicing finding and applying the relevant information to answer your questions is an important data science skill! The teaching staff will be checking the Slack to help answer questions in a reasonable time frame and we also encourage you to answer each other's questions - it's a great way to improve your R skills!
@@ -607,9 +603,18 @@ Questions on Slack must be asked using [reproducible examples](http://adv-r.had.
 
 ### ChatGPT:
 
-Since there is R code on the internet, ChatGPT has been trained on R code and has the capability to answer R coding questions. Exercise extreme caution when using ChatGPT! ChatGPT saves and uses the queries you provide it. This means that asking a question about sensitive data or code could expose that data. If you decide to use ChatGPT, only ask queries of it using a [reproducible example](https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example) with non-sensitive data. The diamonds dataset, loaded with `ggplot::diamonds()` is a great candidate. 
+::: {.callout-warning}
+Since there is R code on the internet, ChatGPT has been trained on R code and has the capability to answer R coding questions. Exercise extreme caution when using ChatGPT! ChatGPT saves and uses the queries you provide it. This means that asking a question about sensitive data or code could expose that data. If you decide to use ChatGPT, only ask queries of it using a [reproducible example](http://adv-r.had.co.nz/Reproducibility.html) with non-sensitive data. The diamonds dataset, loaded with `ggplot::diamonds()`, is a great candidate. 
+:::
 
-This warning aside, ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding questions are:
+::: {.callout-warning}
+Just like machine translators are useful for communication but can stymie the ability to learn a second language, large language models are useful for creating code but can stymie learning R.
+
+We encourage everyone to pursue mastery of R. This means feeling the terror of the blank page and internalizing the syntax of R without the crutch of LLMs before regularly using LLMs.
+::: 
+
+ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding questions are:
+
 - Provide it detailed questions
 - Give it reproducible example code
 - Refine queries when the initial responses are unsatisfactory

@@ -214,7 +214,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -449,7 +449,7 @@ window.Quarto = {
 <section id="hard-to-count-score" class="level3" data-number="15.2.1">
 <h3 data-number="15.2.1" class="anchored" data-anchor-id="hard-to-count-score"><span class="header-section-number">15.2.1</span> Hard to Count Score</h3>
 <p>The US Census Bureau develops <a href="https://www.census.gov/data/developers/data-sets/planning-database.html">planning databases</a> to prepare for decennial censuses. This database has many uses, but one use is to predict the census tracts and census block groups that will have the worst response rates for the decennial census.</p>
-<p>This exercise began with the Hard to Count Score <span class="citation" data-cites="bruce2001 bruce2003">(<a href="#ref-bruce2001" role="doc-biblioref">Antonio Bruce, Robinson, and Sanders 2001</a>; <a href="#ref-bruce2003" role="doc-biblioref">Anotnio Bruce and Robinson 2003</a>)</span>. The authors used theory to develop an index of twelve variables correlated with non response and under counting to sort census tracts and plan for the next decennial census.</p>
+<p>This exercise began with the Hard to Count Score <span class="citation" data-cites="bruce2001 bruce2003">(<a href="references.html#ref-bruce2001" role="doc-biblioref">Antonio Bruce, Robinson, and Sanders 2001</a>; <a href="references.html#ref-bruce2003" role="doc-biblioref">Anotnio Bruce and Robinson 2003</a>)</span>. The authors used theory to develop an index of twelve variables correlated with non response and under counting to sort census tracts and plan for the next decennial census.</p>
 <ul>
 <li>Renter occupied units</li>
 <li>Unmarried</li>
@@ -468,15 +468,15 @@ window.Quarto = {
 </section>
 <section id="kaggle-competition" class="level3" data-number="15.2.2">
 <h3 data-number="15.2.2" class="anchored" data-anchor-id="kaggle-competition"><span class="header-section-number">15.2.2</span> Kaggle Competition</h3>
-<p>In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle <span class="citation" data-cites="erdman2014 erdman2017">(<a href="#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. The competition was motivated by the America COMPETES act. <a href="https://www.kaggle.com/competitions">Kaggle competitions</a> allow teams to compete in predictive modeling tasks for cash prizes.</p>
+<p>In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle <span class="citation" data-cites="erdman2014 erdman2017">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="references.html#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. The competition was motivated by the America COMPETES act. <a href="https://www.kaggle.com/competitions">Kaggle competitions</a> allow teams to compete in predictive modeling tasks for cash prizes.</p>
 <p>The <a href="https://www.kaggle.com/competitions/us-census-bureau-ndsu-and-umn/overview">Census Bureau’s Kaggle Competition</a> tried to answer the question, “Which statistical model best predicts 2010 Census mail return rates?”</p>
 <p>Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman201">(<a href="#ref-erdman201" role="doc-biblioref"><strong>erdman201?</strong></a>)</span>.</p>
+<p>244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman201">(<a href="references.html#ref-erdman201" role="doc-biblioref"><strong>erdman201?</strong></a>)</span>.</p>
 </section>
 <section id="the-low-response-score" class="level3" data-number="15.2.3">
 <h3 data-number="15.2.3" class="anchored" data-anchor-id="the-low-response-score"><span class="header-section-number">15.2.3</span> The Low-Response Score</h3>
 <p>The best models in the Kaggle competition did not directly meet the needs of the US Census Bureau because the models were “black box” and included auxiliary data.</p>
-<p>Instead, the Census Bureau took the 25 “most important” variables from the winning model and used multiple linear regression to construct and evaluate the low response score <span class="citation" data-cites="erdman2014 erdman2017">(<a href="#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. This increased the MSE of the model used to fit the LRS but increased the interpretability.</p>
+<p>Instead, the Census Bureau took the 25 “most important” variables from the winning model and used multiple linear regression to construct and evaluate the low response score <span class="citation" data-cites="erdman2014 erdman2017">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="references.html#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. This increased the MSE of the model used to fit the LRS but increased the interpretability.</p>
 <p><a href="https://arxiv.org/abs/2108.11328">Follow-up work</a> seeks to improve the model performance of an interpretable model for this exact implementation.</p>
 </section>
 <section id="lrs-set-up" class="level3" data-number="15.2.4">
@@ -812,7 +812,7 @@ Bagged Trees Algorithm
 <section id="random-forests" class="level2" data-number="15.5">
 <h2 data-number="15.5" class="anchored" data-anchor-id="random-forests"><span class="header-section-number">15.5</span> Random Forests</h2>
 <blockquote class="blockquote">
-<p>Averaging many highly correlated quantities does not lead to as large a reduction in variance as averaging many uncorrelated quantities. <span class="citation" data-cites="james2017">(<a href="#ref-james2017" role="doc-biblioref">James et al. 2017</a>)</span></p>
+<p>Averaging many highly correlated quantities does not lead to as large a reduction in variance as averaging many uncorrelated quantities. <span class="citation" data-cites="james2017">(<a href="references.html#ref-james2017" role="doc-biblioref">James et al. 2017</a>)</span></p>
 </blockquote>
 <p>The models fit on bootstrap samples of data are often highly correlated. Random forests, one of the most popular bagging algorithms, aims to decorrelate trees and reduce variance error more than simple bagging.</p>
 <p>Random forests are identical to bagged trees, except each time a split is considered in a regression tree, RF only considers a subset of predictors instead of all predictors. By intentionally making each tree a little worse, the algorithm typically makes better predictions.</p>
@@ -1100,7 +1100,7 @@ Warning
 <section id="boosting" class="level2" data-number="15.6">
 <h2 data-number="15.6" class="anchored" data-anchor-id="boosting"><span class="header-section-number">15.6</span> Boosting</h2>
 <blockquote class="blockquote">
-<p>Boosting appears to dominate bagging on most problems, and became the preferred choice. <span class="citation" data-cites="hastie2009">(<a href="#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span></p>
+<p>Boosting appears to dominate bagging on most problems, and became the preferred choice. <span class="citation" data-cites="hastie2009">(<a href="references.html#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span></p>
 </blockquote>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1173,7 +1173,7 @@ XGBoost Algorithm for Regression
 <p><span class="math display">\[\hat{f}(\vec{x}) = \sum_{b = 1}^B \lambda\hat{f}^b(\vec{x})\]</span></p>
 </div>
 </div>
-<p>Consider a few lessons from <span class="citation" data-cites="james2017">James et al. (<a href="#ref-james2017" role="doc-biblioref">2017</a>)</span>:</p>
+<p>Consider a few lessons from <span class="citation" data-cites="james2017">James et al. (<a href="references.html#ref-james2017" role="doc-biblioref">2017</a>)</span>:</p>
 <ul>
 <li>Setting <span class="math inline">\(B\)</span> too large can slowly lead to overfitting for XGBoost. Bagging and random forests do not overfit with large <span class="math inline">\(B\)</span>.<br>
 </li>
@@ -1320,7 +1320,7 @@ XGBoost Algorithm for Regression
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-bruce2003" class="csl-entry" role="listitem">
 Bruce, Anotnio, and Gregory Robinson. 2003. <span>“The Planning Database: Its Development and Use as an Effective Tool in Census 2000.”</span> <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b">https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b</a>.
 </div>

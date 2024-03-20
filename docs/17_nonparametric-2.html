@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-03-18">
+<meta name="dcterms.date" content="2024-03-19">
 
 <title>Data Science for Public Policy - 12&nbsp; Nonparametric Inference</title>
 <style>
@@ -215,7 +215,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -426,7 +426,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 18, 2024</p>
+      <p class="date">March 19, 2024</p>
     </div>
   </div>
   
@@ -454,7 +454,7 @@ window.Quarto = {
 <li>ANOVA to determine if multiple population means are different from other means.</li>
 <li>Two-sample F-tests to determine if two population variances are different from one another.</li>
 </ul>
-<p>Different tests apply in different applied situations. For example, <span class="citation" data-cites="higgins2004a">Higgins (<a href="#ref-higgins2004a" role="doc-biblioref">2004</a>)</span> identifies at least four approaches to testing hypotheses:</p>
+<p>Different tests apply in different applied situations. For example, <span class="citation" data-cites="higgins2004a">Higgins (<a href="references.html#ref-higgins2004a" role="doc-biblioref">2004</a>)</span> identifies at least four approaches to testing hypotheses:</p>
 <ol type="1">
 <li><strong>Use normal-theory methods like t-tests.</strong> Unfortunately, the assumptions of these tests may not be met.</li>
 <li><strong>Transform data and use normal-theory methods like t-tests.</strong> Unfortunately, the assumptions of these tests may still not be met.</li>
@@ -550,7 +550,7 @@ Warning
 </section>
 <section id="example-2" class="level3" data-number="12.1.2">
 <h3 data-number="12.1.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">12.1.2</span> Example 2</h3>
-<p>Let’s consider a real example from <span class="citation" data-cites="ashraf2006">Ashraf, Karlan, and Yin (<a href="#ref-ashraf2006" role="doc-biblioref">2006</a>)</span>. They created a commitment savings product for a Philippine bank called SEED (Save, Earn, Enjoy Deposits). They evaluated the effect of the commitment savings product on the level of household savings (among other outcomes) using a randomized control trial (RCT). The authors shared their data on the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27854">Harvard Dataverse</a>. <a href="https://www.povertyactionlab.org/evaluation/commitment-savings-products-philippines#:~:text=The%20SEED%20account%20provides%20individuals,until%20the%20goal%20is%20reached.">J-PAL offers a brief summary.</a></p>
+<p>Let’s consider a real example from <span class="citation" data-cites="ashraf2006">Ashraf, Karlan, and Yin (<a href="references.html#ref-ashraf2006" role="doc-biblioref">2006</a>)</span>. They created a commitment savings product for a Philippine bank called SEED (Save, Earn, Enjoy Deposits). They evaluated the effect of the commitment savings product on the level of household savings (among other outcomes) using a randomized control trial (RCT). The authors shared their data on the <a href="https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/27854">Harvard Dataverse</a>. <a href="https://www.povertyactionlab.org/evaluation/commitment-savings-products-philippines#:~:text=The%20SEED%20account%20provides%20individuals,until%20the%20goal%20is%20reached.">J-PAL offers a brief summary.</a></p>
 <p><code>seed.csv</code> contains simplified data from their analysis data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>seed <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"seed.csv"</span>))</span>
@@ -665,7 +665,7 @@ $ balchange &lt;dbl&gt; -116.70, -125.19, 3609.95, 4.14, -118.04, -169.95, 1725.
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Simulate two-sample data with 8 observations each like in <a href="#sec-example1" class="quarto-xref"><span class="quarto-unresolved-ref">sec-example1</span></a> using the <a href="https://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> with <code>rlnorm()</code>.</li>
+<li>Simulate two-sample data with 8 observations each like in <a href="#sec-example1" class="quarto-xref"><span>Section 12.1.1</span></a> using the <a href="https://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> with <code>rlnorm()</code>.</li>
 <li>First, run a 2-sample t-test where the simulated data have very similar means.</li>
 <li>Second, run a 2-sample t-test where the simulated data have very different means.</li>
 </ol>
@@ -761,7 +761,7 @@ Permutation principle
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The <strong>permutation principle</strong> states that the permutation distribution is an appropriate reference distribution and can be used to determine p-values and statistical significance. <span class="citation" data-cites="higgins2004a">(<a href="#ref-higgins2004a" role="doc-biblioref">Higgins 2004</a>)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>The <strong>permutation principle</strong> states that the permutation distribution is an appropriate reference distribution and can be used to determine p-values and statistical significance. <span class="citation" data-cites="higgins2004a">(<a href="references.html#ref-higgins2004a" role="doc-biblioref">Higgins 2004</a>)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1147,7 +1147,7 @@ Confidence interval
 </div>
 </div>
 </div>
-<p>We can use this permutation distribution to calculate bias (<a href="#sec-bias" class="quarto-xref"><span class="quarto-unresolved-ref">sec-bias</span></a>), standard errors (<a href="#sec-standard-errors" class="quarto-xref"><span class="quarto-unresolved-ref">sec-standard-errors</span></a>), and confidence intervals (<a href="#sec-confidence-intervals" class="quarto-xref"><span class="quarto-unresolved-ref">sec-confidence-intervals</span></a>).</p>
+<p>We can use this permutation distribution to calculate bias (<a href="#sec-bias" class="quarto-xref"><span>Section 12.3.3</span></a>), standard errors (<a href="#sec-standard-errors" class="quarto-xref"><span>Section 12.3.4</span></a>), and confidence intervals (<a href="#sec-confidence-intervals" class="quarto-xref"><span>Section 12.3.6</span></a>).</p>
 </section>
 <section id="sec-bias" class="level3" data-number="12.3.3">
 <h3 data-number="12.3.3" class="anchored" data-anchor-id="sec-bias"><span class="header-section-number">12.3.3</span> Bias</h3>
@@ -1160,7 +1160,7 @@ Confidence interval
 \]</span></p>
 <p>where <span class="math inline">\(\bar{\hat\theta^*} = \frac{1}{b} \sum_{b = 1}^B \hat\theta_b\)</span>.</p>
 <p>Basically, to estimate bias we subtract our estimate from the mean of the sampling distribution, which is our bootstrap distribution. This estimate of bias can be used to correct for bias.</p>
-<p>If <span class="math inline">\(\frac{|bias|}{se} \le 0.25\)</span>, then it is likely unnecessary to correct for bias <span class="citation" data-cites="rizzo2008">(<a href="#ref-rizzo2008" role="doc-biblioref">Rizzo 2008</a>)</span>. We will next see how to estimate <span class="math inline">\(se\)</span>.</p>
+<p>If <span class="math inline">\(\frac{|bias|}{se} \le 0.25\)</span>, then it is likely unnecessary to correct for bias <span class="citation" data-cites="rizzo2008">(<a href="references.html#ref-rizzo2008" role="doc-biblioref">Rizzo 2008</a>)</span>. We will next see how to estimate <span class="math inline">\(se\)</span>.</p>
 </section>
 <section id="sec-standard-errors" class="level3" data-number="12.3.4">
 <h3 data-number="12.3.4" class="anchored" data-anchor-id="sec-standard-errors"><span class="header-section-number">12.3.4</span> Standard errors</h3>
@@ -1169,7 +1169,7 @@ Confidence interval
 \hat{se}(\hat\theta^*) = \sqrt{\frac{1}{B-1} \sum_{b = 1}^B \left(\hat\theta_b - \bar{\hat\theta^*}\right)^2}
 \]</span></p>
 <p>where <span class="math inline">\(\bar{\hat\theta^*} = \frac{1}{b} \sum_{b = 1}^B \hat\theta_b\)</span>.</p>
-<p>Historically, the bootstrap was used to estimate the standard errors of estimates. The jackknife, another resampling method, can be used to estimate bias and standard errors. We won’t focus on this. Instead, we will estimate confidence intervals <span class="citation" data-cites="chernick2011">(<a href="#ref-chernick2011" role="doc-biblioref">Chernick and LaBudde 2011</a>)</span>.</p>
+<p>Historically, the bootstrap was used to estimate the standard errors of estimates. The jackknife, another resampling method, can be used to estimate bias and standard errors. We won’t focus on this. Instead, we will estimate confidence intervals <span class="citation" data-cites="chernick2011">(<a href="references.html#ref-chernick2011" role="doc-biblioref">Chernick and LaBudde 2011</a>)</span>.</p>
 </section>
 <section id="example-1" class="level3" data-number="12.3.5">
 <h3 data-number="12.3.5" class="anchored" data-anchor-id="example-1"><span class="header-section-number">12.3.5</span> Example</h3>
@@ -1330,7 +1330,7 @@ based on the number of `reps` chosen in the `generate()` step.
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-ashraf2006" class="csl-entry" role="listitem">
 Ashraf, N., D. Karlan, and W. Yin. 2006. <span>“Tying Odysseus to the Mast: Evidence From a Commitment Savings Product in the Philippines.”</span> <em>The Quarterly Journal of Economics</em> 121 (2): 635–72. <a href="https://doi.org/10.1162/qjec.2006.121.2.635">https://doi.org/10.1162/qjec.2006.121.2.635</a>.
 </div>
@@ -1355,7 +1355,7 @@ Rizzo, Maria L. 2008. <em>Statistical Computing with r</em>. Chapman &amp; Hall/
 <li id="fn2"><p>The RCT actually contains a treatment group, a control group that received marketing materials, and a proper control group. In this case, I’ve lumped the marketing group in with the treatment group.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>A permutation is the exhaustive reshuffling of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(m\)</span> groups <em>with regard for order</em>. We should probably call the permutation test the combination test. Combinations are the exhaustive reshuffling of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(m\)</span> groups <em>without regard for order</em>. Using permutations generates the same results as combinations but takes much longer because many of the configurations are duplicated.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn4"><p>The permutation test is considered an exact test because the null model will <em>never</em> test more as significant more than the <span class="math inline">\(\alpha\)</span> level of the test.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn5"><p><span class="citation" data-cites="brown2001">Brown, Cai, and DasGupta (<a href="#ref-brown2001" role="doc-biblioref">2001</a>)</span> explores the coverage probabilities of different techniques for interval estimation for a binomial proportion. Reading this paper made me question everything I knew about confidence intervals.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><span class="citation" data-cites="brown2001">Brown, Cai, and DasGupta (<a href="references.html#ref-brown2001" role="doc-biblioref">2001</a>)</span> explores the coverage probabilities of different techniques for interval estimation for a binomial proportion. Reading this paper made me question everything I knew about confidence intervals.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Confidence intervals are about a process. There is a distinct difference between confidence and probabilities. It is incorrect to say, “the true parameter is in the interval X% of the time.” This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Recall that <span class="math inline">\(\bar{X}\)</span> is an unbiased estimator of the population mean <span class="math inline">\(\mu\)</span>. On the other hand, <span class="math inline">\(\hat\sigma^2\)</span> is a biased estimator of variance <span class="math inline">\(\sigma^2\)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>

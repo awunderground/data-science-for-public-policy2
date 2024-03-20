@@ -214,7 +214,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -937,7 +937,7 @@ Don’t grow vectors!
 </section>
 <section id="examples" class="level3" data-number="7.3.2">
 <h3 data-number="7.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">7.3.2</span> Examples</h3>
-<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
+<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="references.html#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
 <p>Division by zero, which returns <code>NaN</code>, can be a real pain when comparing confidential and noisy results when the confidential value is <code>zero</code>. This function simply returns <code>0</code> when the denominator is <code>0</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co">#' Safely divide number. When zero is in the denominator, return 0. </span></span>
@@ -1176,7 +1176,7 @@ $median
 <section id="debugging" class="level2" data-number="7.4">
 <h2 data-number="7.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">7.4</span> Debugging</h2>
 <p>R code inside of custom functions can be tougher to troubleshoot than R code outside of custom functions. Fortunately, R has a powerful debugging tool.</p>
-<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis" class="quarto-xref"><span class="quarto-unresolved-ref">sec-organizing-an-analysis</span></a>.</p>
+<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis" class="quarto-xref"><span>Section 7.6</span></a>.</p>
 <p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="fig-debuggera" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1297,11 +1297,11 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
                      expr      min       lq     mean   median       uq
-                median(x) 6.409612 6.891239 7.744103 6.954318 8.246207
- quantile(x, probs = 0.5) 3.555438 3.899469 4.352683 3.946291 4.665144
+                median(x) 6.401125 6.923977 7.827531 7.003887 8.314472
+ quantile(x, probs = 0.5) 3.557242 3.935365 4.437866 3.978784 4.672381
        max neval
- 42.530735   100
-  6.489808   100</code></pre>
+ 42.010445   100
+  7.173114   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1418,7 +1418,7 @@ RoxygenNote: 7.2.3</code></pre>
 <h2 data-number="7.10" class="anchored" data-anchor-id="references"><span class="header-section-number">7.10</span> References</h2>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-barrientos2021" class="csl-entry" role="listitem">
 Barrientos, Andrés F., Aaron R. Williams, Joshua Snoke, and Claire McKay Bowen. 2021. <span>“A Feasibility Study of Differentially Private Summary Statistics and Regression Analyses with Evaluations on Administrative and Survey Data.”</span> <a href="https://doi.org/10.48550/ARXIV.2110.12055">https://doi.org/10.48550/ARXIV.2110.12055</a>.
 </div>

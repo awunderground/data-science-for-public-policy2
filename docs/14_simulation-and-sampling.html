@@ -214,7 +214,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -679,7 +679,7 @@ p(x) = {n \choose x} p^x(1 - p)^{n - x}
 p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
 \tag{9.6}\]</span></span></p>
 <p>We can do similar calculations for each value between <span class="math inline">\(0\)</span> and <span class="math inline">\(10\)</span>.</p>
-<p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-binomial</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
+<p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -724,7 +724,7 @@ Sampling Error
 <p><strong>Sampling error</strong> is the difference between sample statistics (estimates of population parameters) and population parameters.</p>
 </div>
 </div>
-<p>The difference between the red dots and black bars in <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-binomial</span></a> is caused by sampling error.</p>
+<p>The difference between the red dots and black bars in <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>9.2</span></a> is caused by sampling error.</p>
 </section>
 <section id="distributions-using-r" class="level3" data-number="9.4.3">
 <h3 data-number="9.4.3" class="anchored" data-anchor-id="distributions-using-r"><span class="header-section-number">9.4.3</span> Distributions Using R</h3>
@@ -811,7 +811,7 @@ X \sim Pois(\lambda)
 <p><span id="eq-poisson-pmf"><span class="math display">\[
 p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 \tag{9.8}\]</span></span></p>
-<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-poisson</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
+<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span>9.3</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -862,7 +862,7 @@ p(x) =
 \frac{1}{6} &amp; \text{if } x = 6
 \end{cases}
 \tag{9.9}\]</span></span></p>
-<p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-die</span></a>. We can sample from this PMF with</p>
+<p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span>9.1</span></a>. We can sample from this PMF with</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1365,7 +1365,7 @@ Multivariate Distribution
 <p><span id="eq-multivariate-normal-pdf"><span class="math display">\[
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 \tag{9.20}\]</span></span></p>
-<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-mvnorm</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
+<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>9.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
 <span id="cb38-2"><a href="#cb38-2"></a>                   <span class="fl">0.8</span>, <span class="dv">1</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>
@@ -1992,7 +1992,7 @@ Resampling
 <p>We will also learn about bootstrap sampling when we discuss nonparametric statistics.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-casella2002" class="csl-entry" role="listitem">
 Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Australia ; Pacific Grove, CA: Thomson Learning.
 </div>
@@ -2002,7 +2002,7 @@ Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd 
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><span class="citation" data-cites="casella2002">(<a href="#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span> offers a robust introduction to deriving maximum likelihood estimators.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><span class="citation" data-cites="casella2002">(<a href="references.html#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span> offers a robust introduction to deriving maximum likelihood estimators.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Note that the MLE for variance is biased.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>Correlation may be more familiar than covariance. Sample correlation is standardized sample covariance. <span class="math inline">\(Corr(\vec{x}, \vec{y}) = \frac{Cov(\vec{x}, \vec{y})}{S_{\vec{x}}S_{\vec{y}}}\)</span>. Correlation is also between -1 and 1 inclusive. Covariance can take on any real value.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
