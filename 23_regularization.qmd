@@ -1,0 +1,218 @@
+---
+title: "Regularization"
+abstract: ""
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+execute:
+  message: false
+  warning: false
+  cache: true
+bibliography: references.bib
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+library(tidyverse)
+library(here)
+library(glmnet)
+library(tidymodels)
+library(vip)
+
+theme_set(theme_minimal())
+
+options(scipen = 999)
+
+```
+
+## Motivation
+
+The previous chapter introduced the idea of regularization in the context of random forests. Regularization is a powerful technique for parametric regression models. 
+
+This section takes the PDB examples and explores three types of regularized regression models: ridge regression, LASSO regression, and elastic net regression. 
+
+## Linear regression
+
+Ordinary least squares (OLS) linear regression generates coefficients that minimize the sum of squared residuals. 
+
+$$\min(SSE) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2\right)$$
+
+It is impossible to solve for OLS when $p > n$ where $p$ is the number of predictors and $n$ is the number of observations. Additionally, OLS is unstable when data contain multicollinearity. 
+
+Let's fit a linear regression model on the PDB data set. 
+
+```{r}
+pdb_small <- read_csv(here::here("data", "pdb_small.csv"))
+
+set.seed(20231114)
+pdb_split <- initial_split(pdb_small, prop = 0.8)
+
+pdb_train <- training(pdb_split)
+
+```
+
+```{r}
+lm_mod <- linear_reg() |>
+  set_mode(mode = "regression") |>
+  set_engine(engine = "lm")
+
+lm_rec <- recipe(non_return_rate ~ ., data = pdb_train) |>
+  add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+  step_rm(has_role("id"))
+
+lm_wf <- workflow() |>
+  add_model(spec = lm_mod) |>
+  add_recipe(recipe = lm_rec)
+
+lm_wf |>
+  fit(data = pdb_train) |>
+  extract_fit_parsnip() |>
+  # vi() |>
+  tidy() |>
+  print(n = Inf)
+  
+```
+
+## Regularization
+
+**Regularization/Penalization:** To reduce the magnitude of parameters (coefficients).
+
+Regularization, or penalization, allows linear regression to work with very wide data, to generate stable estimates for data with multicollinearity, and to perform feature selection.
+
+For regression, the idea is to add a penalty $P$ to the optimization routine:
+
+$$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + P\right)$$
+
+## Ridge Regression
+
+$$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p\beta_j^2\right)$$
+
+Ridge regression adds an L2 penalty to the optimization routine. The model has one hyperparameter, $\lambda$, which determines how much penalty to add. There is no penalty when $\lambda = 0$ (just OLS).
+
+All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.
+
+Ridge regression reduces coefficients but it does not eliminate coefficients. 
+
+### Ridge regression reduces but does not eliminate coefficients
+
+```{r}
+fit_ridge <- function(data, penalty) {
+  
+  ridge_rec <- recipe(non_return_rate ~ ., data = pdb_train) |>
+    add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+    step_rm(has_role("id")) |>
+    step_normalize(all_predictors())
+  
+  ridge_mod <- linear_reg(penalty = penalty, mixture = 0) |>
+    set_mode(mode = "regression") |>
+    set_engine(engine = "glmnet")  
+  
+  ridge_wf <- workflow() |>
+    add_recipe(recipe = ridge_rec) |>
+    add_model(spec = ridge_mod)
+  
+  ridge_wf |>
+    fit(data = pdb_train) |>
+    extract_fit_parsnip() |>
+    tidy() |>
+    mutate(penalty = penalty)
+  
+}
+
+ridge_fit <- seq(0, 50, 1) |>
+  map_dfr(.f = ~ fit_ridge(pdb_train, .x))
+
+ggplot() +
+  geom_line(
+    data = filter(ridge_fit, term != "(Intercept)"),
+    mapping = aes(penalty, estimate, group = term),
+    alpha = 0.4
+  ) +
+  geom_point(
+    data = filter(ridge_fit, term != "(Intercept)", penalty == 0),
+    mapping = aes(penalty, estimate),
+    color = "red"
+  )
+
+```
+
+Note that regularized regression models expect standardized predictors (mean = 0 and standard deviation = 1). This changes this starting estimated parameters.
+
+## LASSO Regression
+
+$$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p|\beta_j|\right)$$
+
+Least Absolute Shrinkage and Selection Operator (LASSO) regression adds an L1 penalty to the optimization routine. The model has one hyperparameter, $\lambda$, which determines how much penalty to add. There is no penalty when $\lambda = 0$ (just OLS).
+
+All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.
+
+LASSO regression can regularize coefficients all the way to zero.
+
+### LASSO regression eliminates coefficients
+
+```{r}
+fit_lasso <- function(data, penalty) {
+  
+  lasso_rec <- recipe(non_return_rate ~ ., data = pdb_train) |>
+    add_role(State_name, County_name, Low_Response_Score, new_role = "id") |>
+    step_rm(has_role("id")) |>
+    step_normalize(all_predictors())
+  
+  lasso_mod <- linear_reg(penalty = penalty, mixture = 1) |>
+    set_mode(mode = "regression") |>
+    set_engine(engine = "glmnet")  
+  
+  lasso_wf <- workflow() |>
+    add_recipe(recipe = lasso_rec) |>
+    add_model(spec = lasso_mod)
+  
+  lasso_wf |>
+    fit(data = pdb_train) |>
+    extract_fit_parsnip() |>
+    tidy() |>
+    mutate(penalty = penalty)
+  
+}
+
+lasso_fit <- seq(0, 3.5, 0.1) |>
+  map_dfr(.f = ~ fit_lasso(pdb_train, .x))
+
+ggplot() +
+  geom_line(
+    data = filter(lasso_fit, term != "(Intercept)"),
+    mapping = aes(penalty, estimate, group = term),
+    alpha = 0.4
+  ) +
+  geom_point(
+    data = filter(lasso_fit, term != "(Intercept)", penalty == 0),
+    mapping = aes(penalty, estimate),
+    color = "red"
+  )
+
+```
+
+## Elastic Net Regression
+
+$$\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda_1\sum_{j = 1}^p\beta_j^2 + \lambda_2\sum_{j = 1}^p|\beta_j|\right)$$
+
+Elastic net regression combines ridge regression and LASSO regression. It has two hyperparameters, $\lambda_1$ and $\lambda_2$. Sometimes the hyperparameters are $\lambda$ and mixture, which determines how much of $\lambda$ to apply to each penalty (i.e. mixture = 0 is ridge regression and mixture = 1 is LASSO regression).
+
+All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.
+
+Elastic net regression can perform feature selection, but in a less dramatic fashion than LASSO regression.
+
+### Elastic net blends Ridge regression and LASSO regression
+
