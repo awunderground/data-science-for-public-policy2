@@ -266,7 +266,7 @@ Bagged trees have four hyperparameters, but three of the hyperparameters are fro
 -   The maximum tree depth
 -   The minimum number of observations in a terminal node
 
-In practice, the number of trees does not need to be tuned and using too many trees will not lead to a model that is overfit. Typically, the number of trees can be set in the 100 to 500 range based on computational limitations.
+Generally, the number of trees does not need to be tuned and using too many trees will not lead to a model that is overfit. Typically, the number of trees can be set in the 100 to 500 range based on computational limitations.
 
 Consider the simulated data and the predicted values for different numbers of trees.
 
@@ -542,7 +542,7 @@ Variable importance is an alternative approach that aims to capture the why of a
 
 For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but it is a valuable tool for understanding a random forest model.
 
-Here we fit the random forest model on all of the training data and then visualize the variable importance.
+Here we fit the random forest model on all of the training data and then visualize the variable importance. The x axis describes the reduction in the variance of the response variable attributable to each predictor.
 
 ```{r}
 rf_final <- rf_wf |>
@@ -554,7 +554,7 @@ rf_final |>
 
 ```
 
-It is common to rescale variable importance for random forests so the most important variable has a value of 1. 
+It is common to rescale variable importance for random forests so the most important variable has a value of 1. This show thes importance of each variable relative to the most important variable.
 
 ```{r}
 rf_final |>
