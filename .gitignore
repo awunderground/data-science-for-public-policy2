@@ -46,3 +46,6 @@ po/*~
 
 # cache files
 *_files/
+
+# large data
+data/pdb2019*
