@@ -18,15 +18,15 @@ book:
       
     - part: Reproducible Research
       chapters: 
-        # - 06_reproducible-research-with-quarto.qmd
+        - 06_reproducible-research-with-quarto.qmd
         - 07_advanced-quarto.qmd
-        # - PART 1: reproducible research with git 1
-        # - PART 1: advanced git
+        - 08_reproducible-research-with-git.qmd
+        - 09_advanced-git.qmd
     - part: Programming
       chapters:
         - 10_functions.qmd
         # - r packages to be developed??
-        # - PART 1: apis
+        - 12_apis.qmd
         - 13_web-scraping.qmd
     - part: Statistics
       chapters:
