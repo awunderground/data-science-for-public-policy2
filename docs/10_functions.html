@@ -955,7 +955,7 @@ Don’t grow vectors!
 </section>
 <section id="examples" class="level3" data-number="10.3.2">
 <h3 data-number="10.3.2" class="anchored" data-anchor-id="examples"><span class="header-section-number">10.3.2</span> Examples</h3>
-<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
+<p>Let’s consider a couple of examples from <span class="citation" data-cites="barrientos2021">(<a href="references.html#ref-barrientos2021" role="doc-biblioref">Barrientos et al. 2021</a>)</span>. This paper is a large-scale simulation of formally private mechanisms, which relates to several future chapters of this book.</p>
 <p>Division by zero, which returns <code>NaN</code>, can be a real pain when comparing confidential and noisy results when the confidential value is <code>zero</code>. This function simply returns <code>0</code> when the denominator is <code>0</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="co">#' Safely divide number. When zero is in the denominator, return 0. </span></span>
@@ -1315,11 +1315,11 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
                      expr      min       lq     mean   median       uq
-                median(x) 6.684804 6.990274 8.584887 7.163315 8.813790
- quantile(x, probs = 0.5) 3.756584 3.974950 4.722241 4.103075 5.180124
+                median(x) 6.642779 6.956696 7.929935 7.016904 8.425910
+ quantile(x, probs = 0.5) 3.743505 3.958160 4.468503 3.998709 4.807373
        max neval
- 56.193083   100
-  9.503923   100</code></pre>
+ 45.360883   100
+  6.666723   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1421,7 +1421,7 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <p>The <a href="https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf">purrr cheatsheet</a> is a great place to go for help using purrr and outlines the different function options. You can also see the <a href="https://purrr.tidyverse.org/reference/index.html">purrr documentation</a> for more details.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
 <div id="ref-barrientos2021" class="csl-entry" role="listitem">
 Barrientos, Andrés F., Aaron R. Williams, Joshua Snoke, and Claire McKay Bowen. 2021. <span>“A Feasibility Study of Differentially Private Summary Statistics and Regression Analyses with Evaluations on Administrative and Survey Data.”</span> <a href="https://doi.org/10.48550/ARXIV.2110.12055">https://doi.org/10.48550/ARXIV.2110.12055</a>.
 </div>
