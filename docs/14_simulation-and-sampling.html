@@ -703,7 +703,7 @@ p(x) = {n \choose x} p^x(1 - p)^{n - x}
 p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
 \tag{13.6}\]</span></span></p>
 <p>We can do similar calculations for each value between <span class="math inline">\(0\)</span> and <span class="math inline">\(10\)</span>.</p>
-<p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-binomial</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
+<p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -748,7 +748,7 @@ Sampling Error
 <p><strong>Sampling error</strong> is the difference between sample statistics (estimates of population parameters) and population parameters.</p>
 </div>
 </div>
-<p>The difference between the red dots and black bars in <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-binomial</span></a> is caused by sampling error.</p>
+<p>The difference between the red dots and black bars in <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> is caused by sampling error.</p>
 </section>
 <section id="distributions-using-r" class="level3" data-number="13.4.3">
 <h3 data-number="13.4.3" class="anchored" data-anchor-id="distributions-using-r"><span class="header-section-number">13.4.3</span> Distributions Using R</h3>
@@ -835,7 +835,7 @@ X \sim Pois(\lambda)
 <p><span id="eq-poisson-pmf"><span class="math display">\[
 p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 \tag{13.8}\]</span></span></p>
-<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-poisson</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
+<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -886,7 +886,7 @@ p(x) =
 \frac{1}{6} &amp; \text{if } x = 6
 \end{cases}
 \tag{13.9}\]</span></span></p>
-<p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-die</span></a>. We can sample from this PMF with</p>
+<p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>. We can sample from this PMF with</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1389,7 +1389,7 @@ Multivariate Distribution
 <p><span id="eq-multivariate-normal-pdf"><span class="math display">\[
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 \tag{13.20}\]</span></span></p>
-<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-mvnorm</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
+<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
 <span id="cb38-2"><a href="#cb38-2"></a>                   <span class="fl">0.8</span>, <span class="dv">1</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>

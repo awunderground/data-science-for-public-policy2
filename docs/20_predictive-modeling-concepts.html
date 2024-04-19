@@ -515,7 +515,7 @@ Classification
 <span id="cb2-7"><a href="#cb2-7"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
 <span id="cb2-8"><a href="#cb2-8"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="#fig-simulated-training-data" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-simulated-training-data</span></a> visualizes the training data.</p>
+<p><a href="#fig-simulated-training-data" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> visualizes the training data.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># visualize the data</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>data1_train <span class="sc">|&gt;</span></span>
@@ -542,7 +542,7 @@ Figure&nbsp;18.1: Simulated training data
 <li>Find the line that minimizes the sum of squared errors between the line and the observed data.</li>
 </ol>
 <p><strong>Note:</strong> Linear regression is linear in its coefficients but can fit non-linear patterns in the data with the inclusion of higher order terms (for example, <span class="math inline">\(x^2\)</span>).</p>
-<p><a href="#fig-simulated-regression" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-simulated-regression</span></a> shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.</p>
+<p><a href="#fig-simulated-regression" class="quarto-xref">Figure&nbsp;<span>18.2</span></a> shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.</p>
 <p>For example, “Degree = 1” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i\)</span> and “Degree = 3” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i + b_2x_i^2 + b_3x_i^3\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -740,7 +740,7 @@ Figure&nbsp;18.3: Changing the cost complexity parameter leads to models that ar
 </div>
 </div>
 </div>
-<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-simulated-regression-trees</span></a> where <code>cp=0.1</code>.</p>
+<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> where <code>cp=0.1</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>

@@ -705,7 +705,7 @@ Caution
 </section>
 <section id="control-flow" class="level3" data-number="10.2.2">
 <h3 data-number="10.2.2" class="anchored" data-anchor-id="control-flow"><span class="header-section-number">10.2.2</span> Control Flow</h3>
-<p>Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We encourage the map-reduce framework in the tidyverse’s purrr library which we introduce in <a href="#sec-purrr" class="quarto-xref"><span class="quarto-unresolved-ref">sec-purrr</span></a>. Even so, understanding the for loop and while loop is important because you will likely see them in other programmers’ R code, and they are extremely common in other programming languages.</p>
+<p>Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We encourage the map-reduce framework in the tidyverse’s purrr library which we introduce in <a href="#sec-purrr" class="quarto-xref"><span>Section 10.7</span></a>. Even so, understanding the for loop and while loop is important because you will likely see them in other programmers’ R code, and they are extremely common in other programming languages.</p>
 <section id="for-loops" class="level4">
 <h4 class="anchored" data-anchor-id="for-loops">For Loops</h4>
 <p>For loops have two main pieces: 1. a header and 2. a body. Headers define the number of iterations and potential inputs to the iteration. Bodies are iterated once per iteration. Here is a very simple example:</p>
@@ -873,8 +873,6 @@ Don’t grow vectors!
 <section id="while-loops" class="level4">
 <h4 class="anchored" data-anchor-id="while-loops">While Loops</h4>
 <p>While loops are similar to for loops; however, instead of predetermining the number of iterations in the header, while loops determine a condition in the header and run until that condition is met. This makes them useful for iterating for an unknown number of iterations. Though while loops are less common than for loops, one policy-relevant domain where while loops could be useful is simulation. A while loop could be useful to run a simulation indefinitely until certain conditions are met. Alternatively, both for and while loops could be used to run a simulation a specified number of times.</p>
-<section id="while-loop-to-run-a-s" class="level5">
-<h5 class="anchored" data-anchor-id="while-loop-to-run-a-s">While loop to run a s</h5>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a>iteration <span class="ot">&lt;-</span> <span class="dv">0</span></span>
 <span id="cb72-2"><a href="#cb72-2"></a>x <span class="ot">&lt;-</span> <span class="dv">2</span></span>
@@ -910,7 +908,6 @@ Don’t grow vectors!
 </ol>
 </div>
 </div>
-</section>
 </section>
 <section id="if-else-and-else-if" class="level4">
 <h4 class="anchored" data-anchor-id="if-else-and-else-if"><code>if</code>, <code>else</code>, and <code>else if</code></h4>
@@ -1194,7 +1191,7 @@ $median
 <section id="debugging" class="level2" data-number="10.4">
 <h2 data-number="10.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">10.4</span> Debugging</h2>
 <p>R code inside of custom functions can be tougher to troubleshoot than R code outside of custom functions. Fortunately, R has a powerful debugging tool.</p>
-<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis" class="quarto-xref"><span class="quarto-unresolved-ref">sec-organizing-an-analysis</span></a>.</p>
+<p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis" class="quarto-xref"><span>Section 10.6</span></a>.</p>
 <p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div id="fig-debuggera" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1314,12 +1311,12 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
-                     expr      min       lq     mean   median       uq
-                median(x) 6.642779 6.956696 7.929935 7.016904 8.425910
- quantile(x, probs = 0.5) 3.743505 3.958160 4.468503 3.998709 4.807373
-       max neval
- 45.360883   100
-  6.666723   100</code></pre>
+                     expr      min       lq     mean   median       uq      max
+                median(x) 6.421379 6.913728 7.830094 6.985314 8.228269 42.46427
+ quantile(x, probs = 0.5) 3.574339 3.912302 4.483839 3.970133 4.798312 13.26010
+ neval
+   100
+   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">

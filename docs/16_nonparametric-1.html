@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-04-17">
+<meta name="dcterms.date" content="2024-04-19">
 
 <title>Data Science for Public Policy - 15&nbsp; Nonparametric Curve Fitting</title>
 <style>
@@ -442,7 +442,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 17, 2024</p>
+      <p class="date">April 19, 2024</p>
     </div>
   </div>
   
@@ -602,7 +602,7 @@ Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard
 <h4 class="anchored" data-anchor-id="sec-binwdith">Number of Bins and Binwidth</h4>
 <p>Histograms and relative frequency histograms are very sensitive to the selection of binwidths. <code>geom_histogram()</code> defaults to 30 bins, but this can be overridden with the <code>binwidth</code> and <code>bins</code> arguments.</p>
 <p>Several papers have developed rules for determining the number of bins or binwidth including <span class="citation" data-cites="scott2005">Scott and Sain (<a href="references.html#ref-scott2005" role="doc-biblioref">2005</a>)</span>.</p>
-<p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-histogram-fewer-bins</span></a> recreates <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-histogram</span></a> with fewer bins.</p>
+<p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> recreates <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> with fewer bins.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -693,7 +693,7 @@ Kernel
 <li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
 <li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
 </ol>
-<p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-kernels</span></a> shows the PDFs for a few kernels.</p>
+<p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> shows the PDFs for a few kernels.</p>
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
@@ -765,8 +765,8 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 </div>
 </figure>
 </div>
-<p>Second, we add kernels centered at every observation with a specified bandwidth. <a href="#fig-norm-kernels" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-norm-kernels</span></a> shows seven normal PDFs centered at our example data points.</p>
-<p>For the sake of simplicity and demonstration, we’ll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in <a href="#sec-binwdith" class="quarto-xref"><span class="quarto-unresolved-ref">sec-binwdith</span></a>. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">KDE Wikipedia page</a> provides a more in depth discussion of bandwidth selection.</p>
+<p>Second, we add kernels centered at every observation with a specified bandwidth. <a href="#fig-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> shows seven normal PDFs centered at our example data points.</p>
+<p>For the sake of simplicity and demonstration, we’ll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in <a href="#sec-binwdith" class="quarto-xref"><span>Section 15.3.1.2</span></a>. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">KDE Wikipedia page</a> provides a more in depth discussion of bandwidth selection.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -808,7 +808,7 @@ Figure&nbsp;15.4: Add PDFs centered at each observation in the data
 </div>
 </div>
 </div>
-<p>Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. <a href="#fig-normalized-norm-kernels" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-normalized-norm-kernels</span></a> shows each kernel divided by 7.</p>
+<p>Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. <a href="#fig-normalized-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.5</span></a> shows each kernel divided by 7.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -851,7 +851,7 @@ Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) N
 </div>
 </div>
 <p>Finally, for any observation <span class="math inline">\(x_0\)</span>, sum up the red lines. This sum is the KDE at point <span class="math inline">\(x_0\)</span>.</p>
-<p>Typically, we calculate the KDE for many values of <span class="math inline">\(x_0\)</span> (e.g.&nbsp;a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in <a href="#fig-kde-visually" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-kde-visually</span></a> is the estimated KDE across the range of the data.</p>
+<p>Typically, we calculate the KDE for many values of <span class="math inline">\(x_0\)</span> (e.g.&nbsp;a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in <a href="#fig-kde-visually" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is the estimated KDE across the range of the data.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -936,7 +936,7 @@ Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) N
 <p><span id="eq-kde"><span class="math display">\[
 \hat{f}(x_0) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
 \tag{15.2}\]</span></span></p>
-<p>Based on <a href="#eq-kde" class="quarto-xref">Equation&nbsp;<span class="quarto-unresolved-ref">eq-kde</span></a>, we need to pick a weighting function (<span class="math inline">\(W(z)\)</span>) and a bandwidth (<span class="math inline">\(\triangle\)</span>). We will almost always use the normal distribution and <code>bw.nrd0</code> bandwidth.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This means we can define a much simpler process:</p>
+<p>Based on <a href="#eq-kde" class="quarto-xref">Equation&nbsp;<span>15.2</span></a>, we need to pick a weighting function (<span class="math inline">\(W(z)\)</span>) and a bandwidth (<span class="math inline">\(\triangle\)</span>). We will almost always use the normal distribution and <code>bw.nrd0</code> bandwidth.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This means we can define a much simpler process:</p>
 <ol type="1">
 <li>Place a normal distribution on each observation in the data with a bandwidth determined by <code>bw.nrd0</code></li>
 <li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
@@ -1031,7 +1031,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <li>Sample 100 observations from a log-normal distribution using <code>rlnorm()</code> with <code>meanlog = 0</code> and <code>sdlog = 1</code>.</li>
 <li>Create a relative frequency histogram for the variable.</li>
 <li>Add a KDE with <code>geom_density()</code> in red.</li>
-<li>Use <code>stat_function()</code>, like in <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-histogram</span></a>, to add the theoretical PDF to the visualization in blue. You should now have three layers.</li>
+<li>Use <code>stat_function()</code>, like in <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>, to add the theoretical PDF to the visualization in blue. You should now have three layers.</li>
 <li>Duplicate the code and set <code>n</code> to <code>10000</code>. Is something off?</li>
 </ol>
 </div>
@@ -1156,7 +1156,7 @@ Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\
 <li><span class="math inline">\(\triangle_{x_o}\)</span> is the maximum distance in the vector <span class="math inline">\(|x_0 - x_i|\)</span></li>
 <li><span class="math inline">\(W()\)</span> is a kernel</li>
 </ul>
-<p><a href="#fig-loess" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-loess</span></a> demonstrates LOESS on simulated data.</p>
+<p><a href="#fig-loess" class="quarto-xref">Figure&nbsp;<span>15.10</span></a> demonstrates LOESS on simulated data.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1341,7 +1341,7 @@ Residual Standard Error: 5.446 </code></pre>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Generate the simulated data from above.</li>
-<li>Generate the plot <a href="#fig-geom_smooth" class="quarto-xref">Figure&nbsp;<span class="quarto-unresolved-ref">fig-geom_smooth</span></a>.</li>
+<li>Generate the plot <a href="#fig-geom_smooth" class="quarto-xref">Figure&nbsp;<span>15.11</span></a>.</li>
 <li>Use <code>loess()</code> and <code>predict()</code> to generate a conditional mean for <span class="math inline">\(x_0 = 6\)</span>.</li>
 <li>Add the predicted values to the data visualization using <code>geom_point()</code> and <code>color = "red"</code>.</li>
 </ol>

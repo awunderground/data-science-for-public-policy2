@@ -3,7 +3,6 @@ title: "Reproducible Research with Git and GitHub"
 format: 
   html:
     toc: true
-    embed-resources: true
     code-line-numbers: true
 ---
 
@@ -31,7 +30,7 @@ The command line (also known as shell or console) is a way of controlling comput
 
 We will run Bash, a command line program, using Terminal on Mac and Git Bash on Windows. Open Terminal like any other program on Mac. Right-click in a desired directory and select "Git Bash Here" to access Git Bash on Windows.
 
-![](images/terminal.png){width="400" fig-align="center"}
+![](images/terminal.png){width="400" fig-align="center" width=70%}
 
 Fortunately, we only need to know a little Bash for version control with Git and cloud computing.
 
@@ -253,7 +252,7 @@ See @sec-app-b for the instructions on initializing a repo locally and then addi
 
 [^files]: Github refuses to store files larger than 100 MiB. This poses a challenge to writing reproducible code. However, many data sources can be downloaded directly from the web or via APIs, allowing code to be reproducible without relying on storing large data sets on Github. Materials later in this book discuss scaping data from the web and using APIs. 
 
-![](images/git-github-workflow.jpeg)
+![](images/git-github-workflow.jpeg){fig-align="center" width=70%}
 
 
 ### Commands
@@ -331,7 +330,7 @@ Our workflow so far has involved only one person, but the true power of GitHub c
 
 We have almost exclusively seen approach one used by collaborative teams. Approach two is more common when a repository has been publicized, and someone external to the work wants to propose changes while lacking the ability to "write" (or push) to that repository. Approach one is covered in more detail in the next chapter. 
 
-![A Common Branching Workflow](images/git-branching.png)
+![A Common Branching Workflow](images/git-branching.png){fig-align="center" width=70%}
 
 To add a collaborator to your repository, under Settings select "Collaborators" under the Access menu on the left. Select the "Add people" button and add your collaborators by entering their GitHub user name.
 

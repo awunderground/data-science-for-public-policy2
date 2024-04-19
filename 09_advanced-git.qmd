@@ -3,7 +3,6 @@ title: "Advanced Git and Github"
 format: 
   html:
     toc: true
-    embed-resources: true
     code-line-numbers: true
 ---
 
@@ -45,7 +44,7 @@ Recall the following diagram from last chapter. We need a way to:
 2. Switch between branches
 3. Combine branches
 
-![A standard git workflow](images/git-branching.png)
+![A standard git workflow](images/git-branching.png){fig-align="center" width=70%}
 
 
 A second stylized (and cute!) example of this workflow can be seen [in this tweet](https://twitter.com/jay_gee/status/702638177471873024/photo/1) from Jennifer Gilbert. The octopus on the left side of the image represents an existing, operational piece of code. Two programmers create separate copies (branches) of that code, work to create independent features (represented by the heart glasses and a cowboy hat), and then merge those features back to the master branch when those features are operational.
@@ -72,20 +71,20 @@ The easiest way to merge branches is on GitHub with pull requests. When you are 
 
 1. On GitHub, click the new pull request button. 
 
-![An New Pull Request](images/new-pull-request.png)
+![An New Pull Request](images/new-pull-request.png){width=20%}
 
 
 2. Then set a pull request from the branch on the right to the branch on the left. 
 
-![](images/pull-request.png){fig-align="center"}
+![](images/pull-request.png){fig-align="center" width=70%}
 
 
 3. Navigate to the pull requests page and review the pull request. <br>
-![](images/pull-requests.png){fig-align="center"}
+![](images/pull-requests.png){fig-align="center" width=25%}
 
 4. Merge the pull request:
 
-![](images/merge-pull-request.png){fig-align="center"}
+![](images/merge-pull-request.png){fig-align="center" width=70%}
 
 ### Putting it all together
 
