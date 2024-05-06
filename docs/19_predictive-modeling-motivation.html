@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 17&nbsp; Predictive Modeling Motivation</title>
+<title>Data Science for Public Policy - 18&nbsp; Predictive Modeling Motivation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -51,7 +51,7 @@ div.csl-indent {
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./20_predictive-modeling-concepts.html" rel="next">
-<link href="./17_nonparametric-2.html" rel="prev">
+<link href="./18_data-imputation.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -131,7 +131,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -300,6 +300,12 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -314,25 +320,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -349,7 +355,13 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -374,27 +386,27 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#problem-structure" id="toc-problem-structure" class="nav-link active" data-scroll-target="#problem-structure"><span class="header-section-number">17.1</span> Problem Structure</a></li>
-  <li><a href="#example-marbles" id="toc-example-marbles" class="nav-link" data-scroll-target="#example-marbles"><span class="header-section-number">17.2</span> Example: Marbles</a>
+  <li><a href="#problem-structure" id="toc-problem-structure" class="nav-link active" data-scroll-target="#problem-structure"><span class="header-section-number">18.1</span> Problem Structure</a></li>
+  <li><a href="#example-marbles" id="toc-example-marbles" class="nav-link" data-scroll-target="#example-marbles"><span class="header-section-number">18.2</span> Example: Marbles</a>
   <ul class="collapse">
-  <li><a href="#implementation-data-1" id="toc-implementation-data-1" class="nav-link" data-scroll-target="#implementation-data-1"><span class="header-section-number">17.2.1</span> Implementation Data</a></li>
-  <li><a href="#modeling-data-1" id="toc-modeling-data-1" class="nav-link" data-scroll-target="#modeling-data-1"><span class="header-section-number">17.2.2</span> Modeling Data</a></li>
-  <li><a href="#predictive-model" id="toc-predictive-model" class="nav-link" data-scroll-target="#predictive-model"><span class="header-section-number">17.2.3</span> Predictive Model</a></li>
+  <li><a href="#implementation-data-1" id="toc-implementation-data-1" class="nav-link" data-scroll-target="#implementation-data-1"><span class="header-section-number">18.2.1</span> Implementation Data</a></li>
+  <li><a href="#modeling-data-1" id="toc-modeling-data-1" class="nav-link" data-scroll-target="#modeling-data-1"><span class="header-section-number">18.2.2</span> Modeling Data</a></li>
+  <li><a href="#predictive-model" id="toc-predictive-model" class="nav-link" data-scroll-target="#predictive-model"><span class="header-section-number">18.2.3</span> Predictive Model</a></li>
   </ul></li>
-  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">17.3</span> Applications</a>
+  <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">18.3</span> Applications</a>
   <ul class="collapse">
-  <li><a href="#targeting-interventions" id="toc-targeting-interventions" class="nav-link" data-scroll-target="#targeting-interventions"><span class="header-section-number">17.3.1</span> Targeting Interventions</a></li>
-  <li><a href="#amplified-asking" id="toc-amplified-asking" class="nav-link" data-scroll-target="#amplified-asking"><span class="header-section-number">17.3.2</span> Amplified Asking</a></li>
-  <li><a href="#scaled-labeling" id="toc-scaled-labeling" class="nav-link" data-scroll-target="#scaled-labeling"><span class="header-section-number">17.3.3</span> Scaled Labeling</a></li>
-  <li><a href="#forecasting-and-nowcasting" id="toc-forecasting-and-nowcasting" class="nav-link" data-scroll-target="#forecasting-and-nowcasting"><span class="header-section-number">17.3.4</span> Forecasting and Nowcasting</a></li>
-  <li><a href="#imputation" id="toc-imputation" class="nav-link" data-scroll-target="#imputation"><span class="header-section-number">17.3.5</span> Imputation</a></li>
+  <li><a href="#targeting-interventions" id="toc-targeting-interventions" class="nav-link" data-scroll-target="#targeting-interventions"><span class="header-section-number">18.3.1</span> Targeting Interventions</a></li>
+  <li><a href="#amplified-asking" id="toc-amplified-asking" class="nav-link" data-scroll-target="#amplified-asking"><span class="header-section-number">18.3.2</span> Amplified Asking</a></li>
+  <li><a href="#scaled-labeling" id="toc-scaled-labeling" class="nav-link" data-scroll-target="#scaled-labeling"><span class="header-section-number">18.3.3</span> Scaled Labeling</a></li>
+  <li><a href="#forecasting-and-nowcasting" id="toc-forecasting-and-nowcasting" class="nav-link" data-scroll-target="#forecasting-and-nowcasting"><span class="header-section-number">18.3.4</span> Forecasting and Nowcasting</a></li>
+  <li><a href="#imputation" id="toc-imputation" class="nav-link" data-scroll-target="#imputation"><span class="header-section-number">18.3.5</span> Imputation</a></li>
   </ul></li>
-  <li><a href="#case-studies" id="toc-case-studies" class="nav-link" data-scroll-target="#case-studies"><span class="header-section-number">17.4</span> Case Studies</a>
+  <li><a href="#case-studies" id="toc-case-studies" class="nav-link" data-scroll-target="#case-studies"><span class="header-section-number">18.4</span> Case Studies</a>
   <ul class="collapse">
-  <li><a href="#preventing-lead-poisoning" id="toc-preventing-lead-poisoning" class="nav-link" data-scroll-target="#preventing-lead-poisoning"><span class="header-section-number">17.4.1</span> Preventing Lead Poisoning</a></li>
-  <li><a href="#measuring-wealth-in-rwanda" id="toc-measuring-wealth-in-rwanda" class="nav-link" data-scroll-target="#measuring-wealth-in-rwanda"><span class="header-section-number">17.4.2</span> Measuring Wealth in Rwanda</a></li>
-  <li><a href="#collecting-land-use-reform-data" id="toc-collecting-land-use-reform-data" class="nav-link" data-scroll-target="#collecting-land-use-reform-data"><span class="header-section-number">17.4.3</span> Collecting Land-Use Reform Data</a></li>
-  <li><a href="#google-flu-trends" id="toc-google-flu-trends" class="nav-link" data-scroll-target="#google-flu-trends"><span class="header-section-number">17.4.4</span> Google Flu Trends</a></li>
+  <li><a href="#preventing-lead-poisoning" id="toc-preventing-lead-poisoning" class="nav-link" data-scroll-target="#preventing-lead-poisoning"><span class="header-section-number">18.4.1</span> Preventing Lead Poisoning</a></li>
+  <li><a href="#measuring-wealth-in-rwanda" id="toc-measuring-wealth-in-rwanda" class="nav-link" data-scroll-target="#measuring-wealth-in-rwanda"><span class="header-section-number">18.4.2</span> Measuring Wealth in Rwanda</a></li>
+  <li><a href="#collecting-land-use-reform-data" id="toc-collecting-land-use-reform-data" class="nav-link" data-scroll-target="#collecting-land-use-reform-data"><span class="header-section-number">18.4.3</span> Collecting Land-Use Reform Data</a></li>
+  <li><a href="#google-flu-trends" id="toc-google-flu-trends" class="nav-link" data-scroll-target="#google-flu-trends"><span class="header-section-number">18.4.4</span> Google Flu Trends</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -402,9 +414,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></h1>
+<h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></h1>
 </div>
 
 
@@ -427,8 +439,8 @@ window.Quarto = {
 </header>
 
 
-<section id="problem-structure" class="level2" data-number="17.1">
-<h2 data-number="17.1" class="anchored" data-anchor-id="problem-structure"><span class="header-section-number">17.1</span> Problem Structure</h2>
+<section id="problem-structure" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="problem-structure"><span class="header-section-number">18.1</span> Problem Structure</h2>
 <p>There are many policy applications where it is useful to make accurate predictions on “unseen” data. Unseen data means any data not used to develop a model for predictions.</p>
 <p>The broad process of developing models to make predictions of a pre-defined variable is predictive modeling or supervised machine learning. The narrower process of developing a specific model with data is called fitting a model, learning a model, or estimating a model. The pre-defined variable the model is intended to predict is the <strong>outcome variable</strong> and the remaining variables used to predict the outcome variable are <strong>predictors</strong>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <p>In most applications we have <strong>modeling data</strong> that include the outcome of interest and <strong>implementation data</strong> that do not include the outcome of interest. Our objective is to fit, or estimate, some <span class="math inline">\(\hat{f}(\vec{x})\)</span> using the modeling data to predict the missing outcome in the implementation data.</p>
@@ -438,7 +450,7 @@ window.Quarto = {
 <img src="images/data.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.1: Modeling Data and Implementation Data for predicting the presence of lead in homes
+Figure&nbsp;18.1: Modeling Data and Implementation Data for predicting the presence of lead in homes
 </figcaption>
 </figure>
 </div>
@@ -476,16 +488,16 @@ Implementation Data
 <img src="images/predictive-modeling-process.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-predictive-modeling-process-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;17.2: Using modeling data to fit a model and make predctions on the implementation data
+Figure&nbsp;18.2: Using modeling data to fit a model and make predctions on the implementation data
 </figcaption>
 </figure>
 </div>
 <p>Our fitted models never perfectly predict the outcome, <span class="math inline">\(y\)</span>. Therefore, we end up with <span class="math inline">\(y = \hat{f}(\vec{x}) + \epsilon\)</span>. A major effort in predictive modeling is improving <span class="math inline">\(\hat{f}(\vec{x})\)</span> to reduce <span class="math inline">\(\epsilon\)</span>.</p>
 </section>
-<section id="example-marbles" class="level2" data-number="17.2">
-<h2 data-number="17.2" class="anchored" data-anchor-id="example-marbles"><span class="header-section-number">17.2</span> Example: Marbles</h2>
-<section id="implementation-data-1" class="level3" data-number="17.2.1">
-<h3 data-number="17.2.1" class="anchored" data-anchor-id="implementation-data-1"><span class="header-section-number">17.2.1</span> Implementation Data</h3>
+<section id="example-marbles" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="example-marbles"><span class="header-section-number">18.2</span> Example: Marbles</h2>
+<section id="implementation-data-1" class="level3" data-number="18.2.1">
+<h3 data-number="18.2.1" class="anchored" data-anchor-id="implementation-data-1"><span class="header-section-number">18.2.1</span> Implementation Data</h3>
 <table class="table">
 <thead>
 <tr class="header">
@@ -509,8 +521,8 @@ Figure&nbsp;17.2: Using modeling data to fit a model and make predctions on the 
 </tbody>
 </table>
 </section>
-<section id="modeling-data-1" class="level3" data-number="17.2.2">
-<h3 data-number="17.2.2" class="anchored" data-anchor-id="modeling-data-1"><span class="header-section-number">17.2.2</span> Modeling Data</h3>
+<section id="modeling-data-1" class="level3" data-number="18.2.2">
+<h3 data-number="18.2.2" class="anchored" data-anchor-id="modeling-data-1"><span class="header-section-number">18.2.2</span> Modeling Data</h3>
 <table class="table">
 <thead>
 <tr class="header">
@@ -562,8 +574,8 @@ Figure&nbsp;17.2: Using modeling data to fit a model and make predctions on the 
 </tbody>
 </table>
 </section>
-<section id="predictive-model" class="level3" data-number="17.2.3">
-<h3 data-number="17.2.3" class="anchored" data-anchor-id="predictive-model"><span class="header-section-number">17.2.3</span> Predictive Model</h3>
+<section id="predictive-model" class="level3" data-number="18.2.3">
+<h3 data-number="18.2.3" class="anchored" data-anchor-id="predictive-model"><span class="header-section-number">18.2.3</span> Predictive Model</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" aria-current="page">Challenge</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false">Solution</a></li></ul>
 <div class="tab-content">
@@ -582,11 +594,11 @@ Figure&nbsp;17.2: Using modeling data to fit a model and make predctions on the 
 </div>
 </section>
 </section>
-<section id="applications" class="level2" data-number="17.3">
-<h2 data-number="17.3" class="anchored" data-anchor-id="applications"><span class="header-section-number">17.3</span> Applications</h2>
+<section id="applications" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="applications"><span class="header-section-number">18.3</span> Applications</h2>
 <p>Predictive modeling has many applications in public policy. Predictive models can be used to improve the allocation of scarce resources, scale survey responses or hand-labelled data sets, and forecast or nowcast.</p>
-<section id="targeting-interventions" class="level3" data-number="17.3.1">
-<h3 data-number="17.3.1" class="anchored" data-anchor-id="targeting-interventions"><span class="header-section-number">17.3.1</span> Targeting Interventions</h3>
+<section id="targeting-interventions" class="level3" data-number="18.3.1">
+<h3 data-number="18.3.1" class="anchored" data-anchor-id="targeting-interventions"><span class="header-section-number">18.3.1</span> Targeting Interventions</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -601,8 +613,8 @@ Targeting Interventions
 </div>
 </div>
 </section>
-<section id="amplified-asking" class="level3" data-number="17.3.2">
-<h3 data-number="17.3.2" class="anchored" data-anchor-id="amplified-asking"><span class="header-section-number">17.3.2</span> Amplified Asking</h3>
+<section id="amplified-asking" class="level3" data-number="18.3.2">
+<h3 data-number="18.3.2" class="anchored" data-anchor-id="amplified-asking"><span class="header-section-number">18.3.2</span> Amplified Asking</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -617,8 +629,8 @@ Amplified Asking
 </div>
 </div>
 </section>
-<section id="scaled-labeling" class="level3" data-number="17.3.3">
-<h3 data-number="17.3.3" class="anchored" data-anchor-id="scaled-labeling"><span class="header-section-number">17.3.3</span> Scaled Labeling</h3>
+<section id="scaled-labeling" class="level3" data-number="18.3.3">
+<h3 data-number="18.3.3" class="anchored" data-anchor-id="scaled-labeling"><span class="header-section-number">18.3.3</span> Scaled Labeling</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -634,8 +646,8 @@ Scaled Labeling
 </div>
 </div>
 </section>
-<section id="forecasting-and-nowcasting" class="level3" data-number="17.3.4">
-<h3 data-number="17.3.4" class="anchored" data-anchor-id="forecasting-and-nowcasting"><span class="header-section-number">17.3.4</span> Forecasting and Nowcasting</h3>
+<section id="forecasting-and-nowcasting" class="level3" data-number="18.3.4">
+<h3 data-number="18.3.4" class="anchored" data-anchor-id="forecasting-and-nowcasting"><span class="header-section-number">18.3.4</span> Forecasting and Nowcasting</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -650,15 +662,15 @@ Forecasting and Nowcasting
 </div>
 </div>
 </section>
-<section id="imputation" class="level3" data-number="17.3.5">
-<h3 data-number="17.3.5" class="anchored" data-anchor-id="imputation"><span class="header-section-number">17.3.5</span> Imputation</h3>
+<section id="imputation" class="level3" data-number="18.3.5">
+<h3 data-number="18.3.5" class="anchored" data-anchor-id="imputation"><span class="header-section-number">18.3.5</span> Imputation</h3>
 <p>Broadly, imputation is the task of using models to assign, or impute, missing values in some dataset. Broadly, imputation can be used for a variety of applications including trying to reduce the consequences of omitted variable bias, generating synthetic data to minimize disclosure risks, and data fusion. Amplified asking and scaled labeling are also examples of imputation tasks.</p>
 </section>
 </section>
-<section id="case-studies" class="level2" data-number="17.4">
-<h2 data-number="17.4" class="anchored" data-anchor-id="case-studies"><span class="header-section-number">17.4</span> Case Studies</h2>
-<section id="preventing-lead-poisoning" class="level3" data-number="17.4.1">
-<h3 data-number="17.4.1" class="anchored" data-anchor-id="preventing-lead-poisoning"><span class="header-section-number">17.4.1</span> Preventing Lead Poisoning</h3>
+<section id="case-studies" class="level2" data-number="18.4">
+<h2 data-number="18.4" class="anchored" data-anchor-id="case-studies"><span class="header-section-number">18.4</span> Case Studies</h2>
+<section id="preventing-lead-poisoning" class="level3" data-number="18.4.1">
+<h3 data-number="18.4.1" class="anchored" data-anchor-id="preventing-lead-poisoning"><span class="header-section-number">18.4.1</span> Preventing Lead Poisoning</h3>
 <p>Consider “<a href="https://www.dssgfellowship.org/wp-content/uploads/2016/01/p2039-potash.pdf">Predictive Modeling for Public Health: Preventing Childhood Lead Poisoning</a>” by <span class="citation" data-cites="potash2015">Potash et al. (<a href="references.html#ref-potash2015" role="doc-biblioref">2015</a>)</span>.</p>
 <p>The authors use historical data in Chicago from home lead inspectors and observable characteristics about homes and neighborhoods to predict if homes contain lead.</p>
 <ul>
@@ -670,8 +682,8 @@ Forecasting and Nowcasting
 <li><strong>Results:</strong> The precision of the model was two to five times better than the baseline scenario of randomly sending inspectors. The advantage faded over time and in situations where more inspectors were available.</li>
 </ul>
 </section>
-<section id="measuring-wealth-in-rwanda" class="level3" data-number="17.4.2">
-<h3 data-number="17.4.2" class="anchored" data-anchor-id="measuring-wealth-in-rwanda"><span class="header-section-number">17.4.2</span> Measuring Wealth in Rwanda</h3>
+<section id="measuring-wealth-in-rwanda" class="level3" data-number="18.4.2">
+<h3 data-number="18.4.2" class="anchored" data-anchor-id="measuring-wealth-in-rwanda"><span class="header-section-number">18.4.2</span> Measuring Wealth in Rwanda</h3>
 <p>Consider “Calling for Better Measurement: Estimating an Individual’s Wealth and Well-Being from Mobile Phone Transaction Records” by <span class="citation" data-cites="blumenstock">Blumenstock (<a href="references.html#ref-blumenstock" role="doc-biblioref">n.d.</a>)</span> and “Predicting poverty and wealth from mobile phone metadata” by <span class="citation" data-cites="blumenstock2015">Blumenstock, Cadamuro, and On (<a href="references.html#ref-blumenstock2015" role="doc-biblioref">2015</a>)</span>.</p>
 <ul>
 <li><strong>Motivation:</strong> Measuring wealth and poverty in developing nations is challenging and expensive.</li>
@@ -682,8 +694,8 @@ Forecasting and Nowcasting
 <li><strong>Results:</strong> The results in the first paper were poor, but follow-up work resulted in models with AUC as high as 0.88 and <span class="math inline">\(R^2\)</span> as high as 0.46.</li>
 </ul>
 </section>
-<section id="collecting-land-use-reform-data" class="level3" data-number="17.4.3">
-<h3 data-number="17.4.3" class="anchored" data-anchor-id="collecting-land-use-reform-data"><span class="header-section-number">17.4.3</span> Collecting Land-Use Reform Data</h3>
+<section id="collecting-land-use-reform-data" class="level3" data-number="18.4.3">
+<h3 data-number="18.4.3" class="anchored" data-anchor-id="collecting-land-use-reform-data"><span class="header-section-number">18.4.3</span> Collecting Land-Use Reform Data</h3>
 <p>Consider “<a href="https://urban-institute.medium.com/how-urban-piloted-data-science-techniques-to-collect-land-use-reform-data-475409903b88">How Urban Piloted Data Science Techniques to Collect Land-Use Reform Data</a>” by <span class="citation" data-cites="zheng2020">Zheng (<a href="references.html#ref-zheng2020" role="doc-biblioref">2020</a>)</span>.</p>
 <ul>
 <li><strong>Motivation:</strong> Land-use reform and zoning are poorly understood at the national level. The Urban Institute set out to create a data set from newspaper articles that reflects land-use reforms.</li>
@@ -694,8 +706,8 @@ Forecasting and Nowcasting
 <li><strong>Results:</strong> The results were not accurate enough to treat as a data set but could be used to target subsequent hand coding and investigation.</li>
 </ul>
 </section>
-<section id="google-flu-trends" class="level3" data-number="17.4.4">
-<h3 data-number="17.4.4" class="anchored" data-anchor-id="google-flu-trends"><span class="header-section-number">17.4.4</span> Google Flu Trends</h3>
+<section id="google-flu-trends" class="level3" data-number="18.4.4">
+<h3 data-number="18.4.4" class="anchored" data-anchor-id="google-flu-trends"><span class="header-section-number">18.4.4</span> Google Flu Trends</h3>
 <p>Consider the high-profile Google Flu Trends model by <span class="citation" data-cites="ginsberg2009">Ginsberg et al. (<a href="references.html#ref-ginsberg2009" role="doc-biblioref">2009</a>)</span>.</p>
 <ul>
 <li><strong>Motivation:</strong> The CDC tracks flu-like illnesses and releases data on about a two-week lag. Understanding flu-like illnesses on a one-day lag can improve public health responses.</li>
@@ -1145,13 +1157,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./17_nonparametric-2.html" class="pagination-link" aria-label="Nonparametric Inference">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span>
+      <a href="./18_data-imputation.html" class="pagination-link" aria-label="Missing Data and Data Imputation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./20_predictive-modeling-concepts.html" class="pagination-link" aria-label="Predictive Modeling Concepts">
-        <span class="nav-page-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
