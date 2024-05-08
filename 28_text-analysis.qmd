@@ -43,7 +43,7 @@ Text analysis has broad applications that extend well beyond policy analysis. We
 The process of condensing the amount of information in a document into a useful subset of information. Techniques range from counting words to using complex machine learning algorithms. 
 :::
 
-**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/)) Before estimating any models, they spent months cutting out each word of the Federalist Papers and the counting the frequency of words. 
+**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. Before estimating any models, they spent months cutting out each word of the Federalist Papers and the counting the frequency of words [@christopher2016]. 
 
 ### Text Classification (supervised)
 
@@ -52,9 +52,9 @@ The process of condensing the amount of information in a document into a useful 
 The process of labeling documents with a predetermined set of labels.
 :::
 
-**Example:** Researchers in the Justice Policy Center at the Urban Institute classified millions of tweets with the word "cop" or "police" as "positive", "negative", "neutral", or "not applicable" for sentiment and "crime or incident information", "department or event information", "traffic or weather updates", "person identification", or "other" for topic. The researchers created content and metadata features, manually labeled a few thousand tweets for training data, and used gradient boosting for supervised machine learning for the task. ([blog](https://medium.com/@urban_institute/how-to-categorize-large-amounts-of-text-data-71e1fd590e2a))
+**Example:** Researchers in the Justice Policy Center at the Urban Institute classified millions of tweets with the word "cop" or "police" as "positive", "negative", "neutral", or "not applicable" for sentiment and "crime or incident information", "department or event information", "traffic or weather updates", "person identification", or "other" for topic. The researchers created content and metadata features, manually labeled a few thousand tweets for training data, and used gradient boosting for supervised machine learning for the task [@oglesby2019].
 
-**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/))
+**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers [@christopher2016].
 
 ### Document Grouping (unsupervised)
 
@@ -63,7 +63,7 @@ The process of labeling documents with a predetermined set of labels.
 The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. Techniques like topic modeling result in lists of important words that can be used to summarize and label the documents while techniques like K-means clustering result in arbitrary cluster labels. 
 :::
 
-**Example:** Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives. ([blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455))
+**Example:** Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives [@vanKessel2019].
 
 ### 4. Text Extraction
 
@@ -73,7 +73,7 @@ Text often contains important unstructured information that would be useful to h
 :::
 
 
-**Example:** Researchers from Cornell counted sources of misinformation from 38 million articles. [NYTimes](https://www.nytimes.com/2020/09/30/us/politics/trump-coronavirus-misinformation.html?referringSource=articleShare). [Methodology](https://int.nyt.com/data/documenttools/evanega-et-al-coronavirus-misinformation-submitted-07-23-20-1/080839ac0c22bca8/full.pdf).
+**Example:** Researchers from Cornell counted sources of misinformation from 38 million articles [@nyt2021; @covidmisinfo]. 
 
 ### Other
 
@@ -121,14 +121,14 @@ Speech recognition, machine translation, question answering, and text autocomple
 
 ::: {.callout-tip}
 ## Bigram graph:
-**Bigram graph:** A directed or undirected graph with individual words as nodes and bigrams as edges. [Example](https://www.tidytextmining.com/ngrams.html)
+**Bigram graph:** A directed or undirected graph with individual words as nodes and bigrams as edges. You can see an example from *Text Mining with R: A Tidy Approach* [@Silge2017] [here](https://www.tidytextmining.com/ngrams.html).
 :::
 
 ## Topic Modeling
 
 ::: {.callout-tip}
 ## Topic modeling:
-**Topic modeling:** Unsupervised and semi-supervised methods for grouping documents. [Example](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455)
+**Topic modeling:** Unsupervised and semi-supervised methods for grouping documents. See @vanKessel2019 for an example. 
 
 Popular methods include:
 
@@ -207,7 +207,7 @@ tidy_fed_paper1
 ```
 
 ::: {.callout-tip}
-**Stemming:** A method of removing the end, and keeping only the root, of a word. Stemming is unaware of the context or use of the word. This [example](https://smltar.com/stemming.html#how-to-stem-text-in-r) provides a good in-depth discussion of the process. 
+**Stemming:** A method of removing the end, and keeping only the root, of a word. Stemming is unaware of the context or use of the word. This [example](https://smltar.com/stemming.html#how-to-stem-text-in-r) [@Silge2017] provides a good in-depth discussion of the process. 
 
 ```{r}
 # SnowballC has a stemmer that works well with tidytext
@@ -222,7 +222,7 @@ tidy_fed_paper1 %>%
 
 ::: {.callout-tip}
 ## Lemmatizing: 
-**Lemmatizing:** A method of returning the base of a word. Lemmatization considers the context of a word. This [example](https://smltar.com/stemming.html#lemmatization) provides more depth on lemmatizing. Lemmatizing requires natural language processing, so this requires Stanford CoreNLP or the Python package spaCy. 
+**Lemmatizing:** A method of returning the base of a word. Lemmatization considers the context of a word. This [example](https://smltar.com/stemming.html#lemmatization) [@Silge2017] provides more depth on lemmatizing. Lemmatizing requires natural language processing, so this requires Stanford CoreNLP or the Python package spaCy. 
 :::
 
 ::: {.callout-tip}
@@ -237,7 +237,7 @@ stop_words
 
 ::: {.callout-tip}
 ## Tidy text
-**Tidy text:** "A table with one token per row." ~ [Text Mining with R](https://www.tidytextmining.com/)
+**Tidy text:** "A table with one token per row." [@Silge2017]
 
 Text can also be stored as a string, a corpus, and a document-term matrix. 
 

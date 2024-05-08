@@ -49,7 +49,7 @@ book:
         # - PART 1: cluster analysis
         - 27_advanced-unsupervised-ml.qmd 
         - 28_text-analysis.qmd
-        # - PART 1: text modeling
+        - 29_text-modeling.qmd
     - part: Other Topics
         # - PART 1: geospatial analysis
         # - parallel programming to be developed
