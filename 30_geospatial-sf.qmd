@@ -36,7 +36,15 @@ Geospatial data are multidimensional. The outline of a simple rectangular state 
 If you are looking online, you may notice R code written in the (similarly named) `library(sp)` package. `library(sp)` is older than `library(sf)`, and `library(sp)` [is no longer being developed](https://geocompx.org/post/2023/rgdal-retirement/). Among its many advantages, `library(sf)` integrates seamlessly with the tidyverse.
 :::
 
-`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` that stores geospatial data which are **points**, **lines**, or **polygons**. Consider this example:
+`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. 
+
+:::callout-tip:
+## Vector Geospatial data
+Vector spatial (or geospatial) data consist of some combination of **points**, **lines**, or **polygons**. 
+:::
+
+
+Consider this example of vector geospatial data:
 
 
 ```{r}
@@ -89,7 +97,7 @@ amtrak_stations %>%
 
 ### Lines
 
-A line (`LINESTRING`) is composed of a sequence of multiple points. Here is an example of Amtrak train routes from the [Bureau of Transportation Statistics](https://data-usdot.opendata.arcgis.com/):
+A line (`LINESTRING`) is composed of a sequence of multiple points. Below is an example of Amtrak train routes from the [Bureau of Transportation Statistics](https://data-usdot.opendata.arcgis.com/). Note that there are many separate lines in the map below. 
 
 ```{r}
 amtrak_routes_file <- here("data", "Amtrak_Routes.geojson")
@@ -129,9 +137,10 @@ states %>%
 
 ### Multi- Geometries
 
-In practice, many records in a sf dataframe do not have type `LINE`, `POINT` or `POLYGON`, but rather `MULTIPOINT`, `MULTILINE` and `MULTIPOLYGON`. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively. 
+In practice, many records in a sf dataframe do not have type `LINE`, `POINT` or `POLYGON`, but rather have type `MULTIPOINT`, `MULTILINE` or `MULTIPOLYGON`. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively. 
 
-Consider the example of Hawaii. Hawaii is a single state, so, in the `states` object above, it should be a single line. However, Hawaii has many islands (polygons), making a `MULTIPOLYGON` the appropriate representation of it. 
+Consider the example of California. California is a single state, so, in the `states` sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the `MULTIPOLYGON` type is most well-suited for representing it.
+
 
 `library(sf)` can represent 18 geometry types. To read about the 12 we do not mention, read the [sf documentation](https://r-spatial.github.io/sf/articles/sf1.html).
 
@@ -140,9 +149,9 @@ If you are struggling with these concepts or want to read about them in greater 
 
 ## `geom_sf()`
 
-`ggplot2::geom_sf()` plots `sf` data. The function automatically references the `geometry` column and does not require any aesthetic mappings. `geom_sf()` works well with layers and it is simple to combine point, line, and polygon data.
+`ggplot2::geom_sf()` plots `sf` data. The function automatically references the `geometry` column and does not require any aesthetic mappings. `geom_sf()` works well with layers, and it is simple to combine point, line, and polygon data.
 
-`geom_sf()` works like `geom_point()` for point data, `geom_line()` for line data, and `geom_area()` for polygon data (e.g. fill controls the color of shapes and color controls the border colors of shapes for polygons).
+`geom_sf()` works like `geom_point()` for point data, `geom_line()` for line data, and `geom_area()` for polygon data (e.g. the `fill` argument controls the color of shapes, and the `color` argument controls the border colors of shapes for polygons).
 
 
 ```{r}
@@ -174,7 +183,11 @@ amtrak_map
 
 Shapefiles are a proprietary file format created by ESRI, the company that creates ArcGIS. Shapefiles are popular because ESRI dominated the GIS space for a long time. A shapefile is actually usually three or more binary files.
 
-`st_read()` reads shapefiles into R in the `sf` format. Simply point the function to the file ending in `.shp`. Note that the other binary files associated with the shapefile must also be located in the same directory as the `.shp` file.
+`st_read()` reads shapefiles into R in the `sf` format. Simply point the function to the file ending in `.shp`. 
+
+:::callout-note
+Note that the other binary files associated with the shapefile must also be located in the same directory as the `.shp` file.
+:::
 
 ### GeoJSON
 
@@ -190,7 +203,7 @@ Lots of geographic information is stored in `.csv` files--especially for point d
 st_as_sf(data, coords = c("lon", "lat"))
 ```
 ::: callout-note
-**Note:** It is trickier (but far less common) to load line, polygon, and multipolygon data from `.csvs`.
+It is trickier (but far less common) to load line, polygon, and multipolygon data from `.csvs`.
 :::
 
 
@@ -256,7 +269,7 @@ mi_cb <- states(cb = TRUE, progress_bar = FALSE) %>%
   labs(title = "Cartographic Boundary") +  
   theme_void()
 
-#mi + mi_cb
+mi + mi_cb
 
 ```
 
@@ -360,7 +373,7 @@ dc_income <- get_acs(
 
 ```
 
-Both `library(tigris)` and `library(tidycensus)` have a `year` parameter that determines the year of the data obtained in functions like `tidycensus::get_acs()` or `tigris::states()`. This parameter currently defaults to 2020 for `get_acs()` and `tigris` functions. `tidycensus::get_acs()` also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.
+Both `library(tigris)` and `library(tidycensus)` have a `year` parameter that determines the year of the data obtained in functions like `tidycensus::get_acs()` or `tigris::states()`. This parameter currently defaults to 2020 for `get_acs()` and 2022 for `tigris` functions. `tidycensus::get_acs()` also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.
 
 ## Choropleths
 
@@ -396,6 +409,7 @@ dc_income %>%
 ```
 
 
+:::callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
 ```{r, include = FALSE}
@@ -413,22 +427,22 @@ exercise_number <- exercise_number + 1
 Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface. 
 
 :::callout-note
-**Note:** the Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
+The Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
 :::
 
-:::callout-tip:
+:::callout-tip
 ### Geographic coordinate reference systems
 **Geographic coordinate reference systems**: data with a three-dimensional representation of the Earth. (i.e. The data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.
 :::
 
 
-::: callout-note
+::: callout-tip
 ### Projected coordinate reference system
 **Projected coordinate reference system:** data with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.
 :::
 
 
-::: callout-note
+::: callout-tip
 ### Projection
 **Projection:** A mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into a two-dimensions.
 :::
@@ -443,41 +457,19 @@ Cylindrical projections maintain lines of longitude and latitude but distort are
 
 The Mercator projection is widespread because it maintains straight lines for longitude and latitude. This was useful for navigators on the open sea hundreds of years ago. This is less useful in the 21st century. The Mercator projection is conformal, so while it maintains angles, it seriously distorts area. To see this, play the [Mercator Puzzle](https://bramus.github.io/mercator-puzzle-redux/).
 
-```{r}
-#| echo: false
-#| out-width: "0.66\\linewidth"
-
-knitr::include_graphics(here::here("images", "mercator.png"))
-
-```
-
-Source: [Encyclopædia Britannica](https://www.britannica.com/science/Mercator-projection#/media/1/375638/231099)
+![Source: [Encyclopædia Britannica](https://www.britannica.com/science/Mercator-projection#/media/1/375638/231099)](images/mercator.png)
 
 #### Albers Equal Area Projection
 
 The Albers Equal Area projection, which is a conic projection, doesn't maintain angles, but it is an equal area projection. It is the default projection of the Urban Institute.
 
-```{r}
-#| echo: false
-#| out-width: "0.66\\linewidth"
-
-knitr::include_graphics(here::here("tutorials", "images", "albers.png"))
-
-```
+![](images/albers.png)
 
 #### State Plane Coordinate Systems (SPCS)
 
 The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. [This site](https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm) has a thorough introduction.
 
-```{r}
-#| echo: false
-#| out-width: "0.66\\linewidth"
-
-knitr::include_graphics(here::here("tutorials", "images", "spcs83.png"))
-
-```
-
-Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)
+![Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)](images/spcs83.png)
 
 #### EPSG Codes
 
@@ -530,7 +522,7 @@ The differences between these two recommendations are not significant.
 
 #### Bottom line
 
-That's a lot of technical information. When mapping in the US
+That's a lot of technical information. When mapping in the US:
 
 1.  Use `CRS = 4326` when you load the data to understand the locations you are mapping. *This is not a projection* but plotting the data acts like a projection.
 2.  Use `CRS = 5070` if you are mapping the entire Continental US. Other useful EPSG codes are available [here](https://guides.library.duke.edu/r-geospatial/CRS).
@@ -617,7 +609,7 @@ ggplot() +
 :::
 
 
-## Spatial operations
+## Spatial Operations
 
 We often want to manipulate spatial data or use spatial data for calculations. This section covers a few common operations.
 
@@ -643,17 +635,25 @@ states %>%
 
 ```
 
+`sf::st_combine()` offers similar functionality from the `library(sf)` package.
+
 ### Spatial Joins
 
-Spatial joins are joins like `left_join()` but the join is based on geography instead of "by" variables. **Note:** both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many.
+Spatial joins are joins like `left_join()`, but the join is based on geography instead of "by" variables. 
 
-`st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` touch the geographies in `y`. The `sf` package offers a number of different geometric confirmations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is copletely within `y`), `st_within` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options.
+:::callout-warning
+For spatial joins to work, both geographies must have the same CRS. As noted above, we encourage you to plot your data before a join as a check that both have the same CRS. 
+:::
+Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many.
+
+`st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` either are inside of or touch the geographies in `y`. The `sf` package offers a number of different topological relations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is completely within `y`), `st_within` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options in the "Geometric confirmation" column.
+
 
 Suppose we want to count the number of Amtrak stations in each state.
 
 
 ```{r}
-# set states CRS to 4326 to match the Amtrak data
+# set states CRS to 5070 to match the Amtrak data
 amtrak_stations <- st_transform(amtrak_stations, crs = 5070)
 
 # dimension before join
@@ -711,13 +711,7 @@ $$d(\vec{p}, \vec{q}) = \sqrt{\sum_{i = 1}^n(q_i - p_i)^2}$$
 
 Instead, it is common to use Haversine distance which accounts for the curvature in the globe.
 
-```{r}
-#| echo: false
-#| out-width: "0.25\\linewidth"
-
-knitr::include_graphics(here::here("tutorials", "images", "haversine.png"))
-
-```
+![](images/haversine.png)
 
 Suppose we want to find the closest and furthest Amtrak stations from Washington DC's Union Station.
 
@@ -746,7 +740,7 @@ amtrak_stations %>%
 
 ```
 
-## Geospatial modeling
+## Geospatial modeling (Spatial Regression Analysis)
 
 Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.
 
@@ -754,7 +748,10 @@ The assumption of independence often falls apart with spatial data. If number of
 
 Spatial regression methods attempt to account for this dependence between observations.
 
+:::callout-note
+## Spatial autocorrelation
 **Spatial autocorrelation:** Correlation between observations that are geographically close.
+:::
 
 Process:
 
@@ -766,12 +763,18 @@ Process:
 
 This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.
 
-Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set may have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+
+This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend *Geocomputation with R* [@geocomp]. (Spatial Data Science)[https://r-spatial.org/book/] provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). (Geographical Data Science)[https://geographicdata.science/book/intro.html] is also a fantastic place to learn more, but note that it is written in Python. 
 
 ## More Resources
 
+-   [Geocomputation with R](https://r.geocompx.org)
+-   [Spatial Data Science](https://r-spatial.org/book/)
+-   [Geographical Data Science](https://geographicdata.science/book/intro.html)
 -   [Drawing Beautiful Maps with sf - part 1](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html)
 -   [Drawing Beautiful Maps with sf - part 2](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
 -   [R Spatial Workshop Notes](https://spatialanalysis.github.io/workshop-notes/)
 -   [Analyzing US Census Data by Kyle Walker -- Chapter 6](https://walker-data.com/census-r/mapping-census-data-with-r.html)
 -   [sf Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf)
+
