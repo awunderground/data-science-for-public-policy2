@@ -5,6 +5,7 @@ format:
   html: 
     code-line-numbers: true
     self-contained: true
+    fig-align: "center"
 editor_options: 
   chunk_output_type: console
 ---
@@ -36,11 +37,13 @@ Geospatial data are multidimensional. The outline of a simple rectangular state 
 If you are looking online, you may notice R code written in the (similarly named) `library(sp)` package. `library(sp)` is older than `library(sf)`, and `library(sp)` [is no longer being developed](https://geocompx.org/post/2023/rgdal-retirement/). Among its many advantages, `library(sf)` integrates seamlessly with the tidyverse.
 :::
 
-`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. 
+`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. You can think of each record in an sf dataframe as having two sets of data:
+1. **Attribute data**: the non-spatial data. These data are stored in all columns except the `geometry` column
+2. **Geographic data**: the geospatial data stored in the `geometry` column. 
 
-:::callout-tip:
+:::callout-tip
 ## Vector Geospatial data
-Vector spatial (or geospatial) data consist of some combination of **points**, **lines**, or **polygons**. 
+Vector geospatial data consist of some combination of **points**, **lines**, or **polygons**. 
 :::
 
 
@@ -73,8 +76,8 @@ amtrak_stations %>%
 
 ```
 
-:::callout-note:
-The geometry column in a `sf` dataframe is "sticky." Even though `geometry` was not included in `select()`, it is still returned. `sf` works this way because the spatial data stored in the geometry column is essential to the object (it couldn't be a spatial data set without the spatial data!). 
+:::callout-note
+The geometry column in a `sf` dataframe is "sticky." Even though `geometry` was not included in `select()`, it is still returned. `sf` works this way because the spatial data stored in the geometry column is essential to the object (it couldn't be a geospatial data set without the geographic component of the data!). 
 
 If you are dead-set on dropping a geometry column, you can use `sf::st_drop_geometry()` which returns a data.frame.
 :::
@@ -312,7 +315,7 @@ exercise_number <- exercise_number + 1
 
 We want to read in and map the locations of World Bank development projects in Bangladesh downloaded from [AidData](https://www.aiddata.org/data/world-bank-geocoded-research-release-level-1-v1-4-2), which includes geographic and other information about development projects.
 
-1.  Copy the below code into your script to read in `aiddata_bangladesh.csv` with read_csv().
+1.  Copy the below code into your script to read in `aiddata_bangladesh.csv` with `read_csv()`.
 
 ```{r}
 aiddata <- read_csv(
@@ -381,8 +384,6 @@ Choropleths are maps that use fill to display the variation in a variable across
 
 ```{r}
 #| echo: false
-#| fig-width: 5
-#| fig-height: 3
 
 dc_income <- get_acs(geography = "tract", 
                      variables = "B19013_001", 
@@ -463,13 +464,13 @@ The Mercator projection is widespread because it maintains straight lines for lo
 
 The Albers Equal Area projection, which is a conic projection, doesn't maintain angles, but it is an equal area projection. It is the default projection of the Urban Institute.
 
-![](images/albers.png)
+![](images/albers.png){fig-align="center"}
 
 #### State Plane Coordinate Systems (SPCS)
 
 The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. [This site](https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm) has a thorough introduction.
 
-![Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)](images/spcs83.png)
+![Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)](images/spcs83.png){fig-align="center"}
 
 #### EPSG Codes
 
@@ -566,10 +567,10 @@ amtrak_map + amtrak_map_new
 ```{r, include = FALSE}
 exercise_number <- exercise_number + 1
 ```
-1.  Copy-and-paste the AidData exercise from exercise 2.
+1.  Copy-and-paste the AidData exercise from Exercise 2.
 2.  Repeat the mapping with a EPSG code that makes sense for Bangladesh using `st_transform()` (**Hint:** you can identify the EPSG code using `suggest_crs(aiddata)`).
-3.  Copy-and-paste the AidData exercise from exercise 2 again.
-4.  Repeat the mapping with a EPSG code that makes sense for Bangladesh using `coord_sf(crs = ####)` where `####` is the EPSG code from step 2 (**Hint:** `coord_sf()` can be added to your mapping code following a + ). This skips the need for `st_transform()` when making maps.
+3.  Copy-and-paste the AidData exercise from Exercise 2 again.
+4.  Repeat the mapping with a EPSG code that makes sense for Bangladesh using `coord_sf(crs = ####)` where `####` is the EPSG code from step 2 (**Hint:** `coord_sf()` can be added to your mapping code following a `+` ). This skips the need for `st_transform()` when making maps.
 
 ```{r}
 #| include: false
@@ -642,9 +643,9 @@ states %>%
 Spatial joins are joins like `left_join()`, but the join is based on geography instead of "by" variables. 
 
 :::callout-warning
-For spatial joins to work, both geographies must have the same CRS. As noted above, we encourage you to plot your data before a join as a check that both have the same CRS. 
+For spatial joins to work, both geographies must have the same CRS. We encourage you to check both layers have the same CRS by using `st_crs()` and a plot of your data (to ensure CRS's are not mis-specified). 
 :::
-Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many.
+Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one or one-to-many.
 
 `st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` either are inside of or touch the geographies in `y`. The `sf` package offers a number of different topological relations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is completely within `y`), `st_within` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options in the "Geometric confirmation" column.
 
@@ -711,7 +712,7 @@ $$d(\vec{p}, \vec{q}) = \sqrt{\sum_{i = 1}^n(q_i - p_i)^2}$$
 
 Instead, it is common to use Haversine distance which accounts for the curvature in the globe.
 
-![](images/haversine.png)
+![](images/haversine.png){fig-align="center"}
 
 Suppose we want to find the closest and furthest Amtrak stations from Washington DC's Union Station.
 
@@ -740,7 +741,7 @@ amtrak_stations %>%
 
 ```
 
-## Geospatial modeling (Spatial Regression Analysis)
+## Geospatial Modeling (Spatial Regression Analysis)
 
 Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.
 
@@ -765,7 +766,7 @@ This note set works entirely with vector spatial data. Vector data consists of v
 
 Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
 
-This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend *Geocomputation with R* [@geocomp]. (Spatial Data Science)[https://r-spatial.org/book/] provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). (Geographical Data Science)[https://geographicdata.science/book/intro.html] is also a fantastic place to learn more, but note that it is written in Python. 
+This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend *Geocomputation with R* [@geocomp]. [Spatial Data Science](https://r-spatial.org/book/) provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). [Geographical Data Science](https://geographicdata.science/book/intro.html) is also a fantastic place to learn more, but note that it is written in Python. 
 
 ## More Resources
 
