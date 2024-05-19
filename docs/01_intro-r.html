@@ -54,6 +54,7 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
+<<<<<<< HEAD
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
@@ -75,6 +76,9 @@ div.csl-right-inline {
 div.csl-indent {
   margin-left: 2em;
 }</style>
+=======
+</style>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -123,6 +127,38 @@ div.csl-indent {
   }
 }</script>
 
+<<<<<<< HEAD
+=======
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -185,7 +221,11 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
@@ -219,8 +259,30 @@ div.csl-indent {
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./06_reproducible-research-with-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_reproducible-research-with-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reproducible Research with Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -237,13 +299,27 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -260,25 +336,47 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -295,25 +393,41 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -330,7 +444,23 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+=======
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -476,11 +606,19 @@ div.csl-indent {
 <p>RStudio is a free, open-source integrated development environment (IDE) that runs on top of R. In practice, R users almost exclusively open RStudio and rarely directly open R. When we say IDE, we mean a piece of software where you can write, or develop, code in an efficient way.</p>
 <p>RStudio is developed by a for-profit company called <a href="https://posit.co">Posit</a>. Posit used to be called RStudio. Posit employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources. <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>While R code can be written in any text editor, the RStudio IDE is a powerful tool with a console, syntax-highlighting, and debugging tools. <a href="https://www.rstudio.com/resources/cheatsheets/">The RStudio IDE cheatsheet</a> outlines some of the power of RStudio.</p>
+<<<<<<< HEAD
 <p><img src="images/rstudio-ide.png" class="img-fluid" width="650"></p>
 </section>
 <section id="rstudio-console" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</h2>
 <p><img src="images/rstudio-console.png" class="img-fluid" width="650"></p>
+=======
+<p><img src="images/rstudio-ide.png" class="img-fluid" width="400"></p>
+</section>
+<section id="rstudio-console" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</h2>
+<p><img src="images/rstudio-console.png" class="img-fluid" width="400"></p>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>The RStudio Console contains the R command line and R output from previously submitted R code.</p>
 <p>Code can be submitted by typing to the right of the last blue <code>&gt;</code> and the hitting enter.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -499,7 +637,11 @@ div.csl-indent {
 </section>
 <section id="r-scripts" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="r-scripts"><span class="header-section-number">1.5</span> .R Scripts</h2>
+<<<<<<< HEAD
 <p><img src="images/rstudio-editor.png" class="img-fluid" width="650"></p>
+=======
+<p><img src="images/rstudio-editor.png" class="img-fluid" width="400"></p>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>By default, there isn’t a record of code directly typed and submitted into the RStudio Console. So, most R programmers use <code>.R</code> scripts to develop R code before submitting code to the console.</p>
 <p><code>.R</code> scripts are simple text files with R code. They are similar to <code>.py</code> files in Python, <code>.sas</code> files in SAS, and <code>.do</code> files in Stata.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -513,9 +655,15 @@ div.csl-indent {
 </div>
 <div class="callout-body-container callout-body">
 <p>Click the new script button in the top left corner of RStudio to create a new script.</p>
+<<<<<<< HEAD
 <p><img src="images/new-script.png" class="img-fluid" width="200"></p>
 <p>Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.</p>
 <p><img src="images/run-button.png" class="img-fluid" width="200"></p>
+=======
+<p><img src="images/new-script.png" class="img-fluid" width="100"></p>
+<p>Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.</p>
+<p><img src="images/run-button.png" class="img-fluid" width="100"></p>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>In both cases, the code from your <code>.R</code> script should move to the R Console and evaluate.</p>
 </div>
 </div>
@@ -827,8 +975,13 @@ div.csl-indent {
 </div>
 </div>
 <div class="callout-body-container callout-body">
+<<<<<<< HEAD
 <p>For practice, let’s install the <code>palmerpenguins</code> package. This package allows us to see some penguins data (our favorite, non-policy dataset!).</p>
 <pre><code>install.packages("palmerpenguins")</code></pre>
+=======
+<p>For practice, let’s install the <code>RXKCD</code> package so we can view some comics in R.</p>
+<pre><code>install.packages("RXKCD")</code></pre>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </div>
 </section>
@@ -852,6 +1005,7 @@ div.csl-indent {
 </div>
 <p>The package contains a dataset called <code>penguins</code>. We can view that data by simply typing <code>penguins</code> in the console or in a .R script.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
@@ -869,10 +1023,20 @@ div.csl-indent {
 10 Adelie  Torgersen           42            20.2               190        4250
 # ℹ 334 more rows
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
+=======
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">327</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_intro-r_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </div>
 <p>Because this is a bit messy, we can get a summary of the data with the <code>summary()</code> function.</p>
 <div class="cell">
+<<<<<<< HEAD
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
@@ -894,6 +1058,24 @@ div.csl-indent {
 </div>
 </div>
 </div>
+=======
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">303</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_intro-r_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">149</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="01_intro-r_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </section>
 <section id="section-1" class="level3" data-number="1.11.6">
@@ -1442,8 +1624,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+<<<<<<< HEAD
       <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the tidyverse">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
+=======
+      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the Tidyverse">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
       </a>
   </div>
 </nav>

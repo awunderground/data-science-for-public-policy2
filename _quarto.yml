@@ -18,15 +18,15 @@ book:
       
     - part: Reproducible Research
       chapters: 
-        # - 06_reproducible-research-with-quarto.qmd
+        - 06_reproducible-research-with-quarto.qmd
         - 07_advanced-quarto.qmd
-        # - PART 1: reproducible research with git 1
-        # - PART 1: advanced git
+        - 08_reproducible-research-with-git.qmd
+        - 09_advanced-git.qmd
     - part: Programming
       chapters:
         - 10_functions.qmd
         # - r packages to be developed??
-        # - PART 1: apis
+        - 12_apis.qmd
         - 13_web-scraping.qmd
     - part: Statistics
       chapters:
@@ -34,7 +34,7 @@ book:
         - 15_microsimulation.qmd   
         - 16_nonparametric-1.qmd
         - 17_nonparametric-2.qmd   
-        # - PART 1:data imputation
+        - 18_data-imputation.qmd
     - part: Supervised Machine Learning
       chapters:
         - 19_predictive-modeling-motivation.qmd 
@@ -48,8 +48,8 @@ book:
         # - PART 1: dimension reduction
         # - PART 1: cluster analysis
         - 27_advanced-unsupervised-ml.qmd 
-        # - PART 1: text analysis
-        # - PART 1: text modeling
+        - 28_text-analysis.qmd
+        - 29_text-modeling.qmd
     - part: Other Topics
         # - PART 1: geospatial analysis
         # - parallel programming to be developed

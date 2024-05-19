@@ -4,7 +4,10 @@ format:
   html:
     toc: true
     code-line-numbers: true
+<<<<<<< HEAD
 
+=======
+>>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 editor_options: 
   chunk_output_type: console
 ---
