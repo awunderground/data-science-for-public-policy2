@@ -1,0 +1,507 @@
+---
+title: "Dimension Reduction"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r}
+#| echo: false
+knitr::opts_chunk$set(size = "small")
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+knitr::opts_chunk$set(fig.align = "center")
+knitr::opts_chunk$set(warning = FALSE)
+
+library(tidyverse)
+library(knitr)
+library(patchwork)
+
+options(scipen = 999)
+```
+
+
+::: {.callout-tip}
+## Unsupervised Learning
+**Unsupervised Learning:** A process of summarizing data without a "target," "response," or "outcome" variable.
+:::
+
+::: {.callout-tip}
+## Dimension reduction
+**Dimension reduction:** Reducing the number of variables in a data set while maintaining the statistical properties of the data.
+:::
+
+::: {.callout-tip}
+## Clustering
+**Clustering:** Grouping observations into homogeneous groups.
+:::
+
+## Dimension Reduction
+
+### Background
+
+Problems:
+
+1.  We want to generally understand large data sets with many variables
+2.  We want to visualize the relationships between more than two or three variables
+3.  We want to estimate a model but we have many correlated predictors
+
+Solution
+
+
+::: {.callout-tip}
+## Dimension reduction
+**Dimension reduction:** Reducing the number of variables in a data set while maintaining the statistical properties of the data.
+
+
+1.  **Variable/Predictor/Feature selection:** Process of selecting a subset of variables/predictors/features that contribute the most to a model, statistic, or data visualization
+2.  **Variable/Predictor/Feature extraction:** Process of combining variables/predictors/features into a reduced subset of *new* informative and non-redundant variables/predictors/features
+:::
+
+What does it mean for a variable to be informative and non-redundant?
+
+::: {.callout-tip}
+## Sample variance:
+**Sample variance:** A measure of data dispersion. Average of squared deviations from the mean.
+:::
+
+
+::: {.callout-tip}
+## Sample covariance:
+**Sample covariance:** A measure of the strength and direction of a linear relationship between two variables.
+:::
+
+::: {.callout-tip}
+## Covariance matrix:
+**Covariance matrix (variance-covariance matrix):** A $p*p$ symmetric matrix with variances on the main diagonal and covariances off of the main diagonal:
+:::
+
+$$\begin{bmatrix}
+s_1^2 & s_{12} & s_{13} \\
+s_{21} & s_2^2 & s_{23} \\
+s_{31} & s_{32} & s_3^2
+\end{bmatrix}$$
+
+::: {.callout-tip}
+## Total sample variance
+**Total sample variance:** The total amount of dispersion within a data set. The sum of the diagonal terms in the covariance matrix. [^trace]
+:::
+
+[^trace]: In linear algebra, the **trace** is the sum of the elements on the main diagonal of a matrix. The total sample variance is the trace of the variance-covariance matrix. 
+
+::: {.callout-tip}
+## Orthogonal:
+**Orthogonal:** Perpendicular. Orthogonal variables are linearly uncorrelated.
+:::
+
+
+We can think of a data set as having a total amount of variance. If variables are identical or highly correlated, then it is easy to capture all or most of the total variance with a subset or linear combination of the variables. We want these new variables to be orthogonal.
+
+### Principal Component Analysis (PCA)
+
+::: {.callout-tip}
+## Principal Component Analysis:
+**Principal Component Analysis:** A process that transforms many possibly linearly correlated variables into a set of linearly uncorrelated variables called principal components. The components are ordered such that the first component explains the most variance in the original data, the second explains the second most variance in the original data, and so on. A subset of principal components can often be used to represent the original data with limited information loss.
+:::
+
+#### Visual Explanation {#sec-vis}
+
+Assume there are two variables $x_1$ and $x_2$. $x_1$ has mean zero and $x_2$ has mean zero.
+
+$x_1$ and $x_2$ are highly correlated. In fact, the data are mostly dispersed in one direction, from southwest to northeast because the data are so highly correlated.
+
+```{r echo = FALSE}
+library(tidyverse)
+
+set.seed(20200323)
+
+ex1 <- tibble(
+  x1 = -10:10 + rnorm(21, mean = 0, sd = 2),
+  x2 = x1 + rnorm(21, mean = 0, sd = 2)
+) %>%
+  mutate(x1 - mean(x1),
+         x2 - mean(x2))
+```
+
+```{r}
+#| fig.height: 3
+#| fig.width: 6.5
+#| echo: false
+
+
+plot1 <- ex1 %>%
+  ggplot(aes(x1, x2)) +
+  geom_point(alpha = 0.5) +
+  scale_x_continuous(limits = c(-15, 15)) +
+  scale_y_continuous(limits = c(-15, 15)) +
+  coord_equal() +
+  labs(title = "Example data") +
+  theme_bw()
+
+pc1 <- prcomp(ex1)
+
+vec1 <- pc1$rotation[, 1] * pc1$sdev[1]
+vec2 <- pc1$rotation[, 2] * pc1$sdev[2]
+
+plot2 <- ex1 %>%
+  ggplot(aes(x1, x2)) +
+  geom_point(alpha = 0.5) +
+  geom_segment(aes(x = 0, xend = vec1[1], y = 0, yend = vec1[2]), 
+               size = 1,
+               arrow = arrow(length = unit(0.03, "npc")),
+               color = "#1696d2") +
+  geom_segment(aes(x = 0, xend = vec2[1], y = 0, yend = vec2[2]),
+               size = 1,
+               arrow = arrow(length = unit(0.03, "npc")),
+               color = "#1696d2") +  
+  scale_x_continuous(limits = c(-15, 15)) +
+  scale_y_continuous(limits = c(-15, 15))  +
+  labs(title = "The Data Mostly Live in 1-D") +
+  coord_equal() +
+  theme_bw()
+
+plot1 + plot2
+```
+
+Imagine adding a new axis through the main pattern in the data. This axis should minimize the sum of squared perpendicular distances from each point to the line.
+
+```{r echo = FALSE, fig.height = 3, fig.width = 6.5}
+ex1 %>%
+  ggplot(aes(x1, x2)) +
+  geom_abline(slope = vec1[2] / vec1[1], 
+              intercept = 0,
+              alpha = 0.5,
+              size = 0.2) +  
+  geom_point(alpha = 0.5) +
+  scale_x_continuous(limits = c(-15, 15)) +
+  scale_y_continuous(limits = c(-15, 15)) +
+  labs(title = "Imagine the Data Having a New Axis") +
+  coord_equal() +
+  theme_bw()
+```
+
+If we project the data onto the main diagonal, then we can dramatically simplify the data without losing much of the variation. In this case, that means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.
+
+This plot represents the first principal component, and it captures most of the variation in the data.
+
+```{r echo = FALSE, fig.height = 2, fig.width = 6.5}
+pc1$x %>%
+  as_tibble() %>%
+  ggplot(aes(PC1, 1)) +
+  geom_point(alpha = 0.5,
+             size = 3) +
+  geom_hline(yintercept = 1,
+             size = 0.2) +
+  labs(y = NULL) +
+  theme_minimal() +
+  labs(title = "Project the Data On To the New Axis") +
+  theme(axis.text.y = element_blank(),
+        panel.grid = element_blank())
+```
+
+Imagine adding a new axis, that is orthogonal to the first PC, through the second pattern in the data. This axis should minimize the sum of squared perpendicular distances from each point to the line.
+
+```{r echo = FALSE, fig.height = 3, fig.width = 6.5}
+ex1 %>%
+  ggplot(aes(x1, x2)) +
+  geom_abline(slope = vec1[2] / vec1[1], 
+              intercept = 0,
+              alpha = 0.5,
+              size = 0.2) +  
+  geom_abline(slope = vec2[2] / vec2[1], 
+              intercept = 0,
+              alpha = 0.5,
+              size = 0.2) +    
+  geom_point(alpha = 0.5) +
+  scale_x_continuous(limits = c(-15, 15)) +
+  scale_y_continuous(limits = c(-15, 15)) +
+  labs(title = "Imagine the Data Having a New Axis") +
+  coord_equal() +
+  theme_bw()
+```
+
+If we project the data onto the second diagonal, then we can further simplify the data--though less than with the first project. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.
+
+```{r echo = FALSE, fig.height = 2, fig.width = 1.5}
+pc1$x %>%
+  as_tibble() %>%
+  ggplot(aes(PC2, 1)) +
+  geom_point(alpha = 0.5,
+             size = 3) +
+  geom_hline(yintercept = 1,
+             size = 0.2) +
+  labs(y = NULL) +
+  theme_minimal() +
+  labs(title = "A 2nd Projection") +
+  theme(axis.text.y = element_blank(),
+        panel.grid = element_blank())
+```
+
+```{r echo = FALSE}
+rm(plot1, plot2, vec1, vec2, pc1)
+```
+
+#### Mathematical Explanation
+
+Principal components are weighted combinations of variables in the original data set.
+
+$$PC_1 = \phi_{11} x_1 + \phi_{21}x_2 \text{ where } \phi_{11}^2 + \phi_{21}^2 = 1$$
+
+$\phi_{11}$ and $\phi_{21}$ are called loadings, and they come from the dominant eigenvector from an eigenvector decomposition of the covariance matrix of the original data set. The eigenvectors specify the orientation of the principal components relative to the original variables. Each eigenvector has an eigenvalue, or the variance explained by the corresponding principal component. The eigenvalues must decrease from the first principal component (corresponding to the dominant eigenvector) to the last.
+
+$$PC_2 = \phi_{12} x_1 + \phi_{22}x_2 \text{ where } \phi_{12}^2 + \phi_{22}^2 = 1$$
+
+$\phi_{12}$ and $\phi_{22}$ are called loadings and they come from the second dominant eigenvector from an eigenvector decomposition of the covariance matrix of the original data set.
+
+:::callout-note
+A more thorough introduction of PCA requires the use of linear algebra which is not assumed for this coursework. If you want to learn more about PCA, you can start with [this blog](https://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/) which gives a linear algebraic approach while also provides intuitive graphics. 
+:::
+
+
+Take a simple example with 10 observations of `body_weight` and `height`. All observations are centered and scaled.
+
+```{r echo = FALSE}
+bmi_ex <- tribble(
+  ~body_weight, ~height,
+  98, 60,
+  105, 62,
+  120, 64,
+  130, 68,
+  141, 66,
+  150, 64,
+  160, 68,
+  180, 72,
+  200, 66,
+  210, 74
+) %>%
+  mutate_all(~(. - mean(.)) / sd(.))
+
+knitr::kable(bmi_ex, digits = 2)
+```
+
+We want to generate weights to combine `body_weight` and `height` into an entirely new variable called `PC1`.
+
+```{r}
+cov_bmi_ex <- cov(bmi_ex)
+cov_bmi_ex
+```
+
+
+```{r}
+eigen_bmi_ex <- eigen(cov_bmi_ex)
+eigen_bmi_ex
+```
+
+```{r}
+pca_bmi_ex <- bmi_ex %>%
+  mutate(PC1 = body_weight * 0.7071068 + 
+           height * 0.7071068) %>%
+  mutate(PC2 = body_weight * -0.7071068 + 
+           height * 0.7071068)
+
+knitr::kable(pca_bmi_ex, digits = 2)
+```
+
+The principal components aren't necessarily interpretable but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, `PC1` is essentially the "latent" variable "size" and `PC2` is essentially body-mass index.
+
+### Variance Explained
+
+So how much variance does a principal component explain? How much variance do the first three principal components explain?
+
+It depends on the nature of the data. If variables in the data set have strong linear relationships, then the first few principal components can explain much of the variation.
+
+::: {.callout-tip}
+## Proportion of variance explained:
+**Proportion of variance explained (PVE):** The proportion of variation captured by the $k^{th}$ principal component
+:::
+
+::: {.callout-tip}
+## Cumulative variance explained:
+**Cumulative variance explained (PVE):** The proportion of variation captured by the $1^{st}$ through $k^{th}$ principal components
+:::
+
+Take the body weight and height example from above. `PC1` captures more than 90 percent of variation in the original data. This is excellent. We took a two variable data set and captured 90 percent of its variation with one variable!
+
+
+```{r}
+summary(prcomp(bmi_ex))
+```
+
+```{r echo = FALSE}
+rm(bmi_ex, cov_bmi_ex, pca_bmi_ex)
+```
+
+### 2nd Interpretation
+
+The principal components create the p-dimensional space that is closest to the observations in the data.
+
+The line in @sec-vis above is the line that is closest to all of the data. Two principal components in a data set with 50 variables create a plane that is closest to all observations in the data in 50 dimensions.
+
+### Implementation
+
+PCA is implemented in R with `prcomp()`. However, we will use `library(recipes)` from the tidymodels framework.
+
+PCA requires numeric data. Categorical variables need to be recoded with techniques like dummy variable encoding. Use `step_dummy()` to create dummy variables. Mixing continuous variables and dummy variables in the same PCA is possible but can complicate interpretation.
+
+The scale of variables matters. If one variable has a range of $[0, 1000000]$ and another has a range of $[0, 0.1]$, then the first variable will dominate the second variable. Sometimes this makes sense if the units are the same or the ranges matter. Other times it does not make sense.
+
+PCA always mean centers data. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. `step_normalize()` centers and scales a variable. `step_range()` converts variables to a scaled numeric range (e.g. 0 to 1).
+
+### Tutorial 1 (continuous variables)
+
+`state_data` includes numeric variables about state household population (`hhpop`), state home ownership rate (`horate`), and state median household income (`medhhincome`). The objective is to plot the three variables in two dimensions.
+
+
+```{r}
+# load statedata from library(urbnmapr)
+state_data <- urbnmapr::statedata
+
+knitr::kable(head(state_data), digits = 3)
+```
+
+```{r fig.height = 4}
+# load needed packages
+library(recipes)
+library(broom)
+
+# normalize numeric variables
+recipe1 <- state_data %>%
+  recipe() %>%
+  step_normalize(hhpop, horate, medhhincome) %>%
+  prep()
+  
+# apply estimated mean and sd to original data
+state_numeric_data <- recipe1 %>%
+  bake(new_data = state_data) 
+
+# look at the correlation matrix
+state_numeric_data %>%
+  select(hhpop, horate, medhhincome) %>%
+  cor()
+
+# estimate the loadings
+recipe2 <- state_numeric_data %>%
+  recipe() %>%
+  step_pca(hhpop, horate, medhhincome) %>%
+  prep(data = state_numeric_data)
+
+# apply loadings to original data
+state_pca <- recipe2 %>%
+  bake(new_data = state_numeric_data)
+
+# visualize!
+ggplot() +
+  geom_point(
+    data = state_pca, 
+    aes(PC1, PC2),
+    alpha = 0.5
+  ) +
+  geom_text(
+    data = filter(state_pca, state_fips %in% c("06", "22", "24")),
+    aes(PC1, PC2, label = state_name)
+  ) +
+  labs(title = "PC1 and PC2 for State Data") +
+  coord_equal() +
+  theme_minimal()
+
+```
+
+```{r}
+tidy(recipe2, number = 1, type = "variance")
+
+```
+
+We can look at the loadings ($\phi_{ij}$s) to determine how much each variable contributes to each principal component. Large loadings (positive or negative) indicate that the variable has a strong relationship to the principal component. The sign of the loading indicates the direction of the relationship. Here, `horate` contributes the most the `PC1` and `hhpop` contributes the most to `PC2`.
+
+```{r}
+tidy(recipe2, number = 1, type = "coef")
+
+```
+
+### Tutorial 2 (categorical variables)
+
+Here we have a data set with 493 votes from two years of the 114th Senate (2015-2017). The data set has 100 rows and 495 variables. An affirmative vote is `1`, a negative vote is `-1`, and an abstention is `0`. The data are from [Bradley Robinson](https://data.world/bradrobinson/us-senate-voting-records) and this example is based on an earlier analysis by Professor Sivan Leviyang.
+
+Understanding the data or visualizing the data would be a time consuming task. Here are the first few columns and rows:
+
+
+```{r message = FALSE}
+votes <- read_csv(here::here("data", 
+                             "votes.csv"))
+
+votes[1:6, 1:6]
+```
+
+Let's use PCA to create principal components of the 493 votes variables.
+
+
+```{r}
+# estimate the loadings
+votes_rec <- votes %>%
+  recipe() %>%
+  step_pca(all_numeric()) %>%
+  prep()
+  
+```
+
+The first principal component explains about 45 percent of the variation.
+
+```{r}
+tidy(votes_rec, number = 1, type = "variance") %>%
+  filter(terms == "cumulative percent variance") %>%
+  slice_min(value, n = 5)
+
+```
+
+At this point, we've estimated the loadings. Let's apply the loadings to the original data with `bake()`.
+
+```{r}
+# apply estimated loadings to original data
+votes_pcs <- votes_rec %>%
+  bake(new_data = votes) 
+
+```
+
+Let's visualize the first two components and label a few key observations.
+
+```{r}
+names <- c("Bernie Sanders", "Ted Cruz", "Joe Manchin", "Susan Collins")
+
+ggplot() +
+  geom_point(
+    data = votes_pcs, 
+    mapping = aes(PC1, PC2, color = party),
+    alpha = 0.5
+  ) +
+  geom_text(
+    data = filter(votes_pcs, name %in% names), 
+    mapping = aes(PC1, PC2, label = name)
+  ) +
+  scale_color_manual(
+    values = c(`D` = "blue", `I` = "#228B22", `R` = "red")
+  ) +
+  labs(title = "PC1 and PC2 of 114th Senate Votes") +
+  theme_minimal() +
+  guides(text = NULL)
+
+```
+
+
+### How many principal components should you use?
+
+By default, conducting PCA with `library(recipes)` will return as many principal components as there are variables. Because because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:
+
+-   Ignore principal components at the point at which the next principal component offers little increase in the total explained variation.
+-   Include all principal components up to a predetermined total percent explained variation, such as 90%.
+-   Ignore components whose explained variation is less than the average variation explained, with the idea being that such a principal component offers less than one variable’s worth of information.
+-   Ignore the last principal components whose explained variation are all roughly equal.
+
+ **Source:** @holland
