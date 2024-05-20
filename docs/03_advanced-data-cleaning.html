@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,13 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -96,7 +90,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -113,12 +106,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./03_advanced-data-cleaning.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./03_advanced-data-cleaning.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -128,7 +121,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -165,11 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
@@ -210,9 +199,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
@@ -226,7 +212,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -243,9 +228,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
@@ -253,17 +235,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <div class="sidebar-item-container"> 
   <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -280,47 +257,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -337,41 +292,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -387,24 +326,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -422,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -449,7 +390,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./03_advanced-data-cleaning.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></h1>
 </div>
@@ -465,14 +406,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     This section covers advanced techniques for cleaning and manipulating data.
   </div>
 </div>
 
-
 </header>
-
 
 <section id="sec-review2" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-review2"><span class="header-section-number">3.1</span> Review</h2>
@@ -539,7 +478,7 @@ Filtering Joins
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(here)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/gabemorrison/Documents/Github/data-science-for-public-policy2</code></pre>
+<pre><code>here() starts at C:/Users/gmorrison/Documents/GitHub/data-science-for-public-policy2</code></pre>
 </div>
 </div>
 <p>After this, <code>here()</code> will use reasonable heuristics to find project files using relative file paths. When placing Quarto documents in a directory below the top-level directory, use <code>here()</code> and treat each folder and file as a different string.</p>
@@ -673,11 +612,7 @@ Filtering Joins
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="images/pivoting.png" class="img-fluid figure-img" width="412"></p>
-</figure>
-</div>
+<p><img src="images/pivoting.png" class="img-fluid" width="412"></p>
 </div>
 </div>
 <p><code>pivot_wider()</code> is the inverse of <code>pivot_longer()</code>.</p>
@@ -1039,43 +974,6 @@ Filtering Joins
 </div>
 <p><br></p>
 <p>Relational joins are fundamental to working with tidy data. Tidy data can only contain one unit of observation (e.g.&nbsp;county or state not county and state). When data exist on multiple levels, they must be stored in separate tables that can later be combined.</p>
-<<<<<<< HEAD
-=======
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Mutating Joins
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame.</p>
-</div>
-</div>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Filtering Joins
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Filtering joins drop observations based on the presence of their key (identifier) in another data frame.</p>
-<p>For example, we may have a list of students in detention and a list of all students. We can use a filtering join to create a list of student not in detention.</p>
-</div>
-</div>
-<p>For now, we will focus on mutating joins. Let their be two data frames <code>x</code> and <code>y</code> and let both data frames have a key variable that uniquely identifies rows.</p>
-<ul>
-<li><code>left_join(x, y)</code> appends variables from <code>y</code> on to <code>x</code> but only keeps observations from <code>x</code>.</li>
-<li><code>full_join(x, y)</code> appends variables from <code>y</code> on to <code>x</code> and keeps all observations from <code>x</code> and <code>y</code>.</li>
-<li><code>anti_join(x, y)</code> returns all observations from <code>x</code> without a match in <code>y</code>. <code>anti_join()</code> is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins.</li>
-</ul>
-<p>To learn more, read the <a href="https://r4ds.hadley.nz/joins.html">Joins chapter of R for Data Science (2e)</a>. <a href="https://github.com/elbersb/tidylog"><code>library(tidylog)</code></a> is a useful function for monitoring the behavior of joins.</p>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </section>
 <section id="tidying-example-4" class="level4">
 <h4 class="anchored" data-anchor-id="tidying-example-4">Tidying Example 4</h4>
@@ -1425,7 +1323,8 @@ $class
 <pre><code>[1] "d" "c" "b" "a"</code></pre>
 </div>
 </div>
-<p><a href="#fig-factors" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> shows how we can use a factor to give a variable a non-alpha numeric order and preserve empty levels. In this case, February and March have zero tropical depressions, tropical storms, and hurricanes and we want to demonstrate that emptiness.</p>
+<p><a href="#fig-factors">Figure&nbsp;<span class="quarto-unresolved-ref">fig-factors</span></a> shows how we can use a factor to give a variable a non-alpha numeric order and preserve empty levels. In this case, February and March have zero tropical depressions, tropical storms, and hurricanes and we want to demonstrate that emptiness.</p>
+<div>
 <div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="co"># use case_match to convert integers into month names</span></span>
 <span id="cb90-2"><a href="#cb90-2"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
 <span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">mutate</span>(</span>
@@ -1462,40 +1361,29 @@ $class
 <span id="cb90-34"><a href="#cb90-34"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb90-35"><a href="#cb90-35"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
 <span id="cb90-36"><a href="#cb90-36"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-factors" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-factors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-factors" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-factors-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-factors-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-factors-1.png" class="img-fluid figure-img" data-ref-parent="fig-factors" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-factors-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Figure without a factor
-</figcaption>
+<div id="fig-factors" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-factors-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-factors-1.png" class="img-fluid figure-img" data-ref-parent="fig-factors" width="672"></p>
+<figcaption class="figure-caption">(a) Figure without a factor</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-factors" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-factors-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-factors-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-factors-2.png" class="img-fluid figure-img" data-ref-parent="fig-factors" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-factors-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Figure with a factor
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-factors-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-factors-2.png" class="img-fluid figure-img" data-ref-parent="fig-factors" width="672"></p>
+<figcaption class="figure-caption">(b) Figure with a factor</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-factors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall</figcaption><p></p>
 </figure>
+</div>
 </div>
 <p>Factors also change the behavior of summary functions like <code>count()</code>.</p>
 <div class="cell">
@@ -1540,7 +1428,8 @@ Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
 </section>
 <section id="changing-order" class="level4">
 <h4 class="anchored" data-anchor-id="changing-order">Changing Order</h4>
-<p><code>fct_relevel()</code>, <code>fct_rev()</code>, and <code>fct_reorder()</code> are useful functions for modifying the order of factor variables. <a href="#fig-fct_rev" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> demonstrates using <code>fct_rev()</code> to flip the order of a categorical axis in ggplot2.</p>
+<p><code>fct_relevel()</code>, <code>fct_rev()</code>, and <code>fct_reorder()</code> are useful functions for modifying the order of factor variables. <a href="#fig-fct_rev">Figure&nbsp;<span class="quarto-unresolved-ref">fig-fct_rev</span></a> demonstrates using <code>fct_rev()</code> to flip the order of a categorical axis in ggplot2.</p>
+<div>
 <div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>storms <span class="sc">|&gt;</span></span>
 <span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb95-3"><a href="#cb95-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
@@ -1551,42 +1440,32 @@ Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
 <span id="cb95-8"><a href="#cb95-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb95-9"><a href="#cb95-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
 <span id="cb95-10"><a href="#cb95-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-fct_rev" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fct_rev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_rev" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_rev-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_rev-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_rev-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_rev" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_rev-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Descending
-</figcaption>
+<div id="fig-fct_rev" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_rev-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_rev-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_rev" width="672"></p>
+<figcaption class="figure-caption">(a) Descending</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_rev" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_rev-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_rev-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_rev-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_rev" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_rev-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Ascending
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_rev-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_rev-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_rev" width="672"></p>
+<figcaption class="figure-caption">(b) Ascending</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fct_rev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.2: Hurricane Season Peaks in Late Summer and Early Fall
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.2: Hurricane Season Peaks in Late Summer and Early Fall</figcaption><p></p>
 </figure>
 </div>
-<p><a href="#fig-fct_reorder" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> orders the factor variable based on the number of observations in each category using <code>fct_reorder()</code>. <code>fct_reorder()</code> can order variables based on more sophisticated summaries than just magnitude. For example, it can order box-and-whisker plots based on the median or even something as arbitrary at the 60th percentile.</p>
+</div>
+<p><a href="#fig-fct_reorder">Figure&nbsp;<span class="quarto-unresolved-ref">fig-fct_reorder</span></a> orders the factor variable based on the number of observations in each category using <code>fct_reorder()</code>. <code>fct_reorder()</code> can order variables based on more sophisticated summaries than just magnitude. For example, it can order box-and-whisker plots based on the median or even something as arbitrary at the 60th percentile.</p>
+<div>
 <div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>storms <span class="sc">|&gt;</span></span>
 <span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb96-3"><a href="#cb96-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
@@ -1597,45 +1476,35 @@ Figure&nbsp;3.2: Hurricane Season Peaks in Late Summer and Early Fall
 <span id="cb96-8"><a href="#cb96-8"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_reorder</span>(<span class="at">.f =</span> month, <span class="at">.x =</span> n, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
 <span id="cb96-9"><a href="#cb96-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
 <span id="cb96-10"><a href="#cb96-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-fct_reorder" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fct_reorder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_reorder" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_reorder-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_reorder-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_reorder-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_reorder" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_reorder-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Alpha-numeric
-</figcaption>
+<div id="fig-fct_reorder" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_reorder-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_reorder-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_reorder" width="672"></p>
+<figcaption class="figure-caption">(a) Alpha-numeric</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_reorder" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_reorder-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_reorder-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_reorder-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_reorder" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_reorder-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Magnitude
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_reorder-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_reorder-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_reorder" width="672"></p>
+<figcaption class="figure-caption">(b) Magnitude</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fct_reorder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.3: Hurricane Season Peaks in Late Summer and Early Fall
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.3: Hurricane Season Peaks in Late Summer and Early Fall</figcaption><p></p>
 </figure>
+</div>
 </div>
 </section>
 <section id="changing-values" class="level4">
 <h4 class="anchored" data-anchor-id="changing-values">Changing Values</h4>
-<p>Functions like <code>fct_recode()</code> and <code>fct_lump_min()</code> are useful for changing factor variables. <a href="#fig-fct_lump_min" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> combines categories with fewer than 1,000 observations into an <code>"Other"</code> group.</p>
+<p>Functions like <code>fct_recode()</code> and <code>fct_lump_min()</code> are useful for changing factor variables. <a href="#fig-fct_lump_min">Figure&nbsp;<span class="quarto-unresolved-ref">fig-fct_lump_min</span></a> combines categories with fewer than 1,000 observations into an <code>"Other"</code> group.</p>
+<div>
 <div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>storms <span class="sc">|&gt;</span></span>
 <span id="cb97-2"><a href="#cb97-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb97-3"><a href="#cb97-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
@@ -1646,40 +1515,29 @@ Figure&nbsp;3.3: Hurricane Season Peaks in Late Summer and Early Fall
 <span id="cb97-8"><a href="#cb97-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
 <span id="cb97-9"><a href="#cb97-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
 <span id="cb97-10"><a href="#cb97-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-fct_lump_min" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-fct_lump_min-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_lump_min" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_lump_min-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_lump_min-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_lump_min-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_lump_min" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_lump_min-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) All
-</figcaption>
+<div id="fig-fct_lump_min" class="cell quarto-layout-panel">
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_lump_min-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_lump_min-1.png" class="img-fluid figure-img" data-ref-parent="fig-fct_lump_min" width="672"></p>
+<figcaption class="figure-caption">(a) All</figcaption>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-fct_lump_min" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-fct_lump_min-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<div aria-describedby="fig-fct_lump_min-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="03_advanced-data-cleaning_files/figure-html/fig-fct_lump_min-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_lump_min" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-fct_lump_min-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Lumped
-</figcaption>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-fct_lump_min-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="03_advanced-data-cleaning_files/figure-html/fig-fct_lump_min-2.png" class="img-fluid figure-img" data-ref-parent="fig-fct_lump_min" width="672"></p>
+<figcaption class="figure-caption">(b) Lumped</figcaption>
 </figure>
 </div>
 </div>
 </div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fct_lump_min-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
-</figcaption>
+<p></p><figcaption class="figure-caption">Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall</figcaption><p></p>
 </figure>
+</div>
 </div>
 </section>
 </section>
@@ -1815,22 +1673,14 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 <div class="cell">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
-<pre><code>Time difference of 90473 days</code></pre>
-=======
-<pre><code>Time difference of 90522 days</code></pre>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+<pre><code>Time difference of 90534 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<<<<<<< HEAD
-<pre><code>Time difference of 130281120 mins</code></pre>
-=======
-<pre><code>Time difference of 130351680 mins</code></pre>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+<pre><code>Time difference of 130368960 mins</code></pre>
 </div>
 </div>
 </section>
@@ -2028,9 +1878,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2040,17 +1891,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2063,125 +1905,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2225,7 +1948,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2251,32 +1973,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2338,23 +2034,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-<<<<<<< HEAD
-      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the tidyverse">
+      <a href="./02_tidyverse.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span>
-=======
-      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the Tidyverse">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04_data-viz.html" class="pagination-link" aria-label="Data Visualization with ggplot2">
+      <a href="./04_data-viz.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

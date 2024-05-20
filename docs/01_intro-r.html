@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.450">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -54,12 +54,10 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-<<<<<<< HEAD
 /* CSS for citations */
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -76,9 +74,6 @@ div.csl-right-inline {
 div.csl-indent {
   margin-left: 2em;
 }</style>
-=======
-</style>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -105,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -120,45 +109,12 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
 
-<<<<<<< HEAD
-=======
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -169,12 +125,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./01_intro-r.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./01_intro-r.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -184,7 +140,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -221,11 +177,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
  <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
@@ -266,9 +218,6 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
@@ -282,7 +231,6 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -299,9 +247,6 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
   </div>
 </li>
@@ -309,17 +254,12 @@ window.Quarto = {
   <div class="sidebar-item-container"> 
   <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
  <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -336,47 +276,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
-=======
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
   </div>
 </li>
       </ul>
@@ -393,41 +311,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -443,24 +345,26 @@ window.Quarto = {
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
-<<<<<<< HEAD
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
-=======
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
       </ul>
@@ -478,7 +382,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -542,7 +446,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01_intro-r.html">Basics</a></li><li class="breadcrumb-item"><a href="./01_intro-r.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></h1>
 </div>
@@ -557,9 +461,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <p>In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we share key foundational concepts when programming with R.</p>
 <section id="six-principles-for-data-analysis" class="level2" data-number="1.1">
@@ -599,26 +501,18 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>The ambiguity [of the S language] is real and goes to a key objective: we wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important.</p>
 </blockquote>
-<p>Source: <span class="citation" data-cites="evolution-s">Peng (<a href="references.html#ref-evolution-s" role="doc-biblioref">2018</a>)</span></p>
+<p>Source: <span class="citation" data-cites="evolution-s">Peng (<a href="#ref-evolution-s" role="doc-biblioref">2018</a>)</span></p>
 </section>
 <section id="rstudio" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.3</span> RStudio</h2>
 <p>RStudio is a free, open-source integrated development environment (IDE) that runs on top of R. In practice, R users almost exclusively open RStudio and rarely directly open R. When we say IDE, we mean a piece of software where you can write, or develop, code in an efficient way.</p>
 <p>RStudio is developed by a for-profit company called <a href="https://posit.co">Posit</a>. Posit used to be called RStudio. Posit employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources. <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>While R code can be written in any text editor, the RStudio IDE is a powerful tool with a console, syntax-highlighting, and debugging tools. <a href="https://www.rstudio.com/resources/cheatsheets/">The RStudio IDE cheatsheet</a> outlines some of the power of RStudio.</p>
-<<<<<<< HEAD
 <p><img src="images/rstudio-ide.png" class="img-fluid" width="650"></p>
 </section>
 <section id="rstudio-console" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</h2>
 <p><img src="images/rstudio-console.png" class="img-fluid" width="650"></p>
-=======
-<p><img src="images/rstudio-ide.png" class="img-fluid" width="400"></p>
-</section>
-<section id="rstudio-console" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</h2>
-<p><img src="images/rstudio-console.png" class="img-fluid" width="400"></p>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>The RStudio Console contains the R command line and R output from previously submitted R code.</p>
 <p>Code can be submitted by typing to the right of the last blue <code>&gt;</code> and the hitting enter.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -637,11 +531,7 @@ window.Quarto = {
 </section>
 <section id="r-scripts" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="r-scripts"><span class="header-section-number">1.5</span> .R Scripts</h2>
-<<<<<<< HEAD
 <p><img src="images/rstudio-editor.png" class="img-fluid" width="650"></p>
-=======
-<p><img src="images/rstudio-editor.png" class="img-fluid" width="400"></p>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>By default, there isn’t a record of code directly typed and submitted into the RStudio Console. So, most R programmers use <code>.R</code> scripts to develop R code before submitting code to the console.</p>
 <p><code>.R</code> scripts are simple text files with R code. They are similar to <code>.py</code> files in Python, <code>.sas</code> files in SAS, and <code>.do</code> files in Stata.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -655,15 +545,9 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p>Click the new script button in the top left corner of RStudio to create a new script.</p>
-<<<<<<< HEAD
 <p><img src="images/new-script.png" class="img-fluid" width="200"></p>
 <p>Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.</p>
 <p><img src="images/run-button.png" class="img-fluid" width="200"></p>
-=======
-<p><img src="images/new-script.png" class="img-fluid" width="100"></p>
-<p>Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.</p>
-<p><img src="images/run-button.png" class="img-fluid" width="100"></p>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 <p>In both cases, the code from your <code>.R</code> script should move to the R Console and evaluate.</p>
 </div>
 </div>
@@ -702,7 +586,7 @@ window.Quarto = {
 </section>
 <section id="style" class="level2" data-number="1.7">
 <h2 data-number="1.7" class="anchored" data-anchor-id="style"><span class="header-section-number">1.7</span> Style</h2>
-<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <span class="citation" data-cites="style">Wickham (<a href="references.html#ref-style" role="doc-biblioref">n.d.</a>)</span></p>
+<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <span class="citation" data-cites="style">Wickham (<a href="#ref-style" role="doc-biblioref">n.d.</a>)</span></p>
 <p><em>Human interpretability</em> is one of the six principles because clear code can save time and reduce the chance of making errors. After time, eyes can be trained to quickly spot incorrect code if a consistent R style is adopted.</p>
 <p>First, note that R is case-sensitive. Capitalization is rare and deviations from the capitalization will throw errors. For example, <code>mean()</code> is a function but <code>Mean()</code> is not a function.</p>
 <p>The <a href="https://style.tidyverse.org/">tidyverse style guide</a> is a comprehensive style guide that, in general, reflects the style of the plurality of R programmers. For now, just focus on consistency.</p>
@@ -772,7 +656,7 @@ window.Quarto = {
 </div>
 <p><em>Lists</em> are one- or multi-dimensional arrays that are made up of other lists. Lists are <em>heterogeneous</em> - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector.</p>
 <p><code>NULL</code> is the null object in R. It means a value does not exist.</p>
-<p><code>NA</code> is a missing value of length 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations <span class="citation" data-cites="Wickham2017R">(<a href="references.html#ref-Wickham2017R" role="doc-biblioref">Wickham and Grolemund 2017, sec. 20.2</a>)</span>.</p>
+<p><code>NA</code> is a missing value of length 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations <span class="citation" data-cites="Wickham2017R">(<a href="#ref-Wickham2017R" role="doc-biblioref">Wickham and Grolemund 2017, sec. 20.2</a>)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -818,7 +702,7 @@ window.Quarto = {
 <ul>
 <li>Only the first ten rows of <code>tibbles</code> print by default</li>
 <li>Extra meta data are printed with <code>tibbles</code></li>
-<li>They have some convenient protections against partial subsetting <span class="citation" data-cites="wickham_r_2023">(<a href="references.html#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023, sec. 3.1.2</a>)</span></li>
+<li>They have some convenient protections against partial subsetting <span class="citation" data-cites="wickham_r_2023">(<a href="#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023, sec. 3.1.2</a>)</span></li>
 <li>They are easier to create from scratch in a <code>.R</code> script</li>
 </ul>
 <div class="cell">
@@ -854,7 +738,7 @@ window.Quarto = {
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
-<p><strong>Style note:</strong> Objects should be given names that are “concise and meaningful” <span class="citation" data-cites="style">(<a href="references.html#ref-style" role="doc-biblioref">Wickham, n.d., sec. 2</a>)</span>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
+<p><strong>Style note:</strong> Objects should be given names that are “concise and meaningful” <span class="citation" data-cites="style">(<a href="#ref-style" role="doc-biblioref">Wickham, n.d., sec. 2</a>)</span>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -899,12 +783,15 @@ window.Quarto = {
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p><em>Modern R with the tidyverse</em> <span class="citation" data-cites="rodrigues">(<a href="references.html#ref-rodrigues" role="doc-biblioref">Rodrigues 2022</a>)</span> has a functional programming chapter that contains more information about functional programming in R.</p>
+<p><em>Modern R with the tidyverse</em> <span class="citation" data-cites="rodrigues">(<a href="#ref-rodrigues" role="doc-biblioref">Rodrigues 2022</a>)</span> has a functional programming chapter that contains more information about functional programming in R.</p>
 <section id="section" class="level3" data-number="1.10.1">
 <h3 data-number="1.10.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.10.1</span> ?</h3>
 <p>Documentation for functions can be easily accessed by prefacing the function name with <code>?</code> and dropping the <code>()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>?mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>starting httpd help server ... done</code></pre>
+</div>
 </div>
 <p>The documentation typically includes a description, a list of the arguments, references, a list of related functions, and examples. The examples are incredibly useful.</p>
 </section>
@@ -913,28 +800,28 @@ window.Quarto = {
 <p>R functions typically contain many arguments. For example, <code>mean()</code> has <code>x</code>, <code>trim</code>, and <code>na.rm</code>. Many arguments have default values and don’t need to be included in function calls. Default values can be seen in the documentation. <code>trim = 0</code> and <code>na.rm = FALSE</code> are the defaults for <code>mean()</code>.</p>
 <p>Arguments can be passed to functions implicitly by position or explicitly by name.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>numeric_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
-<span id="cb39-2"><a href="#cb39-2"></a></span>
-<span id="cb39-3"><a href="#cb39-3"></a><span class="co"># by position (correctly)</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="fu">mean</span>(numeric_vector, <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>numeric_vector <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>, <span class="dv">9</span>, <span class="dv">10</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a><span class="co"># by position (correctly)</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a><span class="fu">mean</span>(numeric_vector, <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.5</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># by position (incorrectly)</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a><span class="fu">mean</span>(<span class="fl">0.2</span>, numeric_vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># by position (incorrectly)</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">mean</span>(<span class="fl">0.2</span>, numeric_vector)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># by name</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">mean</span>(<span class="at">x =</span> numeric_vector, <span class="at">trim =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># by name</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="fu">mean</span>(<span class="at">x =</span> numeric_vector, <span class="at">trim =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.5</code></pre>
 </div>
 </div>
 <p>Function calls can include arguments by position and by name. The first argument in most functions is <code>data</code> or <code>x</code>. It is custom to usually include the first argument by position and then all subsequent arguments by name.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">mean</span>(numeric_vector, <span class="at">trim =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">mean</span>(numeric_vector, <span class="at">trim =</span> <span class="fl">0.2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 5.5</code></pre>
 </div>
@@ -947,7 +834,7 @@ window.Quarto = {
 <h3 data-number="1.11.1" class="anchored" data-anchor-id="base-r"><span class="header-section-number">1.11.1</span> Base R</h3>
 <p>Opening RStudio automatically loads “base R”, a fundamental collection of code and functions that handles simple operations like math and system management.</p>
 <p>For years, R was only base R. New paradigms in R have developed over the last fifteen years that are more intuitive and more flexible than base R. Next week, we’ll discuss the “tidyverse”, the most popular paradigm for R programming.</p>
-<p>All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it’s in a paradigm that you have not learned. Chapter 27 of <em>R for Data Science (2e)</em> (sometimes abbreviated R4DS) provides a great introduction to base R <span class="citation" data-cites="wickham_r_2023">(<a href="references.html#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023</a>)</span>.</p>
+<p>All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it’s in a paradigm that you have not learned. Chapter 27 of <em>R for Data Science (2e)</em> (sometimes abbreviated R4DS) provides a great introduction to base R <span class="citation" data-cites="wickham_r_2023">(<a href="#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023</a>)</span>.</p>
 <p>One other popular R paradigm is <code>data.table</code>. We will not discuss <code>data.table</code> in this class.</p>
 </section>
 <section id="extensibility" class="level3" data-number="1.11.2">
@@ -975,13 +862,8 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<<<<<<< HEAD
 <p>For practice, let’s install the <code>palmerpenguins</code> package. This package allows us to see some penguins data (our favorite, non-policy dataset!).</p>
 <pre><code>install.packages("palmerpenguins")</code></pre>
-=======
-<p>For practice, let’s install the <code>RXKCD</code> package so we can view some comics in R.</p>
-<pre><code>install.packages("RXKCD")</code></pre>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </div>
 </section>
@@ -1001,12 +883,11 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>For practice let’s load the <code>palmerpenguins</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The package contains a dataset called <code>penguins</code>. We can view that data by simply typing <code>penguins</code> in the console or in a .R script.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 344 × 8
    species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
@@ -1023,21 +904,11 @@ window.Quarto = {
 10 Adelie  Torgersen           42            20.2               190        4250
 # ℹ 334 more rows
 # ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
-=======
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">327</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </div>
 <p>Because this is a bit messy, we can get a summary of the data with the <code>summary()</code> function.</p>
 <div class="cell">
-<<<<<<< HEAD
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>      species          island    bill_length_mm  bill_depth_mm  
  Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
@@ -1058,24 +929,6 @@ window.Quarto = {
 </div>
 </div>
 </div>
-=======
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">303</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">149</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
 </div>
 </section>
 <section id="section-1" class="level3" data-number="1.11.6">
@@ -1199,7 +1052,7 @@ Warning
 </ul>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-eubank" class="csl-entry" role="listitem">
 Eubank, Nick. 2016. <span>“Embrace Your Fallibility: Thoughts on Code Integrity.”</span> <a href="https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf">https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf</a>.
 </div>
@@ -1224,7 +1077,7 @@ Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Ti
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><span class="citation" data-cites="eubank">(<a href="references.html#ref-eubank" role="doc-biblioref">Eubank 2016</a>)</span> influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p><span class="citation" data-cites="eubank">(<a href="#ref-eubank" role="doc-biblioref">Eubank 2016</a>)</span> influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>Though we do not focus on the Python programming language in this course, Posit <a href="https://posit.co/solutions/python/">appears to be expanding its focus to Python</a> in addition to R. This is an important development to track in the data science landscape. One key update is that, in 2023, Posit <a href="https://posit.co/blog/welcome-wes/">hired Wes McKinney</a>. McKinney developed the Python pandas package which offers similar functionality to the tidyverse, a collection of R packages which we will discuss next week.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
@@ -1309,9 +1162,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1321,17 +1175,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1344,125 +1189,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1506,7 +1232,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1532,32 +1257,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1619,23 +1318,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Welcome">
+      <a href="./index.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Welcome</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-<<<<<<< HEAD
-      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the tidyverse">
+      <a href="./02_tidyverse.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
-=======
-      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the Tidyverse">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
->>>>>>> 56f02934b8bfdebc3b61809e629b5e6166f39b15
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
