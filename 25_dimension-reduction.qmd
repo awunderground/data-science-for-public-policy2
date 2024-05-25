@@ -54,7 +54,7 @@ Problems:
 2.  We want to visualize the relationships between more than two or three variables
 3.  We want to estimate a model but we have many correlated predictors
 
-Solution
+Solution:
 
 
 ::: {.callout-tip}
@@ -310,7 +310,7 @@ pca_bmi_ex <- bmi_ex %>%
 knitr::kable(pca_bmi_ex, digits = 2)
 ```
 
-The principal components aren't necessarily interpretable but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, `PC1` is essentially the "latent" variable "size" and `PC2` is essentially body-mass index.
+The principal components aren't necessarily interpretable, but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, `PC1` is essentially the "latent" variable "size" and `PC2` is essentially body-mass index.
 
 ### Variance Explained
 

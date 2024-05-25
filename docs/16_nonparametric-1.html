@@ -1,0 +1,1827 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-05-25">
+
+<title>Data Science for Public Policy - 15&nbsp; Nonparametric Curve Fitting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./17_nonparametric-2.html" rel="next">
+<link href="./15_microsimulation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="www/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Policy</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Reproducible Research</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reproducible-research-with-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_reproducible-research-with-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reproducible Research with Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Supervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Unsupervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./30_geospatial-sf.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#sec-review8" id="toc-sec-review8" class="nav-link active" data-scroll-target="#sec-review8"><span class="header-section-number">15.1</span> Review</a></li>
+  <li><a href="#nonparametric-statistics" id="toc-nonparametric-statistics" class="nav-link" data-scroll-target="#nonparametric-statistics"><span class="header-section-number">15.2</span> Nonparametric Statistics</a></li>
+  <li><a href="#estimating-probability-density-functions" id="toc-estimating-probability-density-functions" class="nav-link" data-scroll-target="#estimating-probability-density-functions"><span class="header-section-number">15.3</span> Estimating Probability Density Functions</a>
+  <ul class="collapse">
+  <li><a href="#relative-frequency-histograms" id="toc-relative-frequency-histograms" class="nav-link" data-scroll-target="#relative-frequency-histograms"><span class="header-section-number">15.3.1</span> Relative Frequency Histograms</a></li>
+  <li><a href="#kernel-density-estimation" id="toc-kernel-density-estimation" class="nav-link" data-scroll-target="#kernel-density-estimation"><span class="header-section-number">15.3.2</span> Kernel Density Estimation</a></li>
+  </ul></li>
+  <li><a href="#nonparametric-curve-smoothing" id="toc-nonparametric-curve-smoothing" class="nav-link" data-scroll-target="#nonparametric-curve-smoothing"><span class="header-section-number">15.4</span> Nonparametric Curve Smoothing</a>
+  <ul class="collapse">
+  <li><a href="#approaches" id="toc-approaches" class="nav-link" data-scroll-target="#approaches"><span class="header-section-number">15.4.1</span> Approaches</a></li>
+  <li><a href="#k-nearest-neighbors" id="toc-k-nearest-neighbors" class="nav-link" data-scroll-target="#k-nearest-neighbors"><span class="header-section-number">15.4.2</span> K-Nearest Neighbors</a></li>
+  <li><a href="#local-linear-regression-and-loess" id="toc-local-linear-regression-and-loess" class="nav-link" data-scroll-target="#local-linear-regression-and-loess"><span class="header-section-number">15.4.3</span> Local Linear Regression and LOESS</a></li>
+  <li><a href="#code" id="toc-code" class="nav-link" data-scroll-target="#code"><span class="header-section-number">15.4.4</span> Code</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">May 25, 2024</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    This set of notes defines nonparametric statistics and then focuses on nonparametric curve fitting, which is a major collection of nonparametric statistical methods.
+  </div>
+</div>
+
+
+</header>
+
+
+<section id="sec-review8" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="sec-review8"><span class="header-section-number">15.1</span> Review</h2>
+<ul>
+<li>Statistical models serve three major purposes
+<ol type="1">
+<li>Summary</li>
+<li>Inference</li>
+<li>Prediction</li>
+</ol></li>
+<li>We adopted nonparametric techniques like KNN, decision trees, and random forests for making accurate predictions.</li>
+<li>In certain applications, these data-driven approaches work well.</li>
+</ul>
+</section>
+<section id="nonparametric-statistics" class="level2" data-number="15.2">
+<h2 data-number="15.2" class="anchored" data-anchor-id="nonparametric-statistics"><span class="header-section-number">15.2</span> Nonparametric Statistics</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Parametric Statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Parametric statistics</strong> requires the form of the population distribution to be completely specified except for a finite number of parameters.</p>
+<p>For example, for a given analysis, an analyst could require/assume that the population be normally distributed. The normal distribution has two parameters: mean (<span class="math inline">\(\mu\)</span>) and standard deviation (<span class="math inline">\(\sigma\)</span>).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Nonparametric Statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Nonparametric statistics</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> require a minimal number of assumptions about the form of the population distribution.</p>
+<p><span class="citation" data-cites="higgins2004">Higgins (<a href="references.html#ref-higgins2004" role="doc-biblioref">2004</a>)</span> offers two key examples of minimal assumptions:</p>
+<ol type="1">
+<li>The data are from a population with a continuous distribution.</li>
+<li>The population depends on location<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> and scale<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> parameters.</li>
+</ol>
+</div>
+</div>
+<p>There are nonparametric tests for many common types of statistical inference. For example,</p>
+<ul>
+<li>1-sample location parameter test (a non-parametric analog to a 1-sample t-test).</li>
+<li>2-sample location parameter test (a non-parametric analog to a 2-sample t-test).</li>
+<li>K-sample location parameter test (a non-parametric analog to ANOVA).</li>
+<li>2-sample scale parameter test (a non-parametric analog to a 2-sample F-test).</li>
+</ul>
+<p>Nonparametric statistics can also be grouped by their statistical ideas.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> Many of these ideas are incredibly simple and could be, as my professor used to say, derived while sitting on the beach.</p>
+<ol type="1">
+<li><strong>Smoothing:</strong> Fitting curves without specifying the functional forms of the curves. This can be done in one dimension to estimate a probability distribution function and in multiple dimensions for estimating smoothed conditional means.</li>
+<li><strong>Permutation:</strong> Exhaustively reconfigure the data to create a sampling distribution for a statistic.</li>
+<li><strong>Bootstrap:</strong> Repeatedly sample from the data and calculate a statistic to create a sampling distribution for a statistic.</li>
+</ol>
+<p>This set of notes focuses on techniques for estimating probability density functions (PDFs) with smoothing when the data don’t conform to common PDFs like the normal distribution or exponential distribution. The next set of notes will focus on the permutation and bootstrap for estimating sampling distributions (PDFs for statistics).</p>
+</section>
+<section id="estimating-probability-density-functions" class="level2" data-number="15.3">
+<h2 data-number="15.3" class="anchored" data-anchor-id="estimating-probability-density-functions"><span class="header-section-number">15.3</span> Estimating Probability Density Functions</h2>
+<p>So far, we’ve explored parametric techniques for estimating densities and probability density functions. We looked at data and fit common probability distributions with a finite number of parameters to the data. For instance, for a normal distribution the sufficient statistics or finite number of parameters are the mean and standard deviation. Unfortunately, common distributions may not fit the data.</p>
+<p>In this section, we will look at data-driven nonparametric approaches to estimating probability density functions.</p>
+<p>Suppose we have have a random sample of data <span class="math inline">\(x_1, x_2, ..., x_n\)</span> for one variable and the data come from a population with a continuous probability density function. We represent the PDF as <span class="math inline">\(f_X(x)\)</span>. Our goal is to estimate <span class="math inline">\(f_X(x)\)</span> with <span class="math inline">\(\hat{f_X}(x)\)</span> using a data-driven approach and without specify a model or functional form.</p>
+<p>We will discuss two approaches to this problem:</p>
+<ol type="1">
+<li>Relative frequency histogram</li>
+<li>Kernel density estimators (KDEs)</li>
+</ol>
+<p>We can use relative frequency histograms and KDEs to 1. visualize data and 2. generate new data with random sampling.</p>
+<section id="relative-frequency-histograms" class="level3" data-number="15.3.1">
+<h3 data-number="15.3.1" class="anchored" data-anchor-id="relative-frequency-histograms"><span class="header-section-number">15.3.1</span> Relative Frequency Histograms</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Relative Frequency Histogram
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Relative frequency histograms</strong> are histograms normalized such that the bars sum to 1 that can be used to estimate PDFs.</p>
+<p><strong>Note:</strong> PDFs must integrate to 1.</p>
+</div>
+</div>
+<p>The procedure for creating a relative frequency histogram is fairly simple:</p>
+<ol type="1">
+<li>Partition the range of the data into <span class="math inline">\(k\)</span> bins. The widths are called binwidths and typically the bins have equal binwidths.</li>
+<li>Count the number of observations in each bin.</li>
+<li>Divide the counts by n * binwidth to normalize the histogram</li>
+</ol>
+<p>Let’s consider a formal definition from <span class="citation" data-cites="higgins2004">(<a href="references.html#ref-higgins2004" role="doc-biblioref">Higgins 2004</a>)</span>.</p>
+<p>Partition the range of the data into bins such that <span class="math inline">\(a_1 &lt; a_2 &lt; ... &lt; a_k\)</span>. Let <span class="math inline">\(a_{i + 1} - a_i\)</span> be the binwidth. The density estimate for a value <span class="math inline">\(x\)</span> in an interval <span class="math inline">\(a_i &lt; x \le a_{i + 1}\)</span> is</p>
+<p><span id="eq-histogram"><span class="math display">\[
+\hat{f}(x) = \frac{\text{number of observations} \in (a_i, a_{i + 1}]}{n \cdot (a_{i + 1} - a_i)}
+\tag{15.1}\]</span></span></p>
+<section id="example" class="level4">
+<h4 class="anchored" data-anchor-id="example">Example</h4>
+<p>Consider three random samples of sizes <span class="math inline">\(n = 40\)</span>, <span class="math inline">\(n = 100\)</span>, and <span class="math inline">\(n = 10,000\)</span> from standard normal distribution. In the code below, we store these samples in an a tibble with two columns, one for the name of the sample set and one for the observation in the sample.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">set.seed</span>(<span class="dv">20230617</span>)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="st">`</span><span class="at">n=40</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">40</span>)),</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  <span class="st">`</span><span class="at">n=100</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>)),</span>
+<span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">`</span><span class="at">n=10,000</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>)),</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="at">.id =</span> <span class="st">"set"</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="fu">mutate</span>(<span class="at">set =</span> <span class="fu">factor</span>(set, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"n=40"</span>, <span class="st">"n=100"</span>, <span class="st">"n=10,000"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Let’s use <code>library(ggplot2)</code> and the <code>after_stat()</code> function to create relative frequency histograms for the three random samples. Remember, the relative frequency histograms are <span class="math inline">\(\hat{f}(x)\)</span>.</p>
+<p>In this example, we know <span class="math inline">\(f_X(x)\)</span>. It is the PDF for <span class="math inline">\(X \sim N(\mu = 0, \sigma = 1)\)</span>. Next, superimpose the known PDF on top of <span class="math inline">\(\hat{f_X}(x)\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-histogram" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
+</figcaption>
+<div aria-describedby="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-histogram-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-binwdith" class="level4">
+<h4 class="anchored" data-anchor-id="sec-binwdith">Number of Bins and Binwidth</h4>
+<p>Histograms and relative frequency histograms are very sensitive to the selection of binwidths. <code>geom_histogram()</code> defaults to 30 bins, but this can be overridden with the <code>binwidth</code> and <code>bins</code> arguments.</p>
+<p>Several papers have developed rules for determining the number of bins or binwidth including <span class="citation" data-cites="scott2005">Scott and Sain (<a href="references.html#ref-scott2005" role="doc-biblioref">2005</a>)</span>.</p>
+<p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> recreates <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> with fewer bins.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-histogram-fewer-bins" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-fewer-bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
+</figcaption>
+<div aria-describedby="fig-histogram-fewer-bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-histogram-fewer-bins-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 1</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Run <code>hist(cars$speed, plot = FALSE)</code> and look at the results.</li>
+<li>Write R code to convert <code>$counts</code> into <code>$density</code> based on the process of generating a relative frequency histogram described above.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="kernel-density-estimation" class="level3" data-number="15.3.2">
+<h3 data-number="15.3.2" class="anchored" data-anchor-id="kernel-density-estimation"><span class="header-section-number">15.3.2</span> Kernel Density Estimation</h3>
+<p>We will introduce kernel density estimators by considering two related concepts.</p>
+<section id="concept-1" class="level4">
+<h4 class="anchored" data-anchor-id="concept-1">Concept #1</h4>
+<p>We were able to simplify and fit complex PDFs using mixture distributions. In fact, as <span class="math inline">\(k\)</span>, the number of mixtures in the mixture distribution increased, we were able to fit increasingly complex probability distributions. Unfortunately, this process created overparameterized models.</p>
+<p>Kernel density estimation, a nonparametric approach for estimating PDFs, takes a slightly different approach. It places a simple PDF (called a kernel) at every data point in the data and then combines these simple PDFs into a complex PDF. We no longer need to estimate many parameters and specify the number of clusters, but the KDE is computationally expensive and requires storing all of the original data.</p>
+</section>
+<section id="concept-2" class="level4">
+<h4 class="anchored" data-anchor-id="concept-2">Concept #2</h4>
+<p>Relative frequency histograms have a couple of issues:</p>
+<ol type="1">
+<li>They are very sensitive to binwidths</li>
+<li>They are not smooth</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Kernel Density Estimators
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Kernel Density Estimators</strong> are weighted relative frequencies of the number of values near some value. The counts are normalized so the entire KDE integrates to 1. KDEs are a data-driven method for estimating PDFs.</p>
+<p>Kernel density estimators are smoothed histograms. Fundamentally, they use a weighted average of data points near <span class="math inline">\(x_0\)</span> to generate <span class="math inline">\(\hat{f}(x_0)\)</span>. Here, <span class="math inline">\(x_0\)</span> is the point where we are estimating the probability density.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Kernel
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>kernel</strong> is a weighting function that maps real values to real positive values. Kernels typically integrate to 1 and are symmetric.</p>
+<p>Under this definition, kernels are PDFs like the normal density function and uniform density function.</p>
+</div>
+</div>
+</section>
+<section id="visual-kde-process" class="level4">
+<h4 class="anchored" data-anchor-id="visual-kde-process">Visual KDE Process</h4>
+<p>Kernel density estimation is a data-driven approach to fitting non-parametric PDFs. Let’s walk through a visual demonstration of a KDE where <code>x = c(1, 4, 4.5, 5, 6, 8, 10)</code>.</p>
+<ol type="1">
+<li>Pick a kernel type (normal, triangle, uniform)</li>
+<li>Add kernels centered at every observation with a specified bandwidth</li>
+<li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
+<li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
+</ol>
+<p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> shows the PDFs for a few kernels.</p>
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.6</span>))</span>
+<span id="cb5-6"><a href="#cb5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dunif, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">min =</span> <span class="sc">-</span><span class="fl">0.5</span>, <span class="at">max =</span> <span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span>
+<span id="cb5-12"><a href="#cb5-12"></a></span>
+<span id="cb5-13"><a href="#cb5-13"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>, <span class="fl">0.1</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="dv">1</span> <span class="sc">-</span> <span class="fu">abs</span>(x)) <span class="sc">|&gt;</span></span>
+<span id="cb5-15"><a href="#cb5-15"></a>  <span class="fu">mutate</span>(<span class="at">d =</span> <span class="fu">pmax</span>(d, <span class="dv">0</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, d), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div id="fig-kernels" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
+</figcaption>
+<div aria-describedby="fig-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Normal kernel
+</figcaption>
+<div aria-describedby="fig-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
+</div>
+</figure>
+</div>
+</div>
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Uniform kernel (Boxcar function)
+</figcaption>
+<div aria-describedby="fig-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-kernels-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Triangular kernel
+</figcaption>
+<div aria-describedby="fig-kernels-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-kernels-3.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+<p>Second, we add kernels centered at every observation with a specified bandwidth. <a href="#fig-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> shows seven normal PDFs centered at our example data points.</p>
+<p>For the sake of simplicity and demonstration, we’ll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in <a href="#sec-binwdith" class="quarto-xref"><span>Section 15.3.1.2</span></a>. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">KDE Wikipedia page</a> provides a more in depth discussion of bandwidth selection.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a>data_simple <span class="ot">&lt;-</span> <span class="fu">distinct</span>(data, x)</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>bw <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">bw.nrd0</span>(data_simple<span class="sc">$</span>x)</span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a>  <span class="fu">mutate</span>(<span class="at">density =</span> <span class="fu">dnorm</span>(<span class="at">x =</span> grid, <span class="at">mean =</span> x, <span class="at">sd =</span> bw))</span>
+<span id="cb6-12"><a href="#cb6-12"></a></span>
+<span id="cb6-13"><a href="#cb6-13"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb6-16"><a href="#cb6-16"></a>    <span class="at">data =</span> data,</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="fu">aes</span>(<span class="at">x =</span> grid, <span class="at">y =</span> density, <span class="at">group =</span> <span class="fu">factor</span>(x)),</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>)) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-23"><a href="#cb6-23"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.4: Add PDFs centered at each observation in the data
+</figcaption>
+<div aria-describedby="fig-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-norm-kernels-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. <a href="#fig-normalized-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.5</span></a> shows each kernel divided by 7.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a>data_simple <span class="ot">&lt;-</span> <span class="fu">distinct</span>(data, x)</span>
+<span id="cb7-7"><a href="#cb7-7"></a></span>
+<span id="cb7-8"><a href="#cb7-8"></a>bw <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">bw.nrd0</span>(data_simple<span class="sc">$</span>x)</span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>  <span class="fu">mutate</span>(<span class="at">density =</span> <span class="fu">dnorm</span>(<span class="at">x =</span> grid, <span class="at">mean =</span> x, <span class="at">sd =</span> bw) <span class="sc">/</span> <span class="fu">nrow</span>(data_simple))</span>
+<span id="cb7-12"><a href="#cb7-12"></a></span>
+<span id="cb7-13"><a href="#cb7-13"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="at">data =</span> data,</span>
+<span id="cb7-17"><a href="#cb7-17"></a>    <span class="fu">aes</span>(<span class="at">x =</span> grid, <span class="at">y =</span> density, <span class="at">group =</span> <span class="fu">factor</span>(x)),</span>
+<span id="cb7-18"><a href="#cb7-18"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb7-19"><a href="#cb7-19"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb7-20"><a href="#cb7-20"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-21"><a href="#cb7-21"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>)) <span class="sc">+</span>  </span>
+<span id="cb7-22"><a href="#cb7-22"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
+<span id="cb7-24"><a href="#cb7-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-normalized-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normalized-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+</figcaption>
+<div aria-describedby="fig-normalized-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-normalized-norm-kernels-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>Finally, for any observation <span class="math inline">\(x_0\)</span>, sum up the red lines. This sum is the KDE at point <span class="math inline">\(x_0\)</span>.</p>
+<p>Typically, we calculate the KDE for many values of <span class="math inline">\(x_0\)</span> (e.g.&nbsp;a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in <a href="#fig-kde-visually" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is the estimated KDE across the range of the data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb8-2"><a href="#cb8-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
+<span id="cb8-4"><a href="#cb8-4"></a>)</span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a>data_simple <span class="ot">&lt;-</span> <span class="fu">distinct</span>(data, x)</span>
+<span id="cb8-7"><a href="#cb8-7"></a></span>
+<span id="cb8-8"><a href="#cb8-8"></a>bw <span class="ot">&lt;-</span> stats<span class="sc">::</span><span class="fu">bw.nrd0</span>(data_simple<span class="sc">$</span>x)</span>
+<span id="cb8-9"><a href="#cb8-9"></a></span>
+<span id="cb8-10"><a href="#cb8-10"></a>data <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a>  <span class="fu">mutate</span>(<span class="at">density =</span> <span class="fu">dnorm</span>(<span class="at">x =</span> grid, <span class="at">mean =</span> x, <span class="at">sd =</span> bw) <span class="sc">/</span> <span class="fu">nrow</span>(data_simple))</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>kde_x0 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb8-14"><a href="#cb8-14"></a>  <span class="at">x0 =</span> <span class="fu">density</span>(<span class="at">x =</span> data_simple<span class="sc">$</span>x, <span class="at">n =</span> <span class="dv">10000</span>)<span class="sc">$</span>x,</span>
+<span id="cb8-15"><a href="#cb8-15"></a>  <span class="at">f_hat_x0 =</span> <span class="fu">density</span>(<span class="at">x =</span> data_simple<span class="sc">$</span>x, <span class="at">n =</span> <span class="dv">10000</span>)<span class="sc">$</span>y</span>
+<span id="cb8-16"><a href="#cb8-16"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a>  <span class="fu">slice_min</span>(<span class="fu">abs</span>(x0 <span class="sc">-</span> <span class="dv">4</span>))</span>
+<span id="cb8-18"><a href="#cb8-18"></a>  </span>
+<span id="cb8-19"><a href="#cb8-19"></a>kde_plot <span class="ot">&lt;-</span> data <span class="sc">|&gt;</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb8-21"><a href="#cb8-21"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb8-22"><a href="#cb8-22"></a>    <span class="at">data =</span> data,</span>
+<span id="cb8-23"><a href="#cb8-23"></a>    <span class="fu">aes</span>(<span class="at">x =</span> grid, <span class="at">y =</span> density, <span class="at">group =</span> <span class="fu">factor</span>(x)),</span>
+<span id="cb8-24"><a href="#cb8-24"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span>,</span>
+<span id="cb8-25"><a href="#cb8-25"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>  <span class="fu">geom_density</span>(</span>
+<span id="cb8-28"><a href="#cb8-28"></a>    <span class="at">data =</span> data_simple,</span>
+<span id="cb8-29"><a href="#cb8-29"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x)</span>
+<span id="cb8-30"><a href="#cb8-30"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb8-32"><a href="#cb8-32"></a>    <span class="at">data =</span> kde_x0,</span>
+<span id="cb8-33"><a href="#cb8-33"></a>    <span class="fu">aes</span>(<span class="at">x =</span> x0, <span class="at">y =</span> f_hat_x0)</span>
+<span id="cb8-34"><a href="#cb8-34"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a>  <span class="fu">geom_segment</span>(</span>
+<span id="cb8-36"><a href="#cb8-36"></a>    <span class="at">data =</span> kde_x0,</span>
+<span id="cb8-37"><a href="#cb8-37"></a>    <span class="fu">aes</span>(<span class="at">x =</span> <span class="dv">4</span>, <span class="at">y =</span> <span class="dv">0</span>, <span class="at">xend =</span> <span class="dv">4</span>, <span class="at">yend =</span> f_hat_x0),</span>
+<span id="cb8-38"><a href="#cb8-38"></a>    <span class="at">linetype =</span> <span class="st">"dashed"</span></span>
+<span id="cb8-39"><a href="#cb8-39"></a>  ) <span class="sc">+</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a>  <span class="fu">annotate</span>(<span class="st">"text"</span>, <span class="at">x =</span> <span class="dv">3</span>, <span class="at">y =</span> <span class="fl">0.15</span>,</span>
+<span id="cb8-41"><a href="#cb8-41"></a>           <span class="at">label =</span> <span class="st">"hat(f)(x[0])"</span>, <span class="at">parse =</span> <span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>)) <span class="sc">+</span></span>
+<span id="cb8-43"><a href="#cb8-43"></a>  <span class="fu">labs</span>(</span>
+<span id="cb8-44"><a href="#cb8-44"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
+<span id="cb8-45"><a href="#cb8-45"></a>  )</span>
+<span id="cb8-46"><a href="#cb8-46"></a></span>
+<span id="cb8-47"><a href="#cb8-47"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-kde-visually" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-visually-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+</figcaption>
+<div aria-describedby="fig-kde-visually-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-kde-visually-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="mathematical-kde-process" class="level4">
+<h4 class="anchored" data-anchor-id="mathematical-kde-process">Mathematical KDE Process</h4>
+<ol type="1">
+<li>Pick a kernel type (normal, triangle, uniform)</li>
+<li>Pick a bandwidth</li>
+<li>Add kernels centered at every observation</li>
+<li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
+<li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
+</ol>
+<p>Let <span class="math inline">\(w(z)\)</span> be a kernel (symmetric probability density function) centered at <span class="math inline">\(z\)</span>. This kernel can give more weight to observations near <span class="math inline">\(z\)</span> and less weight to observations far from <span class="math inline">\(z\)</span>.</p>
+<p>Suppose we use a normal kernel and one data point <span class="math inline">\(x_i\)</span>. <span class="math inline">\(\mu = 0\)</span> because the kernel is centered at <span class="math inline">\(z\)</span>. We’ll always use <span class="math inline">\(\sigma = 1\)</span>. If we assume <span class="math inline">\(x_0 = x_i\)</span>, then our weighting function is <span class="math inline">\(W(x_0) = \frac{1} {\sqrt{2\pi}} exp(-\frac{x_0^2}{2})\)</span>.</p>
+<p>When we evaluate the KDE at point <span class="math inline">\(x_0\)</span>, <span class="math inline">\(x_0 = x_i\)</span> won’t necessarily be true. So we will need to shift our weighting function. We simply need to modify our function to be <span class="math inline">\(W(x_0 - x_i) = \frac{1} {\sqrt{2\pi}} exp(-\frac{(x_0 - x_i)^2}{2})\)</span>.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></p>
+<p>We may also want to adjust the widths of our kernels. When using the normal kernel, we leave <span class="math inline">\(\sigma = 1\)</span> and adjust the bandwidth. The bandwidth controls the weight given to points near <span class="math inline">\(x_0\)</span> when estimating the density. Bandwidths are like binwidths in relative frequency histograms. If <span class="math inline">\(\triangle\)</span> is the bandwidth, then our weighting function is <span class="math inline">\(W(\frac{x_0 -x_i}{\triangle})\)</span>.</p>
+<p>Recall that a kernel must integrate to 1. Because <span class="math inline">\(\triangle\)</span> changes the shape of the curve, and therefore the area under the curve, we must account for that by dividing the curve by <span class="math inline">\(\triangle\)</span>. This makes our weight function <span class="math inline">\(\frac{1}{\triangle} W(\frac{x - x_i}{\triangle})\)</span>. Note that as <span class="math inline">\(\triangle\)</span> increases, the PDF curves become wider with less density at any given point.</p>
+<p>We now have a building block <span class="math inline">\(\frac{1}{\triangle} W(\frac{x-x_i}{\triangle})\)</span>. Let’s finally relax our assumption that we have one observation and assume we have <span class="math inline">\(n\)</span> values of <span class="math inline">\(x_i\)</span>.We can take the summation of <span class="math inline">\(n\)</span> of these distributions to create a kernel density estimate. Again, because the KDE must integrate to 1, we must divide the function by <span class="math inline">\(n\)</span>.</p>
+<p>Thus, the kernel density estimate (KDE) is</p>
+<p><span id="eq-kde"><span class="math display">\[
+\hat{f}(x_0) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
+\tag{15.2}\]</span></span></p>
+<p>Based on <a href="#eq-kde" class="quarto-xref">Equation&nbsp;<span>15.2</span></a>, we need to pick a weighting function (<span class="math inline">\(W(z)\)</span>) and a bandwidth (<span class="math inline">\(\triangle\)</span>). We will almost always use the normal distribution and <code>bw.nrd0</code> bandwidth.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This means we can define a much simpler process:</p>
+<ol type="1">
+<li>Place a normal distribution on each observation in the data with a bandwidth determined by <code>bw.nrd0</code></li>
+<li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
+<li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
+</ol>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-kde" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
+</figcaption>
+<div aria-describedby="fig-kde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-kde-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="kdes-in-r" class="level4">
+<h4 class="anchored" data-anchor-id="kdes-in-r">KDE’s in R</h4>
+<p>There are several ways to use kernel density estimators in R. We will explore <code>geom_density()</code> and <code>density()</code>.</p>
+<p>The use of <code>geom_density()</code> is nearly identical to <code>geom_histogram()</code>. The function has a <code>bw</code> argument to change the bandwidth and a <code>kernel</code> argument to change the kernel.</p>
+<div class="cell" data-layout-nrow="2">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
+<span id="cb10-3"><a href="#cb10-3"></a>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="fu">geom_density</span>()</span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a>data <span class="sc">|&gt;</span></span>
+<span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">geom_density</span>(<span class="at">kernel =</span> <span class="st">"triangular"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="fig-applied-kernels" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.8: geom_density() with different kernels
+</figcaption>
+<div aria-describedby="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-applied-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Gaussian kernel
+</figcaption>
+<div aria-describedby="fig-applied-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-applied-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Triangular kernel
+</figcaption>
+<div aria-describedby="fig-applied-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<p><a href="https://towardsdatascience.com/kernel-density-estimation-explained-step-by-step-7cc5b5bc4517">This blog post</a> offers a good walkthrough of the KDE process in plain language.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 2</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://en.wikipedia.org/wiki/Log-normal_distribution">log-normal distribution</a> is a distribution whose natural log is normally distributed. It is useful for modeling variables with a right skew like income and wealth.</p>
+<ol type="1">
+<li>Sample 100 observations from a log-normal distribution using <code>rlnorm()</code> with <code>meanlog = 0</code> and <code>sdlog = 1</code>.</li>
+<li>Create a relative frequency histogram for the variable.</li>
+<li>Add a KDE with <code>geom_density()</code> in red.</li>
+<li>Use <code>stat_function()</code>, like in <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>, to add the theoretical PDF to the visualization in blue. You should now have three layers.</li>
+<li>Duplicate the code and set <code>n</code> to <code>10000</code>. Is something off?</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="nonparametric-curve-smoothing" class="level2" data-number="15.4">
+<h2 data-number="15.4" class="anchored" data-anchor-id="nonparametric-curve-smoothing"><span class="header-section-number">15.4</span> Nonparametric Curve Smoothing</h2>
+<p>We now move to bivariate data where we have <span class="math inline">\(x_1, x_2, ..., x_n\)</span> and <span class="math inline">\(y_1, y_2, ..., y_n\)</span>. Our goal is to <em>flexibly</em> estimate <span class="math inline">\(f(x)\)</span> with <span class="math inline">\(\hat{f}(x)\)</span>.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p><span class="math inline">\(\hat{f}(x)\)</span> is an estimate of the conditional mean <span class="math inline">\(E\left[Y|X=x\right]\)</span>. Recall that linear regression is a parametric approach, with a finite number of parameters, for estimating this conditional mean. When we plug in a specific value, <span class="math inline">\(x_0\)</span>, we get back the conditional mean for <span class="math inline">\(y\)</span> at the specific value <span class="math inline">\(x_0\)</span>.</p>
+<p>We’re focused on nonparametric approaches to estimate <span class="math inline">\(E\left[Y|X=x\right]\)</span>. We want to make a minimal number of assumptions and we don’t want to specify a functional form. This is a very data-driven approach, which is advantageous when the data follow a clear pattern but the functional form isn’t easy to specify with just main effects or low-order polynomials.</p>
+<section id="approaches" class="level3" data-number="15.4.1">
+<h3 data-number="15.4.1" class="anchored" data-anchor-id="approaches"><span class="header-section-number">15.4.1</span> Approaches</h3>
+<p>There are three major nonparametric approaches to curve smoothing.</p>
+<ol type="1">
+<li><strong>Kernel methods</strong>. Kernel methods are related to kernel density estimation for estimating probability density functions. Here, we need to estimate the joint PDF <span class="math inline">\(f_{X,Y}(x, y)\)</span> and the marginal PDF <span class="math inline">\(f_X(x)\)</span>. Next, integrate out <span class="math inline">\(f_X(x)\)</span> to approximate <span class="math inline">\(E\left[Y|X=x\right]\)</span>. This approach can be highly biased in the tails of <span class="math inline">\(x\)</span> and in sparse regions of <span class="math inline">\(x\)</span>.<span class="citation" data-cites="hastie2009">(<a href="references.html#ref-hastie2009" role="doc-biblioref">Hastie, Tibshirani, and Friedman 2009</a>)</span></li>
+<li><strong>Regression splines</strong>. Regression splines break <span class="math inline">\(x\)</span> into ordered regions and then fit <span class="math inline">\(\hat{f}(x)\)</span> as a series of piece-wise low-order polynomial regressions. Special conditions ensure that <span class="math inline">\(\hat{f}(x)\)</span> is continuous where splines meet.</li>
+<li><strong>Local linear regression</strong> and <strong>locally estimated scatter plot smoothing (LOESS)</strong>. These methods use weighted linear regression estimated on observations near <span class="math inline">\(x_0\)</span>, where <span class="math inline">\(x_0\)</span> is a specific point in the domain where we want to estimate <span class="math inline">\(\hat{f}\)</span></li>
+</ol>
+</section>
+<section id="k-nearest-neighbors" class="level3" data-number="15.4.2">
+<h3 data-number="15.4.2" class="anchored" data-anchor-id="k-nearest-neighbors"><span class="header-section-number">15.4.2</span> K-Nearest Neighbors</h3>
+<p>K-Nearest Neighbors (KNN) average is an estimate of the regression function/conditional mean <span class="math inline">\(E\left[Y|X=x\right]\)</span>.</p>
+<p>Let <span class="math inline">\(N_k(x_0)\)</span> be the <span class="math inline">\(k\)</span> closest observations to <span class="math inline">\(x_0\)</span>. Closeness is often measured with Euclidean distance. Let <span class="math inline">\(Ave\)</span> denote the mean. Then</p>
+<p><span id="eq-knn"><span class="math display">\[
+\hat{f}(x_0) = Ave\left(y_i | x_i \in N_k(x_0)\right)
+\tag{15.3}\]</span></span></p>
+<p>is an estimate of the conditional mean of <span class="math inline">\(y\)</span> at point <span class="math inline">\(x_0\)</span>.</p>
+<p>Consider an example with simulated data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a>data1 <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="at">x =</span> x,</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> <span class="fu">sin</span>(x) <span class="sc">+</span> x <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb11-8"><a href="#cb11-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co"># create a recipe</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>knn_rec <span class="ot">&lt;-</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">data =</span> data1)</span>
+<span id="cb12-6"><a href="#cb12-6"></a></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="co"># create a knn model specification</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a>knn_mod <span class="ot">&lt;-</span> </span>
+<span id="cb12-9"><a href="#cb12-9"></a>  <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co"># create a workflow</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a>knn_wf <span class="ot">&lt;-</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a>  <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>  <span class="fu">add_recipe</span>(knn_rec) <span class="sc">%&gt;%</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a>  <span class="fu">add_model</span>(knn_mod)</span>
+<span id="cb12-18"><a href="#cb12-18"></a></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co"># fit the knn model specification on the training data</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a>knn_fit <span class="ot">&lt;-</span> knn_wf <span class="sc">%&gt;%</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a>  <span class="fu">fit</span>(<span class="at">data =</span> data1)</span>
+<span id="cb12-22"><a href="#cb12-22"></a></span>
+<span id="cb12-23"><a href="#cb12-23"></a>predictions_grid <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb12-24"><a href="#cb12-24"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>),</span>
+<span id="cb12-25"><a href="#cb12-25"></a>  <span class="fu">predict</span>(<span class="at">object =</span> knn_fit, <span class="at">new_data =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>)))</span>
+<span id="cb12-26"><a href="#cb12-26"></a>)</span>
+<span id="cb12-27"><a href="#cb12-27"></a></span>
+<span id="cb12-28"><a href="#cb12-28"></a><span class="co"># visualize the data</span></span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> data1, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb12-31"><a href="#cb12-31"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictions_grid, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .pred), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb12-32"><a href="#cb12-32"></a>  <span class="fu">labs</span>(</span>
+<span id="cb12-33"><a href="#cb12-33"></a>    <span class="at">title =</span> <span class="st">"Example 1"</span>,</span>
+<span id="cb12-34"><a href="#cb12-34"></a>    <span class="at">subtitle =</span> <span class="st">"Training Data with Predictions"</span></span>
+<span id="cb12-35"><a href="#cb12-35"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-knn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\(k = 3\)</span>.
+</figcaption>
+<div aria-describedby="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-knn-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>KNN Average has a couple of issues.</p>
+<ol type="1">
+<li><span class="math inline">\(\hat{f}(x)\)</span> is often a discontinuous stepwise function.</li>
+<li>All observations in <span class="math inline">\(N_k(x_0)\)</span> are given the same weight even though some values are nearer to <span class="math inline">\(x_0\)</span> than other values.</li>
+</ol>
+</section>
+<section id="local-linear-regression-and-loess" class="level3" data-number="15.4.3">
+<h3 data-number="15.4.3" class="anchored" data-anchor-id="local-linear-regression-and-loess"><span class="header-section-number">15.4.3</span> Local Linear Regression and LOESS</h3>
+<p>Local linear regression fits a separate weighted linear regression model for each <span class="math inline">\(x_0\)</span> on a subset of the data. Only the closest observations are used. LOESS, a specific local linear regression model, is a curve smoothing approach for data visualization.</p>
+<p>The conditional mean for LOESS is a fairly simple weighted linear regression model.</p>
+<p><span class="math display">\[
+\hat{f}(x_0) = \hat{l}(x_0)
+\]</span></p>
+<p>All we need to do is calculate weights for the weighted linear regression. Span, the <span class="math inline">\(k\)</span> closest observations considered for each linear regression model is the only hyperparameter for LOESS. We will use the tricube weight function using the following procedure:</p>
+<ol type="1">
+<li>Calculate the distance from <span class="math inline">\(x_0\)</span> to all observations in the data.</li>
+<li>Pick the <span class="math inline">\(k\)</span> closest values.</li>
+<li>Divide all chosen distances by the maximum distance so that all distances are in <span class="math inline">\([0, 1]\)</span>.</li>
+<li>Apply the tricube function, <span class="math inline">\((1 - u ^ 3) ^ 3\)</span> to the scaled distances.</li>
+</ol>
+<p>Once the weights are calculated, simply plug them into a linear regression model using the <span class="math inline">\(k\)</span> closest observations to <span class="math inline">\(x_0\)</span>.</p>
+<p>Let’s look at the math that explains the algorithm. The LOESS conditional mean uses weighted least squares to find <span class="math inline">\(\hat{l}(x_0)\)</span> that minimizes</p>
+<p><span class="math display">\[
+\sum_{x_i \in N_k(x_o)} \left[y_i - l(x_i)\right]^2W\left(\frac{|x_0 - x_i|}{\triangle_{x_o}}\right)
+\]</span></p>
+<ul>
+<li><span class="math inline">\(x_i \in N_k(x_o)\)</span> is the <span class="math inline">\(k\)</span> closest observations to <span class="math inline">\(x_0\)</span></li>
+<li><span class="math inline">\(l(x_i)\)</span> is a weighted linear regression model</li>
+<li><span class="math inline">\(|x_0 - x_i|\)</span> is a vector of distances</li>
+<li><span class="math inline">\(\triangle_{x_o}\)</span> is the maximum distance in the vector <span class="math inline">\(|x_0 - x_i|\)</span></li>
+<li><span class="math inline">\(W()\)</span> is a kernel</li>
+</ul>
+<p><a href="#fig-loess" class="quarto-xref">Figure&nbsp;<span>15.10</span></a> demonstrates LOESS on simulated data.</p>
+<div class="cell">
+<details class="code-fold">
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>tricube <span class="ot">&lt;-</span> <span class="cf">function</span>(u) {</span>
+<span id="cb13-2"><a href="#cb13-2"></a>  </span>
+<span id="cb13-3"><a href="#cb13-3"></a>  (<span class="dv">1</span> <span class="sc">-</span> u <span class="sc">^</span> <span class="dv">3</span>) <span class="sc">^</span> <span class="dv">3</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  </span>
+<span id="cb13-5"><a href="#cb13-5"></a>}</span>
+<span id="cb13-6"><a href="#cb13-6"></a></span>
+<span id="cb13-7"><a href="#cb13-7"></a>distance <span class="ot">&lt;-</span> <span class="cf">function</span>(x, x0, k) {</span>
+<span id="cb13-8"><a href="#cb13-8"></a>  </span>
+<span id="cb13-9"><a href="#cb13-9"></a>  distances <span class="ot">&lt;-</span> <span class="fu">abs</span>(x <span class="sc">-</span> x0)</span>
+<span id="cb13-10"><a href="#cb13-10"></a></span>
+<span id="cb13-11"><a href="#cb13-11"></a>  sorted_distances <span class="ot">&lt;-</span> distances <span class="sc">|&gt;</span></span>
+<span id="cb13-12"><a href="#cb13-12"></a>    <span class="fu">sort</span>()</span>
+<span id="cb13-13"><a href="#cb13-13"></a>  </span>
+<span id="cb13-14"><a href="#cb13-14"></a>  ids <span class="ot">&lt;-</span> <span class="fu">which</span>(distances <span class="sc">&lt;=</span> <span class="fu">max</span>(sorted_distances[<span class="dv">1</span><span class="sc">:</span>k]))</span>
+<span id="cb13-15"><a href="#cb13-15"></a>  </span>
+<span id="cb13-16"><a href="#cb13-16"></a>  chosen_distances <span class="ot">&lt;-</span> distances[ids]</span>
+<span id="cb13-17"><a href="#cb13-17"></a>  </span>
+<span id="cb13-18"><a href="#cb13-18"></a>  scaled_distances <span class="ot">&lt;-</span> chosen_distances <span class="sc">/</span> <span class="fu">max</span>(chosen_distances)</span>
+<span id="cb13-19"><a href="#cb13-19"></a>  </span>
+<span id="cb13-20"><a href="#cb13-20"></a>  <span class="fu">list</span>(</span>
+<span id="cb13-21"><a href="#cb13-21"></a>    <span class="at">scaled_distances =</span> scaled_distances,</span>
+<span id="cb13-22"><a href="#cb13-22"></a>    <span class="at">ids =</span> ids</span>
+<span id="cb13-23"><a href="#cb13-23"></a>  )</span>
+<span id="cb13-24"><a href="#cb13-24"></a>  </span>
+<span id="cb13-25"><a href="#cb13-25"></a>}</span>
+<span id="cb13-26"><a href="#cb13-26"></a></span>
+<span id="cb13-27"><a href="#cb13-27"></a>my_loess <span class="ot">&lt;-</span> <span class="cf">function</span>(data, k, x0) {</span>
+<span id="cb13-28"><a href="#cb13-28"></a>  </span>
+<span id="cb13-29"><a href="#cb13-29"></a>  distances <span class="ot">&lt;-</span> <span class="fu">distance</span>(<span class="at">x =</span> data<span class="sc">$</span>x, <span class="at">x0 =</span> x0, <span class="at">k =</span> k)</span>
+<span id="cb13-30"><a href="#cb13-30"></a>  </span>
+<span id="cb13-31"><a href="#cb13-31"></a>  weights <span class="ot">&lt;-</span> <span class="fu">tricube</span>(<span class="at">u =</span> distances<span class="sc">$</span>scaled_distances)</span>
+<span id="cb13-32"><a href="#cb13-32"></a>  </span>
+<span id="cb13-33"><a href="#cb13-33"></a>  fit <span class="ot">&lt;-</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, data[distances<span class="sc">$</span>ids, ], <span class="at">weights =</span> weights)</span>
+<span id="cb13-34"><a href="#cb13-34"></a>  </span>
+<span id="cb13-35"><a href="#cb13-35"></a>  <span class="co"># return coefficient </span></span>
+<span id="cb13-36"><a href="#cb13-36"></a>  <span class="fu">list</span>(</span>
+<span id="cb13-37"><a href="#cb13-37"></a>    <span class="at">coefficient =</span> <span class="fu">coef</span>(fit),</span>
+<span id="cb13-38"><a href="#cb13-38"></a>    <span class="at">y_0 =</span> <span class="fu">predict</span>(fit, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">x =</span> x0))</span>
+<span id="cb13-39"><a href="#cb13-39"></a>  )</span>
+<span id="cb13-40"><a href="#cb13-40"></a>  </span>
+<span id="cb13-41"><a href="#cb13-41"></a>}</span>
+<span id="cb13-42"><a href="#cb13-42"></a></span>
+<span id="cb13-43"><a href="#cb13-43"></a>points <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-44"><a href="#cb13-44"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">8</span>),</span>
+<span id="cb13-45"><a href="#cb13-45"></a>  <span class="at">y =</span> <span class="fu">map_dbl</span>(x, <span class="sc">~</span><span class="fu">my_loess</span>(data1, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">x0 =</span> .x)<span class="sc">$</span>y_0)</span>
+<span id="cb13-46"><a href="#cb13-46"></a>)</span>
+<span id="cb13-47"><a href="#cb13-47"></a>line2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-48"><a href="#cb13-48"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="fl">0.1</span>),</span>
+<span id="cb13-49"><a href="#cb13-49"></a>  <span class="at">y =</span> <span class="fu">map_dbl</span>(x, <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">c</span>(<span class="dv">1</span>, .x) <span class="sc">*</span> <span class="fu">my_loess</span>(data1, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">x0 =</span> <span class="dv">2</span>)<span class="sc">$</span>coefficient))</span>
+<span id="cb13-50"><a href="#cb13-50"></a>)</span>
+<span id="cb13-51"><a href="#cb13-51"></a>line4 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-52"><a href="#cb13-52"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">2</span>, <span class="dv">6</span>, <span class="fl">0.1</span>),</span>
+<span id="cb13-53"><a href="#cb13-53"></a>  <span class="at">y =</span> <span class="fu">map_dbl</span>(x, <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">c</span>(<span class="dv">1</span>, .x) <span class="sc">*</span> <span class="fu">my_loess</span>(data1, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">x0 =</span> <span class="dv">4</span>)<span class="sc">$</span>coefficient))</span>
+<span id="cb13-54"><a href="#cb13-54"></a>)</span>
+<span id="cb13-55"><a href="#cb13-55"></a>line8 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb13-56"><a href="#cb13-56"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">6</span>, <span class="dv">10</span>, <span class="fl">0.1</span>),</span>
+<span id="cb13-57"><a href="#cb13-57"></a>  <span class="at">y =</span> <span class="fu">map_dbl</span>(x, <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">c</span>(<span class="dv">1</span>, .x) <span class="sc">*</span> <span class="fu">my_loess</span>(data1, <span class="at">k =</span> <span class="dv">10</span>, <span class="at">x0 =</span> <span class="dv">8</span>)<span class="sc">$</span>coefficient))</span>
+<span id="cb13-58"><a href="#cb13-58"></a>)</span>
+<span id="cb13-59"><a href="#cb13-59"></a></span>
+<span id="cb13-60"><a href="#cb13-60"></a></span>
+<span id="cb13-61"><a href="#cb13-61"></a>data1 <span class="sc">|&gt;</span> </span>
+<span id="cb13-62"><a href="#cb13-62"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span> </span>
+<span id="cb13-63"><a href="#cb13-63"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb13-64"><a href="#cb13-64"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"loess"</span>, <span class="at">span =</span> <span class="fl">0.1</span>, <span class="at">method.args =</span> <span class="fu">list</span>(<span class="at">degree =</span> <span class="dv">1</span>, <span class="at">surface =</span> <span class="st">"direct"</span>), <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb13-65"><a href="#cb13-65"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb13-66"><a href="#cb13-66"></a>    <span class="at">data =</span> points,</span>
+<span id="cb13-67"><a href="#cb13-67"></a>    <span class="fu">aes</span>(x, y),</span>
+<span id="cb13-68"><a href="#cb13-68"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb13-69"><a href="#cb13-69"></a>  ) <span class="sc">+</span></span>
+<span id="cb13-70"><a href="#cb13-70"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line2, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-71"><a href="#cb13-71"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line4, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb13-72"><a href="#cb13-72"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line8, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-loess" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values a <span class="math inline">\(x_0 \in \{2, 4, 8\}\)</span>. Dashed lines are fitted local linear regression models.
+</figcaption>
+<div aria-describedby="fig-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-loess-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<p>In general, LOESS is very poor for extrapolating beyond the range of <span class="math inline">\(x\)</span> and even in places where data are sparse. In practice, local linear regression models and LOESS are mostly used for visualizing trends in scatter plots using a smoothed conditional mean line.</p>
+</section>
+<section id="code" class="level3" data-number="15.4.4">
+<h3 data-number="15.4.4" class="anchored" data-anchor-id="code"><span class="header-section-number">15.4.4</span> Code</h3>
+<section id="geom_smooth" class="level4">
+<h4 class="anchored" data-anchor-id="geom_smooth"><code>geom_smooth()</code></h4>
+<p>LOESS is not limited to simple linear regression models. For example, <code>geom_smooth()</code> includes a 2nd-order polynomial for each local regression model by default. Let’s fit a</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>data1 <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-geom_smooth" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-geom_smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
+</figcaption>
+<div aria-describedby="fig-geom_smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="16_nonparametric-1_files/figure-html/fig-geom_smooth-1.png" class="img-fluid figure-img" width="672">
+</div>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 3</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Use <code>geom_smooth()</code> to fit a LOESS model to the <code>cars</code> data with <code>x = speed</code> and <code>y = dist</code>.</li>
+<li>Use <code>geom_smooth()</code> to fit a linear regression model to the <code>cars</code> data with <code>x = speed</code> and <code>y = dist</code>. Make the line red.</li>
+</ol>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'
+`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="16_nonparametric-1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="loess" class="level4">
+<h4 class="anchored" data-anchor-id="loess"><code>loess()</code></h4>
+<p><code>loess()</code> can be used to fit a local linear regression model. It contains many arguments than be used to fine-tune the fit include <code>span</code>, <code>degree</code>, and <code>surface</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>data1_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">data =</span> data1, <span class="at">degree =</span> <span class="dv">1</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>data1_loess</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Call:
+loess(formula = y ~ x, data = data1, degree = 1)
+
+Number of Observations: 100 
+Equivalent Number of Parameters: 2.76 
+Residual Standard Error: 5.446 </code></pre>
+</div>
+</div>
+<p>Once we have a LOESS object, we can use <code>predict()</code> to calculate the conditional mean.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">predict</span>(data1_loess, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">8</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       1        2        3 
+25.78555 22.38631 30.15598 </code></pre>
+</div>
+</div>
+<p>LOESS is nonparametric and fits a new model for each unique <span class="math inline">\(x_0\)</span>. LOESS is <em>memory-based</em> meaning that almost all computation is done when <code>predict()</code> is run. This is computationally expensive and LOESS will not work well with large data sets.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 4</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Generate the simulated data from above.</li>
+<li>Generate the plot <a href="#fig-geom_smooth" class="quarto-xref">Figure&nbsp;<span>15.11</span></a>.</li>
+<li>Use <code>loess()</code> and <code>predict()</code> to generate a conditional mean for <span class="math inline">\(x_0 = 6\)</span>.</li>
+<li>Add the predicted values to the data visualization using <code>geom_point()</code> and <code>color = "red"</code>.</li>
+</ol>
+</div>
+</div>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-hastie2009" class="csl-entry" role="listitem">
+Hastie, Trevor, Robert Tibshirani, and J. H. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em>. 2nd ed. Springer Series in Statistics. New York, NY: Springer.
+</div>
+<div id="ref-higgins2004" class="csl-entry" role="listitem">
+Higgins, James J. 2004. <em>An Introduction to Modern Nonparametric Statistics</em>. Pacific Grove, CA: Brooks/Cole.
+</div>
+<div id="ref-scott2005" class="csl-entry" role="listitem">
+Scott, David W., and Stephan R. Sain. 2005. <span>“Multidimensional Density Estimation.”</span> In, 24:229–61. Elsevier. <a href="https://doi.org/10.1016/S0169-7161(04)24009-3">https://doi.org/10.1016/S0169-7161(04)24009-3</a>.
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>R.A. Fisher, a key developer of frequentist statistics, developed an early nonparametric test called <a href="https://en.wikipedia.org/wiki/Fisher%27s_exact_test">Fisher’s Exact Test</a>. The use of nonparametric statistics has increased with swelling computing power.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>A <strong>location parameter</strong> controls the horizontal shift of a distribution. Location parameters include the mean, median, and mode.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A <strong>scale parameter</strong> controls the spread of a distribution. Scale parameters include variance and standard deviation.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Methods based on binomial distribution are also common but we will skip them.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Recall your algebra class where, to move the vertex of a parabola in the x-axis some distance <span class="math inline">\(h\)</span>, you updated the formula <span class="math inline">\(y = x^2\)</span> to <span class="math inline">\(y = (x-h)^2\)</span>. The change to the normal function is analogous. In fact, we can use this idea to shift any kernel.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><span class="math inline">\(\text{bandwidth} = 0.9 min\left(\hat{\sigma}, \frac{IQR}{1.34}\right)\)</span><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Note that <span class="math inline">\(f_x(x)\)</span> above meant a probability density function. In this case, <span class="math inline">\(f(x)\)</span> is a function that relates <span class="math inline">\(y_1, y_2, ..., y_n\)</span> to <span class="math inline">\(x_1, x_2, ..., x_n\)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./15_microsimulation.html" class="pagination-link" aria-label="Microsimulation">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./17_nonparametric-2.html" class="pagination-link" aria-label="Nonparametric Inference">
+        <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

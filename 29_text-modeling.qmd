@@ -101,7 +101,7 @@ The algorithmic grouping or clustering of documents using features extracted fro
 **Topic modeling:** The unsupervised clustering, or grouping, of text documents based on their content. 
 :::
 
-* Alena Stern used Latent Dirichlet Allocation (LDA) to sort 110,063 public records requests into 60 topics [@Stern2018]
+* One of the authors, Alena Stern, used Latent Dirichlet Allocation (LDA) to sort 110,063 public records requests into 60 topics [@Stern2018]
 * Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives [@vanKessel2019]. 
 
 Leveraging what we already know, we can use K-means clustering on a term-document matrix to cluster documents. This approach has two shortcomings. 

@@ -1,0 +1,474 @@
+---
+title: "Missing Data and Data Imputation"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+    
+execute:
+    warning: false
+    message: false
+---
+
+```{r}
+library(tidyverse)
+library(knitr)
+library(grid)
+library(gridExtra)
+```
+
+
+## Types of missingness
+
+
+::: {.callout-tip}
+## Unit missingness:
+**Unit missingness:** When data are missing for an entire observation or row. For example, a researcher contacts a household but the household never responds to the questionnaire.
+:::
+
+
+```{r echo = FALSE}
+tribble(
+  ~id, ~age, ~income,
+  "01", 22, 32000,
+  "02", 32, 48000,
+  "03", NA, NA,
+  "04", 48, 100000
+)
+
+```
+
+
+::: {.callout-tip}
+## Item missingness:
+**Item missingness:** When data are missing for variables within an observation or row. For example, a household responds to a questionnaire but skips a question because they consider it too sensitive. 
+:::
+
+```{r echo = FALSE}
+tribble(
+  ~id, ~age, ~income,
+  "01", NA, 32000,
+  "02", 32, 48000,
+  "03", 16, NA,
+  "04", 48, 100000
+)
+
+```
+
+::: {.callout-tip}
+## Structural missingness:
+**Structural missingness:** Item missingness where the values are missing because of data or questionnaire structure. For example, age of first child could be `NA` for a family without children.
+:::
+
+```{r echo = FALSE}
+tribble(
+  ~id, ~number_of_children, ~child_age1,
+  "01", 2, 8,
+  "02", 1, 10,
+  "03", 0, NA,
+  "04", 1, 1
+)
+
+```
+
+## Missingness mechanisms
+
+
+::: {.callout-tip}
+## Missing completely at random (MCAR)
+**Missing completely at random (MCAR):** The missingness does not depend on observed or unobserved data. Ignoring special cases, this means the probability of missingness is the same for all observations.
+:::
+
+
+::: {.callout-tip}
+## Missing at random
+**Missing at random (MAR):** The probability of missingness depends only on the observed variables for an observation. For example, respondents don't report high wealth but the missingness is correlated with high incomes that are reported. 
+:::
+
+::: {.callout-tip}
+## Missing not at random
+**Missing not at random (MNAR):** The data are neither MCAR nor MAR. The probability of missingness depends on unobservables. For example, if households don’t report their incomes because they have high incomes and we can't observe anything else related to the missingness.
+
+There are tests to compare MCAR and MAR. There is no test to compare MAR and MNAR.
+:::
+
+:::{.callout-note}
+Many data sets are simply of poor quality and can't be fixed, even with the best methods. It is important to understand why data are missing before remediation.   
+:::
+
+## Three motivations
+
+### Missing observations
+
+Missing data are everywhere. 
+
+* Households don't respond to surveys
+* Households skip questions in surveys
+* Administrative data sources don't link for every observation because of administrative errors
+* Observations are censored (top and bottom coding) or suppressed for reasons of statistical disclosure control
+
+Techniques are needed to handle missing values for most statistical methods. For example, linear regression is not robust to missing values. One `NA` will break `lm()`.
+
+Appropriate techniques are highly dependent on if the missing values are MCAR, MAR, or MNAR.
+
+### Augmenting data
+
+As shown in earlier classes, we can use a small but wide data set to impute new variables on to a long but skinny data set.
+
+One of the authors used Survey of Income and Program Participation, which has detailed wealth variables, to impute wealth on to the American Community Survey, which is large and representative at the city level [@williams2023]. In this case, everything is MCAR because all observations are missing.
+
+### Statistical disclosure control
+
+Many surveys contain detailed information that could plausibly be used to identify respondents. Surveys like the Survey of Consumer Finances (SCF), which is created by the Federal Reserve Board, have variables that are deleted and imputed. These imputed values have the statistical properties of the confidential data but have far lower disclosure risks. 
+
+This process typically begins with a "gold standard" standard data set and so all observations are treated as MCAR. 
+
+## Methods for missing data
+
+### Complete case analysis
+
+
+::: {.callout-tip}
+## Lis-wise deletion
+**List-wise deletion:** Analysis where any observation is dropped when it contains a missing value in **any** variable involved in the analysis. `na.rm` implements list-wise deletion. 
+:::
+
+
+::: {.callout-tip}
+## Pairwise deletion
+**Pairwise deletion:** Analysis where any observation is dropped when it contains a missing value in a variable immediately involved in the analysis. For example, if an observation is missing $X_{i,1}$ but has observed $X_{i,2}$ and $X_{i,3}$, then $X_{i,2}$ and $X_{i,3}$ will be included in the covariance matrix for implementing linear regression but $X_{i,1}$ will be dropped. 
+:::
+
+
+::: {.callout-tip}
+## Reweighting
+**Reweighting:** Methods that adjust observation weights to compensate for missingness or measurement error. For example, many surveys are reweighted/benchmarked against the Decennial Census or American Community Survey to compensate for unit nonresponse.
+:::
+
+### Imputation (our focus)
+
+
+::: {.callout-tip}
+## Imputation
+**Imputation:** The process of filling in missing data.
+:::
+
+
+::: {.callout-tip}
+## Explicit imputation
+**Explicit imputation (full probability models):** The predictive distribution used for imputation is based on a full statistical model with explicit assumptions. 
+:::
+
+
+::: {.callout-tip}
+## Implicit imputation
+**Implicit imputation (algorithmic approach):** The predictive distribution is based on algorithms with implicit assumptions. 
+:::
+
+
+#### Imputation examples
+
+Consider the simulated data from the supervised machine learning notes. 
+
+
+```{r}
+set.seed(20201005)
+
+x1 <- runif(n = 1000, min = 0, max = 10)
+x2 <- runif(n = 1000, min = 10, max = 20)
+
+data2 <- bind_cols(
+  x1 = x1,
+  x2 = x2,
+  y = 10 * sin(x1) + x2 + 20 + rnorm(n = length(x1), mean = 0, sd = 2)
+)
+
+```
+
+What if we make about 36 percent of the `y` values missing and make them missing based on the value of `x1`?
+
+```{r}
+data2 <- data2 %>%
+  mutate(
+    missing_prob = 
+      case_when(
+        x1 < 1 ~ 0.05,
+        x1 < 3 ~ 0.8,
+        x1 < 7 ~ 0.05,
+        x1 < 9 ~ 0.8,
+        TRUE ~ 0.05
+      )
+  ) %>%
+  bind_cols(cutoff = runif(1000)) %>%
+  mutate(y_missing = ifelse(cutoff < missing_prob, NA, y))
+
+mean(is.na(data2$y_missing))
+
+```
+
+#### Mode and mean imputation
+
+Let's start with a mean imputation approach. 
+
+```{r}
+# calculate the mean of the non-missing values
+mean_y <- data2 %>%
+  filter(!is.na(y_missing)) %>%
+  summarize(y_missing = mean(y_missing)) %>%
+  pull(y_missing)
+
+# if a value is missing, replace it with the mean from the non-missing values
+mean_imputed <- data2 %>%
+  mutate(
+    imputation = as.numeric(is.na(y_missing)),
+    y_imputed = if_else(
+      condition = is.na(y_missing), 
+      true = mean_y, 
+      false = y_missing
+    )
+  )
+
+# visualize the imputation
+mean_imputed %>%
+  ggplot(aes(x1, y_imputed, color = factor(imputation))) +
+  geom_point(alpha = 0.2) +
+  labs(title = "Mean imputation does a poor job") +
+  theme_minimal()
+
+# compare the mean
+mean_imputed %>%
+  summarize(mean(y), mean(y_imputed))
+
+```
+
+Mode imputation follows a similar procedure. 
+
+#### Linear and logistic regression imputation
+
+Mean and mode imputation do not leverage the observed information for observations with missing values. Let's use linear regression with higher-order terms to impute the missing values. Let's start with a third-degree polynomial. That is the model:
+
+$$y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i1}^2 + \beta_3x_{i1}^3 + \epsilon_i$$
+
+```{r}
+data2_complete <- filter(data2, !is.na(y_missing))
+data2_missing <- filter(data2, is.na(y_missing)) 
+
+lm_y_3 <- data2_complete %>%
+  lm(formula = y_missing ~ poly(x1, degrees = 3, raw = TRUE), data = .)
+
+lm_imputed3 <- bind_rows(
+  `0` = mutate(data2_complete, y_imputed = y_missing),
+  `1` = bind_cols(
+    data2_missing,
+    y_imputed = predict(lm_y_3, newdata = data2_missing)
+  ),
+  .id = "imputation"
+)
+
+# visualize
+lm_imputed3 %>%
+  ggplot(aes(x1, y_imputed, color = factor(imputation))) +
+  geom_point(alpha = 0.2) +
+  labs(title = "Regression imputation (with the wrong model) does a bad job") +
+  theme_minimal()
+
+# compare means
+lm_imputed3 %>%
+  summarize(mean(y), mean(y_imputed))
+
+```
+
+Unfortunately, the results are no better than mean imputation. Let's try a fourth-degree polynomial. That is the model:
+
+$$y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i1}^2 + \beta_3x_{i1}^3 + \beta_4x_{i1}^4 + \epsilon_i$$
+
+```{r}
+lm_y_4 <- data2_complete %>%
+  lm(formula = y_missing ~ poly(x1, degrees = 4, raw = TRUE), data = .)
+
+lm_imputed4 <- bind_rows(
+  `0` = mutate(data2_complete, y_imputed = y_missing),
+  `1` = bind_cols(
+    data2_missing,
+    y_imputed = predict(lm_y_4, newdata = data2_missing)
+  ),
+  .id = "imputation"
+)
+
+# visualize
+lm_imputed4 %>%
+  ggplot(aes(x1, y_imputed, color = factor(imputation))) +
+  geom_point(alpha = 0.2) +
+  labs(title = "Regression imputation (with the right model) does a good job") +
+  theme_minimal()
+
+# compare means
+lm_imputed4 %>%
+  summarize(mean(y), mean(y_imputed))
+
+```
+
+The results are much better. In general, explicit imputation is better when the model is correct because explicit models offer tools for making probabilistic statements about the imputations. However, getting the right model is always a challenging task. 
+
+Logistic regression imputation follows a similar procedure.
+
+#### Other supervised machine learning imputation
+
+As we will discuss in future chapters, linear and logistic regression are both supervised machine learning algorithms. However, there are many other algorithms too. What if we try a K Nearest Neighbors (KNN) algorithm with k = 13. You can learn more about KNN in @sec-knn.
+
+```{r}
+library(tidymodels)
+
+knn_recipe <-
+  recipe(formula = y ~ ., data = data2_complete) %>%
+  step_normalize(x1, x2)
+
+# neighbors = 13 comes from the hyperparameter tuning in the supervised machine
+# learning notes
+knn_mod <-
+  nearest_neighbor(neighbors = 13) %>%
+  set_engine(engine = "kknn") %>%
+  set_mode(mode = "regression")
+
+knn_workflow <-
+  workflow() %>%
+  add_model(spec = knn_mod) %>%
+  add_recipe(recipe = knn_recipe)
+
+knn_fit <- knn_mod %>%
+  fit(formula = y_missing ~ x1 + x2, data = data2_complete)
+
+# add the imputed values
+knn_imputed <- bind_rows(
+  `0` = mutate(data2_complete, y_imputed = y_missing),
+  `1` = bind_cols(
+    data2_missing,
+    y_imputed = predict(knn_fit, new_data = data2_missing)$.pred
+  ),
+  .id = "imputation"
+)
+
+# visualize
+knn_imputed %>%
+  ggplot(aes(x1, y_imputed, color = factor(imputation))) +
+  geom_point(alpha = 0.2) +
+  labs(title = "KNN imputation does a good job") +
+  theme_minimal()
+
+# compare means
+knn_imputed %>%
+  summarize(mean(y), mean(y_imputed))
+
+```
+
+The model is pretty good without much work!
+
+#### Concept: Impute proportions
+
+It is often desirable to impute proportions instead of 0/1 for categorical variables ([McCaffey and Elliott, 2008](https://onlinelibrary.wiley.com/doi/10.1111/j.1475-6773.2007.00810.x)). Converting the probabilities to indicators throws out information and can bias results for small groups. 
+
+* Can sum probabilities to counts
+* Can average probabilities for proportions
+* Can use probabilities as predictors in models
+
+#### Concept: Stochastic imputation
+
+Mean imputation and conditional mean imputation result in distorted sample variances and covariances, and too few values in the tails of distributions (Little and Rubin, 1990).
+
+```{r echo = FALSE}
+set.seed(20220412)
+data <- tibble(
+  x = runif(100, 0, 50),
+  y = rnorm(n = 100, mean = 10 * x, sd = 100)
+)
+
+model <- lm(y ~ x, data = data)
+
+predictors <- c(15, 30, 45)
+conditional_means <- predict(model, newdata = tibble(x = predictors))
+
+create_curve <- function(predictor, conditional_mean) {
+  bind_cols(
+    group = predictor,
+    y = seq(conditional_mean - 300, conditional_mean + 300, 1),
+    x = predictor - dnorm(
+      x = seq(conditional_mean - 300, conditional_mean + 300, 1), 
+      mean = conditional_mean, 
+      sd = 100
+    ) * 3000
+  )
+}
+
+curves <- map2_dfr(.x = predictors, .y = conditional_means, .f = create_curve)
+
+ggplot(data, aes(x, y)) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", lwd=1, se = FALSE) +
+  geom_path(
+    data = curves, 
+    mapping = aes(x, y, group = group), 
+    color = "salmon", 
+    lwd = 1.1
+  ) +
+  theme_minimal() +
+  geom_vline(xintercept = predictors, lty = 2)
+
+```
+
+It is desirable to draw from posterior predictive distributions (Bayesian) or comparable ideas from frequentist statistics or machine learning. For example, instead of imputing directly with linear regression, add normally distributed random noise to the predicted values from linear regression with mean zero and variance equal to the residual variance on complete cases. 
+
+We recommend sampling predicted values from all trees in a random forest model instead of imputing the mean or median of the trees. 
+
+#### Concept: Multiple imputation
+
+Most single imputation methods do not account for imputation uncertainty. A common strategy to account for uncertainty is to repeat the imputation process many times. For example:
+
+1. Impute 50 times.
+2. Estimate the parameter of interest 50 times (for example, population means).
+3. Average the 50 parameters and calculate a standard error that accounts for the variance of the individual estimates and the variance between the estimates. There are combination rules for these calculations.
+
+This results in valid standard errors for many estimators that account for the uncertainty of imputation. 
+
+### Analyze incompleteness
+
+* Explicitly model missingness mechanism
+* Expectation maximization (same algorithm as K-Means clustering)
+* Full information maximum likelihood
+* Gibbs' sampler
+
+## Strategies to avoid/remediate missing data (by Roderick Little)
+
+* **Limit respondent burden -** Limit the length or difficulty of questionnaires to limit the probability that a respondent will start, but not finish the questionnaire. 
+* **Collect data to predict missing values -** Collect basic demographic variables that can be used for reweighting and collect variables that are correlated with variables that will contain missingness. 
+* **Follow up with a subsample of non-respondents -** Information about non-respondents is gold for determining the missingness mechanism and imputing missing data.
+
+## Examples
+
+### Application 1: Bayesian Improved Surname Geocoding
+
+Self-reported race/ethnicity is the gold standard for the analysis of racial and ethnic disparities. Many important data sets do not contain race or ethnicity but have detailed information that could be used to impute race and ethnicity.
+
+**The goal is to make group-level inferences instead of individual inferences.**
+
+[Bayesian Improved Surname Geocoding (BISG)](https://www.rand.org/health-care/tools-methods/bisg.html) is an imputation method developed by RAND Corporation for estimating racial and ethnic disparities with imputations. It has been used in numerous applications like measuring racial/ethnic differences in voluntary disenrollment from Medicare plans and many fair lending models. 
+
+For each observation in a data set, two sets of probabilities for six race/ethnicity groups are generated:
+
+1. Link residential address to Census Block Group information about race and ethnicity.
+2. Link surname to Census surname list information about race and ethnicity. 
+    * 150,000 surnames that show up 100+ times
+    * Counts of 6 different race/ethnicity groups
+
+Use Bayes' theorem to combine residential and surname probabilities. 
+
+For each observation, this results in six probabilities for American Indian/Alaskan Native, Asian and Pacific Island, Black, Hispanic, Multiracial, and White. The model generates ROC AUC of 0.93 or greater for large groups like Black, Hispanic, and White but can perform worse for groups like Multiracial.
+
+### Application 2: `library(tidysynthesis)`
+
+Slides and .R script
+
+## Resources
+
+* [Dealing with missingness in Hands-On Machine Learning with R](https://bradleyboehmke.github.io/HOML/engineering.html#dealing-with-missingness)
+* [Flexible Imputation of Missing Data](https://stefvanbuuren.name/fimd/)
+* [Ethics and Empathy in Using Imputation to Disaggregate Data for Racial Equity, A Case Study Imputing Credit Bureau Data](https://www.urban.org/research/publication/ethics-and-empathy-using-imputation-disaggregate-data-racial-equity-case-study-imputing-credit-bureau-data)
