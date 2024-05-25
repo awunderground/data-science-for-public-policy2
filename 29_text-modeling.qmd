@@ -1,0 +1,762 @@
+---
+title: "Text Modeling"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+    
+execute:
+    warning: false
+    message: false
+    cache: true
+editor: source
+---
+
+
+```{r}
+#| echo: False
+options(scipen = 999)
+```
+
+## Background
+
+### Document-Term Matrix
+
+There exist useful alternative formats to tidytext for storing text information. Different applications use different formats. 
+
+
+::: {.callout-tip}
+## Document-Term Matrix
+**Document-Term Matrix:** A matrix where rows are documents, columns are words, and cells are counts. A document-term matrix is typically sparse.
+:::
+
+
+::: {.callout-tip}
+## One-row-per document:
+**One-row-per document:** A data frame with a column where each cell is the entire text for a document. This is useful for predictive modeling. 
+:::
+
+#### Example 01
+
+```{r}
+library(tidyverse)
+library(tidytext)
+
+theme_set(theme_minimal())
+
+example_doc <- 
+  tribble(
+    ~document, ~word, ~n,
+    "a", "apple", 3,
+    "a", "orange", 2, 
+    "a", "banana", 1,
+    "b", "apple", 2, 
+    "b", "banana", 3
+  )
+
+document_term_matrix <- example_doc %>%
+  cast_dtm(document = document, term = word, value = n)
+
+# document term matrices are large and typically print like this
+document_term_matrix
+
+# here we can see the actual matrix
+as.matrix(document_term_matrix)
+
+```
+
+### `library(broom)`
+
+`library(broom)` contains three functions for tidying up the output of models in R. Most models work with `library(broom)` including `lm()`, `glm()`, and `kmeans()`. 
+
+* `glance()` Returns one row per model.
+* `tidy()` Returns one row per model component (i.e. regression coefficient or cluster).
+* `augment()` Returns one row per observation in the model data set.
+
+### Example 02
+
+```{r}
+library(broom)
+
+cars_lm <- lm(dist ~ speed, data = cars)
+
+# one row for the model
+glance(cars_lm)
+
+# one row per coefficient
+tidy(cars_lm)
+
+# one row per observation in the modeling data
+augment(cars_lm)
+
+```
+
+## Document Grouping/Topic Modeling
+
+The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. 
+
+
+::: {.callout-tip}
+## Topic modeling
+**Topic modeling:** The unsupervised clustering, or grouping, of text documents based on their content. 
+:::
+
+* Alena Stern used Latent Dirichlet Allocation (LDA) to sort 110,063 public records requests into 60 topics [@Stern2018]
+* Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives [@vanKessel2019]. 
+
+Leveraging what we already know, we can use K-means clustering on a term-document matrix to cluster documents. This approach has two shortcomings. 
+
+1. It takes a lot of work to summarize documents that are grouped with K-means clustering.
+2. K-means clustering creates hard assignments. Each observation belongs to exactly one cluster.
+3. K-means clustering uses Euclidean distance, which is relatively simple when working with text
+
+
+::: {.callout-tip}
+## Soft assignment
+**Soft assignment:** Observations are assigned to each cluster or group with probabilities or weights. For example, observation 1 belongs to Group A with 0.9 probability and Group B with 0.1 probability. 
+:::
+
+
+We will focus on a topic modeling algorithm called Latent Dirichlet Allocation (LDA). Non-negative matrix factorization is a different popular algorithm that we will not discuss. 
+
+::: {.callout-tip}
+## Latent Dirichlet Allocation (LDA)
+**Latent Dirichlet Allocation (LDA):** A probabilistic topic model where each document is a mixture of topics and each topic is a mixture of words
+:::
+
+### LDA as a generative model
+
+LDA is a generative model. The model describes how the documents in a corpus were created. LDA relies on the bag-of-words assumption.
+
+
+::: {.callout-tip}
+## Bag-of-words assumption
+**Bag-of-words assumption:** Disregard the grammar and order of words. 
+:::
+
+
+According to the model, any time a document is created:
+
+1. Choose the length of the document, $N$, from a probability distribution
+2. Randomly choose topic probabilities for a document
+3. For each word in the document
+    a. Randomly choose a topic 
+    b. Randomly choose a word conditioned on the topic from a.
+
+### Example 03
+
+Let's demonstrate generating a document using this model. First, let's define two topics. `topic1` is about the economy and `topic2` is about sports. Note that "contract" and "union" are in both topics:
+
+```{r}
+topic1 <- c("inflation", 
+            "unemployment", 
+            "labor", 
+            "force", 
+            "exchange",
+            "rate",
+            "dollar",
+            "bank",
+            "employer",
+            "gdp",
+            "federal",
+            "reserve",
+            "return",
+            "nasdaq",
+            "startup",
+            "business",
+            "insurance",
+            "labor",
+            "union",
+            "contract")
+
+topic2 <- c("basketball", 
+            "basket", 
+            "playoff", 
+            "goal", 
+            "referee",
+            "win",
+            "loss",
+            "score",
+            "soccer",
+            "polo",
+            "run",
+            "champion",
+            "trophy",
+            "contract",
+            "union",
+            "arena",
+            "stadium",
+            "concession",
+            "court",
+            "lights")
+
+topics <- list(
+  topic1,
+  topic2
+)
+
+```
+
+Next, randomly sample a document length. In this case, we will use the [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_distribution), which returns integers. We use `_i` to note that this is for the $i^{th}$ document. 
+
+```{r}
+set.seed(42)
+
+document_length_i <- rpois(n = 1, lambda = 10)
+
+document_length_i
+
+```
+
+Each document will have a document-specific topic probability distribution. We use the Dirichlet distribution to generate this vector of probabilities. The [Dirichlet distribution](https://en.wikipedia.org/wiki/Dirichlet_distribution) is a multivariate [beta distribution](https://en.wikipedia.org/wiki/Beta_distribution). The beta distribution returns random draws between 0 and 1 and is related to the standard uniform distribution. 
+
+```{r}
+topic_distribution_i <- MCMCpack::rdirichlet(n = 1, alpha = c(0.5, 0.5)) %>%
+  as.numeric()
+
+topic_distribution_i
+
+```
+
+Using the document-specific topic distribution, we randomly assign a topic for each of the `r document_length_i` words in our document. 
+
+```{r}
+topic_j <- sample(
+  x = 1:2, 
+  size = document_length_i, 
+  prob = topic_distribution_i, 
+  replace = TRUE
+)
+
+topic_j
+
+```
+
+Finally, we sample each word from the sampled topic. 
+
+```{r}
+document_i <- map_chr(
+  .x = topic_j,
+  .f = ~sample(x = topics[[.x]], size = 1)
+)
+
+document_i
+
+```
+
+We have now generated a document that is a mixture of the two topics. It's more sports than economics but contains both topics. 
+
+The topics are also mixtures of words. "Basketball" only shows up in the sports topic but "union" and "contract" are in both topics. When used in practice, LDA generally involves more words, more topics, and more documents. 
+
+#### LDA and inference
+
+LDA is based on this data generation process, but we don't know the document-specific topic distribution or the topics for the individual words. Thus, LDA is a statistical inference procedure where we try to make inferences about parameters. In other words, we are trying to reverse engineer the generative process outlined above using a corpus of documents. In practice, we don't care about the length of the document, so we can ignore step 1.
+
+The optimization for LDA is similar to the optimization for K-means clustering.
+First, every word in the corpus is randomly assigned a topic. Then, the model is optimized through a two-step process based on expectation maximization (EM), which is the same optimization algorithm used with K-means clustering:
+
+1. Find the optimal posterior topic distribution for each document (this is $\theta$ indirectly) assuming the prior parameters are known
+2. Find the optimal prior parameters assuming the posterior topic distribution for each document is known
+3. Repeat steps 1. and 2. until some topping criterion is reached
+
+### Example 04
+
+Let's consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on [Chapter 6 in Text Mining With R](https://www.tidytextmining.com/topicmodeling.html) [@Silge2017].
+
+```{r}
+library(tidyverse)
+library(tidytext)
+library(SnowballC)
+library(topicmodels)
+
+# load one-row-per-line data ----------------------------------------------
+eos <- read_csv(here::here("data", "executive-orders.csv"))
+
+eos <- filter(eos, !is.na(text))
+
+# tokenize the text -------------------------------------------------------
+tidy_eos <- eos %>%
+  unnest_tokens(output = word, input = text)
+
+# create domain-specific stop words
+domain_stop_words <- tribble(
+  ~word, 
+  "william",
+  "clinton",
+  "george",
+  "bush", 
+  "barack",
+  "obama", 
+  "donald",
+  "trump",
+  "joseph",
+  "biden",
+  "signature",
+  "section",
+  "authority",
+  "vested",
+  "federal",
+  "president",
+  "authority",
+  "constitution",
+  "laws",
+  "united",
+  "states",
+  "america",
+  "secretary",
+  "assistant",
+  "executive",
+  "order",
+  "sec",
+  "u.s.c",
+  "pursuant",
+  "act",
+  "law"
+) %>%
+  mutate(lexicon = "custom")
+
+stop_words <- bind_rows(
+  stop_words,
+  domain_stop_words
+)
+
+# remove stop words with anti_join() and the stop_words tibble
+tidy_eos <- tidy_eos %>%
+  anti_join(stop_words, by = "word") 
+
+# remove words that are entirely numbers
+tidy_eos <- tidy_eos %>%
+  filter(!str_detect(word, pattern = "^\\d")) 
+
+# stem words with wordStem()
+tidy_eos <- tidy_eos %>%
+  mutate(stem = wordStem(word))
+
+```
+
+Next, we convert the tidytext executive orders into a document-term matrix with `cast_dtm()`. 
+
+```{r}
+tidy_eos_count <- tidy_eos %>%
+  count(president, executive_order_number, stem) 
+
+eos_dtm <- tidy_eos_count %>%
+  cast_dtm(document = executive_order_number, term = stem, value = n)
+
+```
+
+Once we have a document-term matrix, implementing LDA is straightforward with `LDA()`, which comes from `library(topicmodels)`. We must predetermine the number of groups with `k` and we set the seed because the algorithm is stochastic (not deterministic). 
+
+```{r}
+eos_lda <- eos_dtm %>%
+  LDA(k = 22, control = list(seed = 20220417))
+
+```
+
+Note: I chose 22 topics using methods outlined in the appendix. 
+
+Interpreting an estimated LDA model is the tricky work. We will do this by looking at
+
+1. Each topic as a mixture of words
+2. Each document as a mixture of topics
+
+#### Word topic probabilities
+
+With LDA, each topic is a mixture of words. The model returns estimated parameters called $\beta$. A $\beta$ represents the estimated probability of a specific word being generated from a particular topic. We can extract $\beta$ from the output of `LDA()` with `tidy()`. 
+
+```{r}
+lda_beta <- tidy(eos_lda, matrix = "beta")
+
+top_beta <- lda_beta %>%
+  group_by(topic) %>%
+  slice_max(beta, n = 12) %>%
+  ungroup() %>%
+  arrange(desc(beta))
+
+top_beta
+
+# pick 6 random topics for visualization
+random_topics <- sample(1:22, size = 6)
+
+top_beta %>%
+  filter(topic %in% random_topics) %>%
+  mutate(term = reorder(term, beta)) %>%
+  ggplot(aes(x = beta, y = term)) +
+  geom_col() +
+  facet_wrap(~ topic, scales = "free")
+
+```
+
+#### Document-topic probabilities
+
+With LDA, each document is a mixture of topics The model returns estimated parameters called $\gamma$. A $\gamma$ represents the estimated proportion of words from a specific document that come from a particular topic.
+
+```{r}
+lda_gamma <- tidy(eos_lda, matrix = "gamma")
+
+top_gamma <- lda_gamma %>%
+  group_by(topic) %>%
+  slice_max(gamma, n = 12) %>%
+  ungroup() %>%
+  arrange(desc(gamma))
+
+top_gamma
+
+```
+
+LDA isn't perfect. It can result in topics that are too broad (what [Patrick van Kessel calls](https://medium.com/pew-research-center-decoded/making-sense-of-topic-models-953a5e42854e) "undercooked") or topics that are too granular (what van Kessel calls "overcooked"). 
+
+In a related blog, @vanKessel2017 discusses using a semi-supervised algorithm called CorEx to resolve some of these challenges. With semi-supervised learning, the analyst can provide anchor terms that help the algorithm generate topics that are better cooked than with unsupervised learning. 
+
+## Text Classification (supervised machine learning)
+
+Sometimes it is useful to create a predictive model that uses text to predict a pre-determined set of labels. For example, if you have a historical corpus of labeled documents and you want to predict labels for new documents. For example, if you have a massive corpus set with a hand-labeled random sample of documents and you want to scale those labels to all documents. 
+
+Fortunately, we can use all of the `library(tidymodels)` tools we already learned this semester. We simply need a way to convert unstructured text into predictors, which is simple with `library(textrecipes)`. 
+
+## `library(textrecipes)`
+
+```{r}
+#| echo: FALSE
+knitr::include_graphics(here::here("images", "textrecipes.png"))
+
+```
+
+`library(textrecipes)` augments `library(recipes)` with `step_*()` functions that are useful for supervised machine learning with text data. 
+
+* `step_tokenize()` Create a token variable from a character predictor. 
+* `step_tokenfilter()` Remove tokens based on rules about the frequency of tokens.
+* `step_tfidf()` Create multiple variables with TF-IDF.
+* `step_ngram()` Create a token variable with n-grams.
+* `step_stem()` Stem tokens.
+* `step_lemma()` Lemmatizes tokens with `library(spacyr)`.
+* `step_stopwords()` Remove stopwords.
+
+### Example 05
+
+Consider the Federalist Papers data set we used in the earlier class notes. After loading the data, the data are in one-row-per-line format. This is the format that we tidied with `unnest_tokens()`. 
+
+```{r echo = FALSE}
+library(gutenbergr)
+
+# download the Federalist Papers from Project Gutenberg
+fed_papers <- gutenberg_download(gutenberg_id = 1404)
+
+# this data cleaning comes from Emil Hvitfeldt
+# https://www.hvitfeldt.me/blog/predicting-authorship-in-the-federalist-papers-with-tidytext/
+hamilton <- c(1, 6:9, 11:13, 15:17, 21:36, 59:61, 65:85)
+madison <- c(10, 14, 18:20, 37:48)
+jay <- c(2:5, 64)
+unknown <- c(49:58, 62:63)
+
+fed_papers <- pull(fed_papers, text) %>%
+  str_c(collapse = " ") %>%
+  str_split(pattern = "\\.|\\?|\\!") %>%
+  unlist() %>%
+  tibble(text = .)
+
+fed_papers <- fed_papers %>%
+  mutate(paper_number = cumsum(str_detect(text, regex("FEDERALIST No",
+                                            ignore_case = TRUE)))) %>%
+  mutate(author = case_when(
+    paper_number %in% hamilton ~ "hamilton",
+    paper_number %in% madison ~ "madison",
+    paper_number %in% jay ~ "jay",
+    paper_number %in% unknown ~ "unknown"
+  ))
+
+fed_papers
+
+```
+
+Predictive modeling uses a slightly different data format than tidytext. We want each row in the data to correspond with the observations we are using for predictions. In this case, we want one row per Federalist paper. 
+
+We can use `nest()` and `paste()` to transform the data into this format. 
+
+```{r}
+fed_papers <- fed_papers %>%
+  group_by(paper_number) %>%
+  nest(text = text) %>%
+  # paste individual lines into one row per document
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) %>%
+  ungroup() %>%
+  # remove white spaces
+  mutate(text = str_squish(str_to_lower(text)))
+
+fed_papers
+
+```
+
+Let's `prep()` and `bake()` a recipe. We want to use recipes because most of these `step_*()` functions are data dependent and need to be repeated during resampling. 
+
+```{r}
+library(textrecipes)
+
+recipe( ~ text, data = fed_papers) %>%
+  # tokenize the text
+  step_tokenize(text) %>%
+  # remove stop works
+  step_stopwords(text) %>%
+  # stem words
+  step_stem(text) %>%
+  # remove infrequent tokens
+  step_tokenfilter(text, max_tokens = 10) %>%
+  # perform TF-IDF
+  step_tfidf(text) %>%
+  prep() %>%
+  bake(new_data = NULL)
+
+```
+
+### Example 06
+
+Let's finish with an example using the executive orders data set. The data contain executive orders for presidents Clinton, Bush, Obama, Trump, and Biden. We will build a model that predicts the party of the president associated with each executive order. Even though we know the party, we can 
+
+1. predict the party of future executive orders
+2. see which predictors are most predictive of party
+
+First, we need to load and pre-process the data.
+
+```{r}
+eos <- read_csv(here::here("data", "executive-orders.csv"))
+
+# remove empty rows
+eos <- filter(eos, !is.na(text))
+
+# remove numbers
+eos <- eos %>%
+  mutate(text = str_remove_all(text, "\\d")) %>%
+  mutate(text = str_remove_all(text, "``''")) %>%
+  mutate(text = str_squish(text))
+
+# combine rows into one row per document
+eos <- eos %>%
+  group_by(executive_order_number) %>%
+  nest(text = text) %>%
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) %>%
+  ungroup()
+
+# label the party of each executive order
+republicans <- c("bush", "trump")
+
+eos_modeling <- eos %>%
+  mutate(
+    party = if_else(
+      condition = president %in% republicans, 
+      true = "rep", 
+      false = "dem"
+    )
+  ) %>%
+  # we can include non-text predictors but we drop predictors that would be too
+  # useful (i.e. dates align with individual presidents)
+  select(-president, -signing_date, -executive_order_number)
+
+```
+
+### Logistic LASSO regression
+
+We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection. 
+
+```{r}
+library(tidymodels)
+library(textrecipes)
+library(vip)
+
+# create a training/testing split
+set.seed(43)
+
+eos_split <- initial_split(eos_modeling, strata = party)
+eos_train <- training(eos_split)
+eos_test <- testing(eos_split)
+
+# set up cross validation
+set.seed(34)
+eos_folds <- vfold_cv(eos_train, strata = party)
+
+```
+
+Next, let's create a recipe that will be used by both models.
+
+```{r}
+eos_rec <-
+  recipe(party ~ text, data = eos_train) %>%
+  step_tokenize(text) %>%
+  step_stopwords(text) %>%
+  step_stem(text) %>%
+  # ad hoc testing indicates that increasing max tokens makes a difference
+  step_tokenfilter(text, max_tokens = 1000) %>%
+  step_tfidf(text) 
+
+```
+
+Create a workflow.
+
+```{r}
+lasso_mod <-
+  logistic_reg(penalty = tune(), mixture = 1) %>%
+  set_mode("classification") %>%
+  set_engine("glmnet")
+
+lasso_wf <- workflow() %>%
+  add_recipe(eos_rec) %>%
+  add_model(lasso_mod)
+  
+```
+
+Create a grid for hyperparameter tuning and fit the models.
+
+```{r}
+lasso_grid <- grid_regular(penalty(range = c(-5, 0)), levels = 10)
+
+lasso_cv <-
+  tune_grid(
+    lasso_wf,
+    eos_folds,
+    grid = lasso_grid
+  )
+
+```
+
+Unpack the estimated models. 
+
+```{r}
+lasso_cv %>%
+  collect_metrics()
+
+autoplot(lasso_cv)
+
+lasso_cv %>%
+  select_best("roc_auc")
+
+```
+
+Fit the best model on all of the training data and look at the coefficients. 
+
+```{r}
+lasso_wf <- finalize_workflow(x = lasso_wf, parameters = select_best(lasso_cv, "roc_auc"))
+
+lasso_fit <- last_fit(lasso_wf, split = eos_split)
+
+lasso_fit %>%
+  extract_fit_parsnip() %>%
+  tidy() %>%
+  arrange(desc(abs(estimate))) %>%
+  print(n = 20)
+
+```
+
+### Random forest
+
+Create a workflow. 
+
+```{r}
+rf_mod <-
+  rand_forest(mtry = tune(), trees = 100, min_n = tune()) %>%
+  set_mode("classification") %>%
+  set_engine("ranger", importance = "impurity")
+
+rf_wf <- workflow() %>%
+  add_recipe(eos_rec) %>%
+  add_model(rf_mod)
+
+```
+
+Create a grid for hyperparameter tuning and fit the models.
+
+```{r}
+rf_grid <- grid_regular(
+  mtry(range = c(10, 100)),
+  min_n(range = c(2, 8)),
+  levels = 5
+)
+
+rf_cv <-
+  tune_grid(
+    rf_wf,
+    eos_folds,
+    grid = rf_grid
+  )
+
+```
+
+Unpack the estimated models. 
+
+```{r}
+rf_cv %>%
+  collect_metrics()
+
+autoplot(rf_cv)
+
+rf_cv %>%
+  select_best("roc_auc")
+
+```
+
+Fit the best model on all of the training data and look at variable importance. 
+
+```{r}
+rf_wf <- finalize_workflow(x = rf_wf, parameters = select_best(rf_cv, "roc_auc"))
+
+rf_fit <- last_fit(rf_wf, split = eos_split)
+
+rf_fit %>% 
+  extract_fit_parsnip() %>% 
+  vip(num_features = 20)
+
+```
+
+### Out of sample error rate
+
+```{r}
+collect_metrics(rf_fit)
+
+```
+
+## Resources
+
+* [Multiclass predictive modeling for #TidyTuesday NBER papers](https://juliasilge.com/blog/nber-papers/) by Julia Silge
+* [Supervised Machine Learning for Text Analysis in R](https://smltar.com/) by Emil Hvitfledt and Julia Silge
+* [Latent Dirichlet Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf)
+* [Latent Dirichlet Allocation tutorial](http://obphio.us/pdfs/lda_tutorial.pdf)
+* [Computing for the Social Sciences](https://cfss.uchicago.edu/notes/text-analysis-workflow/)
+
+
+## Appendix A
+
+Like with cluster analysis, we need to identify a sensible number of topics for topic modeling. 
+
+Start with the application:
+
+* Is there a policy or programmatic number that makes sense for the  application?
+* What have others done?
+* What do subject matter experts sense is a reasonable number of topics?
+
+There are also computational approaches to measuring the quality of the resulting topics. 
+
+[This blog](https://towardsdatascience.com/evaluate-topic-model-in-python-latent-dirichlet-allocation-lda-7d57484bb5d0) describes "coherence". [This resource](https://cfss.uchicago.edu/notes/topic-modeling/#perplexity) describes a related measure called perplexity. 
+
+We can use `library(ldatuning)` to determine the optimal number of topics for LDA. 
+
+* `library(ldatuning)` [page](https://cran.r-project.org/web/packages/ldatuning/index.html)
+* `library(ldatuning)` [vignette](https://cran.r-project.org/web/packages/ldatuning/vignettes/topics.html)
+
+It is computationally expensive. `FindTopicsNumber_plot()` shows the measures and labels them based on if th measures should be minimized or maximized. 
+
+```{r eval = FALSE}
+library(ldatuning)
+
+results <- FindTopicsNumber(
+  eos_dtm,
+  topics = seq(from = 2, to = 82, by = 10),
+  # note: "Griffiths2004" does not work on Mac M1 chips because of Rmpfr
+  metrics = c("CaoJuan2009", "Arun2010", "Deveaud2014"),
+  method = "Gibbs",
+  control = list(seed = 77),
+  mc.cores = 6L,
+  verbose = TRUE
+)
+
+FindTopicsNumber_plot(results)
+
+
+```
