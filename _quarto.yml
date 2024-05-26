@@ -39,7 +39,7 @@ book:
       chapters:
         - 19_predictive-modeling-motivation.qmd 
         - 20_predictive-modeling-concepts.qmd
-        # - PART 1: supervised classification
+        - 21_supervised-classification.qmd
         - 22_ensembling.qmd
         - 23_regularization.qmd
     - part: Unsupervised Machine Learning
