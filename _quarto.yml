@@ -34,7 +34,7 @@ book:
         - 15_microsimulation.qmd   
         - 16_nonparametric-1.qmd
         - 17_nonparametric-2.qmd   
-        - 18_data-imputation.qmd
+        #  18_data-imputation.qmd
     - part: Supervised Machine Learning
       chapters:
         - 19_predictive-modeling-motivation.qmd 
@@ -48,8 +48,8 @@ book:
         # - PART 1: dimension reduction
         # - PART 1: cluster analysis
         - 27_advanced-unsupervised-ml.qmd 
-        - 28_text-analysis.qmd
-        - 29_text-modeling.qmd
+        # - 28_text-analysis.qmd
+        # - 29_text-modeling.qmd
     - part: Other Topics
         # - PART 1: geospatial analysis
         # - parallel programming to be developed

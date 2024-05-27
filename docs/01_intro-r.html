@@ -54,7 +54,27 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -103,35 +123,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -194,7 +185,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
@@ -314,12 +305,6 @@ window.Quarto = {
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -334,25 +319,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -369,19 +354,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -420,42 +393,42 @@ window.Quarto = {
   <li><a href="#rstudio-console" id="toc-rstudio-console" class="nav-link" data-scroll-target="#rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</a></li>
   <li><a href="#r-scripts" id="toc-r-scripts" class="nav-link" data-scroll-target="#r-scripts"><span class="header-section-number">1.5</span> .R Scripts</a></li>
   <li><a href="#comments" id="toc-comments" class="nav-link" data-scroll-target="#comments"><span class="header-section-number">1.6</span> Comments</a></li>
-  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures"><span class="header-section-number">1.7</span> Data Structures</a>
+  <li><a href="#style" id="toc-style" class="nav-link" data-scroll-target="#style"><span class="header-section-number">1.7</span> Style</a></li>
+  <li><a href="#data-structures" id="toc-data-structures" class="nav-link" data-scroll-target="#data-structures"><span class="header-section-number">1.8</span> Data Structures</a>
   <ul class="collapse">
-  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="header-section-number">1.7.1</span> Vectors</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">1.7.2</span> Matrices</a></li>
-  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">1.7.3</span> Data frames</a></li>
-  <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles"><span class="header-section-number">1.7.4</span> tibbles</a></li>
+  <li><a href="#vectors" id="toc-vectors" class="nav-link" data-scroll-target="#vectors"><span class="header-section-number">1.8.1</span> Vectors</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">1.8.2</span> Matrices</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">1.8.3</span> Data frames</a></li>
+  <li><a href="#tibbles" id="toc-tibbles" class="nav-link" data-scroll-target="#tibbles"><span class="header-section-number">1.8.4</span> tibbles</a></li>
   </ul></li>
-  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">1.8</span> Assignment</a></li>
-  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">1.9</span> Functions</a>
+  <li><a href="#assignment" id="toc-assignment" class="nav-link" data-scroll-target="#assignment"><span class="header-section-number">1.9</span> Assignment</a></li>
+  <li><a href="#functions" id="toc-functions" class="nav-link" data-scroll-target="#functions"><span class="header-section-number">1.10</span> Functions</a>
   <ul class="collapse">
-  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">1.9.1</span> ?</a></li>
-  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments"><span class="header-section-number">1.9.2</span> Arguments</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"><span class="header-section-number">1.10.1</span> ?</a></li>
+  <li><a href="#arguments" id="toc-arguments" class="nav-link" data-scroll-target="#arguments"><span class="header-section-number">1.10.2</span> Arguments</a></li>
   </ul></li>
-  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">1.10</span> R Packages</a>
+  <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">1.11</span> R Packages</a>
   <ul class="collapse">
-  <li><a href="#base-r" id="toc-base-r" class="nav-link" data-scroll-target="#base-r"><span class="header-section-number">1.10.1</span> Base R</a></li>
-  <li><a href="#extensibility" id="toc-extensibility" class="nav-link" data-scroll-target="#extensibility"><span class="header-section-number">1.10.2</span> Extensibility</a></li>
-  <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran"><span class="header-section-number">1.10.3</span> CRAN</a></li>
-  <li><a href="#install.packages" id="toc-install.packages" class="nav-link" data-scroll-target="#install.packages"><span class="header-section-number">1.10.4</span> <code>install.packages()</code></a></li>
-  <li><a href="#library" id="toc-library" class="nav-link" data-scroll-target="#library"><span class="header-section-number">1.10.5</span> <code>library()</code></a></li>
-  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">1.10.6</span> <code>::</code></a></li>
+  <li><a href="#base-r" id="toc-base-r" class="nav-link" data-scroll-target="#base-r"><span class="header-section-number">1.11.1</span> Base R</a></li>
+  <li><a href="#extensibility" id="toc-extensibility" class="nav-link" data-scroll-target="#extensibility"><span class="header-section-number">1.11.2</span> Extensibility</a></li>
+  <li><a href="#cran" id="toc-cran" class="nav-link" data-scroll-target="#cran"><span class="header-section-number">1.11.3</span> CRAN</a></li>
+  <li><a href="#install.packages" id="toc-install.packages" class="nav-link" data-scroll-target="#install.packages"><span class="header-section-number">1.11.4</span> <code>install.packages()</code></a></li>
+  <li><a href="#library" id="toc-library" class="nav-link" data-scroll-target="#library"><span class="header-section-number">1.11.5</span> <code>library()</code></a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"><span class="header-section-number">1.11.6</span> <code>::</code></a></li>
   </ul></li>
-  <li><a href="#organizing-an-analysis" id="toc-organizing-an-analysis" class="nav-link" data-scroll-target="#organizing-an-analysis"><span class="header-section-number">1.11</span> Organizing an Analysis</a>
+  <li><a href="#organizing-an-analysis" id="toc-organizing-an-analysis" class="nav-link" data-scroll-target="#organizing-an-analysis"><span class="header-section-number">1.12</span> Organizing an Analysis</a>
   <ul class="collapse">
-  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects"><span class="header-section-number">1.11.1</span> R Projects</a></li>
-  <li><a href="#filepaths" id="toc-filepaths" class="nav-link" data-scroll-target="#filepaths"><span class="header-section-number">1.11.2</span> Filepaths</a></li>
+  <li><a href="#r-projects" id="toc-r-projects" class="nav-link" data-scroll-target="#r-projects"><span class="header-section-number">1.12.1</span> R Projects</a></li>
+  <li><a href="#filepaths" id="toc-filepaths" class="nav-link" data-scroll-target="#filepaths"><span class="header-section-number">1.12.2</span> Filepaths</a></li>
   </ul></li>
-  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">1.12</span> Getting help</a>
+  <li><a href="#getting-help" id="toc-getting-help" class="nav-link" data-scroll-target="#getting-help"><span class="header-section-number">1.13</span> Getting help</a>
   <ul class="collapse">
-  <li><a href="#googling" id="toc-googling" class="nav-link" data-scroll-target="#googling"><span class="header-section-number">1.12.1</span> Googling</a></li>
-  <li><a href="#stack-overflow" id="toc-stack-overflow" class="nav-link" data-scroll-target="#stack-overflow"><span class="header-section-number">1.12.2</span> Stack Overflow</a></li>
-  <li><a href="#rstudio-community" id="toc-rstudio-community" class="nav-link" data-scroll-target="#rstudio-community"><span class="header-section-number">1.12.3</span> RStudio community</a></li>
-  <li><a href="#cran-task-views" id="toc-cran-task-views" class="nav-link" data-scroll-target="#cran-task-views"><span class="header-section-number">1.12.4</span> CRAN task views</a></li>
-  <li><a href="#twitter" id="toc-twitter" class="nav-link" data-scroll-target="#twitter"><span class="header-section-number">1.12.5</span> Twitter</a></li>
-  <li><a href="#data-science-for-public-policy-slack" id="toc-data-science-for-public-policy-slack" class="nav-link" data-scroll-target="#data-science-for-public-policy-slack"><span class="header-section-number">1.12.6</span> Data Science for Public Policy Slack</a></li>
-  <li><a href="#chatgpt" id="toc-chatgpt" class="nav-link" data-scroll-target="#chatgpt"><span class="header-section-number">1.12.7</span> ChatGPT:</a></li>
+  <li><a href="#googling" id="toc-googling" class="nav-link" data-scroll-target="#googling"><span class="header-section-number">1.13.1</span> Googling</a></li>
+  <li><a href="#stack-overflow" id="toc-stack-overflow" class="nav-link" data-scroll-target="#stack-overflow"><span class="header-section-number">1.13.2</span> Stack Overflow</a></li>
+  <li><a href="#rstudio-community" id="toc-rstudio-community" class="nav-link" data-scroll-target="#rstudio-community"><span class="header-section-number">1.13.3</span> RStudio community</a></li>
+  <li><a href="#cran-task-views" id="toc-cran-task-views" class="nav-link" data-scroll-target="#cran-task-views"><span class="header-section-number">1.13.4</span> CRAN task views</a></li>
+  <li><a href="#data-science-for-public-policy-slack" id="toc-data-science-for-public-policy-slack" class="nav-link" data-scroll-target="#data-science-for-public-policy-slack"><span class="header-section-number">1.13.5</span> Data Science for Public Policy Slack</a></li>
+  <li><a href="#chatgpt" id="toc-chatgpt" class="nav-link" data-scroll-target="#chatgpt"><span class="header-section-number">1.13.6</span> ChatGPT:</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -482,13 +455,12 @@ window.Quarto = {
 </header>
 
 
-<p>In this chapter, we introduce 6 key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we share key foundational concepts when programming with R.</p>
+<p>In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we share key foundational concepts when programming with R.</p>
 <section id="six-principles-for-data-analysis" class="level2" data-number="1.1">
 <h2 data-number="1.1" class="anchored" data-anchor-id="six-principles-for-data-analysis"><span class="header-section-number">1.1</span> Six Principles for Data Analysis</h2>
 <section id="accuracy" class="level3" data-number="1.1.1">
 <h3 data-number="1.1.1" class="anchored" data-anchor-id="accuracy"><span class="header-section-number">1.1.1</span> Accuracy</h3>
-<p>Deliberate steps <em>should</em> be taken to minimize the chance of making an error and maximize the chance of catching errors when errors inevitably occur.</p>
-<p><a href="http://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf">Embrace Your Fallibility: Thoughts on Code Integrity</a></p>
+<p>Deliberate steps <em>should</em> be taken to minimize the chance of making an error and maximize the chance of catching errors when errors inevitably occur. <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 </section>
 <section id="computational-reproducibility" class="level3" data-number="1.1.2">
 <h3 data-number="1.1.2" class="anchored" data-anchor-id="computational-reproducibility"><span class="header-section-number">1.1.2</span> Computational reproducibility</h3>
@@ -521,18 +493,18 @@ window.Quarto = {
 <blockquote class="blockquote">
 <p>The ambiguity [of the S language] is real and goes to a key objective: we wanted users to be able to begin in an interactive environment, where they did not consciously think of themselves as programming. Then as their needs became clearer and their sophistication increased, they should be able to slide gradually into programming, when the language and system aspects would become more important.</p>
 </blockquote>
-<p>Source: “Stages in the Evolution of S” via <a href="https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/">Roger Peng</a></p>
+<p>Source: <span class="citation" data-cites="evolution-s">Peng (<a href="references.html#ref-evolution-s" role="doc-biblioref">2018</a>)</span></p>
 </section>
 <section id="rstudio" class="level2" data-number="1.3">
 <h2 data-number="1.3" class="anchored" data-anchor-id="rstudio"><span class="header-section-number">1.3</span> RStudio</h2>
 <p>RStudio is a free, open-source integrated development environment (IDE) that runs on top of R. In practice, R users almost exclusively open RStudio and rarely directly open R. When we say IDE, we mean a piece of software where you can write, or develop, code in an efficient way.</p>
-<p>RStudio is developed by a for-profit company called <a href="https://rstudio.com/">RStudio</a>. RStudio, the company, employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources.</p>
+<p>RStudio is developed by a for-profit company called <a href="https://posit.co">Posit</a>. Posit used to be called RStudio. Posit employs some of the R community’s most prolific, open-source developers and creates many open-source tools and resources. <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>While R code can be written in any text editor, the RStudio IDE is a powerful tool with a console, syntax-highlighting, and debugging tools. <a href="https://www.rstudio.com/resources/cheatsheets/">The RStudio IDE cheatsheet</a> outlines some of the power of RStudio.</p>
-<p><img src="images/rstudio-ide.png" class="img-fluid" width="400"></p>
+<p><img src="images/rstudio-ide.png" class="img-fluid" width="650"></p>
 </section>
 <section id="rstudio-console" class="level2" data-number="1.4">
 <h2 data-number="1.4" class="anchored" data-anchor-id="rstudio-console"><span class="header-section-number">1.4</span> RStudio Console</h2>
-<p><img src="images/rstudio-console.png" class="img-fluid" width="400"></p>
+<p><img src="images/rstudio-console.png" class="img-fluid" width="650"></p>
 <p>The RStudio Console contains the R command line and R output from previously submitted R code.</p>
 <p>Code can be submitted by typing to the right of the last blue <code>&gt;</code> and the hitting enter.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -551,7 +523,7 @@ window.Quarto = {
 </section>
 <section id="r-scripts" class="level2" data-number="1.5">
 <h2 data-number="1.5" class="anchored" data-anchor-id="r-scripts"><span class="header-section-number">1.5</span> .R Scripts</h2>
-<p><img src="images/rstudio-editor.png" class="img-fluid" width="400"></p>
+<p><img src="images/rstudio-editor.png" class="img-fluid" width="650"></p>
 <p>By default, there isn’t a record of code directly typed and submitted into the RStudio Console. So, most R programmers use <code>.R</code> scripts to develop R code before submitting code to the console.</p>
 <p><code>.R</code> scripts are simple text files with R code. They are similar to <code>.py</code> files in Python, <code>.sas</code> files in SAS, and <code>.do</code> files in Stata.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -565,9 +537,9 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p>Click the new script button in the top left corner of RStudio to create a new script.</p>
-<p><img src="images/new-script.png" class="img-fluid" width="100"></p>
+<p><img src="images/new-script.png" class="img-fluid" width="200"></p>
 <p>Add some R code to your new script. Place your cursor on a line of R code and hit Command-Enter on Macs or Control-Enter on Windows. Alternatively, highlight the code (it can be multiple lines) and click the run button.</p>
-<p><img src="images/run-button.png" class="img-fluid" width="100"></p>
+<p><img src="images/run-button.png" class="img-fluid" width="200"></p>
 <p>In both cases, the code from your <code>.R</code> script should move to the R Console and evaluate.</p>
 </div>
 </div>
@@ -603,17 +575,19 @@ window.Quarto = {
 <p>Add comments to your <code>.R</code> that clarify the <em>why</em>. Since we only know a few operations, the comments may need to focus on your why you picked your favorite numbers.</p>
 </div>
 </div>
-<p>#Style</p>
-<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <a href="https://style.tidyverse.org/">Hadley Wickham</a></p>
+</section>
+<section id="style" class="level2" data-number="1.7">
+<h2 data-number="1.7" class="anchored" data-anchor-id="style"><span class="header-section-number">1.7</span> Style</h2>
+<p><em>Good coding style is like correct punctuation: you can manage without it, butitsuremakesthingseasiertoread.</em> ~ <span class="citation" data-cites="style">Wickham (<a href="references.html#ref-style" role="doc-biblioref">n.d.</a>)</span></p>
 <p><em>Human interpretability</em> is one of the six principles because clear code can save time and reduce the chance of making errors. After time, eyes can be trained to quickly spot incorrect code if a consistent R style is adopted.</p>
 <p>First, note that R is case-sensitive. Capitalization is rare and deviations from the capitalization will throw errors. For example, <code>mean()</code> is a function but <code>Mean()</code> is not a function.</p>
 <p>The <a href="https://style.tidyverse.org/">tidyverse style guide</a> is a comprehensive style guide that, in general, reflects the style of the plurality of R programmers. For now, just focus on consistency.</p>
 </section>
-<section id="data-structures" class="level2" data-number="1.7">
-<h2 data-number="1.7" class="anchored" data-anchor-id="data-structures"><span class="header-section-number">1.7</span> Data Structures</h2>
+<section id="data-structures" class="level2" data-number="1.8">
+<h2 data-number="1.8" class="anchored" data-anchor-id="data-structures"><span class="header-section-number">1.8</span> Data Structures</h2>
 <p>Data analysis is not possible without data structures for data. R has several important data structures that shape how information is stored and processed.</p>
-<section id="vectors" class="level3" data-number="1.7.1">
-<h3 data-number="1.7.1" class="anchored" data-anchor-id="vectors"><span class="header-section-number">1.7.1</span> Vectors</h3>
+<section id="vectors" class="level3" data-number="1.8.1">
+<h3 data-number="1.8.1" class="anchored" data-anchor-id="vectors"><span class="header-section-number">1.8.1</span> Vectors</h3>
 <p><em>Vectors</em> are one-dimensional arrays that contain one and only one type of data. Atomic vectors in R are <em>homogeneous</em>. There are six types of atomic vectors:</p>
 <ul>
 <li>logical</li>
@@ -674,8 +648,7 @@ window.Quarto = {
 </div>
 <p><em>Lists</em> are one- or multi-dimensional arrays that are made up of other lists. Lists are <em>heterogeneous</em> - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector.</p>
 <p><code>NULL</code> is the null object in R. It means a value does not exist.</p>
-<p>![Source: <a href="https://r4ds.hadley.nz/rectangling.html#lists" width="200">R4DS</a></p>
-<p><code>NA</code> is a missing value of lenth 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations.</p>
+<p><code>NA</code> is a missing value of length 1 in R. <code>NA</code>s are powerful representations in R with special properties. <code>NA</code> is a contagious value in R that will override all calculations <span class="citation" data-cites="Wickham2017R">(<a href="references.html#ref-Wickham2017R" role="doc-biblioref">Wickham and Grolemund 2017, sec. 20.2</a>)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="dv">1</span> <span class="sc">+</span> <span class="dv">2</span> <span class="sc">+</span> <span class="dv">3</span> <span class="sc">+</span> <span class="cn">NA</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -692,12 +665,12 @@ window.Quarto = {
 </div>
 <p><strong>Note:</strong> <code>NA</code> and <code>NULL</code> have different meanings! <code>NULL</code> means no value exists. <code>NA</code> means a value could exist but it is unknown.</p>
 </section>
-<section id="matrices" class="level3" data-number="1.7.2">
-<h3 data-number="1.7.2" class="anchored" data-anchor-id="matrices"><span class="header-section-number">1.7.2</span> Matrices</h3>
+<section id="matrices" class="level3" data-number="1.8.2">
+<h3 data-number="1.8.2" class="anchored" data-anchor-id="matrices"><span class="header-section-number">1.8.2</span> Matrices</h3>
 <p><em>Matrices</em> are multi-dimensional arrays where every element is of the same type. Most data in data science contains at least numeric information and character information. Accordingly, we will not use matrices much in this course.</p>
 </section>
-<section id="data-frames" class="level3" data-number="1.7.3">
-<h3 data-number="1.7.3" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">1.7.3</span> Data frames</h3>
+<section id="data-frames" class="level3" data-number="1.8.3">
+<h3 data-number="1.8.3" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">1.8.3</span> Data frames</h3>
 <p>Instead, <code>data frames</code>, and their powerful cousins <code>tibbles</code>, are the backbone of data science and this course. <code>Data frames</code> are two-dimensional arrays where each column is a list (usually a vector). Most times, each column will be of one type while a given row will contain many different types. We usually refer to columns as <em>variables</em> and rows as <em>observations</em>.</p>
 <p>Here are the first six rows of a data frame with information about diamond prices and diamond characteristics:</p>
 <div class="cell">
@@ -715,13 +688,13 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="tibbles" class="level3" data-number="1.7.4">
-<h3 data-number="1.7.4" class="anchored" data-anchor-id="tibbles"><span class="header-section-number">1.7.4</span> tibbles</h3>
+<section id="tibbles" class="level3" data-number="1.8.4">
+<h3 data-number="1.8.4" class="anchored" data-anchor-id="tibbles"><span class="header-section-number">1.8.4</span> tibbles</h3>
 <p><code>tibbles</code> are special data frames that have a few extra features:</p>
 <ul>
 <li>Only the first ten rows of <code>tibbles</code> print by default</li>
 <li>Extra meta data are printed with <code>tibbles</code></li>
-<li><a href="https://r4ds.had.co.nz/tibbles.html#tibbles-vs.data.frame">They have some convenient protections against partial subsetting</a></li>
+<li>They have some convenient protections against partial subsetting <span class="citation" data-cites="wickham_r_2023">(<a href="references.html#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023, sec. 3.1.2</a>)</span></li>
 <li>They are easier to create from scratch in a <code>.R</code> script</li>
 </ul>
 <div class="cell">
@@ -743,8 +716,8 @@ window.Quarto = {
 <p>From this moment forward, I will use data frame to mean tibble.</p>
 </section>
 </section>
-<section id="assignment" class="level2" data-number="1.8">
-<h2 data-number="1.8" class="anchored" data-anchor-id="assignment"><span class="header-section-number">1.8</span> Assignment</h2>
+<section id="assignment" class="level2" data-number="1.9">
+<h2 data-number="1.9" class="anchored" data-anchor-id="assignment"><span class="header-section-number">1.9</span> Assignment</h2>
 <p>R can operate on many different vectors and data frames in the same R session. This creates much flexibility. It also means most unique objects in an R session need unique names.</p>
 <p><code>&lt;-</code> is the assignment operator. An object created on the right side of an assignment operator is assigned to a name on the left side of an assignment operator. Assignment operators are important for saving the consequences of operations and functions. Without assignment, the result of a calculation is not saved for use in a future calculation. Operations without assignment operators will typically be printed to the console but not saved for future use.</p>
 <div class="cell">
@@ -757,7 +730,7 @@ window.Quarto = {
 <pre><code>[1] 4</code></pre>
 </div>
 </div>
-<p><strong>Style note:</strong> Objects should be given names that are <a href="https://style.tidyverse.org/syntax.html#object-names">“concise and meaningful”</a>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
+<p><strong>Style note:</strong> Objects should be given names that are “concise and meaningful” <span class="citation" data-cites="style">(<a href="references.html#ref-style" role="doc-biblioref">Wickham, n.d., sec. 2</a>)</span>. Generally the names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case).</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -781,8 +754,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="functions" class="level2" data-number="1.9">
-<h2 data-number="1.9" class="anchored" data-anchor-id="functions"><span class="header-section-number">1.9</span> Functions</h2>
+<section id="functions" class="level2" data-number="1.10">
+<h2 data-number="1.10" class="anchored" data-anchor-id="functions"><span class="header-section-number">1.10</span> Functions</h2>
 <p><code>+</code>, <code>-</code>, <code>*</code>, and <code>/</code> are great, but data science requires a lot more than just basic arithmetic.</p>
 <p>R contains many more functions that can perform mathematical operations, control your computer operating system, process text data, and more. In fact, R is built around functions.</p>
 <p>Because R was developed by statisticians, R’s functions have a lot in common with mathematical functions.</p>
@@ -802,17 +775,17 @@ window.Quarto = {
 <pre><code>[1] 2</code></pre>
 </div>
 </div>
-<p><a href="https://b-rodrigues.github.io/modern_R/functional-programming.html">This free book chapter contains more information about functional programming in R</a>.</p>
-<section id="section" class="level3" data-number="1.9.1">
-<h3 data-number="1.9.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.9.1</span> ?</h3>
+<p><em>Modern R with the tidyverse</em> <span class="citation" data-cites="rodrigues">(<a href="references.html#ref-rodrigues" role="doc-biblioref">Rodrigues 2022</a>)</span> has a functional programming chapter that contains more information about functional programming in R.</p>
+<section id="section" class="level3" data-number="1.10.1">
+<h3 data-number="1.10.1" class="anchored" data-anchor-id="section"><span class="header-section-number">1.10.1</span> ?</h3>
 <p>Documentation for functions can be easily accessed by prefacing the function name with <code>?</code> and dropping the <code>()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>?mean</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The documentation typically includes a description, a list of the arguments, references, a list of related functions, and examples. The examples are incredibly useful.</p>
 </section>
-<section id="arguments" class="level3" data-number="1.9.2">
-<h3 data-number="1.9.2" class="anchored" data-anchor-id="arguments"><span class="header-section-number">1.9.2</span> Arguments</h3>
+<section id="arguments" class="level3" data-number="1.10.2">
+<h3 data-number="1.10.2" class="anchored" data-anchor-id="arguments"><span class="header-section-number">1.10.2</span> Arguments</h3>
 <p>R functions typically contain many arguments. For example, <code>mean()</code> has <code>x</code>, <code>trim</code>, and <code>na.rm</code>. Many arguments have default values and don’t need to be included in function calls. Default values can be seen in the documentation. <code>trim = 0</code> and <code>na.rm = FALSE</code> are the defaults for <code>mean()</code>.</p>
 <p>Arguments can be passed to functions implicitly by position or explicitly by name.</p>
 <div class="cell">
@@ -844,28 +817,28 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="r-packages" class="level2" data-number="1.10">
-<h2 data-number="1.10" class="anchored" data-anchor-id="r-packages"><span class="header-section-number">1.10</span> R Packages</h2>
-<section id="base-r" class="level3" data-number="1.10.1">
-<h3 data-number="1.10.1" class="anchored" data-anchor-id="base-r"><span class="header-section-number">1.10.1</span> Base R</h3>
+<section id="r-packages" class="level2" data-number="1.11">
+<h2 data-number="1.11" class="anchored" data-anchor-id="r-packages"><span class="header-section-number">1.11</span> R Packages</h2>
+<section id="base-r" class="level3" data-number="1.11.1">
+<h3 data-number="1.11.1" class="anchored" data-anchor-id="base-r"><span class="header-section-number">1.11.1</span> Base R</h3>
 <p>Opening RStudio automatically loads “base R”, a fundamental collection of code and functions that handles simple operations like math and system management.</p>
 <p>For years, R was only base R. New paradigms in R have developed over the last fifteen years that are more intuitive and more flexible than base R. Next week, we’ll discuss the “tidyverse”, the most popular paradigm for R programming.</p>
-<p>All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it’s in a paradigm that you have not learned.</p>
+<p>All R programming will involve some base R, but much base R has been replaced with new tools that are more concise. Just know that at some point you may end up on a Stack Overflow page that looks like alphabet soup because it’s in a paradigm that you have not learned. Chapter 27 of <em>R for Data Science (2e)</em> (sometimes abbreviated R4DS) provides a great introduction to base R <span class="citation" data-cites="wickham_r_2023">(<a href="references.html#ref-wickham_r_2023" role="doc-biblioref">Wickham, Çetinkaya-Rundel, and Grolemund 2023</a>)</span>.</p>
 <p>One other popular R paradigm is <code>data.table</code>. We will not discuss <code>data.table</code> in this class.</p>
 </section>
-<section id="extensibility" class="level3" data-number="1.10.2">
-<h3 data-number="1.10.2" class="anchored" data-anchor-id="extensibility"><span class="header-section-number">1.10.2</span> Extensibility</h3>
+<section id="extensibility" class="level3" data-number="1.11.2">
+<h3 data-number="1.11.2" class="anchored" data-anchor-id="extensibility"><span class="header-section-number">1.11.2</span> Extensibility</h3>
 <p>R is an <em>extensible</em> programming language. It was designed to allow for new capabilities and functionality.</p>
 <p>R is also <em>open source</em>. All of it’s source code is publicly available.</p>
 <p>These two features have allowed R users to contribute millions of lines of code that can be used by other users without condition or compensation. The main mode of contribution are R packages. Packages are collections of functions and data that expand the power and usefulness of R.</p>
 <p>The predecessor of R, the S programming language, was designed to call FORTRAN subroutines. Accordingly, many R packages used to call compiled FORTRAN code. Now, many R packaged call compiled C++ code. This gives users the intuition of R syntax with better performance. <a href="https://www.r-project.org/conferences/useR-2006/Slides/Chambers.pdf">Here’s a brief history of R and S</a>.</p>
 </section>
-<section id="cran" class="level3" data-number="1.10.3">
-<h3 data-number="1.10.3" class="anchored" data-anchor-id="cran"><span class="header-section-number">1.10.3</span> CRAN</h3>
+<section id="cran" class="level3" data-number="1.11.3">
+<h3 data-number="1.11.3" class="anchored" data-anchor-id="cran"><span class="header-section-number">1.11.3</span> CRAN</h3>
 <p>Most R packages are stored on the Comprehensive R Archive Network (<a href="https://cran.r-project.org/">CRAN</a>). Packages must pass a modest number of tests for stability and design to be added to CRAN.</p>
 </section>
-<section id="install.packages" class="level3" data-number="1.10.4">
-<h3 data-number="1.10.4" class="anchored" data-anchor-id="install.packages"><span class="header-section-number">1.10.4</span> <code>install.packages()</code></h3>
+<section id="install.packages" class="level3" data-number="1.11.4">
+<h3 data-number="1.11.4" class="anchored" data-anchor-id="install.packages"><span class="header-section-number">1.11.4</span> <code>install.packages()</code></h3>
 <p>Packages can be directly installed from CRAN using <code>install.packages()</code>. Simply include the name of the desired package in quotes as the only argument to the function.</p>
 <p>Installation need only happen once per computer per package version. It is customary to never include <code>install.packages()</code> in a <code>.R</code> script.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -878,66 +851,86 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>For practice, let’s install the <code>RXKCD</code> package so we can view some comics in R.</p>
-<pre><code>install.packages("RXKCD")</code></pre>
+<p>For practice, let’s install the <code>palmerpenguins</code> package. This package allows us to see some penguins data (our favorite, non-policy dataset!).</p>
+<pre><code>install.packages("palmerpenguins")</code></pre>
 </div>
 </div>
 </section>
-<section id="library" class="level3" data-number="1.10.5">
-<h3 data-number="1.10.5" class="anchored" data-anchor-id="library"><span class="header-section-number">1.10.5</span> <code>library()</code></h3>
+<section id="library" class="level3" data-number="1.11.5">
+<h3 data-number="1.11.5" class="anchored" data-anchor-id="library"><span class="header-section-number">1.11.5</span> <code>library()</code></h3>
 <p>After installation, packages need to be loaded once per R session using the <code>library()</code> function. While <code>install.packages()</code> expects a quoted package name, it is best practice to use unquoted names in <code>library()</code>.</p>
 <p>It is a good idea to include <code>library()</code> statements at the top of scripts for each package used in the script. This way it is obvious at the top of the script which packages are necessary.</p>
-<section id="exercise-6" class="level4">
-<h4 class="anchored" data-anchor-id="exercise-6"><span style="color:#1696d2;">Exercise 6</span></h4>
-<p>For practice let’s load the <code>RXKCD</code> package.</p>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span style="color:#1696d2;">Exercise 6</span>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For practice let’s load the <code>palmerpenguins</code> package.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(RXKCD)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">library</span>(palmerpenguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Finally, let’s look at some comics!</p>
+<p>The package contains a dataset called <code>penguins</code>. We can view that data by simply typing <code>penguins</code> in the console or in a .R script.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">327</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>penguins</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 344 × 8
+   species island    bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
+   &lt;fct&gt;   &lt;fct&gt;              &lt;dbl&gt;         &lt;dbl&gt;             &lt;int&gt;       &lt;int&gt;
+ 1 Adelie  Torgersen           39.1          18.7               181        3750
+ 2 Adelie  Torgersen           39.5          17.4               186        3800
+ 3 Adelie  Torgersen           40.3          18                 195        3250
+ 4 Adelie  Torgersen           NA            NA                  NA          NA
+ 5 Adelie  Torgersen           36.7          19.3               193        3450
+ 6 Adelie  Torgersen           39.3          20.6               190        3650
+ 7 Adelie  Torgersen           38.9          17.8               181        3625
+ 8 Adelie  Torgersen           39.2          19.6               195        4675
+ 9 Adelie  Torgersen           34.1          18.1               193        3475
+10 Adelie  Torgersen           42            20.2               190        4250
+# ℹ 334 more rows
+# ℹ 2 more variables: sex &lt;fct&gt;, year &lt;int&gt;</code></pre>
 </div>
 </div>
-</div>
+<p>Because this is a bit messy, we can get a summary of the data with the <code>summary()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">303</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">summary</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      species          island    bill_length_mm  bill_depth_mm  
+ Adelie   :152   Biscoe   :168   Min.   :32.10   Min.   :13.10  
+ Chinstrap: 68   Dream    :124   1st Qu.:39.23   1st Qu.:15.60  
+ Gentoo   :124   Torgersen: 52   Median :44.45   Median :17.30  
+                                 Mean   :43.92   Mean   :17.15  
+                                 3rd Qu.:48.50   3rd Qu.:18.70  
+                                 Max.   :59.60   Max.   :21.50  
+                                 NA's   :2       NA's   :2      
+ flipper_length_mm  body_mass_g       sex           year     
+ Min.   :172.0     Min.   :2700   female:165   Min.   :2007  
+ 1st Qu.:190.0     1st Qu.:3550   male  :168   1st Qu.:2007  
+ Median :197.0     Median :4050   NA's  : 11   Median :2008  
+ Mean   :200.9     Mean   :4202                Mean   :2008  
+ 3rd Qu.:213.0     3rd Qu.:4750                3rd Qu.:2009  
+ Max.   :231.0     Max.   :6300                Max.   :2009  
+ NA's   :2         NA's   :2                                 </code></pre>
 </div>
 </div>
 </div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>meta_data <span class="ot">&lt;-</span> <span class="fu">getXKCD</span>(<span class="at">which =</span> <span class="dv">149</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="01_intro-r_files/figure-html/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
 </div>
-</div>
-</div>
-<p><span class="math display">\[\cdot\cdot\cdot\]</span></p>
 </section>
-</section>
-<section id="section-1" class="level3" data-number="1.10.6">
-<h3 data-number="1.10.6" class="anchored" data-anchor-id="section-1"><span class="header-section-number">1.10.6</span> <code>::</code></h3>
+<section id="section-1" class="level3" data-number="1.11.6">
+<h3 data-number="1.11.6" class="anchored" data-anchor-id="section-1"><span class="header-section-number">1.11.6</span> <code>::</code></h3>
 <p>Sometimes two packages have functions with the same name. <code>::</code> can be used to directly access an exported R object from a package’s namespace.</p>
 <pre><code>dplyr::select()</code></pre>
 <pre><code>MASS::select()</code></pre>
 </section>
 </section>
-<section id="organizing-an-analysis" class="level2" data-number="1.11">
-<h2 data-number="1.11" class="anchored" data-anchor-id="organizing-an-analysis"><span class="header-section-number">1.11</span> Organizing an Analysis</h2>
-<section id="r-projects" class="level3" data-number="1.11.1">
-<h3 data-number="1.11.1" class="anchored" data-anchor-id="r-projects"><span class="header-section-number">1.11.1</span> R Projects</h3>
+<section id="organizing-an-analysis" class="level2" data-number="1.12">
+<h2 data-number="1.12" class="anchored" data-anchor-id="organizing-an-analysis"><span class="header-section-number">1.12</span> Organizing an Analysis</h2>
+<section id="r-projects" class="level3" data-number="1.12.1">
+<h3 data-number="1.12.1" class="anchored" data-anchor-id="r-projects"><span class="header-section-number">1.12.1</span> R Projects</h3>
 <p>R Projects, proper noun, are the best way to organize an analysis. They have several advantages:</p>
 <ul>
 <li>They make it possible to concurrently run multiple RStudio sessions.</li>
@@ -978,8 +971,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="filepaths" class="level3" data-number="1.11.2">
-<h3 data-number="1.11.2" class="anchored" data-anchor-id="filepaths"><span class="header-section-number">1.11.2</span> Filepaths</h3>
+<section id="filepaths" class="level3" data-number="1.12.2">
+<h3 data-number="1.12.2" class="anchored" data-anchor-id="filepaths"><span class="header-section-number">1.12.2</span> Filepaths</h3>
 <p>Windows file paths are usually delimited with <code>\</code>. *nix file paths are usually delimited with <code>/</code>. Never use <code>\</code> in file paths in R. <code>\</code> is an escape character in R and will complicate an analysis. Fortunately, RStudio understands <code>/</code> in file paths regardless of operating system.</p>
 <p>Never use <code>setwd()</code> in R. It is unnecessary, it makes code unreproducible across machines, and it is rude to collaborators. R Projects create a better framework for file paths. Simply treat the directory where the R Project lives as the working directory and directories inside of that directory as sub-directories.</p>
 <p>For example, say there’s a <code>.Rproj</code> called <code>starwars-analysis.Rproj</code> in a directory called <code>starwars-analysis/</code>. If there is a .csv in that folder called <code>jedi.csv</code>, the file can be loaded with <code>read_csv("jedi.csv")</code> instead of <code>read_csv("H:/alena/analyses/starwars-analysis/jedi.csv")</code>. If that file is in a sub-directory of starwars-analysis called data, it can be loaded with <code>read_csv("data/jedi.csv")</code>. The same concepts hold for writing data and graphics.</p>
@@ -988,40 +981,94 @@ window.Quarto = {
 <p><img src="images/directory.png" class="img-fluid" width="200"></p>
 </section>
 </section>
-<section id="getting-help" class="level2" data-number="1.12">
-<h2 data-number="1.12" class="anchored" data-anchor-id="getting-help"><span class="header-section-number">1.12</span> Getting help</h2>
-<section id="googling" class="level3" data-number="1.12.1">
-<h3 data-number="1.12.1" class="anchored" data-anchor-id="googling"><span class="header-section-number">1.12.1</span> Googling</h3>
+<section id="getting-help" class="level2" data-number="1.13">
+<h2 data-number="1.13" class="anchored" data-anchor-id="getting-help"><span class="header-section-number">1.13</span> Getting help</h2>
+<section id="googling" class="level3" data-number="1.13.1">
+<h3 data-number="1.13.1" class="anchored" data-anchor-id="googling"><span class="header-section-number">1.13.1</span> Googling</h3>
 <p>When Googling for R or data science help, set the search range to the last year or less to avoid out-of-date solutions and to focus on up-to-date practices. The search window can be set by clicking Tools after a Google search.</p>
 </section>
-<section id="stack-overflow" class="level3" data-number="1.12.2">
-<h3 data-number="1.12.2" class="anchored" data-anchor-id="stack-overflow"><span class="header-section-number">1.12.2</span> Stack Overflow</h3>
+<section id="stack-overflow" class="level3" data-number="1.13.2">
+<h3 data-number="1.13.2" class="anchored" data-anchor-id="stack-overflow"><span class="header-section-number">1.13.2</span> Stack Overflow</h3>
 <p><a href="https://stackoverflow.com/">Stack Overflow</a> contains numerous solutions. If a problem is particularly perplexing, it is simple to submit questions. Exercise caution when submitting questions because the Stack Overflow community has strict norms about questions and loose norms about respecting novices.</p>
 </section>
-<section id="rstudio-community" class="level3" data-number="1.12.3">
-<h3 data-number="1.12.3" class="anchored" data-anchor-id="rstudio-community"><span class="header-section-number">1.12.3</span> RStudio community</h3>
+<section id="rstudio-community" class="level3" data-number="1.13.3">
+<h3 data-number="1.13.3" class="anchored" data-anchor-id="rstudio-community"><span class="header-section-number">1.13.3</span> RStudio community</h3>
 <p><a href="https://community.rstudio.com/">RStudio Community</a> is a new forum for R Users. It has a smaller back catalog than Stack Overflow but users are friendlier than on Stack Overflow.</p>
 </section>
-<section id="cran-task-views" class="level3" data-number="1.12.4">
-<h3 data-number="1.12.4" class="anchored" data-anchor-id="cran-task-views"><span class="header-section-number">1.12.4</span> CRAN task views</h3>
+<section id="cran-task-views" class="level3" data-number="1.13.4">
+<h3 data-number="1.13.4" class="anchored" data-anchor-id="cran-task-views"><span class="header-section-number">1.13.4</span> CRAN task views</h3>
 <p><a href="https://cran.r-project.org/web/views/">CRAN task views</a> contains thorough introductions to packages and techniques organized by subject matter. The Econometrics, Reproducible Research, and and Social Sciences task views are good starting places.</p>
 </section>
-<section id="twitter" class="level3" data-number="1.12.5">
-<h3 data-number="1.12.5" class="anchored" data-anchor-id="twitter"><span class="header-section-number">1.12.5</span> Twitter</h3>
-<p>Twitter is mostly bad. But the #rstats hashtag and #rstats community are mostly good. They are also generally inclusive and civil. In particular, open sources developers like Hadley Wickham (@hadleywickham), Jenny Bryan (@JennyBryan), and Joe Cheng (@jcheng) are active.</p>
-</section>
-<section id="data-science-for-public-policy-slack" class="level3" data-number="1.12.6">
-<h3 data-number="1.12.6" class="anchored" data-anchor-id="data-science-for-public-policy-slack"><span class="header-section-number">1.12.6</span> Data Science for Public Policy Slack</h3>
+<section id="data-science-for-public-policy-slack" class="level3" data-number="1.13.5">
+<h3 data-number="1.13.5" class="anchored" data-anchor-id="data-science-for-public-policy-slack"><span class="header-section-number">1.13.5</span> Data Science for Public Policy Slack</h3>
 <p>We’ve created a Slack workspace for this class (which will be shared across both sections) and encourage you to ask questions in Slack. In general, we ask that you try to answer questions on your own using the sources above <em>before</em> posting in Slack. Practicing finding and applying the relevant information to answer your questions is an important data science skill! The teaching staff will be checking the Slack to help answer questions in a reasonable time frame and we also encourage you to answer each other’s questions - it’s a great way to improve your R skills!</p>
 <p>Questions on Slack must be asked using <a href="http://adv-r.had.co.nz/Reproducibility.html">reproducible examples</a>. Simply copying-and-pasting questions or answers in the Slack channel is not allowed. If you’re unsure how to share a reproducible example without sharing your answers in a public channel, you can DM the teaching staff to be safe.</p>
 </section>
-<section id="chatgpt" class="level3" data-number="1.12.7">
-<h3 data-number="1.12.7" class="anchored" data-anchor-id="chatgpt"><span class="header-section-number">1.12.7</span> ChatGPT:</h3>
-<p>Since there is R code on the internet, ChatGPT has been trained on R code and has the capability to answer R coding questions. Exercise extreme caution when using ChatGPT! ChatGPT saves and uses the queries you provide it. This means that asking a question about sensitive data or code could expose that data. If you decide to use ChatGPT, only ask queries of it using a <a href="https://stackoverflow.com/questions/5963269/how-to-make-a-great-r-reproducible-example">reproducible example</a> with non-sensitive data. The diamonds dataset, loaded with <code>ggplot::diamonds()</code> is a great candidate.</p>
-<p>This warning aside, ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding questions are: - Provide it detailed questions - Give it reproducible example code - Refine queries when the initial responses are unsatisfactory</p>
+<section id="chatgpt" class="level3" data-number="1.13.6">
+<h3 data-number="1.13.6" class="anchored" data-anchor-id="chatgpt"><span class="header-section-number">1.13.6</span> ChatGPT:</h3>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Since there is R code on the internet, ChatGPT has been trained on R code and has the capability to answer R coding questions. Exercise extreme caution when using ChatGPT! ChatGPT saves and uses the queries you provide it. This means that asking a question about sensitive data or code could expose that data. If you decide to use ChatGPT, only ask queries of it using a <a href="http://adv-r.had.co.nz/Reproducibility.html">reproducible example</a> with non-sensitive data. The diamonds dataset, loaded with <code>ggplot::diamonds()</code>, is a great candidate.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Just like machine translators are useful for communication but can stymie the ability to learn a second language, large language models are useful for creating code but can stymie learning R.</p>
+<p>We encourage everyone to pursue mastery of R. This means feeling the terror of the blank page and internalizing the syntax of R without the crutch of LLMs before regularly using LLMs.</p>
+</div>
+</div>
+<p>ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding questions are:</p>
+<ul>
+<li>Provide it detailed questions</li>
+<li>Give it reproducible example code</li>
+<li>Refine queries when the initial responses are unsatisfactory</li>
+</ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="ref-eubank" class="csl-entry" role="listitem">
+Eubank, Nick. 2016. <span>“Embrace Your Fallibility: Thoughts on Code Integrity.”</span> <a href="https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf">https://www.nickeubank.com/wp-content/uploads/2016/06/Eubank_EmbraceYourFallibility.pdf</a>.
+</div>
+<div id="ref-evolution-s" class="csl-entry" role="listitem">
+Peng, Roger. 2018. <span>“Teaching r to New Users - from Tapply to the Tidyverse.”</span> <a href="https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/">https://simplystatistics.org/posts/2018-07-12-use-r-keynote-2018/</a>.
+</div>
+<div id="ref-rodrigues" class="csl-entry" role="listitem">
+Rodrigues, Bruno. 2022. <em>Modern R with the tidyverse</em>. <a href="https://modern-rstats.eu">https://modern-rstats.eu</a>.
+</div>
+<div id="ref-style" class="csl-entry" role="listitem">
+Wickham, Hadley. n.d. <em>The tidyverse style guide</em>. <a href="https://style.tidyverse.org/index.html">https://style.tidyverse.org/index.html</a>.
+</div>
+<div id="ref-wickham_r_2023" class="csl-entry" role="listitem">
+Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualie, and Model Data</em>. 2nd edition. Sebastopol, CA: O’Reilly.
+</div>
+<div id="ref-Wickham2017R" class="csl-entry" role="listitem">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. Paperback; O’Reilly Media. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
+</div>
+</div>
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p><span class="citation" data-cites="eubank">(<a href="references.html#ref-eubank" role="doc-biblioref">Eubank 2016</a>)</span> influenced our thinking on this issue and provides proactive steps for writing high-quality code using defensive programming.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Though we do not focus on the Python programming language in this course, Posit <a href="https://posit.co/solutions/python/">appears to be expanding its focus to Python</a> in addition to R. This is an important development to track in the data science landscape. One key update is that, in 2023, Posit <a href="https://posit.co/blog/welcome-wes/">hired Wes McKinney</a>. McKinney developed the Python pandas package which offers similar functionality to the tidyverse, a collection of R packages which we will discuss next week.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -1419,8 +1466,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the Tidyverse">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the Tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./02_tidyverse.html" class="pagination-link" aria-label="Introduction to the tidyverse">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

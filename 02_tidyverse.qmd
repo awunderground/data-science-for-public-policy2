@@ -1,5 +1,5 @@
 ---
-title: "Introduction to the Tidyverse"
+title: "Introduction to the tidyverse"
 format: 
   html:
     toc: true
@@ -512,11 +512,13 @@ count(x = asec, pernum, offpov)
 
 \newpage
 
-## Mutating joins
+## Mutating Joins
 
 Mutating joins join one dataframe to columns from another dataframe by matching values common in both dataframes. The syntax is derived from *Structured Query Language* (SQL).
 
 Each function requires an `x` (or left) dataframe, a `y` (or right) data frame, and `by` variables that exist in both dataframes. Note that below we're creating dataframes using the `tribble()` function, which creates a tibble using a row-wise layout. 
+
+[`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful function for monitoring the behavior of joins. It prints out summaries of the number of rows in each dataframe that successfully join.
 
 
 ```{r create-join-frames}
@@ -577,6 +579,10 @@ full_join(x = reading_scores, y = math_scores, by = "name")
 
 ```
 
+## Filtering Joins
+
+Filtering joins drop observations based on the presence of their key (identifier) in another data frame. They use the same syntax as mutating joins with an `x` (or left) dataframe, a `y` (or right) data frame, and `by` variables that exist in both dataframes.
+
 ### `anti_join()`
 
 `anti_join()` returns all rows from `x` where there are not matching values in `y`. `anti_join()` complements `inner_join()`. Together, they should exhaust the `x` dataframe.
@@ -587,25 +593,28 @@ anti_join(x = reading_scores, y = math_scores, by = "name")
 
 ```
 
+::: {.callout-note}
 The Combine Tables column in the [Data Transformation Cheat Sheet](https://www.rstudio.com/resources/cheatsheets/) is an invaluable resource for navigating joins. The "column matching for joins" section of that cheat sheet outlines how to join tables by matching on multiple columns or match on columns with different names in each table.
 
+*R for Data Science (2e)* also has an [excellent chapter](https://r4ds.hadley.nz/joins) covering joins.
+:::
 
 
-### readr
+## readr
 
 `readr` is a core tidyverse package for reading and parsing rectangular data from text files (.csv, .tsv, etc.). `read_csv()` reads `.csv` files and has a bevy of advantages versus `read.csv()`. We recommend never using `read.csv()`. 
 
 Many `.csv`s can be read without issue with simple syntax `read_csv(file = "relative/path/to/data")`.
 
-`readr` and `read_csv()` have powerful tools for resolving parsing issues. More can be learned in the [data import section in R4DS](https://r4ds.hadley.nz/data-import.html).
+`readr` and `read_csv()` have powerful tools for resolving parsing issues. More can be learned in the [data import section](https://r4ds.hadley.nz/data-import.html) in *R for Data Science (2e)*.
 
-### readxl
+## readxl
 
 [readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session. 
 
 The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
 
-### Next Skills
+## Next Skills
 
 * `across()` can be used with `library(dplyr)` functions such as `summarise()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
 * `pivot_wider()` and `pivot_longer()` can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization. 
