@@ -575,18 +575,18 @@ knn_rec <-
 
 # create a knn model specification
 knn_mod <- 
-  nearest_neighbor(neighbors = 3) %>%
-  set_engine(engine = "kknn") %>%
+  nearest_neighbor(neighbors = 3) |> 
+  set_engine(engine = "kknn") |> 
   set_mode(mode = "regression")
 
 # create a workflow
 knn_wf <-
-  workflow() %>%
-  add_recipe(knn_rec) %>%
+  workflow() |> 
+  add_recipe(knn_rec) |> 
   add_model(knn_mod)
 
 # fit the knn model specification on the training data
-knn_fit <- knn_wf %>%
+knn_fit <- knn_wf |> 
   fit(data = data1)
 
 predictions_grid <- tibble(

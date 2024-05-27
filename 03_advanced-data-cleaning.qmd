@@ -137,7 +137,7 @@ readxl_example("clippy.xlsx") |>
 
 As is common with many Excel workbooks, the second sheet contains a second row of column names with parenthetical comments about each column.[^02_advanced-data-cleaning-1]
 
-[^02_advanced-data-cleaning-1]: The instinct to include these comments is good. The execution is poor because it creates big headaches for people using programming languages. I suggest using a data dictionary instead.
+[^02_advanced-data-cleaning-1]: The instinct to include these comments is good. The execution is poor because it creates big headaches for people using programming languages. We suggest using a data dictionary instead.
 
 ```{r}
 readxl_example("clippy.xlsx") |>  
@@ -554,7 +554,7 @@ exercise_number <- exercise_number + 1
 
 :::
 
-To see more examples, read the [tidy data section in R for Data Science (2e)](https://r4ds.hadley.nz/data-tidy.html)
+To see more examples, read the [tidy data section in *R for Data Science (2e)*](https://r4ds.hadley.nz/data-tidy.html)
 
 ## Transform {#sec-transform}
 

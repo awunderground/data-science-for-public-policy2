@@ -145,7 +145,7 @@ exercise_number <- exercise_number + 1
 #| echo: false
 #| include: false
 
-pulse <- pulse %>%
+pulse <- pulse |>
   janitor::clean_names()
 
 ```
@@ -199,7 +199,7 @@ We see that all of the columns have been read in as character vectors because th
 
 ```{r}
 #save the column names from the dataframe
-col_names <- dc_centroids %>% names()
+col_names <- dc_centroids |> names()
 
 dc_centroids <- read_csv(
   paste0(
@@ -246,7 +246,7 @@ To demonstrate some of the `stringr` functions, let's create a `state` column wi
 
 
 ```{r}
-dc_centroids <- dc_centroids %>%
+dc_centroids <- dc_centroids |>
   mutate(
     #replace first instance of pattern
     tract = str_replace(tract, "\\.", ""), 
@@ -273,7 +273,7 @@ exercise_number <- exercise_number + 1
 ```{r}
 #| echo: false
 #| include: false
-dc_centroids <- dc_centroids %>%
+dc_centroids <- dc_centroids |>
   mutate(
     #replace first instance of pattern
     tract = str_replace(tract, "\\.", ""), 
@@ -302,9 +302,9 @@ acled_2022 <- read_csv(
   paste0(
     "https://raw.githubusercontent.com/awunderground/awunderground-data/",
     "main/acled/acled_africa_2022.csv")
-  ) %>%
-  janitor::clean_names() %>%
-  mutate(event_date = ymd(event_date)) %>%
+  ) |>
+  janitor::clean_names() |>
+  mutate(event_date = ymd(event_date)) |>
   select(event_date, region, country, event_type, sub_event_type)
 
 
@@ -313,7 +313,7 @@ acled_2022 <- read_csv(
 Creating datetime columns enables the use of a number of different operations, such as filtering based on date:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   filter(event_date > "2022-06-01")
 
 ```
@@ -322,7 +322,7 @@ acled_2022 %>%
 Or calculating durations:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   #number of days into 2022 event occurred
   mutate(days_into_2022 = event_date - ymd("2022-01-01")) 
 
@@ -331,7 +331,7 @@ acled_2022 %>%
 Or extracting components of dates:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   mutate(event_month = month(event_date)) #month event occurred
 
 ```
@@ -341,7 +341,7 @@ Datetimes can also much more easily be plotted using `ggplot2`. For example, it 
 
 
 ```{r}
-acled_2022 %>% 
+acled_2022 |> 
   ggplot(aes(x = event_date)) + 
   geom_freqpoly(binwidth = 1) # each bin is 1 day
 
@@ -359,7 +359,7 @@ Categorical variables can be stored as characters in R. The `case_when()` functi
 
 
 ```{r}
-pulse <- pulse %>%
+pulse <- pulse |>
   mutate(
     hisp_rrace = case_when(
       rrace == 1 ~ "White alone, not Hispanic",
@@ -434,7 +434,7 @@ exercise_number <- exercise_number + 1
 #| eval: false
 #| include: false
 
-pulse <- pulse %>%
+pulse <- pulse |>
   mutate(
     recvdvacc = if_else(
       condition = recvdvacc %in% c(-88, -99), 
@@ -464,15 +464,15 @@ The `replace_na()` function in `dplyr` is very useful for replacing NA values in
 df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
 
 # Using replace_na to replace one column
-df %>% 
+df |> 
   mutate(x = replace_na(x, 0))
 
 # Using replace_na to replace multiple columns with different values
-df %>% 
+df |> 
   replace_na(list(x = 0, y = "unknown"))
 
 # Using if_else to perform mean imputation
-df %>% 
+df |> 
   mutate(x = if_else(is.na(x), mean(x, na.rm = TRUE), x))
 
 ```
@@ -496,7 +496,7 @@ summary(msleep$bodywt)
 ```{r}
 #| fig-height: 1
 
-msleep %>%
+msleep |>
   ggplot(aes(bodywt, 1)) +
   geom_point(alpha = 0.2) +
   scale_y_continuous(breaks = 0) +
@@ -526,8 +526,8 @@ library(assertr)
 df <- tibble(age = c(20, 150, 47, 88),
              height = c(60, 2, 72, 66))
 
-df %>%
-  assertr::verify(age < 120) %>%
+df |>
+  assertr::verify(age < 120) |>
   summarise(mean(age, na.rm = TRUE))
 
 ```
@@ -567,8 +567,8 @@ exercise_number <- exercise_number + 1
 
 summary(dc_centroids$pop10)
 
-dc_centroids %>%
-  assertr::verify(pop10 > 1000) %>%
+dc_centroids |>
+  assertr::verify(pop10 > 1000) |>
   summarise(mean_pop = mean(pop10, na.rm = TRUE))
 
 

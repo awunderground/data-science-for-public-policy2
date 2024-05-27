@@ -449,7 +449,7 @@ div.csl-indent {
 <li>The toughest part of data visualization is data munging.</li>
 <li>Data frames are the only appropriate input for <code>library(ggplot2)</code>.</li>
 </ul>
-<p>ggplot2 is an R package for data visualization that was developed during Hadley Wickham’s graduate studies at Iowa State University. ggplot2 is formalized in <em>A Layered Grammar of Graphics</em> by Hadley Wickham <span class="citation" data-cites="layered-grammar">Wickham (<a href="references.html#ref-layered-grammar" role="doc-biblioref">2010</a>)</span>.</p>
+<p>ggplot2 is an R package for data visualization that was developed during Hadley Wickham’s graduate studies at Iowa State University. ggplot2 is formalized in <em>A Layered Grammar of Graphics</em> <span class="citation" data-cites="layered-grammar">(<a href="references.html#ref-layered-grammar" role="doc-biblioref">Wickham 2010</a>)</span>.</p>
 <p>The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson’s grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.</p>
 <p>There are <strong>eight</strong> main ingredients to the grammar of graphics. We will work our way through the ingredients with many hands-on examples.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -492,11 +492,11 @@ Tip
 <p><strong>Data</strong> are the values represented in the visualization.</p>
 </div>
 </div>
-<p><code>ggplot(data = )</code> or <code>data %&gt;% ggplot()</code></p>
+<p><code>ggplot(data = )</code> or <code>data |&gt; ggplot()</code></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>storms <span class="sc">%&gt;%</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">select</span>(name, year, category, lat, long, wind, pressure) <span class="sc">%&gt;%</span></span>
-<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">select</span>(name, year, category, lat, long, wind, pressure) <span class="sc">|&gt;</span></span>
+<span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">sample_n</span>(<span class="dv">10</span>) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">kable</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
@@ -513,94 +513,94 @@ Tip
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Beryl</td>
+<td style="text-align: left;">Alicia</td>
+<td style="text-align: right;">1983</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">37.6</td>
+<td style="text-align: right;">-99.2</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oscar</td>
 <td style="text-align: right;">2012</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">31.5</td>
-<td style="text-align: right;">-76.2</td>
-<td style="text-align: right;">40</td>
-<td style="text-align: right;">999</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Gloria</td>
-<td style="text-align: right;">1985</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">53.8</td>
-<td style="text-align: right;">-34.0</td>
-<td style="text-align: right;">50</td>
-<td style="text-align: right;">990</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Paulette</td>
-<td style="text-align: right;">2020</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">23.4</td>
-<td style="text-align: right;">-52.1</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">990</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Hortense</td>
-<td style="text-align: right;">1990</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">29.3</td>
-<td style="text-align: right;">-50.2</td>
+<td style="text-align: right;">15.0</td>
+<td style="text-align: right;">-39.6</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">1006</td>
+<td style="text-align: right;">1007</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Nadine</td>
-<td style="text-align: right;">2018</td>
+<td style="text-align: left;">Charley</td>
+<td style="text-align: right;">1998</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">13.3</td>
-<td style="text-align: right;">-32.5</td>
+<td style="text-align: right;">27.5</td>
+<td style="text-align: right;">-96.5</td>
+<td style="text-align: right;">60</td>
+<td style="text-align: right;">1002</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hermine</td>
+<td style="text-align: right;">1980</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">15.8</td>
+<td style="text-align: right;">-84.2</td>
+<td style="text-align: right;">45</td>
+<td style="text-align: right;">998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gert</td>
+<td style="text-align: right;">2017</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">30.2</td>
+<td style="text-align: right;">-72.3</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">996</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Isidore</td>
+<td style="text-align: right;">2002</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">35.0</td>
+<td style="text-align: right;">-86.5</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ernesto</td>
+<td style="text-align: right;">1994</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">13.8</td>
+<td style="text-align: right;">-30.5</td>
 <td style="text-align: right;">50</td>
 <td style="text-align: right;">998</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Dennis</td>
-<td style="text-align: right;">1987</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">10.7</td>
-<td style="text-align: right;">-23.6</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1011</td>
+<td style="text-align: left;">Beryl</td>
+<td style="text-align: right;">2018</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">11.1</td>
+<td style="text-align: right;">-49.3</td>
+<td style="text-align: right;">65</td>
+<td style="text-align: right;">995</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Bonnie</td>
-<td style="text-align: right;">1998</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">37.3</td>
-<td style="text-align: right;">-73.2</td>
-<td style="text-align: right;">60</td>
-<td style="text-align: right;">991</td>
+<td style="text-align: left;">Dean</td>
+<td style="text-align: right;">1989</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">37.5</td>
+<td style="text-align: right;">-64.0</td>
+<td style="text-align: right;">85</td>
+<td style="text-align: right;">979</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Humberto</td>
-<td style="text-align: right;">2019</td>
-<td style="text-align: right;">2</td>
-<td style="text-align: right;">36.0</td>
-<td style="text-align: right;">-60.8</td>
-<td style="text-align: right;">95</td>
-<td style="text-align: right;">955</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ike</td>
-<td style="text-align: right;">2008</td>
+<td style="text-align: left;">Alberto</td>
+<td style="text-align: right;">2018</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">17.2</td>
-<td style="text-align: right;">-37.0</td>
+<td style="text-align: right;">18.7</td>
+<td style="text-align: right;">-86.5</td>
 <td style="text-align: right;">30</td>
 <td style="text-align: right;">1006</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Arlene</td>
-<td style="text-align: right;">2017</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">31.9</td>
-<td style="text-align: right;">-44.4</td>
-<td style="text-align: right;">35</td>
-<td style="text-align: right;">994</td>
 </tr>
 </tbody>
 </table>
@@ -1085,10 +1085,10 @@ Note
 <ol type="1">
 <li>Add the following exercise to you script. Run it!</li>
 </ol>
-<pre><code>storms %&gt;%  
-  filter(category &gt; 0) %&gt;%
-  distinct(name, year) %&gt;%
-  count(year) %&gt;%
+<pre><code>storms |&gt;  
+  filter(category &gt; 0) |&gt;
+  distinct(name, year) |&gt;
+  count(year) |&gt;
   ggplot() + 
   geom_line(mapping = aes(x = year, y = n))</code></pre>
 <ol start="2" type="1">
