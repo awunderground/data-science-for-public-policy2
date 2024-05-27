@@ -25,9 +25,7 @@ We've already covered reading in csv files using the `read_csv()` function from 
 
 ### Excel Spreadsheets
 
-[readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package, so it needs to be explicitly loaded in each R session. 
-
-The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
+We introduced [readxl](https://readxl.tidyverse.org/) in @sec-readxl. As a reminder, it is not a core tidyverse package, so it needs to be explicitly loaded in each R session. 
 
 Many excel files can be read with the simple syntax `data <- read_excel(path = "relative/file/path/to/data")`. In cases where the Excel spreadsheet contains multiple sheets, you can use the `sheet` argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet). You can also read only components of a sheet using Excel-style cell-ranges (ex: `A3:L44`). 
 
@@ -121,7 +119,7 @@ pulse <- read_csv(
 
 ## Column Names
 
-As we discussed in week 1, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
+As discussed earlier in the course, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
 
 The [janitor package](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the `clean_names()` function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The `clean_names()` function works well with the `|>` operator.
 
@@ -240,7 +238,10 @@ as.numeric(c("20", "10", "10+", "25", "~8"))
 
 ### String manipulation with `stringr`
 
-Before converting column types, it is critical to clean the column values to ensure that NA values aren't accidentally introduced by coercion. The `stringr` package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with `library(tidyverse)`. The [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) offers a great guide to the `stringr` functions. 
+Before converting column types, it is critical to clean the column values to ensure that NA values aren't accidentally introduced by coercion. We can use the `stringr` package introduced in @sec-strings to clean character data. A few reminders:
+
+-  This package is part of the core tidyverse and is automatically loaded with `library(tidyverse)`.
+-  The [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) offers a great guide to the `stringr` functions. 
 
 To demonstrate some of the `stringr` functions, let's create a `state` column with the two digit state FIPS code for DC and a `geoid` column in the `dc_centroid` dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the `tract` column and then concatenate the `county` and `tract` columns into a `geoid` column. We can do that using `stringr` as follows:
 
@@ -286,11 +287,13 @@ dc_centroids <- dc_centroids |>
 
 :::
 
+:::{.callout-note}
 Note that the `str_replace()` function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it's syntax can be complex and not particularly intuitive. [This vignette](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html) provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. ChatGPT is often effective at writing regular expressions, but recall our warnings about using ChatGPT in Chapter 1. 
+:::
 
 ### Date manipulation with `lubridate`
 
-The `lubridate` package makes it much easier to work with dates and times in R. While also part of the tidyverse, it is not a core tidyverse package and must be explicitly loaded in each session with `library(lubridate)`.
+The `lubridate` package, which we introduced in @sec-dates, makes it much easier to work with dates and times in R. As a reminder, `lubridate` is part of the tidyverse, but it is not a core tidyverse package. It must be explicitly loaded in each session with `library(lubridate)`.
 
 We'll use a dataset on political violence and protest events across the continent of Africa in 2022 from the [Armed Conflict Location & Event Data Project (ACLED)](https://acleddata.com/) to illustrate the power of `lubridate`. The `lubridate` package allows users to easily and quickly parse date-time variables in a range of different formats. For example, the `ymd()` function takes a date variable in year-month-day format (e.g. 2022-01-31) and converts it to a date-time format. The different formats are outlined in the [lubridate documentation](https://lubridate.tidyverse.org/). 
 
@@ -455,6 +458,8 @@ Once you have converted all missing value encodings to NA, the next question you
 
     - *Mean/median/mode imputation*: Fills the missing values with the column mean or median. This approach is very easy to implement, but can artifically reduce variance in your data and be sensitive to outliers in the case of mean imputation. 
     - *Predictive imputation*: Fills the missing values with a predicted value based on a model that has been fit to the data or calculated probabilities based on other columns in the data. This is a more complex approach but is likely more accurate (for example, it can take into account variable correlation).
+    
+These alternatives are discussed in more detail in a later chapter covering data imputation. 
 
 The `replace_na()` function in `dplyr` is very useful for replacing NA values in one or more columns.
 

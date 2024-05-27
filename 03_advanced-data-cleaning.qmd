@@ -29,7 +29,7 @@ exercise_number <- 1
 
 ## Review {#sec-review2}
 
-*R for Data Science (2e)* [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Recall from the previous lecture techniques for importing data like `read_csv()`, for tidying data like `pivot_longer()`, and for transforming data like `mutate()`.
+*R for Data Science (2e)* [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Recall from the previous lecture techniques for importing data like `read_csv()` and for transforming data like `mutate()`.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -558,7 +558,7 @@ To see more examples, read the [tidy data section in *R for Data Science (2e)*](
 
 ## Transform {#sec-transform}
 
-### Strings
+### Strings {#sec-strings}
 
 Check out the [stringr cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf). 
 
@@ -648,7 +648,7 @@ exercise_number <- exercise_number + 1
 
 :::
 
-### Factors
+### Factors {sec-factors}
 
 Check out the [forcats cheat sheet](https://forcats.tidyverse.org/).
 
@@ -832,7 +832,7 @@ storms |>
 
 ```
 
-### Dates and Date-Times
+### Dates and Date-Times {sec-dates}
 
 Check out the [lubridate cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf). 
 
@@ -1029,7 +1029,7 @@ replace_na(x, replace = 2)
 
 ```
 
-We recommend avoiding arguments like `na.rm` and using `filter()` for structurally missing values and `replace_na()` or imputation for nonresponse.
+We recommend avoiding arguments like `na.rm` and using `filter()` for structurally missing values and `replace_na()` or imputation for nonresponse. We introduce more sophisticated methods to handle missing data in a later chapter. 
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
