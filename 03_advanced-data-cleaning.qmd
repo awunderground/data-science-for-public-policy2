@@ -105,7 +105,7 @@ read_csv(here("data", "raw", "important-data.csv"))
 
 ```
 
-### `library(readxl)`
+### `library(readxl)` {#sec-readxl}
 
 We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it's a dominant tool for storing data and often enters the data science workflow.
 

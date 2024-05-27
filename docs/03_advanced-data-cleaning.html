@@ -363,7 +363,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-import" id="toc-sec-import" class="nav-link" data-scroll-target="#sec-import"><span class="header-section-number">3.2</span> Import</a>
   <ul class="collapse">
   <li><a href="#libraryhere" id="toc-libraryhere" class="nav-link" data-scroll-target="#libraryhere"><span class="header-section-number">3.2.1</span> <code>library(here)</code></a></li>
-  <li><a href="#libraryreadxl" id="toc-libraryreadxl" class="nav-link" data-scroll-target="#libraryreadxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></a></li>
+  <li><a href="#sec-readxl" id="toc-sec-readxl" class="nav-link" data-scroll-target="#sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></a></li>
   </ul></li>
   <li><a href="#sec-tidy" id="toc-sec-tidy" class="nav-link" data-scroll-target="#sec-tidy"><span class="header-section-number">3.3</span> Tidy</a></li>
   <li><a href="#sec-transform" id="toc-sec-transform" class="nav-link" data-scroll-target="#sec-transform"><span class="header-section-number">3.4</span> Transform</a>
@@ -482,8 +482,8 @@ Filtering Joins
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="st">"important-data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="libraryreadxl" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="libraryreadxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></h3>
+<section id="sec-readxl" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></h3>
 <p>We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it’s a dominant tool for storing data and often enters the data science workflow.</p>
 <p><code>library(readxl)</code> is the premier package for reading data from <code>.xls</code> and <code>.xlsx</code> files. <code>read_excel()</code>, which works like <code>read_csv()</code>, loads data from <code>.xls</code> and <code>.xlsx</code> files. Consider data from the Urban Institute’s <a href="https://apps.urban.org/features/debt-interactive-map/?type=overall&amp;variable=totcoll">Debt in America</a> feature accessed through the <a href="https://datacatalog.urban.org/dataset/debt-america-2022">Urban Institute Data Catalog</a>.</p>
 <div class="cell">

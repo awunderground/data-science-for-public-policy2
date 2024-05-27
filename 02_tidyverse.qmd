@@ -612,7 +612,7 @@ Many `.csv`s can be read without issue with simple syntax `read_csv(file = "rela
 
 [readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session. 
 
-The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
+We introduce the package more thoroughly in [@sec-readxl]. The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
 
 ## Next Skills
 
