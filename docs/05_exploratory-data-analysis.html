@@ -285,12 +285,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -305,25 +299,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -340,31 +334,31 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -381,7 +375,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial-sf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
   </div>
 </li>
       </ul>
@@ -604,7 +598,7 @@ $ afact    &lt;chr&gt; "tract to tract allocation factor", "1", "1", "1", "1", "
 <p>We see that all of the columns have been read in as character vectors because the second line of the csv file has a character description of each column. By default, <code>read_csv</code> uses the first 1,000 rows of data to infer the column types of a file. We can avoid this by skipping the first two lines of the csv file and manually setting the column names.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co">#save the column names from the dataframe</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>col_names <span class="ot">&lt;-</span> dc_centroids <span class="sc">%&gt;%</span> <span class="fu">names</span>()</span>
+<span id="cb10-2"><a href="#cb10-2"></a>col_names <span class="ot">&lt;-</span> dc_centroids <span class="sc">|&gt;</span> <span class="fu">names</span>()</span>
 <span id="cb10-3"><a href="#cb10-3"></a></span>
 <span id="cb10-4"><a href="#cb10-4"></a>dc_centroids <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
 <span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">paste0</span>(</span>
@@ -677,7 +671,7 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 <p>Before converting column types, it is critical to clean the column values to ensure that NA values aren’t accidentally introduced by coercion. The <code>stringr</code> package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with <code>library(tidyverse)</code>. The <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringr cheat sheet</a> offers a great guide to the <code>stringr</code> functions.</p>
 <p>To demonstrate some of the <code>stringr</code> functions, let’s create a <code>state</code> column with the two digit state FIPS code for DC and a <code>geoid</code> column in the <code>dc_centroid</code> dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the <code>tract</code> column and then concatenate the <code>county</code> and <code>tract</code> columns into a <code>geoid</code> column. We can do that using <code>stringr</code> as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>dc_centroids <span class="ot">&lt;-</span> dc_centroids <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>dc_centroids <span class="ot">&lt;-</span> dc_centroids <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb19-3"><a href="#cb19-3"></a>    <span class="co">#replace first instance of pattern</span></span>
 <span id="cb19-4"><a href="#cb19-4"></a>    <span class="at">tract =</span> <span class="fu">str_replace</span>(tract, <span class="st">"</span><span class="sc">\\</span><span class="st">."</span>, <span class="st">""</span>), </span>
@@ -712,9 +706,9 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 <span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb20-4"><a href="#cb20-4"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
 <span id="cb20-5"><a href="#cb20-5"></a>    <span class="st">"main/acled/acled_africa_2022.csv"</span>)</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">mutate</span>(<span class="at">event_date =</span> <span class="fu">ymd</span>(event_date)) <span class="sc">%&gt;%</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>  janitor<span class="sc">::</span><span class="fu">clean_names</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-8"><a href="#cb20-8"></a>  <span class="fu">mutate</span>(<span class="at">event_date =</span> <span class="fu">ymd</span>(event_date)) <span class="sc">|&gt;</span></span>
 <span id="cb20-9"><a href="#cb20-9"></a>  <span class="fu">select</span>(event_date, region, country, event_type, sub_event_type)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 22101 Columns: 29
@@ -731,7 +725,7 @@ dttm  (1): EVENT_DATE
 </div>
 <p>Creating datetime columns enables the use of a number of different operations, such as filtering based on date:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>acled_2022 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>acled_2022 <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">filter</span>(event_date <span class="sc">&gt;</span> <span class="st">"2022-06-01"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6,859 × 5
@@ -752,7 +746,7 @@ dttm  (1): EVENT_DATE
 </div>
 <p>Or calculating durations:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>acled_2022 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>acled_2022 <span class="sc">|&gt;</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="co">#number of days into 2022 event occurred</span></span>
 <span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">mutate</span>(<span class="at">days_into_2022 =</span> event_date <span class="sc">-</span> <span class="fu">ymd</span>(<span class="st">"2022-01-01"</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -774,7 +768,7 @@ dttm  (1): EVENT_DATE
 </div>
 <p>Or extracting components of dates:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>acled_2022 <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>acled_2022 <span class="sc">|&gt;</span></span>
 <span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">mutate</span>(<span class="at">event_month =</span> <span class="fu">month</span>(event_date)) <span class="co">#month event occurred</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 22,101 × 6
@@ -795,7 +789,7 @@ dttm  (1): EVENT_DATE
 </div>
 <p>Datetimes can also much more easily be plotted using <code>ggplot2</code>. For example, it is easy to visualize the distribution of events across the year:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>acled_2022 <span class="sc">%&gt;%</span> </span>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>acled_2022 <span class="sc">|&gt;</span> </span>
 <span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> event_date)) <span class="sc">+</span> </span>
 <span id="cb28-3"><a href="#cb28-3"></a>  <span class="fu">geom_freqpoly</span>(<span class="at">binwidth =</span> <span class="dv">1</span>) <span class="co"># each bin is 1 day</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
@@ -813,7 +807,7 @@ dttm  (1): EVENT_DATE
 <h3 data-number="5.4.3" class="anchored" data-anchor-id="categorical-and-factor-variables"><span class="header-section-number">5.4.3</span> Categorical and Factor Variables</h3>
 <p>Categorical variables can be stored as characters in R. The <code>case_when()</code> function makes it very easy to create categorical variables based on other columns. For example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pulse <span class="ot">&lt;-</span> pulse <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>pulse <span class="ot">&lt;-</span> pulse <span class="sc">|&gt;</span></span>
 <span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb29-3"><a href="#cb29-3"></a>    <span class="at">hisp_rrace =</span> <span class="fu">case_when</span>(</span>
 <span id="cb29-4"><a href="#cb29-4"></a>      rrace <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="st">"White alone, not Hispanic"</span>,</span>
@@ -897,7 +891,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="cn">NA</span>, <span class="st">"b"</span>))</span>
 <span id="cb38-2"><a href="#cb38-2"></a></span>
 <span id="cb38-3"><a href="#cb38-3"></a><span class="co"># Using replace_na to replace one column</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb38-4"><a href="#cb38-4"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb38-5"><a href="#cb38-5"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">replace_na</span>(x, <span class="dv">0</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -908,7 +902,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 3     0 b    </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># Using replace_na to replace multiple columns with different values</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb40-2"><a href="#cb40-2"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">replace_na</span>(<span class="fu">list</span>(<span class="at">x =</span> <span class="dv">0</span>, <span class="at">y =</span> <span class="st">"unknown"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -919,7 +913,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 3     0 b      </code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># Using if_else to perform mean imputation</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>df <span class="sc">%&gt;%</span> </span>
+<span id="cb42-2"><a href="#cb42-2"></a>df <span class="sc">|&gt;</span> </span>
 <span id="cb42-3"><a href="#cb42-3"></a>  <span class="fu">mutate</span>(<span class="at">x =</span> <span class="fu">if_else</span>(<span class="fu">is.na</span>(x), <span class="fu">mean</span>(x, <span class="at">na.rm =</span> <span class="cn">TRUE</span>), x))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
@@ -944,7 +938,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>msleep <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>msleep <span class="sc">|&gt;</span></span>
 <span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(bodywt, <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.2</span>) <span class="sc">+</span></span>
 <span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
@@ -974,8 +968,8 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <span id="cb47-3"><a href="#cb47-3"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">age =</span> <span class="fu">c</span>(<span class="dv">20</span>, <span class="dv">150</span>, <span class="dv">47</span>, <span class="dv">88</span>),</span>
 <span id="cb47-4"><a href="#cb47-4"></a>             <span class="at">height =</span> <span class="fu">c</span>(<span class="dv">60</span>, <span class="dv">2</span>, <span class="dv">72</span>, <span class="dv">66</span>))</span>
 <span id="cb47-5"><a href="#cb47-5"></a></span>
-<span id="cb47-6"><a href="#cb47-6"></a>df <span class="sc">%&gt;%</span></span>
-<span id="cb47-7"><a href="#cb47-7"></a>  assertr<span class="sc">::</span><span class="fu">verify</span>(age <span class="sc">&lt;</span> <span class="dv">120</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb47-6"><a href="#cb47-6"></a>df <span class="sc">|&gt;</span></span>
+<span id="cb47-7"><a href="#cb47-7"></a>  assertr<span class="sc">::</span><span class="fu">verify</span>(age <span class="sc">&lt;</span> <span class="dv">120</span>) <span class="sc">|&gt;</span></span>
 <span id="cb47-8"><a href="#cb47-8"></a>  <span class="fu">summarise</span>(<span class="fu">mean</span>(age, <span class="at">na.rm =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>verification [age &lt; 120] failed! (1 failure)

@@ -305,12 +305,6 @@ div.csl-indent {
  <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./18_data-imputation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Missing Data and Data Imputation</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -325,25 +319,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -360,31 +354,31 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -401,7 +395,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial-sf.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
   </div>
 </li>
       </ul>
@@ -913,15 +907,15 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <span id="cb29-2"><a href="#cb29-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span>
 <span id="cb29-3"><a href="#cb29-3"></a></span>
 <span id="cb29-4"><a href="#cb29-4"></a><span class="co"># new way</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>asec <span class="sc">%&gt;%</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>asec <span class="sc">|&gt;</span></span>
 <span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>See the power:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>new_asec <span class="ot">&lt;-</span> asec <span class="sc">%&gt;%</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">filter</span>(pernum <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">select</span>(year, month, pernum, inctot) <span class="sc">%&gt;%</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>new_asec <span class="ot">&lt;-</span> asec <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">filter</span>(pernum <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">select</span>(year, month, pernum, inctot) <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span></span>
 <span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">select</span>(<span class="sc">-</span>inctot)</span>
 <span id="cb30-6"><a href="#cb30-6"></a></span>
 <span id="cb30-7"><a href="#cb30-7"></a>new_asec</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -948,7 +942,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p><code>summarize()</code> collapses many rows in a dataframe into fewer rows with summary statistics of the many rows. <code>n()</code>, <code>mean()</code>, and <code>sum()</code> are common summary statistics. Renaming is useful with <code>summarize()</code>!</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># summarize without renaming the statistics</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>asec <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>asec <span class="sc">|&gt;</span></span>
 <span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(ftotval), <span class="fu">mean</span>(inctot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
@@ -957,7 +951,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 1         105254.     209921275.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># summarize and rename the statistics</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>asec <span class="sc">%&gt;%</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>asec <span class="sc">|&gt;</span></span>
 <span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">summarize</span>(<span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
@@ -972,8 +966,8 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.8" class="anchored" data-anchor-id="group_by"><span class="header-section-number">2.4.8</span> <code>group_by()</code></h3>
 <p><code>group_by()</code> groups a dataframe based on specified variables. <code>summarize()</code> with grouped dataframes creates subgroup summary statistics. <code>mutate()</code> with <code>group_by()</code> calculates grouped summaries for each row.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>asec <span class="sc">%&gt;%</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">group_by</span>(pernum) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">group_by</span>(pernum) <span class="sc">|&gt;</span></span>
 <span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb36-4"><a href="#cb36-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb36-5"><a href="#cb36-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
@@ -1004,14 +998,14 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p>Dataframes can be grouped by multiple variables.</p>
 <p>Grouped tibbles include metadata about groups. For example, <code>Groups:   pernum, offpov [40]</code>. One grouping is dropped each time <code>summarize()</code> is used. It is easy to forget if a dataframe is grouped, so it is safe to include <code>ungroup()</code> at the end of a section of functions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>asec <span class="sc">%&gt;%</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">group_by</span>(pernum, offpov) <span class="sc">%&gt;%</span></span>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">group_by</span>(pernum, offpov) <span class="sc">|&gt;</span></span>
 <span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb38-4"><a href="#cb38-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
 <span id="cb38-5"><a href="#cb38-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
 <span id="cb38-6"><a href="#cb38-6"></a>    <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot)</span>
-<span id="cb38-7"><a href="#cb38-7"></a>  ) <span class="sc">%&gt;%</span></span>
-<span id="cb38-8"><a href="#cb38-8"></a>  <span class="fu">arrange</span>(offpov) <span class="sc">%&gt;%</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a>  <span class="fu">arrange</span>(offpov) <span class="sc">|&gt;</span></span>
 <span id="cb38-9"><a href="#cb38-9"></a>  <span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'pernum'. You can override using the
@@ -1082,7 +1076,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </section>
 <section id="bonus-count" class="level3" data-number="2.4.9">
 <h3 data-number="2.4.9" class="anchored" data-anchor-id="bonus-count"><span class="header-section-number">2.4.9</span> BONUS: <code>count()</code></h3>
-<p><code>count()</code> is a shortcut to <code>df %&gt;% group_by(var) %&gt;% summarize(n())</code>. <code>count()</code> counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:</p>
+<p><code>count()</code> is a shortcut to <code>df |&gt; group_by(var) |&gt; summarize(n())</code>. <code>count()</code> counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">count</span>(asec, pernum)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">

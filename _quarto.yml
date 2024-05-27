@@ -34,7 +34,7 @@ book:
         - 15_microsimulation.qmd   
         - 16_nonparametric-1.qmd
         - 17_nonparametric-2.qmd   
-        - 18_data-imputation.qmd
+        #  18_data-imputation.qmd
     - part: Supervised Machine Learning
       chapters:
         - 19_predictive-modeling-motivation.qmd 

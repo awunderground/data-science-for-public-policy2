@@ -339,7 +339,7 @@ Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and r
 mutate(.data = asec, inctot_adjusted = inctot * 1.1)
 
 # new way
-asec %>%
+asec |>
   mutate(inctot_adjusted = inctot * 1.1)
 
 ```
@@ -351,10 +351,10 @@ See the power:
 
 
 ```{r pipe-data-cleaning}
-new_asec <- asec %>%
-  filter(pernum == 1) %>%
-  select(year, month, pernum, inctot) %>%
-  mutate(inctot_adjusted = inctot * 1.1) %>%
+new_asec <- asec |>
+  filter(pernum == 1) |>
+  select(year, month, pernum, inctot) |>
+  mutate(inctot_adjusted = inctot * 1.1) |>
   select(-inctot)
 
 new_asec
@@ -371,11 +371,11 @@ new_asec
 
 ```{r summarize-example}
 # summarize without renaming the statistics
-asec %>%
+asec |>
   summarize(mean(ftotval), mean(inctot))
 
 # summarize and rename the statistics
-asec %>%
+asec |>
   summarize(mean_ftotval = mean(ftotval), mean_inctot = mean(inctot))
 
 ```
@@ -391,8 +391,8 @@ asec %>%
 
 
 ```{r group_by-example}
-asec %>%
-  group_by(pernum) %>%
+asec |>
+  group_by(pernum) |>
   summarize(
     n = n(),
     mean_ftotval = mean(ftotval), 
@@ -410,14 +410,14 @@ Grouped tibbles include metadata about groups. For example, `Groups:   pernum, o
 
 
 ```{r group_by-example-many-groups}
-asec %>%
-  group_by(pernum, offpov) %>%
+asec |>
+  group_by(pernum, offpov) |>
   summarize(
     n = n(),
     mean_ftotval = mean(ftotval), 
     mean_inctot = mean(inctot)
-  ) %>%
-  arrange(offpov) %>%
+  ) |>
+  arrange(offpov) |>
   ungroup()
 
 ```
@@ -442,9 +442,9 @@ exercise_number <- exercise_number + 1
 3. Use `summarize()` and `n()` to count the number of observations in poverty. 
 
 ```{r echo = FALSE, eval = FALSE}
-asec %>%
-  filter(offpovuniv == "In Poverty Universe") %>%
-  group_by(offpov) %>%
+asec |>
+  filter(offpovuniv == "In Poverty Universe") |>
+  group_by(offpov) |>
   summarize(n())
 
 ```
@@ -469,13 +469,13 @@ exercise_number <- exercise_number + 1
 7. Use `summarize()` and `n()` to see if you get the same result for `offpov` and `in_poverty`. You should only get two rows per family size if your poverty calculation is correct.
 
 ```{r echo = FALSE, eval = FALSE}
-asec %>%
-  filter(offpovuniv == "In Poverty Universe") %>%
-  group_by(cpsid) %>%
-  mutate(family_size = n()) %>%
-  ungroup() %>%
-  mutate(in_poverty = offtotval < offcutoff) %>%
-  group_by(family_size, offpov, in_poverty) %>%
+asec |>
+  filter(offpovuniv == "In Poverty Universe") |>
+  group_by(cpsid) |>
+  mutate(family_size = n()) |>
+  ungroup() |>
+  mutate(in_poverty = offtotval < offcutoff) |>
+  group_by(family_size, offpov, in_poverty) |>
   summarize(n())
 
 ```
@@ -494,7 +494,7 @@ No! We did not account for sampling weights, so our estimates are incorrect. Ass
 
 ### BONUS: `count()`
 
-`count()` is a shortcut to `df %>% group_by(var) %>% summarize(n())`. `count()` counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:
+`count()` is a shortcut to `df |> group_by(var) |> summarize(n())`. `count()` counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:
 
 
 
