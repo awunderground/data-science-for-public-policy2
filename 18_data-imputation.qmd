@@ -188,7 +188,7 @@ data2 <- bind_cols(
 What if we make about 36 percent of the `y` values missing and make them missing based on the value of `x1`?
 
 ```{r}
-data2 <- data2 %>%
+data2 <- data2 |>
   mutate(
     missing_prob = 
       case_when(
@@ -198,8 +198,8 @@ data2 <- data2 %>%
         x1 < 9 ~ 0.8,
         TRUE ~ 0.05
       )
-  ) %>%
-  bind_cols(cutoff = runif(1000)) %>%
+  ) |>
+  bind_cols(cutoff = runif(1000)) |>
   mutate(y_missing = ifelse(cutoff < missing_prob, NA, y))
 
 mean(is.na(data2$y_missing))
@@ -212,13 +212,13 @@ Let's start with a mean imputation approach.
 
 ```{r}
 # calculate the mean of the non-missing values
-mean_y <- data2 %>%
-  filter(!is.na(y_missing)) %>%
-  summarize(y_missing = mean(y_missing)) %>%
+mean_y <- data2 |>
+  filter(!is.na(y_missing)) |>
+  summarize(y_missing = mean(y_missing)) |>
   pull(y_missing)
 
 # if a value is missing, replace it with the mean from the non-missing values
-mean_imputed <- data2 %>%
+mean_imputed <- data2 |>
   mutate(
     imputation = as.numeric(is.na(y_missing)),
     y_imputed = if_else(
@@ -229,14 +229,14 @@ mean_imputed <- data2 %>%
   )
 
 # visualize the imputation
-mean_imputed %>%
+mean_imputed |>
   ggplot(aes(x1, y_imputed, color = factor(imputation))) +
   geom_point(alpha = 0.2) +
   labs(title = "Mean imputation does a poor job") +
   theme_minimal()
 
 # compare the mean
-mean_imputed %>%
+mean_imputed |>
   summarize(mean(y), mean(y_imputed))
 
 ```
@@ -253,8 +253,8 @@ $$y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i1}^2 + \beta_3x_{i1}^3 + \epsilon_i
 data2_complete <- filter(data2, !is.na(y_missing))
 data2_missing <- filter(data2, is.na(y_missing)) 
 
-lm_y_3 <- data2_complete %>%
-  lm(formula = y_missing ~ poly(x1, degrees = 3, raw = TRUE), data = .)
+lm_y_3 <- data2_complete |>
+  lm(formula = y_missing ~ poly(x1, degrees = 3, raw = TRUE), data = _)
 
 lm_imputed3 <- bind_rows(
   `0` = mutate(data2_complete, y_imputed = y_missing),
@@ -266,14 +266,14 @@ lm_imputed3 <- bind_rows(
 )
 
 # visualize
-lm_imputed3 %>%
+lm_imputed3 |>
   ggplot(aes(x1, y_imputed, color = factor(imputation))) +
   geom_point(alpha = 0.2) +
   labs(title = "Regression imputation (with the wrong model) does a bad job") +
   theme_minimal()
 
 # compare means
-lm_imputed3 %>%
+lm_imputed3 |>
   summarize(mean(y), mean(y_imputed))
 
 ```
@@ -283,8 +283,8 @@ Unfortunately, the results are no better than mean imputation. Let's try a fourt
 $$y_i = \beta_0 + \beta_1x_{i1} + \beta_2x_{i1}^2 + \beta_3x_{i1}^3 + \beta_4x_{i1}^4 + \epsilon_i$$
 
 ```{r}
-lm_y_4 <- data2_complete %>%
-  lm(formula = y_missing ~ poly(x1, degrees = 4, raw = TRUE), data = .)
+lm_y_4 <- data2_complete |>
+  lm(formula = y_missing ~ poly(x1, degrees = 4, raw = TRUE), data = _)
 
 lm_imputed4 <- bind_rows(
   `0` = mutate(data2_complete, y_imputed = y_missing),
@@ -296,14 +296,14 @@ lm_imputed4 <- bind_rows(
 )
 
 # visualize
-lm_imputed4 %>%
+lm_imputed4 |>
   ggplot(aes(x1, y_imputed, color = factor(imputation))) +
   geom_point(alpha = 0.2) +
   labs(title = "Regression imputation (with the right model) does a good job") +
   theme_minimal()
 
 # compare means
-lm_imputed4 %>%
+lm_imputed4 |>
   summarize(mean(y), mean(y_imputed))
 
 ```
@@ -320,22 +320,22 @@ As we will discuss in future chapters, linear and logistic regression are both s
 library(tidymodels)
 
 knn_recipe <-
-  recipe(formula = y ~ ., data = data2_complete) %>%
+  recipe(formula = y ~ ., data = data2_complete) |>
   step_normalize(x1, x2)
 
 # neighbors = 13 comes from the hyperparameter tuning in the supervised machine
 # learning notes
 knn_mod <-
-  nearest_neighbor(neighbors = 13) %>%
-  set_engine(engine = "kknn") %>%
+  nearest_neighbor(neighbors = 13) |>
+  set_engine(engine = "kknn") |>
   set_mode(mode = "regression")
 
 knn_workflow <-
-  workflow() %>%
-  add_model(spec = knn_mod) %>%
+  workflow() |>
+  add_model(spec = knn_mod) |>
   add_recipe(recipe = knn_recipe)
 
-knn_fit <- knn_mod %>%
+knn_fit <- knn_mod |>
   fit(formula = y_missing ~ x1 + x2, data = data2_complete)
 
 # add the imputed values
@@ -349,14 +349,14 @@ knn_imputed <- bind_rows(
 )
 
 # visualize
-knn_imputed %>%
+knn_imputed |>
   ggplot(aes(x1, y_imputed, color = factor(imputation))) +
   geom_point(alpha = 0.2) +
   labs(title = "KNN imputation does a good job") +
   theme_minimal()
 
 # compare means
-knn_imputed %>%
+knn_imputed |>
   summarize(mean(y), mean(y_imputed))
 
 ```
