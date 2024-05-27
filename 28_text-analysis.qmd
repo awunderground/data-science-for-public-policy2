@@ -179,7 +179,7 @@ fed_papers <- gutenberg_download(gutenberg_id = 1404)
 
 fed_papers
 
-fed_paper1 <- fed_papers %>%
+fed_paper1 <- fed_papers |>
   filter(row_number() >= 8 & row_number() <= 165)
 
 ```
@@ -199,7 +199,7 @@ fed_paper1 <- fed_papers %>%
 
 ```{r}
 # tidytext can tokenize text with unnest_tokens()
-tidy_fed_paper1 <- fed_paper1 %>%
+tidy_fed_paper1 <- fed_paper1 |>
   unnest_tokens(output = word, input = text)
 
 tidy_fed_paper1
@@ -213,8 +213,8 @@ tidy_fed_paper1
 # SnowballC has a stemmer that works well with tidytext
 library(SnowballC)
 
-tidy_fed_paper1 %>%
-  mutate(stem = wordStem(word)) %>%
+tidy_fed_paper1 |>
+  mutate(stem = wordStem(word)) |>
   filter(word != stem)
 
 ```
@@ -267,17 +267,17 @@ madison <- c(10, 14, 18:20, 37:48)
 jay <- c(2:5, 64)
 unknown <- c(49:58, 62:63)
 
-fed_papers <- pull(fed_papers, text) %>%
-  str_c(collapse = " ") %>%
-  str_split(pattern = "\\.|\\?|\\!") %>%
-  unlist() %>%
-  tibble(text = .) %>%
+fed_papers <- pull(fed_papers, text) |>
+  str_c(collapse = " ") |>
+  str_split(pattern = "\\.|\\?|\\!") |>
+  unlist() |>
+  tibble(text = _) |>
   mutate(sentence = row_number())
 
-tidy_fed_papers <- fed_papers %>%
+tidy_fed_papers <- fed_papers |>
   mutate(paper_number = cumsum(str_detect(text, regex("FEDERALIST No",
-                                                      ignore_case = TRUE)))) %>%
-  unnest_tokens(word, text) %>%
+                                                      ignore_case = TRUE)))) |>
+  unnest_tokens(word, text) |>
   mutate(author = case_when(
     paper_number %in% hamilton ~ "hamilton",
     paper_number %in% madison ~ "madison",
@@ -293,22 +293,22 @@ Here we'll calculate term frequency without stop words and with stemming.
 
 ```{r}
 # filter to main authors
-tidy_fed_papers1 <- tidy_fed_papers %>%
+tidy_fed_papers1 <- tidy_fed_papers |>
   filter(author %in% c("hamilton", "madison"))
 
 # remove stop words and stem the words
-tidy_fed_papers1 <- tidy_fed_papers1 %>%
-  anti_join(stop_words, by = "word") %>%
+tidy_fed_papers1 <- tidy_fed_papers1 |>
+  anti_join(stop_words, by = "word") |>
   mutate(word = wordStem(word))
 
 # count Hamilton's most-frequent words
-tidy_fed_papers1 %>%
-  filter(author == "hamilton") %>%
+tidy_fed_papers1 |>
+  filter(author == "hamilton") |>
   count(word, sort = TRUE)
 
 # count Madison's most-frequent words
-tidy_fed_papers1 %>%
-  filter(author == "madison") %>%
+tidy_fed_papers1 |>
+  filter(author == "madison") |>
   count(word, sort = TRUE)
 
 ```
@@ -319,16 +319,16 @@ Here we'll perform TF-IDF.
 
 ```{r}
 # calculate tf-idf
-tf_idf <- tidy_fed_papers %>%
-  count(author, word, sort = TRUE) %>%
+tf_idf <- tidy_fed_papers |>
+  count(author, word, sort = TRUE) |>
   bind_tf_idf(term = word, document = author, n = n) 
 
 # plot
-tf_idf %>%
-  filter(author %in% c("hamilton", "madison")) %>%
-  group_by(author) %>%
-  top_n(15, tf_idf) %>%
-  mutate(word = reorder(word, tf_idf)) %>%
+tf_idf |>
+  filter(author %in% c("hamilton", "madison")) |>
+  group_by(author) |>
+  top_n(15, tf_idf) |>
+  mutate(word = reorder(word, tf_idf)) |>
   ggplot(aes(tf_idf, word, fill = author)) +
   geom_col() +
   facet_wrap(~author, scales = "free") +
@@ -340,8 +340,8 @@ tf_idf %>%
 ### Approach 3
 
 ```{r}
-tidy_fed_papers %>%
-  count(author, word, sort = TRUE) %>%
+tidy_fed_papers |>
+  count(author, word, sort = TRUE) |>
   filter(word == "upon")
 
 ```
@@ -371,20 +371,20 @@ shakespeare <- gutenberg_download(
 )
 
 # create tokens and drop character cues
-shakespeare_clean <- shakespeare %>%
-  unnest_tokens(word, text, to_lower = FALSE) %>%
+shakespeare_clean <- shakespeare |>
+  unnest_tokens(word, text, to_lower = FALSE) |>
   filter(word != str_to_upper(word)) 
 
 # calculate TF-IDF
-shakespeare_tf_idf <- shakespeare_clean %>%
-  count(title, word, sort = TRUE) %>%
+shakespeare_tf_idf <- shakespeare_clean |>
+  count(title, word, sort = TRUE) |>
   bind_tf_idf(term = word, document = title, n = n)
 
 # plot
-shakespeare_tf_idf %>%
-  group_by(title) %>%
-  top_n(8, tf_idf) %>%
-  mutate(word = reorder(word, tf_idf)) %>%
+shakespeare_tf_idf |>
+  group_by(title) |>
+  top_n(8, tf_idf) |>
+  mutate(word = reorder(word, tf_idf)) |>
   ggplot(aes(tf_idf, word, fill = title)) +
   geom_col() +
   facet_wrap(~title, scales = "free", ncol = 2) +

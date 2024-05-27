@@ -71,7 +71,7 @@ amtrak_stations <- st_read(amtrak_stations_file, quiet = TRUE)
 
 # print the geometry column
 
-amtrak_stations %>%
+amtrak_stations |>
   select(stationnam)
 
 ```
@@ -88,7 +88,7 @@ Points, which `library(sf)` calls `POINT`, are zero-dimensional geospatial objec
 
 ```{r}
 # create a map
-amtrak_stations %>%
+amtrak_stations |>
   ggplot() +
   geom_sf() +
   labs(
@@ -109,7 +109,7 @@ amtrak_routes_file <- here("data", "Amtrak_Routes.geojson")
 amtrak_routes <- st_read(amtrak_routes_file, quiet = TRUE)
 
 # create map with lines data
-amtrak_routes %>%
+amtrak_routes |>
   ggplot() +
   geom_sf() +
   labs(
@@ -127,10 +127,10 @@ Polygons (`POLYGON`) are two-dimensional geospatial objects. Like lines, polygon
 
 ```{r}
 # load and subset states data
-states <- tigris::states(cb = TRUE, progress_bar = FALSE) %>%
+states <- tigris::states(cb = TRUE, progress_bar = FALSE) |>
   filter(!STATEFP %in% c("78", "69", "66", "60", "72", "02", "15"))
 
-states %>%
+states |>
   ggplot() +
   geom_sf() +
   labs(title = "Example of polygon data") +
@@ -238,7 +238,7 @@ library(tigris)
 
 dc_roads <- roads(state = "DC", county = "District of Columbia")
 
-dc_roads %>%
+dc_roads |>
   ggplot() +
   geom_sf() +
   theme_void()
@@ -258,15 +258,15 @@ TIGER line files are high-resolution and follow legal boundaries. Sometimes the 
 
 library(tigris)
 
-mi <- states(progress_bar = FALSE) %>%
-  filter(STUSPS == "MI") %>%
+mi <- states(progress_bar = FALSE) |>
+  filter(STUSPS == "MI") |>
   ggplot() +
   geom_sf() +
   labs(title = "TIGER/Line") +
   theme_void() 
 
-mi_cb <- states(cb = TRUE, progress_bar = FALSE) %>%
-  filter(STUSPS == "MI") %>%
+mi_cb <- states(cb = TRUE, progress_bar = FALSE) |>
+  filter(STUSPS == "MI") |>
   ggplot() +
   geom_sf() +
   labs(title = "Cartographic Boundary") +  
@@ -339,8 +339,8 @@ aiddata <- read_csv(
     "https://raw.githubusercontent.com/awunderground/awunderground-data/",
     "main/aiddata/aiddata_bangladesh.csv"
     )
-  ) %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
   st_set_crs(value = 4326)
 
 ggplot() +
@@ -392,7 +392,7 @@ dc_income <- get_acs(geography = "tract",
                      geometry = TRUE,
                      progress = FALSE)
 
-dc_income %>%
+dc_income |>
   ggplot() +
   geom_sf(aes(fill = estimate), color = "white", size = 0.1) +
   scale_fill_gradient(
@@ -510,7 +510,7 @@ library(crsuggest)
 
 suggest_crs(amtrak_stations)
 
-virginia_stations <- amtrak_stations %>%
+virginia_stations <- amtrak_stations |>
   filter(state == "VA")
 
 suggest_crs(virginia_stations)
@@ -581,9 +581,9 @@ aiddata <- read_csv(
     "https://raw.githubusercontent.com/awunderground/awunderground-data/",
     "main/aiddata/aiddata_bangladesh.csv"
     )
-  ) %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
-  st_set_crs(value = 4326) %>%
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
+  st_set_crs(value = 4326) |>
   st_transform(crs = 7783)
 
 ggplot() +
@@ -596,8 +596,8 @@ aiddata <- read_csv(
     "https://raw.githubusercontent.com/awunderground/awunderground-data/",
     "main/aiddata/aiddata_bangladesh.csv"
     )
-  ) %>%
-  st_as_sf(coords = c("longitude", "latitude")) %>%
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
   st_set_crs(value = 4326)
 
 
@@ -623,14 +623,14 @@ Sometimes we want to aggregate smaller geographies into larger geographies. This
 dmv_names <- c("South Dakota", "North Dakota")
 
 # add a projection
-states <- states %>%
+states <- states |>
   st_transform(crs = 5070)
 
 # aggregate states and make a map
-states %>%
-  mutate(new_NAME = if_else(NAME %in% dmv_names, "Dakota", NAME)) %>%
-  group_by(new_NAME) %>%
-  summarize() %>%
+states |>
+  mutate(new_NAME = if_else(NAME %in% dmv_names, "Dakota", NAME)) |>
+  group_by(new_NAME) |>
+  summarize() |>
   ggplot() +
   geom_sf()
 
@@ -667,10 +667,10 @@ amtrak <- st_join(states, amtrak_stations, join = st_intersects)
 dim(amtrak)
 
 # count the number of stations per state
-amtrak %>%
-  as_tibble() %>% # converting from sf to tibble speeds calculations
-  group_by(NAME) %>%
-  summarize(number_of_stations = n()) %>%
+amtrak |>
+  as_tibble() |> # converting from sf to tibble speeds calculations
+  group_by(NAME) |>
+  summarize(number_of_stations = n()) |>
   arrange(desc(number_of_stations))
 
 ```
@@ -698,8 +698,8 @@ amtrak_stations_joined <- st_join(
 )
 
 # count the station names
-amtrak_stations_joined %>%
-  as_tibble() %>%
+amtrak_stations_joined |>
+  as_tibble() |>
   count(stationnam.x, sort = TRUE)
 
 ```
@@ -719,24 +719,24 @@ Suppose we want to find the closest and furthest Amtrak stations from Washington
 
 ```{r}
 # create a data frame with just Union Station
-union_station <- amtrak_stations %>%
+union_station <- amtrak_stations |>
   filter(state == "DC")
 
-no_union_station <- amtrak_stations %>%
+no_union_station <- amtrak_stations |>
   filter(state != "DC") 
 
 # calculate the distance from Union Station to all other stations
 amtrak_distances <- st_distance(union_station, no_union_station)
 
 # find the closest station
-amtrak_stations %>%
-  slice(which.min(amtrak_distances)) %>%
+amtrak_stations |>
+  slice(which.min(amtrak_distances)) |>
   select(stationnam, city)
 
 
 # find the further station
-amtrak_stations %>%
-  slice(which.max(amtrak_distances)) %>%
+amtrak_stations |>
+  slice(which.max(amtrak_distances)) |>
   select(stationnam, city)
 
 ```

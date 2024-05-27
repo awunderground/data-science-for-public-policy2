@@ -54,7 +54,7 @@ example_doc <-
     "b", "banana", 3
   )
 
-document_term_matrix <- example_doc %>%
+document_term_matrix <- example_doc |> 
   cast_dtm(document = document, term = word, value = n)
 
 # document term matrices are large and typically print like this
@@ -211,7 +211,7 @@ document_length_i
 Each document will have a document-specific topic probability distribution. We use the Dirichlet distribution to generate this vector of probabilities. The [Dirichlet distribution](https://en.wikipedia.org/wiki/Dirichlet_distribution) is a multivariate [beta distribution](https://en.wikipedia.org/wiki/Beta_distribution). The beta distribution returns random draws between 0 and 1 and is related to the standard uniform distribution. 
 
 ```{r}
-topic_distribution_i <- MCMCpack::rdirichlet(n = 1, alpha = c(0.5, 0.5)) %>%
+topic_distribution_i <- MCMCpack::rdirichlet(n = 1, alpha = c(0.5, 0.5)) |> 
   as.numeric()
 
 topic_distribution_i
@@ -275,7 +275,7 @@ eos <- read_csv(here::here("data", "executive-orders.csv"))
 eos <- filter(eos, !is.na(text))
 
 # tokenize the text -------------------------------------------------------
-tidy_eos <- eos %>%
+tidy_eos <- eos |> 
   unnest_tokens(output = word, input = text)
 
 # create domain-specific stop words
@@ -312,7 +312,7 @@ domain_stop_words <- tribble(
   "pursuant",
   "act",
   "law"
-) %>%
+) |> 
   mutate(lexicon = "custom")
 
 stop_words <- bind_rows(
@@ -321,15 +321,15 @@ stop_words <- bind_rows(
 )
 
 # remove stop words with anti_join() and the stop_words tibble
-tidy_eos <- tidy_eos %>%
+tidy_eos <- tidy_eos |> 
   anti_join(stop_words, by = "word") 
 
 # remove words that are entirely numbers
-tidy_eos <- tidy_eos %>%
+tidy_eos <- tidy_eos |> 
   filter(!str_detect(word, pattern = "^\\d")) 
 
 # stem words with wordStem()
-tidy_eos <- tidy_eos %>%
+tidy_eos <- tidy_eos |> 
   mutate(stem = wordStem(word))
 
 ```
@@ -337,10 +337,10 @@ tidy_eos <- tidy_eos %>%
 Next, we convert the tidytext executive orders into a document-term matrix with `cast_dtm()`. 
 
 ```{r}
-tidy_eos_count <- tidy_eos %>%
+tidy_eos_count <- tidy_eos |> 
   count(president, executive_order_number, stem) 
 
-eos_dtm <- tidy_eos_count %>%
+eos_dtm <- tidy_eos_count |> 
   cast_dtm(document = executive_order_number, term = stem, value = n)
 
 ```
@@ -348,7 +348,7 @@ eos_dtm <- tidy_eos_count %>%
 Once we have a document-term matrix, implementing LDA is straightforward with `LDA()`, which comes from `library(topicmodels)`. We must predetermine the number of groups with `k` and we set the seed because the algorithm is stochastic (not deterministic). 
 
 ```{r}
-eos_lda <- eos_dtm %>%
+eos_lda <- eos_dtm |> 
   LDA(k = 22, control = list(seed = 20220417))
 
 ```
@@ -367,10 +367,10 @@ With LDA, each topic is a mixture of words. The model returns estimated paramete
 ```{r}
 lda_beta <- tidy(eos_lda, matrix = "beta")
 
-top_beta <- lda_beta %>%
-  group_by(topic) %>%
-  slice_max(beta, n = 12) %>%
-  ungroup() %>%
+top_beta <- lda_beta |> 
+  group_by(topic) |> 
+  slice_max(beta, n = 12) |> 
+  ungroup() |> 
   arrange(desc(beta))
 
 top_beta
@@ -378,9 +378,9 @@ top_beta
 # pick 6 random topics for visualization
 random_topics <- sample(1:22, size = 6)
 
-top_beta %>%
-  filter(topic %in% random_topics) %>%
-  mutate(term = reorder(term, beta)) %>%
+top_beta |> 
+  filter(topic %in% random_topics) |> 
+  mutate(term = reorder(term, beta)) |> 
   ggplot(aes(x = beta, y = term)) +
   geom_col() +
   facet_wrap(~ topic, scales = "free")
@@ -394,10 +394,10 @@ With LDA, each document is a mixture of topics The model returns estimated param
 ```{r}
 lda_gamma <- tidy(eos_lda, matrix = "gamma")
 
-top_gamma <- lda_gamma %>%
-  group_by(topic) %>%
-  slice_max(gamma, n = 12) %>%
-  ungroup() %>%
+top_gamma <- lda_gamma |> 
+  group_by(topic) |> 
+  slice_max(gamma, n = 12) |> 
+  ungroup() |> 
   arrange(desc(gamma))
 
 top_gamma
@@ -449,15 +449,15 @@ madison <- c(10, 14, 18:20, 37:48)
 jay <- c(2:5, 64)
 unknown <- c(49:58, 62:63)
 
-fed_papers <- pull(fed_papers, text) %>%
-  str_c(collapse = " ") %>%
-  str_split(pattern = "\\.|\\?|\\!") %>%
-  unlist() %>%
-  tibble(text = .)
+fed_papers <- pull(fed_papers, text) |> 
+  str_c(collapse = " ") |> 
+  str_split(pattern = "\\.|\\?|\\!") |> 
+  unlist() |> 
+  tibble(text = _)
 
-fed_papers <- fed_papers %>%
+fed_papers <- fed_papers |> 
   mutate(paper_number = cumsum(str_detect(text, regex("FEDERALIST No",
-                                            ignore_case = TRUE)))) %>%
+                                            ignore_case = TRUE)))) |> 
   mutate(author = case_when(
     paper_number %in% hamilton ~ "hamilton",
     paper_number %in% madison ~ "madison",
@@ -474,12 +474,12 @@ Predictive modeling uses a slightly different data format than tidytext. We want
 We can use `nest()` and `paste()` to transform the data into this format. 
 
 ```{r}
-fed_papers <- fed_papers %>%
-  group_by(paper_number) %>%
-  nest(text = text) %>%
+fed_papers <- fed_papers |> 
+  group_by(paper_number) |> 
+  nest(text = text) |> 
   # paste individual lines into one row per document
-  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) %>%
-  ungroup() %>%
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |> 
+  ungroup() |> 
   # remove white spaces
   mutate(text = str_squish(str_to_lower(text)))
 
@@ -492,18 +492,18 @@ Let's `prep()` and `bake()` a recipe. We want to use recipes because most of the
 ```{r}
 library(textrecipes)
 
-recipe( ~ text, data = fed_papers) %>%
+recipe( ~ text, data = fed_papers) |> 
   # tokenize the text
-  step_tokenize(text) %>%
+  step_tokenize(text) |> 
   # remove stop works
-  step_stopwords(text) %>%
+  step_stopwords(text) |> 
   # stem words
-  step_stem(text) %>%
+  step_stem(text) |> 
   # remove infrequent tokens
-  step_tokenfilter(text, max_tokens = 10) %>%
+  step_tokenfilter(text, max_tokens = 10) |> 
   # perform TF-IDF
-  step_tfidf(text) %>%
-  prep() %>%
+  step_tfidf(text) |> 
+  prep() |> 
   bake(new_data = NULL)
 
 ```
@@ -524,29 +524,29 @@ eos <- read_csv(here::here("data", "executive-orders.csv"))
 eos <- filter(eos, !is.na(text))
 
 # remove numbers
-eos <- eos %>%
-  mutate(text = str_remove_all(text, "\\d")) %>%
-  mutate(text = str_remove_all(text, "``''")) %>%
+eos <- eos |> 
+  mutate(text = str_remove_all(text, "\\d")) |> 
+  mutate(text = str_remove_all(text, "``''")) |> 
   mutate(text = str_squish(text))
 
 # combine rows into one row per document
-eos <- eos %>%
-  group_by(executive_order_number) %>%
-  nest(text = text) %>%
-  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) %>%
+eos <- eos |> 
+  group_by(executive_order_number) |> 
+  nest(text = text) |> 
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |> 
   ungroup()
 
 # label the party of each executive order
 republicans <- c("bush", "trump")
 
-eos_modeling <- eos %>%
+eos_modeling <- eos |> 
   mutate(
     party = if_else(
       condition = president %in% republicans, 
       true = "rep", 
       false = "dem"
     )
-  ) %>%
+  ) |> 
   # we can include non-text predictors but we drop predictors that would be too
   # useful (i.e. dates align with individual presidents)
   select(-president, -signing_date, -executive_order_number)
@@ -579,12 +579,12 @@ Next, let's create a recipe that will be used by both models.
 
 ```{r}
 eos_rec <-
-  recipe(party ~ text, data = eos_train) %>%
-  step_tokenize(text) %>%
-  step_stopwords(text) %>%
-  step_stem(text) %>%
+  recipe(party ~ text, data = eos_train) |> 
+  step_tokenize(text) |> 
+  step_stopwords(text) |> 
+  step_stem(text) |> 
   # ad hoc testing indicates that increasing max tokens makes a difference
-  step_tokenfilter(text, max_tokens = 1000) %>%
+  step_tokenfilter(text, max_tokens = 1000) |> 
   step_tfidf(text) 
 
 ```
@@ -593,12 +593,12 @@ Create a workflow.
 
 ```{r}
 lasso_mod <-
-  logistic_reg(penalty = tune(), mixture = 1) %>%
-  set_mode("classification") %>%
+  logistic_reg(penalty = tune(), mixture = 1) |> 
+  set_mode("classification") |> 
   set_engine("glmnet")
 
-lasso_wf <- workflow() %>%
-  add_recipe(eos_rec) %>%
+lasso_wf <- workflow() |> 
+  add_recipe(eos_rec) |> 
   add_model(lasso_mod)
   
 ```
@@ -620,12 +620,12 @@ lasso_cv <-
 Unpack the estimated models. 
 
 ```{r}
-lasso_cv %>%
+lasso_cv |> 
   collect_metrics()
 
 autoplot(lasso_cv)
 
-lasso_cv %>%
+lasso_cv |> 
   select_best("roc_auc")
 
 ```
@@ -637,10 +637,10 @@ lasso_wf <- finalize_workflow(x = lasso_wf, parameters = select_best(lasso_cv, "
 
 lasso_fit <- last_fit(lasso_wf, split = eos_split)
 
-lasso_fit %>%
-  extract_fit_parsnip() %>%
-  tidy() %>%
-  arrange(desc(abs(estimate))) %>%
+lasso_fit |> 
+  extract_fit_parsnip() |> 
+  tidy() |> 
+  arrange(desc(abs(estimate))) |> 
   print(n = 20)
 
 ```
@@ -651,12 +651,12 @@ Create a workflow.
 
 ```{r}
 rf_mod <-
-  rand_forest(mtry = tune(), trees = 100, min_n = tune()) %>%
-  set_mode("classification") %>%
+  rand_forest(mtry = tune(), trees = 100, min_n = tune()) |> 
+  set_mode("classification") |> 
   set_engine("ranger", importance = "impurity")
 
-rf_wf <- workflow() %>%
-  add_recipe(eos_rec) %>%
+rf_wf <- workflow() |> 
+  add_recipe(eos_rec) |> 
   add_model(rf_mod)
 
 ```
@@ -682,12 +682,12 @@ rf_cv <-
 Unpack the estimated models. 
 
 ```{r}
-rf_cv %>%
+rf_cv |> 
   collect_metrics()
 
 autoplot(rf_cv)
 
-rf_cv %>%
+rf_cv |> 
   select_best("roc_auc")
 
 ```
@@ -699,8 +699,8 @@ rf_wf <- finalize_workflow(x = rf_wf, parameters = select_best(rf_cv, "roc_auc")
 
 rf_fit <- last_fit(rf_wf, split = eos_split)
 
-rf_fit %>% 
-  extract_fit_parsnip() %>% 
+rf_fit |> 
+  extract_fit_parsnip() |> 
   vip(num_features = 20)
 
 ```

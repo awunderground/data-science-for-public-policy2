@@ -126,7 +126,7 @@ set.seed(20200323)
 ex1 <- tibble(
   x1 = -10:10 + rnorm(21, mean = 0, sd = 2),
   x2 = x1 + rnorm(21, mean = 0, sd = 2)
-) %>%
+) |>
   mutate(x1 - mean(x1),
          x2 - mean(x2))
 ```
@@ -137,7 +137,7 @@ ex1 <- tibble(
 #| echo: false
 
 
-plot1 <- ex1 %>%
+plot1 <- ex1 |>
   ggplot(aes(x1, x2)) +
   geom_point(alpha = 0.5) +
   scale_x_continuous(limits = c(-15, 15)) +
@@ -151,7 +151,7 @@ pc1 <- prcomp(ex1)
 vec1 <- pc1$rotation[, 1] * pc1$sdev[1]
 vec2 <- pc1$rotation[, 2] * pc1$sdev[2]
 
-plot2 <- ex1 %>%
+plot2 <- ex1 |>
   ggplot(aes(x1, x2)) +
   geom_point(alpha = 0.5) +
   geom_segment(aes(x = 0, xend = vec1[1], y = 0, yend = vec1[2]), 
@@ -174,7 +174,7 @@ plot1 + plot2
 Imagine adding a new axis through the main pattern in the data. This axis should minimize the sum of squared perpendicular distances from each point to the line.
 
 ```{r echo = FALSE, fig.height = 3, fig.width = 6.5}
-ex1 %>%
+ex1 |>
   ggplot(aes(x1, x2)) +
   geom_abline(slope = vec1[2] / vec1[1], 
               intercept = 0,
@@ -193,8 +193,8 @@ If we project the data onto the main diagonal, then we can dramatically simplify
 This plot represents the first principal component, and it captures most of the variation in the data.
 
 ```{r echo = FALSE, fig.height = 2, fig.width = 6.5}
-pc1$x %>%
-  as_tibble() %>%
+pc1$x |>
+  as_tibble() |>
   ggplot(aes(PC1, 1)) +
   geom_point(alpha = 0.5,
              size = 3) +
@@ -210,7 +210,7 @@ pc1$x %>%
 Imagine adding a new axis, that is orthogonal to the first PC, through the second pattern in the data. This axis should minimize the sum of squared perpendicular distances from each point to the line.
 
 ```{r echo = FALSE, fig.height = 3, fig.width = 6.5}
-ex1 %>%
+ex1 |>
   ggplot(aes(x1, x2)) +
   geom_abline(slope = vec1[2] / vec1[1], 
               intercept = 0,
@@ -231,8 +231,8 @@ ex1 %>%
 If we project the data onto the second diagonal, then we can further simplify the data--though less than with the first project. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.
 
 ```{r echo = FALSE, fig.height = 2, fig.width = 1.5}
-pc1$x %>%
-  as_tibble() %>%
+pc1$x |>
+  as_tibble() |>
   ggplot(aes(PC2, 1)) +
   geom_point(alpha = 0.5,
              size = 3) +
@@ -281,7 +281,7 @@ bmi_ex <- tribble(
   180, 72,
   200, 66,
   210, 74
-) %>%
+) |>
   mutate_all(~(. - mean(.)) / sd(.))
 
 knitr::kable(bmi_ex, digits = 2)
@@ -301,9 +301,9 @@ eigen_bmi_ex
 ```
 
 ```{r}
-pca_bmi_ex <- bmi_ex %>%
+pca_bmi_ex <- bmi_ex |>
   mutate(PC1 = body_weight * 0.7071068 + 
-           height * 0.7071068) %>%
+           height * 0.7071068) |>
   mutate(PC2 = body_weight * -0.7071068 + 
            height * 0.7071068)
 
@@ -373,28 +373,28 @@ library(recipes)
 library(broom)
 
 # normalize numeric variables
-recipe1 <- state_data %>%
-  recipe() %>%
-  step_normalize(hhpop, horate, medhhincome) %>%
+recipe1 <- state_data |>
+  recipe() |>
+  step_normalize(hhpop, horate, medhhincome) |>
   prep()
   
 # apply estimated mean and sd to original data
-state_numeric_data <- recipe1 %>%
+state_numeric_data <- recipe1 |>
   bake(new_data = state_data) 
 
 # look at the correlation matrix
-state_numeric_data %>%
-  select(hhpop, horate, medhhincome) %>%
+state_numeric_data |>
+  select(hhpop, horate, medhhincome) |>
   cor()
 
 # estimate the loadings
-recipe2 <- state_numeric_data %>%
-  recipe() %>%
-  step_pca(hhpop, horate, medhhincome) %>%
+recipe2 <- state_numeric_data |>
+  recipe() |>
+  step_pca(hhpop, horate, medhhincome) |>
   prep(data = state_numeric_data)
 
 # apply loadings to original data
-state_pca <- recipe2 %>%
+state_pca <- recipe2 |>
   bake(new_data = state_numeric_data)
 
 # visualize!
@@ -445,9 +445,9 @@ Let's use PCA to create principal components of the 493 votes variables.
 
 ```{r}
 # estimate the loadings
-votes_rec <- votes %>%
-  recipe() %>%
-  step_pca(all_numeric()) %>%
+votes_rec <- votes |>
+  recipe() |>
+  step_pca(all_numeric()) |>
   prep()
   
 ```
@@ -455,8 +455,8 @@ votes_rec <- votes %>%
 The first principal component explains about 45 percent of the variation.
 
 ```{r}
-tidy(votes_rec, number = 1, type = "variance") %>%
-  filter(terms == "cumulative percent variance") %>%
+tidy(votes_rec, number = 1, type = "variance") |>
+  filter(terms == "cumulative percent variance") |>
   slice_min(value, n = 5)
 
 ```
@@ -465,7 +465,7 @@ At this point, we've estimated the loadings. Let's apply the loadings to the ori
 
 ```{r}
 # apply estimated loadings to original data
-votes_pcs <- votes_rec %>%
+votes_pcs <- votes_rec |>
   bake(new_data = votes) 
 
 ```
