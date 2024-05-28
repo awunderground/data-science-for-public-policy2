@@ -301,7 +301,7 @@ format:
 :::
 
 
-## GitHub Pages
+## GitHub Pages {#sec-ghp}
 
 [GitHub Pages](https://pages.github.com/) are free websites hosted directly from a GitHub repository. With a free GitHub account, a GitHub repo must be public to create a GitHub page with that repo. When you create a GitHub page, you associate it with a specific branch of your repo. GitHub Pages will look for an `index.html`, `index.md`, or `README.md` file as the entry file for your site.
 

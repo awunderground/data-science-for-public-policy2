@@ -98,7 +98,7 @@ If you run into merge conflicts, either follow the GitHub instructions or follow
 
 ## GitHub Pages
 
-GitHub offers a free and simple tool for a hosting website in a GitHub repository called [GitHub pages](https://pages.github.com/). A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names. 
+As we introduced in @sec-ghp, GitHub offers a free and simple tool for a hosting website in a GitHub repository called [GitHub pages](https://pages.github.com/). A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names. 
 
 Let's walk through an example:
 
@@ -113,7 +113,7 @@ Let's walk through an example:
 7. Add page1 to the end of the link
 8. Add the link to page1 in the README. `git add`, `git commit`, and `git push`.
 
-## index as homepage
+### index as homepage
 
 The [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/index.html) does not use the README as a home page. Instead it uses and index page. 
 

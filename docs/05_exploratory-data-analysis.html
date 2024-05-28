@@ -864,6 +864,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <li><em>Predictive imputation</em>: Fills the missing values with a predicted value based on a model that has been fit to the data or calculated probabilities based on other columns in the data. This is a more complex approach but is likely more accurate (for example, it can take into account variable correlation).</li>
 </ul></li>
 </ul>
+<p>These alternatives are discussed in more detail in a later chapter covering data imputation.</p>
 <p>The <code>replace_na()</code> function in <code>dplyr</code> is very useful for replacing NA values in one or more columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="cn">NA</span>, <span class="st">"b"</span>))</span>

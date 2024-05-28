@@ -65,7 +65,8 @@ According to @Wickham2017R [Chapter 27](https://r4ds.had.co.nz/r-markdown.html#i
 > 1.  "For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis."
 > 2.  "For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code)."
 > 3.  "As an environment in which to do data science, as a modern day lab notebook where you can capture not only what you did, but also what you were thinking."
-s
+
+
 Quarto uses
 
 -   plain text files ending in `.qmd` that are similar to `.R` files.
@@ -74,8 +75,7 @@ Quarto uses
 
 [^pandoc]: Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their [About Page](https://pandoc.org/index.html).
 
-Quarto calls `library(knitr)` and "knits" `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded and the entire process is handled by clicking the "Render" button in RStudio.
-
+Quarto calls `library(knitr)` and "knits" `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded, and the entire process is handled by clicking the "Render" button in RStudio.
 
 
 ![](images/rstudio-qmd-how-it-works.png)
@@ -102,7 +102,7 @@ exercise_number <- exercise_number + 1
 
 1.  If you already have a LaTeX distribution like `tinytext` or `MiKTeX`, then skip this exercise.
 2.  Follow [these instructions](https://yihui.org/tinytex/) to install `library(tinytex)`.
-
+:::
 
 The "Render" workflow has a few advantages:
 
@@ -111,7 +111,6 @@ The "Render" workflow has a few advantages:
 3.  The output types are really appealing. By creating publishable documents with code, there is no need to copy-and-paste or transpose results.
 4.  The process is iterable and scalable.
 
-:::
 
 
 ::: {.callout-warning}
