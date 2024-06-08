@@ -1,5 +1,6 @@
 ---
 title: "Data Visualization with ggplot2"
+abstract: This chapter introduces ggplot2, the tidyverse’s wildly popular data visualization package. 
 format: 
   html:
     toc: true

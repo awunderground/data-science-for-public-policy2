@@ -429,6 +429,7 @@ window.Quarto = {
   <li><a href="#benchmarking" id="toc-benchmarking" class="nav-link" data-scroll-target="#benchmarking"><span class="header-section-number">10.5</span> Benchmarking</a></li>
   <li><a href="#sec-organizing-an-analysis" id="toc-sec-organizing-an-analysis" class="nav-link" data-scroll-target="#sec-organizing-an-analysis"><span class="header-section-number">10.6</span> Organizing an Analysis</a></li>
   <li><a href="#sec-purrr" id="toc-sec-purrr" class="nav-link" data-scroll-target="#sec-purrr"><span class="header-section-number">10.7</span> Iteration with <code>library(purrr)</code></a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">10.8</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -1311,12 +1312,12 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
-                     expr      min        lq     mean    median       uq
-                median(x) 13.30335 15.849247 18.72527 17.007415 19.96237
- quantile(x, probs = 0.5)  7.67438  9.164464 10.69292  9.820915 12.32290
+                     expr      min       lq     mean   median       uq
+                median(x) 6.730970 7.067621 8.066725 7.128178 8.684292
+ quantile(x, probs = 0.5) 3.819847 4.018267 4.558521 4.068081 4.941033
        max neval
- 103.53607   100
-  18.43926   100</code></pre>
+ 43.773978   100
+  6.838472   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1416,6 +1417,10 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <li>What do I want back? A numeric vector (<code>dbl</code>), character vector (<code>chr</code>), dataframe created by column-binding (<code>dfc</code>), dataframe created by row-binding (<code>dfr</code>), etc?</li>
 </ul>
 <p>The <a href="https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf">purrr cheatsheet</a> is a great place to go for help using purrr and outlines the different function options. You can also see the <a href="https://purrr.tidyverse.org/reference/index.html">purrr documentation</a> for more details.</p>
+</section>
+<section id="conclusion" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.8</span> Conclusion</h2>
+<p>R has many useful built-in functions, and you can easily install other extremely useful functions by loading in R packages. However, in many cases, it is useful to write your own custom functions. This section illustrated how to write custom R functions with the <code>function() {}</code> syntax. When writing R functions, R’s debugger is extremely helpful to implement “break points” which can help identify errors. Custom functions can be especially powerful when combined with iteration, and the tidyverse’s <code>purrr</code> package offers an elegant way to apply this concept. Lastly, this section covers other programming fundamentals like <code>if</code> <code>else</code> statements, <code>for</code> loops and <code>while</code> loops.</p>
 
 
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">

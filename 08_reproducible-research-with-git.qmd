@@ -1,5 +1,6 @@
 ---
 title: "Reproducible Research with Git and GitHub"
+abstract: Git and Github are powerful software tools used to control different versions of a codebase, track changes, and collaborate with other programmers. This section introduces both tools.
 format: 
   html:
     toc: true
@@ -334,7 +335,11 @@ We have almost exclusively seen approach one used by collaborative teams. Approa
 
 To add a collaborator to your repository, under Settings select "Collaborators" under the Access menu on the left. Select the "Add people" button and add your collaborators by entering their GitHub user name.
 
-## Git is Confusing
+## Conclusion
+Git is a distributed version-control system. It is used for tracking changes in the code. GitHub is an online hosting service for version control using git. Key workhorse commands are `git status`, `git add`, `git commit -m <message>` `git push` and `git diff`. GitHub is also great because it will host websites using GitHub Pages. 
+
+
+### Git is Confusing
 
 ```{r}
 #| echo: false
@@ -344,9 +349,9 @@ meta_data <- getXKCD(which = 1597)
 
 ```
 
-I promise that it's worth it.
+We promise that it's worth it.
 
-## Resources
+### Resources
 
 -   [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 -   [Happy Git and GitHub for the UserR](https://happygitwithr.com/)

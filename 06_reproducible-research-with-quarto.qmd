@@ -1,5 +1,6 @@
 ---
 title: "Reproducible Research with Quarto"
+abstract: The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of RMarkdown. 
 format: 
   html:
     toc: true
@@ -362,14 +363,20 @@ An alternative to rendering a Quarto document with the Render button is to use t
 -   The Urban Institute State and Local Finance Initiative creates [State Fiscal Briefs](https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs) by iterating R Markdown documents.
 -   [Data\@Urban](https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
 
-## Suggestions
+
+## Summary:
+Quarto is an updated version of RMarkdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
+
+
+### Suggestions
 
 -   Render early, and render often.
 -   Select the gear to the right of "Render" and select "Chunk Output in Console"
 -   Learn math mode. Also, `library(equatiomatic)` ([CRAN](https://cran.r-project.org/web/packages/equatiomatic/index.html), [GitHub](https://github.com/datalorax/equatiomatic)) is amazing.
 
-## Resources
+### Resources
 
 -   [Quarto intro](https://quarto.org/)
 -   [R4DS R Quarto chapter](https://r4ds.hadley.nz/quarto)
 -   [Happy Git R Markdown tutorial](https://happygitwithr.com/rmd-test-drive.html)
+

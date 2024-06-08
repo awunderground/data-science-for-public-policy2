@@ -417,7 +417,10 @@ div.csl-indent {
   </ul></li>
   <li><a href="#readr" id="toc-readr" class="nav-link" data-scroll-target="#readr"><span class="header-section-number">2.7</span> readr</a></li>
   <li><a href="#readxl" id="toc-readxl" class="nav-link" data-scroll-target="#readxl"><span class="header-section-number">2.8</span> readxl</a></li>
-  <li><a href="#next-skills" id="toc-next-skills" class="nav-link" data-scroll-target="#next-skills"><span class="header-section-number">2.9</span> Next Skills</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">2.9</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#next-skills" id="toc-next-skills" class="nav-link" data-scroll-target="#next-skills"><span class="header-section-number">2.9.1</span> Next Skills</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -438,6 +441,12 @@ div.csl-indent {
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    The tidyverse is an immensely popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities.
+  </div>
+</div>
 
 
 </header>
@@ -1207,10 +1216,15 @@ Note
 <section id="readxl" class="level2" data-number="2.8">
 <h2 data-number="2.8" class="anchored" data-anchor-id="readxl"><span class="header-section-number">2.8</span> readxl</h2>
 <p><a href="https://readxl.tidyverse.org/">readxl</a> is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session.</p>
-<p>The <a href="https://readxl.tidyverse.org/">tidyverse website</a> has a good tutorial on readxl.</p>
+<p>We introduce the package more thoroughly in <a href="03_advanced-data-cleaning.html#sec-readxl" class="quarto-xref"><span>Section 3.2.2</span></a>. The <a href="https://readxl.tidyverse.org/">tidyverse website</a> has a good tutorial on readxl.</p>
 </section>
-<section id="next-skills" class="level2" data-number="2.9">
-<h2 data-number="2.9" class="anchored" data-anchor-id="next-skills"><span class="header-section-number">2.9</span> Next Skills</h2>
+<section id="conclusion" class="level2" data-number="2.9">
+<h2 data-number="2.9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.9</span> Conclusion</h2>
+<p>This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from <code>dplyr</code>, a tidyverse package built to support data cleaning operations: - <code>select()</code> for removing columns - <code>filter()</code> for removing rows - <code>rename()</code> for renaming columns - <code>arrange()</code> for reordering columns - <code>mutate()</code> for creating new columns - <code>|&gt;</code> (the pipe operator) for chaining together multiple functions (part of base, but extremely useful!) - <code>summarize()</code> for collapsing many rows of a data frame into fewer rows - <code>group_by()</code> to group a data frame by certain specified variables - <code>count()</code> a shortcut for <code>group_by() |&gt; summarize(n())</code></p>
+<p>The chapter also introduced mutating joins (<code>left_join()</code>, <code>inner_join()</code>, and <code>full_join()</code>) which create new columns and filtering joins (<code>anti_join()</code>) which drop observations depending on the presence of their key in another data frame.</p>
+<p>The chapter concluded by introducing the <code>readr</code> and <code>readxl</code> packages which are useful for reading data into R.</p>
+<section id="next-skills" class="level3" data-number="2.9.1">
+<h3 data-number="2.9.1" class="anchored" data-anchor-id="next-skills"><span class="header-section-number">2.9.1</span> Next Skills</h3>
 <ul>
 <li><code>across()</code> can be used with <code>library(dplyr)</code> functions such as <code>summarise()</code> and <code>mutate()</code> to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with <code>summarize()</code>. <code>across()</code> uses the same <code>tidyselect</code> select language and helpers discussed earlier to select the columns to transform.</li>
 <li><code>pivot_wider()</code> and <code>pivot_longer()</code> can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization.</li>
@@ -1222,6 +1236,7 @@ Note
 Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <a href="https://doi.org/10.18637/jss.v059.i10">https://doi.org/10.18637/jss.v059.i10</a>.
 </div>
 </div>
+</section>
 </section>
 
 </main> <!-- /main -->

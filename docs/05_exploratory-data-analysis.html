@@ -381,6 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#handling-outliersunexpected-values" id="toc-handling-outliersunexpected-values" class="nav-link" data-scroll-target="#handling-outliersunexpected-values"><span class="header-section-number">5.6.3</span> Handling Outliers/Unexpected Values</a></li>
   </ul></li>
   <li><a href="#data-quality-assurance" id="toc-data-quality-assurance" class="nav-link" data-scroll-target="#data-quality-assurance"><span class="header-section-number">5.7</span> Data Quality Assurance</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.8</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -401,6 +402,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    This chapter introduces exploratory data analysis (EDA), an essential process for data scientists and researchers to use to understand their data.
+  </div>
+</div>
 
 
 </header>
@@ -676,7 +683,7 @@ Note
 </section>
 <section id="date-manipulation-with-lubridate" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="date-manipulation-with-lubridate"><span class="header-section-number">5.4.2</span> Date manipulation with <code>lubridate</code></h3>
-<p>The <code>lubridate</code> package, which we introduced in <span class="quarto-unresolved-ref">?sec-dates</span>, makes it much easier to work with dates and times in R. As a reminder, <code>lubridate</code> is part of the tidyverse, but it is not a core tidyverse package. It must be explicitly loaded in each session with <code>library(lubridate)</code>.</p>
+<p>The <code>lubridate</code> package, which we introduced in <a href="03_advanced-data-cleaning.html#sec-dates" class="quarto-xref"><span>Section 3.4.3</span></a>, makes it much easier to work with dates and times in R. As a reminder, <code>lubridate</code> is part of the tidyverse, but it is not a core tidyverse package. It must be explicitly loaded in each session with <code>library(lubridate)</code>.</p>
 <p>We’ll use a dataset on political violence and protest events across the continent of Africa in 2022 from the <a href="https://acleddata.com/">Armed Conflict Location &amp; Event Data Project (ACLED)</a> to illustrate the power of <code>lubridate</code>. The <code>lubridate</code> package allows users to easily and quickly parse date-time variables in a range of different formats. For example, the <code>ymd()</code> function takes a date variable in year-month-day format (e.g.&nbsp;2022-01-31) and converts it to a date-time format. The different formats are outlined in the <a href="https://lubridate.tidyverse.org/">lubridate documentation</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -999,6 +1006,10 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <li>Is the data gathering reproducible? Wherever possible, eliminate manual steps to gather or process the data. This includes using reproducible processes for data ingest such as APIs or reading data directly from the website rather than manually downloading files. All edits to the data should be made programmatically (e.g.&nbsp;skipping rows when reading data rather than deleting extraneous rows manually). Document the source of the data including the URL, the date of the access, and specific metadata about the vintage.</li>
 <li>How can you verify that you are accessing and using the data correctly? This may include writing tests to ensure that raw and calculated data values are plausible, comparing summary statistics against those provided in the data documentation (if applicable), published tables/statistics from the data provider, or published tables/statistics from a trusted third party.</li>
 </ol>
+</section>
+<section id="conclusion" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.8</span> Conclusion</h2>
+<p>This chapter outlined EDA in great detail. Some key reminders are: - R and the tidyverse have great packages for reading in data (<code>readr</code> for csv files, <code>readxl</code> for Excel files, <code>haven</code> for STATA, SAS, and SPSS files). - <code>janitor::clean_names()</code> is a great way to get your column name structure to “snake case”. - <code>glimpse()</code> is an easy way to get summary statistics on your columns. - <code>stringr</code> and <code>lubridate</code> can help you handle string and date manipulation, respectively. - There a many good options for handling missing data. Be thoughtful! - Unit tests are a good way to ensure your data is in an expected format.</p>
 
 
 </section>

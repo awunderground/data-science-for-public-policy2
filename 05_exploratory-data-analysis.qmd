@@ -1,5 +1,6 @@
 ---
 title: "Exploratory Data Analysis"
+abstract: This chapter introduces exploratory data analysis (EDA), an essential process for data scientists and researchers to use to understand their data.
 format: 
   html:
     toc: true
@@ -589,3 +590,13 @@ Data quality assurance is the foundation of high quality analysis. Four key ques
 2. Does the data accurately represent the population of interest? Think about the data generation process (e.g. using 311 calls or Uber ride data to measure potholes) - are any populations likely to be over or underrepresented? Use tools like Urban's [Spatial Equity Data Tool](https://apps.urban.org/features/equity-data-tool/) to test data for unrepresentativeness.
 3. Is the data gathering reproducible? Wherever possible, eliminate manual steps to gather or process the data. This includes using reproducible processes for data ingest such as APIs or reading data directly from the website rather than manually downloading files. All edits to the data should be made programmatically (e.g. skipping rows when reading data rather than deleting extraneous rows manually). Document the source of the data including the URL, the date of the access, and specific metadata about the vintage.
 4. How can you verify that you are accessing and using the data correctly? This may include writing tests to ensure that raw and calculated data values are plausible, comparing summary statistics against those provided in the data documentation (if applicable), published tables/statistics from the data provider, or published tables/statistics from a trusted third party. 
+
+## Conclusion
+This chapter outlined EDA in great detail. Some key reminders are:
+- R and the tidyverse have great packages for reading in data (`readr` for csv files, `readxl` for Excel files, `haven` for STATA, SAS, and SPSS files). 
+- `janitor::clean_names()` is a great way to get your column name structure to "snake case".
+- `glimpse()` is an easy way to get summary statistics on your columns. 
+- `stringr` and `lubridate` can help you handle string and date manipulation, respectively. 
+- There a many good options for handling missing data. Be thoughtful!
+- Unit tests are a good way to ensure your data is in an expected format. 
+

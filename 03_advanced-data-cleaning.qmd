@@ -1,6 +1,6 @@
 ---
 title: "Advanced Data Cleaning"
-abstract: "This section covers advanced techniques for cleaning and manipulating data."
+abstract: "This section covers advanced techniques for cleaning and manipulating data using the tidyverse."
 format: 
   html:
     toc: true
@@ -832,7 +832,7 @@ storms |>
 
 ```
 
-### Dates and Date-Times {sec-dates}
+### Dates and Date-Times {#sec-dates}
 
 Check out the [lubridate cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf). 
 
@@ -1048,3 +1048,10 @@ This Excel workbook is a beast. For instance, it isn't clear how the hierarchy w
 2. Create a tidy data frame with rows 10 through 12 ("Number of single returns", "Number of joint returns", and "Number of head of household returns") disaggregated by "size of adjusted gross income". 
 
 :::
+
+## Conclusion
+Key takeaways from this chapter are:
+1. `here` is a helpful package for reading data, and it is especially helpful when using `.Rproj`s. 
+2. `readxl` is great for reading excel files into R.
+3. `pivot_wider()` and `pivot_longer()` are functions from the `tidyr` package that are useful for reshaping data into a “tidy” format.
+4. The tidyverse also contains useful package for handing strings (`stringr`) factors (`forecats`), and dates (`lubridate`). 

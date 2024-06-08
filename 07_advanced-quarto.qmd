@@ -320,7 +320,10 @@ exercise_number <- exercise_number + 1
 
 :::
 
-## More Resources
+## Conclusion
+ Quarto can handle mathematical equations using `$`. Quarto also has syntax to allow cross references to sections, figures, tables and equations. Lastly, Quarto integrates well with Zotero to handle citations. 
+
+### More Resources
 
 - [Quarto Guide](https://quarto.org/docs/guide/)
 - [Iterating fact sheets and web pages with Quarto](https://urban-institute.medium.com/iterated-fact-sheets-with-r-markdown-d685eb4eafce)

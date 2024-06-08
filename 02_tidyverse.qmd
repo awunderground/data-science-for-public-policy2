@@ -1,5 +1,6 @@
 ---
 title: "Introduction to the tidyverse"
+abstract: The tidyverse is an immensely popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities. 
 format: 
   html:
     toc: true
@@ -614,7 +615,25 @@ Many `.csv`s can be read without issue with simple syntax `read_csv(file = "rela
 
 We introduce the package more thoroughly in [@sec-readxl]. The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
 
-## Next Skills
+
+## Conclusion
+This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from `dplyr`, a tidyverse package built to support data cleaning operations: 
+- `select()` for removing columns
+- `filter()` for removing rows
+- `rename()` for renaming columns
+- `arrange()` for reordering columns
+- `mutate()` for creating new columns
+- `|>` (the pipe operator) for chaining together multiple functions (part of base, but extremely useful!)
+- `summarize()` for collapsing many rows of a data frame into fewer rows
+- `group_by()` to group a data frame by certain specified variables
+- `count()` a shortcut for `group_by() |> summarize(n())`
+
+The chapter also introduced mutating joins (`left_join()`, `inner_join()`, and `full_join()`) which create new columns and filtering joins (`anti_join()`) which drop observations depending on the presence of their key in another data frame. 
+
+The chapter concluded by introducing the `readr` and `readxl` packages which are useful for reading data into R. 
+
+
+### Next Skills
 
 * `across()` can be used with `library(dplyr)` functions such as `summarise()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
 * `pivot_wider()` and `pivot_longer()` can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization. 

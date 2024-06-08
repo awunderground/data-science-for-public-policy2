@@ -1,5 +1,6 @@
 ---
 title: "Advanced Git and Github"
+abstract: git and GitHub are perfect for the Issue > Branch > PR workflow. This chapter introduces that workflow. 
 format: 
   html:
     toc: true
@@ -122,7 +123,10 @@ The [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-a
 3. Add, commit, and push your code to the main branch.
 4. After a few minutes return to the link provided on GitHub pages.
 
-## More resources
+## Summary:
+GitHub Pages is a great project management tool. It can be integrated perfectly into the Issue > Branch > PR workflow. Branching is useful to allow separate collaborators to work on different features of a codebase simultaneously without interrupting each other. When conflicts do arise, do not fret! Merge conflicts are normal and can be resolved easily. 
+
+### More resources
 
 * [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * [Happy Git and GitHub for the UserR](https://happygitwithr.com/)
