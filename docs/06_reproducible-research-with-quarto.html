@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -428,7 +428,7 @@ div.csl-indent {
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of RMarkdown.
+    The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown.
   </div>
 </div>
 
@@ -482,7 +482,7 @@ Coefficients:
 <h2 data-number="6.4" class="anchored" data-anchor-id="quarto"><span class="header-section-number">6.4</span> Quarto</h2>
 <p>Quarto is a literate statistical programming tool for R, Julia, Python, JavaScript, and more. It was released by <a href="https://posit.co">Posit</a> in 2022. Quarto is an important tool for reproducible research. It combines narrative text with styles, code, and the output of code and can be used to create many types of documents including PDFs, html websites, slides, and more.</p>
 <p>Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (<code>.Rmd</code>) documents without any edits or changes.</p>
-<p>Sweave is a competing framework that it is out-of-date, and Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
+<p>Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
 <p>According to <span class="citation" data-cites="Wickham2017R">Wickham and Grolemund (<a href="references.html#ref-Wickham2017R" role="doc-biblioref">2017</a>)</span> <a href="https://r4ds.had.co.nz/r-markdown.html#introduction-18">Chapter 27</a>, there are three main reasons to use R Markdown (they hold for Quarto) :</p>
 <blockquote class="blockquote">
 <ol type="1">
@@ -798,7 +798,7 @@ format:
 </section>
 <section id="conclusion" class="level2" data-number="6.7">
 <h2 data-number="6.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.7</span> Conclusion</h2>
-<p>Quarto is an updated version of RMarkdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too!</p>
+<p>Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too!</p>
 <section id="suggestions" class="level3" data-number="6.7.1">
 <h3 data-number="6.7.1" class="anchored" data-anchor-id="suggestions"><span class="header-section-number">6.7.1</span> Suggestions</h3>
 <ul>
@@ -922,6 +922,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -956,7 +974,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

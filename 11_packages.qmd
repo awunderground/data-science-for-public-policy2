@@ -1,6 +1,12 @@
 ---
-title: "11_packages"
-editor: visual
+title: "R Packages"
+abstract: "This section introduces the development of custom R packages"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
 ---
 
 ## Packages

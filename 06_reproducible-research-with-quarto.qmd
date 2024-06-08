@@ -1,6 +1,6 @@
 ---
 title: "Reproducible Research with Quarto"
-abstract: The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of RMarkdown. 
+abstract: The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown. 
 format: 
   html:
     toc: true
@@ -59,7 +59,7 @@ Quarto is a literate statistical programming tool for R, Julia, Python, JavaScri
 
 Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (`.Rmd`) documents without any edits or changes.
 
-Sweave is a competing framework that it is out-of-date, and Jupyter (**Ju**lia, **Py**thon, and **R**) is a competing framework that is popular for Python but has not caught on for R.
+Jupyter (**Ju**lia, **Py**thon, and **R**) is a competing framework that is popular for Python but has not caught on for R.
 
 According to @Wickham2017R [Chapter 27](https://r4ds.had.co.nz/r-markdown.html#introduction-18), there are three main reasons to use R Markdown (they hold for Quarto) :
 
@@ -363,9 +363,9 @@ An alternative to rendering a Quarto document with the Render button is to use t
 -   The Urban Institute State and Local Finance Initiative creates [State Fiscal Briefs](https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs) by iterating R Markdown documents.
 -   [Data\@Urban](https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
 
-
 ## Conclusion
-Quarto is an updated version of RMarkdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
+
+Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
 
 
 ### Suggestions

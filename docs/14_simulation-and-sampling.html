@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -788,7 +788,7 @@ Sampling Error
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 7 5 4 8 6 5 6 6 4 2</code></pre>
+<pre><code> [1] 6 3 3 1 3 4 6 5 3 4</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -855,8 +855,7 @@ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 <span id="cb11-14"><a href="#cb11-14"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
-(`geom_bar()`).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-poisson" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -1607,18 +1606,6 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb52-7"><a href="#cb52-7"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">1</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb52-8"><a href="#cb52-8"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">2</span>), <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb52-9"><a href="#cb52-9"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in ggforce::geom_circle(aes(x0 = 2, y0 = 1, r = 1), fill = "blue", : All aesthetics have length 1, but the data has 861 rows.
-ℹ Did you mean to use `annotate()`?</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "red", : All aesthetics have length 1, but the data has 861 rows.
-ℹ Did you mean to use `annotate()`?</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_rect(aes(xmin = 0, xmax = 3, ymin = 0, ymax = 2), fill = NA, : All aesthetics have length 1, but the data has 861 rows.
-ℹ Did you mean to use `annotate()`?</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1628,33 +1615,33 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
-<span id="cb56-2"><a href="#cb56-2"></a></span>
-<span id="cb56-3"><a href="#cb56-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
-<span id="cb56-4"><a href="#cb56-4"></a><span class="fu">set.seed</span>(<span class="dv">20210907</span>)</span>
-<span id="cb56-5"><a href="#cb56-5"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb56-6"><a href="#cb56-6"></a>  <span class="at">x =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3</span>),</span>
-<span id="cb56-7"><a href="#cb56-7"></a>  <span class="at">y =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">2</span>)</span>
-<span id="cb56-8"><a href="#cb56-8"></a>)</span>
-<span id="cb56-9"><a href="#cb56-9"></a></span>
-<span id="cb56-10"><a href="#cb56-10"></a><span class="co"># calculate if (x, y) is in the circle, the square, or neither</span></span>
-<span id="cb56-11"><a href="#cb56-11"></a>samples <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
-<span id="cb56-12"><a href="#cb56-12"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb56-13"><a href="#cb56-13"></a>    <span class="at">in_square =</span> <span class="fu">between</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">between</span>(y, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb56-14"><a href="#cb56-14"></a>    <span class="at">in_circle =</span> (x <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> (y <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span></span>
-<span id="cb56-15"><a href="#cb56-15"></a>  ) </span>
-<span id="cb56-16"><a href="#cb56-16"></a></span>
-<span id="cb56-17"><a href="#cb56-17"></a><span class="co"># calculate the proportion of samples in each shape</span></span>
-<span id="cb56-18"><a href="#cb56-18"></a>prop_in_shapes <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
-<span id="cb56-19"><a href="#cb56-19"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb56-20"><a href="#cb56-20"></a>    <span class="at">prop_in_square =</span> <span class="fu">mean</span>(in_square), </span>
-<span id="cb56-21"><a href="#cb56-21"></a>    <span class="at">prop_in_circle =</span> <span class="fu">mean</span>(in_circle)</span>
-<span id="cb56-22"><a href="#cb56-22"></a>  ) </span>
-<span id="cb56-23"><a href="#cb56-23"></a></span>
-<span id="cb56-24"><a href="#cb56-24"></a><span class="co"># calculate the ratio</span></span>
-<span id="cb56-25"><a href="#cb56-25"></a>prop_in_shapes <span class="sc">|&gt;</span></span>
-<span id="cb56-26"><a href="#cb56-26"></a>  <span class="fu">mutate</span>(prop_in_circle <span class="sc">/</span> prop_in_square) <span class="sc">|&gt;</span></span>
-<span id="cb56-27"><a href="#cb56-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a><span class="fu">set.seed</span>(<span class="dv">20210907</span>)</span>
+<span id="cb53-5"><a href="#cb53-5"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb53-6"><a href="#cb53-6"></a>  <span class="at">x =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3</span>),</span>
+<span id="cb53-7"><a href="#cb53-7"></a>  <span class="at">y =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">2</span>)</span>
+<span id="cb53-8"><a href="#cb53-8"></a>)</span>
+<span id="cb53-9"><a href="#cb53-9"></a></span>
+<span id="cb53-10"><a href="#cb53-10"></a><span class="co"># calculate if (x, y) is in the circle, the square, or neither</span></span>
+<span id="cb53-11"><a href="#cb53-11"></a>samples <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
+<span id="cb53-12"><a href="#cb53-12"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb53-13"><a href="#cb53-13"></a>    <span class="at">in_square =</span> <span class="fu">between</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">between</span>(y, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb53-14"><a href="#cb53-14"></a>    <span class="at">in_circle =</span> (x <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> (y <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span></span>
+<span id="cb53-15"><a href="#cb53-15"></a>  ) </span>
+<span id="cb53-16"><a href="#cb53-16"></a></span>
+<span id="cb53-17"><a href="#cb53-17"></a><span class="co"># calculate the proportion of samples in each shape</span></span>
+<span id="cb53-18"><a href="#cb53-18"></a>prop_in_shapes <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
+<span id="cb53-19"><a href="#cb53-19"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb53-20"><a href="#cb53-20"></a>    <span class="at">prop_in_square =</span> <span class="fu">mean</span>(in_square), </span>
+<span id="cb53-21"><a href="#cb53-21"></a>    <span class="at">prop_in_circle =</span> <span class="fu">mean</span>(in_circle)</span>
+<span id="cb53-22"><a href="#cb53-22"></a>  ) </span>
+<span id="cb53-23"><a href="#cb53-23"></a></span>
+<span id="cb53-24"><a href="#cb53-24"></a><span class="co"># calculate the ratio</span></span>
+<span id="cb53-25"><a href="#cb53-25"></a>prop_in_shapes <span class="sc">|&gt;</span></span>
+<span id="cb53-26"><a href="#cb53-26"></a>  <span class="fu">mutate</span>(prop_in_circle <span class="sc">/</span> prop_in_square) <span class="sc">|&gt;</span></span>
+<span id="cb53-27"><a href="#cb53-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   prop_in_square prop_in_circle `prop_in_circle/prop_in_square`
@@ -1708,43 +1695,43 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>We can calculate the above statistics over repeated sampling and confirm their asymptotic properties with Monte Carlo simulation.</p>
 <p>First, create 1,000 random samples from the population.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
-<span id="cb58-2"><a href="#cb58-2"></a></span>
-<span id="cb58-3"><a href="#cb58-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
-<span id="cb58-4"><a href="#cb58-4"></a>  <span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
-<span id="cb58-5"><a href="#cb58-5"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">tibble</span>(</span>
-<span id="cb58-6"><a href="#cb58-6"></a>    <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
-<span id="cb58-7"><a href="#cb58-7"></a>    <span class="at">epsilon =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb58-8"><a href="#cb58-8"></a>    <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
-<span id="cb58-9"><a href="#cb58-9"></a>  )</span>
-<span id="cb58-10"><a href="#cb58-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
+<span id="cb55-2"><a href="#cb55-2"></a></span>
+<span id="cb55-3"><a href="#cb55-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
+<span id="cb55-5"><a href="#cb55-5"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">tibble</span>(</span>
+<span id="cb55-6"><a href="#cb55-6"></a>    <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb55-7"><a href="#cb55-7"></a>    <span class="at">epsilon =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb55-8"><a href="#cb55-8"></a>    <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb55-9"><a href="#cb55-9"></a>  )</span>
+<span id="cb55-10"><a href="#cb55-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, estimate a simple linear regression model for each draw of the population. This step includes calculating <span class="math inline">\(\hat\sigma\)</span>, <span class="math inline">\(\hat\beta_1\)</span>, <span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat{SE}(\hat\beta_1)\)</span>, and <span class="math inline">\(\hat{SE}(\hat\beta_0)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="at">.x =</span> data,</span>
-<span id="cb59-3"><a href="#cb59-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
-<span id="cb59-4"><a href="#cb59-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb56-2"><a href="#cb56-2"></a>  <span class="at">.x =</span> data,</span>
+<span id="cb56-3"><a href="#cb56-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
+<span id="cb56-4"><a href="#cb56-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we extract the coefficients and confidence intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
-<span id="cb60-2"><a href="#cb60-2"></a>  <span class="at">.x =</span> estimated_models,</span>
-<span id="cb60-3"><a href="#cb60-3"></a>  <span class="at">.f =</span> tidy,</span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
-<span id="cb60-5"><a href="#cb60-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="at">.x =</span> estimated_models,</span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="at">.f =</span> tidy,</span>
+<span id="cb57-4"><a href="#cb57-4"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s look at estimates of the residual standard error. The center of the distribution closely matches the population standard deviation of the error term.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
-<span id="cb61-2"><a href="#cb61-2"></a>  <span class="at">.x =</span> estimated_models,</span>
-<span id="cb61-3"><a href="#cb61-3"></a>  <span class="at">.f =</span> glance</span>
-<span id="cb61-4"><a href="#cb61-4"></a>) </span>
-<span id="cb61-5"><a href="#cb61-5"></a></span>
-<span id="cb61-6"><a href="#cb61-6"></a>model_metrics <span class="sc">|&gt;</span></span>
-<span id="cb61-7"><a href="#cb61-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
-<span id="cb61-8"><a href="#cb61-8"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb61-9"><a href="#cb61-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="at">.x =</span> estimated_models,</span>
+<span id="cb58-3"><a href="#cb58-3"></a>  <span class="at">.f =</span> glance</span>
+<span id="cb58-4"><a href="#cb58-4"></a>) </span>
+<span id="cb58-5"><a href="#cb58-5"></a></span>
+<span id="cb58-6"><a href="#cb58-6"></a>model_metrics <span class="sc">|&gt;</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb58-9"><a href="#cb58-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1758,11 +1745,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s plot the coefficients. The centers approximately match the population intercept of 5 and slope of 15.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
-<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb63-4"><a href="#cb63-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb63-5"><a href="#cb63-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1778,12 +1765,12 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p><span class="math display">\[\hat{SE}(\hat\beta_1) = \sqrt\frac{\hat\sigma^2}{\sum(x_i -\bar{x})^2} = \sqrt\frac{10^2}{40,000} = 0.05\]</span></p>
 <p><span class="math display">\[\hat{SE}(\hat{\beta_0}) = \sqrt{\hat\sigma^2\left[\frac{1}{n} + \frac{\bar{x}^2}{\sum(x_i - \bar{x})^2}\right]} = \sqrt{10^2\left[\frac{1}{10,000} + 0\right]} = 0.1\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
-<span id="cb65-3"><a href="#cb65-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb65-4"><a href="#cb65-4"></a>    <span class="fu">mean</span>(estimate), </span>
-<span id="cb65-5"><a href="#cb65-5"></a>    <span class="fu">sd</span>(estimate)</span>
-<span id="cb65-6"><a href="#cb65-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb62-4"><a href="#cb62-4"></a>    <span class="fu">mean</span>(estimate), </span>
+<span id="cb62-5"><a href="#cb62-5"></a>    <span class="fu">sd</span>(estimate)</span>
+<span id="cb62-6"><a href="#cb62-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   term        `mean(estimate)` `sd(estimate)`
@@ -1794,18 +1781,18 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s look at how often the true parameter is inside the 95% confidence interval. It’s close although not exactly 95%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
             &lt;dbl&gt;
 1           0.959</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
@@ -1827,10 +1814,10 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <li>The departure time is arrival time plus the wait time plus the service time.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
-<span id="cb71-2"><a href="#cb71-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
-<span id="cb71-3"><a href="#cb71-3"></a></span>
-<span id="cb71-4"><a href="#cb71-4"></a>queue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
+<span id="cb68-2"><a href="#cb68-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
+<span id="cb68-3"><a href="#cb68-3"></a></span>
+<span id="cb68-4"><a href="#cb68-4"></a>queue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 5
    interarrival_time arrival_time service_time wait_time departure_time
@@ -1849,20 +1836,20 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb73-2"><a href="#cb73-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
-<span id="cb73-3"><a href="#cb73-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
-<span id="cb73-4"><a href="#cb73-4"></a>           <span class="fu">rep</span>(<span class="st">"departure"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))), </span>
-<span id="cb73-5"><a href="#cb73-5"></a>  <span class="at">change =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))),</span>
-<span id="cb73-6"><a href="#cb73-6"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb73-7"><a href="#cb73-7"></a>  <span class="fu">arrange</span>(time) <span class="sc">|&gt;</span> </span>
-<span id="cb73-8"><a href="#cb73-8"></a>  <span class="fu">filter</span>(time <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb73-9"><a href="#cb73-9"></a>  <span class="fu">mutate</span>(<span class="at">queue =</span> <span class="fu">cumsum</span>(change) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb73-10"><a href="#cb73-10"></a></span>
-<span id="cb73-11"><a href="#cb73-11"></a>flow <span class="sc">|&gt;</span></span>
-<span id="cb73-12"><a href="#cb73-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, queue)) <span class="sc">+</span></span>
-<span id="cb73-13"><a href="#cb73-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb73-14"><a href="#cb73-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
+<span id="cb70-3"><a href="#cb70-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
+<span id="cb70-4"><a href="#cb70-4"></a>           <span class="fu">rep</span>(<span class="st">"departure"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))), </span>
+<span id="cb70-5"><a href="#cb70-5"></a>  <span class="at">change =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))),</span>
+<span id="cb70-6"><a href="#cb70-6"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb70-7"><a href="#cb70-7"></a>  <span class="fu">arrange</span>(time) <span class="sc">|&gt;</span> </span>
+<span id="cb70-8"><a href="#cb70-8"></a>  <span class="fu">filter</span>(time <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb70-9"><a href="#cb70-9"></a>  <span class="fu">mutate</span>(<span class="at">queue =</span> <span class="fu">cumsum</span>(change) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb70-10"><a href="#cb70-10"></a></span>
+<span id="cb70-11"><a href="#cb70-11"></a>flow <span class="sc">|&gt;</span></span>
+<span id="cb70-12"><a href="#cb70-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, queue)) <span class="sc">+</span></span>
+<span id="cb70-13"><a href="#cb70-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb70-14"><a href="#cb70-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1873,35 +1860,35 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>This is interesting, but it’s still only one draw from a Monte Carlo simulation. What if we are interested in the distribution of wait times for the fifth customer?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co">#' Generate wait times at the queue</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="co">#'</span></span>
-<span id="cb74-3"><a href="#cb74-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
-<span id="cb74-4"><a href="#cb74-4"></a><span class="co">#' @param iterations An integer for the number of Monte Carlo iterations</span></span>
-<span id="cb74-5"><a href="#cb74-5"></a><span class="co">#' @param t A t for the maximum time</span></span>
-<span id="cb74-6"><a href="#cb74-6"></a><span class="co">#'</span></span>
-<span id="cb74-7"><a href="#cb74-7"></a><span class="co">#' @return A vector of wait times</span></span>
-<span id="cb74-8"><a href="#cb74-8"></a><span class="co">#' </span></span>
-<span id="cb74-9"><a href="#cb74-9"></a>generate_waits <span class="ot">&lt;-</span> <span class="cf">function</span>(person_number, iterations, t) {</span>
-<span id="cb74-10"><a href="#cb74-10"></a>  </span>
-<span id="cb74-11"><a href="#cb74-11"></a>  wait_time <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> iterations)</span>
-<span id="cb74-12"><a href="#cb74-12"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(wait_time)) {</span>
-<span id="cb74-13"><a href="#cb74-13"></a>    </span>
-<span id="cb74-14"><a href="#cb74-14"></a>    wait_time[i] <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> t, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)<span class="sc">$</span>wait_time[person_number]</span>
-<span id="cb74-15"><a href="#cb74-15"></a>    </span>
-<span id="cb74-16"><a href="#cb74-16"></a>  }</span>
-<span id="cb74-17"><a href="#cb74-17"></a>  </span>
-<span id="cb74-18"><a href="#cb74-18"></a>  <span class="fu">return</span>(wait_time)</span>
-<span id="cb74-19"><a href="#cb74-19"></a>  </span>
-<span id="cb74-20"><a href="#cb74-20"></a>}</span>
-<span id="cb74-21"><a href="#cb74-21"></a></span>
-<span id="cb74-22"><a href="#cb74-22"></a><span class="fu">set.seed</span>(<span class="dv">20200908</span>)</span>
-<span id="cb74-23"><a href="#cb74-23"></a>wait_time <span class="ot">&lt;-</span> <span class="fu">generate_waits</span>(<span class="at">person_number =</span> <span class="dv">5</span>, <span class="at">iterations =</span> <span class="dv">10000</span>, <span class="at">t =</span> <span class="dv">50</span>)</span>
-<span id="cb74-24"><a href="#cb74-24"></a></span>
-<span id="cb74-25"><a href="#cb74-25"></a><span class="fu">mean</span>(wait_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="co">#' Generate wait times at the queue</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a><span class="co">#'</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
+<span id="cb71-4"><a href="#cb71-4"></a><span class="co">#' @param iterations An integer for the number of Monte Carlo iterations</span></span>
+<span id="cb71-5"><a href="#cb71-5"></a><span class="co">#' @param t A t for the maximum time</span></span>
+<span id="cb71-6"><a href="#cb71-6"></a><span class="co">#'</span></span>
+<span id="cb71-7"><a href="#cb71-7"></a><span class="co">#' @return A vector of wait times</span></span>
+<span id="cb71-8"><a href="#cb71-8"></a><span class="co">#' </span></span>
+<span id="cb71-9"><a href="#cb71-9"></a>generate_waits <span class="ot">&lt;-</span> <span class="cf">function</span>(person_number, iterations, t) {</span>
+<span id="cb71-10"><a href="#cb71-10"></a>  </span>
+<span id="cb71-11"><a href="#cb71-11"></a>  wait_time <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> iterations)</span>
+<span id="cb71-12"><a href="#cb71-12"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(wait_time)) {</span>
+<span id="cb71-13"><a href="#cb71-13"></a>    </span>
+<span id="cb71-14"><a href="#cb71-14"></a>    wait_time[i] <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> t, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)<span class="sc">$</span>wait_time[person_number]</span>
+<span id="cb71-15"><a href="#cb71-15"></a>    </span>
+<span id="cb71-16"><a href="#cb71-16"></a>  }</span>
+<span id="cb71-17"><a href="#cb71-17"></a>  </span>
+<span id="cb71-18"><a href="#cb71-18"></a>  <span class="fu">return</span>(wait_time)</span>
+<span id="cb71-19"><a href="#cb71-19"></a>  </span>
+<span id="cb71-20"><a href="#cb71-20"></a>}</span>
+<span id="cb71-21"><a href="#cb71-21"></a></span>
+<span id="cb71-22"><a href="#cb71-22"></a><span class="fu">set.seed</span>(<span class="dv">20200908</span>)</span>
+<span id="cb71-23"><a href="#cb71-23"></a>wait_time <span class="ot">&lt;-</span> <span class="fu">generate_waits</span>(<span class="at">person_number =</span> <span class="dv">5</span>, <span class="at">iterations =</span> <span class="dv">10000</span>, <span class="at">t =</span> <span class="dv">50</span>)</span>
+<span id="cb71-24"><a href="#cb71-24"></a></span>
+<span id="cb71-25"><a href="#cb71-25"></a><span class="fu">mean</span>(wait_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.464371</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     2.5%       50%     97.5% 
 0.0000000 0.9222193 5.8742015 </code></pre>
@@ -2112,6 +2099,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -2146,7 +2151,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
