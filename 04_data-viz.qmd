@@ -1,5 +1,6 @@
 ---
 title: "Data Visualization with ggplot2"
+abstract: This chapter introduces ggplot2, the tidyverse’s wildly popular data visualization package. 
 format: 
   html:
     toc: true
@@ -37,7 +38,7 @@ exercise_number <- 1
 * The toughest part of data visualization is data munging. 
 * Data frames are the only appropriate input for `library(ggplot2)`. 
 
-ggplot2 is an R package for data visualization that was developed during Hadley Wickham's graduate studies at Iowa State University. ggplot2 is formalized in *A Layered Grammar of Graphics* by Hadley Wickham @layered-grammar.
+ggplot2 is an R package for data visualization that was developed during Hadley Wickham's graduate studies at Iowa State University. ggplot2 is formalized in *A Layered Grammar of Graphics* [@layered-grammar].
 
 The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson's grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.  
 
@@ -73,15 +74,15 @@ ggplot(data = storms) +
 :::
 
 
-`ggplot(data = )` or `data %>% ggplot()`
+`ggplot(data = )` or `data |> ggplot()`
 
 
 ```{r}
 #| label: 1-data
 
-storms %>%
-  select(name, year, category, lat, long, wind, pressure) %>%
-  sample_n(10) %>%
+storms |>
+  select(name, year, category, lat, long, wind, pressure) |>
+  sample_n(10) |>
   kable()
 
 ```
@@ -103,10 +104,10 @@ storms %>%
 #| echo: false
 #| warning: false
 
-recent_storms <- filter(storms, year > 2005) %>%
+recent_storms <- filter(storms, year > 2005) |>
   sample_n(50)
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(x = pressure, 
              y = 1)
          ) +
@@ -124,7 +125,7 @@ recent_storms %>%
 #| fig-height: 2
 #| echo: false
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(x = pressure, 
              y = 1, 
              color = wind)
@@ -143,7 +144,7 @@ recent_storms %>%
 #| fig-height: 2
 #| echo: false
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(pressure, 1, color = status)) +
   geom_point(alpha = 0.5) +
   scale_y_continuous(breaks = 0) +
@@ -159,7 +160,7 @@ recent_storms %>%
 #| fig-height: 2
 #| echo: false
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(x = pressure, 
              y = 1, 
              size = wind)
@@ -179,7 +180,7 @@ recent_storms %>%
 #| echo: false
 #| warning: false
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(x = pressure, 
              y = 1, 
              shape = status)
@@ -210,7 +211,7 @@ Others: transparency, line type
 #| echo: false
 #| warning: false
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(x = category)) +
   geom_bar()
 
@@ -221,9 +222,9 @@ recent_storms %>%
 ```{r}
 #| echo: false
 
-storms %>%
-  count(name, year) %>%
-  count(year) %>%
+storms |>
+  count(name, year) |>
+  count(year) |>
   ggplot(aes(x = year, 
              y = n)) +
   geom_line() +
@@ -240,10 +241,10 @@ storms %>%
 
 recent_storms <- filter(storms, year > 2005)
 
-recent_storms50 <- filter(storms, year > 2005) %>%
+recent_storms50 <- filter(storms, year > 2005) |>
   sample_n(50)
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(pressure, wind)) +
   geom_point() +
   scale_y_continuous(limits = c(0, 160))
@@ -305,7 +306,7 @@ exercise_number <- exercise_number + 1
 #| fig-height: 1
 #| echo: false
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(x = pressure, 
              y = 1)
          ) +
@@ -325,7 +326,7 @@ recent_storms50 %>%
 #| fig-height: 1
 #| echo: false
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(x = pressure, 
              y = 1)
          ) +
@@ -346,7 +347,7 @@ recent_storms50 %>%
 #| fig-height: 1.5
 #| echo: false
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(x = pressure, 
              y= 1, 
              size = wind)
@@ -369,7 +370,7 @@ recent_storms50 %>%
 #| fig-height: 1.5
 #| echo: false
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(pressure, 1, size = wind)) +
   ggplot2::geom_point(alpha = 0.5) +
   scale_size_continuous(range = c(0.5, 15),
@@ -428,7 +429,7 @@ ggplot(storms, aes(pressure, wind)) +
 #| echo: false
 
 tibble(x = 1:100, 
-       y = 1:100) %>%
+       y = 1:100) |>
   ggplot(aes(x, y)) +
   geom_point(alpha = 0) +
   coord_polar()
@@ -474,9 +475,9 @@ You can see a helpful chart illustrating these differences [here](https://ggplot
 #| warning: false
  library(urbnmapr)
 
-recent_storms %>%
+recent_storms |>
   ggplot(aes(long, lat, group = name)) +
-  geom_polygon(data = states, aes(long, lat, group = group),
+  geom_polygon(data = urbnmapr::states, aes(long, lat, group = group),
                fill = "grey", color = "#ffffff", linewidth = 0.05) +
   geom_path(alpha = 0.3, size = 0.5, color = "#1696d2") +
   facet_wrap(~category) +
@@ -492,9 +493,9 @@ recent_storms %>%
 ```{r}
 #| echo: false
 
-storms %>%
-  filter(year %in% c(1986, 2005, 2020)) %>%
-  filter(month %in% c(6, 7, 8)) %>%
+storms |>
+  filter(year %in% c(1986, 2005, 2020)) |>
+  filter(month %in% c(6, 7, 8)) |>
   ggplot(aes(pressure, wind, color = status)) +
   geom_point(alpha = 0.2) +
   facet_grid(month ~ year)
@@ -586,7 +587,7 @@ set_urbn_defaults(style = "print")
 ```{r}
 #| echo: false
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(x = pressure, 
              y = wind)) +
   geom_point() +
@@ -601,7 +602,7 @@ recent_storms50 %>%
 
 library(ggthemes)
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(pressure, wind)) +
   geom_point() +
   scale_y_continuous(limits = c(0, 160)) +  
@@ -621,7 +622,7 @@ library(urbnthemes)
 
 set_urbn_defaults(style = "print")
 
-recent_storms50 %>%
+recent_storms50 |>
   ggplot(aes(pressure, wind)) +
   geom_point(color = "#1696d2") +
 	scale_x_continuous(limits = c(920, 1020), expand = c(0, 0), breaks = c(920, 940, 960, 980, 1000, 1020)) +
@@ -645,10 +646,10 @@ exercise_number <- exercise_number + 1
 1. Add the following exercise to you script. Run it!
 
 ```
-storms %>%  
-  filter(category > 0) %>%
-  distinct(name, year) %>%
-  count(year) %>%
+storms |>  
+  filter(category > 0) |>
+  distinct(name, year) |>
+  count(year) |>
   ggplot() + 
   geom_line(mapping = aes(x = year, y = n))
 ```
@@ -738,7 +739,7 @@ This is a summary of the functions we discussed in this chapter. While by no mea
 7. *Statistical transformations* 
 8. *Theme*
 
-## Resources
+### Resources
 
 * [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/graphics-guide.html)
 * [Why the Urban Institute visualizes data with ggplot2](https://medium.com/@urban_institute/why-the-urban-institute-visualizes-data-with-ggplot2-46d8cfc7ee67)

@@ -1,0 +1,136 @@
+---
+title: "Advanced Git and Github"
+abstract: git and GitHub are perfect for the Issue > Branch > PR workflow. This chapter introduces that workflow. 
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+---
+
+
+```{r}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+```
+
+## The Issue > Branch > PR Workflow
+There are several popular workflows for collaborating with Git and GitHub. This section outlines an `issue`-`branch`-`pr` workflow which is extremely common and which we use regularly.
+
+### GitHub issues
+
+[GitHub issues](https://help.github.com/en/github/managing-your-work-on-github/about-issues) are a GitHub project management tool for managing to-dos and conversations about a code base. This feature of Github can be seen as a built-in alternative to project management softwares like Jira, Trello, and monday, among many others.
+
+![](images/issues.png)
+
+
+For each substantial change to the code base, open a GitHub issue.
+
+### Working with Branches
+
+#### Branching Motivation
+
+The track changes feature in programs like with Microsoft Word follows each and every keystroke or click. In the previous chapter, we compared git to a super-charged version of track changes, and we think this comparison is fair. However, code is different than prose. If a program is not working, it isn’t desirable to document and share a change until that change creates a different, but still working, program. Working with other developers can complicate this desire to always commit sensible changes. 
+
+Meet branching. Branching allows multiple versions of the same program to be developed simultaneously and then merged together when those versions are ready and operational. 
+
+#### Branching Diagrammed 
+Recall the following diagram from last chapter. We need a way to:
+
+1. Create branches
+2. Switch between branches
+3. Combine branches
+
+![A standard git workflow](images/git-branching.png){fig-align="center" width=70%}
+
+
+A second stylized (and cute!) example of this workflow can be seen [in this tweet](https://twitter.com/jay_gee/status/702638177471873024/photo/1) from Jennifer Gilbert. The octopus on the left side of the image represents an existing, operational piece of code. Two programmers create separate copies (branches) of that code, work to create independent features (represented by the heart glasses and a cowboy hat), and then merge those features back to the master branch when those features are operational.
+
+#### How to branch
+`git branch` prints out important information about the available branches in a repo. It is similar to `git status` in that it provides useful information while not making any changes.
+
+`git switch -c <new branch name>` creates a new branch and then navigates you to the new branch.
+
+`git switch <new branch name>` navigates you from your current branch to the specified branch. It is only possible to switch between branches if there are no uncommitted changes. [^checkout]
+
+[^checkout]: `git checkout` is another exceedingly common git command. Many resources on the internet may encourage the usage of `git checkout <branch name>` to switch branches, or `git checkout -b <new branch name>` to create a new branch and then switch to it. This is okay! However, `git checkout` also has other capabilities, and that glut of functionality can be confusing to users. This makes `git switch` the simpler, more modern option.]
+
+
+1. Use `git switch main` to navigate to the main branch. Use `git pull origin main` to update your local version of the `main` branch with any remote changes. 
+2. Use `git switch -c <new branch name>` to create and switch to a new branch with the name `iss<number>`, where <number> is the issue number from GitHub.
+3. Work as if you are on the main branch but push to branch `iss<number>`. 
+
+[Jenny Bryan](https://happygitwithr.com/git-branches.html) provides a more thorough background.
+
+### Pull requests
+
+The easiest way to merge branches is on GitHub with pull requests. When you are ready to merge the code, push all of your code to your remote branch. 
+
+1. On GitHub, click the new pull request button. 
+
+![An New Pull Request](images/new-pull-request.png){width=20%}
+
+
+2. Then set a pull request from the branch on the right to the branch on the left. 
+
+![](images/pull-request.png){fig-align="center" width=70%}
+
+
+3. Navigate to the pull requests page and review the pull request. <br>
+![](images/pull-requests.png){fig-align="center" width=25%}
+
+4. Merge the pull request:
+
+![](images/merge-pull-request.png){fig-align="center" width=70%}
+
+### Putting it all together
+
+1. Open a GitHub issue for a substantial change to the project
+2. Create a new branch named after the GitHub issue number
+3. After one or more commits, create a pull request and merge the code
+
+### Merge conflicts
+
+If you run into merge conflicts, either follow the GitHub instructions or follow [Jenny Bryan's instructions](https://happygitwithr.com/git-branches.html) for resolving the conflict at the command line. Do not panic! 
+
+## GitHub Pages
+
+As we introduced in @sec-ghp, GitHub offers a free and simple tool for a hosting website in a GitHub repository called [GitHub pages](https://pages.github.com/). A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names. 
+
+Let's walk through an example:
+
+### README as homepage
+
+1. Create a new local directory with a README.md.
+2. Run `echo "<h1>Page 1<\h1>" > page1.html` at the command line.
+3. `git init`, `git add`, and `git commit` your changes.
+4. Create a remote repository on GitHub and link it to your local repository.
+5. Push your local changes.
+6. Navigate to Settings in your GitHub repo. Go to GitHub pages and set the source to "main branch". The page will reload and a link will appear. Go to the link. 
+7. Add page1 to the end of the link
+8. Add the link to page1 in the README. `git add`, `git commit`, and `git push`.
+
+### index as homepage
+
+The [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/index.html) does not use the README as a home page. Instead it uses and index page. 
+
+1. Run `echo "<h1>Index<\h1>" > index.html` at the command line.
+2. Run `echo "<a href="https://awunderground.github.io/git-example/page1">Page 1</a>" > index.html` at the command line where url is the link to Page 1 on GitHub pages. 
+3. Add, commit, and push your code to the main branch.
+4. After a few minutes return to the link provided on GitHub pages.
+
+## Conclusion
+GitHub Pages is a great project management tool. It can be integrated perfectly into the Issue > Branch > PR workflow. Branching is useful to allow separate collaborators to work on different features of a codebase simultaneously without interrupting each other. When conflicts do arise, do not fret! Merge conflicts are normal and can be resolved easily. 
+
+### More resources
+
+* [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+* [Happy Git and GitHub for the UserR](https://happygitwithr.com/)
+* [Git Pocket Guide](https://www.amazon.com/Git-Pocket-Guide-Working-Introduction/dp/1449325866)
+* [Getting Git Right](https://www.atlassian.com/git)
+* [Git Learning Lab](https://lab.github.com/)
+* The Urban Institute's [Reproducibility Website](https://ui-research.github.io/reproducibility-at-urban/) and its [Git and Github page](https://ui-research.github.io/reproducibility-at-urban/git-overview.html)

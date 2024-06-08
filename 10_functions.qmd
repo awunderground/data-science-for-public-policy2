@@ -1,6 +1,6 @@
 ---
 title: "Advanced R Programming"
-abstract: "We've mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and R packages."
+abstract: "We've mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and iteration."
 format: 
   html:
     toc: true
@@ -221,9 +221,10 @@ alphabet[["vowels"]]
 
 ### Control Flow
 
-#### For Loops
 
-Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We previously focused on the Map-Reduce framework and `library(purrr)` instead of for loops for iteration.
+Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We encourage the map-reduce framework in the tidyverse's purrr library which we introduce in @sec-purrr. Even so, understanding the for loop and while loop is important because you will likely see them in other programmers' R code, and they are extremely common in other programming languages. 
+
+#### For Loops
 
 For loops have two main pieces: 1. a header and 2. a body. Headers define the number of iterations and potential inputs to the iteration. Bodies are iterated once per iteration. Here is a very simple example:
 
@@ -363,7 +364,7 @@ alphabet <- list(
 
 #### While Loops
 
-While loops are similar to for loops; however, instead of predetermining the number of iterations in the header, while loops determine a condition in the header and run until that condition is met. For loops can be rewritten as while loops. It can be useful to track the iteration number. Consider a simple example where we double `x` every iteration while `x < 1000`.
+While loops are similar to for loops; however, instead of predetermining the number of iterations in the header, while loops determine a condition in the header and run until that condition is met. This makes them useful for iterating for an unknown number of iterations. Though while loops are less common than for loops, one policy-relevant domain where while loops could be useful is simulation. A while loop could be useful to run a simulation indefinitely until certain conditions are met. Alternatively, both for and while loops could be used to run a simulation a specified number of times. 
 
 ```{r}
 iteration <- 0
@@ -435,6 +436,7 @@ if (distribution == "normal") {
 ```
 
 This style of using `if`, `else if`, and `else` is fundamental for including options in custom functions.
+
 
 ## Custom Functions
 
@@ -593,11 +595,11 @@ Tips for writing functions:
 
 -   Function names should be short but effectively describe what the function does. Function names should generally be verbs while function arguments should be nouns. See the [Tidyverse style guide](https://style.tidyverse.org/functions.html) for more details on function naming and style.
 -   As a general principle, functions should each do only one task. This makes it much easier to debug your code and reuse functions!
--   Use `::` (e.g. `dplyr::filter()`) when writing custom functions. This will create stabler code and make it easier to develop R packages.
+-   Use `::` (e.g. `dplyr::filter()` instead of `filter()`) when writing custom functions. This will create stabler code and make it easier to develop R packages.
 
 ### Functions with Multiple Outputs
 
-When `return()` is reached in a function, `return()` is evaluated and evaluation ends and R leaves the function. 
+When `return()` is reached in a function, `return()` is evaluated, evaluation ends and R leaves the function. 
 
 ```{r}
 sow_return <- function() {
@@ -616,7 +618,7 @@ If the end of a function is reached without calling `return()`, the value from t
 
 We prefer to include `return()` at the end of functions for clarity even though `return()` doesn't change the behavior of the function. 
 
-Sometimes we want to return more than one vector or data frame. `list()` is very helpful in these siutations. 
+Sometimes we want to return more than one vector or data frame. `list()` is very helpful in these situations because it allows us technically to return a single object (the list) while actually passing out multiple objects (the components of the list). 
 
 ```{r}
 summarize_results <- function(x) {
@@ -640,7 +642,7 @@ summarize_results(x = 1:10)
 
 ### Referential Transparency
 
-R functions, like mathematical functions, should always return the exact same output for a given set of inputs[^stochastic]. This is called referential transparency. R will not enforce this idea, so you must write good code.
+R functions, like mathematical functions, should always return the exact same output for a given set of inputs.[^stochastic] This is called referential transparency. R will not enforce this idea, so you must write good code.
 
 [^stochastic]: This rule won't exactly hold if the function contains random or stochastic code. In those cases, the function should return the same output every time if the seed is set with `set.seed()`. 
 
@@ -679,7 +681,7 @@ good_function(x = 2, y = 1)
 
 ```
 
-Bruno Rodriguez has a [book](http://modern-rstats.eu/functional-programming.html#properties-of-functions) and a [blog](https://www.brodrigues.co/blog/2022-05-26-safer_programs/) that explores this idea further.
+Bruno Rodriguez has a [book](http://modern-rstats.eu/functional-programming.html#properties-of-functions) and a [blog](https://www.brodrigues.co/blog/2022-05-26-safer_programs/) that explore this idea further.
 
 ## Debugging
 
@@ -798,112 +800,75 @@ We typically recommending adding a directory called `R` or `src` in a project di
 
 We typically only add one function to an R script in the `R/` directory and name the script after the function (without parentheses). Next, we source function scripts at the top of Quarto documents after loading packages with the `source()`. [`library(here)`](https://here.r-lib.org/) is essential if when sourcing from a Quarto document that is in a subdirectory of the project.
 
-## Packages
 
-At some point, the same scripts or data are used often enough or widely enough to justify moving from sourced R scripts to a full-blown R package. R packages make it easier to
+## Iteration with `library(purrr)` {#sec-purrr}
 
-1.  Make it easier to share and version code.
-2.  Improve documentation of functions and data.
-3.  Make it easier to test code.
-4.  Often lead to fun hex stickers.
-
-### Use This
-
-`library(usethis)` includes an R package template. The following will add all necessary files for an R package to a directory called `testpackage/` and open an RStudio package.
+Most functions in `R` are vectorized. That means a function operates on every element in a vector by default. 
 
 ```{r}
-#| eval: false
+teacher_names <- c("aaron", "alex", "alena")
 
-library(usethis)
-create_package("/Users/adam/testpackage")
+say_hello(name = teacher_names)
 
 ```
 
-### Package contents
+`say_hello()` is vectorized. It works without iteration, but let's just use it as an example to learn about iteration. Let's start with a simple for loop. 
 
-The template includes a lot of different files and directories. We will focus on the minimum sufficient set of files for building a package.
-
-`DESCRIPTION` contains the meta information about the package. Important lines include the package version and the license. Package versions are useful for tracking the version of the package used with an analysis. `library(usethis)` has a helper function for [picking a license](https://choosealicense.com/licenses/).
-
-```         
-Package: testpackage
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
-    license
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.3
-```
-
-### Functions
-
-Functions go in the R directory, just like when we sourced functions earlier. Be sure to reference packages directly with `::` (e.g. `stats::lm()`).
-
-#### Roxygen
-
-It is essential to use Roxygen skeletons with custom functions. RStudio makes this simple. Place the cursor in a function and select `Code > Insert Roxygen Skeleton`. The Roxygen skeleton creates help documentation for a package, which can be accessed with `?`.
-
-```         
-#' Title
-#'
-#' @param
-#'
-#' @return
-#' @export
-#'
-#' @examples
-```
-
-The title should be a brief description of the function. `param` describes each input to the function and `return` describes the output of the function.
-
-#### Tests
-
-::: {.panel-tip}
-## Unit testing
-
-**Unit testing** is the systematic testing of functions to ensure correctness.
-
-:::
-
-Unit testing is essential to developing high-quality code--especially for large scale projects. Fortunately, `library(testthat)` and `library(usethis)` make unit testing easy in R packages.
-
-`use_testthat()` will add a directory with the skeleton for a set of unit tests.
-
-`use_test()` will add a new test. For example, `use_test("good_function")` will add a script to test the `good_function()` from earlier in the notes.
-
-There are two pieces to a test. A **test** and an **expectation**. Tests group multiple expectations together and begins with `test_that()`. Expectations compare the output of the function against expected output. The script created by `use_test("good_function")` contains a shell that is easy to update. Consider this example:
 
 ```{r}
-#| eval: false
-test_that("good_function is correct for positive integers ", {
-  expect_equal(good_function(x = 2, y = 2), 4)
-  expect_equal(good_function(x = 3, y = 3), 9)
-})
+# the vector over which to iterate
+teacher_names <- c("aaron", "alex", "alena")
+
+# preallocate the output vector
+greetings <- vector(mode = "character", 
+                    length = length(teacher_names)
+                    )
+for (i in seq_along(teacher_names)) {
+  
+  greetings[i] <- say_hello(teacher_names[i])
+  
+}
+
+# print the result
+greetings
 
 ```
 
-::: {.panel-tip}
-## Test coverage
+That's a lot of typing. It is much more common in R to use `library(purrr)`, which replaces apply functions.[^apply] `map()` iterates over each element of a data structure called `.x`, applies a function called `.f` to each element, and then returns a list.
 
-**Test coverage** is the scope and quality of tests performed on a code base.
-:::
+[^apply]: "Apply functions" refers to a family of base R functions like `lapply()`. The `map()` family is similar, but it has more helper functions. You can read more in [*Advanced R*](https://adv-r.hadley.nz/functionals.html).
 
-The goal to develop tests with good test coverage that will loudly fail when bugs are introduced into code.
+```{r}
+library(purrr)
 
-### Building the package
+teacher_names <- c("aaron", "alex", "alena")
+map(.x = teacher_names, .f = say_hello)
 
-The package needs to be documented and rebuilt each time the contents of the package are edited. The package should also be tested and checked on a regular basis.
+```
 
-1.  Run `devtools::document()` to document all of the functions in the package.
-2.  Run `devtools::built()` to build the package.
-3.  Run `devtools::test()` to test the package. This runs all tests and returns diagnostics about passes, warnings, and failures.
-4.  Run `devtools::check()` to check the package. This runs tests and also checks for documentation and package setup.
+`map()` always returns a list. Sometimes we want to do something called map reduce. Functions like `map_chr()`, `map_dbl()`, and `map_df()` will map reduce. In this case, `map_chr()` returns a character vector instead of a list:
 
-This section barely scratches the surface of package development. Read [R Packages (2e)](https://r-pkgs.org/) to learn more.
 
-## References
+```{r}
+map_chr(.x = teacher_names, .f = say_hello)
+
+```
+
+We can quickly add anonymous functions in `map()` and its relatives with `~`. A tibble is just a list of columns. This function iterates over each column, counts the number of missing values, and then returns a named vector.
+
+```{r}
+map_dbl(.x = msleep, .f = ~sum(is.na(.x)))
+
+```
+
+The purrr library also has functions that can iterate over multiple inputs simultaneously. To figure out which purrr function to use ask the following:
+
+- How many inputs do I have? Is it one (`map`), two (`map2`), or 3+ (`pmap`)?
+- What do I want back? A numeric vector (`dbl`), character vector (`chr`), dataframe created by column-binding (`dfc`), dataframe created by row-binding (`dfr`), etc?
+
+The [purrr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf) is a great place to go for help using purrr and outlines the different function options. You can also see the [purrr documentation](https://purrr.tidyverse.org/reference/index.html) for more details.
+
+
+## Conclusion
+
+R has many useful built-in functions, and you can easily install other extremely useful functions by loading in R packages. However, in many cases, it is useful to write your own custom functions. This section illustrated how to write custom R functions with the `function() {}` syntax. When writing R functions, R’s debugger is extremely helpful to implement “break points” which can help identify errors. Custom functions can be especially powerful when combined with iteration, and the tidyverse’s `purrr` package offers an elegant way to apply this concept. Lastly, this section covers other programming fundamentals like `if` `else` statements, `for` loops and `while` loops. 

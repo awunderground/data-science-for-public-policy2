@@ -1,0 +1,390 @@
+---
+title: "Reproducible Research with Git and GitHub"
+abstract: Git and Github are powerful software tools used to control different versions of a codebase, track changes, and collaborate with other programmers. This section introduces both tools.
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+---
+
+```{r}
+#| label: quarto-setup
+#| echo: false
+#| message: false
+#| warning: false
+
+knitr::opts_chunk$set(fig.align = "center")
+
+library(tidyverse)
+library(knitr)
+library(RXKCD)
+
+```
+
+::: {.callout-note}
+`<>` are used throughout this chapter to indicate blanks that need to be filled in. Don't actually submit `<>`. Instead, replace them with the desired text.
+:::
+
+## Command Line
+
+The command line (also known as shell or console) is a way of controlling computers without using a graphical user interface (i.e. pointing-and-clicking). The command line is useful because pointing-and-clicking is tough to reproduce or scale and because lots of useful software is only available through the command line. Furthermore, cloud computing often requires use of the command line.
+
+We will run Bash, a command line program, using Terminal on Mac and Git Bash on Windows. Open Terminal like any other program on Mac. Right-click in a desired directory and select "Git Bash Here" to access Git Bash on Windows.
+
+![](images/terminal.png){width="400" fig-align="center" width=70%}
+
+Fortunately, we only need to know a little Bash for version control with Git and cloud computing.
+
+`pwd` - print working directory - prints the file path to the current location in the
+
+`ls` - list - lists files and folders in the current working directory.
+
+`cd` - change directory - move the current working directory.
+
+`mkdir` - make directory - creates a directory (folder) in the current working directory.
+
+`touch` - creates a text file with the provided name.
+
+`mv` - move - moves a file from one location to the other.
+
+`cat` - concatenate - concatenate and print a file.
+
+```{r}
+#| echo: false
+exercise_number <-  1
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+1.  Create a new directory called `cli-exercise`.
+2.  Navigate to this directory using `cd` in the Terminal or Git Bash.
+3.  Submit `pwd` to confirm you are in the correct directory.
+:::
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+Use the following code to create a new text document called `haiku.txt` in the working directory.
+
+``` bash
+pwd
+ls
+touch haiku.txt
+ls
+```
+:::
+
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+Use following to add the haiku "The Old Pond" by Matsuo Basho to `haiku.txt`.
+
+``` bash
+cat haiku.txt
+echo "An old silent pond" >> haiku.txt
+cat haiku.txt
+echo "A frog jumps into the pond-" >> haiku.txt
+echo "Splash! Silence again." >> haiku.txt
+echo "~Matsuo Basho" >> haiku.txt
+cat haiku.txt
+```
+:::
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+Use the following code to move `haiku.txt` to a subdirectory called `poems/`.
+
+``` bash
+ls
+mkdir poems
+ls
+mv haiku.txt poems/haiku.txt
+ls
+cat poems/haiku.txt
+```
+:::
+
+
+### Useful tips
+
+-   Tab completion can save a ton of typing. Hitting tab twice shows all of the available options that can complete from the currently typed text.
+-   Hit the up arrow to cycle through previously submitted commands.
+-   Use `man <command name>` to pull up help documentation. Hit `q` to exit.
+-   Typing `..` refers to the directory above the working directory. Writing `cd ..` changes to the directory above the working directory.
+-   Typing just `cd` changes to the home directory.
+
+### Programs
+
+We can run programs from the command line. Commands from programs always start with the name of the program. Running git commands intuitively start with `git`. For example:
+
+``` bash
+git init
+git status
+```
+
+
+## Why version control?
+
+Version control is a system for managing and recording changes to files over time. Version control is essential to managing code and analyses. Good version control can:
+
+-   Limit the chance of making a mistake
+-   Maximize the chance of catching a mistake when it happens
+-   Create a permanent record of changes to code
+-   Easily undo mistakes by switching between iterations of code
+-   Allow multiple paths of development while protecting working versions of code
+-   Encourage communication between collaborators
+-   Be used for external communication
+
+## Why distributed version control?
+
+*Centralized version control* stores all files and the log of those files in one centralized location. *Distributed version control* stores files and logs in one or many locations and has tools for combining the different versions of files and logs.
+
+Centralized version control systems like Google Drive or Box are good for sharing a Microsoft Word document, but they are terrible for collaborating on code.
+
+Distributed version control allows for the simultaneous editing and running of code. It also allows for code development without sacrificing a working version of the code.
+
+## Git vs. GitHub
+
+Git is a distributed version-control system for tracking changes in code. Git is free, open-source software and can be used locally without an internet connection. It's like a turbo-charged version of Microsoft Word's track changes for code.
+
+[GitHub](https://github.com/), which is owned by Microsoft, is an online hosting service for version control using Git. It also contains useful tools for collaboration and project management. It's like a turbo-charged version of Google Drive or Box for sharing repositories created using Git.
+
+At first, it's easy to mix up Git and GitHub. Just try to remember that they are separate tools that complement each other well.
+
+## SSH Keys for Authentication
+
+GitHub started requiring token-based or SSH-based authentication in [2021](https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/). We will focus on creating SSH keys for authentication. For instructions on creating a personal access token for authentication, see @sec-ap-a below.
+
+We will follow the [instructions for setting up SSH keys](https://happygitwithr.com/ssh-keys.html#option-2-set-up-from-the-shell) using the console, or terminal window, from Jenny Bryan's fantastic *Happy Git with R*.
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+1.  Follow the instructions above for setting up SSH keys using the console. We recommend using the default key location and key name. You can choose whether or not to add a password for the key. Note that if you choose to add a password, you will need to enter that password every time you perform operations with GitHub - so make sure you'll be able to remember it!
+2.  When you get to the section of the instructions to provide the public key to GitHub, we recommend obtaining the public key as follows:
+
+-   In a terminal window, run `cat ~/.ssh/id_ed25519.pub`
+-   Highlight the public key that is printed to the console and copy the text.
+-   Follow the instructions from Jenny Bryan at 10.5.3 to add the copied key to GitHub.
+:::
+
+
+## Git + GitHub Workflow
+
+**Repository:** A collection of files, often a directory, where files are organized and logged by Git.
+
+Git and GitHub organize projects into repositories. Typically, a "repo" will correspond with the place where you started a .Rproj. When working with Git and GitHub, your files will exist in two places: **locally** on your computer and **remotely** on GitHub.
+
+When creating a new repository, you can use either of the following alternatives:
+
+- Initialize the repo locally on your computer and later add the repo to GitHub 
+
+- Initialize the repo remotely on GitHub and then copy (clone) the repo to your computer. 
+
+To create a repository (only needs to be done once per project):
+
+`git init` initializes a local Git repository.
+
+OR
+
+`git clone <link>` copies a remote repository from GitHub to the location of the working directory on your computer.
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+We're going to create a repo remotely on GitHub and clone it to our computer.
+
+1.  Go to GitHub.
+2.  Click the big green "New" button.
+3.  Call the repo `first-repo`. Select a public repository and check the box that says `Add a README file`.
+4.  Click the "Create Repository" button.
+5.  Click the green "Code" button and copy the SSH link.
+6.  Navigate to your `cli-exercise` folder on the command line using `cd`. Run `git clone < link >`, where you replace `< link >` with the SSH link you copied. This will create a folder called `first-repo` with your repo files, including the `README.md` file you created when you initialized the repo.
+
+See @sec-app-b for the instructions on initializing a repo locally and then adding to GitHub.
+:::
+
+
+### Basic Approach
+
+1.  Initialize a repository for a project (we've already done this!).
+2.  Tell Git which files to track. Track scripts. Avoid tracking data or binary files like `.xlsx`. [^files]
+3.  Take a snapshot of tracked files and add a commit message.
+4.  Save the tracked files to the remote GitHub repository.
+5.  Repeat, repeat, repeat
+
+[^files]: Github refuses to store files larger than 100 MiB. This poses a challenge to writing reproducible code. However, many data sources can be downloaded directly from the web or via APIs, allowing code to be reproducible without relying on storing large data sets on Github. Materials later in this book discuss scaping data from the web and using APIs. 
+
+![](images/git-github-workflow.jpeg){fig-align="center" width=70%}
+
+
+### Commands
+
+`git status` prints out all of the important information about your repo. Use it before and after most commands to understand how code changes your repo.
+
+`git add <file-name>` adds a file to staging. It says, "hey look at this!".
+
+`git commit -m "<message>"` commits changes made to added files to the repository. It says, "hey, take a snapshot of the things you looked at in the previous command." **Don't forget the `-m`.** [^m]
+
+[^m]: The `-m` stands for `message`. Writing a brief commit message like "fixes bug in data cleaning script" can help collaborators (including your future self) understand the purpose of your commits. 
+
+`git push origin main` pushes your local commits to the remote repository on GitHub. It says, "hey, take a look at these snapshots I just made". It is possible to push to branches other than `main`. Simply replace `main` with the desired branch name.
+
+`git log --oneline` shows the commit history in the repository.
+
+`git diff` shows changes since the last commit.
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+1.  Navigate to your `first-repo` directory on the command line and run `git status` to confirm that there is a git repo.
+2.  In RStudio, create a new R project. Select the option to associate the R project with an existing directory and select the `first-repo` directory. This will open the `first-repo` project.
+3.  Create a quarto document. Select the HTML option and give the document whatever title you'd like. Once the document is created, save the untitled document as "index.qmd". Edit the YML header of the document to set `self-contained` to true as follows:
+
+```{=html}
+format: 
+      html:
+        self-contained: true
+```
+    
+4.  In a code chunk, add `library(tidyverse)` and create any graph with `library(ggplot2)` and the `storms` dataset.
+5.  Render the document to html.
+6.  In the terminal, run `git add index.qmd index.html`. Then run `git status`.
+7.  Then run `git commit -m "add first graph"` to commit the two files with a commit message. Then run `git status` again and observe the change.
+8.  Finally, run `git push origin main` to push the commit to GitHub. Navigate to the repo on GitHub to confirm that the files have been pushed to your remote repo.
+9.  Make some changes to your the graph in your `index.qmd` file (e.g. change the color of a geometry, add labels, etc.). Then run steps 5-8 again (with a different commit message in step 7).
+10. In the GitHub repo, click on `index.qmd` then click on the History icon in the top right corner. Note that you'll see your two commits. Click on the most recent commit and notice that you can see the changes that you've made to the file.
+:::
+
+
+## GitHub Pages {#sec-ghp}
+
+[GitHub Pages](https://pages.github.com/) are free websites hosted directly from a GitHub repository. With a free GitHub account, a GitHub repo must be public to create a GitHub page with that repo. When you create a GitHub page, you associate it with a specific branch of your repo. GitHub Pages will look for an `index.html`, `index.md`, or `README.md` file as the entry file for your site.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <-  1 + exercise_number
+
+```
+
+1.  Go to your GitHub repository and select "Settings" on the top right.
+2.  Under the "Code and Automations" menu on the left side, select "Pages".
+3.  Under "Build and Deployment" and "Branch", use the drop down menu to change the branch to "main". This will trigger the deployment of your GitHub page from the "main" branch of your repository. It will take a bit of time for your GitHub page to be ready.
+4.  Refresh the page, and when you see a box that says "your site is live" at the top of your page, click the link to go to your website!
+:::
+
+
+## Collaboration Using Git + GitHub (with branching)
+
+Our workflow so far has involved only one person, but the true power of GitHub comes through collaboration! There are two main models for collaborating with GitHub.
+
+1.  Shared repository with branching
+2.  Fork and pull
+
+We have almost exclusively seen approach one used by collaborative teams. Approach two is more common when a repository has been publicized, and someone external to the work wants to propose changes while lacking the ability to "write" (or push) to that repository. Approach one is covered in more detail in the next chapter. 
+
+![A Common Branching Workflow](images/git-branching.png){fig-align="center" width=70%}
+
+To add a collaborator to your repository, under Settings select "Collaborators" under the Access menu on the left. Select the "Add people" button and add your collaborators by entering their GitHub user name.
+
+## Conclusion
+Git is a distributed version-control system. It is used for tracking changes in the code. GitHub is an online hosting service for version control using git. Key workhorse commands are `git status`, `git add`, `git commit -m <message>` `git push` and `git diff`. GitHub is also great because it will host websites using GitHub Pages. 
+
+
+### Git is Confusing
+
+```{r}
+#| echo: false
+#| fig-width: 6.5
+#| fig-height: 6
+meta_data <- getXKCD(which = 1597)
+
+```
+
+We promise that it's worth it.
+
+### Resources
+
+-   [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+-   [Happy Git and GitHub for the UserR](https://happygitwithr.com/)
+-   [Git Pocket Guide](https://www.amazon.com/Git-Pocket-Guide-Working-Introduction/dp/1449325866)
+-   [Getting Git Right](https://www.atlassian.com/git)
+-   [Git Learning Lab](https://lab.github.com/)
+-   [Git Handbook](https://guides.github.com/introduction/git-handbook/)
+-   [Mastering Markdown](https://guides.github.com/features/mastering-markdown/)
+-   [Understanding the GitHub Flow](https://guides.github.com/introduction/flow/)
+-   [Documenting Your Projects on GitHub](https://guides.github.com/features/wikis/)
+-   [Git Tutorial](https://www.katacoda.com/courses/git)
+
+## Personal Access Tokens for Authentication {#sec-ap-a}
+
+1.  Starting on your GitHub account navigate through the following:
+    a.  Click your icon in the far right
+    b.  Select **Settings** at the bottom of the drop down menu
+    c.  Select **Developer Settings** on the bottom left
+    d.  Select **Personal access tokens** on the bottom left
+    e.  Select **Generate new token**
+2.  Set up your Personal Access Token (PAT)
+    a.  Add a note describing the use of your token. This is useful if you intend to generate multiple tokens for different uses.
+    b.  Select "No expiration". You may want tokens to expire if that access sensitive resources.
+    c.  Select scopes. You must select at least the "repo" scope. You may want to add other scopes but they are not required for this course.
+3.  Click **Generate token**
+4.  This is your only chance to view the token. Copy and paste the token and store it somewhere safe. If you lose the token, you can always generate a new token.
+5.  Git will prompt you for your GitHub username and password sometimes while cloning repositories or pushing to private repositories. Use your GitHub username when prompted for username. Use your generated PAT when prompted for password.
+
+## Initialize a Repo Locally and Add to GitHub {#sec-app-b}
+
+*This only needs to happen once per repository*
+
+1.  Initialize a local repository with `git init` as outlined above.
+2.  On GitHub, click the plus sign in the top, right corner and select `New Repository`.
+3.  Create a repository with the same name as your directory.
+4.  Copy the code under **...or push an existing repository from the command line** and submit it in the command line that is already open.

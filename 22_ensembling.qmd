@@ -89,7 +89,7 @@ Participants use the 2012 Block-Group-Level Planning Database and were evaluated
 
 [^11_ensembling-1]: The Kaggle competition website says mean absolute error weighed by 2010 population.
 
-244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees [@erdman201].
+244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees [@erdman2014].
 
 ### The Low-Response Score
 

@@ -1,5 +1,6 @@
 ---
 title: "Exploratory Data Analysis"
+abstract: This chapter introduces exploratory data analysis (EDA), an essential process for data scientists and researchers to use to understand their data.
 format: 
   html:
     toc: true
@@ -25,9 +26,7 @@ We've already covered reading in csv files using the `read_csv()` function from 
 
 ### Excel Spreadsheets
 
-[readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package, so it needs to be explicitly loaded in each R session. 
-
-The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
+We introduced [readxl](https://readxl.tidyverse.org/) in @sec-readxl. As a reminder, it is not a core tidyverse package, so it needs to be explicitly loaded in each R session. 
 
 Many excel files can be read with the simple syntax `data <- read_excel(path = "relative/file/path/to/data")`. In cases where the Excel spreadsheet contains multiple sheets, you can use the `sheet` argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet). You can also read only components of a sheet using Excel-style cell-ranges (ex: `A3:L44`). 
 
@@ -121,7 +120,7 @@ pulse <- read_csv(
 
 ## Column Names
 
-As we discussed in week 1, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
+As discussed earlier in the course, dataframe columns - like other objects - should be given names that are ["concise and meaningful"](https://style.tidyverse.org/syntax.html#object-names). Generally column names should be nouns and only use lowercase letters, numbers, and underscores `_` (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g "Birth Month" = bad, "birth_month" = good). It is also best practice for column names to be singular (use "birth_month" instead of "birth_months").
 
 The [janitor package](https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html) is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the `clean_names()` function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The `clean_names()` function works well with the `|>` operator.
 
@@ -145,7 +144,7 @@ exercise_number <- exercise_number + 1
 #| echo: false
 #| include: false
 
-pulse <- pulse %>%
+pulse <- pulse |>
   janitor::clean_names()
 
 ```
@@ -199,7 +198,7 @@ We see that all of the columns have been read in as character vectors because th
 
 ```{r}
 #save the column names from the dataframe
-col_names <- dc_centroids %>% names()
+col_names <- dc_centroids |> names()
 
 dc_centroids <- read_csv(
   paste0(
@@ -240,13 +239,16 @@ as.numeric(c("20", "10", "10+", "25", "~8"))
 
 ### String manipulation with `stringr`
 
-Before converting column types, it is critical to clean the column values to ensure that NA values aren't accidentally introduced by coercion. The `stringr` package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with `library(tidyverse)`. The [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) offers a great guide to the `stringr` functions. 
+Before converting column types, it is critical to clean the column values to ensure that NA values aren't accidentally introduced by coercion. We can use the `stringr` package introduced in @sec-strings to clean character data. A few reminders:
+
+-  This package is part of the core tidyverse and is automatically loaded with `library(tidyverse)`.
+-  The [stringr cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/strings.pdf) offers a great guide to the `stringr` functions. 
 
 To demonstrate some of the `stringr` functions, let's create a `state` column with the two digit state FIPS code for DC and a `geoid` column in the `dc_centroid` dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the `tract` column and then concatenate the `county` and `tract` columns into a `geoid` column. We can do that using `stringr` as follows:
 
 
 ```{r}
-dc_centroids <- dc_centroids %>%
+dc_centroids <- dc_centroids |>
   mutate(
     #replace first instance of pattern
     tract = str_replace(tract, "\\.", ""), 
@@ -273,7 +275,7 @@ exercise_number <- exercise_number + 1
 ```{r}
 #| echo: false
 #| include: false
-dc_centroids <- dc_centroids %>%
+dc_centroids <- dc_centroids |>
   mutate(
     #replace first instance of pattern
     tract = str_replace(tract, "\\.", ""), 
@@ -286,11 +288,13 @@ dc_centroids <- dc_centroids %>%
 
 :::
 
+:::{.callout-note}
 Note that the `str_replace()` function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it's syntax can be complex and not particularly intuitive. [This vignette](https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html) provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. ChatGPT is often effective at writing regular expressions, but recall our warnings about using ChatGPT in Chapter 1. 
+:::
 
 ### Date manipulation with `lubridate`
 
-The `lubridate` package makes it much easier to work with dates and times in R. While also part of the tidyverse, it is not a core tidyverse package and must be explicitly loaded in each session with `library(lubridate)`.
+The `lubridate` package, which we introduced in @sec-dates, makes it much easier to work with dates and times in R. As a reminder, `lubridate` is part of the tidyverse, but it is not a core tidyverse package. It must be explicitly loaded in each session with `library(lubridate)`.
 
 We'll use a dataset on political violence and protest events across the continent of Africa in 2022 from the [Armed Conflict Location & Event Data Project (ACLED)](https://acleddata.com/) to illustrate the power of `lubridate`. The `lubridate` package allows users to easily and quickly parse date-time variables in a range of different formats. For example, the `ymd()` function takes a date variable in year-month-day format (e.g. 2022-01-31) and converts it to a date-time format. The different formats are outlined in the [lubridate documentation](https://lubridate.tidyverse.org/). 
 
@@ -302,9 +306,9 @@ acled_2022 <- read_csv(
   paste0(
     "https://raw.githubusercontent.com/awunderground/awunderground-data/",
     "main/acled/acled_africa_2022.csv")
-  ) %>%
-  janitor::clean_names() %>%
-  mutate(event_date = ymd(event_date)) %>%
+  ) |>
+  janitor::clean_names() |>
+  mutate(event_date = ymd(event_date)) |>
   select(event_date, region, country, event_type, sub_event_type)
 
 
@@ -313,7 +317,7 @@ acled_2022 <- read_csv(
 Creating datetime columns enables the use of a number of different operations, such as filtering based on date:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   filter(event_date > "2022-06-01")
 
 ```
@@ -322,7 +326,7 @@ acled_2022 %>%
 Or calculating durations:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   #number of days into 2022 event occurred
   mutate(days_into_2022 = event_date - ymd("2022-01-01")) 
 
@@ -331,7 +335,7 @@ acled_2022 %>%
 Or extracting components of dates:
 
 ```{r}
-acled_2022 %>%
+acled_2022 |>
   mutate(event_month = month(event_date)) #month event occurred
 
 ```
@@ -341,7 +345,7 @@ Datetimes can also much more easily be plotted using `ggplot2`. For example, it 
 
 
 ```{r}
-acled_2022 %>% 
+acled_2022 |> 
   ggplot(aes(x = event_date)) + 
   geom_freqpoly(binwidth = 1) # each bin is 1 day
 
@@ -359,7 +363,7 @@ Categorical variables can be stored as characters in R. The `case_when()` functi
 
 
 ```{r}
-pulse <- pulse %>%
+pulse <- pulse |>
   mutate(
     hisp_rrace = case_when(
       rrace == 1 ~ "White alone, not Hispanic",
@@ -434,7 +438,7 @@ exercise_number <- exercise_number + 1
 #| eval: false
 #| include: false
 
-pulse <- pulse %>%
+pulse <- pulse |>
   mutate(
     recvdvacc = if_else(
       condition = recvdvacc %in% c(-88, -99), 
@@ -455,6 +459,8 @@ Once you have converted all missing value encodings to NA, the next question you
 
     - *Mean/median/mode imputation*: Fills the missing values with the column mean or median. This approach is very easy to implement, but can artifically reduce variance in your data and be sensitive to outliers in the case of mean imputation. 
     - *Predictive imputation*: Fills the missing values with a predicted value based on a model that has been fit to the data or calculated probabilities based on other columns in the data. This is a more complex approach but is likely more accurate (for example, it can take into account variable correlation).
+    
+These alternatives are discussed in more detail in a later chapter covering data imputation. 
 
 The `replace_na()` function in `dplyr` is very useful for replacing NA values in one or more columns.
 
@@ -464,15 +470,15 @@ The `replace_na()` function in `dplyr` is very useful for replacing NA values in
 df <- tibble(x = c(1, 2, NA), y = c("a", NA, "b"))
 
 # Using replace_na to replace one column
-df %>% 
+df |> 
   mutate(x = replace_na(x, 0))
 
 # Using replace_na to replace multiple columns with different values
-df %>% 
+df |> 
   replace_na(list(x = 0, y = "unknown"))
 
 # Using if_else to perform mean imputation
-df %>% 
+df |> 
   mutate(x = if_else(is.na(x), mean(x, na.rm = TRUE), x))
 
 ```
@@ -496,7 +502,7 @@ summary(msleep$bodywt)
 ```{r}
 #| fig-height: 1
 
-msleep %>%
+msleep |>
   ggplot(aes(bodywt, 1)) +
   geom_point(alpha = 0.2) +
   scale_y_continuous(breaks = 0) +
@@ -526,8 +532,8 @@ library(assertr)
 df <- tibble(age = c(20, 150, 47, 88),
              height = c(60, 2, 72, 66))
 
-df %>%
-  assertr::verify(age < 120) %>%
+df |>
+  assertr::verify(age < 120) |>
   summarise(mean(age, na.rm = TRUE))
 
 ```
@@ -567,8 +573,8 @@ exercise_number <- exercise_number + 1
 
 summary(dc_centroids$pop10)
 
-dc_centroids %>%
-  assertr::verify(pop10 > 1000) %>%
+dc_centroids |>
+  assertr::verify(pop10 > 1000) |>
   summarise(mean_pop = mean(pop10, na.rm = TRUE))
 
 
@@ -584,3 +590,14 @@ Data quality assurance is the foundation of high quality analysis. Four key ques
 2. Does the data accurately represent the population of interest? Think about the data generation process (e.g. using 311 calls or Uber ride data to measure potholes) - are any populations likely to be over or underrepresented? Use tools like Urban's [Spatial Equity Data Tool](https://apps.urban.org/features/equity-data-tool/) to test data for unrepresentativeness.
 3. Is the data gathering reproducible? Wherever possible, eliminate manual steps to gather or process the data. This includes using reproducible processes for data ingest such as APIs or reading data directly from the website rather than manually downloading files. All edits to the data should be made programmatically (e.g. skipping rows when reading data rather than deleting extraneous rows manually). Document the source of the data including the URL, the date of the access, and specific metadata about the vintage.
 4. How can you verify that you are accessing and using the data correctly? This may include writing tests to ensure that raw and calculated data values are plausible, comparing summary statistics against those provided in the data documentation (if applicable), published tables/statistics from the data provider, or published tables/statistics from a trusted third party. 
+
+## Conclusion
+This chapter outlined EDA in great detail. Some key reminders are:
+- R and the tidyverse have great packages for reading in data (`readr` for csv files, `readxl` for Excel files, `haven` for STATA, SAS, and SPSS files). 
+
+- `janitor::clean_names()` is a great way to get your column name structure to "snake case".
+- `glimpse()` is an easy way to get summary statistics on your columns. 
+- `stringr` and `lubridate` can help you handle string and date manipulation, respectively. 
+- There a many good options for handling missing data. Be thoughtful!
+- Unit tests are a good way to ensure your data is in an expected format. 
+
