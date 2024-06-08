@@ -618,6 +618,7 @@ We introduce the package more thoroughly in [@sec-readxl]. The [tidyverse websit
 
 ## Conclusion
 This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from `dplyr`, a tidyverse package built to support data cleaning operations: 
+
 - `select()` for removing columns
 - `filter()` for removing rows
 - `rename()` for renaming columns

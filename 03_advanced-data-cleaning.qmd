@@ -1051,6 +1051,7 @@ This Excel workbook is a beast. For instance, it isn't clear how the hierarchy w
 
 ## Conclusion
 Key takeaways from this chapter are:
+
 1. `here` is a helpful package for reading data, and it is especially helpful when using `.Rproj`s. 
 2. `readxl` is great for reading excel files into R.
 3. `pivot_wider()` and `pivot_longer()` are functions from the `tidyr` package that are useful for reshaping data into a “tidy” format.

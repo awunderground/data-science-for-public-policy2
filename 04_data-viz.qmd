@@ -739,7 +739,7 @@ This is a summary of the functions we discussed in this chapter. While by no mea
 7. *Statistical transformations* 
 8. *Theme*
 
-## Resources
+### Resources
 
 * [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/graphics-guide.html)
 * [Why the Urban Institute visualizes data with ggplot2](https://medium.com/@urban_institute/why-the-urban-institute-visualizes-data-with-ggplot2-46d8cfc7ee67)

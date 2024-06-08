@@ -1220,7 +1220,18 @@ Note
 </section>
 <section id="conclusion" class="level2" data-number="2.9">
 <h2 data-number="2.9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">2.9</span> Conclusion</h2>
-<p>This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from <code>dplyr</code>, a tidyverse package built to support data cleaning operations: - <code>select()</code> for removing columns - <code>filter()</code> for removing rows - <code>rename()</code> for renaming columns - <code>arrange()</code> for reordering columns - <code>mutate()</code> for creating new columns - <code>|&gt;</code> (the pipe operator) for chaining together multiple functions (part of base, but extremely useful!) - <code>summarize()</code> for collapsing many rows of a data frame into fewer rows - <code>group_by()</code> to group a data frame by certain specified variables - <code>count()</code> a shortcut for <code>group_by() |&gt; summarize(n())</code></p>
+<p>This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from <code>dplyr</code>, a tidyverse package built to support data cleaning operations:</p>
+<ul>
+<li><code>select()</code> for removing columns</li>
+<li><code>filter()</code> for removing rows</li>
+<li><code>rename()</code> for renaming columns</li>
+<li><code>arrange()</code> for reordering columns</li>
+<li><code>mutate()</code> for creating new columns</li>
+<li><code>|&gt;</code> (the pipe operator) for chaining together multiple functions (part of base, but extremely useful!)</li>
+<li><code>summarize()</code> for collapsing many rows of a data frame into fewer rows</li>
+<li><code>group_by()</code> to group a data frame by certain specified variables</li>
+<li><code>count()</code> a shortcut for <code>group_by() |&gt; summarize(n())</code></li>
+</ul>
 <p>The chapter also introduced mutating joins (<code>left_join()</code>, <code>inner_join()</code>, and <code>full_join()</code>) which create new columns and filtering joins (<code>anti_join()</code>) which drop observations depending on the presence of their key in another data frame.</p>
 <p>The chapter concluded by introducing the <code>readr</code> and <code>readxl</code> packages which are useful for reading data into R.</p>
 <section id="next-skills" class="level3" data-number="2.9.1">

@@ -364,7 +364,7 @@ An alternative to rendering a Quarto document with the Render button is to use t
 -   [Data\@Urban](https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
 
 
-## Summary:
+## Conclusion
 Quarto is an updated version of RMarkdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
 
 

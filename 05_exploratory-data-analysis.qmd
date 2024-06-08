@@ -594,6 +594,7 @@ Data quality assurance is the foundation of high quality analysis. Four key ques
 ## Conclusion
 This chapter outlined EDA in great detail. Some key reminders are:
 - R and the tidyverse have great packages for reading in data (`readr` for csv files, `readxl` for Excel files, `haven` for STATA, SAS, and SPSS files). 
+
 - `janitor::clean_names()` is a great way to get your column name structure to "snake case".
 - `glimpse()` is an easy way to get summary statistics on your columns. 
 - `stringr` and `lubridate` can help you handle string and date manipulation, respectively. 
