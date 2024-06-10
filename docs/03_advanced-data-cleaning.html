@@ -400,16 +400,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-import" id="toc-sec-import" class="nav-link" data-scroll-target="#sec-import"><span class="header-section-number">3.2</span> Import</a>
   <ul class="collapse">
   <li><a href="#libraryhere" id="toc-libraryhere" class="nav-link" data-scroll-target="#libraryhere"><span class="header-section-number">3.2.1</span> <code>library(here)</code></a></li>
-  <li><a href="#libraryreadxl" id="toc-libraryreadxl" class="nav-link" data-scroll-target="#libraryreadxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></a></li>
+  <li><a href="#sec-readxl" id="toc-sec-readxl" class="nav-link" data-scroll-target="#sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></a></li>
   </ul></li>
   <li><a href="#sec-tidy" id="toc-sec-tidy" class="nav-link" data-scroll-target="#sec-tidy"><span class="header-section-number">3.3</span> Tidy</a></li>
   <li><a href="#sec-transform" id="toc-sec-transform" class="nav-link" data-scroll-target="#sec-transform"><span class="header-section-number">3.4</span> Transform</a>
   <ul class="collapse">
-  <li><a href="#strings" id="toc-strings" class="nav-link" data-scroll-target="#strings"><span class="header-section-number">3.4.1</span> Strings</a></li>
-  <li><a href="#factors" id="toc-factors" class="nav-link" data-scroll-target="#factors"><span class="header-section-number">3.4.2</span> Factors</a></li>
-  <li><a href="#dates-and-date-times" id="toc-dates-and-date-times" class="nav-link" data-scroll-target="#dates-and-date-times"><span class="header-section-number">3.4.3</span> Dates and Date-Times</a></li>
+  <li><a href="#sec-strings" id="toc-sec-strings" class="nav-link" data-scroll-target="#sec-strings"><span class="header-section-number">3.4.1</span> Strings</a></li>
+  <li><a href="#factors-sec-factors" id="toc-factors-sec-factors" class="nav-link" data-scroll-target="#factors-sec-factors"><span class="header-section-number">3.4.2</span> Factors {sec-factors}</a></li>
+  <li><a href="#sec-dates" id="toc-sec-dates" class="nav-link" data-scroll-target="#sec-dates"><span class="header-section-number">3.4.3</span> Dates and Date-Times</a></li>
   <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.4.4</span> Missing Data</a></li>
   </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.5</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -433,7 +434,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    This section covers advanced techniques for cleaning and manipulating data.
+    This section covers advanced techniques for cleaning and manipulating data using the tidyverse.
   </div>
 </div>
 
@@ -443,7 +444,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="sec-review2" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-review2"><span class="header-section-number">3.1</span> Review</h2>
-<p><em>R for Data Science (2e)</em> <a href="https://r4ds.hadley.nz/intro.html#fig-ds-diagram">displays</a> the first steps of the data science process as “Import”, “Tidy”, and “Transform”. Recall from the previous lecture techniques for importing data like <code>read_csv()</code>, for tidying data like <code>pivot_longer()</code>, and for transforming data like <code>mutate()</code>.</p>
+<p><em>R for Data Science (2e)</em> <a href="https://r4ds.hadley.nz/intro.html#fig-ds-diagram">displays</a> the first steps of the data science process as “Import”, “Tidy”, and “Transform”. Recall from the previous lecture techniques for importing data like <code>read_csv()</code> and for transforming data like <code>mutate()</code>.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -519,8 +520,8 @@ Filtering Joins
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="st">"important-data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="libraryreadxl" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="libraryreadxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></h3>
+<section id="sec-readxl" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></h3>
 <p>We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it’s a dominant tool for storing data and often enters the data science workflow.</p>
 <p><code>library(readxl)</code> is the premier package for reading data from <code>.xls</code> and <code>.xlsx</code> files. <code>read_excel()</code>, which works like <code>read_csv()</code>, loads data from <code>.xls</code> and <code>.xlsx</code> files. Consider data from the Urban Institute’s <a href="https://apps.urban.org/features/debt-interactive-map/?type=overall&amp;variable=totcoll">Debt in America</a> feature accessed through the <a href="https://datacatalog.urban.org/dataset/debt-america-2022">Urban Institute Data Catalog</a>.</p>
 <div class="cell">
@@ -1127,8 +1128,8 @@ Filtering Joins
 </section>
 <section id="sec-transform" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="sec-transform"><span class="header-section-number">3.4</span> Transform</h2>
-<section id="strings" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="strings"><span class="header-section-number">3.4.1</span> Strings</h3>
+<section id="sec-strings" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="sec-strings"><span class="header-section-number">3.4.1</span> Strings</h3>
 <p>Check out the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">stringr cheat sheet</a>.</p>
 <p><code>library(stringr)</code> contains powerful functions for working with strings in R. In data analysis, we may need to detect matches, subset strings, work with the lengths of strings, modify strings, and join and split strings.</p>
 <section id="detecting-matches" class="level4">
@@ -1278,8 +1279,8 @@ date (1): signing_date
 </div>
 </section>
 </section>
-<section id="factors" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="factors"><span class="header-section-number">3.4.2</span> Factors</h3>
+<section id="factors-sec-factors" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="factors-sec-factors"><span class="header-section-number">3.4.2</span> Factors {sec-factors}</h3>
 <p>Check out the <a href="https://forcats.tidyverse.org/">forcats cheat sheet</a>.</p>
 <p>Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains <a href="https://r4ds.had.co.nz/vectors.html#augmented-vectors">augmented vectors</a> like factors.</p>
 <p>Factors are categorical data stored as integers with a levels attribute. Character vectors often work well for categorical data and many of R’s functions convert character vectors to factors. This happens with <code>lm()</code>.</p>
@@ -1613,8 +1614,8 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 </div>
 </section>
 </section>
-<section id="dates-and-date-times" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="dates-and-date-times"><span class="header-section-number">3.4.3</span> Dates and Date-Times</h3>
+<section id="sec-dates" class="level3" data-number="3.4.3">
+<h3 data-number="3.4.3" class="anchored" data-anchor-id="sec-dates"><span class="header-section-number">3.4.3</span> Dates and Date-Times</h3>
 <p>Check out the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf">lubridate cheat sheet</a>.</p>
 <p>There are many ways to store dates.</p>
 <ul>
@@ -1745,14 +1746,14 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 <div class="cell">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 90542 days</code></pre>
+<pre><code>Time difference of 90555 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 130380480 mins</code></pre>
+<pre><code>Time difference of 130399200 mins</code></pre>
 </div>
 </div>
 </section>
@@ -1839,7 +1840,7 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 <pre><code>[1] 1 2 3</code></pre>
 </div>
 </div>
-<p>We recommend avoiding arguments like <code>na.rm</code> and using <code>filter()</code> for structurally missing values and <code>replace_na()</code> or imputation for nonresponse.</p>
+<p>We recommend avoiding arguments like <code>na.rm</code> and using <code>filter()</code> for structurally missing values and <code>replace_na()</code> or imputation for nonresponse. We introduce more sophisticated methods to handle missing data in a later chapter.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1858,9 +1859,19 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 </ol>
 </div>
 </div>
-
-
 </section>
+</section>
+<section id="conclusion" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.5</span> Conclusion</h2>
+<p>Key takeaways from this chapter are:</p>
+<ol type="1">
+<li><code>here</code> is a helpful package for reading data, and it is especially helpful when using <code>.Rproj</code>s.</li>
+<li><code>readxl</code> is great for reading excel files into R.</li>
+<li><code>pivot_wider()</code> and <code>pivot_longer()</code> are functions from the <code>tidyr</code> package that are useful for reshaping data into a “tidy” format.</li>
+<li>The tidyverse also contains useful package for handing strings (<code>stringr</code>) factors (<code>forecats</code>), and dates (<code>lubridate</code>).</li>
+</ol>
+
+
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

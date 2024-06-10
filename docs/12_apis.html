@@ -428,8 +428,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#iterate-the-functions" id="toc-iterate-the-functions" class="nav-link" data-scroll-target="#iterate-the-functions"><span class="header-section-number">11.13.3</span> Iterate the functions</a></li>
   </ul></li>
   <li><a href="#r-packages" id="toc-r-packages" class="nav-link" data-scroll-target="#r-packages"><span class="header-section-number">11.14</span> R Packages</a></li>
-  <li><a href="#popular-r-api-packages" id="toc-popular-r-api-packages" class="nav-link" data-scroll-target="#popular-r-api-packages"><span class="header-section-number">11.15</span> Popular R API packages</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">11.16</span> Resources</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">11.15</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#popular-r-api-packages-and-r-api-packages-developed-by-the-urban-institute" id="toc-popular-r-api-packages-and-r-api-packages-developed-by-the-urban-institute" class="nav-link" data-scroll-target="#popular-r-api-packages-and-r-api-packages-developed-by-the-urban-institute"><span class="header-section-number">11.15.1</span> Popular R API packages and R API packages developed by the Urban Institute</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">11.15.2</span> Resources</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -450,6 +453,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    Many data providers allow public access to data through APIs. Understanding how these work and how to use R to call and gather data from APIs is an important skill for a data scientist.
+  </div>
+</div>
 
 
 </header>
@@ -905,16 +914,21 @@ $message
 </div>
 </div>
 </section>
-<section id="popular-r-api-packages" class="level2" data-number="11.15">
-<h2 data-number="11.15" class="anchored" data-anchor-id="popular-r-api-packages"><span class="header-section-number">11.15</span> Popular R API packages</h2>
+<section id="conclusion" class="level2" data-number="11.15">
+<h2 data-number="11.15" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">11.15</span> Conclusion</h2>
+<p>R provides robust tools to call APIs. Many R packages, including some developed by data scientists at the Urban Institute, provide more user-friendly interfaces to APIs. Remember to be polite when calling APIs and not to share API credentials publicly.</p>
+<section id="popular-r-api-packages-and-r-api-packages-developed-by-the-urban-institute" class="level3" data-number="11.15.1">
+<h3 data-number="11.15.1" class="anchored" data-anchor-id="popular-r-api-packages-and-r-api-packages-developed-by-the-urban-institute"><span class="header-section-number">11.15.1</span> Popular R API packages and R API packages developed by the Urban Institute</h3>
 <ul>
 <li><a href="https://cran.r-project.org/web/packages/censusapi/index.html">censusapi</a></li>
 <li><a href="https://cran.r-project.org/web/packages/tidycensus/index.html">tidycensus</a></li>
+<li><a href="https://cran.r-project.org/web/packages/tigris/index.html">tigris</a></li>
 <li><a href="https://github.com/UrbanInstitute/education-data-package-r">Urban Institute Education Data Portal</a></li>
+<li><a href="https://github.com/UrbanInstitute/sedtR">Urban Institute sedtR package</a></li>
 </ul>
 </section>
-<section id="resources" class="level2" data-number="11.16">
-<h2 data-number="11.16" class="anchored" data-anchor-id="resources"><span class="header-section-number">11.16</span> Resources</h2>
+<section id="resources" class="level3" data-number="11.15.2">
+<h3 data-number="11.15.2" class="anchored" data-anchor-id="resources"><span class="header-section-number">11.15.2</span> Resources</h3>
 <ul>
 <li><a href="https://zapier.com/learn/apis/">Zapier Intro to APIs</a></li>
 <li><a href="https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html">Best practices for API packages</a></li>
@@ -926,6 +940,7 @@ $message
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

@@ -437,8 +437,11 @@ div.csl-indent {
   <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides"><span class="header-section-number">6.6.7</span> Slides</a></li>
   <li><a href="#fact-sheets-and-fact-pages" id="toc-fact-sheets-and-fact-pages" class="nav-link" data-scroll-target="#fact-sheets-and-fact-pages"><span class="header-section-number">6.6.8</span> Fact sheets and fact pages</a></li>
   </ul></li>
-  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions"><span class="header-section-number">6.7</span> Suggestions</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.8</span> Resources</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.7</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions"><span class="header-section-number">6.7.1</span> Suggestions</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.7.2</span> Resources</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -459,6 +462,12 @@ div.csl-indent {
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown.
+  </div>
+</div>
 
 
 </header>
@@ -510,21 +519,22 @@ Coefficients:
 <h2 data-number="6.4" class="anchored" data-anchor-id="quarto"><span class="header-section-number">6.4</span> Quarto</h2>
 <p>Quarto is a literate statistical programming tool for R, Julia, Python, JavaScript, and more. It was released by <a href="https://posit.co">Posit</a> in 2022. Quarto is an important tool for reproducible research. It combines narrative text with styles, code, and the output of code and can be used to create many types of documents including PDFs, html websites, slides, and more.</p>
 <p>Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (<code>.Rmd</code>) documents without any edits or changes.</p>
-<p>Sweave is a competing framework that it is out-of-date, and Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
+<p>Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
 <p>According to <span class="citation" data-cites="Wickham2017R">Wickham and Grolemund (<a href="references.html#ref-Wickham2017R" role="doc-biblioref">2017</a>)</span> <a href="https://r4ds.had.co.nz/r-markdown.html#introduction-18">Chapter 27</a>, there are three main reasons to use R Markdown (they hold for Quarto) :</p>
 <blockquote class="blockquote">
 <ol type="1">
 <li>“For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis.”</li>
 <li>“For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e.&nbsp;the code).”</li>
-<li>“As an environment in which to do data science, as a modern day lab notebook where you can capture not only what you did, but also what you were thinking.” s Quarto uses</li>
+<li>“As an environment in which to do data science, as a modern day lab notebook where you can capture not only what you did, but also what you were thinking.”</li>
 </ol>
 </blockquote>
+<p>Quarto uses</p>
 <ul>
 <li>plain text files ending in <code>.qmd</code> that are similar to <code>.R</code> files.</li>
 <li><code>library(knitr)</code>.</li>
 <li><a href="https://pandoc.org/">pandoc</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 </ul>
-<p>Quarto calls <code>library(knitr)</code> and “knits” <code>.qmd</code> (Quarto files) into <code>.md</code> (Markdown files), which Pandoc then converts into any specified output type. Quarto and <code>library(knitr)</code> don’t need to be explicitly loaded and the entire process is handled by clicking the “Render” button in RStudio.</p>
+<p>Quarto calls <code>library(knitr)</code> and “knits” <code>.qmd</code> (Quarto files) into <code>.md</code> (Markdown files), which Pandoc then converts into any specified output type. Quarto and <code>library(knitr)</code> don’t need to be explicitly loaded, and the entire process is handled by clicking the “Render” button in RStudio.</p>
 <p><img src="images/rstudio-qmd-how-it-works.png" class="img-fluid"></p>
 <p><strong>Source:</strong> <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto website</a></p>
 <p>Clicking the “Render” button starts this process.</p>
@@ -544,6 +554,8 @@ Coefficients:
 <li>If you already have a LaTeX distribution like <code>tinytext</code> or <code>MiKTeX</code>, then skip this exercise.</li>
 <li>Follow <a href="https://yihui.org/tinytex/">these instructions</a> to install <code>library(tinytex)</code>.</li>
 </ol>
+</div>
+</div>
 <p>The “Render” workflow has a few advantages:</p>
 <ol type="1">
 <li>All code is rerun in a clean environment when “Rendering”. This ensures that the code runs in order and is reproducible.</li>
@@ -551,8 +563,6 @@ Coefficients:
 <li>The output types are really appealing. By creating publishable documents with code, there is no need to copy-and-paste or transpose results.</li>
 <li>The process is iterable and scalable.</li>
 </ol>
-</div>
-</div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -823,16 +833,19 @@ format:
 </ul>
 </section>
 </section>
-<section id="suggestions" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="suggestions"><span class="header-section-number">6.7</span> Suggestions</h2>
+<section id="conclusion" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.7</span> Conclusion</h2>
+<p>Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too!</p>
+<section id="suggestions" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="suggestions"><span class="header-section-number">6.7.1</span> Suggestions</h3>
 <ul>
 <li>Render early, and render often.</li>
 <li>Select the gear to the right of “Render” and select “Chunk Output in Console”</li>
 <li>Learn math mode. Also, <code>library(equatiomatic)</code> (<a href="https://cran.r-project.org/web/packages/equatiomatic/index.html">CRAN</a>, <a href="https://github.com/datalorax/equatiomatic">GitHub</a>) is amazing.</li>
 </ul>
 </section>
-<section id="resources" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.8</span> Resources</h2>
+<section id="resources" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.7.2</span> Resources</h3>
 <ul>
 <li><a href="https://quarto.org/">Quarto intro</a></li>
 <li><a href="https://r4ds.hadley.nz/quarto">R4DS R Quarto chapter</a></li>
@@ -851,6 +864,7 @@ Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for 
 Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. Paperback; O’Reilly Media. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
 </div>
 </div>
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

@@ -373,9 +373,12 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#github-pages" id="toc-github-pages" class="nav-link" data-scroll-target="#github-pages"><span class="header-section-number">9.2</span> GitHub Pages</a>
   <ul class="collapse">
   <li><a href="#readme-as-homepage" id="toc-readme-as-homepage" class="nav-link" data-scroll-target="#readme-as-homepage"><span class="header-section-number">9.2.1</span> README as homepage</a></li>
+  <li><a href="#index-as-homepage" id="toc-index-as-homepage" class="nav-link" data-scroll-target="#index-as-homepage"><span class="header-section-number">9.2.2</span> index as homepage</a></li>
   </ul></li>
-  <li><a href="#index-as-homepage" id="toc-index-as-homepage" class="nav-link" data-scroll-target="#index-as-homepage"><span class="header-section-number">9.3</span> index as homepage</a></li>
-  <li><a href="#more-resources" id="toc-more-resources" class="nav-link" data-scroll-target="#more-resources"><span class="header-section-number">9.4</span> More resources</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">9.3</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#more-resources" id="toc-more-resources" class="nav-link" data-scroll-target="#more-resources"><span class="header-section-number">9.3.1</span> More resources</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -396,6 +399,12 @@ ul.task-list li input[type="checkbox"] {
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    git and GitHub are perfect for the Issue &gt; Branch &gt; PR workflow. This chapter introduces that workflow.
+  </div>
+</div>
 
 
 </header>
@@ -491,7 +500,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="github-pages" class="level2" data-number="9.2">
 <h2 data-number="9.2" class="anchored" data-anchor-id="github-pages"><span class="header-section-number">9.2</span> GitHub Pages</h2>
-<p>GitHub offers a free and simple tool for a hosting website in a GitHub repository called <a href="https://pages.github.com/">GitHub pages</a>. A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names.</p>
+<p>As we introduced in <a href="08_reproducible-research-with-git.html#sec-ghp" class="quarto-xref"><span>Section 8.7</span></a>, GitHub offers a free and simple tool for a hosting website in a GitHub repository called <a href="https://pages.github.com/">GitHub pages</a>. A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names.</p>
 <p>Let’s walk through an example:</p>
 <section id="readme-as-homepage" class="level3" data-number="9.2.1">
 <h3 data-number="9.2.1" class="anchored" data-anchor-id="readme-as-homepage"><span class="header-section-number">9.2.1</span> README as homepage</h3>
@@ -506,9 +515,8 @@ ul.task-list li input[type="checkbox"] {
 <li>Add the link to page1 in the README. <code>git add</code>, <code>git commit</code>, and <code>git push</code>.</li>
 </ol>
 </section>
-</section>
-<section id="index-as-homepage" class="level2" data-number="9.3">
-<h2 data-number="9.3" class="anchored" data-anchor-id="index-as-homepage"><span class="header-section-number">9.3</span> index as homepage</h2>
+<section id="index-as-homepage" class="level3" data-number="9.2.2">
+<h3 data-number="9.2.2" class="anchored" data-anchor-id="index-as-homepage"><span class="header-section-number">9.2.2</span> index as homepage</h3>
 <p>The <a href="https://urbaninstitute.github.io/r-at-urban/index.html">Urban Institute R Users Group website</a> does not use the README as a home page. Instead it uses and index page.</p>
 <ol type="1">
 <li>Run <code>echo "&lt;h1&gt;Index&lt;\h1&gt;" &gt; index.html</code> at the command line.</li>
@@ -517,8 +525,12 @@ ul.task-list li input[type="checkbox"] {
 <li>After a few minutes return to the link provided on GitHub pages.</li>
 </ol>
 </section>
-<section id="more-resources" class="level2" data-number="9.4">
-<h2 data-number="9.4" class="anchored" data-anchor-id="more-resources"><span class="header-section-number">9.4</span> More resources</h2>
+</section>
+<section id="conclusion" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">9.3</span> Conclusion</h2>
+<p>GitHub Pages is a great project management tool. It can be integrated perfectly into the Issue &gt; Branch &gt; PR workflow. Branching is useful to allow separate collaborators to work on different features of a codebase simultaneously without interrupting each other. When conflicts do arise, do not fret! Merge conflicts are normal and can be resolved easily.</p>
+<section id="more-resources" class="level3" data-number="9.3.1">
+<h3 data-number="9.3.1" class="anchored" data-anchor-id="more-resources"><span class="header-section-number">9.3.1</span> More resources</h3>
 <ul>
 <li><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git Cheat Sheet</a></li>
 <li><a href="https://happygitwithr.com/">Happy Git and GitHub for the UserR</a></li>
@@ -529,6 +541,7 @@ ul.task-list li input[type="checkbox"] {
 </ul>
 
 
+</section>
 </section>
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>

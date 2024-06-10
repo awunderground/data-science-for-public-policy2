@@ -418,6 +418,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#handling-outliersunexpected-values" id="toc-handling-outliersunexpected-values" class="nav-link" data-scroll-target="#handling-outliersunexpected-values"><span class="header-section-number">5.6.3</span> Handling Outliers/Unexpected Values</a></li>
   </ul></li>
   <li><a href="#data-quality-assurance" id="toc-data-quality-assurance" class="nav-link" data-scroll-target="#data-quality-assurance"><span class="header-section-number">5.7</span> Data Quality Assurance</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">5.8</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -438,6 +439,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
   </div>
   
+<div>
+  <div class="abstract">
+    <div class="block-title">Abstract</div>
+    This chapter introduces exploratory data analysis (EDA), an essential process for data scientists and researchers to use to understand their data.
+  </div>
+</div>
 
 
 </header>
@@ -448,8 +455,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>We’ve already covered reading in csv files using the <code>read_csv()</code> function from the <code>readr</code> package, but you may also need to read in data that is stored in a number of other common file formats:</p>
 <section id="excel-spreadsheets" class="level3" data-number="5.1.1">
 <h3 data-number="5.1.1" class="anchored" data-anchor-id="excel-spreadsheets"><span class="header-section-number">5.1.1</span> Excel Spreadsheets</h3>
-<p><a href="https://readxl.tidyverse.org/">readxl</a> is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package, so it needs to be explicitly loaded in each R session.</p>
-<p>The <a href="https://readxl.tidyverse.org/">tidyverse website</a> has a good tutorial on readxl.</p>
+<p>We introduced <a href="https://readxl.tidyverse.org/">readxl</a> in <a href="03_advanced-data-cleaning.html#sec-readxl" class="quarto-xref"><span>Section 3.2.2</span></a>. As a reminder, it is not a core tidyverse package, so it needs to be explicitly loaded in each R session.</p>
 <p>Many excel files can be read with the simple syntax <code>data &lt;- read_excel(path = "relative/file/path/to/data")</code>. In cases where the Excel spreadsheet contains multiple sheets, you can use the <code>sheet</code> argument to specify the sheet to read as a string (the name of the sheet) or an integer (the position of the sheet). You can also read only components of a sheet using Excel-style cell-ranges (ex: <code>A3:L44</code>).</p>
 </section>
 <section id="stata-sas-and-spss-files" class="level3" data-number="5.1.2">
@@ -507,7 +513,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="column-names" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="column-names"><span class="header-section-number">5.2</span> Column Names</h2>
-<p>As we discussed in week 1, dataframe columns - like other objects - should be given names that are <a href="https://style.tidyverse.org/syntax.html#object-names">“concise and meaningful”</a>. Generally column names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g “Birth Month” = bad, “birth_month” = good). It is also best practice for column names to be singular (use “birth_month” instead of “birth_months”).</p>
+<p>As discussed earlier in the course, dataframe columns - like other objects - should be given names that are <a href="https://style.tidyverse.org/syntax.html#object-names">“concise and meaningful”</a>. Generally column names should be nouns and only use lowercase letters, numbers, and underscores <code>_</code> (this is referred to as snake case). Columns should not begin with numbers. You should not include white space in column names (e.g “Birth Month” = bad, “birth_month” = good). It is also best practice for column names to be singular (use “birth_month” instead of “birth_months”).</p>
 <p>The <a href="https://cran.r-project.org/web/packages/janitor/vignettes/janitor.html">janitor package</a> is a package that contains a number of useful functions to clean data in accordance with the tidyverse principles. One such function is the <code>clean_names()</code> function, which converts column names to snake case according to the tidyverse type guide (along with some other useful cleaning functions outlined in the link above). The <code>clean_names()</code> function works well with the <code>|&gt;</code> operator.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -668,7 +674,11 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 </div>
 <section id="string-manipulation-with-stringr" class="level3" data-number="5.4.1">
 <h3 data-number="5.4.1" class="anchored" data-anchor-id="string-manipulation-with-stringr"><span class="header-section-number">5.4.1</span> String manipulation with <code>stringr</code></h3>
-<p>Before converting column types, it is critical to clean the column values to ensure that NA values aren’t accidentally introduced by coercion. The <code>stringr</code> package in the tidyverse offers a number of excellent functions for cleaning character data. This package is part of the core tidyverse and is automatically loaded with <code>library(tidyverse)</code>. The <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringr cheat sheet</a> offers a great guide to the <code>stringr</code> functions.</p>
+<p>Before converting column types, it is critical to clean the column values to ensure that NA values aren’t accidentally introduced by coercion. We can use the <code>stringr</code> package introduced in <a href="03_advanced-data-cleaning.html#sec-strings" class="quarto-xref"><span>Section 3.4.1</span></a> to clean character data. A few reminders:</p>
+<ul>
+<li>This package is part of the core tidyverse and is automatically loaded with <code>library(tidyverse)</code>.</li>
+<li>The <a href="https://github.com/rstudio/cheatsheets/blob/main/strings.pdf">stringr cheat sheet</a> offers a great guide to the <code>stringr</code> functions.</li>
+</ul>
 <p>To demonstrate some of the <code>stringr</code> functions, let’s create a <code>state</code> column with the two digit state FIPS code for DC and a <code>geoid</code> column in the <code>dc_centroid</code> dataframe which contains the 11-digit census tract FIPS code, which can be useful for joining this dataframe with other dataframes that commonly use the FIPS code as a unique identifier. We will need to first remove the period from the <code>tract</code> column and then concatenate the <code>county</code> and <code>tract</code> columns into a <code>geoid</code> column. We can do that using <code>stringr</code> as follows:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>dc_centroids <span class="ot">&lt;-</span> dc_centroids <span class="sc">|&gt;</span></span>
@@ -694,11 +704,23 @@ $ afact    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 
 </ol>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Note that the <code>str_replace()</code> function uses regular expressions to match the pattern that gets replaced. Regular expressions is a concise and flexible tool for describing patterns in strings - but it’s syntax can be complex and not particularly intuitive. <a href="https://cran.r-project.org/web/packages/stringr/vignettes/regular-expressions.html">This vignette</a> provides a useful introduction to regular expressions, and when in doubt - there are plentiful Stack Overflow posts to help when you search your specific case. ChatGPT is often effective at writing regular expressions, but recall our warnings about using ChatGPT in Chapter 1.</p>
+</div>
+</div>
 </section>
 <section id="date-manipulation-with-lubridate" class="level3" data-number="5.4.2">
 <h3 data-number="5.4.2" class="anchored" data-anchor-id="date-manipulation-with-lubridate"><span class="header-section-number">5.4.2</span> Date manipulation with <code>lubridate</code></h3>
-<p>The <code>lubridate</code> package makes it much easier to work with dates and times in R. While also part of the tidyverse, it is not a core tidyverse package and must be explicitly loaded in each session with <code>library(lubridate)</code>.</p>
+<p>The <code>lubridate</code> package, which we introduced in <a href="03_advanced-data-cleaning.html#sec-dates" class="quarto-xref"><span>Section 3.4.3</span></a>, makes it much easier to work with dates and times in R. As a reminder, <code>lubridate</code> is part of the tidyverse, but it is not a core tidyverse package. It must be explicitly loaded in each session with <code>library(lubridate)</code>.</p>
 <p>We’ll use a dataset on political violence and protest events across the continent of Africa in 2022 from the <a href="https://acleddata.com/">Armed Conflict Location &amp; Event Data Project (ACLED)</a> to illustrate the power of <code>lubridate</code>. The <code>lubridate</code> package allows users to easily and quickly parse date-time variables in a range of different formats. For example, the <code>ymd()</code> function takes a date variable in year-month-day format (e.g.&nbsp;2022-01-31) and converts it to a date-time format. The different formats are outlined in the <a href="https://lubridate.tidyverse.org/">lubridate documentation</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -886,6 +908,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <li><em>Predictive imputation</em>: Fills the missing values with a predicted value based on a model that has been fit to the data or calculated probabilities based on other columns in the data. This is a more complex approach but is likely more accurate (for example, it can take into account variable correlation).</li>
 </ul></li>
 </ul>
+<p>These alternatives are discussed in more detail in a later chapter covering data imputation.</p>
 <p>The <code>replace_na()</code> function in <code>dplyr</code> is very useful for replacing NA values in one or more columns.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>df <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="cn">NA</span>), <span class="at">y =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="cn">NA</span>, <span class="st">"b"</span>))</span>
@@ -1020,6 +1043,17 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <li>Is the data gathering reproducible? Wherever possible, eliminate manual steps to gather or process the data. This includes using reproducible processes for data ingest such as APIs or reading data directly from the website rather than manually downloading files. All edits to the data should be made programmatically (e.g.&nbsp;skipping rows when reading data rather than deleting extraneous rows manually). Document the source of the data including the URL, the date of the access, and specific metadata about the vintage.</li>
 <li>How can you verify that you are accessing and using the data correctly? This may include writing tests to ensure that raw and calculated data values are plausible, comparing summary statistics against those provided in the data documentation (if applicable), published tables/statistics from the data provider, or published tables/statistics from a trusted third party.</li>
 </ol>
+</section>
+<section id="conclusion" class="level2" data-number="5.8">
+<h2 data-number="5.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.8</span> Conclusion</h2>
+<p>This chapter outlined EDA in great detail. Some key reminders are: - R and the tidyverse have great packages for reading in data (<code>readr</code> for csv files, <code>readxl</code> for Excel files, <code>haven</code> for STATA, SAS, and SPSS files).</p>
+<ul>
+<li><code>janitor::clean_names()</code> is a great way to get your column name structure to “snake case”.</li>
+<li><code>glimpse()</code> is an easy way to get summary statistics on your columns.</li>
+<li><code>stringr</code> and <code>lubridate</code> can help you handle string and date manipulation, respectively.</li>
+<li>There a many good options for handling missing data. Be thoughtful!</li>
+<li>Unit tests are a good way to ensure your data is in an expected format.</li>
+</ul>
 
 
 </section>

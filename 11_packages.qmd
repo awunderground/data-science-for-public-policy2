@@ -1,8 +1,13 @@
 ---
-title: "11_packages"
-editor: visual
+title: "R Packages"
+abstract: "This section introduces the development of custom R packages"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
 ---
-
 
 ## Packages
 
@@ -69,11 +74,10 @@ The title should be a brief description of the function. `param` describes each 
 
 #### Tests
 
-::: {.panel-tip}
+::: panel-tip
 ## Unit testing
 
 **Unit testing** is the systematic testing of functions to ensure correctness.
-
 :::
 
 Unit testing is essential to developing high-quality code--especially for large scale projects. Fortunately, `library(testthat)` and `library(usethis)` make unit testing easy in R packages.
@@ -93,7 +97,7 @@ test_that("good_function is correct for positive integers ", {
 
 ```
 
-::: {.panel-tip}
+::: panel-tip
 ## Test coverage
 
 **Test coverage** is the scope and quality of tests performed on a code base.

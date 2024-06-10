@@ -1,5 +1,6 @@
 ---
 title: "Introduction to R"
+abstract: In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
 format: 
   html:
     toc: true
@@ -15,8 +16,6 @@ editor_options:
 exercise_number <- 1
 
 ```
-
-In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
 
 
 ## Six Principles for Data Analysis
@@ -618,3 +617,6 @@ ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding q
 - Provide it detailed questions
 - Give it reproducible example code
 - Refine queries when the initial responses are unsatisfactory
+
+## Conclusion
+R is a powerful programming language that was developed initially for statistics but is now used in a variety of contexts. Key advantages to R include that it has a fantastic, custom-built IDE called RStudio and a large open source community of users that provides help and develops new packages. Like other open source programming languages, conducting data science in R supports the six principles of data analysis introduced at the start of this chapter. 

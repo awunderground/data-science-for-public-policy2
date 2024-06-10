@@ -867,3 +867,8 @@ The purrr library also has functions that can iterate over multiple inputs simul
 - What do I want back? A numeric vector (`dbl`), character vector (`chr`), dataframe created by column-binding (`dfc`), dataframe created by row-binding (`dfr`), etc?
 
 The [purrr cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/purrr.pdf) is a great place to go for help using purrr and outlines the different function options. You can also see the [purrr documentation](https://purrr.tidyverse.org/reference/index.html) for more details.
+
+
+## Conclusion
+
+R has many useful built-in functions, and you can easily install other extremely useful functions by loading in R packages. However, in many cases, it is useful to write your own custom functions. This section illustrated how to write custom R functions with the `function() {}` syntax. When writing R functions, R’s debugger is extremely helpful to implement “break points” which can help identify errors. Custom functions can be especially powerful when combined with iteration, and the tidyverse’s `purrr` package offers an elegant way to apply this concept. Lastly, this section covers other programming fundamentals like `if` `else` statements, `for` loops and `while` loops. 

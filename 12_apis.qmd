@@ -1,5 +1,6 @@
 ---
 title: "Web Application Programming Interfaces (Web APIs)"
+abstract: Many data providers allow public access to data through APIs. Understanding how these work and how to use R to call and gather data from APIs is an important skill for a data scientist.
 format: 
   html:
     toc: true
@@ -388,13 +389,19 @@ getCensus(
   as_tibble()
 ```
 
-## Popular R API packages
+
+## Conclusion
+R provides robust tools to call APIs. Many R packages, including some developed by data scientists at the Urban Institute, provide more user-friendly interfaces to APIs. Remember to be polite when calling APIs and not to share API credentials publicly. 
+
+### Popular R API packages and R API packages developed by the Urban Institute
 
 * [censusapi](https://cran.r-project.org/web/packages/censusapi/index.html)
 * [tidycensus](https://cran.r-project.org/web/packages/tidycensus/index.html)
+* [tigris](https://cran.r-project.org/web/packages/tigris/index.html)
 * [Urban Institute Education Data Portal](https://github.com/UrbanInstitute/education-data-package-r)
+* [Urban Institute sedtR package](https://github.com/UrbanInstitute/sedtR)
 
-## Resources 
+### Resources 
 
 * [Zapier Intro to APIs](https://zapier.com/learn/apis/)
 * [Best practices for API packages](https://cran.r-project.org/web/packages/httr/vignettes/api-packages.html)

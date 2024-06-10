@@ -1,5 +1,6 @@
 ---
 title: "Advanced Git and Github"
+abstract: git and GitHub are perfect for the Issue > Branch > PR workflow. This chapter introduces that workflow. 
 format: 
   html:
     toc: true
@@ -98,7 +99,7 @@ If you run into merge conflicts, either follow the GitHub instructions or follow
 
 ## GitHub Pages
 
-GitHub offers a free and simple tool for a hosting website in a GitHub repository called [GitHub pages](https://pages.github.com/). A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names. 
+As we introduced in @sec-ghp, GitHub offers a free and simple tool for a hosting website in a GitHub repository called [GitHub pages](https://pages.github.com/). A basic setup is to use index.html or README.md as an index to connect individual pages together whose URLs are based on their file names. 
 
 Let's walk through an example:
 
@@ -113,7 +114,7 @@ Let's walk through an example:
 7. Add page1 to the end of the link
 8. Add the link to page1 in the README. `git add`, `git commit`, and `git push`.
 
-## index as homepage
+### index as homepage
 
 The [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-at-urban/index.html) does not use the README as a home page. Instead it uses and index page. 
 
@@ -122,7 +123,10 @@ The [Urban Institute R Users Group website](https://urbaninstitute.github.io/r-a
 3. Add, commit, and push your code to the main branch.
 4. After a few minutes return to the link provided on GitHub pages.
 
-## More resources
+## Conclusion
+GitHub Pages is a great project management tool. It can be integrated perfectly into the Issue > Branch > PR workflow. Branching is useful to allow separate collaborators to work on different features of a codebase simultaneously without interrupting each other. When conflicts do arise, do not fret! Merge conflicts are normal and can be resolved easily. 
+
+### More resources
 
 * [Git Cheat Sheet](https://education.github.com/git-cheat-sheet-education.pdf)
 * [Happy Git and GitHub for the UserR](https://happygitwithr.com/)
