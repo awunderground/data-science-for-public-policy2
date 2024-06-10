@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 20&nbsp; Regularization</title>
+<title>Data Science for Public Policy - 21&nbsp; Regularization</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ window.Quarto = {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./23_regularization.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./23_regularization.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></a></li></ol></nav>
         <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -334,19 +334,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_supervised-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -363,7 +369,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -388,20 +394,20 @@ window.Quarto = {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">20.1</span> Motivation</a></li>
-  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">20.2</span> Linear regression</a></li>
-  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization"><span class="header-section-number">20.3</span> Regularization</a></li>
-  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">20.4</span> Ridge Regression</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">21.1</span> Motivation</a></li>
+  <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">21.2</span> Linear regression</a></li>
+  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization"><span class="header-section-number">21.3</span> Regularization</a></li>
+  <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">21.4</span> Ridge Regression</a>
   <ul class="collapse">
-  <li><a href="#ridge-regression-reduces-but-does-not-eliminate-coefficients" id="toc-ridge-regression-reduces-but-does-not-eliminate-coefficients" class="nav-link" data-scroll-target="#ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">20.4.1</span> Ridge regression reduces but does not eliminate coefficients</a></li>
+  <li><a href="#ridge-regression-reduces-but-does-not-eliminate-coefficients" id="toc-ridge-regression-reduces-but-does-not-eliminate-coefficients" class="nav-link" data-scroll-target="#ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">21.4.1</span> Ridge regression reduces but does not eliminate coefficients</a></li>
   </ul></li>
-  <li><a href="#lasso-regression" id="toc-lasso-regression" class="nav-link" data-scroll-target="#lasso-regression"><span class="header-section-number">20.5</span> LASSO Regression</a>
+  <li><a href="#lasso-regression" id="toc-lasso-regression" class="nav-link" data-scroll-target="#lasso-regression"><span class="header-section-number">21.5</span> LASSO Regression</a>
   <ul class="collapse">
-  <li><a href="#lasso-regression-eliminates-coefficients" id="toc-lasso-regression-eliminates-coefficients" class="nav-link" data-scroll-target="#lasso-regression-eliminates-coefficients"><span class="header-section-number">20.5.1</span> LASSO regression eliminates coefficients</a></li>
+  <li><a href="#lasso-regression-eliminates-coefficients" id="toc-lasso-regression-eliminates-coefficients" class="nav-link" data-scroll-target="#lasso-regression-eliminates-coefficients"><span class="header-section-number">21.5.1</span> LASSO regression eliminates coefficients</a></li>
   </ul></li>
-  <li><a href="#elastic-net-regression" id="toc-elastic-net-regression" class="nav-link" data-scroll-target="#elastic-net-regression"><span class="header-section-number">20.6</span> Elastic Net Regression</a>
+  <li><a href="#elastic-net-regression" id="toc-elastic-net-regression" class="nav-link" data-scroll-target="#elastic-net-regression"><span class="header-section-number">21.6</span> Elastic Net Regression</a>
   <ul class="collapse">
-  <li><a href="#elastic-net-blends-ridge-regression-and-lasso-regression" id="toc-elastic-net-blends-ridge-regression-and-lasso-regression" class="nav-link" data-scroll-target="#elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends Ridge regression and LASSO regression</a></li>
+  <li><a href="#elastic-net-blends-ridge-regression-and-lasso-regression" id="toc-elastic-net-blends-ridge-regression-and-lasso-regression" class="nav-link" data-scroll-target="#elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">21.6.1</span> Elastic net blends Ridge regression and LASSO regression</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -409,9 +415,9 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./23_regularization.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./23_regularization.html"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></a></li></ol></nav>
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
+<h1 class="title"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></h1>
 </div>
 
 
@@ -428,13 +434,13 @@ window.Quarto = {
 </header>
 
 
-<section id="motivation" class="level2" data-number="20.1">
-<h2 data-number="20.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">20.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="21.1">
+<h2 data-number="21.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">21.1</span> Motivation</h2>
 <p>The previous chapter introduced the idea of regularization in the context of random forests. Regularization is a powerful technique for parametric regression models.</p>
 <p>This section takes the PDB examples and explores three types of regularized regression models: ridge regression, LASSO regression, and elastic net regression.</p>
 </section>
-<section id="linear-regression" class="level2" data-number="20.2">
-<h2 data-number="20.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">20.2</span> Linear regression</h2>
+<section id="linear-regression" class="level2" data-number="21.2">
+<h2 data-number="21.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">21.2</span> Linear regression</h2>
 <p>Ordinary least squares (OLS) linear regression generates coefficients that minimize the sum of squared residuals.</p>
 <p><span class="math display">\[\min(SSE) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2\right)\]</span></p>
 <p>It is impossible to solve for OLS when <span class="math inline">\(p &gt; n\)</span> where <span class="math inline">\(p\)</span> is the number of predictors and <span class="math inline">\(n\)</span> is the number of observations. Additionally, OLS is unstable when data contain multicollinearity.</p>
@@ -496,21 +502,21 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="regularization" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="regularization"><span class="header-section-number">20.3</span> Regularization</h2>
+<section id="regularization" class="level2" data-number="21.3">
+<h2 data-number="21.3" class="anchored" data-anchor-id="regularization"><span class="header-section-number">21.3</span> Regularization</h2>
 <p><strong>Regularization/Penalization:</strong> To reduce the magnitude of parameters (coefficients).</p>
 <p>Regularization, or penalization, allows linear regression to work with very wide data, to generate stable estimates for data with multicollinearity, and to perform feature selection.</p>
 <p>For regression, the idea is to add a penalty <span class="math inline">\(P\)</span> to the optimization routine:</p>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + P\right)\]</span></p>
 </section>
-<section id="ridge-regression" class="level2" data-number="20.4">
-<h2 data-number="20.4" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">20.4</span> Ridge Regression</h2>
+<section id="ridge-regression" class="level2" data-number="21.4">
+<h2 data-number="21.4" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">21.4</span> Ridge Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p\beta_j^2\right)\]</span></p>
 <p>Ridge regression adds an L2 penalty to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
 <p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
 <p>Ridge regression reduces coefficients but it does not eliminate coefficients.</p>
-<section id="ridge-regression-reduces-but-does-not-eliminate-coefficients" class="level3" data-number="20.4.1">
-<h3 data-number="20.4.1" class="anchored" data-anchor-id="ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">20.4.1</span> Ridge regression reduces but does not eliminate coefficients</h3>
+<section id="ridge-regression-reduces-but-does-not-eliminate-coefficients" class="level3" data-number="21.4.1">
+<h3 data-number="21.4.1" class="anchored" data-anchor-id="ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">21.4.1</span> Ridge regression reduces but does not eliminate coefficients</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fit_ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(data, penalty) {</span>
 <span id="cb4-2"><a href="#cb4-2"></a>  </span>
@@ -560,14 +566,14 @@ window.Quarto = {
 <p>Note that regularized regression models expect standardized predictors (mean = 0 and standard deviation = 1). This changes this starting estimated parameters.</p>
 </section>
 </section>
-<section id="lasso-regression" class="level2" data-number="20.5">
-<h2 data-number="20.5" class="anchored" data-anchor-id="lasso-regression"><span class="header-section-number">20.5</span> LASSO Regression</h2>
+<section id="lasso-regression" class="level2" data-number="21.5">
+<h2 data-number="21.5" class="anchored" data-anchor-id="lasso-regression"><span class="header-section-number">21.5</span> LASSO Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p|\beta_j|\right)\]</span></p>
 <p>Least Absolute Shrinkage and Selection Operator (LASSO) regression adds an L1 penalty to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
 <p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
 <p>LASSO regression can regularize coefficients all the way to zero.</p>
-<section id="lasso-regression-eliminates-coefficients" class="level3" data-number="20.5.1">
-<h3 data-number="20.5.1" class="anchored" data-anchor-id="lasso-regression-eliminates-coefficients"><span class="header-section-number">20.5.1</span> LASSO regression eliminates coefficients</h3>
+<section id="lasso-regression-eliminates-coefficients" class="level3" data-number="21.5.1">
+<h3 data-number="21.5.1" class="anchored" data-anchor-id="lasso-regression-eliminates-coefficients"><span class="header-section-number">21.5.1</span> LASSO regression eliminates coefficients</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit_lasso <span class="ot">&lt;-</span> <span class="cf">function</span>(data, penalty) {</span>
 <span id="cb5-2"><a href="#cb5-2"></a>  </span>
@@ -616,14 +622,14 @@ window.Quarto = {
 </div>
 </section>
 </section>
-<section id="elastic-net-regression" class="level2" data-number="20.6">
-<h2 data-number="20.6" class="anchored" data-anchor-id="elastic-net-regression"><span class="header-section-number">20.6</span> Elastic Net Regression</h2>
+<section id="elastic-net-regression" class="level2" data-number="21.6">
+<h2 data-number="21.6" class="anchored" data-anchor-id="elastic-net-regression"><span class="header-section-number">21.6</span> Elastic Net Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda_1\sum_{j = 1}^p\beta_j^2 + \lambda_2\sum_{j = 1}^p|\beta_j|\right)\]</span></p>
 <p>Elastic net regression combines ridge regression and LASSO regression. It has two hyperparameters, <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>. Sometimes the hyperparameters are <span class="math inline">\(\lambda\)</span> and mixture, which determines how much of <span class="math inline">\(\lambda\)</span> to apply to each penalty (i.e.&nbsp;mixture = 0 is ridge regression and mixture = 1 is LASSO regression).</p>
 <p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
 <p>Elastic net regression can perform feature selection, but in a less dramatic fashion than LASSO regression.</p>
-<section id="elastic-net-blends-ridge-regression-and-lasso-regression" class="level3" data-number="20.6.1">
-<h3 data-number="20.6.1" class="anchored" data-anchor-id="elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends Ridge regression and LASSO regression</h3>
+<section id="elastic-net-blends-ridge-regression-and-lasso-regression" class="level3" data-number="21.6.1">
+<h3 data-number="21.6.1" class="anchored" data-anchor-id="elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">21.6.1</span> Elastic net blends Ridge regression and LASSO regression</h3>
 
 
 </section>
@@ -709,24 +715,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -761,11 +749,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
@@ -1042,12 +1026,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./22_ensembling.html" class="pagination-link" aria-label="Ensembling">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./27_advanced-unsupervised-ml.html" class="pagination-link" aria-label="Mixture Distributions and Mixture Modeling">
-        <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -325,19 +325,25 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_supervised-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -354,7 +360,7 @@ div.csl-indent {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -519,94 +525,94 @@ Tip
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Danny</td>
-<td style="text-align: right;">2003</td>
+<td style="text-align: left;">Felix</td>
+<td style="text-align: right;">2001</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">31.0</td>
-<td style="text-align: right;">-42.0</td>
-<td style="text-align: right;">20</td>
-<td style="text-align: right;">1024</td>
+<td style="text-align: right;">14.4</td>
+<td style="text-align: right;">-29.5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">1007</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Leslie</td>
-<td style="text-align: right;">2012</td>
+<td style="text-align: left;">Juan</td>
+<td style="text-align: right;">1985</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">13.2</td>
-<td style="text-align: right;">-33.7</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">1009</td>
+<td style="text-align: right;">30.3</td>
+<td style="text-align: right;">-87.7</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">982</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Fred</td>
+<td style="text-align: left;">Chris</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">28.2</td>
+<td style="text-align: right;">-80.0</td>
+<td style="text-align: right;">40</td>
+<td style="text-align: right;">1008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florence</td>
+<td style="text-align: right;">1988</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: right;">29.1</td>
+<td style="text-align: right;">-89.3</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">984</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fay</td>
+<td style="text-align: right;">2020</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">32.8</td>
+<td style="text-align: right;">-83.7</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">1014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Josephine</td>
+<td style="text-align: right;">1996</td>
+<td style="text-align: right;">NA</td>
+<td style="text-align: right;">63.0</td>
+<td style="text-align: right;">-30.5</td>
+<td style="text-align: right;">30</td>
+<td style="text-align: right;">992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Grace</td>
 <td style="text-align: right;">2009</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">17.5</td>
-<td style="text-align: right;">-34.0</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1006</td>
+<td style="text-align: right;">42.0</td>
+<td style="text-align: right;">-19.0</td>
+<td style="text-align: right;">55</td>
+<td style="text-align: right;">988</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Fabian</td>
-<td style="text-align: right;">1997</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">25.7</td>
-<td style="text-align: right;">-63.5</td>
-<td style="text-align: right;">30</td>
-<td style="text-align: right;">1007</td>
+<td style="text-align: left;">Floyd</td>
+<td style="text-align: right;">1999</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">24.9</td>
+<td style="text-align: right;">-75.3</td>
+<td style="text-align: right;">105</td>
+<td style="text-align: right;">927</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Henri</td>
-<td style="text-align: right;">2021</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">29.7</td>
-<td style="text-align: right;">-72.0</td>
-<td style="text-align: right;">55</td>
-<td style="text-align: right;">997</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Paulette</td>
+<td style="text-align: left;">Isaias</td>
 <td style="text-align: right;">2020</td>
 <td style="text-align: right;">1</td>
-<td style="text-align: right;">28.6</td>
-<td style="text-align: right;">-59.1</td>
-<td style="text-align: right;">65</td>
-<td style="text-align: right;">981</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Ana</td>
-<td style="text-align: right;">1979</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">14.0</td>
-<td style="text-align: right;">-62.8</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">1012</td>
+<td style="text-align: right;">32.8</td>
+<td style="text-align: right;">-79.1</td>
+<td style="text-align: right;">80</td>
+<td style="text-align: right;">986</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Teddy</td>
-<td style="text-align: right;">2020</td>
-<td style="text-align: right;">3</td>
-<td style="text-align: right;">24.4</td>
-<td style="text-align: right;">-57.9</td>
-<td style="text-align: right;">100</td>
-<td style="text-align: right;">947</td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Bonnie</td>
-<td style="text-align: right;">2016</td>
+<td style="text-align: left;">Eloise</td>
+<td style="text-align: right;">1975</td>
 <td style="text-align: right;">NA</td>
-<td style="text-align: right;">32.4</td>
-<td style="text-align: right;">-54.5</td>
-<td style="text-align: right;">25</td>
-<td style="text-align: right;">1013</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">AL081994</td>
-<td style="text-align: right;">1994</td>
-<td style="text-align: right;">NA</td>
-<td style="text-align: right;">16.5</td>
-<td style="text-align: right;">-85.9</td>
+<td style="text-align: right;">35.5</td>
+<td style="text-align: right;">-84.3</td>
 <td style="text-align: right;">30</td>
-<td style="text-align: right;">1007</td>
+<td style="text-align: right;">999</td>
 </tr>
 </tbody>
 </table>
@@ -710,7 +716,8 @@ Tip
 <p><code>geom_line()</code></p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 2 rows containing missing values (`geom_line()`).</code></pre>
+<pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
+(`geom_line()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
@@ -1315,24 +1322,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1367,11 +1356,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
