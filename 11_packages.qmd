@@ -1,0 +1,117 @@
+---
+title: "R Packages"
+abstract: "This section introduces the development of custom R packages"
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Packages
+
+At some point, the same scripts or data are used often enough or widely enough to justify moving from sourced R scripts to a full-blown R package. R packages make it easier to
+
+1.  Make it easier to share and version code.
+2.  Improve documentation of functions and data.
+3.  Make it easier to test code.
+4.  Often lead to fun hex stickers.
+
+### Use This
+
+`library(usethis)` includes an R package template. The following will add all necessary files for an R package to a directory called `testpackage/` and open an RStudio package.
+
+```{r}
+#| eval: false
+
+library(usethis)
+create_package("/Users/adam/testpackage")
+
+```
+
+### Package contents
+
+The template includes a lot of different files and directories. We will focus on the minimum sufficient set of files for building a package.
+
+`DESCRIPTION` contains the meta information about the package. Important lines include the package version and the license. Package versions are useful for tracking the version of the package used with an analysis. `library(usethis)` has a helper function for [picking a license](https://choosealicense.com/licenses/).
+
+```         
+Package: testpackage
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.0.9000
+Authors@R: 
+    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: What the package does (one paragraph).
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+```
+
+### Functions
+
+Functions go in the R directory, just like when we sourced functions earlier. Be sure to reference packages directly with `::` (e.g. `stats::lm()`).
+
+#### Roxygen
+
+It is essential to use Roxygen skeletons with custom functions. RStudio makes this simple. Place the cursor in a function and select `Code > Insert Roxygen Skeleton`. The Roxygen skeleton creates help documentation for a package, which can be accessed with `?`.
+
+```         
+#' Title
+#'
+#' @param
+#'
+#' @return
+#' @export
+#'
+#' @examples
+```
+
+The title should be a brief description of the function. `param` describes each input to the function and `return` describes the output of the function.
+
+#### Tests
+
+::: panel-tip
+## Unit testing
+
+**Unit testing** is the systematic testing of functions to ensure correctness.
+:::
+
+Unit testing is essential to developing high-quality code--especially for large scale projects. Fortunately, `library(testthat)` and `library(usethis)` make unit testing easy in R packages.
+
+`use_testthat()` will add a directory with the skeleton for a set of unit tests.
+
+`use_test()` will add a new test. For example, `use_test("good_function")` will add a script to test the `good_function()` from earlier in the notes.
+
+There are two pieces to a test. A **test** and an **expectation**. Tests group multiple expectations together and begins with `test_that()`. Expectations compare the output of the function against expected output. The script created by `use_test("good_function")` contains a shell that is easy to update. Consider this example:
+
+```{r}
+#| eval: false
+test_that("good_function is correct for positive integers ", {
+  expect_equal(good_function(x = 2, y = 2), 4)
+  expect_equal(good_function(x = 3, y = 3), 9)
+})
+
+```
+
+::: panel-tip
+## Test coverage
+
+**Test coverage** is the scope and quality of tests performed on a code base.
+:::
+
+The goal to develop tests with good test coverage that will loudly fail when bugs are introduced into code.
+
+### Building the package
+
+The package needs to be documented and rebuilt each time the contents of the package are edited. The package should also be tested and checked on a regular basis.
+
+1.  Run `devtools::document()` to document all of the functions in the package.
+2.  Run `devtools::built()` to build the package.
+3.  Run `devtools::test()` to test the package. This runs all tests and returns diagnostics about passes, warnings, and failures.
+4.  Run `devtools::check()` to check the package. This runs tests and also checks for documentation and package setup.
+
+This section barely scratches the surface of package development. Read [R Packages (2e)](https://r-pkgs.org/) to learn more.

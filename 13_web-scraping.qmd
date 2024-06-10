@@ -627,3 +627,5 @@ exercise_number <- exercise_number + 1
 
 :::
 
+## Conclusion
+Scraping data from websites is a powerful way of collecting data at scale or even when it is not organized in easily downloadable files like CSVs. Iteratively downloading is an elegant alternative to a time-intensive and potentially prohibitive process of going to websites and repeatedly downloading individual data sets. Scraping content from the body of websites is a more sophisticated approach that involves determining website html structure and then using that knowledge to extract key elements of that text. We strongly encourage you to consider the legal and ethnical risks of downloading this data. 

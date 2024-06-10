@@ -182,7 +182,7 @@ ggplot() +
 
 ```
 
-### KNN
+### KNN {#sec-knn}
 
 1.  Find the $k$ closest observations using only the predictors. Closeness is typically measured with Euclidean distance.
 2.  Take the mean of the outcome variables for the $k$ closest observations.
