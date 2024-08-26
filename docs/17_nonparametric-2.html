@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.4.550">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-06-08">
+<meta name="dcterms.date" content="2024-06-09">
 
 <title>Data Science for Public Policy - 16&nbsp; Nonparametric Inference</title>
 <style>
@@ -355,19 +355,25 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts</span></span></a>
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_supervised-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -384,7 +390,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -450,7 +456,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 8, 2024</p>
+      <p class="date">June 9, 2024</p>
     </div>
   </div>
   
@@ -954,6 +960,10 @@ Warning
 <span id="cb29-14"><a href="#cb29-14"></a>perm_dist <span class="sc">|&gt;</span></span>
 <span id="cb29-15"><a href="#cb29-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
 <span id="cb29-16"><a href="#cb29-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
+ℹ Did you mean to use `annotate()`?</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -961,9 +971,9 @@ Warning
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># calculate the p-value</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
@@ -977,22 +987,26 @@ Warning
 <h4 class="anchored" data-anchor-id="sample-difference-in-medians">2-Sample Difference in Medians</h4>
 <p>Using normal-theory statistics, we don’t have clear strategies for statistical tests about the median. This is simple with nonparametric statistics.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># calculate the test statistic</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
-<span id="cb32-5"><a href="#cb32-5"></a></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># generate the permutation distribution</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a>perm_dist <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb32-8"><a href="#cb32-8"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
-<span id="cb32-9"><a href="#cb32-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb32-10"><a href="#cb32-10"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb32-11"><a href="#cb32-11"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
-<span id="cb32-12"><a href="#cb32-12"></a></span>
-<span id="cb32-13"><a href="#cb32-13"></a><span class="co"># visualize the p-value</span></span>
-<span id="cb32-14"><a href="#cb32-14"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
-<span id="cb32-16"><a href="#cb32-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># calculate the test statistic</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
+<span id="cb33-5"><a href="#cb33-5"></a></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="co"># generate the permutation distribution</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>perm_dist <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
+<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-10"><a href="#cb33-10"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-11"><a href="#cb33-11"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
+<span id="cb33-12"><a href="#cb33-12"></a></span>
+<span id="cb33-13"><a href="#cb33-13"></a><span class="co"># visualize the p-value</span></span>
+<span id="cb33-14"><a href="#cb33-14"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb33-15"><a href="#cb33-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb33-16"><a href="#cb33-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
+ℹ Did you mean to use `annotate()`?</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1000,9 +1014,9 @@ Warning
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># calculate the p-value</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
@@ -1013,9 +1027,9 @@ Warning
 <p>We have sufficient evidence to reject the null hypothesis in favor if the alternative hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population median for group 1 is different than the population median for group 2.</p>
 <p>Interestingly, the median change for the treatment group is slightly less negative than the control group.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>seed <span class="sc">|&gt;</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">group_by</span>(group2) <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(balchange))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>seed <span class="sc">|&gt;</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">group_by</span>(group2) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(balchange))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   group2    median
@@ -1138,20 +1152,20 @@ Confidence interval
 <section id="example" class="level3" data-number="16.3.2">
 <h3 data-number="16.3.2" class="anchored" data-anchor-id="example"><span class="header-section-number">16.3.2</span> Example</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>b <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> B)</span>
-<span id="cb37-3"><a href="#cb37-3"></a></span>
-<span id="cb37-4"><a href="#cb37-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(b)) {</span>
-<span id="cb37-5"><a href="#cb37-5"></a>  </span>
-<span id="cb37-6"><a href="#cb37-6"></a>  x_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(seed<span class="sc">$</span>balchange, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb37-7"><a href="#cb37-7"></a>  </span>
-<span id="cb37-8"><a href="#cb37-8"></a>  b[i] <span class="ot">&lt;-</span> <span class="fu">median</span>(x_boot)</span>
-<span id="cb37-9"><a href="#cb37-9"></a>  </span>
-<span id="cb37-10"><a href="#cb37-10"></a>}</span>
-<span id="cb37-11"><a href="#cb37-11"></a></span>
-<span id="cb37-12"><a href="#cb37-12"></a><span class="fu">tibble</span>(b) <span class="sc">|&gt;</span></span>
-<span id="cb37-13"><a href="#cb37-13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(b)) <span class="sc">+</span></span>
-<span id="cb37-14"><a href="#cb37-14"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>b <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> B)</span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(b)) {</span>
+<span id="cb39-5"><a href="#cb39-5"></a>  </span>
+<span id="cb39-6"><a href="#cb39-6"></a>  x_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(seed<span class="sc">$</span>balchange, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb39-7"><a href="#cb39-7"></a>  </span>
+<span id="cb39-8"><a href="#cb39-8"></a>  b[i] <span class="ot">&lt;-</span> <span class="fu">median</span>(x_boot)</span>
+<span id="cb39-9"><a href="#cb39-9"></a>  </span>
+<span id="cb39-10"><a href="#cb39-10"></a>}</span>
+<span id="cb39-11"><a href="#cb39-11"></a></span>
+<span id="cb39-12"><a href="#cb39-12"></a><span class="fu">tibble</span>(b) <span class="sc">|&gt;</span></span>
+<span id="cb39-13"><a href="#cb39-13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(b)) <span class="sc">+</span></span>
+<span id="cb39-14"><a href="#cb39-14"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1191,15 +1205,15 @@ Confidence interval
 <h3 data-number="16.3.5" class="anchored" data-anchor-id="example-1"><span class="header-section-number">16.3.5</span> Example</h3>
 <p>First, let’s repeat the SEED example from above using the <code>boot()</code> function. <code>boot()</code> expects a custom function with the argument <code>x</code> for the data and the argument <code>i</code> for the index for statistics. We use<code>R = 5000</code> for <code>B &lt;- 5000</code> in the earlier example.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb39-2"><a href="#cb39-2"></a></span>
-<span id="cb39-3"><a href="#cb39-3"></a>seed_bootstrap <span class="ot">&lt;-</span> <span class="fu">boot</span>(</span>
-<span id="cb39-4"><a href="#cb39-4"></a>  <span class="at">data =</span> seed<span class="sc">$</span>balchange, </span>
-<span id="cb39-5"><a href="#cb39-5"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x, i) <span class="fu">median</span>(x[i]), </span>
-<span id="cb39-6"><a href="#cb39-6"></a>  <span class="at">R =</span> <span class="dv">5000</span></span>
-<span id="cb39-7"><a href="#cb39-7"></a>)</span>
-<span id="cb39-8"><a href="#cb39-8"></a></span>
-<span id="cb39-9"><a href="#cb39-9"></a>seed_bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(boot)</span>
+<span id="cb41-2"><a href="#cb41-2"></a></span>
+<span id="cb41-3"><a href="#cb41-3"></a>seed_bootstrap <span class="ot">&lt;-</span> <span class="fu">boot</span>(</span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="at">data =</span> seed<span class="sc">$</span>balchange, </span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x, i) <span class="fu">median</span>(x[i]), </span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="at">R =</span> <span class="dv">5000</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a>)</span>
+<span id="cb41-8"><a href="#cb41-8"></a></span>
+<span id="cb41-9"><a href="#cb41-9"></a>seed_bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ORDINARY NONPARAMETRIC BOOTSTRAP
@@ -1217,14 +1231,14 @@ t1*   -63.04 -0.9602388    7.817336</code></pre>
 </div>
 <p><code>library(boot)</code> and <code>boot()</code> are useful when we want to see bias. They are also useful when we are interested in statistics not included in <code>library(infer)</code>. Otherwise, we will use <code>library(infer)</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>bootstrap_distribution <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> balchange) <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">med =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"median"</span>)</span>
-<span id="cb41-6"><a href="#cb41-6"></a></span>
-<span id="cb41-7"><a href="#cb41-7"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb41-8"><a href="#cb41-8"></a>  <span class="fu">visualize</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>bootstrap_distribution <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> balchange) <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">med =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"median"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6"></a></span>
+<span id="cb43-7"><a href="#cb43-7"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb43-8"><a href="#cb43-8"></a>  <span class="fu">visualize</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1258,13 +1272,17 @@ t1*   -63.04 -0.9602388    7.817336</code></pre>
 <section id="example-3" class="level3" data-number="16.3.7">
 <h3 data-number="16.3.7" class="anchored" data-anchor-id="example-3"><span class="header-section-number">16.3.7</span> Example</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> balchange) <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"median"</span>)</span>
-<span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
-<span id="cb42-7"><a href="#cb42-7"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> balchange) <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"median"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb44-7"><a href="#cb44-7"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
+ℹ Did you mean to use `annotate()`?</code></pre>
+</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1272,12 +1290,12 @@ t1*   -63.04 -0.9602388    7.817336</code></pre>
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: Please be cautious in reporting a p-value of 0. This result is an
-approximation based on the number of `reps` chosen in the `generate()` step.
-See `?get_p_value()` for more information.</code></pre>
+<pre><code>Warning: Please be cautious in reporting a p-value of 0. This result is an approximation
+based on the number of `reps` chosen in the `generate()` step.
+ℹ See `get_p_value()` (`?infer::get_p_value()`) for more information.</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
@@ -1285,12 +1303,12 @@ See `?get_p_value()` for more information.</code></pre>
     &lt;dbl&gt;
 1       0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">get_confidence_interval</span>(</span>
-<span id="cb46-3"><a href="#cb46-3"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb46-5"><a href="#cb46-5"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">get_confidence_interval</span>(</span>
+<span id="cb49-3"><a href="#cb49-3"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
+<span id="cb49-4"><a href="#cb49-4"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb49-5"><a href="#cb49-5"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
+<span id="cb49-6"><a href="#cb49-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
@@ -1453,24 +1471,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -1505,11 +1505,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+      return note.innerHTML;
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

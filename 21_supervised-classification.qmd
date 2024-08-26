@@ -1,0 +1,603 @@
+---
+title: "Classification"
+abstract: "This chapter introduces the second fundamental type of supervised machine learning, classification."
+
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+execute:
+  message: false
+  warning: false
+---
+
+
+```{r}
+#| echo: FALSE
+knitr::opts_chunk$set(size = "small")
+```
+
+```{r}
+#| echo: FALSE
+
+library(tidyverse)
+library(knitr)
+library(grid)
+library(gridExtra)
+library(tidymodels)
+
+```
+
+
+## Types of Classification
+:::{.callout-tip}
+## Binary Classification
+**Binary classification:** Predicting one of two classes. For example, rat burrow or no rat burrow, lead paint or no lead paint, or insured or uninsured. Classes are often recoded to `1` and `0` as in logistic regression.
+:::
+
+:::{.callout-tip}
+## Multiclass Classification:
+**Multiclass classification:** Predicting one of three or more classes. For example, single filer, joint filer, or head of household; or on-time, delinquent, or defaulted. Classes can be recoded to integers for models like multinomial logistic regression, but many of the best models can handle factors.
+::: 
+
+
+## Metrics
+
+Classification problems require a different set of error metrics and diagnostics than regression problems. Assume a binary classifier for the following definitions. Let an event be the outcome `1` in a binary classification problem and a non-event be the outcome `0`. 
+
+:::{.callout-tip}
+## True positive
+**True positive:** Correctly predicting an event. Predicting $\hat{y_i} = 1$ when $y_i = 1$
+:::
+
+:::{.callout-tip}
+## True negative
+**True negative:** Correctly predicting a non-event. Predicting $\hat{y_i} = 0$ when $y_i = 0$
+:::
+
+:::{.callout-tip}
+## False positive
+**False positive:** Incorrectly predicting an event for a non-event. Predicting $\hat{y_i} = 1$ when $y_i = 0$
+:::
+
+:::{.callout-tip}::
+## False negative
+**False negative:** Incorrectly predicting a non-event for an event. Predicting $\hat{y_i} = 0$ when $y = 1$
+:::
+
+:::{.callout-tip}
+## Confusion Matrix
+**Confusion matrix:** A simple matrix that compares predicted outcomes with actual outcomes. 
+:::
+
+As these notes will show, there are many ways to combine true positives, false positives, true negatives, and false negatives into a given metric. It is important to understand a use-case in which a predictive algorithm will be used. That should inform the specific metric selected. 
+
+
+|                     |              |                      |                |
+|---------------------|--------------|:--------------------:|:--------------:|
+|                     |              | **True Value**       |                |
+|                     |              | **$y=1$**                | **$y=0$**          |
+| **Predicted Value** | **$\hat{y}=1$**        | True Positive (TP) | False Positive (FP) |
+|                     | **$\hat{y}=0$**        | False Negative (FN)| True Negative (TN)  |
+: Example Confusion Matrix 
+
+
+
+:::{.callout-tip}
+## Accuracy:
+**Accuracy:** The sum of the values on the main diagonal of the confusion matrix divided by the total number of predictions ($\frac{TP + TN}{total}$).
+:::
+
+
+### Example 1
+
+Consider the following set of true values and predicted values from a binary classification problem:
+
+```{r echo = FALSE}
+tribble(
+  ~true_value, ~predicted_value,
+  0, 0,
+  0, 0,
+  0, 0,
+  1, 0,  
+  1, 1,
+  1, 1,
+  0, 1,
+  0, 1,   
+  1, 1,
+  1, 1
+) %>%
+  knitr::kable()
+```
+
+The confusion matrix for this data:
+
+
+|                     |              |                      |                |
+|---------------------|--------------|:--------------------:|:--------------:|
+|                     |              | **True Value**       |                |
+|                     |              | **$y=1$**                | **$y=0$**          |
+| **Predicted Value** | **$\hat{y}=1$**        |  4 | 2 |
+|                     | **$\hat{y}=0$**        | 1  | 3 |
+
+
+
+### Example 2
+
+A test for breast cancer is 99.1% accurate across 1,000 tests. Is it a good test?
+
+
+|                     |              |                      |                |
+|---------------------|--------------|:--------------------:|:--------------:|
+|                     |              | **True Value**       |                |
+|                     |              | **$y=1$**                | **$y=0$**          |
+| **Predicted Value** | **$\hat{y}=1$**        |  1 |   4 |
+|                     | **$\hat{y}=0$**        | 5  | 990 |
+
+
+
+This test only accurately predicted one cancer case. In fact, a person was more likely not to have cancer given a positive test than to have cancer. This example demonstrates the base rate fallacy and the accuracy paradox. Both are the results of high class imbalance. Clearly we need more sophisticated way of evaluating classifiers than just accuracy. 
+
+## More metrics
+
+```{r echo = FALSE, out.width = "85%"}
+knitr::include_graphics(path = here::here("images", "confusion-matrix.jpeg"))
+```
+
+### Most Important Metrics
+
+
+:::{.callout-tip}
+## Accuracy
+**Accuracy:** How often the classifier is correct. $\frac{TP +TN}{total}$. All else equal, we want to maximize accuracy.
+:::
+
+
+:::{.callout-tip}
+## Precision
+**Precision:** How often the classifier is correct when it predicts events. $\frac{TP}{TP+FP}$. All else equal, we want to maximize precision.
+:::
+
+
+:::{.callout-tip}
+## Recall
+**Recall/Sensitivity/True Positive Rate:** How often the classifier is correct when there is an event. $\frac{TP}{TP+FN}$. All else equal, we want to maximize recall/sensitivity.
+:::
+
+
+### Other Metrics
+
+
+:::{.callout-tip}
+## Specificity
+**Specificity:** How often the classifier is correct when there is a non-event. $\frac{TN}{TN+FP}$. All else equal, we want to maximize specificity.
+:::
+
+
+:::{.callout-tip}
+## False Positive Rate
+**False Positive Rate:** 1 - Specificity
+
+Note that False Positive Rate is sometimes referred to as FPR. 
+:::
+
+
+### Example 2 continued
+
+
+|                     |              |                      |                |
+|---------------------|--------------|:--------------------:|:--------------:|
+|                     |              | **True Value**       |                |
+|                     |              | **$y=1$**                | **$y=0$**          |
+| **Predicted Value** | **$\hat{y}=1$**        |  1 |   4 |
+|                     | **$\hat{y}=0$**        | 5  | 990 |
+
+<br>
+
+<br>
+
+
+**Precision:** $\frac{TP}{TP + FP} = \frac{1}{1 + 4} = \frac{1}{5}$
+
+**Recall/Sensitivity:** $\frac{TP}{TP + FN} = \frac{1}{1 + 5} = \frac{1}{6}$
+
+The breast cancer test has poor precision and recall.
+
+
+**Specificity:** $\frac{TN}{FP + TN} = \frac{990}{4 + 990} = \frac{990}{994}$
+
+**False Positive Rate (FPR):** $1 - Specificity = \frac{4}{994}$
+
+The breast cancer cancer test also has poor False Positive Rate.
+
+### Using Thresholds to Predict Classes: 
+
+Most algorithms for classification generate predicted classes and probabilities of predicted classes. A predicted probability of 0.99 for an event is very different than a predicted probability of 0.51. 
+
+To generate class predictions, usually a threshold is used. For example, if $\hat{P}(event) > 0.5$ then predict event. It is common to adjust the threshold to values other than 0.5. As 0.5 decreases, marginal cases shift from $\hat{y} = 0$ to $\hat{y} = 1$ because the threshold for an event decreases.
+
+As the threshold decreases (we are predicting more events and fewer non-events):
+
+* the true positive rate increases and the false positive rate increases
+* precision decreases and sensitivity/recall increases
+* sensitivity increases and specificity decreases
+
+In general, the goal is to create a model that has a high true positive rate and a low false positive rate, high precision and high recall, and high sensitivity and high specificity. Changing the threshold is a movement along these tradeoffs. Estimating "better" models is often a way to improve these tradeoffs. Of course, there is some amount of irreducible error. 
+
+:::callout-tip
+## Receiver Operating Curve (ROC)
+**Receiver Operating Characteristics (ROC) curve:** A curve that shows the trade-off between the false positive rate and true positive rate as different threshold probabilities are used for classification. 
+:::
+
+
+```{r echo = FALSE}
+set.seed(1)
+
+b0 <- 0
+b1 <- 1
+b2 <- 1
+b3 <- 1 
+  
+data <- tibble(
+  x1 = rnorm(1000),
+  x2 = rnorm(1000),
+  x3 = rnorm(1000),
+  error = rnorm(1000)
+)
+
+data <- data %>%
+  mutate(
+    p_y = exp(b0 + b1 * x1 + b2 * x2 + b3 * x3 + error) /
+      (1 + exp(b0 + b1 * x1 + b2 * x2 + b3 * x3 + error))
+  )
+
+data <- data %>%
+  mutate(y = factor(round(p_y), levels = c("1", "0")))
+
+model1 <- glm(y ~ x1, data = data, family = "binomial")
+model2 <- glm(y ~ x1 + x2, data = data, family = "binomial")
+model3 <- glm(y ~ x1 + x2 + x3, data = data, family = "binomial")
+
+data <- tibble(
+  data,
+  model1 = 1 - predict(model1, newdata = data, type = "response"),
+  model2 = 1 - predict(model2, newdata = data, type = "response"),
+  model3 = 1 - predict(model3, newdata = data, type = "response")
+)
+
+bind_rows(
+  `Acceptable` = roc_curve(data = data, truth = y, 
+                           #estimate = model1
+                           model1),
+  `Good` = roc_curve(data = data, truth = y, 
+                     #estimate = model2
+                     model2),
+  `Excellent` = roc_curve(data = data, truth = y, 
+                          #estimate = model3
+                          model3),
+  .id = "Quality"
+) %>%
+  ggplot(aes(1 - specificity, sensitivity, color = Quality)) +
+  geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
+  geom_path() +
+  labs(
+    title = "Example ROC Curve for Three Logistic Regression Classifiers",
+    x = "FPR (1 - Specificity)",
+    y = "TPR (Sensitivity or Recall)"
+  ) +
+  annotate("text", x = 0.55, y = 0.5, label = "Random Guessing", angle = 45) +
+  annotate("text", x = 0.13, y = 0.85, label = "Excellent", color = "#00BA38", angle = 45) +
+  annotate("text", x = 0.28, y = 0.67, label = "Acceptable", color = "#F8677D", angle = 45) +
+  annotate("text", x = 0.22, y = 0.78, label = "Good", color = "#619CFF", angle = 45) +
+  guides(color = "none") +
+  coord_equal() +
+  theme_minimal() +
+  theme(plot.title.position = "plot")
+
+```
+
+::: callout-tip
+## Area Under the Curve
+**Area Under the Curve (AUC):** A one-number summary of an ROC curve where 0.5 is random guessing and the rules of thumb are 0.7 is acceptable, 0.8 is good, and 0.9 is excellent. 
+
+AUC is also sometimes referred to as AUROC (Area under the Receiver Operating Curve).
+:::
+
+
+```{r echo = FALSE}
+bind_rows(
+  `Acceptable` = roc_auc(data = data, truth = y, 
+                         #estimate = model1
+                         model1),
+  `Good` = roc_auc(data = data, truth = y, 
+                   #estimate = model2
+                   model2),
+  `Excellent` = roc_auc(data = data, truth = y, 
+                        #estimate = model3,
+                        model3),
+  .id = "Quality"
+)
+
+```
+
+* [ROC Curves and AUC](https://bradleyboehmke.github.io/HOML/process.html#classification-models)
+
+### Relative costs
+
+True positives, true negatives, false positives, and false negatives can carry different costs, and it is important to consider the relative costs when creating models and interventions.
+
+A false positive for a cancer test could result in more diagnostic tests. A false negative for a cancer test could lead to untreated cancer and severe health consequences. The relative differences in these outcomes should be considered. 
+
+A false positive for a rat burrow is a wasted trip for an exterminator. A false negative for an rat burrow is an untreated rat burrow. The difference in these outcomes is small, especially compared to the alternative of the exterminator guessing which alleys to visit. 
+
+### Multiclass metrics
+
+Consider a multiclass classification problem with three unique levels ("a", "b", "c")
+
+```{r echo = FALSE}
+tribble(
+  ~true_value, ~predicted_value,
+  "a", "a",
+  "a", "a",
+  "a", "a",
+  "a", "a",
+  "b", "b",
+  "b", "a",
+  "b", "b",
+  "b", "c",
+  "c", "c",
+  "c", "b",
+  "c", "a",
+  "c", "c"
+) %>%
+  knitr::kable()
+```
+
+<br>
+
+Create a confusion matrix:
+
+
+|                     |                     | **True Value**     |             |             |
+|---------------------|---------------------|:------------------:|:-----------:|:-----------:|
+|                     |                     | **$y=a$**          | **$y=b$**   | **$y=c$**   |
+| **Predicted Value** | **$\hat{y}=a$**     | 4                  | 1           | 1           |
+|                     | **$\hat{y}=b$**     | 0                  | 2           | 2           |
+|                     | **$\hat{y}=c$**     | 0                  | 1           | 2           |
+
+
+<br>
+
+
+Accuracy still measures how often the classifier is correct. In multiclass classification problem, the correct predictions are on the diagonal. 
+
+Accuracy: $\frac{4 + 2 + 2}{12} = \frac{8}{12} = \frac{2}{3}$
+
+There are multiclass extensions of precision, recall/sensitivity, and specificity. They are beyond the scope of this class. 
+
+
+## R Code
+
+### Example 1
+
+Example 1 uses data about penguins from the Palmer Archipelago in Antarctica. The data include measurements about three different species of penguins. This example only considers two classes and does not use resampling methods because only one model is estimated. 
+
+
+```{r}
+library(tidyverse)
+library(tidymodels)
+library(palmerpenguins)
+
+# drop to two species
+penguins_small <- penguins %>%
+  filter(species %in% c("Adelie", "Gentoo")) %>%
+  mutate(species = factor(species))
+
+# look at missing data
+map_dbl(.x = penguins_small, .f = ~ sum(is.na(.x)))
+
+# drop missing values
+penguins_small <- penguins_small %>%
+  drop_na()
+
+```
+
+#### Step 1. Split the data into training and testing data
+
+```{r}
+set.seed(20201013)
+
+# create a split object
+penguins_small_split <- initial_split(data = penguins_small, prop = 0.8)
+
+# create the training and testing data
+penguins_small_train <- training(x = penguins_small_split) 
+penguins_small_test <- testing(x = penguins_small_split)
+
+rm(penguins_small)
+
+```
+
+#### Step 2. EDA
+
+```{r}
+penguins_small_train %>%
+  ggplot(aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
+  geom_point(alpha = 0.5) +
+  theme_minimal()
+
+```
+
+#### Step 3. Estimate a Model
+
+```{r}
+# create a recipe
+cart_rec <- 
+  recipe(formula = species ~ ., data = penguins_small_train)
+
+# create a cart model object
+cart_mod <- 
+  decision_tree() %>%
+  set_engine(engine = "rpart") %>%
+  set_mode(mode = "classification")
+
+cart_wf <- workflow() %>%
+  add_recipe(cart_rec) %>%
+  add_model(cart_mod)
+  
+# fit the model
+cart_fit <- cart_wf %>%
+  fit(data = penguins_small_train)
+
+# create a tree
+rpart.plot::rpart.plot(x = cart_fit$fit$fit$fit)
+
+```
+
+#### Step 4. Evaluate a Model
+
+```{r}
+# predict the predicted class and the predicted probability of each class
+predictions <- bind_cols(
+  penguins_small_test,
+  predict(object = cart_fit, new_data = penguins_small_test),
+  predict(object = cart_fit, new_data = penguins_small_test, type = "prob")
+)
+
+select(predictions, species, starts_with(".pred"))
+
+```
+
+##### Create a confusion matrix:
+
+```{r}
+conf_mat(data = predictions,
+         truth = species,
+         estimate = .pred_class)
+
+```
+
+
+```{r}
+#| include: false
+exercise_number <- 1
+
+```
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+::: {.panel-tabset}
+### Exercise
+"Adelie" is the "event". 
+
+Calculate the accuracy.
+
+
+### Answer
+
+$$Accuracy = \frac{TP + TN}{total} = \frac{27 + 25}{53} = \frac{52}{53} \approx 0.981$$
+
+```{r}
+accuracy(data = predictions,
+         truth = species,
+         estimate = .pred_class)
+
+```
+:::
+:::
+
+```{r}
+#| include: false
+exercise_number <- exercise_number + 1
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+::: {.panel-tabset}
+### Exercise
+Calculate the precision.
+
+### Answer
+
+$$Precision = \frac{TP}{TP + FP} = \frac{27}{27 + 1} = \frac{27}{28} \approx 0.964$$
+
+```{r}
+precision(data = predictions,
+          truth = species,
+          estimate = .pred_class)
+```
+:::
+:::
+
+
+```{r}
+#| include: false
+exercise_number <- exercise_number + 1
+
+```
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+::: {.panel-tabset}
+### Exercise
+Calculate the sensitivity.
+
+
+### Answer
+$$Sensitivity = \frac{27}{27 + 0} = \frac{27}{27} = 1$$
+
+```{r}
+recall(data = predictions,
+       truth = species,
+       estimate = .pred_class)
+
+```
+
+:::
+:::
+
+
+#### Step 5. Make a New Prediction
+
+![Source: [Lescroël, A. L.; Ballard, G.; Grémillet, D.; Authier, M.; Ainley, D. G. (2014)](https://en.wikipedia.org/wiki/Ad%C3%A9lie_penguin#/media/File:Automated_weighbridge_for_Ad%C3%A9lie_penguins_-_journal.pone.0085291.g002.png)](images/penguins.png)
+
+<br> 
+
+```{r}
+new_penguins <- tribble(
+  ~island, 
+  ~bill_length_mm,
+  ~bill_depth_mm,
+  ~flipper_length_mm,
+  ~body_mass_g,
+  ~sex,
+  ~year,
+  "Torgersen",
+  40, 
+  19, 
+  190, 
+  4000, 
+  "male", 
+  2008
+)
+
+predict(object = cart_fit, new_data = new_penguins)
+
+predict(object = cart_fit, new_data = new_penguins, type = "prob")
+
+```
+
+
+Note that the decision tree has one split, on flipper length. Below the threshold, all penguins are Adelie. Consequently, the probability associated with  `.pred_Adelie` is 100% or 1.0. You can see this with the code below:
+
+```{r}
+penguins_small_train |> 
+  filter(flipper_length_mm < 206) |>
+  group_by(species) |> 
+  count()
+```

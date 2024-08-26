@@ -1,6 +1,6 @@
 ---
-title: "Predictive Modeling Concepts"
-abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but introduces complete examples with code at the end."
+title: "Predictive Modeling Concepts and Regression"
+abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focused on regression, one of the two main types of supervised machine learning."
 format: 
   html:
     toc: true
