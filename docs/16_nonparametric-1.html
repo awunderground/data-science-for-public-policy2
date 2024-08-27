@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2024-06-09">
+<meta name="dcterms.date" content="2024-08-26">
 
 <title>Data Science for Public Policy - 15&nbsp; Nonparametric Curve Fitting</title>
 <style>
@@ -23,7 +23,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -59,7 +59,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -102,13 +101,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -117,7 +110,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -126,33 +118,6 @@ div.csl-indent {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -163,12 +128,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -178,7 +143,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -408,7 +373,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -435,7 +400,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></h1>
 </div>
@@ -448,7 +413,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">June 9, 2024</p>
+      <p class="date">August 26, 2024</p>
     </div>
   </div>
   
@@ -457,14 +422,12 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     This set of notes defines nonparametric statistics and then focuses on nonparametric curve fitting, which is a major collection of nonparametric statistical methods.
   </div>
 </div>
 
-
 </header>
-
 
 <section id="sec-review8" class="level2" data-number="15.1">
 <h2 data-number="15.1" class="anchored" data-anchor-id="sec-review8"><span class="header-section-number">15.1</span> Review</h2>
@@ -591,14 +554,10 @@ Relative Frequency Histogram
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-histogram" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
-</figcaption>
-<div aria-describedby="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-histogram-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-histogram" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-histogram-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -608,7 +567,7 @@ Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard
 <h4 class="anchored" data-anchor-id="sec-binwdith">Number of Bins and Binwidth</h4>
 <p>Histograms and relative frequency histograms are very sensitive to the selection of binwidths. <code>geom_histogram()</code> defaults to 30 bins, but this can be overridden with the <code>binwidth</code> and <code>bins</code> arguments.</p>
 <p>Several papers have developed rules for determining the number of bins or binwidth including <span class="citation" data-cites="scott2005">Scott and Sain (<a href="references.html#ref-scott2005" role="doc-biblioref">2005</a>)</span>.</p>
-<p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> recreates <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> with fewer bins.</p>
+<p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins">Figure&nbsp;<span>15.2</span></a> recreates <a href="#fig-histogram">Figure&nbsp;<span>15.1</span></a> with fewer bins.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -616,14 +575,10 @@ Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard
 <span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-histogram-fewer-bins" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-fewer-bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
-</figcaption>
-<div aria-describedby="fig-histogram-fewer-bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-histogram-fewer-bins-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-histogram-fewer-bins" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-histogram-fewer-bins-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -699,8 +654,9 @@ Kernel
 <li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
 <li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
 </ol>
-<p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> shows the PDFs for a few kernels.</p>
-<details class="code-fold">
+<p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels">Figure&nbsp;<span>15.3</span></a> shows the PDFs for a few kernels.</p>
+<div>
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
@@ -722,59 +678,44 @@ Kernel
 <span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
 <span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div id="fig-kernels" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
-</figcaption>
-<div aria-describedby="fig-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Normal kernel
-</figcaption>
-<div aria-describedby="fig-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
-</div>
+<div id="fig-kernels" class="cell quarto-layout-panel">
+<p></p><figcaption>Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation</figcaption><p></p>
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kernels-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(a) Normal kernel</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Uniform kernel (Boxcar function)
-</figcaption>
-<div aria-describedby="fig-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
-</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kernels-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(b) Uniform kernel (Boxcar function)</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-3" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Triangular kernel
-</figcaption>
-<div aria-describedby="fig-kernels-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-kernels-3.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672">
-</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 50.0%;justify-content: center;">
+<div id="fig-kernels-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(c) Triangular kernel</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-kernels-3.png" class="img-fluid figure-img" data-ref-parent="fig-kernels" width="672"></p>
 </figure>
-</div>
 </div>
 </div>
 </div>
 </figure>
 </div>
-<p>Second, we add kernels centered at every observation with a specified bandwidth. <a href="#fig-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.4</span></a> shows seven normal PDFs centered at our example data points.</p>
-<p>For the sake of simplicity and demonstration, we’ll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in <a href="#sec-binwdith" class="quarto-xref"><span>Section 15.3.1.2</span></a>. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">KDE Wikipedia page</a> provides a more in depth discussion of bandwidth selection.</p>
+</div>
+<p>Second, we add kernels centered at every observation with a specified bandwidth. <a href="#fig-norm-kernels">Figure&nbsp;<span>15.4</span></a> shows seven normal PDFs centered at our example data points.</p>
+<p>For the sake of simplicity and demonstration, we’ll typically use default bandwidths. Think of bandwidths like binwidths for the relative frequency histograms we discussed in <a href="#sec-binwdith"><span>Section&nbsp;15.3.1.2</span></a>. Using smaller bandwidths leads to noisier KDEs but more precision. Increasing the bandwidth leads to smoother KDEs but less precision. The <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">KDE Wikipedia page</a> provides a more in depth discussion of bandwidth selection.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
@@ -802,21 +743,17 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 <span id="cb6-24"><a href="#cb6-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.4: Add PDFs centered at each observation in the data
-</figcaption>
-<div aria-describedby="fig-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-norm-kernels-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-norm-kernels" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.4: Add PDFs centered at each observation in the data</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-norm-kernels-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. <a href="#fig-normalized-norm-kernels" class="quarto-xref">Figure&nbsp;<span>15.5</span></a> shows each kernel divided by 7.</p>
+<p>Third, we need to adjust these normal PDFs so the KDE integrates to 1. Otherwise, the KDE will not be a PDF. To do this, simply divide each PDF by the number of data points. <a href="#fig-normalized-norm-kernels">Figure&nbsp;<span>15.5</span></a> shows each kernel divided by 7.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
@@ -844,22 +781,18 @@ Figure&nbsp;15.4: Add PDFs centered at each observation in the data
 <span id="cb7-24"><a href="#cb7-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-normalized-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normalized-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
-</figcaption>
-<div aria-describedby="fig-normalized-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-normalized-norm-kernels-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-normalized-norm-kernels" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-normalized-norm-kernels-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 <p>Finally, for any observation <span class="math inline">\(x_0\)</span>, sum up the red lines. This sum is the KDE at point <span class="math inline">\(x_0\)</span>.</p>
-<p>Typically, we calculate the KDE for many values of <span class="math inline">\(x_0\)</span> (e.g.&nbsp;a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in <a href="#fig-kde-visually" class="quarto-xref">Figure&nbsp;<span>15.6</span></a> is the estimated KDE across the range of the data.</p>
+<p>Typically, we calculate the KDE for many values of <span class="math inline">\(x_0\)</span> (e.g.&nbsp;a sequence from -2 to 15 by increments of 0.1) and then visualize the result. The black line in <a href="#fig-kde-visually">Figure&nbsp;<span>15.6</span></a> is the estimated KDE across the range of the data.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
@@ -910,14 +843,10 @@ Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) N
 <span id="cb8-47"><a href="#cb8-47"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-kde-visually" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-visually-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
-</figcaption>
-<div aria-describedby="fig-kde-visually-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-kde-visually-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-kde-visually" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-kde-visually-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -942,26 +871,22 @@ Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) N
 <p><span id="eq-kde"><span class="math display">\[
 \hat{f}(x_0) = \frac{1}{n\triangle} \sum_{i = 1}^n w\left(\frac{x_0 - x_i}{\triangle}\right)
 \tag{15.2}\]</span></span></p>
-<p>Based on <a href="#eq-kde" class="quarto-xref">Equation&nbsp;<span>15.2</span></a>, we need to pick a weighting function (<span class="math inline">\(W(z)\)</span>) and a bandwidth (<span class="math inline">\(\triangle\)</span>). We will almost always use the normal distribution and <code>bw.nrd0</code> bandwidth.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This means we can define a much simpler process:</p>
+<p>Based on <a href="#eq-kde">Equation&nbsp;<span>15.2</span></a>, we need to pick a weighting function (<span class="math inline">\(W(z)\)</span>) and a bandwidth (<span class="math inline">\(\triangle\)</span>). We will almost always use the normal distribution and <code>bw.nrd0</code> bandwidth.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> This means we can define a much simpler process:</p>
 <ol type="1">
 <li>Place a normal distribution on each observation in the data with a bandwidth determined by <code>bw.nrd0</code></li>
 <li>Divide each kernel by <span class="math inline">\(n\)</span> so the distribution is normalized</li>
 <li>To find the KDE at value <span class="math inline">\(x_0\)</span>, sum the normalized kernels at <span class="math inline">\(x_0\)</span></li>
 </ol>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-kde" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
-</figcaption>
-<div aria-describedby="fig-kde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-kde-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-kde" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-kde-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -971,7 +896,7 @@ Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) N
 <h4 class="anchored" data-anchor-id="kdes-in-r">KDE’s in R</h4>
 <p>There are several ways to use kernel density estimators in R. We will explore <code>geom_density()</code> and <code>density()</code>.</p>
 <p>The use of <code>geom_density()</code> is nearly identical to <code>geom_histogram()</code>. The function has a <code>bw</code> argument to change the bandwidth and a <code>kernel</code> argument to change the kernel.</p>
-<div class="cell" data-layout-nrow="2">
+<div>
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
 <span id="cb10-3"><a href="#cb10-3"></a>)</span>
@@ -983,38 +908,26 @@ Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) N
 <span id="cb10-9"><a href="#cb10-9"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
 <span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">geom_density</span>(<span class="at">kernel =</span> <span class="st">"triangular"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-applied-kernels" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.8: geom_density() with different kernels
-</figcaption>
-<div aria-describedby="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-applied-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Gaussian kernel
-</figcaption>
-<div aria-describedby="fig-applied-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672">
-</div>
+<div id="fig-applied-kernels" class="cell quarto-layout-panel">
+<p></p><figcaption>Figure&nbsp;15.8: geom_density() with different kernels</figcaption><p></p>
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-applied-kernels-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(a) Gaussian kernel</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-1.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-applied-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Triangular kernel
-</figcaption>
-<div aria-describedby="fig-applied-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672">
-</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 100.0%;justify-content: center;">
+<div id="fig-applied-kernels-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(b) Triangular kernel</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-applied-kernels-2.png" class="img-fluid figure-img" data-ref-parent="fig-applied-kernels" width="672"></p>
 </figure>
-</div>
 </div>
 </div>
 </div>
@@ -1037,7 +950,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <li>Sample 100 observations from a log-normal distribution using <code>rlnorm()</code> with <code>meanlog = 0</code> and <code>sdlog = 1</code>.</li>
 <li>Create a relative frequency histogram for the variable.</li>
 <li>Add a KDE with <code>geom_density()</code> in red.</li>
-<li>Use <code>stat_function()</code>, like in <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a>, to add the theoretical PDF to the visualization in blue. You should now have three layers.</li>
+<li>Use <code>stat_function()</code>, like in <a href="#fig-histogram">Figure&nbsp;<span>15.1</span></a>, to add the theoretical PDF to the visualization in blue. You should now have three layers.</li>
 <li>Duplicate the code and set <code>n</code> to <code>10000</code>. Is something off?</li>
 </ol>
 </div>
@@ -1079,7 +992,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <span id="cb11-8"><a href="#cb11-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb12-2"><a href="#cb12-2"></a></span>
@@ -1118,14 +1031,10 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <span id="cb12-35"><a href="#cb12-35"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-knn" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\(k = 3\)</span>.
-</figcaption>
-<div aria-describedby="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-knn-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-knn" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\(k = 3\)</span>.</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-knn-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1162,9 +1071,9 @@ Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\
 <li><span class="math inline">\(\triangle_{x_o}\)</span> is the maximum distance in the vector <span class="math inline">\(|x_0 - x_i|\)</span></li>
 <li><span class="math inline">\(W()\)</span> is a kernel</li>
 </ul>
-<p><a href="#fig-loess" class="quarto-xref">Figure&nbsp;<span>15.10</span></a> demonstrates LOESS on simulated data.</p>
+<p><a href="#fig-loess">Figure&nbsp;<span>15.10</span></a> demonstrates LOESS on simulated data.</p>
 <div class="cell">
-<details class="code-fold">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>tricube <span class="ot">&lt;-</span> <span class="cf">function</span>(u) {</span>
 <span id="cb13-2"><a href="#cb13-2"></a>  </span>
@@ -1240,14 +1149,10 @@ Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\
 <span id="cb13-72"><a href="#cb13-72"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line8, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-loess" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values a <span class="math inline">\(x_0 \in \{2, 4, 8\}\)</span>. Dashed lines are fitted local linear regression models.
-</figcaption>
-<div aria-describedby="fig-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-loess-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-loess" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values a <span class="math inline">\(x_0 \in \{2, 4, 8\}\)</span>. Dashed lines are fitted local linear regression models.</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-loess-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1268,14 +1173,10 @@ Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values 
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-geom_smooth" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-geom_smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
-</figcaption>
-<div aria-describedby="fig-geom_smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="16_nonparametric-1_files/figure-html/fig-geom_smooth-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-geom_smooth" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data</figcaption>
+<p><img src="16_nonparametric-1_files/figure-html/fig-geom_smooth-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1302,11 +1203,7 @@ Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
 `geom_smooth()` using formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="16_nonparametric-1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="16_nonparametric-1_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1347,7 +1244,7 @@ Residual Standard Error: 5.446 </code></pre>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Generate the simulated data from above.</li>
-<li>Generate the plot <a href="#fig-geom_smooth" class="quarto-xref">Figure&nbsp;<span>15.11</span></a>.</li>
+<li>Generate the plot <a href="#fig-geom_smooth">Figure&nbsp;<span>15.11</span></a>.</li>
 <li>Use <code>loess()</code> and <code>predict()</code> to generate a conditional mean for <span class="math inline">\(x_0 = 6\)</span>.</li>
 <li>Add the predicted values to the data visualization using <code>geom_point()</code> and <code>color = "red"</code>.</li>
 </ol>
@@ -1355,7 +1252,7 @@ Residual Standard Error: 5.446 </code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-hastie2009" class="csl-entry" role="listitem">
 Hastie, Trevor, Robert Tibshirani, and J. H. Friedman. 2009. <em>The Elements of Statistical Learning: Data Mining, Inference, and Prediction</em>. 2nd ed. Springer Series in Statistics. New York, NY: Springer.
 </div>
@@ -1462,9 +1359,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1474,17 +1372,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1497,125 +1386,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1659,7 +1429,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1685,32 +1454,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1772,18 +1515,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./15_microsimulation.html" class="pagination-link" aria-label="Microsimulation">
+      <a href="./15_microsimulation.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./17_nonparametric-2.html" class="pagination-link" aria-label="Nonparametric Inference">
+      <a href="./17_nonparametric-2.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
