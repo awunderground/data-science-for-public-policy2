@@ -46,3 +46,6 @@ po/*~
 
 # cached_files:
 *_cache*
+
+# environment file for quarto (render)
+_environment

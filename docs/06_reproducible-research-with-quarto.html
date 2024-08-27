@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -54,7 +54,26 @@ div.sourceCode
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -81,13 +100,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -96,7 +109,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -113,12 +125,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html">Reproducible Research</a></li><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html">Reproducible Research</a></li><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -128,7 +140,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -209,6 +221,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_reproducible-research-with-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reproducible Research with Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
+  </div>
+</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -223,13 +247,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
   </div>
 </li>
       </ul>
@@ -246,25 +276,25 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
   </div>
 </li>
       </ul>
@@ -280,8 +310,32 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./19_predictive-modeling-review.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Predictive Modeling Review</span></span></a>
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_supervised-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
       </ul>
@@ -297,8 +351,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./26_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -316,7 +370,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -329,9 +383,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#quarto" id="toc-quarto" class="nav-link" data-scroll-target="#quarto"><span class="header-section-number">6.4</span> Quarto</a></li>
   <li><a href="#three-ingredients-in-a-.qmd" id="toc-three-ingredients-in-a-.qmd" class="nav-link" data-scroll-target="#three-ingredients-in-a-.qmd"><span class="header-section-number">6.5</span> Three Ingredients in a <code>.qmd</code></a>
   <ul class="collapse">
-  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header"><span class="header-section-number">6.5.1</span> YAML header</a></li>
-  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text"><span class="header-section-number">6.5.2</span> Markdown text</a></li>
-  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">6.5.3</span> Code chunks</a></li>
+  <li><a href="#yaml-header" id="toc-yaml-header" class="nav-link" data-scroll-target="#yaml-header"><span class="header-section-number">6.5.1</span> 1. YAML header</a></li>
+  <li><a href="#markdown-text" id="toc-markdown-text" class="nav-link" data-scroll-target="#markdown-text"><span class="header-section-number">6.5.2</span> 2. Markdown text</a></li>
+  <li><a href="#code-chunks" id="toc-code-chunks" class="nav-link" data-scroll-target="#code-chunks"><span class="header-section-number">6.5.3</span> 3. Code chunks</a></li>
   </ul></li>
   <li><a href="#applications" id="toc-applications" class="nav-link" data-scroll-target="#applications"><span class="header-section-number">6.6</span> Applications</a>
   <ul class="collapse">
@@ -342,18 +396,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#blogdown" id="toc-blogdown" class="nav-link" data-scroll-target="#blogdown"><span class="header-section-number">6.6.5</span> Blogdown</a></li>
   <li><a href="#microsoft-word-and-microsoft-powerpoint" id="toc-microsoft-word-and-microsoft-powerpoint" class="nav-link" data-scroll-target="#microsoft-word-and-microsoft-powerpoint"><span class="header-section-number">6.6.6</span> Microsoft Word and Microsoft PowerPoint</a></li>
   <li><a href="#slides" id="toc-slides" class="nav-link" data-scroll-target="#slides"><span class="header-section-number">6.6.7</span> Slides</a></li>
-  <li><a href="#fact-sheets" id="toc-fact-sheets" class="nav-link" data-scroll-target="#fact-sheets"><span class="header-section-number">6.6.8</span> Fact sheets</a></li>
-  <li><a href="#fact-pages" id="toc-fact-pages" class="nav-link" data-scroll-target="#fact-pages"><span class="header-section-number">6.6.9</span> Fact pages</a></li>
+  <li><a href="#fact-sheets-and-fact-pages" id="toc-fact-sheets-and-fact-pages" class="nav-link" data-scroll-target="#fact-sheets-and-fact-pages"><span class="header-section-number">6.6.8</span> Fact sheets and fact pages</a></li>
   </ul></li>
-  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions"><span class="header-section-number">6.7</span> Suggestions</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.8</span> Resources</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">6.7</span> Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#suggestions" id="toc-suggestions" class="nav-link" data-scroll-target="#suggestions"><span class="header-section-number">6.7.1</span> Suggestions</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">6.7.2</span> Resources</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html">Reproducible Research</a></li><li class="breadcrumb-item"><a href="./06_reproducible-research-with-quarto.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></h1>
 </div>
@@ -367,10 +423,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     
   </div>
   
-
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown.
+  </div>
+</div>
 
 </header>
-
 
 <section id="motivation" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">6.1</span> Motivation</h2>
@@ -387,13 +447,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 data-number="6.2" class="anchored" data-anchor-id="literate-statistical-programming"><span class="header-section-number">6.2</span> Literate (Statistical) Programming</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/knuth.jpg" class="img-fluid figure-img" data-align="center"></p>
-<figcaption><strong>Source:</strong> Jacob Applebaum</figcaption>
+<p><img src="images/knuth.jpg" class="img-fluid figure-img" width="150"></p>
+<figcaption class="figure-caption"><strong>Source:</strong> <a href="https://en.wikipedia.org/wiki/Donald_Knuth#/media/File:KnuthAtOpenContentAlliance.jpg">Jacob Applebaum</a></figcaption>
 </figure>
 </div>
-<p><a href="http://www.literateprogramming.com/knuthweb.pdf">Literature Programming</a> and <a href="https://www.latex-project.org/">LaTeX</a></p>
+<p>According to Donald Knuth:</p>
 <blockquote class="blockquote">
-<p><small>Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do. ~Literate Programming (1984) by Donald Knuth</small></p>
+<p>Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do. ~ <span class="citation" data-cites="knuth84">Knuth (<a href="references.html#ref-knuth84" role="doc-biblioref">1984</a>)</span>.</p>
 </blockquote>
 </section>
 <section id="example" class="level2" data-number="6.3">
@@ -416,10 +476,10 @@ Coefficients:
 </section>
 <section id="quarto" class="level2" data-number="6.4">
 <h2 data-number="6.4" class="anchored" data-anchor-id="quarto"><span class="header-section-number">6.4</span> Quarto</h2>
-<p>Quarto is a new literate statistical programming tool for R, Julia, Python, JavaScript, and more. It is an important tool for reproducible research. It combines narrative text with styles, code, and the output of code and can be used to create many types of documents including PDFs, html websites, slides, and more.</p>
+<p>Quarto is a literate statistical programming tool for R, Julia, Python, JavaScript, and more. It was released by <a href="https://posit.co">Posit</a> in 2022. Quarto is an important tool for reproducible research. It combines narrative text with styles, code, and the output of code and can be used to create many types of documents including PDFs, html websites, slides, and more.</p>
 <p>Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (<code>.Rmd</code>) documents without any edits or changes.</p>
-<p>Sweave is a competing framework that it is out-of-date and Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
-<p>According to <a href="https://r4ds.had.co.nz/r-markdown.html#introduction-18">Wickham and Grolemund</a>, there are three main reasons to use R Markdown (they hold for Quarto):</p>
+<p>Jupyter (<strong>Ju</strong>lia, <strong>Py</strong>thon, and <strong>R</strong>) is a competing framework that is popular for Python but has not caught on for R.</p>
+<p>According to <span class="citation" data-cites="Wickham2017R">Wickham and Grolemund (<a href="references.html#ref-Wickham2017R" role="doc-biblioref">2017</a>)</span> <a href="https://r4ds.had.co.nz/r-markdown.html#introduction-18">Chapter 27</a>, there are three main reasons to use R Markdown (they hold for Quarto) :</p>
 <blockquote class="blockquote">
 <ol type="1">
 <li>“For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis.”</li>
@@ -431,29 +491,13 @@ Coefficients:
 <ul>
 <li>plain text files ending in <code>.qmd</code> that are similar to <code>.R</code> files.</li>
 <li><code>library(knitr)</code>.</li>
-<li><a href="https://pandoc.org/">pandoc</a>.</li>
+<li><a href="https://pandoc.org/">pandoc</a>.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 </ul>
-<p>Quarto calls <code>library(knitr)</code> and “knits” <code>.qmd</code> (Quarto files) into <code>.md</code> (Markdown files), which Pandoc then converts into any specified output type. Quarto and <code>library(knitr)</code> don’t need to be explicitly loaded and the entire process is handled by clicking the “Render” button in RStudio.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/rstudio-qmd-how-it-works.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="700"></p>
-</figure>
-</div>
-</div>
-</div>
+<p>Quarto calls <code>library(knitr)</code> and “knits” <code>.qmd</code> (Quarto files) into <code>.md</code> (Markdown files), which Pandoc then converts into any specified output type. Quarto and <code>library(knitr)</code> don’t need to be explicitly loaded, and the entire process is handled by clicking the “Render” button in RStudio.</p>
+<p><img src="images/rstudio-qmd-how-it-works.png" class="img-fluid"></p>
 <p><strong>Source:</strong> <a href="https://quarto.org/docs/get-started/hello/rstudio.html">Quarto website</a></p>
 <p>Clicking the “Render” button starts this process.</p>
-<div class="cell" data-layout-align="center">
-<div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/render.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="94"></p>
-</figure>
-</div>
-</div>
-</div>
+<p><img src="images/render.png" class="img-fluid"></p>
 <p>Quarto, <code>library(knitr)</code>, and Pandoc are all installed with RStudio. The only additional software you will need is a LaTeX distribution. Follow <a href="https://yihui.org/tinytex/">these instructions</a> to install <code>library(tinytex)</code> if you want to make PDF documents.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -478,13 +522,27 @@ Coefficients:
 <li>The output types are really appealing. By creating publishable documents with code, there is no need to copy-and-paste or transpose results.</li>
 <li>The process is iterable and scalable.</li>
 </ol>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the RStudio IDE (or in VSCode), clicking the Render button is analogous to running <code>quarto preview</code> in the terminal. This is different from another quarto command line function <code>quarto render</code><a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. <code>quarto preview</code> will cause the page to re-render and update. However, if you use Quarto to build a HTML-based book (like this one) or a website, by default, running <code>quarto preview</code> will not incorporate updated global options (often specified in <code>_quarto.yml</code>) or external files. To redeploy a website and/or incorporate those changes, run <code>quarto render</code>.</p>
+<p>You can read more about this distinction on the <a href="https://quarto.org/docs/websites/#website-preview">Quarto documentation</a>.</p>
+</div>
+</div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
+<span style="color:#1696d2;">Exercise 2</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -505,11 +563,11 @@ Coefficients:
 <li>Code chunks</li>
 </ol>
 <section id="yaml-header" class="level3" data-number="6.5.1">
-<h3 data-number="6.5.1" class="anchored" data-anchor-id="yaml-header"><span class="header-section-number">6.5.1</span> YAML header</h3>
-<p>YAML stands for “yet another markup language”. The YAML header contains meta information about the document including output type, document settings, and parameters that can be passed to the document. The YAML header starts with <code>---</code> and ends with <code>---</code>.</p>
+<h3 data-number="6.5.1" class="anchored" data-anchor-id="yaml-header"><span class="header-section-number">6.5.1</span> 1. YAML header</h3>
+<p>YAML stands for “yet another markup language.” The YAML header contains meta information about the document including output type, document settings, and parameters that can be passed to the document. The YAML header starts with <code>---</code> and ends with <code>---</code>.</p>
 <p>Here is the simplest YAML header for a PDF document:</p>
 <pre><code>---
-format: pdf
+format: html
 ---</code></pre>
 <p>YAML headers can contain many output specific settings. This YAML header creates an HTML document with code folding and a floating table of contents:</p>
 <pre><code>---
@@ -518,32 +576,9 @@ format:
     code-fold: true
     toc: true
 ---  </code></pre>
-<p>Parameters can be specified as follows</p>
-<pre><code>---
-format: pdf
-params:
-  state: "Virginia"
----</code></pre>
-<p>Now state can be referred to anywhere in R code as <code>params$state</code>.</p>
-<div class="callout callout-style-simple callout-none no-icon callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon no-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<ol type="1">
-<li>Switch the output type to PDF and render the document.</li>
-<li>Switch the output type back to HTML.</li>
-</ol>
-</div>
-</div>
 </section>
 <section id="markdown-text" class="level3" data-number="6.5.2">
-<h3 data-number="6.5.2" class="anchored" data-anchor-id="markdown-text"><span class="header-section-number">6.5.2</span> Markdown text</h3>
+<h3 data-number="6.5.2" class="anchored" data-anchor-id="markdown-text"><span class="header-section-number">6.5.2</span> 2. Markdown text</h3>
 <p>Markdown is a shortcut for HyperText Markup Language (HTML). Essentially, simple meta characters corresponding to formatting are added to plain text.</p>
 <pre><code>Titles and subtitltes
 ------------------------------------------------------------
@@ -585,7 +620,7 @@ Links and images
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
+<span style="color:#1696d2;">Exercise 3</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -597,21 +632,13 @@ Links and images
 </div>
 </section>
 <section id="code-chunks" class="level3" data-number="6.5.3">
-<h3 data-number="6.5.3" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">6.5.3</span> Code chunks</h3>
-<div class="cell">
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="images/inline-r-code.png" class="img-fluid figure-img" style="width:65.0%"></p>
-</figure>
-</div>
-</div>
-</div>
+<h3 data-number="6.5.3" class="anchored" data-anchor-id="code-chunks"><span class="header-section-number">6.5.3</span> 3. Code chunks</h3>
+<p><img src="images/inline-r-code.png" class="img-fluid"></p>
 <p>More frequently, code is added in code chunks:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="in">2 + 2</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="in">```{r}</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4</code></pre>
 </div>
@@ -630,13 +657,13 @@ Links and images
 </ul>
 <p>Quarto has a rich set of options that go inside of the chunks and control the behavior of Quarto.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="in">#| eval: false</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="in">2 + 2</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a><span class="in">```{r}</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">#| eval: false</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>In this case, <code>eval</code> makes the code not run. Other chunk-specific settings can be added inside the brackets. Here are the most important options:</p>
+<p>In this case, <code>eval</code> makes the code not run. Other chunk-specific settings can be added inside the brackets. Here<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> are the most important options:</p>
 <table class="table">
 <thead>
 <tr class="header">
@@ -650,30 +677,38 @@ Links and images
 <td>Hides code in output</td>
 </tr>
 <tr class="even">
+<td>eval: false</td>
+<td>Turns off evaluation</td>
+</tr>
+<tr class="odd">
+<td>output: false</td>
+<td>Hides code output</td>
+</tr>
+<tr class="even">
 <td>warning: false</td>
 <td>Turns off warnings</td>
 </tr>
 <tr class="odd">
-<td>fig-height: 8</td>
-<td>Changes figure width</td>
+<td>message: false</td>
+<td>Turns off messages</td>
 </tr>
 <tr class="even">
+<td>fig-height: 8</td>
+<td>Changes figure width in inches<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></td>
+</tr>
+<tr class="odd">
 <td>fig-width: 8</td>
-<td>Changes figure height</td>
+<td>Changes figure height in inches<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></td>
 </tr>
 </tbody>
 </table>
-<p>Default settings for the entire document can be changed in the YAML header with the <code>execute</code> option:</p>
-<pre><code>execute:
-  warning: false</code></pre>
-<p>The table added above was typed as Markdown code. But sometimes it is easier to use a code chunk to create and print a table. Pipe any data frame into <code>knitr::kable()</code> to create a table that will be formatted in the output of a rendered Quarto document.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
+<span style="color:#1696d2;">Exercise 4</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -697,7 +732,7 @@ Links and images
 format: pdf
 ---</code></pre>
 <ul>
-<li>These notes!</li>
+<li>Any documents intended to be published or printed out. For example, <a href="https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/">this blog</a> details how Cameron Patrick wrote their PhD thesis in Quarto.</li>
 </ul>
 </section>
 <section id="html-documents" class="level3" data-number="6.6.2">
@@ -721,8 +756,8 @@ format: gfm
 </section>
 <section id="bookdown" class="level3" data-number="6.6.4">
 <h3 data-number="6.6.4" class="anchored" data-anchor-id="bookdown"><span class="header-section-number">6.6.4</span> Bookdown</h3>
-<p><a href="https://bookdown.org/">Bookdown</a> is an R package by Yihui Xie for authoring books in R Markdown. Many books, including R for Data Science (<a href="https://github.com/hadley/r4ds">GitHub</a>) by Hadley Wickham and Garrett Grolemund, have been written in R Markdown.</p>
-<p><a href="https://quarto.org/docs/books/">Quarto book</a> replaces bookdown. It is oriented around Quarto projects.</p>
+<p><a href="https://bookdown.org/">Bookdown</a> is an R package by Yihui Xie for authoring books in R Markdown. Many books, including the first edition of <em>R for Data Science</em> (<span class="citation" data-cites="Wickham2017R">Wickham and Grolemund (<a href="references.html#ref-Wickham2017R" role="doc-biblioref">2017</a>)</span>), have been written in Quarto.</p>
+<p><a href="https://quarto.org/docs/books/">Quarto book</a> replaces bookdown. It is oriented around Quarto projects. The second edition of <em>R for Data Science</em> (<span class="citation" data-cites="wickham_r_2023">Wickham, Çetinkaya-Rundel, and Grolemund (<a href="references.html#ref-wickham_r_2023" role="doc-biblioref">2023</a>)</span>) was written in Quarto.</p>
 </section>
 <section id="blogdown" class="level3" data-number="6.6.5">
 <h3 data-number="6.6.5" class="anchored" data-anchor-id="blogdown"><span class="header-section-number">6.6.5</span> Blogdown</h3>
@@ -731,7 +766,7 @@ format: gfm
 </section>
 <section id="microsoft-word-and-microsoft-powerpoint" class="level3" data-number="6.6.6">
 <h3 data-number="6.6.6" class="anchored" data-anchor-id="microsoft-word-and-microsoft-powerpoint"><span class="header-section-number">6.6.6</span> Microsoft Word and Microsoft PowerPoint</h3>
-<p>It is possible to write to Word and PowerPoint. In general, I’ve found the functionality to be limited and it is difficult to match institutional branding standards.</p>
+<p>It is possible to write to Word and PowerPoint. In general, We’ve found the functionality to be limited, and it is difficult to match institutional branding standards.</p>
 </section>
 <section id="slides" class="level3" data-number="6.6.7">
 <h3 data-number="6.6.7" class="anchored" data-anchor-id="slides"><span class="header-section-number">6.6.7</span> Slides</h3>
@@ -744,42 +779,63 @@ format:
       slideNumber: true
       previewLinks: true
 ---</code></pre>
-</section>
-<section id="fact-sheets" class="level3" data-number="6.6.8">
-<h3 data-number="6.6.8" class="anchored" data-anchor-id="fact-sheets"><span class="header-section-number">6.6.8</span> Fact sheets</h3>
-<p>An alternative to rendering a Quarto document with the Render button is to use the <code>quarto::render()</code> function. This allows for iterating the rendering of documents. By passing different parameters to each rendering, it’s possible to create documents for different geographies, organizations, people, or periods of time.</p>
-<p>At the Urban Institute, we regularly iterate fact sheets at the state and county level.</p>
 <ul>
-<li><a href="https://www.urban.org/policy-centers/income-and-benefits-policy-center/projects/expanding-eitc-workers-without-resident-children">Expanding the EITC for Workers without Resident Children</a></li>
-<li><a href="https://medium.com/@urban_institute/iterated-pdfs-with-r-markdown-144e2a6d6a1a">Data@Urban</a> includes an outline.</li>
+<li>Despite the challenge of rendering to Powerpoint, Quarto can be used effectively to create presentations. One of the authors of this book <a href="https://github.com/Deckart2/mm-presentation">used Quarto</a> to create a presentation about iterated fact sheet development which, coincidentally, also used Quarto!</li>
 </ul>
 </section>
-<section id="fact-pages" class="level3" data-number="6.6.9">
-<h3 data-number="6.6.9" class="anchored" data-anchor-id="fact-pages"><span class="header-section-number">6.6.9</span> Fact pages</h3>
-<p>It’s also possible to iterate websites with <code>quarto::render()</code>.</p>
+<section id="fact-sheets-and-fact-pages" class="level3" data-number="6.6.8">
+<h3 data-number="6.6.8" class="anchored" data-anchor-id="fact-sheets-and-fact-pages"><span class="header-section-number">6.6.8</span> Fact sheets and fact pages</h3>
+<p>An alternative to rendering a Quarto document with the Render button is to use the <code>quarto::render()</code> function. This allows for iterating the rendering of documents which is particularly useful for the development of fact sheets and fact pages. The next chapter of the book expands on this use case.</p>
 <ul>
 <li>The Urban Institute State and Local Finance Initiative creates <a href="https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs">State Fiscal Briefs</a> by iterating R Markdown documents.</li>
 <li><a href="https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce">Data@Urban</a></li>
 </ul>
 </section>
 </section>
-<section id="suggestions" class="level2" data-number="6.7">
-<h2 data-number="6.7" class="anchored" data-anchor-id="suggestions"><span class="header-section-number">6.7</span> Suggestions</h2>
+<section id="conclusion" class="level2" data-number="6.7">
+<h2 data-number="6.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.7</span> Conclusion</h2>
+<p>Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too!</p>
+<section id="suggestions" class="level3" data-number="6.7.1">
+<h3 data-number="6.7.1" class="anchored" data-anchor-id="suggestions"><span class="header-section-number">6.7.1</span> Suggestions</h3>
 <ul>
 <li>Render early, and render often.</li>
 <li>Select the gear to the right of “Render” and select “Chunk Output in Console”</li>
 <li>Learn math mode. Also, <code>library(equatiomatic)</code> (<a href="https://cran.r-project.org/web/packages/equatiomatic/index.html">CRAN</a>, <a href="https://github.com/datalorax/equatiomatic">GitHub</a>) is amazing.</li>
 </ul>
 </section>
-<section id="resources" class="level2" data-number="6.8">
-<h2 data-number="6.8" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.8</span> Resources</h2>
+<section id="resources" class="level3" data-number="6.7.2">
+<h3 data-number="6.7.2" class="anchored" data-anchor-id="resources"><span class="header-section-number">6.7.2</span> Resources</h3>
 <ul>
 <li><a href="https://quarto.org/">Quarto intro</a></li>
-<li><a href="https://r4ds.had.co.nz/r-markdown.html">R4DS R Markdown chapter</a></li>
+<li><a href="https://r4ds.hadley.nz/quarto">R4DS R Quarto chapter</a></li>
 <li><a href="https://happygitwithr.com/rmd-test-drive.html">Happy Git R Markdown tutorial</a></li>
 </ul>
 
 
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-knuth84" class="csl-entry" role="listitem">
+Knuth, Donald E. 1984. <span>“Literate Programming.”</span> <em>Comput. J.</em> 27 (2): 97–111. <a href="https://doi.org/10.1093/comjnl/27.2.97">https://doi.org/10.1093/comjnl/27.2.97</a>.
+</div>
+<div id="ref-wickham_r_2023" class="csl-entry" role="listitem">
+Wickham, Hadley, Mine Çetinkaya-Rundel, and Garrett Grolemund. 2023. <em>R for Data Science: Import, Tidy, Transform, Visualie, and Model Data</em>. 2nd edition. Sebastopol, CA: O’Reilly.
+</div>
+<div id="ref-Wickham2017R" class="csl-entry" role="listitem">
+Wickham, Hadley, and Garrett Grolemund. 2017. <em>R for Data Science: Import, Tidy, Transform, Visualize, and Model Data</em>. 1st ed. Paperback; O’Reilly Media. <a href="http://r4ds.had.co.nz/">http://r4ds.had.co.nz/</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their <a href="https://pandoc.org/index.html">About Page</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>The <code>quarto::quarto_render()</code> function, which we describe below, wraps the bash <code>quarto render</code> function.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>This table was typed as Markdown code. But sometimes it is easier to use a code chunk to create and print a table. Pipe any data frame into <code>knitr::kable()</code> to create a table that will be formatted in the output of a rendered Quarto document.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The default dimensions for figures change based on the output format. Visit <a href="https://quarto.org/docs/computations/execution-options.html#figure-options">here</a> to learn more. Default settings for the entire document can be changed in the YAML header with the <code>execute</code> option:</p>
+<p>execute: warning: false<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>The default dimensions for figures change based on the output format. Visit <a href="https://quarto.org/docs/computations/execution-options.html#figure-options">here</a> to learn more. Default settings for the entire document can be changed in the YAML header with the <code>execute</code> option:</p>
+<p>execute: warning: false<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
@@ -862,9 +918,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -874,17 +931,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -897,125 +945,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1059,7 +988,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1085,32 +1013,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1172,18 +1074,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./05_exploratory-data-analysis.html" class="pagination-link" aria-label="Exploratory Data Analysis">
+      <a href="./05_exploratory-data-analysis.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./07_advanced-quarto.html" class="pagination-link" aria-label="Advanced Quarto">
+      <a href="./07_advanced-quarto.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
