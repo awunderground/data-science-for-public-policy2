@@ -127,12 +127,9 @@ In both cases, the code from your `.R` script should move to the R Console and e
 
 :::
 
-
 ## Comments
 
 R will interpret all text in a `.R` script as R code unless the code follows `#`, the comment symbol. Comments are essential to writing clear code in any programming language. 
-
-
 
 ```{r eval = FALSE}
 ## Demonstrate the value of a comment and make a simple calculation
@@ -143,8 +140,6 @@ It should be obvious *what* a line of clear R code accomplishes. It isn't always
 
 The following comment isn't useful because it just restates the R code, which is clear:
 
-
-
 ```{r eval = FALSE}
 # divide every value by 1.11
 cost / 1.11
@@ -152,11 +147,19 @@ cost / 1.11
 
 The following comment is useful because it adds context to the R code:
 
-
-
 ```{r eval = FALSE}
 # convert costs from dollars to Euros using the 2020-01-13 exchange rate
 cost / 1.11
+```
+
+The following is useful because it avoids [magic numbers](https://www.inf.unibz.it/~calvanese/teaching/05-06-ip/lecture-notes/uni04/node17.html).
+
+```{r eval = FALSE}
+# dollars to Euros 2020-01-13 exchange rate
+exchange_rate <- 1.11
+
+# convert costs from dollars to Euros
+cost / exchange_rate
 ```
 
 ::: callout

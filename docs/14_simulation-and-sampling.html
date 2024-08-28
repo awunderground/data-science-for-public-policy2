@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,7 +109,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -125,33 +117,6 @@ div.csl-indent {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -162,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -177,7 +142,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -407,7 +372,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -461,7 +426,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></h1>
 </div>
@@ -476,9 +441,7 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <section id="sec-review5" class="level2" data-number="13.1">
 <h2 data-number="13.1" class="anchored" data-anchor-id="sec-review5"><span class="header-section-number">13.1</span> Review</h2>
@@ -652,8 +615,8 @@ p(x) = P(X = x)
 <p>where <span class="math inline">\(0 \le p(x) \le 1\)</span> and <span class="math inline">\(\sum_{x \in \Omega} p(x) = 1\)</span></p>
 </div>
 </div>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/fig-die_4030fa9069cf56a4c6c20c2368c4dded">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">a =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>),</span>
@@ -664,14 +627,10 @@ p(x) = P(X = x)
 <span id="cb1-7"><a href="#cb1-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PMF for rolling a fair die"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-die" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-die-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.1: PMF for rolling a fair die
-</figcaption>
-<div aria-describedby="fig-die-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-die-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-die" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;13.1: PMF for rolling a fair die</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-die-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -709,9 +668,9 @@ p(x) = {n \choose x} p^x(1 - p)^{n - x}
 p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
 \tag{13.6}\]</span></span></p>
 <p>We can do similar calculations for each value between <span class="math inline">\(0\)</span> and <span class="math inline">\(10\)</span>.</p>
-<p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
-<div class="cell">
-<details class="code-fold">
+<p>We can also take random draws from the distribution. <a href="#fig-binomial">Figure&nbsp;<span>13.2</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/fig-binomial_8f2ab5210e5eea9f56da9362795f724e">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">x =</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
@@ -729,14 +688,10 @@ p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
 <span id="cb2-14"><a href="#cb2-14"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-binomial" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-binomial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.2: 1,000 random draws from a binomial distribution with 10 trials and p = 0.5
-</figcaption>
-<div aria-describedby="fig-binomial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-binomial-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-binomial" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;13.2: 1,000 random draws from a binomial distribution with 10 trials and p = 0.5</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-binomial-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -754,7 +709,7 @@ Sampling Error
 <p><strong>Sampling error</strong> is the difference between sample statistics (estimates of population parameters) and population parameters.</p>
 </div>
 </div>
-<p>The difference between the red dots and black bars in <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> is caused by sampling error.</p>
+<p>The difference between the red dots and black bars in <a href="#fig-binomial">Figure&nbsp;<span>13.2</span></a> is caused by sampling error.</p>
 </section>
 <section id="distributions-using-r" class="level3" data-number="13.4.3">
 <h3 data-number="13.4.3" class="anchored" data-anchor-id="distributions-using-r"><span class="header-section-number">13.4.3</span> Distributions Using R</h3>
@@ -767,7 +722,7 @@ Sampling Error
 </ul>
 <p>Let’s consider a few examples:</p>
 <p>The following answers the question: “What is the probability of observing 10 events in 10 trials when <code>p = 0.5</code>?”</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-5_36bb31ad693a0e536d818116dce8d744">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0009765625</code></pre>
@@ -775,7 +730,7 @@ Sampling Error
 </div>
 <p><br></p>
 <p>The following answers the question: “What’s the probability of observing 3 or fewer events in 10 trials when <code>p = 0.5</code>”</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-6_8446c49c8ff967c3c1e310308fdcac7b">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">pbinom</span>(<span class="at">q =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.171875</code></pre>
@@ -783,7 +738,7 @@ Sampling Error
 </div>
 <p><br></p>
 <p>The following answers the question: “What is a 10th percentile number of events to see in 10 trials when <code>p = 0.5</code>?</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-7_df440ed6ee12b945c4a4dc67a726cafe">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">qbinom</span>(<span class="at">p =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
@@ -791,10 +746,10 @@ Sampling Error
 </div>
 <p><br></p>
 <p>The following randomly draw ten different binomially distributed random variables.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-8_09790690d5b68075d7eb1d8d3a102b14">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 7 5 4 8 6 5 6 6 4 2</code></pre>
+<pre><code> [1] 7 6 3 6 3 6 5 5 4 5</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -841,9 +796,9 @@ X \sim Pois(\lambda)
 <p><span id="eq-poisson-pmf"><span class="math display">\[
 p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 \tag{13.8}\]</span></span></p>
-<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
-<div class="cell">
-<details class="code-fold">
+<p><a href="#fig-poisson">Figure&nbsp;<span>13.3</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/fig-poisson_5fdc5d15745cf59d06ced5cf6acc4024">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20200905</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a></span>
@@ -865,14 +820,10 @@ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-poisson" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.3: 1,000 samples of a Poisson RV
-</figcaption>
-<div aria-describedby="fig-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-poisson-1.png" class="img-fluid figure-img" width="672">
-</div>
+<div id="fig-poisson" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">Figure&nbsp;13.3: 1,000 samples of a Poisson RV</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-poisson-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -892,15 +843,15 @@ p(x) =
 \frac{1}{6} &amp; \text{if } x = 6
 \end{cases}
 \tag{13.9}\]</span></span></p>
-<p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>. We can sample from this PMF with</p>
-<div class="cell">
+<p>This PMF is visualized in <a href="#fig-die">Figure&nbsp;<span>13.1</span></a>. We can sample from this PMF with</p>
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-12_d127f67d643c7820e2a4fc870c68df53">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
 <p>We can also sample with probabilities that differ for each event:</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-13_205f14df31bfd9c06f0648ccacdfdd0a">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sample</span>(</span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"rain"</span>, <span class="st">"sunshine"</span>), </span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">size =</span> <span class="dv">1</span>, </span>
@@ -961,8 +912,8 @@ Cumulative Distribution Function (CDF)
 </div>
 </div>
 <p>Here is the PDF for a <strong>standard normal random variable:</strong></p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-16_c300a8e60041e5aa5062396b19b48933">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -974,17 +925,13 @@ Cumulative Distribution Function (CDF)
 <span id="cb17-8"><a href="#cb17-8"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>If we integrate the entire function we get the CDF.</p>
 <p><strong>Cumulative Density Function (CDF):</strong> A function of a random variable <span class="math inline">\(X\)</span> that returns the probability that the value <span class="math inline">\(X &lt; x\)</span>.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-17_6a2c622c3f32138a015963908f171e10">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -997,11 +944,7 @@ Cumulative Distribution Function (CDF)
 <span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <section id="uniform-distribution" class="level3" data-number="13.5.1">
@@ -1020,8 +963,8 @@ f(x) =
 \end{cases}
 \tag{13.11}\]</span></span></p>
 <p>Standard uniform random variables are useful for generating other random processes and imputation.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-18_2f5771ae9f7f39490dcb8adc97bae978">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">set.seed</span>(<span class="dv">20200904</span>)</span>
 <span id="cb19-2"><a href="#cb19-2"></a></span>
@@ -1038,11 +981,7 @@ f(x) =
 <span id="cb19-13"><a href="#cb19-13"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1075,8 +1014,8 @@ P(a \le X \le b) = P(a \le X &lt; b) = P(a &lt; X \le b) = P(a &lt; X &lt; b) = 
 </div>
 </div>
 <p>The last portion of this inequality is fundamental to working with continuous probability distributions and is the backbone of much of any intro to statistics course. For example, the probability, <span class="math inline">\(P(X &lt; 0)\)</span> is represented by the blue region below.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-19_9ab5468206bca00d71e2ea37037e5db6">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -1088,11 +1027,7 @@ P(a \le X \le b) = P(a \le X &lt; b) = P(a &lt; X \le b) = P(a &lt; X &lt; b) = 
 <span id="cb20-8"><a href="#cb20-8"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1126,8 +1061,8 @@ X \sim Exp(\lambda)
 <p><span id="eq-exponential-pdf"><span class="math display">\[
 f(x) = \lambda\exp(-\lambda x)
 \tag{13.16}\]</span></span></p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-22_01f0f1c1d2f4bfb73929b4e9c919aca2">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">x =</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span>)</span>
@@ -1142,11 +1077,7 @@ f(x) = \lambda\exp(-\lambda x)
 <span id="cb21-11"><a href="#cb21-11"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1212,7 +1143,7 @@ Maximum Likelihood Estimation
 <h4 class="anchored" data-anchor-id="binomial-distribution-mles">Binomial distribution MLEs</h4>
 <p>Suppose we have a sample of data <span class="math inline">\(x_1, ..., x_m\)</span>. If the number of trials <span class="math inline">\(n\)</span> is already known, then <span class="math inline">\(p\)</span> is the only parameter for the binomial distribution that needs to be estimated. The MLE for <span class="math inline">\(p\)</span> is <span class="math inline">\(\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}\)</span>.</p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\hat{p}\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-23_97f9c94c3ff02e0b73d4ac3f696dfb13">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
 <span id="cb22-2"><a href="#cb22-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">8</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span>
 <span id="cb22-3"><a href="#cb22-3"></a></span>
@@ -1221,7 +1152,7 @@ Maximum Likelihood Estimation
 <pre><code>[1] 4 3 6 3 4 3 3 2</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-24_2470e27d9ec23661babae380c47ec586">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mle_binom <span class="ot">&lt;-</span> <span class="fu">sum</span>(x) <span class="sc">/</span> (<span class="dv">10</span> <span class="sc">*</span> <span class="dv">8</span>)</span>
 <span id="cb24-2"><a href="#cb24-2"></a></span>
 <span id="cb24-3"><a href="#cb24-3"></a>mle_binom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1234,11 +1165,11 @@ Maximum Likelihood Estimation
 <h4 class="anchored" data-anchor-id="normal-distribution-mles">Normal distribution MLEs</h4>
 <p><span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are the parameters of a normal distribution. The MLEs for a normal distribution are <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i = \bar{x}\)</span> and <span class="math inline">\(s^2 = \frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i\)</span> and <span class="math inline">\(\hat\sigma^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-25_22ef112e5b593c2abd6441b400993717">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
 <span id="cb26-2"><a href="#cb26-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-26_377f8bdd406335d26240978fac10ee09">
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mean_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
 <span id="cb27-2"><a href="#cb27-2"></a></span>
 <span id="cb27-3"><a href="#cb27-3"></a>mean_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1259,11 +1190,7 @@ Maximum Likelihood Estimation
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1271,7 +1198,7 @@ Maximum Likelihood Estimation
 <h4 class="anchored" data-anchor-id="exponential-distribution-mles">Exponential distribution MLEs</h4>
 <p><span class="math inline">\(\lambda\)</span> is the only parameter of an exponential distribution. The MLE for an exponential distribution is <span class="math inline">\(\hat\lambda = \frac{1}{\bar{x}}\)</span>.</p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\frac{1}{\bar{x}}\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-27_45b0236e9ee48583be6ffb28603123d5">
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
 <span id="cb33-2"><a href="#cb33-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">200</span>, <span class="at">rate =</span> <span class="dv">10</span>)</span>
 <span id="cb33-3"><a href="#cb33-3"></a></span>
@@ -1289,11 +1216,7 @@ Maximum Likelihood Estimation
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1309,8 +1232,8 @@ Maximum Likelihood Estimation
 <ol type="1">
 <li>Create the vector in the code chunk below:</li>
 </ol>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-29_ce4acf3f3ab762d6ad5001a3fc6cb1ee">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb37-2"><a href="#cb37-2"></a>  <span class="fl">30970.787</span>, <span class="fl">10901.544</span>, <span class="fl">15070.015</span>, <span class="fl">10445.772</span>, <span class="fl">8972.258</span>, </span>
@@ -1395,7 +1318,8 @@ Multivariate Distribution
 <p><span id="eq-multivariate-normal-pdf"><span class="math display">\[
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 \tag{13.20}\]</span></span></p>
-<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
+<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
+<div>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
 <span id="cb38-2"><a href="#cb38-2"></a>                   <span class="fl">0.8</span>, <span class="dv">1</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>
@@ -1429,52 +1353,37 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb40-17"><a href="#cb40-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb40-18"><a href="#cb40-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(V1, V2)) <span class="sc">+</span></span>
 <span id="cb40-19"><a href="#cb40-19"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div id="fig-mvnorm" class="quarto-layout-panel">
-<figure class="quarto-float quarto-float-fig figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-mvnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
-</figcaption>
-<div aria-describedby="fig-mvnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="quarto-layout-row">
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-1" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(a) Strong Positive Covariance
-</figcaption>
-<div aria-describedby="fig-mvnorm-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-1.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672">
-</div>
+<div id="fig-mvnorm" class="cell quarto-layout-panel" data-hash="14_simulation-and-sampling_cache/html/fig-mvnorm_b8b14e24dbdc8733f5d2980a3da567af">
+<p></p><figcaption>Figure&nbsp;13.4: Samples from Multivariate Normal Distributions</figcaption><p></p>
+<figure class="figure">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-mvnorm-1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(a) Strong Positive Covariance</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-1.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-2" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(b) Weak Covariance
-</figcaption>
-<div aria-describedby="fig-mvnorm-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-2.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672">
-</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-mvnorm-2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(b) Weak Covariance</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-2.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-3" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-subfloat-fig figure">
-<figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-(c) Strong Negative Covariance
-</figcaption>
-<div aria-describedby="fig-mvnorm-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-3.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672">
-</div>
+<div class="cell-output-display quarto-layout-cell quarto-layout-cell-subref" style="flex-basis: 33.3%;justify-content: center;">
+<div id="fig-mvnorm-3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<figcaption class="figure-caption">(c) Strong Negative Covariance</figcaption>
+<p><img src="14_simulation-and-sampling_files/figure-html/fig-mvnorm-3.png" class="img-fluid figure-img" data-ref-parent="fig-mvnorm" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-</div>
 </figure>
+</div>
 </div>
 </section>
 </section>
@@ -1502,7 +1411,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <h3 data-number="13.8.1" class="anchored" data-anchor-id="example-1-coin-tossing"><span class="header-section-number">13.8.1</span> Example 1: Coin Tossing</h3>
 <p>We can calculate the proportion of tosses of a fair coin that we expect to turn up heads by finding the expected value of the binomial distribution and dividing by the number of tosses. But suppose we can’t… Or maybe we wish to confirm our calculations with simulations…</p>
 <p>Let’s try repeated sampling from a binomial distribution to approximate this process:</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-32_6738033c649390c9d9035f1e165346d0">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co">#' Count the proportion of n tosses that turn up heads</span></span>
 <span id="cb41-2"><a href="#cb41-2"></a><span class="co">#'</span></span>
 <span id="cb41-3"><a href="#cb41-3"></a><span class="co">#' @param n An integer for the number of tosses</span></span>
@@ -1524,7 +1433,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb41-19"><a href="#cb41-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s toss the coin ten times.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-33_d75ac64fe5a643236c783048920ff2a6">
 <div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
 <span id="cb42-2"><a href="#cb42-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1532,7 +1441,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <p>Ok, we got 0.3, which we know isn’t close to the expected proportion of 0.5. What if we toss the coin 1 million times.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-34_1699f7c47ab9976b4b6263e99d9fe998">
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
 <span id="cb44-2"><a href="#cb44-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1550,7 +1459,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>On average, a bootstrap sample includes about 63% of the observations from the data that are sampled. This means that an individual bootstrap sample excludes 37% of the observations from the source data!</p>
 <p>So if we bootstrap sample from a vector of length 100, then <span class="math inline">\(\frac{63}{100}\)</span> values will end up in the bootstrap sample on average and <span class="math inline">\(\frac{37}{100}\)</span> of the values will be repeats on average.</p>
 <p>We can explore this fact empirically with Monte Carlo simulation using repeated samples from a categorical distribution. We will use <code>sample()</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-36_392c31bcbc9bb2c560be29b5050c932c">
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co">#' Calculate the proportion of unique values from a vector of integers included </span></span>
 <span id="cb46-2"><a href="#cb46-2"></a><span class="co">#' in a bootstrap sample</span></span>
 <span id="cb46-3"><a href="#cb46-3"></a><span class="co">#'</span></span>
@@ -1571,7 +1480,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb46-18"><a href="#cb46-18"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s bootstrap sample 100,000 times.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-37_d9d4282472e3fc10e71e81429b691539">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># pre-allocate the output vector for efficient computation</span></span>
 <span id="cb47-2"><a href="#cb47-2"></a>prop_unique <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">100000</span>)</span>
 <span id="cb47-3"><a href="#cb47-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(prop_unique)) {</span>
@@ -1581,14 +1490,14 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb47-7"><a href="#cb47-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Finally, calculate the mean proportion and estimate the expected value.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-38_a431dbdceeeb58d9015b238c37e2e390">
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">mean</span>(prop_unique)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6337935</code></pre>
 </div>
 </div>
 <p>We can also calculate a 95% confidence interval using the bootstrap samples.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-39_4cbcbdc7cf6ca8927341e43576e9f625">
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">quantile</span>(prop_unique, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 2.5% 97.5% 
@@ -1603,7 +1512,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 \frac{\text{Area of Cirle}}{\text{Area of Square}} = \frac{\pi r ^ 2}{r ^ 2} = \pi
 \tag{13.21}\]</span></span></p>
 <p>This is simply solved with Monte Carlo simulation. Randomly sample a bivariate uniform random variables and count how frequently the values are inside of the square or inside the circle.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-40_de6850eeaa5812ea236a20a5d53a6c2e">
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">expand_grid</span>(</span>
 <span id="cb52-2"><a href="#cb52-2"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="fl">0.1</span>),</span>
 <span id="cb52-3"><a href="#cb52-3"></a>  <span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.1</span>)</span>
@@ -1626,14 +1535,10 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 ℹ Did you mean to use `annotate()`?</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-40-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-</div>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-41_1138b5e6c09928e94e210baa50b4fb9a">
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
 <span id="cb56-2"><a href="#cb56-2"></a></span>
 <span id="cb56-3"><a href="#cb56-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
@@ -1713,7 +1618,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p><span class="math display">\[y = 5 + 15x + \epsilon\]</span></p>
 <p>We can calculate the above statistics over repeated sampling and confirm their asymptotic properties with Monte Carlo simulation.</p>
 <p>First, create 1,000 random samples from the population.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-42_ec18c8e2d1a09178af19e5bc5d439339">
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
 <span id="cb58-2"><a href="#cb58-2"></a></span>
 <span id="cb58-3"><a href="#cb58-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
@@ -1726,14 +1631,14 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb58-10"><a href="#cb58-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, estimate a simple linear regression model for each draw of the population. This step includes calculating <span class="math inline">\(\hat\sigma\)</span>, <span class="math inline">\(\hat\beta_1\)</span>, <span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat{SE}(\hat\beta_1)\)</span>, and <span class="math inline">\(\hat{SE}(\hat\beta_0)\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-43_041a9cfa3795cfdfe1d9ed30a92e9598">
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
 <span id="cb59-2"><a href="#cb59-2"></a>  <span class="at">.x =</span> data,</span>
 <span id="cb59-3"><a href="#cb59-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
 <span id="cb59-4"><a href="#cb59-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we extract the coefficients and confidence intervals.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-44_b80141910c8eac46788ee10f049e47a9">
 <div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
 <span id="cb60-2"><a href="#cb60-2"></a>  <span class="at">.x =</span> estimated_models,</span>
 <span id="cb60-3"><a href="#cb60-3"></a>  <span class="at">.f =</span> tidy,</span>
@@ -1741,7 +1646,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb60-5"><a href="#cb60-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s look at estimates of the residual standard error. The center of the distribution closely matches the population standard deviation of the error term.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-45_0a1c64340c917867b7439511bb8882b6">
 <div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
 <span id="cb61-2"><a href="#cb61-2"></a>  <span class="at">.x =</span> estimated_models,</span>
 <span id="cb61-3"><a href="#cb61-3"></a>  <span class="at">.f =</span> glance</span>
@@ -1755,15 +1660,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-45-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Let’s plot the coefficients. The centers approximately match the population intercept of 5 and slope of 15.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-46_0d9e8d1a931bcc157c2725db74ae0926">
 <div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
 <span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
@@ -1773,17 +1674,13 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-46-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>The standard deviation of the coefficients also matches the standard errors.</p>
 <p><span class="math display">\[\hat{SE}(\hat\beta_1) = \sqrt\frac{\hat\sigma^2}{\sum(x_i -\bar{x})^2} = \sqrt\frac{10^2}{40,000} = 0.05\]</span></p>
 <p><span class="math display">\[\hat{SE}(\hat{\beta_0}) = \sqrt{\hat\sigma^2\left[\frac{1}{n} + \frac{\bar{x}^2}{\sum(x_i - \bar{x})^2}\right]} = \sqrt{10^2\left[\frac{1}{10,000} + 0\right]} = 0.1\]</span></p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-47_0cbb309725abb45478c3283fc35c4ef2">
 <div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
 <span id="cb65-3"><a href="#cb65-3"></a>  <span class="fu">summarize</span>(</span>
@@ -1799,7 +1696,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <p>Let’s look at how often the true parameter is inside the 95% confidence interval. It’s close although not exactly 95%.</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-48_59d15c90dc169da7477902d2285d5af9">
 <div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1832,7 +1729,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <li>The wait times are zero if a person arrives after the person before them and the difference between the prior person’s departure and the current person’s arrival otherwise.</li>
 <li>The departure time is arrival time plus the wait time plus the service time.</li>
 </ul>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-50_645e96024132b4b50691d5f399fcf761">
 <div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
 <span id="cb71-2"><a href="#cb71-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
 <span id="cb71-3"><a href="#cb71-3"></a></span>
@@ -1854,7 +1751,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 # ℹ 90 more rows</code></pre>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-51_95617e6b31eafb5e178ebdbf659276de">
 <div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
 <span id="cb73-2"><a href="#cb73-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
 <span id="cb73-3"><a href="#cb73-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
@@ -1870,15 +1767,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb73-13"><a href="#cb73-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
 <span id="cb73-14"><a href="#cb73-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="14_simulation-and-sampling_files/figure-html/unnamed-chunk-51-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>This is interesting, but it’s still only one draw from a Monte Carlo simulation. What if we are interested in the distribution of wait times for the fifth customer?</p>
-<div class="cell">
+<div class="cell" data-hash="14_simulation-and-sampling_cache/html/unnamed-chunk-52_e883c50cabe93eb4110a30ae63d22af6">
 <div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co">#' Generate wait times at the queue</span></span>
 <span id="cb74-2"><a href="#cb74-2"></a><span class="co">#'</span></span>
 <span id="cb74-3"><a href="#cb74-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
@@ -2022,7 +1915,7 @@ Resampling
 <p>We will also learn about bootstrap sampling when we discuss nonparametric statistics.</p>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-casella2002" class="csl-entry" role="listitem">
 Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd ed. Australia ; Pacific Grove, CA: Thomson Learning.
 </div>
@@ -2118,9 +2011,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2130,17 +2024,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2153,125 +2038,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2315,7 +2081,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2341,32 +2106,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2428,18 +2167,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./13_web-scraping.html" class="pagination-link" aria-label="Web Scraping">
+      <a href="./13_web-scraping.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./15_microsimulation.html" class="pagination-link" aria-label="Microsimulation">
+      <a href="./15_microsimulation.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

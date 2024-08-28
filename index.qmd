@@ -1,6 +1,6 @@
 # Welcome {.unnumbered}
 
-This book is the notes for Advanced Data Science for Public Policy in the McCourt School of Public Policy at Georgetown University. 
+This book contains the notes for Intro to Data Science and Advanced Data Science in the McCourt School of Public Policy at Georgetown University. Together, the notes are the text Data Science for Public Policy.
 
 ## Acknowledgements (More to come!)
 
