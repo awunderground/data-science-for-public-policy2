@@ -362,12 +362,12 @@ Let's use bagged trees to predict the low response rate from the Census PDB exam
 #| label: bagged-trees-pdb
 
 bagged_trees_mod <- bag_tree(cost_complexity = 0.001) |>
-  set_engine("rpart", times = 100) |>
-  set_mode("regression") 
+  set_engine(engine = "rpart", times = 60) |>
+  set_mode(mode = "regression") 
 
 bagged_trees_mod_wf <- workflow() |>
-  add_recipe(dt_rec) |>
-  add_model(bagged_trees_mod)
+  add_recipe(recipe = dt_rec) |>
+  add_model(spec = bagged_trees_mod)
 
 bagged_trees_resamples <- bagged_trees_mod_wf |>
   fit_resamples(resamples = pdb_folds)
