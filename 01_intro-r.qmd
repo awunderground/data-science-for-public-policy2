@@ -132,7 +132,7 @@ In both cases, the code from your `.R` script should move to the R Console and e
 R will interpret all text in a `.R` script as R code unless the code follows `#`, the comment symbol. Comments are essential to writing clear code in any programming language. 
 
 ```{r eval = FALSE}
-## Demonstrate the value of a comment and make a simple calculation
+# Demonstrate the value of a comment and make a simple calculation
 2 + 2
 ```
 
@@ -218,8 +218,6 @@ c(1.1, 2.2, 3.3)
 c("District of Columbia", "Virginia", "Maryland")
 ```
 
-
-
 The `class()` function can be used to identify the type, or class, of an object. For example:
 
 ```{r}
@@ -269,10 +267,10 @@ is.na(c(1, 2, NA))
 
 Instead, `data frames`, and their powerful cousins `tibbles`, are the backbone of data science and this course. `Data frames` are two-dimensional arrays where each column is a list (usually a vector). Most times, each column will be of one type while a given row will contain many different types. We usually refer to columns as *variables* and rows as *observations*. 
 
-Here are the first six rows of a data frame with information about diamond prices and diamond characteristics:
+Here are the first six rows of a data frame with information about mammal sleep habits:
 
 ```{r}
-head(ggplot2::diamonds)
+head(ggplot2::msleep)
 ```
 
 ### tibbles
@@ -291,15 +289,15 @@ library(tidyverse)
 ```
 
 ```{r}
+#| echo: false
+
 tibble(
   a = c(TRUE, FALSE, FALSE),
-  b = c(1, 2, 3),
+  b = c(1L, 2L, 3L),
   c = c(1.1, 2.2, 3.3),
   d = c("District of Columbia", "Virginia", "Maryland")
 )
 ```
-
-
 
 From this moment forward, I will use data frame to mean tibble. 
 
@@ -308,8 +306,6 @@ From this moment forward, I will use data frame to mean tibble.
 R can operate on many different vectors and data frames in the same R session. This creates much flexibility. It also means most unique objects in an R session need unique names.
 
 `<-` is the assignment operator. An object created on the right side of an assignment operator is assigned to a name on the left side of an assignment operator. Assignment operators are important for saving the consequences of operations and functions. Without assignment, the result of a calculation is not saved for use in a future calculation. Operations without assignment operators will typically be printed to the console but not saved for future use.
-
-
 
 ```{r}
 # this important calculation is saved to the R environment
