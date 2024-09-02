@@ -1,6 +1,6 @@
 ---
 title: "Data Visualization with ggplot2"
-abstract: This chapter introduces ggplot2, the tidyverse’s wildly popular data visualization package. 
+abstract: This chapter introduces ggplot2, the tidyverse’s popular data visualization package. 
 format: 
   html:
     toc: true
@@ -58,7 +58,9 @@ exercise_number <- exercise_number + 1
 2. Create a new `.R` script in your directory called `03_data-visualization.R`. 
 3.  **Type** (don't copy & paste) the following code below `library(tidyverse)` in `03_data-visualization.R`.
 
-```
+```{r}
+#| eval: false
+
 ggplot(data = storms) + 
   geom_point(mapping = aes(x = pressure, y = wind))
 ```
@@ -177,6 +179,7 @@ recent_storms |>
 **Shape**
 
 ```{r}
+#| fig-height: 2
 #| echo: false
 #| warning: false
 
@@ -211,7 +214,7 @@ Others: transparency, line type
 #| echo: false
 #| warning: false
 
-recent_storms |>
+storms |>
   ggplot(aes(x = category)) +
   geom_bar()
 
@@ -308,8 +311,7 @@ exercise_number <- exercise_number + 1
 
 recent_storms50 |>
   ggplot(aes(x = pressure, 
-             y = 1)
-         ) +
+             y = 1)) +
   geom_point(alpha = 0.2) +
   scale_y_continuous(breaks = 0) +
   labs(y = NULL) +
@@ -328,8 +330,7 @@ recent_storms50 |>
 
 recent_storms50 |>
   ggplot(aes(x = pressure, 
-             y = 1)
-         ) +
+             y = 1)) +
   geom_point(alpha = 0.2) +
   scale_x_reverse() +
   scale_y_continuous(breaks = 0) +
@@ -350,8 +351,7 @@ recent_storms50 |>
 recent_storms50 |>
   ggplot(aes(x = pressure, 
              y= 1, 
-             size = wind)
-         ) +
+             size = wind)) +
   ggplot2::geom_point(alpha = 0.5) +
   scale_size_continuous(breaks = c(25, 75, 125)) +  
   scale_y_continuous(breaks = 0) +
@@ -396,7 +396,9 @@ exercise_number <- exercise_number + 1
 
 1. Type the following code in your script. 
 
-```
+```{r}
+#| eval: false
+
 data <- tibble(x = 1:10, y = 1:10)
 ggplot(data = data) +
   geom_blank(mapping = aes(x = x, y = y))
@@ -459,7 +461,9 @@ exercise_number <- exercise_number + 1
 **Facets (optional)** break data into meaningful subsets. 
 :::
 
-`facet_wrap` and `facet_grid` are similar but have distinct functions. As the diagram below illustrates, `facet_wrap` organizes a 1 dimensional set of charts, but wraps the charts in two dimensions to preserve space. `facet_grid` organizes a set of charts in two dimensions. [^facet-geo] 
+Faceting breaks data visualizations into meaningful subsets using a variable or variables in the data set. This type of visualization is sometimes called small multiples. 
+
+`facet_wrap` small multiples, in order, until the variable is exhausted. It does not provide much macro structure to the visualization. `facet_grid` creates a macro structure where each panel represents the combination of one level on the maco x-axis with one level on the macro y-axis.[^facet-geo] 
 
 [^facet-geo]: `facet_geo` organizes charts in a way that attempts to preserve some geographic component of the data. It is beyond the scope of this course. You can learn more  at the [geofacet package vignette](https://cran.r-project.org/web/packages/geofacet/vignettes/geofacet.html) website. 
 
@@ -472,17 +476,11 @@ You can see a helpful chart illustrating these differences [here](https://ggplot
 
 ```{r}
 #| echo: false
-#| warning: false
- library(urbnmapr)
 
-recent_storms |>
-  ggplot(aes(long, lat, group = name)) +
-  geom_polygon(data = urbnmapr::states, aes(long, lat, group = group),
-               fill = "grey", color = "#ffffff", linewidth = 0.05) +
-  geom_path(alpha = 0.3, size = 0.5, color = "#1696d2") +
-  facet_wrap(~category) +
-  coord_map(projection = "albers", lat0 = 39, lat1 = 45) +
-  urbnthemes::theme_urbn_map()
+storms |>
+  ggplot(aes(pressure, wind, color = status)) +
+  geom_point(alpha = 0.2) +
+  facet_wrap(~ month, )
 
 ```
 
@@ -515,7 +513,9 @@ exercise_number <- exercise_number + 1
 
 1. Add the following code to your script. Submit it!
 
-```
+```{r}
+#| eval: false
+
 ggplot(storms) +
   geom_bar(mapping = aes(x = category))
 ```
@@ -564,7 +564,9 @@ exercise_number <- exercise_number + 1
 2. Run `install.packages("remotes")` and `remotes::install_github("UrbanInstitute/urbnthemes")` in the console. 
 3. In the lines preceding the chart add and run the following code:
 
-```
+```{r}
+#| eval: false
+
 library(urbnthemes)
 set_urbn_defaults(style = "print")
 ```
@@ -645,7 +647,9 @@ exercise_number <- exercise_number + 1
 
 1. Add the following exercise to you script. Run it!
 
-```
+```{r}
+#| eval: false
+
 storms |>  
   filter(category > 0) |>
   distinct(name, year) |>
@@ -677,7 +681,9 @@ exercise_number <- exercise_number + 1
 
 1. Add the following exercise to you script. Run it!
 
-```
+```{r}
+#| eval: false
+
 ggplot(data = storms, mapping = aes(x = pressure, y = wind)) + 
   geom_point() +
   geom_smooth()
