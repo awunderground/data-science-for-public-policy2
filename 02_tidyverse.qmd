@@ -1,6 +1,6 @@
 ---
 title: "Introduction to the tidyverse"
-abstract: The tidyverse is an immensely popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities. 
+abstract: The tidyverse is a popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities. 
 format: 
   html:
     toc: true
@@ -87,7 +87,9 @@ The defining opinion of the tidyverse is its wholehearted adoption of tidy data.
 
 1. Each variable forms a column.
 2. Each observation forms a row.
-3. Each type of observational unit forms a dataframe. (This is from the paper, not the book)
+3. Each type of observational unit forms a dataframe.[^paper]
+
+[^paper]: This definition is from the tidy data paper, not R for Data Science, which uses a slightly different definition.
 
 ![Source: [R4DS](https://r4ds.hadley.nz/data-tidy)](images/tidy-data.png)
 
@@ -95,7 +97,12 @@ Tidy data was formalized by Hadley @Wickhamtidy in the Journal of Statistical So
 
 > Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.hadley.nz/data-tidy.html)
 
-The tidy approach to data science is powerful because it breaks data work into two distinct parts. First, get the data into a tidy format. Second, use tools optimized for tidy data. By standardizing the data structure for most community-created tools, the framework oriented diffuse development and reduced the friction of data work. 
+The tidy approach to data science is powerful because it breaks data work into two distinct parts. 
+
+1. Get the data into a tidy format. 
+2. Use tools optimized for tidy data. 
+
+By standardizing the data structure for most community-created tools, the framework orients diffuse development and reduces the friction of data work. 
 
 ## dplyr
 
@@ -109,9 +116,7 @@ dplyr can be explicitly loaded with `library(dplyr)` or loaded with `library(tid
 library(tidyverse)
 ```
 
-
-
-We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the Current Population Survey (CPS). Run the following code to load the data.
+We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the [Current Population Survey](https://cps.ipums.org/cps/about.shtml) (CPS). Run the following code to load the data.
 
 ```{r}
 #| label: load-asec
@@ -126,11 +131,7 @@ asec <- read_csv(
 
 ```
 
-
-
 We can use `glimpse(asec)` to quickly view the data. We can also use `View(asec)` to open up `asec` in RStudio. 
-
-
 
 ```{r glimpse-asec}
 glimpse(x = asec)
@@ -157,7 +158,7 @@ This works great until the goal is to select 99 of 100 variables. Fortunately, `
 select(.data = asec, -asecflag)
 ```
 
-Tidy data generally results in longer, wider data sets than other programming languages so iteratively selecting by column names is less important than in Stata or SAS. Still, `dplyr` contains powerful helper functions that can select variables based on patterns in column names:
+`dplyr` contains powerful helper functions that can select variables based on patterns in column names:
 
 * `contains()`: Contains a given string
 * `starts_with()`: Starts with a prefix
@@ -197,7 +198,7 @@ rename(.data = asec, serial_number = serial)
 
 
 
-You can also rename a selection of variables using `rename_with()`. The `.cols` argument is used to select the columns to rename and takes a `tidyselect` statement like those we introduced above. Here, we're using the `where()` selection helper which selects all columns where a given condition is TRUE. The default value for the `.cols` argument is `everything()` which selects all columns in the dataset.
+You can also rename a selection of variables using `rename_with()`. The `.cols` argument is used to select the columns to rename and takes a `tidyselect` statement like those we introduced above. Here, we're using the `where()` selection helper which selects all columns where a given condition is `TRUE`. The default value for the `.cols` argument is `everything()` which selects all columns in the dataset.
 
 
 
@@ -332,7 +333,7 @@ Data munging is tiring when each operation needs to be assigned to a name with `
 `|>` passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:
 
 
-Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) wildly popular, particularly in the `tidyverse framework`. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
+Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) popular, particularly in the `tidyverse framework`. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
 
 
 ```{r pipe-example, eval = FALSE}

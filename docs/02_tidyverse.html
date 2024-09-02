@@ -442,7 +442,7 @@ div.csl-indent {
 <div>
   <div class="abstract">
     <div class="abstract-title">Abstract</div>
-    The tidyverse is an immensely popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities.
+    The tidyverse is a popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities.
   </div>
 </div>
 
@@ -509,7 +509,7 @@ div.csl-indent {
 <ol type="1">
 <li>Each variable forms a column.</li>
 <li>Each observation forms a row.</li>
-<li>Each type of observational unit forms a dataframe. (This is from the paper, not the book)</li>
+<li>Each type of observational unit forms a dataframe.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
 </ol>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -521,7 +521,12 @@ div.csl-indent {
 <blockquote class="blockquote">
 <p>Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ <a href="https://r4ds.hadley.nz/data-tidy.html">Hadley Wickham</a></p>
 </blockquote>
-<p>The tidy approach to data science is powerful because it breaks data work into two distinct parts. First, get the data into a tidy format. Second, use tools optimized for tidy data. By standardizing the data structure for most community-created tools, the framework oriented diffuse development and reduced the friction of data work.</p>
+<p>The tidy approach to data science is powerful because it breaks data work into two distinct parts.</p>
+<ol type="1">
+<li>Get the data into a tidy format.</li>
+<li>Use tools optimized for tidy data.</li>
+</ol>
+<p>By standardizing the data structure for most community-created tools, the framework orients diffuse development and reduces the friction of data work.</p>
 </section>
 </section>
 <section id="dplyr" class="level2" data-number="2.4">
@@ -531,7 +536,7 @@ div.csl-indent {
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We’ll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the Current Population Survey (CPS). Run the following code to load the data.</p>
+<p>We’ll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the <a href="https://cps.ipums.org/cps/about.shtml">Current Population Survey</a> (CPS). Run the following code to load the data.</p>
 <div class="cell" data-messgae="false">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>asec <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">paste0</span>(</span>
@@ -620,7 +625,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 #   offtotval &lt;dbl&gt;, offcutoff &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Tidy data generally results in longer, wider data sets than other programming languages so iteratively selecting by column names is less important than in Stata or SAS. Still, <code>dplyr</code> contains powerful helper functions that can select variables based on patterns in column names:</p>
+<p><code>dplyr</code> contains powerful helper functions that can select variables based on patterns in column names:</p>
 <ul>
 <li><code>contains()</code>: Contains a given string</li>
 <li><code>starts_with()</code>: Starts with a prefix</li>
@@ -670,7 +675,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 #   offpov &lt;chr&gt;, offpovuniv &lt;chr&gt;, offtotval &lt;dbl&gt;, offcutoff &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>You can also rename a selection of variables using <code>rename_with()</code>. The <code>.cols</code> argument is used to select the columns to rename and takes a <code>tidyselect</code> statement like those we introduced above. Here, we’re using the <code>where()</code> selection helper which selects all columns where a given condition is TRUE. The default value for the <code>.cols</code> argument is <code>everything()</code> which selects all columns in the dataset.</p>
+<p>You can also rename a selection of variables using <code>rename_with()</code>. The <code>.cols</code> argument is used to select the columns to rename and takes a <code>tidyselect</code> statement like those we introduced above. Here, we’re using the <code>where()</code> selection helper which selects all columns where a given condition is <code>TRUE</code>. The default value for the <code>.cols</code> argument is <code>everything()</code> which selects all columns in the dataset.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">rename_with</span>(<span class="at">.data =</span> asec, <span class="at">.fn =</span> toupper, <span class="at">.cols =</span> <span class="fu">where</span>(is.numeric))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -869,7 +874,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.6" class="anchored" data-anchor-id="section"><span class="header-section-number">2.4.6</span> <code>|&gt;</code></h3>
 <p>Data munging is tiring when each operation needs to be assigned to a name with <code>&lt;-</code>. The pipe, <code>|&gt;</code>, allows lines of code to be chained together so the assignment operator only needs to be used once.</p>
 <p><code>|&gt;</code> passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:</p>
-<p>Legacy R code may use <code>%&gt;%</code>, the pipe from the <code>magrittr</code> package. It was (and remains) wildly popular, particularly in the <code>tidyverse framework</code>. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because <code>|&gt;</code> is new and continues to be developed, developers have increased <code>|&gt;</code>’s abilities over time. To see a list of key differences between <code>%&gt;%</code> and <code>|&gt;</code>, see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/">this blog</a>.</p>
+<p>Legacy R code may use <code>%&gt;%</code>, the pipe from the <code>magrittr</code> package. It was (and remains) popular, particularly in the <code>tidyverse framework</code>. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because <code>|&gt;</code> is new and continues to be developed, developers have increased <code>|&gt;</code>’s abilities over time. To see a list of key differences between <code>%&gt;%</code> and <code>|&gt;</code>, see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/">this blog</a>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># old way</span></span>
 <span id="cb29-2"><a href="#cb29-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span>
@@ -1244,6 +1249,12 @@ Wickham, Hadley. 2014. <span>“Tidy Data.”</span> <a href="https://doi.org/10
 </div>
 </div>
 </section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>This definition is from the tidy data paper, not R for Data Science, which uses a slightly different definition.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
 </section>
 
 </main> <!-- /main -->
