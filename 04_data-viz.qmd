@@ -9,6 +9,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+![Charles Minard's famous data visualization of Napolean's Russian Campisng of 1812.](images/header-images/Minard.png)
+
 ```{r}
 #| echo: false
 #| message: false

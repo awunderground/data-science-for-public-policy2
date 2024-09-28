@@ -9,6 +9,11 @@ editor_options:
   chunk_output_type: console
 ---
 
+![](images/header-images/Soviet_apartment.jpg)
+
+~ A Soviet Apartment that looks like a data frame. Image by [lafleur](https://en.wikipedia.org/wiki/Brutalist_architecture#/media/File:Soviet_apartment.jpg)
+
+
 ```{r rmarkdown-setup, echo = FALSE}
 #| echo: false
 #| warning: false

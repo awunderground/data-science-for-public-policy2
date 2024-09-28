@@ -9,6 +9,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+![English alphabet from 1740](images/header-images/Chart_of_the_English_alphabet_from_1740_(from_James_Hoy,_Irish_Spelling-Book).png){width=50%}
 
 ```{r}
 #| echo: false
@@ -234,14 +235,11 @@ c(TRUE, 1, "District of Columbia")
 class(c(TRUE, 1, "District of Columbia"))
 ```
 
-
 *Lists* are one- or multi-dimensional arrays that are made up of other lists. Lists are *heterogeneous* - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector. 
 
 `NULL` is the null object in R. It means a value does not exist.
 
 `NA` is a missing value of length 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations [@Wickham2017R, Section 20.2].
-
-
 
 ```{r}
 1 + 2 + 3 + NA

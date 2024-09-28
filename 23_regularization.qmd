@@ -9,10 +9,11 @@ execute:
   message: false
   warning: false
   cache: true
-bibliography: references.bib
 editor_options: 
   chunk_output_type: console
 ---
+
+![A mountain ridge in Japan.](images/header-images/Tsubakurodake_from_Otenshodake_2002-8-22.jpg)
 
 ```{r}
 #| echo: false

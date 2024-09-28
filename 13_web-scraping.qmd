@@ -10,6 +10,8 @@ format:
     code-line-numbers: true
 ---
 
+![](images/header-images/Two_working_knives.jpg)
+
 ```{r}
 #| echo: false
 #| message: false

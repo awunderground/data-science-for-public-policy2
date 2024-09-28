@@ -9,6 +9,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+![Engineers clean a test mirror for the James Webb Space Telescope](images/header-images/Engineers_Clean_JWST_Secondary_Reflector_with_Carbon_Dioxide_Snow.jpg)
+
 ```{r}
 #| echo: false
 #| warning: false
