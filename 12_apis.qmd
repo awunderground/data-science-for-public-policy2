@@ -9,6 +9,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+![Sömmering's electric telegraph in 1809](images/header-images/Soemmerring_1810_telegraph_overview.jpg){width=50%}
 
 ```{r}
 #| echo: false

@@ -10,7 +10,7 @@ editor_options:
 bibliography: references.bib
 ---
 
-![The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.](images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg)
+![The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.](images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg)
 
 
 

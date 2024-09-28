@@ -9,6 +9,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+![A page from Alexander Graham Bell’s laboratory notebook](images/header-images/AGBell_Notebook.jpg)
+
 ```{r echo = FALSE}
 #| echo: false
 #| warning: false

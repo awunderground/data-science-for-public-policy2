@@ -9,6 +9,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+![](images/header-images/Lego_Color_Bricks.jpg)
+
+~ Photo by [Alan Chia](https://en.wikipedia.org/wiki/Lego#/media/File:Lego_Color_Bricks.jpg)
+
 ```{r}
 #| echo: false
 

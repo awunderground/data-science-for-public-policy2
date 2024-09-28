@@ -12,6 +12,8 @@ editor_options:
 fig-cap-location: top
 ---
 
+![Simulation is a common tool for forecasting weather.](images/header-images/Day5pressureforecast.png)
+
 ```{r}
 #| echo: false
 

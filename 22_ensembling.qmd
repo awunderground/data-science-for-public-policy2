@@ -12,6 +12,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+![A school of fish in Hawai'i](images/header-images/Red_Fish_at_Papahānaumokuākea_(cropped).jpg)
+
 ```{r}
 #| echo: false
 

@@ -7,6 +7,8 @@ format:
     code-line-numbers: true
 ---
 
+![Chemistry stencils that were used for drawing equipment in lab notebooks](images/header-images/Schablone_Logarex_25524-S,_Chemie_II.jpg)
+
 ## Review Exercise {#sec-review}
 
 Let's start with an exercise to review content from the previous section of notes:

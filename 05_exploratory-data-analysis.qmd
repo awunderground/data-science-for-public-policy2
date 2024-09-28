@@ -10,6 +10,8 @@ editor_options:
   chunk_output_type: console
 ---
 
+![Bruce McCandless II in space in 1984.](images/header-images/Bruce_McCandless_II_during_EVA_in_1984.jpg)
+
 ```{r}
 #| label: rmarkdown-setup
 #| echo: false

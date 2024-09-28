@@ -9,6 +9,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+![](images/header-images/ZIM_New_York_(ship,_2002)_002.jpg)
+
+~ Image by [Patrick Denker](https://en.wikipedia.org/wiki/Intermodal_container#/media/File:ZIM_New_York_(ship,_2002)_002.jpg)
+
 ## Packages
 
 At some point, the same scripts or data are used often enough or widely enough to justify moving from sourced R scripts to a full-blown R package. R packages make it easier to

@@ -7,6 +7,8 @@ format:
     code-line-numbers: true
 ---
 
+![Hansel and Gretel by Arthur Rackham.](images/header-images/Hansel-and-gretel-rackham.jpg){width=60%}
+
 ```{r}
 #| label: quarto-setup
 #| echo: false
