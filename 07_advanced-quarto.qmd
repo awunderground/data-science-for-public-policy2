@@ -7,7 +7,8 @@ format:
     code-line-numbers: true
 ---
 
-## Review Exercise 
+## Review Exercise {#sec-review}
+
 Let's start with an exercise to review content from the previous section of notes:
 
 ```{r}

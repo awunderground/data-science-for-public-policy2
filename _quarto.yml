@@ -51,7 +51,8 @@ book:
         # - 28_text-analysis.qmd
         # - 29_text-modeling.qmd
     - part: Other Topics
-        # - PART 1: geospatial analysis
+      chapters:
+       - 28_geospatial.qmd
         # - parallel programming to be developed
     - references.qmd
 
