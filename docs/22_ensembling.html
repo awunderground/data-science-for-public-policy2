@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -58,7 +58,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -101,13 +100,7 @@ div.csl-indent {
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,7 +109,6 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -125,33 +117,6 @@ div.csl-indent {
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -162,12 +127,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./22_ensembling.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./22_ensembling.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -177,7 +142,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -420,7 +385,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -454,7 +419,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./22_ensembling.html"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></h1>
 </div>
@@ -469,14 +434,12 @@ window.Quarto = {
   </div>
   
 
-
 </header>
-
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/header-images/Red_Fish_at_Papahānaumokuākea_(cropped).jpg" class="img-fluid figure-img"></p>
-<figcaption>A school of fish in Hawai’i</figcaption>
+<figcaption class="figure-caption">A school of fish in Hawai’i</figcaption>
 </figure>
 </div>
 <section id="motivation" class="level2" data-number="20.1">
@@ -531,7 +494,7 @@ window.Quarto = {
 <section id="lrs-set-up" class="level3" data-number="20.2.4">
 <h3 data-number="20.2.4" class="anchored" data-anchor-id="lrs-set-up"><span class="header-section-number">20.2.4</span> LRS Set Up</h3>
 <p>We will work with the tract-level PDB instead of the block-group level PDB to simplify computation. The PDB contains more than 500 variables. For now, we only consider the top 25 variables to further simplify computation.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-3_5a0aba8b654a7c5a5aef0407ab0abfff">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pdb_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"pdb_small.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 69650 Columns: 26
@@ -549,7 +512,7 @@ dbl (24): Low_Response_Score, non_return_rate, Renter_Occp_HU_ACS_13_17, Pop...
 <span id="cb3-4"><a href="#cb3-4"></a>pdb_train <span class="ot">&lt;-</span> <span class="fu">training</span>(pdb_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Lastly, we set up <span class="math inline">\(v\)</span>-fold cross validation. We only use five folds because some of the models take a long time to fit to the data.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-5_0a16bab7b6c57acd1bc1d6a3e4bcbb26">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>pdb_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> pdb_train, <span class="at">v =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -557,7 +520,7 @@ dbl (24): Low_Response_Score, non_return_rate, Renter_Occp_HU_ACS_13_17, Pop...
 <h3 data-number="20.2.5" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">20.2.5</span> Linear Regression</h3>
 <p>We first consider multiple linear regression. We need a recipe, a model, and a workflow to fit the model five times and evaluate its predictive accuracy.</p>
 <p>The data set contains a few variables that shouldn’t be included in the model. We use <code>add_role()</code> to turn them into “ids” and then <code>step_rm(has_role("id"))</code> to remove them from consideration.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-6_3969c03bdccf56406d34cdab23d17496">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>lm_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
@@ -574,7 +537,7 @@ dbl (24): Low_Response_Score, non_return_rate, Renter_Occp_HU_ACS_13_17, Pop...
 <span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The model has good, but not great performance.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-7_affd224f1783d3da168ec63c1057ffc1">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>lm_resamples <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -586,7 +549,7 @@ dbl (24): Low_Response_Score, non_return_rate, Renter_Occp_HU_ACS_13_17, Pop...
 </div>
 </div>
 <p>We can use <code>last_fit()</code> to fit the model to all of the training data and <code>extract_fit_parsnip()</code> to examine the estimated coefficients.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-8_86a5e0065972816a31a77395d7835666">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>lm_wf <span class="sc">|&gt;</span></span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="fu">last_fit</span>(pdb_split) <span class="sc">|&gt;</span></span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">extract_fit_parsnip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -628,7 +591,7 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <section id="regression-trees" class="level3" data-number="20.2.6">
 <h3 data-number="20.2.6" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">20.2.6</span> Regression Trees</h3>
 <p>Next, we consider regression trees.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-9_79512236b54e993d087432caeba63b7a">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>dt_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
@@ -645,7 +608,7 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <span id="cb10-14"><a href="#cb10-14"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Again, the model has good, but not great performance.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-10_a4e577f1036343da0663e8867e6ec1a5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>dt_resamples <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -742,8 +705,8 @@ Bagged Trees Algorithm
 </ul>
 <p>In practice, the number of trees does not need to be tuned and using too many trees will not lead to a model that is overfit. Typically, the number of trees can be set in the 100 to 500 range based on computational limitations.</p>
 <p>Consider the simulated data and the predicted values for different numbers of trees.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-11_8bee4ed989d07fe55cfd58bb164b9d76">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb13-2"><a href="#cb13-2"></a></span>
@@ -776,14 +739,14 @@ Bagged Trees Algorithm
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="22_ensembling_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Simulated data</figcaption>
+<figcaption class="figure-caption">Simulated data</figcaption>
 </figure>
 </div>
 </div>
 </div>
 <p>The syntax for bagged trees is slightly different than other models and requires the use of <code>library(baguette)</code>. Here, <code>times</code> is the number of bootstraps to use for the algorithm. When <code>times = 1</code>, then the algorithm is one regression tree trained on a bootstrap sample of the data.</p>
 <p>Notice how the predicted value line smooths out because of the averaging of many trees.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/bagged-trees-data1_6bf5369a44c320e294c9539ed342a1f7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(baguette)</span>
 <span id="cb14-2"><a href="#cb14-2"></a></span>
 <span id="cb14-3"><a href="#cb14-3"></a>bagged_trees1 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
@@ -828,15 +791,11 @@ Bagged Trees Algorithm
 <span id="cb14-42"><a href="#cb14-42"></a>  ) <span class="sc">+</span></span>
 <span id="cb14-43"><a href="#cb14-43"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="22_ensembling_files/figure-html/bagged-trees-data1-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="22_ensembling_files/figure-html/bagged-trees-data1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Let’s use bagged trees to predict the low response rate from the Census PDB example.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/bagged-trees-pdb_101adf9af6c5f5351b27a3a84ced1738">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>bagged_trees_mod <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">60</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) </span>
@@ -916,8 +875,8 @@ Regularization
 </div>
 <p>As <span class="math inline">\(mtry \to p\)</span>, RF converges with bagged trees.</p>
 <p>Let’s use random forests to predict the low response rate from the Census PDB example.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="22_ensembling_cache/html/tune-rf_14615ff03415f691ee097e5660cbcf28">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>rf_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
@@ -958,7 +917,7 @@ Regularization
 <span id="cb17-37"><a href="#cb17-37"></a><span class="fu">autoplot</span>(rf_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/rf_93a12f74ac10e2ef27e49223c4c6e36f">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>rf_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
@@ -984,15 +943,15 @@ Regularization
 <span id="cb18-23"><a href="#cb18-23"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The random forest results are great.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-17_116cfeb956f3653051f805a1e33af007">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>rf_resamples <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   4.51      5 0.0461  Preprocessor1_Model1
-2 rsq     standard   0.631     5 0.00571 Preprocessor1_Model1</code></pre>
+1 rmse    standard   4.51      5 0.0468  Preprocessor1_Model1
+2 rsq     standard   0.631     5 0.00583 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 <section id="interpretability" class="level3" data-number="20.5.1">
@@ -1047,7 +1006,7 @@ Variable Importance
 <p>Variable importance is an alternative approach that aims to capture the why of a model and prediction. For linear regression, variable importance is typically just the absolute value of the estimated coefficient.</p>
 <p>For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but is a valuable tool for understanding a random forest model.</p>
 <p>Here we fit the random forest model on all of the training data and then visualize the variable importance.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-18_9e458f9785d2075adba99c9a20771dbb">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>rf_final <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">last_fit</span>(pdb_split) </span>
 <span id="cb21-3"><a href="#cb21-3"></a></span>
@@ -1055,15 +1014,11 @@ Variable Importance
 <span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
 <span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="22_ensembling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="22_ensembling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>It is common to rescale variable importance for random forests so the most important variable has a value of 1.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-19_c44914c740dd6f53a32b286ba272fc0f">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>rf_final <span class="sc">|&gt;</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
 <span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
@@ -1075,11 +1030,7 @@ Variable Importance
 <span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Importance, Variable)) <span class="sc">+</span></span>
 <span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="22_ensembling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="22_ensembling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1100,10 +1051,10 @@ Parallelization
 </div>
 </div>
 <p>Computers have a limited number of cores. The following code counts the number of available cores.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-20_7d989c9767ea1ef15bd964e04ab9eae4">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 10</code></pre>
+<pre><code>[1] 8</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1120,7 +1071,7 @@ Warning
 </div>
 </div>
 <p>We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grow. Simply include <code>num.threads</code> in the <code>set_engine()</code> call.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-21_71e6825fe7dab499eeefbbe702a3f4ac">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">set_engine</span>(</span>
 <span id="cb25-2"><a href="#cb25-2"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
 <span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
@@ -1128,7 +1079,7 @@ Warning
 <span id="cb25-5"><a href="#cb25-5"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Parallelization is more difficult with boosted models, which are sequentially trained. The hyperparameter tuning later in this chapter uses a more complex socket parallelization with the following setup. This should detect a backend built into <code>library(tidymodels)</code> and parallelize the hyperparameter tuning with an entire model fit allocated to each core.</p>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-22_ce0b6124cb0d637a8eb2a77ede9ff5c9">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">library</span>(doFuture)</span>
 <span id="cb26-2"><a href="#cb26-2"></a><span class="fu">library</span>(doParallel)</span>
 <span id="cb26-3"><a href="#cb26-3"></a></span>
@@ -1139,7 +1090,7 @@ Warning
 <span id="cb26-8"><a href="#cb26-8"></a><span class="fu">registerDoFuture</span>()</span>
 <span id="cb26-9"><a href="#cb26-9"></a></span>
 <span id="cb26-10"><a href="#cb26-10"></a><span class="co"># set up socket parallelization</span></span>
-<span id="cb26-11"><a href="#cb26-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> <span class="dv">4</span>L)</span>
+<span id="cb26-11"><a href="#cb26-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
 <span id="cb26-12"><a href="#cb26-12"></a></span>
 <span id="cb26-13"><a href="#cb26-13"></a><span class="co"># plan for parallelization</span></span>
 <span id="cb26-14"><a href="#cb26-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1231,8 +1182,8 @@ XGBoost Algorithm for Regression
 </ul>
 <p>The performance of XGBoost is very sensitive to hyperparameter tuning. In general, fitting the model is computationally very expensive.</p>
 <p>XGBoost does not parallelize as easily as random forests because trees are fit sequentially instead of independently. It is possible to parallelize hyperparameter tuning.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="22_ensembling_cache/html/tune-xgboost_0b30128015b94d535baca409d2bf6876">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(doFuture)</span>
 <span id="cb29-2"><a href="#cb29-2"></a><span class="fu">library</span>(doParallel)</span>
@@ -1244,7 +1195,7 @@ XGBoost Algorithm for Regression
 <span id="cb29-8"><a href="#cb29-8"></a><span class="fu">registerDoFuture</span>()</span>
 <span id="cb29-9"><a href="#cb29-9"></a></span>
 <span id="cb29-10"><a href="#cb29-10"></a><span class="co"># set up socket parallelization</span></span>
-<span id="cb29-11"><a href="#cb29-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> <span class="dv">4</span>L)</span>
+<span id="cb29-11"><a href="#cb29-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
 <span id="cb29-12"><a href="#cb29-12"></a></span>
 <span id="cb29-13"><a href="#cb29-13"></a><span class="co"># plan for parallelization</span></span>
 <span id="cb29-14"><a href="#cb29-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span>
@@ -1283,7 +1234,7 @@ XGBoost Algorithm for Regression
 <span id="cb29-47"><a href="#cb29-47"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell">
+<div class="cell" data-hash="22_ensembling_cache/html/xgboost_f218d2f31bd8a10c57d448d8e3f79841">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># hyperparameters selected with cross validation and tuning</span></span>
 <span id="cb30-2"><a href="#cb30-2"></a>xgb_spec <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
 <span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
@@ -1303,73 +1254,76 @@ XGBoost Algorithm for Regression
 <span id="cb30-17"><a href="#cb30-17"></a></span>
 <span id="cb30-18"><a href="#cb30-18"></a>xgb_resamples <span class="ot">&lt;-</span> xgb_wf <span class="sc">|&gt;</span></span>
 <span id="cb30-19"><a href="#cb30-19"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'xgboost' was built under R version 4.3.3</code></pre>
+</div>
 </div>
 <p>These results are the best.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-25_e1be8a4a6255621cb49c65def610e527">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   4.39      5 0.0499  Preprocessor1_Model1
-2 rsq     standard   0.649     5 0.00612 Preprocessor1_Model1</code></pre>
+1 rmse    standard   4.40      5 0.0505  Preprocessor1_Model1
+2 rsq     standard   0.648     5 0.00620 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
 <section id="final-comparison" class="level2" data-number="20.8">
 <h2 data-number="20.8" class="anchored" data-anchor-id="final-comparison"><span class="header-section-number">20.8</span> Final Comparison</h2>
 <p>Finally, let’s compare the RMSE and <span class="math inline">\(r\)</span>-squared for linear regression, regression trees, bagged trees, random forests (with hyperparameter tuning), and XGBoost (with hyperparameter tuning).</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb33-4"><a href="#cb33-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
-<span id="cb33-6"><a href="#cb33-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb33-8"><a href="#cb33-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb33-9"><a href="#cb33-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb33-10"><a href="#cb33-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb33-12"><a href="#cb33-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb33-13"><a href="#cb33-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-26_ccb01d63b9b253bb573a9c108f8336e9">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb34-4"><a href="#cb34-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
+<span id="cb34-6"><a href="#cb34-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb34-8"><a href="#cb34-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb34-9"><a href="#cb34-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb34-10"><a href="#cb34-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb34-11"><a href="#cb34-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb34-12"><a href="#cb34-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb34-13"><a href="#cb34-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   model             .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
 1 Linear regression rmse    standard    5.33     5  0.0580 Preprocessor1_Model1
 2 Regression trees  rmse    standard    5.30     5  0.0334 Preprocessor1_Model1
-3 Bagged trees      rmse    standard    5.03     5  0.0380 Preprocessor1_Model1
-4 Random forest     rmse    standard    4.51     5  0.0461 Preprocessor1_Model1
-5 XGBoost           rmse    standard    4.39     5  0.0499 Preprocessor1_Model1</code></pre>
+3 Bagged trees      rmse    standard    5.04     5  0.0389 Preprocessor1_Model1
+4 Random forest     rmse    standard    4.51     5  0.0468 Preprocessor1_Model1
+5 XGBoost           rmse    standard    4.40     5  0.0505 Preprocessor1_Model1</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb35-5"><a href="#cb35-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
-<span id="cb35-6"><a href="#cb35-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
-<span id="cb35-8"><a href="#cb35-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb35-9"><a href="#cb35-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
-<span id="cb35-10"><a href="#cb35-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb35-11"><a href="#cb35-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
-<span id="cb35-12"><a href="#cb35-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb35-13"><a href="#cb35-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb36-8"><a href="#cb36-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb36-10"><a href="#cb36-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb36-12"><a href="#cb36-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   model             .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
 1 Linear regression rsq     standard   0.485     5 0.00906 Preprocessor1_Model1
 2 Regression trees  rsq     standard   0.490     5 0.00384 Preprocessor1_Model1
-3 Bagged trees      rsq     standard   0.541     5 0.00455 Preprocessor1_Model1
-4 Random forest     rsq     standard   0.631     5 0.00571 Preprocessor1_Model1
-5 XGBoost           rsq     standard   0.649     5 0.00612 Preprocessor1_Model1</code></pre>
+3 Bagged trees      rsq     standard   0.541     5 0.00472 Preprocessor1_Model1
+4 Random forest     rsq     standard   0.631     5 0.00583 Preprocessor1_Model1
+5 XGBoost           rsq     standard   0.648     5 0.00620 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
 <div id="ref-bruce2003" class="csl-entry" role="listitem">
 Bruce, Anotnio, and Gregory Robinson. 2003. <span>“The Planning Database: Its Development and Use as an Effective Tool in Census 2000.”</span> <a href="https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b">https://citeseerx.ist.psu.edu/document?repid=rep1&amp;type=pdf&amp;doi=b2edb90180a9132f64f8287af2db92c031b5d40b</a>.
 </div>
@@ -1478,27 +1432,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1508,17 +1445,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1530,130 +1458,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1697,7 +1502,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1723,32 +1527,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1810,18 +1588,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./21_supervised-classification.html" class="pagination-link" aria-label="Classification">
+      <a href="./21_supervised-classification.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./23_regularization.html" class="pagination-link" aria-label="Regularization">
+      <a href="./23_regularization.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

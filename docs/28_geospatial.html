@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,13 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -96,7 +90,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -105,33 +98,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -142,12 +108,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./28_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./28_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -157,7 +123,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -400,7 +366,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -444,7 +410,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./28_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></h1>
 </div>
@@ -460,19 +426,17 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     In this chapter, we introduce mapping and geospatial analysis using the simple features framework in R.
   </div>
 </div>
 
-
 </header>
-
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg" class="img-fluid figure-img"></p>
-<figcaption>The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.</figcaption>
+<figcaption class="figure-caption">The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.</figcaption>
 </figure>
 </div>
 <section id="motivation" class="level2" data-number="23.1">
@@ -560,11 +524,7 @@ Points
 <span id="cb5-7"><a href="#cb5-7"></a>    <span class="at">caption =</span> <span class="st">"Amtrak stations from opendata.arcgis.com"</span>) <span class="sc">+</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -600,11 +560,7 @@ Linestrings
 <span id="cb6-13"><a href="#cb6-13"></a>  ) <span class="sc">+</span></span>
 <span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -637,11 +593,7 @@ Polygons
 <span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example of polygon data"</span>) <span class="sc">+</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Multipoints, multilinestrings, and multipolygons are additional geometries based on points, linestrings, and polygons. The <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a> outlines many geometry types.</p>
@@ -686,11 +638,7 @@ Simple features
 <span id="cb10-18"><a href="#cb10-18"></a></span>
 <span id="cb10-19"><a href="#cb10-19"></a>amtrak_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -762,11 +710,7 @@ in your R script or .Rprofile.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mi <span class="sc">+</span> mi_cb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="384"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="384"></p>
 </div>
 </div>
 <p><code>library(rgeoboundaries)</code></p>
@@ -784,11 +728,7 @@ in your R script or .Rprofile.</code></pre>
 <span id="cb19-9"><a href="#cb19-9"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
 <span id="cb19-10"><a href="#cb19-10"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -838,17 +778,19 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p><code>library(tidycensus)</code> sometimes requires the same Census API Key we used in the API tutorial (<a href="https://api.census.gov/data/key_signup.html">sign up here</a>). You should be able to install your API key into your version of R with <code>census_api_key("your-key-string", install = TRUE)</code>. To obtain your keystring, you can use <code>library(dotenv)</code> and <code>Sys.getenv(&lt;key name in .env file&gt;)</code>.</p>
 <p><code>library(tidycensus)</code> has two big differences from <code>library(tigris)</code>: 1. it can pull Census data with the geographic data, and 2. it only provides cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tidycensus)</span>
-<span id="cb22-2"><a href="#cb22-2"></a></span>
-<span id="cb22-3"><a href="#cb22-3"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
-<span id="cb22-6"><a href="#cb22-6"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
-<span id="cb22-7"><a href="#cb22-7"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
-<span id="cb22-8"><a href="#cb22-8"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb22-9"><a href="#cb22-9"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
-<span id="cb22-10"><a href="#cb22-10"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tidycensus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tidycensus' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
+<span id="cb24-6"><a href="#cb24-6"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb24-7"><a href="#cb24-7"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Getting data from the 2015-2019 5-year ACS</code></pre>
 </div>
@@ -864,17 +806,13 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p>Choropleths are maps that use fill to display the variation in a variable across geographies.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Getting data from the 2017-2021 5-year ACS</code></pre>
+<pre><code>Getting data from the 2018-2022 5-year ACS</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="480"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="480"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -944,14 +882,10 @@ Projection
 <section id="mercator-projection" class="level4">
 <h4 class="anchored" data-anchor-id="mercator-projection">Mercator projection</h4>
 <p>The Mercator projection is widespread because it maintains straight lines for longitude and latitude. This was useful for navigators on the open sea hundreds of years ago. This is less useful in the 21st century. The Mercator projection is conformal, so while it maintains angles, it seriously distorts area. To see this, play the <a href="https://bramus.github.io/mercator-puzzle-redux/">Mercator Puzzle</a>.</p>
-<div id="fig-mercator" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-mercator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/mercator.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mercator-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.1: Mercator
-</figcaption>
+<div id="fig-mercator" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/mercator.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;23.1: Mercator</figcaption>
 </figure>
 </div>
 <p>Source: <a href="https://www.britannica.com/science/Mercator-projection#/media/1/375638/231099">Encyclopædia Britannica</a></p>
@@ -959,28 +893,20 @@ Figure&nbsp;23.1: Mercator
 <section id="albers-equal-area-projection" class="level4">
 <h4 class="anchored" data-anchor-id="albers-equal-area-projection">Albers Equal Area Projection</h4>
 <p>The Albers Equal Area projection, which is a conic projection, doesn’t maintain angles, but it is an equal area projection. It is the default projection of the Urban Institute.</p>
-<div id="fig-albers" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-albers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/albers.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-albers-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.2: Albers
-</figcaption>
+<div id="fig-albers" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/albers.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;23.2: Albers</figcaption>
 </figure>
 </div>
 </section>
 <section id="state-plane-coordinate-systems-spcs" class="level4">
 <h4 class="anchored" data-anchor-id="state-plane-coordinate-systems-spcs">State Plane Coordinate Systems (SPCS)</h4>
 <p>The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. <a href="https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm">This site</a> has a thorough introduction.</p>
-<div id="fig-state-planes" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-state-planes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/spcs83.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-state-planes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.3: State Planes
-</figcaption>
+<div id="fig-state-planes" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/spcs83.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;23.3: State Planes</figcaption>
 </figure>
 </div>
 <p>Source: <a href="https://geodesy.noaa.gov/SPCS/maps.shtml">NOAA</a></p>
@@ -1017,12 +943,12 @@ Datum
 <h4 class="anchored" data-anchor-id="librarycrsuggest"><code>library(crsuggest)</code></h4>
 <p><a href="https://github.com/walkerke/crsuggest"><code>library(crsuggest)</code></a> can simplify the process of picking a CRS.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(crsuggest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(crsuggest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using the EPSG Dataset v10.019, a product of the International Association of Oil &amp; Gas Producers. 
 Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1038,10 +964,10 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
  9 6922     NAD83 / Kansas LCC              project…    4269 m         +proj=lc…
 10 6467     NAD83(2011) / Kansas North (ft… project…    6318 us-ft     +proj=lc…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
-<span id="cb31-3"><a href="#cb31-3"></a></span>
-<span id="cb31-4"><a href="#cb31-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
+<span id="cb33-3"><a href="#cb33-3"></a></span>
+<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1072,11 +998,7 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Here’s the map from earlier with EPSG 4326 on the left and EPSG 5070 (Alber’s Equal Area Conic Projection) on the right:</p>
 <div class="cell">
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1107,26 +1029,22 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <h3 data-number="23.7.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">23.7.1</span> Aggregation</h3>
 <p>Sometimes we want to aggregate smaller geographies into larger geographies. This is simple with a <code>group_by()</code> and <code>summarize()</code> workflow. Suppose we want to combine North Dakota and South Dakota into Dakota.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># states to combine</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3"></a></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="co"># add a projection</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb33-7"><a href="#cb33-7"></a></span>
-<span id="cb33-8"><a href="#cb33-8"></a><span class="co"># aggregate states and make a map</span></span>
-<span id="cb33-9"><a href="#cb33-9"></a>states <span class="sc">|&gt;</span></span>
-<span id="cb33-10"><a href="#cb33-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
-<span id="cb33-12"><a href="#cb33-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
-<span id="cb33-13"><a href="#cb33-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb33-14"><a href="#cb33-14"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># states to combine</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a></span>
+<span id="cb35-4"><a href="#cb35-4"></a><span class="co"># add a projection</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb35-7"><a href="#cb35-7"></a></span>
+<span id="cb35-8"><a href="#cb35-8"></a><span class="co"># aggregate states and make a map</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>states <span class="sc">|&gt;</span></span>
+<span id="cb35-10"><a href="#cb35-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
+<span id="cb35-11"><a href="#cb35-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
+<span id="cb35-12"><a href="#cb35-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
+<span id="cb35-13"><a href="#cb35-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb35-14"><a href="#cb35-14"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="28_geospatial_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1136,28 +1054,28 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p><code>st_join()</code> performs a left spatial join in R. <code>st_intersects</code> means observations will join if the geographies in <code>x</code> touch the geographies in <code>y</code>. The <code>sf</code> package offers a number of different geometric confirmations that can be used for spatial joins, such as <code>st_covered_by</code> (identifies if <code>x</code> is copletely within <code>y</code>), <code>st_within</code> (identifies if <code>x</code> is within a specified distance of <code>y</code>) and many more. The <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">sf cheat sheet</a> provides a good outline of the different options.</p>
 <p>Suppose we want to count the number of Amtrak stations in each state.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># set states CRS to 4326 to match the Amtrak data</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb34-3"><a href="#cb34-3"></a></span>
-<span id="cb34-4"><a href="#cb34-4"></a><span class="co"># dimension before join</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># set states CRS to 4326 to match the Amtrak data</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="co"># dimension before join</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1096   12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># spatial join using intersection</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
-<span id="cb36-3"><a href="#cb36-3"></a></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">dim</span>(amtrak)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># spatial join using intersection</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
+<span id="cb38-3"><a href="#cb38-3"></a></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a><span class="fu">dim</span>(amtrak)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1080   21</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># count the number of stations per state</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>amtrak <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># count the number of stations per state</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>amtrak <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
+<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49 × 2
    NAME         number_of_stations
@@ -1181,24 +1099,24 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Adding buffers to points, lines, and polygons is useful for counting shapes near other shapes. For instance, we may want to count the number of housing units within 500 meters of a metro station or the number of schools more than 5 miles from a fire station.</p>
 <p>Suppose we want to count the number of Amtrak stations within 5 kilometers of each Amtrak station. We can buffer the Amtrak station points, join the unbuffered data to the buffered data, and then count.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
-<span id="cb40-4"><a href="#cb40-4"></a>  amtrak_stations, </span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
-<span id="cb40-6"><a href="#cb40-6"></a>)</span>
-<span id="cb40-7"><a href="#cb40-7"></a></span>
-<span id="cb40-8"><a href="#cb40-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
-<span id="cb40-9"><a href="#cb40-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
-<span id="cb40-10"><a href="#cb40-10"></a>  amtrak_stations_buffered,</span>
-<span id="cb40-11"><a href="#cb40-11"></a>  amtrak_stations, </span>
-<span id="cb40-12"><a href="#cb40-12"></a>  <span class="at">join =</span> st_intersects</span>
-<span id="cb40-13"><a href="#cb40-13"></a>)</span>
-<span id="cb40-14"><a href="#cb40-14"></a></span>
-<span id="cb40-15"><a href="#cb40-15"></a><span class="co"># count the station names</span></span>
-<span id="cb40-16"><a href="#cb40-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
-<span id="cb40-17"><a href="#cb40-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb40-18"><a href="#cb40-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
+<span id="cb42-3"><a href="#cb42-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
+<span id="cb42-4"><a href="#cb42-4"></a>  amtrak_stations, </span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
+<span id="cb42-6"><a href="#cb42-6"></a>)</span>
+<span id="cb42-7"><a href="#cb42-7"></a></span>
+<span id="cb42-8"><a href="#cb42-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
+<span id="cb42-9"><a href="#cb42-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb42-10"><a href="#cb42-10"></a>  amtrak_stations_buffered,</span>
+<span id="cb42-11"><a href="#cb42-11"></a>  amtrak_stations, </span>
+<span id="cb42-12"><a href="#cb42-12"></a>  <span class="at">join =</span> st_intersects</span>
+<span id="cb42-13"><a href="#cb42-13"></a>)</span>
+<span id="cb42-14"><a href="#cb42-14"></a></span>
+<span id="cb42-15"><a href="#cb42-15"></a><span class="co"># count the station names</span></span>
+<span id="cb42-16"><a href="#cb42-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
+<span id="cb42-17"><a href="#cb42-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb42-18"><a href="#cb42-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,007 × 2
    stationnam.x                   n
@@ -1222,32 +1140,28 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Euclidean distance is common for calculating straight line distances but does not make sense for calculating distances on the surface of an ellipsoid like Earth.</p>
 <p><span class="math display">\[d(\vec{p}, \vec{q}) = \sqrt{\sum_{i = 1}^n(q_i - p_i)^2}\]</span></p>
 <p>Instead, it is common to use Haversine distance which accounts for the curvature in the globe.</p>
-<div id="fig-haversine" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-haversine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/haversine.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-haversine-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;23.4: Haversine Distance
-</figcaption>
+<div id="fig-haversine" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/haversine.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figure&nbsp;23.4: Haversine Distance</figcaption>
 </figure>
 </div>
 <p>Suppose we want to find the closest and furthest Amtrak stations from Washington DC’s Union Station.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># create a data frame with just Union Station</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
-<span id="cb42-4"><a href="#cb42-4"></a></span>
-<span id="cb42-5"><a href="#cb42-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
-<span id="cb42-10"><a href="#cb42-10"></a></span>
-<span id="cb42-11"><a href="#cb42-11"></a><span class="co"># find the closest station</span></span>
-<span id="cb42-12"><a href="#cb42-12"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb42-13"><a href="#cb42-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb42-14"><a href="#cb42-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># create a data frame with just Union Station</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
+<span id="cb44-4"><a href="#cb44-4"></a></span>
+<span id="cb44-5"><a href="#cb44-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
+<span id="cb44-7"><a href="#cb44-7"></a></span>
+<span id="cb44-8"><a href="#cb44-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
+<span id="cb44-9"><a href="#cb44-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
+<span id="cb44-10"><a href="#cb44-10"></a></span>
+<span id="cb44-11"><a href="#cb44-11"></a><span class="co"># find the closest station</span></span>
+<span id="cb44-12"><a href="#cb44-12"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb44-13"><a href="#cb44-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb44-14"><a href="#cb44-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
@@ -1257,10 +1171,10 @@ Projected CRS: NAD83 / Conus Albers
       stationnam       city                geometry
 1 Alexandria, VA Alexandria POINT (1618448 1915016)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># find the further station</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># find the further station</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
@@ -1384,27 +1298,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1414,17 +1311,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1436,130 +1324,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1603,7 +1368,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1629,32 +1393,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1716,18 +1454,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./27_advanced-unsupervised-ml.html" class="pagination-link" aria-label="Mixture Distributions and Mixture Modeling">
+      <a href="./27_advanced-unsupervised-ml.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link" aria-label="References">
+      <a href="./references.html" class="pagination-link">
         <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 

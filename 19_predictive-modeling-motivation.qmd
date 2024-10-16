@@ -30,6 +30,39 @@ theme_set(theme_minimal())
 
 ```
 
+## Review
+
+There are three distinct reasons to build a statistical model.
+
+1. Summary
+2. Inference
+3. Prediction
+
+**Summary:** Much like a mean can be used to summarize a collection of numbers, a statistical model can be used to summarize relationships between variables. 
+ 
+**Inference:** With inference, the goal is to use statistics calculated on a sample of data to learn about some unknown parameter from a population. We use data and assumptions for inference. If the assumptions are approximately met, then we can use known sampling distributions to generate test statistics and p-values to make inferences. We can also test formal hypotheses with $H_0$ as the null hypothesis and $H_a$ as the alternative hypothesis.
+
+**Prediction:** With prediction, the goal is make informed and accurate guesses about the value or level of a variable given a set of predictor variables. Unlike inference, which usually focuses on coefficients of predictor variables, the focus here is on the dependent variable.
+
+Consider a population linear regression model:
+
+$$y_i = \beta_0 + \beta_1X_{i1} + \cdot\cdot\cdot + \beta_pX_{ip} + \epsilon_i$$
+
+and an estimated linear regression model 
+
+$$\hat{y_i} = \hat\beta_0 + \hat\beta_1x_{i1} + \cdot\cdot\cdot + \hat\beta_px_{ip}$$ {#eq-regression}
+
+We can use @eq_regression for all three motivations. 
+
+- @eq_regression is a model of the conditional mean of $y$, which is a statistical summary.
+- @eq_regression allows us to make inference about $\beta_j$ using $\hat\beta_j$.
+- @eq_regression allows us to make predictions, $\hat{y_i}$, given $\vec{x_i}$.
+
+:::{.callout-note}
+The same statistical model can summarize, be used for inference, and make valid and accurate predictions. However, the optimal model for one motivation is rarely best for all three motivations. **Thus, it is important to clearly articulate the motivation for a statistical model before picking which tools and diagnostics to use.**
+
+:::
+
 ## Problem Structure
 
 There are many policy applications where it is useful to make accurate predictions on "unseen" data. Unseen data means any data not used to develop a model for predictions.
