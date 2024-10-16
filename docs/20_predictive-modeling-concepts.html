@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.3.433">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,13 +81,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
+  "limit": 20,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -96,7 +90,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -105,33 +98,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -142,12 +108,12 @@ window.Quarto = {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./20_predictive-modeling-concepts.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./20_predictive-modeling-concepts.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -157,7 +123,7 @@ window.Quarto = {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -400,7 +366,7 @@ window.Quarto = {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -427,7 +393,7 @@ window.Quarto = {
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./19_predictive-modeling-motivation.html">Supervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./20_predictive-modeling-concepts.html"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></a></li></ol></nav>
+<header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></h1>
 </div>
@@ -443,14 +409,12 @@ window.Quarto = {
   
 <div>
   <div class="abstract">
-    <div class="block-title">Abstract</div>
+    <div class="abstract-title">Abstract</div>
     This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focused on regression, one of the two main types of supervised machine learning.
   </div>
 </div>
 
-
 </header>
-
 
 <section id="regression" class="level2" data-number="18.1">
 <h2 data-number="18.1" class="anchored" data-anchor-id="regression"><span class="header-section-number">18.1</span> Regression</h2>
@@ -511,7 +475,7 @@ Classification
 <section id="regression-algorithms" class="level2" data-number="18.2">
 <h2 data-number="18.2" class="anchored" data-anchor-id="regression-algorithms"><span class="header-section-number">18.2</span> Regression Algorithms</h2>
 <p>Let’s explore a few algorithms for generating predictions in regression applications. Consider some simulated data with 1,000 observations, one predictor, and one outcome.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-4_ba150beb11b1c87c2337448612f64b82">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
@@ -524,7 +488,7 @@ Classification
 <span id="cb1-10"><a href="#cb1-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For reasons explained later, we split the data into a training data set with 750 observations and a testing data set with 250 observations.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-5_5a215c8b54676099012b7eecb081f409">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
 <span id="cb2-2"><a href="#cb2-2"></a></span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="co"># create a split object</span></span>
@@ -534,8 +498,8 @@ Classification
 <span id="cb2-7"><a href="#cb2-7"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
 <span id="cb2-8"><a href="#cb2-8"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p><a href="#fig-simulated-training-data" class="quarto-xref">Figure&nbsp;<span>18.1</span></a> visualizes the training data.</p>
-<div class="cell">
+<p><a href="#fig-simulated-training-data">Figure&nbsp;<span>18.1</span></a> visualizes the training data.</p>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/fig-simulated-training-data_86d145240bec7f49aee1a7b7cd8338b0">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># visualize the data</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>data1_train <span class="sc">|&gt;</span></span>
 <span id="cb3-3"><a href="#cb3-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
@@ -543,14 +507,10 @@ Classification
 <span id="cb3-5"><a href="#cb3-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example 1 Data"</span>) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div id="fig-simulated-training-data" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-simulated-training-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-training-data-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simulated-training-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.1: Simulated training data
-</figcaption>
+<div id="fig-simulated-training-data" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-training-data-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;18.1: Simulated training data</figcaption>
 </figure>
 </div>
 </div>
@@ -561,10 +521,10 @@ Figure&nbsp;18.1: Simulated training data
 <li>Find the line that minimizes the sum of squared errors between the line and the observed data.</li>
 </ol>
 <p><strong>Note:</strong> Linear regression is linear in its coefficients but can fit non-linear patterns in the data with the inclusion of higher order terms (for example, <span class="math inline">\(x^2\)</span>).</p>
-<p><a href="#fig-simulated-regression" class="quarto-xref">Figure&nbsp;<span>18.2</span></a> shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.</p>
+<p><a href="#fig-simulated-regression">Figure&nbsp;<span>18.2</span></a> shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.</p>
 <p>For example, “Degree = 1” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i\)</span> and “Degree = 3” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i + b_2x_i^2 + b_3x_i^3\)</span>.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/fig-simulated-regression_7605899b8d41e5b14d99381344589d6f">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>lin_reg_model1 <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>() <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"lm"</span>) <span class="sc">|&gt;</span></span>
@@ -609,14 +569,10 @@ Figure&nbsp;18.1: Simulated training data
 <span id="cb4-41"><a href="#cb4-41"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-simulated-regression" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-simulated-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-regression-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simulated-regression-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher order terms
-</figcaption>
+<div id="fig-simulated-regression" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-regression-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher order terms</figcaption>
 </figure>
 </div>
 </div>
@@ -628,8 +584,8 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <li>Find the <span class="math inline">\(k\)</span> closest observations using only the predictors. Closeness is typically measured with Euclidean distance.</li>
 <li>Take the mean of the outcome variables for the <span class="math inline">\(k\)</span> closest observations.</li>
 </ol>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/simulated-knn_9519d8fac64a1b548974daa552770048">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># create a knn model specification</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>knn_mod1 <span class="ot">&lt;-</span> </span>
@@ -683,7 +639,7 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/simulated-knn-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Changing k leads to models that under and over fit to the data</figcaption>
+<figcaption class="figure-caption">Changing k leads to models that under and over fit to the data</figcaption>
 </figure>
 </div>
 </div>
@@ -696,8 +652,8 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <li>Repeat step 1 recursively until a stopping parameter is reached (cost complexity, minimum group size, tree depth).</li>
 </ol>
 <p><a href="https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?scp=5&amp;sq=Decision%20Obama%20clinton&amp;st=cse">Decision Tree: The Obama-Clinton Divide</a> from the New York Times is a clear example of a regression tree.</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/fig-simulated-regression-trees_422744d957110d365cb6195b3338c046">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>reg_tree_mod1 <span class="ot">&lt;-</span> </span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">decision_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.1</span>) <span class="sc">|&gt;</span></span>
@@ -747,32 +703,24 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <span id="cb6-46"><a href="#cb6-46"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-simulated-regression-trees" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-simulated-regression-trees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-regression-trees-1.png" class="img-fluid figure-img" width="672">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simulated-regression-trees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.3: Changing the cost complexity parameter leads to models that are under of over fit to the data
-</figcaption>
+<div id="fig-simulated-regression-trees" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-regression-trees-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;18.3: Changing the cost complexity parameter leads to models that are under of over fit to the data</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> where <code>cp=0.1</code>.</p>
-<div class="cell">
-<details class="code-fold">
+<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees">Figure&nbsp;<span>18.3</span></a> where <code>cp=0.1</code>.</p>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-10_78dfbc2f19f272848c16105e0f7068d7">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(rpart.plot)</span>
 <span id="cb7-2"><a href="#cb7-2"></a></span>
 <span id="cb7-3"><a href="#cb7-3"></a><span class="fu">rpart.plot</span>(reg_tree_mod1<span class="sc">$</span>fit, <span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Linear regression is a parameteric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.</p>
@@ -844,8 +792,8 @@ Bias error
 </div>
 </div>
 <p>Here, the model on the left does a poor job fitting the data (high bias) and the model on the right does a decent job fitting the data (low bias).</p>
-<div class="cell" data-layout-align="center">
-<details class="code-fold">
+<div class="cell" data-layout-align="center" data-hash="20_predictive-modeling-concepts_cache/html/model-bias_ab40098784b0584534049fcbfe974363">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">set.seed</span>(<span class="dv">20200225</span>)</span>
 <span id="cb8-2"><a href="#cb8-2"></a></span>
@@ -880,7 +828,7 @@ Bias error
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/model-bias-1.png" class="img-fluid figure-img" width="384"></p>
-<figcaption>Bias</figcaption>
+<figcaption class="figure-caption">Bias</figcaption>
 </figure>
 </div>
 </div>
@@ -899,8 +847,8 @@ Variance error
 </div>
 </div>
 <p>Here, the model on the left does not change much as the training data change (low variance) and the model on the right changes a lot when the training data change (high variance).</p>
-<div class="cell">
-<details class="code-fold">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/model-variance_0bfdb66a15dd314acc4f6c57052df592">
+<details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">set.seed</span>(<span class="dv">20200226</span>)</span>
 <span id="cb9-2"><a href="#cb9-2"></a></span>
@@ -940,7 +888,7 @@ Variance error
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/model-variance-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Variance</figcaption>
+<figcaption class="figure-caption">Variance</figcaption>
 </figure>
 </div>
 </div>
@@ -951,11 +899,11 @@ Variance error
 <li>underfitting-overfitting tradeoff</li>
 <li>simplicity-complexity tradeoff</li>
 </ul>
-<div class="cell" data-layout-align="center">
+<div class="cell" data-layout-align="center" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-14_0fc62c8f6171962a4da0c7dc91691d9a">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="384"></p>
 </figure>
 </div>
 </div>
@@ -1030,16 +978,7 @@ Testing data
 <p>A subset of data used to estimate model performance. The testing set usually includes all observations not included in the testing set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.</p>
 </div>
 </div>
-<div id="fig-cv" class="quarto-figure quarto-figure-center quarto-float anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/cross-validation.jpeg" id="fig-cv" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.4
-</figcaption>
-</figure>
-</div>
+<p><img src="images/cross-validation.jpeg" id="fig-cv" class="img-fluid"></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1107,7 +1046,7 @@ Warning
 <h3 data-number="18.5.1" class="anchored" data-anchor-id="example-knn"><span class="header-section-number">18.5.1</span> Example: KNN</h3>
 <section id="split-data-into-training-and-testing-data" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data">1. Split data into training and testing data</h4>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-15_258dd1d109e694264ca2ccd2c6ab7582">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
 <span id="cb10-2"><a href="#cb10-2"></a></span>
 <span id="cb10-3"><a href="#cb10-3"></a><span class="co"># create a split object</span></span>
@@ -1134,18 +1073,14 @@ Warning
 <p>Exploring the testing data will lead to data leakage.</p>
 </div>
 </div>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-16_ae3fe3ab5644a8fd633fb3337ba205b4">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>data1_train <span class="sc">|&gt;</span></span>
 <span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
 <span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example 1 Data"</span>) <span class="sc">+</span></span>
 <span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1153,7 +1088,7 @@ Warning
 <h4 class="anchored" data-anchor-id="set-up-resampling-for-model-selection">3. Set up Resampling for Model Selection</h4>
 <p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are small (750 observations and one predictor), so we will repeat the entire cross validation process five times.</p>
 <p>Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation improves the accuracy of our estimated error rates.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-17_17a2a8a6abaa0056cd918485a1a3e386">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>data1_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> data1_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
@@ -1166,20 +1101,20 @@ Warning
 <li><strong>Hyperparameter tuning.</strong> Hyperparameter tuning is typically handled by using <code>tune()</code> when picking an algorithm and then creating a hyperparameter tuning grid.</li>
 </ol>
 <p>It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-18_973e8b9d528574075e02f887f477a071">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>knn_recipe <span class="ot">&lt;-</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> y <span class="sc">~</span> ., <span class="at">data =</span> data1_train) <span class="sc">|&gt;</span></span>
 <span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>nearest_neighbor()</code> to create a KNN model and we use <code>tune()</code> as a placeholder for <code>k</code>. Note that we can tune many hyperparameters for a given model. The Regression Tree example later in this chapter illustrates this concept.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-19_120f7cdc8dafa3009ebc2bccf30e3156">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>knn_mod <span class="ot">&lt;-</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>grid_regular()</code> to specify a hyperparameter tuning grid for potential values of <span class="math inline">\(k\)</span>.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-20_13cdf012723a723fd20305ae41f62305">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>knn_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">99</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span>
 <span id="cb15-2"><a href="#cb15-2"></a></span>
 <span id="cb15-3"><a href="#cb15-3"></a>knn_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1200,7 +1135,7 @@ Warning
 </div>
 </div>
 <p>Finally, we combine the recipe and model objects into a <code>workflow()</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-21_8d2ad58abb0f041967e532840765d97c">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>knn_workflow <span class="ot">&lt;-</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> knn_recipe) <span class="sc">|&gt;</span></span>
@@ -1210,7 +1145,7 @@ Warning
 <section id="test-and-choose-the-best-model" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model">5. Test and Choose the “Best” Model</h4>
 <p><code>tune_grid()</code> fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each evaluation data set.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-22_41c3bbae3190052fc62666634cf1935b">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>knn_res <span class="ot">&lt;-</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  knn_workflow <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">tune_grid</span>(</span>
@@ -1220,7 +1155,7 @@ Warning
 <span id="cb18-7"><a href="#cb18-7"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can quickly extract information from the tuned results object with functions like <code>collect_metrics()</code>, <code>show_best()</code>, and <code>autoplot()</code>.</p>
-<div class="cell">
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-23_ba75224b152ae1993a9fd462594c9de5">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>knn_res <span class="sc">|&gt;</span></span>
 <span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1240,6 +1175,10 @@ Warning
 </div>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>knn_res <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in show_best(knn_res): No value of `metric` was given; "rmse" will be
+used.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   neighbors .metric .estimator  mean     n std_err .config              
@@ -1250,14 +1189,10 @@ Warning
 4        55 rmse    standard    2.03    50  0.0205 Preprocessor1_Model06
 5        11 rmse    standard    2.06    50  0.0209 Preprocessor1_Model02</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>knn_res <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1265,16 +1200,20 @@ Warning
 <h4 class="anchored" data-anchor-id="optional-expand-the-model-fit">6. Optional: Expand the Model Fit</h4>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb24-2"><a href="#cb24-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-24_888eda62ade62d5fa71ca96a07fec21b">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb25-2"><a href="#cb25-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in select_best(knn_res): No value of `metric` was given; "rmse" will be
+used.</code></pre>
+</div>
 </div>
 <p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb25-2"><a href="#cb25-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">last_fit</span>(data1_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-25_13c71bdb635b029ed01f738d4d5c49f4">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>final_fit <span class="ot">&lt;-</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">last_fit</span>(data1_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1295,9 +1234,9 @@ Note
 <h4 class="anchored" data-anchor-id="evaluate-the-final-model">7. Evaluate the Final Model</h4>
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
 <p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-26_ad3b2e82647a5305b90128966e167476">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
@@ -1316,25 +1255,25 @@ Note
 <section id="example-regression-trees" class="level3" data-number="18.5.2">
 <h3 data-number="18.5.2" class="anchored" data-anchor-id="example-regression-trees"><span class="header-section-number">18.5.2</span> Example: Regression Trees</h3>
 <p>We’ll next work with a subset of data from the <code>Chicago</code> data set from <code>library(tidymodels)</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">select</span>(</span>
-<span id="cb28-3"><a href="#cb28-3"></a>    ridership,</span>
-<span id="cb28-4"><a href="#cb28-4"></a>    Clark_Lake,</span>
-<span id="cb28-5"><a href="#cb28-5"></a>    Quincy_Wells,</span>
-<span id="cb28-6"><a href="#cb28-6"></a>    Irving_Park,</span>
-<span id="cb28-7"><a href="#cb28-7"></a>    Monroe,</span>
-<span id="cb28-8"><a href="#cb28-8"></a>    Polk,</span>
-<span id="cb28-9"><a href="#cb28-9"></a>    temp,</span>
-<span id="cb28-10"><a href="#cb28-10"></a>    percip,</span>
-<span id="cb28-11"><a href="#cb28-11"></a>    Bulls_Home,</span>
-<span id="cb28-12"><a href="#cb28-12"></a>    Bears_Home,</span>
-<span id="cb28-13"><a href="#cb28-13"></a>    WhiteSox_Home,</span>
-<span id="cb28-14"><a href="#cb28-14"></a>    Cubs_Home,</span>
-<span id="cb28-15"><a href="#cb28-15"></a>    date</span>
-<span id="cb28-16"><a href="#cb28-16"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb28-17"><a href="#cb28-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb28-18"><a href="#cb28-18"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-27_4e6b54f07dd33689595c066d035cb87b">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">select</span>(</span>
+<span id="cb30-3"><a href="#cb30-3"></a>    ridership,</span>
+<span id="cb30-4"><a href="#cb30-4"></a>    Clark_Lake,</span>
+<span id="cb30-5"><a href="#cb30-5"></a>    Quincy_Wells,</span>
+<span id="cb30-6"><a href="#cb30-6"></a>    Irving_Park,</span>
+<span id="cb30-7"><a href="#cb30-7"></a>    Monroe,</span>
+<span id="cb30-8"><a href="#cb30-8"></a>    Polk,</span>
+<span id="cb30-9"><a href="#cb30-9"></a>    temp,</span>
+<span id="cb30-10"><a href="#cb30-10"></a>    percip,</span>
+<span id="cb30-11"><a href="#cb30-11"></a>    Bulls_Home,</span>
+<span id="cb30-12"><a href="#cb30-12"></a>    Bears_Home,</span>
+<span id="cb30-13"><a href="#cb30-13"></a>    WhiteSox_Home,</span>
+<span id="cb30-14"><a href="#cb30-14"></a>    Cubs_Home,</span>
+<span id="cb30-15"><a href="#cb30-15"></a>    date</span>
+<span id="cb30-16"><a href="#cb30-16"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb30-17"><a href="#cb30-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb30-18"><a href="#cb30-18"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 5,698
 Columns: 14
@@ -1361,15 +1300,15 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 </section>
 <section id="split-data-into-training-and-testing-data-1" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data-1">1. Split data into training and testing data</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
-<span id="cb30-2"><a href="#cb30-2"></a></span>
-<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># create a split object</span></span>
-<span id="cb30-4"><a href="#cb30-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
-<span id="cb30-5"><a href="#cb30-5"></a></span>
-<span id="cb30-6"><a href="#cb30-6"></a><span class="co"># create the training and testing data</span></span>
-<span id="cb30-7"><a href="#cb30-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
-<span id="cb30-8"><a href="#cb30-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-28_25f3e5383aeada8f0a3f51c06cc2d5d7">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="co"># create a split object</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># create the training and testing data</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
+<span id="cb32-8"><a href="#cb32-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exploratory-data-analysis-1" class="level4">
@@ -1379,39 +1318,39 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <section id="set-up-resampling-for-model-selection-1" class="level4">
 <h4 class="anchored" data-anchor-id="set-up-resampling-for-model-selection-1">3. Set up Resampling for Model Selection</h4>
 <p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger in the previous example, so we skip repeats.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-29_c20a54b8b4af2d1459b93de95ce81d07">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-candidate-models-1" class="level4">
 <h4 class="anchored" data-anchor-id="create-candidate-models-1">4. Create Candidate Models</h4>
 <p>We will use regression trees for this example. For feature and target engineering, we will simply remove the date column.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">step_rm</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-30_863d83d38ad9d7e9dfdad93df4d4151a">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">step_rm</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We specify a regression tree with the rpart engine.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">decision_tree</span>(</span>
-<span id="cb33-3"><a href="#cb33-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
-<span id="cb33-4"><a href="#cb33-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
-<span id="cb33-5"><a href="#cb33-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
-<span id="cb33-6"><a href="#cb33-6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-31_95e8fd0f7631233fdac370efe46bf9a3">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">decision_tree</span>(</span>
+<span id="cb35-3"><a href="#cb35-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb35-4"><a href="#cb35-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb35-5"><a href="#cb35-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
+<span id="cb35-6"><a href="#cb35-6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>grid_regular()</code> to specify a hyperparameter tuning grid for potential values of the cost-complexity parameter, tree depth parameter, and minimum n.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">min_n</span>(),</span>
-<span id="cb34-5"><a href="#cb34-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
-<span id="cb34-6"><a href="#cb34-6"></a>)</span>
-<span id="cb34-7"><a href="#cb34-7"></a></span>
-<span id="cb34-8"><a href="#cb34-8"></a>rpart_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-32_39859c949ee4e7afcb4b35e453ebe4c2">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>)</span>
+<span id="cb36-7"><a href="#cb36-7"></a></span>
+<span id="cb36-8"><a href="#cb36-8"></a>rpart_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 3
    cost_complexity tree_depth min_n
@@ -1430,24 +1369,24 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 </div>
 </div>
 <p>Finally, we combine the recipe and model objects into a <code>workflow()</code>.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-33_23ff38b71b148b6b3686dfbab2cfc241">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-and-choose-the-best-model-1" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model-1">5. Test and Choose the “Best” Model</h4>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>rpart_res <span class="ot">&lt;-</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
-<span id="cb37-4"><a href="#cb37-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
-<span id="cb37-5"><a href="#cb37-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
-<span id="cb37-6"><a href="#cb37-6"></a></span>
-<span id="cb37-7"><a href="#cb37-7"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-34_0e11cdb937efde0321cde6e6a088f9fd">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>rpart_res <span class="ot">&lt;-</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
+<span id="cb39-4"><a href="#cb39-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
+<span id="cb39-5"><a href="#cb39-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
+<span id="cb39-6"><a href="#cb39-6"></a></span>
+<span id="cb39-7"><a href="#cb39-7"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 9
    cost_complexity tree_depth min_n .metric .estimator  mean     n std_err
@@ -1465,8 +1404,12 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 # ℹ 990 more rows
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in show_best(rpart_res): No value of `metric` was given; "rmse" will be
+used.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 9
   cost_complexity tree_depth min_n .metric .estimator  mean     n std_err
@@ -1478,22 +1421,22 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 5       0.0000774          5    35 rmse    standard    2.37    10  0.0369
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">select_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">select_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
+be used.</code></pre>
+</div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   cost_complexity tree_depth min_n .config                
             &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  
 1         0.00001          5    40 Preprocessor1_Model0921</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1501,25 +1444,29 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <h4 class="anchored" data-anchor-id="optional-expand-the-model-fit-1">6. Optional: Expand the Model Fit</h4>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb44-2"><a href="#cb44-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-35_d9eecee092d03e6dc154bcf43782c0e8">
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb48-2"><a href="#cb48-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
+be used.</code></pre>
+</div>
 </div>
 <p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb45-2"><a href="#cb45-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">last_fit</span>(chicago_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-36_01335787d0c383fae2428fbaa8df8a1c">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>final_fit <span class="ot">&lt;-</span> </span>
+<span id="cb50-2"><a href="#cb50-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">last_fit</span>(chicago_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="evaluate-the-final-model-1" class="level4">
 <h4 class="anchored" data-anchor-id="evaluate-the-final-model-1">7. Evaluate the Final Model</h4>
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
 <p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-37_b55b6576336addce6407dc0eda67d833">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
@@ -1625,27 +1572,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+  function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
+      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1655,17 +1585,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start',
+      placement: 'bottom-start'
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1677,130 +1598,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
-    }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
-          }
-        }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
-        }
-        return container.innerHTML
-      } else {
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(note);
-        }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
-      }
-    }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
-          }
-        } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
-          .then(res => res.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
-            if (note !== null) {
-              const html = processXRef(id, note);
-              instance.setContent(html);
-            } 
-          }).finally(() => {
-            instance.enable();
-            instance.show();
-          });
-        }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
+      return note.innerHTML;
     });
   }
       let selectedAnnoteEl;
@@ -1844,7 +1642,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
-            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1870,32 +1667,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1957,18 +1728,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./19_predictive-modeling-motivation.html" class="pagination-link" aria-label="Predictive Modeling Motivation">
+      <a href="./19_predictive-modeling-motivation.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./21_supervised-classification.html" class="pagination-link" aria-label="Classification">
+      <a href="./21_supervised-classification.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
-
 
 
 
