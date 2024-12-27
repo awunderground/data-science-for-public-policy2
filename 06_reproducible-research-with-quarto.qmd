@@ -1,0 +1,384 @@
+---
+title: "Reproducible Research with Quarto"
+abstract: The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown. 
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+![A page from Alexander Graham Bell’s laboratory notebook](images/header-images/AGBell_Notebook.jpg)
+
+```{r echo = FALSE}
+#| echo: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+exercise_number <- 1
+```
+
+## Motivation
+
+There are many problems worth avoiding in an analysis:
+
+-   Copying-and-pasting, transposing, and manual repetition
+-   Out-of-sequence documents
+-   Parallel documents (a script and a narrative Word doc)
+-   Code written for computers that is tough to parse by humans
+
+Not convinced? Maybe we just want to make [cool stuff](https://quarto.org/docs/gallery/).
+
+## Literate (Statistical) Programming
+
+![**Source:** [Jacob Applebaum](https://en.wikipedia.org/wiki/Donald_Knuth#/media/File:KnuthAtOpenContentAlliance.jpg)](images/knuth.jpg){width="150"}
+
+According to Donald Knuth:
+
+> Let us change our traditional attitude to the construction of programs: Instead of imagining that our main task is to instruct a computer what to do, let us concentrate rather on explaining to human beings what we want a computer to do. ~ @knuth84. 
+
+## Example
+
+We used a linear model because there is reason to believe that the population model is linear. The observations are independent and the errors are independently and identically distributed with an approximately normal distribution.
+
+```{r}
+#| label: linear-model
+
+model1 <- lm(formula = dist ~ speed, data = cars)
+model1
+
+```
+
+An increase in travel speed of one mile per hour is associated with a `r round(model1$coefficients[2], 2)` foot increase in stopping distance on average.
+
+## Quarto
+
+Quarto is a literate statistical programming tool for R, Julia, Python, JavaScript, and more. It was released by [Posit](https://posit.co) in 2022. Quarto is an important tool for reproducible research. It combines narrative text with styles, code, and the output of code and can be used to create many types of documents including PDFs, html websites, slides, and more.
+
+Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (`.Rmd`) documents without any edits or changes.
+
+Jupyter (**Ju**lia, **Py**thon, and **R**) is a competing framework that is popular for Python but has not caught on for R.
+
+According to @Wickham2017R [Chapter 27](https://r4ds.had.co.nz/r-markdown.html#introduction-18), there are three main reasons to use R Markdown (they hold for Quarto) :
+
+> 1.  "For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis."
+> 2.  "For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code)."
+> 3.  "As an environment in which to do data science, as a modern day lab notebook where you can capture not only what you did, but also what you were thinking."
+
+
+Quarto uses
+
+-   plain text files ending in `.qmd` that are similar to `.R` files.
+-   `library(knitr)`.
+-   [pandoc](https://pandoc.org/).[^pandoc]
+
+[^pandoc]: Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their [About Page](https://pandoc.org/index.html).
+
+Quarto calls `library(knitr)` and "knits" `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded, and the entire process is handled by clicking the "Render" button in RStudio.
+
+
+![](images/rstudio-qmd-how-it-works.png)
+
+**Source:** [Quarto website](https://quarto.org/docs/get-started/hello/rstudio.html)
+
+Clicking the "Render" button starts this process.
+
+
+![](images/render.png)
+
+Quarto, `library(knitr)`, and Pandoc are all installed with RStudio. The only additional software you will need is a LaTeX distribution. Follow [these instructions](https://yihui.org/tinytex/) to install `library(tinytex)` if you want to make PDF documents.
+
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  If you already have a LaTeX distribution like `tinytext` or `MiKTeX`, then skip this exercise.
+2.  Follow [these instructions](https://yihui.org/tinytex/) to install `library(tinytex)`.
+:::
+
+The "Render" workflow has a few advantages:
+
+1.  All code is rerun in a clean environment when "Rendering". This ensures that the code runs in order and is reproducible.
+2.  It is easier to document code than with inline comments.
+3.  The output types are really appealing. By creating publishable documents with code, there is no need to copy-and-paste or transpose results.
+4.  The process is iterable and scalable.
+
+
+
+::: {.callout-warning}
+In the RStudio IDE (or in VSCode), clicking the Render button is analogous to running `quarto preview` in the terminal. This is different from another quarto command line function `quarto render`[^render]. `quarto preview` will cause the page to re-render and update. However, if you use Quarto to build a HTML-based book (like this one) or a website, by default, running `quarto preview` will not incorporate updated global options (often specified in `_quarto.yml`) or external files. To redeploy a website and/or incorporate those changes, run `quarto render`. 
+
+You can read more about this distinction on the [Quarto documentation](https://quarto.org/docs/websites/#website-preview).
+
+:::
+
+[^render]: The `quarto::quarto_render()` function, which we describe below, wraps the bash `quarto render` function.
+
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+
+1.  Click the new script button and add a "Quarto Document".
+2.  Give the document a name, an author, and ensure that HTML is selected.
+3.  Save the document as "hello-quarto.qmd".
+4.  Click "Render".
+
+:::
+
+## Three Ingredients in a `.qmd`
+
+1.  YAML header
+2.  Markdown text
+3.  Code chunks
+
+### 1. YAML header
+
+YAML stands for "yet another markup language." The YAML header contains meta information about the document including output type, document settings, and parameters that can be passed to the document. The YAML header starts with `---` and ends with `---`.
+
+Here is the simplest YAML header for a PDF document:
+
+
+    ---
+    format: html
+    ---
+
+
+YAML headers can contain many output specific settings. This YAML header creates an HTML document with code folding and a floating table of contents:
+
+    ---
+    format: 
+      html:
+        code-fold: true
+        toc: true
+    ---  
+
+### 2. Markdown text
+
+Markdown is a shortcut for HyperText Markup Language (HTML). Essentially, simple meta characters corresponding to formatting are added to plain text.
+
+    Titles and subtitltes
+    ------------------------------------------------------------
+
+    # Title 1
+
+    ## Title 2
+
+    ### Title 3
+
+
+    Text formatting 
+    ------------------------------------------------------------
+
+    *italic*  
+
+    **bold**   
+
+    `code`
+
+    Lists
+    ------------------------------------------------------------
+
+    * Bulleted list item 1
+    * Item 2
+      * Item 2a
+      * Item 2b
+
+    1. Item 1
+    2. Item 2
+
+    Links and images
+    ------------------------------------------------------------
+
+    [text](http://link.com)
+
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Add text with formatting like headers and bold to your Quarto document.
+2.  Render!
+
+:::
+
+
+### 3. Code chunks
+
+![](images/inline-r-code.png)
+
+More frequently, code is added in code chunks:
+
+```{r}
+#| echo: fenced
+
+2 + 2
+
+```
+
+The first argument inline or in a code chunk is the language engine. Most commonly, this will just be a lower case `r`. `knitr` allows for many different language engines:
+
+-   R
+-   Julia
+-   Python
+-   SQL
+-   Bash
+-   Rcpp
+-   Stan
+-   Javascript
+-   CSS
+
+Quarto has a rich set of options that go inside of the chunks and control the behavior of Quarto.
+
+```{r}
+#| echo: fenced
+#| eval: false
+
+2 + 2
+
+```
+
+In this case, `eval` makes the code not run. Other chunk-specific settings can be added inside the brackets. Here[^1] are the most important options:
+
+| Option         | Effect                |
+|----------------|-----------------------|
+| echo: false    | Hides code in output  |
+| eval: false    | Turns off evaluation  |
+| output: false  | Hides code output     |
+| warning: false | Turns off warnings    |
+| message: false | Turns off messages    |
+| fig-height: 8  | Changes figure width in inches[^dimensions] |
+| fig-width: 8   | Changes figure height in inches[^dimensions] |
+
+[^dimensions]: The default dimensions for figures change based on the output format. Visit [here](https://quarto.org/docs/computations/execution-options.html#figure-options) to learn more.
+Default settings for the entire document can be changed in the YAML header with the `execute` option:
+
+    execute:
+      warning: false
+
+
+[^1]: This table was typed as Markdown code. But sometimes it is easier to use a code chunk to create and print a table. Pipe any data frame into `knitr::kable()` to create a table that will be formatted in the output of a rendered Quarto document.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Add a code chunk.
+2.  Load the storms data set.
+3.  Filter the data to only include hurricanes.
+4.  Make a data visualization with ggplot2 using the data from
+5.  Include an option to hide the R code.
+6.  Render!
+
+:::
+
+## Applications
+
+### PDF documents
+
+    ---
+    format: pdf
+    ---
+
+-   Any documents intended to be published or printed out. For example, [this blog](https://cameronpatrick.com/post/2023/07/quarto-thesis-formatting/) details how Cameron Patrick wrote their PhD thesis in Quarto. 
+
+### html documents
+
+    ---
+    format: html
+    ---
+
+-   [Regression in R notes](https://ui-research.github.io/urbn101-intro-r/lessons/07_linear-regression)
+-   [R at the Urban Institute website](https://urbaninstitute.github.io/r-at-urban/)
+
+### GitHub README
+
+    ---
+    format: gfm
+    ---
+
+-   [urbnthemes](https://github.com/UrbanInstitute/urbnthemes)
+
+### Bookdown
+
+[Bookdown](https://bookdown.org/) is an R package by Yihui Xie for authoring books in R Markdown. Many books, including the first edition of  *R for Data Science* (@Wickham2017R), have been written in Quarto.
+
+[Quarto book](https://quarto.org/docs/books/) replaces bookdown. It is oriented around Quarto projects. The second edition of *R for Data Science* (@wickham_r_2023) was written in Quarto.
+
+### Blogdown
+
+[Blogdown](https://bookdown.org/yihui/blogdown/) is an R package by Yihui Xie for creating and managing a blog in R Markdown. [Up & Running with blogdown in 2021](https://www.apreshill.com/blog/2020-12-new-year-new-blogdown/) by Alison Hill is a great tutorial for getting started with Blogdown.
+
+There is no good Quarto replacement right now.
+
+### Microsoft Word and Microsoft PowerPoint
+
+It is possible to write to Word and PowerPoint. In general, We've found the functionality to be limited, and it is difficult to match institutional branding standards.
+
+### Slides
+
+    ---
+    format:
+      revealjs:
+        css: styles.css
+        incremental: true
+        reveal_options:
+          slideNumber: true
+          previewLinks: true
+    ---
+
+- Despite the challenge of rendering to Powerpoint, Quarto can be used effectively to create presentations. One of the authors of this book [used Quarto](https://github.com/Deckart2/mm-presentation) to create a presentation about iterated fact sheet development which, coincidentally, also used Quarto!
+
+### Fact sheets and fact pages
+
+An alternative to rendering a Quarto document with the Render button is to use the `quarto::render()` function. This allows for iterating the rendering of documents which is particularly useful for the development of fact sheets and fact pages. The next chapter of the book expands on this use case. 
+
+-   The Urban Institute State and Local Finance Initiative creates [State Fiscal Briefs](https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs) by iterating R Markdown documents.
+-   [Data\@Urban](https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
+
+## Conclusion
+
+Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
+
+
+### Suggestions
+
+-   Render early, and render often.
+-   Select the gear to the right of "Render" and select "Chunk Output in Console"
+-   Learn math mode. Also, `library(equatiomatic)` ([CRAN](https://cran.r-project.org/web/packages/equatiomatic/index.html), [GitHub](https://github.com/datalorax/equatiomatic)) is amazing.
+
+### Resources
+
+-   [Quarto intro](https://quarto.org/)
+-   [R4DS R Quarto chapter](https://r4ds.hadley.nz/quarto)
+-   [Happy Git R Markdown tutorial](https://happygitwithr.com/rmd-test-drive.html)
+

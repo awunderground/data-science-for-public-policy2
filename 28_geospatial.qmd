@@ -1,0 +1,754 @@
+---
+title: "Geospatial Analysis with sf"
+abstract: In this chapter, we introduce mapping and geospatial analysis using the simple features framework in R.
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+---
+
+![The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.](images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg)
+
+
+
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(here)
+
+theme_set(theme_minimal())
+
+```
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Motivation
+
+* Many data are inherently spatial. We need tools to manipulate, explore, communicate, and model spatial data. 
+* Point-and-click tools suffer many of the drawbacks outlined in earlier note sets. 
+* Proprietary geospatial tools are prohibitively expensive. 
+* Everyone loves maps. 
+
+## `library(sf)` and geospatial data
+
+Geospatial data are multidimensional. The outline of a simple rectangular state like Kansas may have a few vertices and a complex state like West Virginia may have many more vertices. Furthermore, geospatial data have auxiliary information about bounding boxes and projections. Fortunately, `library(sf)` can store all of this information in a rectangular tibble that works well with `library(dplyr)` and `library(ggplot2)`. 
+
+`library(sf)` stores geospatial data, which are **points**, **linestrings**, or **polygons** in a `geometry` column. Consider this example:
+
+```{r}
+library(sf)
+
+amtrak_stations_file <- 
+  here("data", "amtrak_stations.geojson")
+
+# download Amtrak data
+if(!file.exists(amtrak_stations_file)) {
+  
+  download.file(
+    url = "https://opendata.arcgis.com/datasets/628537f4cf774cde8aa9721212226390_0.geojson",
+    destfile = amtrak_stations_file
+  )
+  
+}
+
+# read sf data
+amtrak_stations <- st_read(amtrak_stations_file, quiet = TRUE)
+
+# print the geometry column
+# NOTE: geometry columns are "sticky" -- geometry is returned even though it 
+# isn't include in select()
+amtrak_stations |>
+  select(stationnam)
+
+```
+
+### Points
+
+::: {.callout-tip}
+## Points
+
+Points are zero-dimensional geometries. Points are coordinates and are frequently represented by a single longitude and latitude. 
+:::
+
+Let's map the Amtrak stations from the above example:
+
+```{r}
+# create a map
+amtrak_stations |>
+  ggplot() +
+  geom_sf() +
+  labs(
+    title = "Example of point data",
+    caption = "Amtrak stations from opendata.arcgis.com") +
+  theme_void()
+
+```
+
+### Linestrings
+
+::: {.callout-tip}
+## Linestrings
+
+Linestrings are one-dimensional geometries. Linestrings are a sequence of points connected by lines. 
+:::
+
+Here is an example of Amtrak train routes from the [Bureau of Transportation Statistics](https://data-usdot.opendata.arcgis.com/):
+
+```{r}
+amtrak_routes_file <- here("data", "Amtrak_Routes.geojson")
+
+# load sf data
+amtrak_routes <- st_read(amtrak_routes_file, quiet = TRUE)
+
+# create map with lines data
+amtrak_routes |>
+  ggplot() +
+  geom_sf() +
+  labs(
+    title = "Example of line data",
+    caption = "Amtrak routes from Bureau of Transportation Statistics"
+  ) +
+  theme_void()
+
+```
+
+### Polygons
+
+::: {.callout-tip}
+## Polygons
+
+Polygons are two-dimensional geometries. Polygons are a sequence of points connected by lines that form a closed shape. 
+:::
+
+Here is a simple example with of the Continental United States:
+
+```{r}
+# load and subset states data
+states <- tigris::states(cb = TRUE, progress_bar = FALSE) |>
+  filter(!STATEFP %in% c("78", "69", "66", "60", "72", "02", "15"))
+
+states |>
+  ggplot() +
+  geom_sf() +
+  labs(title = "Example of polygon data") +
+  theme_void()
+
+```
+
+Multipoints, multilinestrings, and multipolygons are additional geometries based on points, linestrings, and polygons. The [sf documentation](https://r-spatial.github.io/sf/articles/sf1.html) outlines many geometry types. 
+
+::: {.callout-tip}
+## Simple features
+
+Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard. 
+:::
+
+`library(sf)` implements simple features in R and introduces `sf` data. 
+
+## `geom_sf()`
+
+`geom_sf()` plots `sf` data. The function automatically references the `geometry` column and does not require any aesthetic mappings. `geom_sf()` works well with layers and it is simple to combine point, line, and polygon data.
+
+`geom_sf()` works like `geom_point()` for point data, `geom_line()` for linestring data, and `geom_area()` for polygon data (e.g. fill controls the color of shapes and color controls the border colors of shapes for polygons). 
+
+```{r}
+amtrak_map <- ggplot() +
+  geom_sf(
+    data = states,
+    fill = NA
+  ) +
+  geom_sf(
+    data = amtrak_routes, 
+    color = "blue"
+  ) +
+  geom_sf(
+    data = amtrak_stations, 
+    color = "red", 
+    size = 0.75,
+    alpha = 0.5
+  ) +
+  labs(title = "Amtrak stations and train routes") +
+  theme_void()
+
+amtrak_map
+
+```
+
+## Getting and loading spatial data
+
+### Shapefiles
+
+Shapefiles are a proprietary file format created by ESRI, the company that creates ArcGIS. Shapefiles are popular because ESRI dominated the GIS space for a long time. A shapefile is actually usually three or more binary files. 
+
+`st_read()` reads shapefiles into R in the `sf` format. Simply point the function to the file ending in `.shp`. Note that the other binary files associated with the shapefile must also be located in the same directory as the `.shp` file.
+
+### GeoJSON
+
+.geojson is an open source file type for storing geospatial data. It is plain text, which means it plays well with version control. 
+
+`st_read()` also reads GeoJSON data. Point the function at a file ending in .geojson to read the data. 
+
+### .csv files
+
+Lots of geographic information is stored in .csv files--especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with `read_csv()`. Second, use `st_as_sf()` to convert the tibble into an sf object and specify the columns with longitude and latitude with the `coords` argument:
+
+```r
+st_as_sf(data, coords = c("lon", "lat"))
+
+```
+
+**Note:** It is trickier (but far less common) to load line, polygon, and multipolygon data from .csvs.
+
+### `library(tigris)`
+
+[`library(tigris)`](https://github.com/walkerke/tigris) is an exceptional package that downloads and provides TIGER/Line shapefiles from the US Census Bureau. TIGER stands for Topologically Integrated Geographic Encoding and Referencing.
+
+The package provides lots of data with simple functions ([full list here](https://github.com/walkerke/tigris)) like `counties()` to access counties, `tracts()` to access census tracts, and `roads()` to access roads. The `state` and `county` arguments accept names and FIPS codes.
+
+`library(tigris)` has a new `shift` option that elides Alaska and Hawaii next to the Continental United States. 
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1. Using `library(tigris)`, pull roads data for DC with `state = "DC"` and `county = "District of Columbia"`.
+2. Create a map with `geom_sf()` and `theme_void()`.
+
+```{r}
+#| include: false
+#| eval: false
+
+library(tigris)
+
+dc_roads <- roads(state = "DC", county = "District of Columbia")
+
+dc_roads |>
+  ggplot() +
+  geom_sf() +
+  theme_void()
+
+```
+
+:::
+
+TIGER line files are high-resolution and follow legal boundaries. Sometimes the maps are counterintuitive. For example, the outline of Michigan will include the Great Lakes, which is uncommon. Cartographic boundary files are quicker to download and are clipped to the coastline, which better aligns with expectations. 
+
+```{r}
+#| fig-width: 4
+#| fig-height: 3
+
+library(tigris)
+library(patchwork)
+
+mi <- states(progress_bar = FALSE) |>
+  filter(STUSPS == "MI") |>
+  ggplot() +
+  geom_sf() +
+  labs(title = "TIGER/Line") +
+  theme_void() 
+
+mi_cb <- states(cb = TRUE, progress_bar = FALSE) |>
+  filter(STUSPS == "MI") |>
+  ggplot() +
+  geom_sf() +
+  labs(title = "Cartographic Boundary") +  
+  theme_void()
+
+mi + mi_cb
+
+```
+
+`library(rgeoboundaries)`
+
+The [`rgeoboundaries`](https://rspatialdata.github.io/admin_boundaries.html) package is a client for the [geoBoundaries API](https://www.geoboundaries.org/), providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the `remotes` package as follows
+
+The `rgeoboundaries` package can provide boundaries for countries at different administrative division levels. For example, here we obtain the adm1 boundaries (the first subnational level) for Bangladesh. The `type` argument of the `geoboundaries()` function can be set to obtain a simplified version of the boundaries.
+
+```{r}
+library(rgeoboundaries)
+
+bangladesh <- geoboundaries(
+  country = "Bangladesh", 
+  adm_lvl = "adm1",
+  type = "SSCGS" # Simplified Single Country Globally Standardized
+) 
+
+ggplot(data = bangladesh) +
+  geom_sf()
+
+```
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+We want to read in and map the locations of World Bank development projects in Bangladesh downloaded from [AidData](https://www.aiddata.org/data/world-bank-geocoded-research-release-level-1-v1-4-2), which includes geographic and other information about development projects. 
+
+1. Copy the below code into your script to read in `aiddata_bangladesh.csv` with read_csv().
+
+```{r}
+aiddata <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/awunderground/awunderground-data/",
+    "main/aiddata/aiddata_bangladesh.csv"
+    )
+  )
+```
+
+2. Use `st_as_sf()` to convert the .csv to `sf`. 
+3. Use `st_set_crs(value = 4326)` to set the CRS (we will discuss below).
+4. Add a basemap of adm1 boundaries for Bangladesh using the `bangladesh` object created above.
+5. Map the Bangladesh development project data with `color = status`.
+
+```{r}
+#| include: false
+
+aiddata <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/awunderground/awunderground-data/",
+    "main/aiddata/aiddata_bangladesh.csv"
+    )
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
+  st_set_crs(value = 4326)
+
+ggplot() +
+  geom_sf(data = bangladesh) +
+  geom_sf(data = aiddata, aes(color = status)) 
+
+```
+
+:::
+
+### `library(tidycensus)`
+
+[`library(tidycensus)`](https://walker-data.com/tidycensus/articles/spatial-data.html), which was created by the creator of `library(tigris)`, is also a valuable source of geographic data. Simply include `geometry = TRUE` in functions like `get_acs()` to pull the shapes data as `sf`. The `state` and `county` arguments accept names and FIPS codes.
+
+`library(tidycensus)` sometimes requires the same Census API Key we used in the API tutorial ([sign up here](https://api.census.gov/data/key_signup.html)). You should be able to install your API key into your version of R with `census_api_key("your-key-string", install = TRUE)`. To obtain your keystring, you can use `library(dotenv)` and `Sys.getenv(<key name in .env file>)`.
+
+`library(tidycensus)` has two big differences from `library(tigris)`: 1. it can pull Census data with the geographic data, and 2. it only provides  cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.
+
+```{r}
+library(tidycensus)
+
+dc_income <- get_acs(
+  geography = "tract", 
+  variables = "B19013_001", 
+  state = "DC", 
+  county = "District of Columbia", 
+  geometry = TRUE,
+  year = 2019,
+  progress = FALSE
+)
+
+```
+
+Both `library(tigris)` and `library(tidycensus)` have a `year` parameter that determines the year of the data obtained in functions like `tidycensus::get_acs()` or `tigris::states()`. This parameter currently defaults to 2020 for `get_acs()` and `tigris` functions. `tidycensus::get_acs()` also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.
+
+## Choropleths
+
+Choropleths are maps that use fill to display the variation in a variable across geographies. 
+
+```{r}
+#| echo: false
+#| fig-width: 5
+#| fig-height: 3
+
+dc_income <- get_acs(geography = "tract", 
+                     variables = "B19013_001", 
+                     state = "DC", 
+                     county = "District of Columbia", 
+                     geometry = TRUE,
+                     progress = FALSE)
+
+dc_income |>
+  ggplot() +
+  geom_sf(aes(fill = estimate), color = "white", size = 0.1) +
+  scale_fill_gradient(
+    low = "#cfe8f3", 
+    high = "#062635",
+    labels = scales::dollar
+  ) +
+  theme_void() +
+  labs(
+    title = "DC is Highly Segregated by Household Income",
+    caption = "2015-2019 5-Year ACS",
+    fill = "Household Income"
+  )
+
+```
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1. Copy the code that pulls income in DC by census tract under `library(tidycensus)`. 
+2. Try to recreate the above choropleth using `fill`.
+3. **Hint:** Use `scale_fill_gradient()` with `low = "#cfe8f3"` and `high = "#062635"`.
+
+:::
+
+## Spatial concepts
+
+Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface. **Note:** the Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
+
+::: {.callout-tip}
+## Geographic coordinate reference systems
+
+Geographic coordinate reference systems represent geographies with a three-dimensional representation of the Earth. (i.e., The data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.
+:::
+
+::: {.callout-tip}
+## Projected coordinate reference system
+
+Projected coordinate reference system represent geographies with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.
+:::
+
+::: {.callout-tip}
+## Projection
+
+A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into a two-dimensions. 
+:::
+
+### Popular projections
+
+All projections are wrong, but all projections are wrong in different ways with different uses.
+
+Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Conic projections distort longitudes and latitudes but maintain areas. Azimuthal projections maintain distances but struggle to project large areas. 
+
+#### Mercator projection
+
+The Mercator projection is widespread because it maintains straight lines for longitude and latitude. This was useful for navigators on the open sea hundreds of years ago. This is less useful in the 21st century. The Mercator projection is conformal, so while it maintains angles, it seriously distorts area. To see this, play the [Mercator Puzzle](https://bramus.github.io/mercator-puzzle-redux/).
+
+![Mercator](images/mercator.png){#fig-mercator fig-align="center" width=70%}
+
+Source: [Encyclopædia Britannica](https://www.britannica.com/science/Mercator-projection#/media/1/375638/231099)
+
+#### Albers Equal Area Projection
+
+The Albers Equal Area projection, which is a conic projection, doesn't maintain angles, but it is an equal area projection. It is the default projection of the Urban Institute. 
+
+![Albers](images/albers.png){#fig-albers fig-align="center" width=70%}
+
+#### State Plane Coordinate Systems (SPCS)
+
+The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. [This site](https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm) has a thorough introduction.
+
+![State Planes](images/spcs83.png){#fig-state-planes fig-align="center" width=70%}
+
+Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)
+
+#### EPSG Codes
+
+A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes from the European Petrol Survey Group, which no longer exists. EPSG codes are 4-6 numbers. Always check to see if a CRS is specified after loading spatial data. Here are some defaults:
+
+* The EPSG code will always be 4326 for GeoJSONs.
+* .csv files with longitude and latitude will typically be 4326.
+* R should read the CRS from `.prj` file when reading shapefiles. If it fails, open the `.prj` file and use [this tool](http://prj2epsg.org) to identify the EPSG code. 
+
+Use `st_crs()` to see the CRS. Use `st_set_crs()` to set the CRS. Use `st_transform()` to transform the CRS. Note that `st_set_crs()` simply adds or updates CRS information - it does not transform the data. When using multiple different geospatial datasets for mapping (e.g. layering points and polygons), they should have the same CRS prior to mapping.
+
+[epsg.io](epsg.io) and [spatialreference.org](spatialreference.org) are useful for finding and learning more about EPSG codes. 
+
+#### Datum
+
+::: {.callout-tip}
+## Datum
+
+A datum is a reference point for measuring locations on the surface of the Earth. The datum defines an anchor point for coordinate systems and thus allows a unique set of longitudes and latitudes to fully define the surface of the Earth.
+
+:::
+
+The invention of GPS has standardized datums. Geodetic datums like the North American Datum of 1983 (**NAD83**) and the World Geodetic System of 1984 (**WGS84**) now dominate. In fact, all GPS measurements are based on WGS84. This [blog](https://www.esri.com/news/arcuser/0401/datum.html) describes the importance of datums. 
+
+#### `library(crsuggest)`
+
+[`library(crsuggest)`](https://github.com/walkerke/crsuggest) can simplify the process of picking a CRS. 
+
+```{r}
+library(crsuggest)
+
+suggest_crs(amtrak_stations)
+
+virginia_stations <- amtrak_stations |>
+  filter(state == "VA")
+
+suggest_crs(virginia_stations)
+
+```
+
+The top suggestion for `virginia_stations` is `CRS == 6593`. If we [look up](http://epsg.io/6593) this CRS we see it has geodetic datum NAD83 and is based on the Lambert Conformal Conic projection used for SPCS. If we [look up](https://www.spatialreference.org/ref/?search=virginia&srtext=Search) the best SPCS for Northern Virginia, we get `CRS == 3686`, which is the third recommendation. 
+
+The differences between these two recommendations are not significant. 
+
+#### Bottom line
+
+That's a lot of technical information. When mapping in the US
+
+1. Use `CRS = 4326` when you load the data to understand the locations you are mapping. *This is not a projection* but plotting the data acts like a projection.
+2. Use `CRS = 5070` if you are mapping the entire Continental US. Other useful EPSG codes are available [here](https://guides.library.duke.edu/r-geospatial/CRS). 
+3. Use the recommended state plane coordinate system for state and local maps.
+
+Here's the map from earlier with EPSG 4326 on the left and EPSG 5070 (Alber's Equal Area Conic Projection) on the right:
+
+```{r}
+#| echo: false
+
+amtrak_map_new <- ggplot() +
+  geom_sf(
+    data = states,
+    fill = NA
+  ) +
+  geom_sf(
+    data = amtrak_routes, 
+    color = "blue"
+  ) +
+  geom_sf(
+    data = amtrak_stations, 
+    color = "red", 
+    size = 0.75,
+    alpha = 0.5
+  ) +
+  labs(title = "Albers Equal Area Conic Projection") +
+  coord_sf(crs = 5070) +
+  theme_void()
+
+amtrak_map <- amtrak_map +
+  labs(title = "EPSG 4326 (no projection)")
+
+amtrak_map + amtrak_map_new
+
+```
+
+::: callout
+
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+exercise_number <- exercise_number + 1
+
+```
+
+1. Copy-and-paste the AidData exercise from exercise 2.
+2. Repeat the mapping with a EPSG code that makes sense for Bangladesh using `st_transform()` (**Hint:** you can identify the EPSG code using `suggest_crs(aiddata)`).
+3. Copy-and-paste the AidData exercise from exercise 2 again. 
+4. Repeat the mapping with a EPSG code that makes sense for Bangladesh using `coord_sf(crs = ####)` where `####` is the EPSG code from step 2 (**Hint:** `coord_sf()` can be added to your mapping code following a + ). This skips the need for `st_transform()` when making maps. 
+
+```{r}
+#| include: false
+
+# attempt 1
+aiddata <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/awunderground/awunderground-data/",
+    "main/aiddata/aiddata_bangladesh.csv"
+    )
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
+  st_set_crs(value = 4326) |>
+  st_transform(crs = 7783)
+
+ggplot() +
+  geom_sf(data = bangladesh) +
+  geom_sf(data = aiddata, aes(color = status)) 
+
+# attempt 2
+aiddata <- read_csv(
+  paste0(
+    "https://raw.githubusercontent.com/awunderground/awunderground-data/",
+    "main/aiddata/aiddata_bangladesh.csv"
+    )
+  ) |>
+  st_as_sf(coords = c("longitude", "latitude")) |>
+  st_set_crs(value = 4326)
+
+
+ggplot() +
+  geom_sf(data = bangladesh) +
+  geom_sf(data = aiddata, aes(color = status)) +
+  coord_sf(crs = 7787)
+
+```
+
+:::
+
+## Spatial operations
+
+We often want to manipulate spatial data or use spatial data for calculations. This section covers a few common operations. 
+
+### Aggregation
+
+Sometimes we want to aggregate smaller geographies into larger geographies. This is simple with a `group_by()` and `summarize()` workflow. Suppose we want to combine North Dakota and South Dakota into Dakota. 
+
+```{r}
+# states to combine
+dmv_names <- c("South Dakota", "North Dakota")
+
+# add a projection
+states <- states |>
+  st_transform(crs = 5070)
+
+# aggregate states and make a map
+states |>
+  mutate(new_NAME = if_else(NAME %in% dmv_names, "Dakota", NAME)) |>
+  group_by(new_NAME) |>
+  summarize() |>
+  ggplot() +
+  geom_sf()
+
+```
+
+### Spatial Joins
+
+Spatial joins are joins like `left_join()` but the join is based on geography instead of "by" variables. **Note:** both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many. 
+
+`st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` touch the geographies in `y`. The `sf` package offers a number of different geometric confirmations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is copletely within `y`), `st_within` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options. 
+
+Suppose we want to count the number of Amtrak stations in each state.
+
+```{r}
+# set states CRS to 4326 to match the Amtrak data
+amtrak_stations <- st_transform(amtrak_stations, crs = 5070)
+
+# dimension before join
+dim(amtrak_stations)
+
+# spatial join using intersection
+amtrak <- st_join(states, amtrak_stations, join = st_intersects)
+
+# dimension after join -- lose international stations
+dim(amtrak)
+
+# count the number of stations per state
+amtrak |>
+  as_tibble() |> # converting from sf to tibble speeds calculations
+  group_by(NAME) |>
+  summarize(number_of_stations = n()) |>
+  arrange(desc(number_of_stations))
+
+```
+
+### Buffers
+
+Adding buffers to points, lines, and polygons is useful for counting shapes near other shapes. For instance, we may want to count the number of housing units within 500 meters of a metro station or the number of schools more than 5 miles from a fire station. 
+
+Suppose we want to count the number of Amtrak stations within 5 kilometers of each Amtrak station. We can buffer the Amtrak station points, join the unbuffered data to the buffered data, and then count. 
+
+```{r}
+# add a buffer of 5 kilometers to each station
+# the units package is useful for setting buffers with different units
+amtrak_stations_buffered <- st_buffer(
+  amtrak_stations, 
+  dist = units::set_units(5, "km")
+)
+
+# spatial join the unbuffered shapes to the buffer shapes
+amtrak_stations_joined <- st_join(
+  amtrak_stations_buffered,
+  amtrak_stations, 
+  join = st_intersects
+)
+
+# count the station names
+amtrak_stations_joined |>
+  as_tibble() |>
+  count(stationnam.x, sort = TRUE)
+
+```
+
+### Distances
+
+Euclidean distance is common for calculating straight line distances but does not make sense for calculating distances on the surface of an ellipsoid like Earth.
+
+$$d(\vec{p}, \vec{q}) = \sqrt{\sum_{i = 1}^n(q_i - p_i)^2}$$
+
+Instead, it is common to use Haversine distance which accounts for the curvature in the globe. 
+
+![Haversine Distance](images/haversine.png){#fig-haversine fig-align="center" width=70%}
+
+Suppose we want to find the closest and furthest Amtrak stations from Washington DC's Union Station. 
+
+```{r}
+# create a data frame with just Union Station
+union_station <- amtrak_stations |>
+  filter(state == "DC")
+
+no_union_station <- amtrak_stations |>
+  filter(state != "DC") 
+
+# calculate the distance from Union Station to all other stations
+amtrak_distances <- st_distance(union_station, no_union_station)
+
+# find the closest station
+amtrak_stations |>
+  slice(which.min(amtrak_distances)) |>
+  select(stationnam, city)
+
+
+# find the further station
+amtrak_stations |>
+  slice(which.max(amtrak_distances)) |>
+  select(stationnam, city)
+
+```
+
+## Geospatial modeling
+
+Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.   
+
+The assumption of independence often falls apart with spatial data. If number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn't make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina. 
+
+Spatial regression methods attempt to account for this dependence between observations. 
+
+**Spatial autocorrelation:** Correlation between observations that are geographically close. 
+
+Process:
+
+1. Estimate a non-spatial regression model.
+2. Use tests of spatial autocorrelation like Moran's I, Geary's c, or Getis and Ord's G-statistic on the residuals to test for spatial autocorrelation.
+3. If spatial autocorrelation exists, the use a spatial error model or a spatial lag model. 
+
+## Parting Thoughts
+
+This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons. 
+
+Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set may have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+
+## More Resources
+
+* [Drawing Beautiful Maps with sf - part 1](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html)
+* [Drawing Beautiful Maps with sf - part 2](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
+* [R Spatial Workshop Notes](https://spatialanalysis.github.io/workshop-notes/)
+* [Analyzing US Census Data by Kyle Walker -- Chapter 6](https://walker-data.com/census-r/mapping-census-data-with-r.html)
+* [sf Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf)

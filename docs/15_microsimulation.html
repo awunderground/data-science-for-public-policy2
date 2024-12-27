@@ -1,0 +1,1713 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.433">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Data Science for Public Policy - 14&nbsp; Microsimulation</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./16_nonparametric-1.html" rel="next">
+<link href="./14_simulation-and-sampling.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="www/styles.css">
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./15_microsimulation.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Data Science for Public Policy</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Welcome</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+ <span class="menu-text">Basics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01_intro-r.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction to R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02_tidyverse.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Introduction to the tidyverse</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03_advanced-data-cleaning.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Advanced Data Cleaning</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04_data-viz.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Data Visualization with ggplot2</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05_exploratory-data-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Exploratory Data Analysis</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+ <span class="menu-text">Reproducible Research</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06_reproducible-research-with-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Reproducible Research with Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07_advanced-quarto.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Advanced Quarto</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./08_reproducible-research-with-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Reproducible Research with Git and GitHub</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./09_advanced-git.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Advanced Git and Github</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+ <span class="menu-text">Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./10_functions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./12_apis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./13_web-scraping.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+ <span class="menu-text">Statistics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./14_simulation-and-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./15_microsimulation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./16_nonparametric-1.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./17_nonparametric-2.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Nonparametric Inference</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+ <span class="menu-text">Supervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-5" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./19_predictive-modeling-motivation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Predictive Modeling Motivation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./20_predictive-modeling-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">18</span>&nbsp; <span class="chapter-title">Predictive Modeling Concepts and Regression</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./21_supervised-classification.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">19</span>&nbsp; <span class="chapter-title">Classification</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+ <span class="menu-text">Unsupervised Machine Learning</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+ <span class="menu-text">Other Topics</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_geospatial.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">14.1</span> Motivation</a></li>
+  <li><a href="#calculators" id="toc-calculators" class="nav-link" data-scroll-target="#calculators"><span class="header-section-number">14.2</span> Calculators</a>
+  <ul class="collapse">
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">14.2.1</span> Example 1</a></li>
+  </ul></li>
+  <li><a href="#microsimulation" id="toc-microsimulation" class="nav-link" data-scroll-target="#microsimulation"><span class="header-section-number">14.3</span> Microsimulation</a>
+  <ul class="collapse">
+  <li><a href="#basic-microsimulation" id="toc-basic-microsimulation" class="nav-link" data-scroll-target="#basic-microsimulation"><span class="header-section-number">14.3.1</span> Basic Microsimulation</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">14.3.2</span> Example 2</a></li>
+  <li><a href="#distributional-analysis" id="toc-distributional-analysis" class="nav-link" data-scroll-target="#distributional-analysis"><span class="header-section-number">14.3.3</span> Distributional Analysis</a></li>
+  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">14.3.4</span> Example 3</a></li>
+  <li><a href="#counterfactual-analysis" id="toc-counterfactual-analysis" class="nav-link" data-scroll-target="#counterfactual-analysis"><span class="header-section-number">14.3.5</span> Counterfactual Analysis</a></li>
+  <li><a href="#example-4" id="toc-example-4" class="nav-link" data-scroll-target="#example-4"><span class="header-section-number">14.3.6</span> Example 4</a></li>
+  <li><a href="#extrapolation" id="toc-extrapolation" class="nav-link" data-scroll-target="#extrapolation"><span class="header-section-number">14.3.7</span> Extrapolation</a></li>
+  <li><a href="#transitions" id="toc-transitions" class="nav-link" data-scroll-target="#transitions"><span class="header-section-number">14.3.8</span> Transitions</a></li>
+  <li><a href="#example-5" id="toc-example-5" class="nav-link" data-scroll-target="#example-5"><span class="header-section-number">14.3.9</span> Example 5</a></li>
+  <li><a href="#beyond-accounting-rules" id="toc-beyond-accounting-rules" class="nav-link" data-scroll-target="#beyond-accounting-rules"><span class="header-section-number">14.3.10</span> Beyond Accounting Rules</a></li>
+  </ul></li>
+  <li><a href="#building-a-representative-population" id="toc-building-a-representative-population" class="nav-link" data-scroll-target="#building-a-representative-population"><span class="header-section-number">14.4</span> Building a Representative Population</a>
+  <ul class="collapse">
+  <li><a href="#synthetic-starting-data" id="toc-synthetic-starting-data" class="nav-link" data-scroll-target="#synthetic-starting-data"><span class="header-section-number">14.4.1</span> Synthetic Starting Data</a></li>
+  <li><a href="#data-linkage-and-imputation" id="toc-data-linkage-and-imputation" class="nav-link" data-scroll-target="#data-linkage-and-imputation"><span class="header-section-number">14.4.2</span> Data Linkage and Imputation</a></li>
+  <li><a href="#validation" id="toc-validation" class="nav-link" data-scroll-target="#validation"><span class="header-section-number">14.4.3</span> Validation</a></li>
+  <li><a href="#reweighting" id="toc-reweighting" class="nav-link" data-scroll-target="#reweighting"><span class="header-section-number">14.4.4</span> Reweighting</a></li>
+  <li><a href="#alignment" id="toc-alignment" class="nav-link" data-scroll-target="#alignment"><span class="header-section-number">14.4.5</span> Alignment</a></li>
+  </ul></li>
+  <li><a href="#assumptions" id="toc-assumptions" class="nav-link" data-scroll-target="#assumptions"><span class="header-section-number">14.5</span> Assumptions</a>
+  <ul class="collapse">
+  <li><a href="#open-vs.-closed" id="toc-open-vs.-closed" class="nav-link" data-scroll-target="#open-vs.-closed"><span class="header-section-number">14.5.1</span> Open vs.&nbsp;Closed</a></li>
+  <li><a href="#independence" id="toc-independence" class="nav-link" data-scroll-target="#independence"><span class="header-section-number">14.5.2</span> Independence</a></li>
+  <li><a href="#markov-assumption" id="toc-markov-assumption" class="nav-link" data-scroll-target="#markov-assumption"><span class="header-section-number">14.5.3</span> Markov Assumption</a></li>
+  </ul></li>
+  <li><a href="#uncertainty" id="toc-uncertainty" class="nav-link" data-scroll-target="#uncertainty"><span class="header-section-number">14.6</span> Uncertainty</a></li>
+  <li><a href="#microsimulation-model-examples" id="toc-microsimulation-model-examples" class="nav-link" data-scroll-target="#microsimulation-model-examples"><span class="header-section-number">14.7</span> Microsimulation Model Examples</a>
+  <ul class="collapse">
+  <li><a href="#simulating-the-2020-census" id="toc-simulating-the-2020-census" class="nav-link" data-scroll-target="#simulating-the-2020-census"><span class="header-section-number">14.7.1</span> Simulating the 2020 Census</a></li>
+  <li><a href="#tpc-microsimulation-in-the-cloud" id="toc-tpc-microsimulation-in-the-cloud" class="nav-link" data-scroll-target="#tpc-microsimulation-in-the-cloud"><span class="header-section-number">14.7.2</span> TPC Microsimulation in the Cloud</a></li>
+  <li><a href="#modeling-income-in-the-near-term-mintmint" id="toc-modeling-income-in-the-near-term-mintmint" class="nav-link" data-scroll-target="#modeling-income-in-the-near-term-mintmint"><span class="header-section-number">14.7.3</span> Modeling Income in the Near Term (MINT)</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Microsimulation</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+<div>
+  <div class="abstract">
+    <div class="abstract-title">Abstract</div>
+    This sections covers microsimulation, which is an important technique for policy evaluation.
+  </div>
+</div>
+
+</header>
+
+<section id="motivation" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">14.1</span> Motivation</h2>
+<p>It is often important to ask <strong>“what would be the policy impact of…”</strong> on a population or subpopulation.</p>
+<p>One common approach is to look at representative units. For example, we could construct one observation that is representative (e.g.&nbsp;median family structure, median income, etc.) and pass its values into a calculator. Then, we could extrapolate this experience to other observations.</p>
+<p>Another common approach is to look at aggregated data. For example, we could look at county-level insurance coverage in Medicaid expansion and non-expansion states and then extrapolate to other health care expansions.</p>
+<p><span class="citation" data-cites="orcutt1957">Orcutt (<a href="references.html#ref-orcutt1957" role="doc-biblioref">1957</a>)</span> suggested a radically different approach. Instead of using a representative unit or aggregated data to project outcomes, model outcomes for individual units and aggregate the results. Potential units-of-analysis include people, households, and firms. Models include anything from simple accounting rules to complex behavioral and demographic models.</p>
+<p>It took decades for this approach to see wide adoption because of data and computational limitations, but it is now commonplace in policy evaluation.</p>
+</section>
+<section id="calculators" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="calculators"><span class="header-section-number">14.2</span> Calculators</h2>
+<p>We’ll first look at calculators, which are an important tool for representative unit methods and microsimulation.</p>
+<ul>
+<li>The Tax Policy Center’s <a href="https://tpc-marriage-calculator.urban.org/">Marriage Calculator</a> can be used to calculate tax marriage penalties and benefits.</li>
+<li><a href="https://policyengine.org/us/household?focus=intro">PolicyEngine</a> contains scores of calculators for taxes and benefits. For example, <a href="https://policyengine.org/us/household?focus=householdOutput.mtr&amp;household=33433">this calculator evaluates marginal tax rates in California</a> accounting for taxes and benefits.</li>
+</ul>
+<p>These two examples show the value of using calculators to explore potentially harmful marriage disincentives like marriage penalties, benefits cliffs, and extremely high marginal tax rates.</p>
+<section id="example-1" class="level3" data-number="14.2.1">
+<h3 data-number="14.2.1" class="anchored" data-anchor-id="example-1"><span class="header-section-number">14.2.1</span> Example 1</h3>
+<p>Suppose we are interested in creating a new tax credit that is very simple. Its only parameters are number of children and total family income. It has the following characteristics:</p>
+<ul>
+<li>Ignore the first $20,000 of family income</li>
+<li>Create a maximum benefit of $3,000 for one child, $4,500 for two children, and $6,000 for three or more children</li>
+<li>Reduce the benefit by $0.10 for every dollar of income in excess of $20,000.</li>
+</ul>
+<p>We first create an R function that implements this policy proposal.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#' Calculate the benefit from the new tax credit</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="co">#'</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="co">#' @param num_children A numeric for the number of children</span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="co">#' @param family_income A numeric for family income</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="co">#'</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="co">#' @return Numeric benefit in dollars</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="co">#' </span></span>
+<span id="cb1-8"><a href="#cb1-8"></a>new_tax_credit <span class="ot">&lt;-</span> <span class="cf">function</span>(num_children, family_income) {</span>
+<span id="cb1-9"><a href="#cb1-9"></a>  </span>
+<span id="cb1-10"><a href="#cb1-10"></a>  modified_income <span class="ot">&lt;-</span> <span class="fu">pmax</span>(family_income <span class="sc">-</span> <span class="dv">20000</span>, <span class="dv">0</span>)</span>
+<span id="cb1-11"><a href="#cb1-11"></a>  </span>
+<span id="cb1-12"><a href="#cb1-12"></a>  benefit <span class="ot">&lt;-</span> dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb1-13"><a href="#cb1-13"></a>    num_children <span class="sc">&gt;=</span> <span class="dv">3</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">6000</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> modified_income),</span>
+<span id="cb1-14"><a href="#cb1-14"></a>    num_children <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">4500</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> modified_income),</span>
+<span id="cb1-15"><a href="#cb1-15"></a>    num_children <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">3000</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> modified_income),</span>
+<span id="cb1-16"><a href="#cb1-16"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb1-17"><a href="#cb1-17"></a>  )</span>
+<span id="cb1-18"><a href="#cb1-18"></a></span>
+<span id="cb1-19"><a href="#cb1-19"></a>  <span class="fu">return</span>(benefit)</span>
+<span id="cb1-20"><a href="#cb1-20"></a>  </span>
+<span id="cb1-21"><a href="#cb1-21"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can apply the calculator to representative cases:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">new_tax_credit</span>(<span class="at">num_children =</span> <span class="dv">1</span>, <span class="at">family_income =</span> <span class="dv">34000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1600</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">new_tax_credit</span>(<span class="at">num_children =</span> <span class="dv">4</span>, <span class="at">family_income =</span> <span class="dv">12000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 6000</code></pre>
+</div>
+</div>
+<p>We can also apply the calculator to many potential values and generate benefit plots:</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">expand_grid</span>(</span>
+<span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">family_income =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">100000</span>, <span class="dv">100</span>),</span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">num_children =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="at">benefit =</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb6-7"><a href="#cb6-7"></a>      <span class="at">.x =</span> num_children, </span>
+<span id="cb6-8"><a href="#cb6-8"></a>      <span class="at">.y =</span> family_income, </span>
+<span id="cb6-9"><a href="#cb6-9"></a>      <span class="at">.f =</span> new_tax_credit</span>
+<span id="cb6-10"><a href="#cb6-10"></a>    )</span>
+<span id="cb6-11"><a href="#cb6-11"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(family_income, benefit, <span class="at">color =</span> <span class="fu">factor</span>(num_children))) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span></span>
+<span id="cb6-15"><a href="#cb6-15"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()) <span class="sc">+</span></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="at">x =</span> <span class="st">"Family income"</span>,</span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="at">y =</span> <span class="st">"Benefit"</span>,</span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="at">color =</span> <span class="st">"Number of children"</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div id="fig-benefit-curve" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="15_microsimulation_files/figure-html/fig-benefit-curve-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figure&nbsp;14.1: Benefits for different income levels and numbers of children</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Create a new, well-documented function called <code>alternative_tax_credit()</code> based on <code>new_tax_credit()</code> that models the following proposed tax credit:
+<ul>
+<li>Ignore the first $20,000 if family income.</li>
+<li>Create a maximum benefits of $4,000 for one child, $4,500 for two children, and $5,000 for three children.</li>
+<li>Reduces the benefit by $.05 for every dollar of income in excess of $20,000.</li>
+</ul></li>
+<li>Use <code>library(ggplot2)</code>, <code>expand_grid()</code>, and <code>map2_dbl()</code> to create a chart like the one in the notes for this alternative tax credit.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="microsimulation" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="microsimulation"><span class="header-section-number">14.3</span> Microsimulation</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Microsimulation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Microsimulation</strong> is a tool for projection that starts with individual observations (i.e.&nbsp;people or households) and then aggregates those individuals.</p>
+</div>
+</div>
+<p>Microsimulation requires many assumptions and significant investment, but is useful for a few reasons:</p>
+<ol type="1">
+<li>It can be used to project heterogeneous outcomes and to look at the distribution of outcomes instead of just typical outcomes.</li>
+<li>It can be used to evaluate “what-if” situations by comparing baseline projections with counterfactual projections.</li>
+</ol>
+<p>Microsimulation is widely used in government, not-for-profits, and academia:</p>
+<ol type="1">
+<li>The <a href="https://www.cbo.gov/publication/53667">Congressional Budget Office’s Long-Term (CBOLT)</a> model is used for long-term fiscal forecasts.</li>
+<li>The CBO uses <a href="https://www.cbo.gov/publication/57205">HISIM2</a> to forecast health insurance coverage and premiums for people under age 65.</li>
+<li>The Urban-Brookings Tax Policy Center <a href="https://www.taxpolicycenter.org/model-estimates">evaluates most major tax proposals</a> with its tax microsimulation model.</li>
+</ol>
+<p>Microsimulation is also widely cited in popular publications around important debates:</p>
+<ol type="1">
+<li>The Urban Institute’s HIPSM was cited in the majority opinion of the Supreme Court case <em>King v. Burwell</em>, which upheld the Patient Protection and Affordable Care Act.</li>
+<li>TPC’s tax model is regularly cited in the New York Times, Wall Street Journal, and Washington Post when TPC evaluates candidates’ tax plans.</li>
+</ol>
+<p>Microsimulation models range from simple calculators applied to representative microdata to very complex dynamic models.</p>
+<section id="basic-microsimulation" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="basic-microsimulation"><span class="header-section-number">14.3.1</span> Basic Microsimulation</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Accounting Rules
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Accounting rules</strong> are the basic calculations associated with government law and programs like taxes, Social Security benefits, and Medicare.</p>
+<p>Accounting rules are sometimes called arithmetic rules because they are typically limited to addition, subtraction, multiplication, division, and simple if-else logic.</p>
+</div>
+</div>
+<p>Let’s start with a very simple algorithm for microsimulation modeling:</p>
+<ol type="1">
+<li>Construct a sample that represents the population of interest.</li>
+<li>Apply accounting rules.</li>
+<li>Aggregate.</li>
+</ol>
+<p>The simplest microsimulation models essentially apply tax models similar to TurboTax to a representative set of microdata.</p>
+<p>We can summarize output from microsimulation models with summary statistics that demonstrate the distribution of outcomes. For example, it is common to look at deciles or key percentiles to understand the heterogeneity of changes.</p>
+<p>We can construct a baseline simulation by applying current law for step 2. Next, we can construct an alternative or counterfactual simulation by changing step 2 to a proposed policy. Finally, we can difference current law and the counterfactual to estimate the impact of a policy.</p>
+</section>
+<section id="example-2" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="example-2"><span class="header-section-number">14.3.2</span> Example 2</h3>
+<p>Let’s consider a simple example where we apply the benefit calculator from earlier to families from the 2022 Annual Social and Economic Supplement to the Current Population Survey.</p>
+<p>To keep things simple, we only consider families related to the head of household (and ignore other families in the household). Furthermore, we will ignore observations weights.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># if file doesn't exist in data, then download</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"cps_microsim.csv"</span>))) {</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  </span>
+<span id="cb7-4"><a href="#cb7-4"></a>  cps_extract_request <span class="ot">&lt;-</span> <span class="fu">define_extract_cps</span>(</span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="at">description =</span> <span class="st">"2018-2019 CPS Data"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="at">samples =</span> <span class="st">"cps2022_03s"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    <span class="at">variables =</span> <span class="fu">c</span>(<span class="st">"YEAR"</span>, <span class="st">"NCHILD"</span>, <span class="st">"FTOTVAL"</span>)</span>
+<span id="cb7-8"><a href="#cb7-8"></a>  )</span>
+<span id="cb7-9"><a href="#cb7-9"></a>  </span>
+<span id="cb7-10"><a href="#cb7-10"></a>  submitted_extract <span class="ot">&lt;-</span> <span class="fu">submit_extract</span>(cps_extract_request)</span>
+<span id="cb7-11"><a href="#cb7-11"></a>  </span>
+<span id="cb7-12"><a href="#cb7-12"></a>  downloadable_extract <span class="ot">&lt;-</span> <span class="fu">wait_for_extract</span>(submitted_extract)</span>
+<span id="cb7-13"><a href="#cb7-13"></a>  </span>
+<span id="cb7-14"><a href="#cb7-14"></a>  data_files <span class="ot">&lt;-</span> <span class="fu">download_extract</span>(</span>
+<span id="cb7-15"><a href="#cb7-15"></a>    downloadable_extract,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="at">download_dir =</span> <span class="fu">here</span>(<span class="st">"data"</span>)</span>
+<span id="cb7-17"><a href="#cb7-17"></a>  )</span>
+<span id="cb7-18"><a href="#cb7-18"></a>  </span>
+<span id="cb7-19"><a href="#cb7-19"></a>  cps_data <span class="ot">&lt;-</span> <span class="fu">read_ipums_micro</span>(data_files)</span>
+<span id="cb7-20"><a href="#cb7-20"></a>  </span>
+<span id="cb7-21"><a href="#cb7-21"></a>  cps_data <span class="sc">|&gt;</span></span>
+<span id="cb7-22"><a href="#cb7-22"></a>    <span class="fu">filter</span>(PERNUM <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb7-24"><a href="#cb7-24"></a>      <span class="at">FTOTVAL =</span> <span class="fu">zap_labels</span>(FTOTVAL),</span>
+<span id="cb7-25"><a href="#cb7-25"></a>      <span class="at">NCHILD =</span> <span class="fu">zap_labels</span>(NCHILD)</span>
+<span id="cb7-26"><a href="#cb7-26"></a>    ) <span class="sc">|&gt;</span></span>
+<span id="cb7-27"><a href="#cb7-27"></a>    <span class="fu">select</span>(SERIAL, YEAR, ASECWT, NCHILD, FTOTVAL) <span class="sc">|&gt;</span></span>
+<span id="cb7-28"><a href="#cb7-28"></a>    <span class="fu">rename_with</span>(tolower) <span class="sc">|&gt;</span></span>
+<span id="cb7-29"><a href="#cb7-29"></a>    <span class="fu">write_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"cps_microsim.csv"</span>))</span>
+<span id="cb7-30"><a href="#cb7-30"></a>  </span>
+<span id="cb7-31"><a href="#cb7-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>asec <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"cps_microsim.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 59148 Columns: 5
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+dbl (5): serial, year, asecwt, nchild, ftotval
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>proposal1 <span class="ot">&lt;-</span> asec <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb10-3"><a href="#cb10-3"></a>    <span class="at">benefit =</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb10-4"><a href="#cb10-4"></a>      <span class="at">.x =</span> nchild, </span>
+<span id="cb10-5"><a href="#cb10-5"></a>      <span class="at">.y =</span> ftotval, </span>
+<span id="cb10-6"><a href="#cb10-6"></a>      <span class="at">.f =</span> new_tax_credit</span>
+<span id="cb10-7"><a href="#cb10-7"></a>    )</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  )</span>
+<span id="cb10-9"><a href="#cb10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10"></a><span class="fu">arrange</span>(proposal1, <span class="fu">desc</span>(benefit))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 59,148 × 6
+   serial  year asecwt nchild ftotval benefit
+    &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+ 1    118  2022   865.      4    1552    6000
+ 2    159  2022  1098.      3       1    6000
+ 3    405  2022   933.      3   16478    6000
+ 4   1914  2022   614.      4    9300    6000
+ 5   3269  2022   391.      3    5400    6000
+ 6   4632  2022  2624.      3       0    6000
+ 7   4692  2022  1746.      3   15500    6000
+ 8   4812  2022  1468.      4   12000    6000
+ 9   5494  2022   662.      3   18000    6000
+10   5596  2022  1708.      3   10002    6000
+# ℹ 59,138 more rows</code></pre>
+</div>
+</div>
+</section>
+<section id="distributional-analysis" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="distributional-analysis"><span class="header-section-number">14.3.3</span> Distributional Analysis</h3>
+<p>Aggregate analysis and representative unit analysis often mask important heterogeneity. The first major advantage of microsimulation is the ability to apply distributional analysis.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Distributional Analysis
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Distributional analysis is the calculation and interpretation of statistics outside of the mean, median, and total. The objective is to understand a range of outcomes instead of typical outcomes.</p>
+</div>
+</div>
+<p>Here, we expand step 3 from the basic microsimulation algorithm to include a range of statistics. The most common statistics are percentiles or outcomes for ntiles.</p>
+</section>
+<section id="example-3" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="example-3"><span class="header-section-number">14.3.4</span> Example 3</h3>
+<p>Consider the previous example. Let’s summarize the mean benefit by family income decile. We can use the <code>ntile()</code> function to construct <code>ntiles()</code>. We can use <code>min()</code> and <code>max()</code> in <code>summarize()</code> to define the bounds of the ntiles.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>distributional_table <span class="ot">&lt;-</span> proposal1 <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">mutate</span>(<span class="at">ftotval_decile =</span> <span class="fu">ntile</span>(ftotval, <span class="at">n =</span> <span class="dv">10</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="fu">group_by</span>(ftotval_decile) <span class="sc">|&gt;</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb12-5"><a href="#cb12-5"></a>    <span class="at">min_income =</span> <span class="fu">min</span>(ftotval),</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="at">max_income =</span> <span class="fu">max</span>(ftotval),</span>
+<span id="cb12-7"><a href="#cb12-7"></a>    <span class="at">mean_benefit =</span> <span class="fu">mean</span>(benefit)</span>
+<span id="cb12-8"><a href="#cb12-8"></a>  )</span>
+<span id="cb12-9"><a href="#cb12-9"></a></span>
+<span id="cb12-10"><a href="#cb12-10"></a>distributional_table</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   ftotval_decile min_income max_income mean_benefit
+            &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+ 1              1     -19935      14160       1019. 
+ 2              2      14160      25200        921. 
+ 3              3      25200      37432        863. 
+ 4              4      37433      50100        622. 
+ 5              5      50100      65122        266. 
+ 6              6      65124      84000         59.6
+ 7              7      84000     108006          0  
+ 8              8     108010     143210          0  
+ 9              9     143221     205154          0  
+10             10     205163    2320191          0  </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>distributional_table <span class="sc">|&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(ftotval_decile, mean_benefit)) <span class="sc">+</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>()(mean_benefit)), <span class="at">vjust =</span> <span class="sc">-</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">scale_y_continuous</span>(</span>
+<span id="cb14-7"><a href="#cb14-7"></a>    <span class="at">expand =</span> <span class="fu">expansion</span>(<span class="at">mult =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.1</span>)),</span>
+<span id="cb14-8"><a href="#cb14-8"></a>    <span class="at">labels =</span> scales<span class="sc">::</span><span class="fu">label_dollar</span>() </span>
+<span id="cb14-9"><a href="#cb14-9"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-10"><a href="#cb14-10"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-11"><a href="#cb14-11"></a>    <span class="at">title =</span> <span class="st">"Distribution of Average Benefits Under the Benefit Proposal"</span>,</span>
+<span id="cb14-12"><a href="#cb14-12"></a>    <span class="at">x =</span> <span class="st">"Familiy Income Decile"</span>,</span>
+<span id="cb14-13"><a href="#cb14-13"></a>    <span class="at">y =</span> <span class="st">"Average Benefit"</span></span>
+<span id="cb14-14"><a href="#cb14-14"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="15_microsimulation_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Apply the calculator from the earlier exercise to the CPS data.</li>
+<li>Aggregate outcomes for the 5th, 15th, and 25th percentiles.</li>
+<li>Aggregate outcomes for the bottom 10 vintiles (a vintile is one twentieth of the population).</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="counterfactual-analysis" class="level3" data-number="14.3.5">
+<h3 data-number="14.3.5" class="anchored" data-anchor-id="counterfactual-analysis"><span class="header-section-number">14.3.5</span> Counterfactual Analysis</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Counterfactual
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>counterfactual</strong> is a situation that would be true under different circumstances.</p>
+</div>
+</div>
+<p>The second major advantage of microsimulation is the ability to implement counterfactuals and evaluate “what-if” situations. Consider a few examples:</p>
+<ul>
+<li>What could happen to the distribution of post-tax income if the top marginal tax rate is increased by 5 percentage points?</li>
+<li>What could happen to median Social Security benefits in 2030 if the retirement age is increased by 2 months every year beginning in 2024?</li>
+<li>What could happen to total student loan balances if federal student loan interest accumulation is paused for 6 more months.</li>
+</ul>
+<p>We update our microsimulation algorithm to include counterfactual analysis.</p>
+<ol type="1">
+<li>Construct a sample that represents the population of interest.</li>
+<li>Apply accounting rules that reflect current circumstances. This is the baseline microsimulation.</li>
+<li>Apply accounting rules that reflect counterfactual circumstances. This is the counterfactual microsimulation.</li>
+<li>Aggregate results with a focus on the difference between the baseline microsimulation and the counterfactual simulation.</li>
+</ol>
+</section>
+<section id="example-4" class="level3" data-number="14.3.6">
+<h3 data-number="14.3.6" class="anchored" data-anchor-id="example-4"><span class="header-section-number">14.3.6</span> Example 4</h3>
+<p>Let’s pretend the <code>new_tax_credit()</code> is <strong>current law</strong>. It is our baseline. Suppose a legislator proposes reforms to the law. This is our <strong>counterfactual</strong>. Here are the proposed changes:</p>
+<ul>
+<li>Eliminate benefits for families with zero income to promote work.</li>
+<li>Eliminate the $20,000 income exclusion to reduce benefits for higher earners.</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co">#' Calculate the benefit from the new tax credit</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="co">#'</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="co">#' @param num_children A numeric for the number of children</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="co">#' @param family_income A numeric for family income</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="co">#'</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="co">#' @return Numeric benefit in dollars</span></span>
+<span id="cb15-7"><a href="#cb15-7"></a>newer_tax_credit <span class="ot">&lt;-</span> <span class="cf">function</span>(num_children, family_income) {</span>
+<span id="cb15-8"><a href="#cb15-8"></a>  </span>
+<span id="cb15-9"><a href="#cb15-9"></a>  dplyr<span class="sc">::</span><span class="fu">case_when</span>(</span>
+<span id="cb15-10"><a href="#cb15-10"></a>    family_income <span class="sc">==</span> <span class="dv">0</span> <span class="sc">~</span> <span class="dv">0</span>,</span>
+<span id="cb15-11"><a href="#cb15-11"></a>    num_children <span class="sc">&gt;=</span> <span class="dv">3</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">6000</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> family_income),</span>
+<span id="cb15-12"><a href="#cb15-12"></a>    num_children <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">4500</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> family_income),</span>
+<span id="cb15-13"><a href="#cb15-13"></a>    num_children <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="fu">pmax</span>(<span class="dv">0</span>, <span class="dv">3000</span> <span class="sc">-</span> <span class="fl">0.1</span> <span class="sc">*</span> family_income),</span>
+<span id="cb15-14"><a href="#cb15-14"></a>    <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">0</span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>  )</span>
+<span id="cb15-16"><a href="#cb15-16"></a></span>
+<span id="cb15-17"><a href="#cb15-17"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>proposal2 <span class="ot">&lt;-</span> asec <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb16-3"><a href="#cb16-3"></a>    <span class="at">benefit_baseline =</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb16-4"><a href="#cb16-4"></a>      <span class="at">.x =</span> nchild, </span>
+<span id="cb16-5"><a href="#cb16-5"></a>      <span class="at">.y =</span> ftotval, </span>
+<span id="cb16-6"><a href="#cb16-6"></a>      <span class="at">.f =</span> new_tax_credit</span>
+<span id="cb16-7"><a href="#cb16-7"></a>    ),</span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="at">benefit_counteractual =</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb16-9"><a href="#cb16-9"></a>      <span class="at">.x =</span> nchild, </span>
+<span id="cb16-10"><a href="#cb16-10"></a>      <span class="at">.y =</span> ftotval, </span>
+<span id="cb16-11"><a href="#cb16-11"></a>      <span class="at">.f =</span> newer_tax_credit</span>
+<span id="cb16-12"><a href="#cb16-12"></a>    )</span>
+<span id="cb16-13"><a href="#cb16-13"></a>  )</span>
+<span id="cb16-14"><a href="#cb16-14"></a></span>
+<span id="cb16-15"><a href="#cb16-15"></a>proposal2 <span class="sc">|&gt;</span></span>
+<span id="cb16-16"><a href="#cb16-16"></a>  <span class="fu">mutate</span>(<span class="at">benefit_change =</span> benefit_counteractual <span class="sc">-</span> benefit_baseline) <span class="sc">|&gt;</span></span>
+<span id="cb16-17"><a href="#cb16-17"></a>    <span class="fu">mutate</span>(<span class="at">ftotval_decile =</span> <span class="fu">ntile</span>(ftotval, <span class="at">n =</span> <span class="dv">10</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb16-18"><a href="#cb16-18"></a>  <span class="fu">group_by</span>(ftotval_decile) <span class="sc">|&gt;</span></span>
+<span id="cb16-19"><a href="#cb16-19"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb16-20"><a href="#cb16-20"></a>    <span class="at">min_income =</span> <span class="fu">min</span>(ftotval),</span>
+<span id="cb16-21"><a href="#cb16-21"></a>    <span class="at">max_income =</span> <span class="fu">max</span>(ftotval),</span>
+<span id="cb16-22"><a href="#cb16-22"></a>    <span class="at">mean_benefit =</span> <span class="fu">mean</span>(benefit_change)</span>
+<span id="cb16-23"><a href="#cb16-23"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 10 × 4
+   ftotval_decile min_income max_income mean_benefit
+            &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;        &lt;dbl&gt;
+ 1              1     -19935      14160       -374. 
+ 2              2      14160      25200       -436. 
+ 3              3      25200      37432       -557. 
+ 4              4      37433      50100       -467. 
+ 5              5      50100      65122       -242. 
+ 6              6      65124      84000        -59.6
+ 7              7      84000     108006          0  
+ 8              8     108010     143210          0  
+ 9              9     143221     205154          0  
+10             10     205163    2320191          0  </code></pre>
+</div>
+</div>
+<div class="callout callout-style-simple callout-none no-icon callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Run the <strong>baseline</strong> and <strong>counterfactual</strong> simulations.</li>
+<li>Create a bar chart representing the change in benefits.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="extrapolation" class="level3" data-number="14.3.7">
+<h3 data-number="14.3.7" class="anchored" data-anchor-id="extrapolation"><span class="header-section-number">14.3.7</span> Extrapolation</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Extrapolation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Extrapolation</strong> is the extension of microsimulation models to unobserved time periods. Most often, microsimulation models are extrapolated into the future.</p>
+</div>
+</div>
+<p>Most microsimulation models incorporate time. For example, many models look at a few or many years. We now add a new step 2 to the microsimulation algorithm, where we we can project demographic and economic outcomes into the future or past before applying accounting rules and aggregating the results.</p>
+<ol type="1">
+<li>Construct a sample that represents the population of interest.</li>
+<li>Extrapolate the population of interest over multiple time periods.</li>
+<li>Apply accounting rules.</li>
+<li>Aggregate.</li>
+</ol>
+<p>Some microsimulation models treat time as continuous. More often, microsimulation treats time as discrete. For example, models represent time every month or every year.</p>
+<p>Extrapolation adds uncertainty and assumptions to microsimulation. It is important to be clear about what microsimulation is and isn’t.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Projection
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>projection</strong> explores what could happen under a given set of assumptions. It is always correct under the assumptions.</p>
+<p><a href="https://www.statcan.gc.ca/en/microsimulation/modgen/new/chap2/chap2#a2">Stats Canada</a></p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Forecast
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>forecast</strong> attempts to predict the most-likely future.</p>
+<p><a href="https://www.statcan.gc.ca/en/microsimulation/modgen/new/chap2/chap2#a2">Stats Canada</a></p>
+</div>
+</div>
+<p>Most microsimulation models are projections, not forecasts.</p>
+</section>
+<section id="transitions" class="level3" data-number="14.3.8">
+<h3 data-number="14.3.8" class="anchored" data-anchor-id="transitions"><span class="header-section-number">14.3.8</span> Transitions</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Static Microsimulation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Static microsimulation</strong> models do not subject units to individual transitions between time periods <span class="math inline">\(t - 1\)</span> and <span class="math inline">\(t\)</span> or to behavioral responses.</p>
+</div>
+</div>
+<p>Static models typically only deal with one time period or they deal with multiple time periods but reweight the data to match expected totals and characteristics over time. Basically, individual decisions affect the distribution of outcomes but have little impact on overall outcomes.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Dynamic Microsimulation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Dynamic microsimulation</strong> models subject individual units to transitions between time periods <span class="math inline">\(t - 1\)</span> and <span class="math inline">\(t\)</span>. This is sometimes referred to as “aging” the population. Dynamic microsimulation models sometimes subject individual units to behavioral responses.</p>
+</div>
+</div>
+<p>Transitions from period <span class="math inline">\(t - 1\)</span> to period <span class="math inline">\(t\)</span> are key to dynamic microsimulation. Transitions can be deterministic or stochastic. An example of a deterministic transition is an individual always joining Medicare at age 65. An example of a stochastic transition is an unmarried individual marrying at age 30 with probability <span class="math inline">\(p_1\)</span> and remaining unmarried with probability <span class="math inline">\(p_2\)</span>. Stochastic transitions are connected to the idea of Monte Carlo simulation.</p>
+<p>Transition models are fundamental to stochastic transitions. Transition models include transition probability models (categorical variables) and processes based on probability distributions (continuous variables).</p>
+<p>Here are are few examples of transitions that could be modeled:</p>
+<ul>
+<li>If an individual will acquire more education.</li>
+<li>If an individual will work.</li>
+<li>If an individual will marry, divorce, or widow.</li>
+<li>If an individual will have children.</li>
+<li>If an individual will retire.</li>
+<li>If an individual will die.</li>
+</ul>
+<p>Transition models are often taken from existing literature or estimated on panel data. The data used to estimate these models must have at least two time periods.</p>
+<p>It is common to extrapolate backwards, which is also known as backcasting, to evaluate microsimulation models against history. Backcasting can add important longitudinal information to records like detailed earnings histories for calculating Social Security benefits. Backcasting also offers opportunities to benchmark model projections against observed history.</p>
+</section>
+<section id="example-5" class="level3" data-number="14.3.9">
+<h3 data-number="14.3.9" class="anchored" data-anchor-id="example-5"><span class="header-section-number">14.3.9</span> Example 5</h3>
+<p>Let’s extrapolate our 2022 CPS data to 2023 and 2024 using transition models for number of children and family total income.</p>
+<p>The transition model for number of children is <em>very simple</em>. 15% of families lose a child, 80% of families observe no change, and 5% of families gain one child.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="co">#' Extrapolate the number of children</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="co">#'</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="co">#' @param num_children A numeric for the number of children in time t</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="co">#'</span></span>
+<span id="cb18-5"><a href="#cb18-5"></a><span class="co">#' @return A numeric for the number in time t + 1</span></span>
+<span id="cb18-6"><a href="#cb18-6"></a><span class="co">#'</span></span>
+<span id="cb18-7"><a href="#cb18-7"></a>children_hazard <span class="ot">&lt;-</span> <span class="cf">function</span>(num_children) {</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  </span>
+<span id="cb18-9"><a href="#cb18-9"></a>  change <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">1</span>), <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.15</span>, <span class="fl">0.8</span>, <span class="fl">0.05</span>))</span>
+<span id="cb18-10"><a href="#cb18-10"></a>  </span>
+<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">pmax</span>(num_children <span class="sc">+</span> change, <span class="dv">0</span>)</span>
+<span id="cb18-12"><a href="#cb18-12"></a>  </span>
+<span id="cb18-13"><a href="#cb18-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The transition model for family income is <em>very simple</em>. The proportion change is drawn from a normal distribution with <span class="math inline">\(\mu = 0.02\)</span> and <span class="math inline">\(\sigma = 0.03\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#' Extrapolate family income</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="co">#'</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="co">#' @param num_children A numeric for family income in time t</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="co">#'</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="co">#' @return A numeric for family income in time t + 1</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a><span class="co">#'</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>income_hazard <span class="ot">&lt;-</span> <span class="cf">function</span>(family_income) {</span>
+<span id="cb19-8"><a href="#cb19-8"></a>  </span>
+<span id="cb19-9"><a href="#cb19-9"></a>  change <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">mean =</span> <span class="fl">0.02</span>, <span class="at">sd =</span> <span class="fl">0.03</span>)</span>
+<span id="cb19-10"><a href="#cb19-10"></a>  </span>
+<span id="cb19-11"><a href="#cb19-11"></a>  family_income <span class="sc">+</span> family_income <span class="sc">*</span> change</span>
+<span id="cb19-12"><a href="#cb19-12"></a>  </span>
+<span id="cb19-13"><a href="#cb19-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>For simplicity, we combine both transition models into one function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co">#' Extrapolate the simple CPS</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="co">#'</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="co">#' @param data A tibble with nchild and ftotval</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="co">#'</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a><span class="co">#' @return A data frame in time t + 1</span></span>
+<span id="cb20-6"><a href="#cb20-6"></a><span class="co">#'</span></span>
+<span id="cb20-7"><a href="#cb20-7"></a>extrapolate <span class="ot">&lt;-</span> <span class="cf">function</span>(data) {</span>
+<span id="cb20-8"><a href="#cb20-8"></a>  </span>
+<span id="cb20-9"><a href="#cb20-9"></a>  data <span class="sc">|&gt;</span></span>
+<span id="cb20-10"><a href="#cb20-10"></a>    <span class="fu">mutate</span>(</span>
+<span id="cb20-11"><a href="#cb20-11"></a>      <span class="at">nchild =</span> <span class="fu">map_dbl</span>(<span class="at">.x =</span> nchild, <span class="at">.f =</span> children_hazard),</span>
+<span id="cb20-12"><a href="#cb20-12"></a>      <span class="at">ftotval =</span> <span class="fu">map_dbl</span>(<span class="at">.x =</span> ftotval, <span class="at">.f =</span> income_hazard),</span>
+<span id="cb20-13"><a href="#cb20-13"></a>      <span class="at">year =</span> year <span class="sc">+</span> <span class="dv">1</span></span>
+<span id="cb20-14"><a href="#cb20-14"></a>    )</span>
+<span id="cb20-15"><a href="#cb20-15"></a></span>
+<span id="cb20-16"><a href="#cb20-16"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we extrapolate.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># make the stochastic results reproducible</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">set.seed</span>(<span class="dv">20230812</span>)</span>
+<span id="cb21-3"><a href="#cb21-3"></a></span>
+<span id="cb21-4"><a href="#cb21-4"></a><span class="co"># extrapolate using t to create t + 1</span></span>
+<span id="cb21-5"><a href="#cb21-5"></a>asec2023 <span class="ot">&lt;-</span> <span class="fu">extrapolate</span>(asec)</span>
+<span id="cb21-6"><a href="#cb21-6"></a>asec2024 <span class="ot">&lt;-</span> <span class="fu">extrapolate</span>(asec2023)</span>
+<span id="cb21-7"><a href="#cb21-7"></a></span>
+<span id="cb21-8"><a href="#cb21-8"></a><span class="co"># combine</span></span>
+<span id="cb21-9"><a href="#cb21-9"></a>asec_extrapolated <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb21-10"><a href="#cb21-10"></a>  asec,</span>
+<span id="cb21-11"><a href="#cb21-11"></a>  asec2023,</span>
+<span id="cb21-12"><a href="#cb21-12"></a>  asec2024</span>
+<span id="cb21-13"><a href="#cb21-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>The benefit and income amounts in <code>new_tax_credit()</code> are not indexed for inflation. Let’s see how benefits change over time with the extrapolated data.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>asec_extrapolated <span class="sc">|&gt;</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="at">benefit =</span> <span class="fu">map2_dbl</span>(</span>
+<span id="cb22-4"><a href="#cb22-4"></a>      <span class="at">.x =</span> nchild, </span>
+<span id="cb22-5"><a href="#cb22-5"></a>      <span class="at">.y =</span> ftotval, </span>
+<span id="cb22-6"><a href="#cb22-6"></a>      <span class="at">.f =</span> new_tax_credit</span>
+<span id="cb22-7"><a href="#cb22-7"></a>    )</span>
+<span id="cb22-8"><a href="#cb22-8"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">group_by</span>(year) <span class="sc">|&gt;</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb22-11"><a href="#cb22-11"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval),</span>
+<span id="cb22-12"><a href="#cb22-12"></a>    <span class="at">total_nchild =</span> <span class="fu">sum</span>(nchild),</span>
+<span id="cb22-13"><a href="#cb22-13"></a>    <span class="at">mean_benefit =</span> <span class="fu">mean</span>(benefit)</span>
+<span id="cb22-14"><a href="#cb22-14"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+   year mean_ftotval total_nchild mean_benefit
+  &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;
+1  2022       97768.        46296         375.
+2  2023       99705.        45615         379.
+3  2024      101700.        44848         379.</code></pre>
+</div>
+</div>
+<p>Even though incomes grew and the number of children declined, it turns out that enough families went from zero children to one child under the transition probability model for children that average benefits remained about the same.</p>
+</section>
+<section id="beyond-accounting-rules" class="level3" data-number="14.3.10">
+<h3 data-number="14.3.10" class="anchored" data-anchor-id="beyond-accounting-rules"><span class="header-section-number">14.3.10</span> Beyond Accounting Rules</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Behavioral Responses
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>behavioral response</strong> is an assumed reaction to changing circumstances in a microsimulation model.</p>
+<p>For example, increasing Social Security benefits may crowd out retirement savings <span class="citation" data-cites="chetty2014">(<a href="references.html#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span>. In other words, the existence of Social Security may induce a person to save less for retirement.</p>
+</div>
+</div>
+<p>Until now, we’ve only considered accounting rules within each time period. Accounting rules are appealing because they don’t require major assumptions, but they are typically insufficient. It is often necessary to consider how units will respond to a changing environment.</p>
+<p>Behavioral responses are often elasticities estimated with econometric analysis. Behavioral responses are also a huge source of assumptions and uncertainty for microsimulation.</p>
+<p>Consider a microsimulation model that models retirement savings. When modeling a proposal to expand Social Security benefits, an analyst may use parameters estimated in <span class="citation" data-cites="chetty2014">(<a href="references.html#ref-chetty2014" role="doc-biblioref">Chetty et al. 2014</a>)</span> to model reductions in savings in accounts like 401(k) accounts. These are behavioral responses. These estimates are uncertain, so the analyst could add sensitivity analysis to model low, medium, and high rates of crowding out.</p>
+</section>
+</section>
+<section id="building-a-representative-population" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="building-a-representative-population"><span class="header-section-number">14.4</span> Building a Representative Population</h2>
+<p>Building a starting sample and constructing data for estimating transition models is difficult. We briefly outline a few techniques of interest.</p>
+<section id="synthetic-starting-data" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="synthetic-starting-data"><span class="header-section-number">14.4.1</span> Synthetic Starting Data</h3>
+<p>We’ve adopted a cross-sectional starting population. Some microsimulation models adopt a synthetic<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> approach where every observation is simulated from birth.</p>
+</section>
+<section id="data-linkage-and-imputation" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="data-linkage-and-imputation"><span class="header-section-number">14.4.2</span> Data Linkage and Imputation</h3>
+<p>Many microsimulation models need more variables than are included in any one source of information. For example, retirement models often need demographic information, longitudinal earnings information, and tax information. Many microsimulation models rely on data linkage and data imputation techniques to augment their starting data.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data Linkage
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Data linkage</strong> is the process of using distance-based rules or probabilistic models to connect an observation in one source of data to an observation in another source of data.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Data imputation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Data imputation</strong> is the process of using models to predict values where data is unobserved. The data could be missing because of nonresponse or because the information was not gathered in the data collection process.</p>
+</div>
+</div>
+</section>
+<section id="validation" class="level3" data-number="14.4.3">
+<h3 data-number="14.4.3" class="anchored" data-anchor-id="validation"><span class="header-section-number">14.4.3</span> Validation</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Validation
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Validation</strong> is the process of reviewing results to determine their validity. Techniques include comparing statistics, visual comparisons, and statistical comparisons like the Kolmogorov-Smirnov test for the equivalence of two distributions.</p>
+</div>
+</div>
+<p>Visual and statistical validation are essential to evaluating the quality of a microsimulation model. If validation looks poor, then a modeler can redo other parts of the microsimulation workflow or they can <strong>reweight</strong> or <strong>align</strong> the data.</p>
+</section>
+<section id="reweighting" class="level3" data-number="14.4.4">
+<h3 data-number="14.4.4" class="anchored" data-anchor-id="reweighting"><span class="header-section-number">14.4.4</span> Reweighting</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Reweighting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Reweighting</strong> is the process of adjusting observation weights in a data set so aggregate weighted statistics from the data set hit specified targets.</p>
+</div>
+</div>
+<p>Suppose a well-regarded source of information says mean income is $50,000 but a microsimulation model estimates mean income of $45,000. We can use reweighting to plausibly adjust the weights in the microsimulation model so mean income is $50,000.</p>
+<p>Techniques include post-stratification and calibration. <span class="citation" data-cites="kolenikov2016">Kolenikov (<a href="references.html#ref-kolenikov2016" role="doc-biblioref">2016</a>)</span> offers a good introduction.</p>
+</section>
+<section id="alignment" class="level3" data-number="14.4.5">
+<h3 data-number="14.4.5" class="anchored" data-anchor-id="alignment"><span class="header-section-number">14.4.5</span> Alignment</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Alignment
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Alignment</strong> is the process of adjusting model coefficients or predicted values so aggregated outputs align with specified aggregate targets. These targets are aggregate outcomes like total income or state-level tax revenue.</p>
+</div>
+</div>
+<p>Suppose a well-regarded source of information says mean income is $50,000 but a microsimulation model estimates mean income of $45,000. We can adjust the intercept in linear regression models or adjust predicted values so mean income is $50,000. <span class="citation" data-cites="li2014">Li and O’Donoghue (<a href="references.html#ref-li2014" role="doc-biblioref">2014</a>)</span> offers a good introduction.</p>
+</section>
+</section>
+<section id="assumptions" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="assumptions"><span class="header-section-number">14.5</span> Assumptions</h2>
+<p>Microsimulation is only as useful as its assumptions. We will review a few key assumptions present in many microsimulation models.</p>
+<section id="open-vs.-closed" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="open-vs.-closed"><span class="header-section-number">14.5.1</span> Open vs.&nbsp;Closed</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Closed Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A <strong>closed microsimulation model</strong> models the life cycle of all units in the model. For example, two existing units marry.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Open Model
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>An <strong>open microsimulation model</strong> allows for the on-demand generation of new, but mature, units in the model.</p>
+</div>
+</div>
+</section>
+<section id="independence" class="level3" data-number="14.5.2">
+<h3 data-number="14.5.2" class="anchored" data-anchor-id="independence"><span class="header-section-number">14.5.2</span> Independence</h3>
+<p>Another important assumption deals with the relationship between units in the model. Should observations be treated as wholly independent or do they interact? For example, if someone takes a job is it more difficult for another individual to take the job?</p>
+<p>Interactions can be explicit or implicit.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Explicit Interaction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Explicit interaction</strong> allows the actions of one unit to affect other units during extrapolation or behavioral models.</p>
+<p>For example, models of marriage markets may account for changing economic circumstances among potential matches.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Implicit Interaction
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Implicit interaction</strong> allows the actions of one unit to affect other units in post-processing.</p>
+<p>For example, reweighting and alignment techniques allow outcomes for one unit to affect other units through intercepts in models and new weights.</p>
+</div>
+</div>
+</section>
+<section id="markov-assumption" class="level3" data-number="14.5.3">
+<h3 data-number="14.5.3" class="anchored" data-anchor-id="markov-assumption"><span class="header-section-number">14.5.3</span> Markov Assumption</h3>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Markov Assumption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Markov assumptions states that the only factors affecting a transition from period <span class="math inline">\(t - 1\)</span> to period <span class="math inline">\(t\)</span> are observable in <span class="math inline">\(t - 1\)</span>.</p>
+<p>The Markov assumption only considers memory or history to the extent that it is observable in period <span class="math inline">\(t - 1\)</span>. For example, <span class="math inline">\(t - 2\)</span> may affect educational attainment or college savings in <span class="math inline">\(t - 1\)</span>, which can affect the transition from <span class="math inline">\(t - 1\)</span> to <span class="math inline">\(t\)</span>, but <span class="math inline">\(t - 2\)</span> will never be explicitly included.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="uncertainty" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="uncertainty"><span class="header-section-number">14.6</span> Uncertainty</h2>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Aletoric Uncertainty
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Aleatoric uncertainty</strong> is uncertainty due to probabilistic randomness.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Epistemic Uncertainty
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Epistemic uncertainty</strong> is uncertainty due to lack of knowledge of the underlying system.</p>
+</div>
+</div>
+<p>The microsimulation field has a poor track record of quantifying uncertainty. Most estimates do not contain standard errors or even crude distributions of outcomes.</p>
+<p>Microsimulation models have <em>many</em> sources of uncertainty. The starting data and data used for model estimation are often samples with sampling error. Transition models fail to capture all sources of variation. The models often intentionally include Monte Carlo error.</p>
+<p><span class="citation" data-cites="mcclelland2020">McClelland, Khitatrakun, and Lu (<a href="references.html#ref-mcclelland2020" role="doc-biblioref">2020</a>)</span> explored adding confidence intervals to microsimulation models using normal approximations and bootstrapping methods<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. They find that normal approximations work well in most cases unless policy changes affect a small number of returns.</p>
+<p>Across microsimulations for five policy approaches, they estimate modest confidence intervals. This makes sense. First, microsimulation aggregates many units that have their own sources of uncertainty. This is different than earlier examples of Monte Carlo simulation that focused on one observation at a time. Aggregation reduces variance.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<p>Second, the authors only consider uncertainty because of sampling variation. This fails to capture aleatoric uncertainty from statistical matching, imputation, and projection. Furthermore, these methods fail to capture epistemic uncertainty. The confidence intervals, in other words, assume the model is correct.</p>
+<p>Given these shortcomings, it is important to be clear about assumptions, transparent about implementations, and humble about conclusions. All useful models are wrong. The hope is to be as little wrong as possible.</p>
+</section>
+<section id="microsimulation-model-examples" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="microsimulation-model-examples"><span class="header-section-number">14.7</span> Microsimulation Model Examples</h2>
+<p>First, let’s outline a few characteristics of microsimulation models.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Compiled Programming Languages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Compiled programming languages</strong> have an explicit compiling step where code is converted to assembly language and ultimately binary code.</p>
+<p>C++, Fortran, and Java are examples of compiled programming languages.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Scripting Programming Languages
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Scripting</strong> programming languages, also known as interpreted programming languages, do not have a compiling step.</p>
+<p>R, Python, and Julia are examples of scripting programming languages.</p>
+</div>
+</div>
+<p><span class="citation" data-cites="aruoba2018">Aruoba and Fernndez-Villaverde (<a href="references.html#ref-aruoba2018" role="doc-biblioref">2018</a>)</span> benchmark several programming languages on the same computing task. Lower-level, compiled programming languages dominate higher-level, scripting programming languages like R and Python. Julia is the lone bright spot that blends usability and performance.</p>
+<p>Many microsimulation models are written in lower-level, compiled programming languages. Fortran may seem old, but there is a reason it has stuck around for microsimulation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+General Microsimulation Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>General microsimulation models</strong> contain a wide range of behaviors and population segments.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Specialized Microsimulation Models
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Specialized microsimulation models</strong> focus on a limit set of behaviors or population segments. ~ <a href="https://www.statcan.gc.ca/en/microsimulation/modgen/new/chap2/chap2#a3">Stats Canada</a></p>
+</div>
+</div>
+<section id="simulating-the-2020-census" class="level3" data-number="14.7.1">
+<h3 data-number="14.7.1" class="anchored" data-anchor-id="simulating-the-2020-census"><span class="header-section-number">14.7.1</span> Simulating the 2020 Census</h3>
+<ul>
+<li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/simulating-2020-census-miscounts-and-fairness-outcomes">Simulating the 2020 Census</a></li>
+<li><strong>Authors:</strong> Diana Elliott, Steven Martin, Jessica Shakesprere, Jessica Kelly</li>
+<li><strong>General or specific:</strong> Specific</li>
+<li><strong>Language:</strong> Python</li>
+<li><strong>Purpose:</strong> The authors simulate various Decennial Census response factors and evaluate the distribution of responses to the Decennial Census.</li>
+</ul>
+</section>
+<section id="tpc-microsimulation-in-the-cloud" class="level3" data-number="14.7.2">
+<h3 data-number="14.7.2" class="anchored" data-anchor-id="tpc-microsimulation-in-the-cloud"><span class="header-section-number">14.7.2</span> TPC Microsimulation in the Cloud</h3>
+<ul>
+<li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/scaling-microsimulation-modeling-cloud-guide">TPC Microsimulation in the Cloud</a></li>
+<li><strong>Authors:</strong> The TPC microsimulation team, Jessica Kelly, Kyle Ueyama, Alyssa Harris</li>
+<li><strong>General or specific:</strong> Specific</li>
+<li><strong>Language:</strong> Fortran</li>
+<li><strong>Purpose:</strong> The authors take TPC’s tax microsimulation model and move it to the cloud. This allows TPC to reverse the typical microsimulation process. Instead of describing policies and observing the outcomes, they can describe desirable outcomes and then use grid search to back out policies that achieve those outcomes.</li>
+</ul>
+</section>
+<section id="modeling-income-in-the-near-term-mintmint" class="level3" data-number="14.7.3">
+<h3 data-number="14.7.3" class="anchored" data-anchor-id="modeling-income-in-the-near-term-mintmint"><span class="header-section-number">14.7.3</span> Modeling Income in the Near Term (MINT)<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a></h3>
+<ul>
+<li><strong>Name:</strong> <a href="https://www.urban.org/research/publication/modeling-income-near-term">Modeling Income in the Near Term (MINT)</a></li>
+<li><strong>Authors:</strong> Karen E. Smith and <em>many</em> other people</li>
+<li><strong>General or specific:</strong> General</li>
+<li><strong>Language:</strong> SAS<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a></li>
+<li><strong>Purpose:</strong> The Social Security Administration uses MINT to evaluate the distributional impact of various Social Security policy proposals.</li>
+</ul>
+
+
+<div id="refs" class="references csl-bib-body hanging-indent" role="list" style="display: none">
+<div id="ref-aruoba2018" class="csl-entry" role="listitem">
+Aruoba, S. Boragan, and Jesus Fernndez-Villaverde. 2018. <span>“A Comparison of Programming Languages in Economics: An Update.”</span> <a href="https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf">https://www.sas.upenn.edu/~jesusfv/Update_March_23_2018.pdf</a>.
+</div>
+<div id="ref-chetty2014" class="csl-entry" role="listitem">
+Chetty, Raj, John N. Friedman, Søren Leth-Petersen, Torben Heien Nielsen, and Tore Olsen. 2014. <span>“Active Vs. Passive Decisions and Crowd-Out in Retirement Savings Accounts: Evidence from Denmark*.”</span> <em>The Quarterly Journal of Economics</em> 129 (3): 1141–1219. <a href="https://doi.org/10.1093/qje/qju013">https://doi.org/10.1093/qje/qju013</a>.
+</div>
+<div id="ref-kolenikov2016" class="csl-entry" role="listitem">
+Kolenikov, Stas J. 2016. <span>“Post-Stratification or a Non-Response Adjustment?”</span> <em>Survey Practice</em> 9 (3): 1–12. <a href="https://doi.org/10.29115/SP-2016-0014">https://doi.org/10.29115/SP-2016-0014</a>.
+</div>
+<div id="ref-li2014" class="csl-entry" role="listitem">
+Li, Jinjing, and Cathal O’Donoghue. 2014. <span>“Evaluating Binary Alignment Methods in Microsimulation Models.”</span> <em>Journal of Artificial Societies and Social Simulation</em> 17 (1): 15. <a href="https://doi.org/10.18564/jasss.2334">https://doi.org/10.18564/jasss.2334</a>.
+</div>
+<div id="ref-mcclelland2020" class="csl-entry" role="listitem">
+McClelland, Robert, Surachai Khitatrakun, and Chenxi Lu. 2020. <span>“Estimating Confidence Intervals in a Tax Microsimulation Model.”</span> <em>International Journal of Microsimulation</em> 13 (2): 2–20. <a href="https://doi.org/10.34196/IJM.00216">https://doi.org/10.34196/IJM.00216</a>.
+</div>
+<div id="ref-orcutt1957" class="csl-entry" role="listitem">
+Orcutt, Guy H. 1957. <span>“A New Type of Socio-Economic System.”</span> <em>The Review of Economics and Statistics</em> 39 (2): 116. <a href="https://doi.org/10.2307/1928528">https://doi.org/10.2307/1928528</a>.
+</div>
+</div>
+</section>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Most data for microsimulation models are collected through complex surveys. Accordingly, most microsimulation models need to account for weights to calculate estimates that represent the entire population of interest.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><strong>Synthetic</strong> will carry many meanings this semester.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Their implementation of bootstrapping is clever and uses replicate weights to simplify computation and manage memory.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The standard error of the mean reduces at a rate of <span class="math inline">\(\sqrt{n}\)</span> as the sample size increases.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>MINT comically models income and many other variables for at least 75 years into the future.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>The Dynamic Simulation of Income Model (DYNASIM) is a related to MINT and is written in Fortran.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./14_simulation-and-sampling.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./16_nonparametric-1.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>

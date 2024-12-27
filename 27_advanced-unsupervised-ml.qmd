@@ -1,0 +1,1043 @@
+---
+title: "Mixture Distributions and Mixture Modeling"
+abstract: "This chapter introduces mixture distributions and mixture modeling. This tools use simple probability distributions to model and understand complex empirical distributions."
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+execute:
+  cache: true
+bibliography: references.bib
+---
+
+![](images/header-images/Temee.jpg)
+
+~ Image by [Yaan](https://en.wikipedia.org/wiki/Bactrian_camel#/media/File:Temee.jpg)
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+
+theme_set(theme_minimal())
+
+```
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Review 1 {#sec-review6a}
+
+We'll start with a review of multivariate normal distributions. In particular, this exercise demonstrates the impact of the variance-covariance matrix on the shape of multivariate normal distributions.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Load `library(mvtnorm)`.
+2.  Copy and paste the following code. This code will not obviously not run as is. We will add tibbles to `independent`, `sigma1` and `sigma2` in the steps below.
+
+```{r}
+#| eval: false
+bind_rows(
+  independent = ,
+  var_covar1 = ,
+  var_covar2 = ,
+  .id = "source"
+)
+
+```
+
+3.  Create a tibble with `V1` and `V2`. For both variables, use `rnorm()` to sample 1,000 observations from a standard normal distribution. Add the results to `independent`.
+4.  Using the following variance-covariance matrix, sample 1,000 observations from a multivariate-normal distribution. Add the results for `sigma1` and use `as_tibble()`.
+
+```{r}
+#| eval: false
+
+sigma1 <- matrix(
+  c(1, 0,
+    0, 1), 
+  nrow = 2, ncol = 2, byrow = TRUE
+)
+
+```
+
+5.  Using the following variance-covariance matrix, sample 1,000 observations from a multivariate-normal distribution. Add the results for `sigma2` and use `as_tibble()`.
+
+```{r}
+#| eval: false
+
+sigma2 <- matrix(
+  c(1, 0.8,
+    0.8, 1), 
+  nrow = 2, ncol = 2, byrow = TRUE
+)
+
+```
+
+6.  Create a scatter plot with `V1` on the x-axis and `V2` on the y-axis. Facet based on `source`.
+:::
+
+```{r}
+#| fold: true
+#| eval: false
+
+library(mvtnorm)
+
+sigma1 <- matrix(
+  c(1, 0,
+    0, 1), 
+  nrow = 2, ncol = 2, byrow = TRUE
+)
+
+sigma2 <- matrix(
+  c(1, 0.8,
+    0.8, 1), 
+  nrow = 2, ncol = 2, byrow = TRUE
+)
+
+bind_rows(
+  independent = tibble(
+    V1 = rnorm(n = 1000),
+    V2 = rnorm(n = 1000)
+  ),
+  sigma1 = rmvnorm(
+    n = 1000, 
+    sigma = sigma1
+  ) |>
+    as_tibble(),
+  sigma2 = rmvnorm(
+    n = 1000, 
+    sigma = sigma2
+  ) |>
+    as_tibble(),
+  .id = "source"
+) |>
+  ggplot(aes(V1, V2)) +
+  geom_point() +
+  facet_wrap(~ source)
+
+```
+
+## A New Type of Random Variable
+
+We learned about common univariate and multivariate distributions. For each of the distributions, there are well-defined and straightforward ways to sample values from the distribution. We can also manipulate these distributions to calculate probabilities.
+
+The real world is complicated, and we will quickly come across data where we struggle to find a common probability distributions.
+
+Figure @fig-geyser-eruptions shows a relative frequency histogram for the duration of eruptions at Old Faithful in Yellowstone National Park.
+
+```{r}
+#| label: fig-geyser-eruptions
+#| fig-cap: Distribution of waiting times between eruptions at the Old Faithful geyser in Yellowstone National Park. 
+
+# faithful is a data set built into R
+faithful |>
+  ggplot(aes(eruptions, y = after_stat(density))) +
+  geom_histogram()
+
+```
+
+This distribution looks very complicated. But what if we break this distribution into pieces? In this case, what if we think of the distribution as a combination of two normal distributions?
+
+```{r}
+#| code-fold: true
+#| message: false
+
+# show geyser as two normal distribution
+library(mclust)
+
+gmm_geyser <- Mclust(
+  data = dplyr::select(faithful, eruptions), 
+  G = 2
+)
+
+
+bind_cols(
+  faithful,
+  cluster = gmm_geyser$classification
+) |>
+  ggplot(aes(eruptions, y = after_stat(density), 
+             fill = factor(cluster))) +
+  geom_histogram() +
+  guides(fill = "none")
+
+```
+
+::: callout-tip
+## Latent Variable
+
+A **latent variable** is a variable that isn't directly observed but can be inferred through other variables and modeling. Sometimes the latent variable is meaningful but unobserved. Sometimes it isn't meaningful.
+
+**Latent variables** are sometimes called hidden variables.
+:::
+
+Breaking complex problems into smaller pieces is good. These latent variables will allow us to do some cools things:
+
+1.  Simply express complicated probability distributions
+2.  Make inferences about complex populations
+3.  Cluster data
+
+In this set of notes, we'll use latent variables to
+
+1.  Construct mixture distributions
+2.  Cluster data
+
+Let's consider a "data generation story" different than anything we considered in Chapter 5. Instead of sampling directly from one known probability distribution, we will sample in two stages [@hastie2009].
+
+1.  Sample from a discrete probability distribution with $k$ unique values (i.e. Bernoulli distribution when $k = 2$ and categorical distribution when $k > 2$).
+2.  Sample from one of $k$ different distributions conditional on the outcome of step 1.
+
+This new sampling procedure aligns closely with the idea of hierarchical sampling and hierarchical models. It is also sometimes called ancestral sampling [@bishop2006, Page 430].
+
+This two-step approach dramatically increases the types of distributions at our disposal because we are no longer limited to individual common univariate distributions like a single normal distribution or a single uniform distribution. The two-step approach is also the foundation of two related tools:
+
+1.  **Mixture distributions:** Distributions expressed as the linear combination of other distributions. Mixture distributions can be very complicated distributions expressed in terms of simple distributions with known properties.
+2.  **Mixture modeling:** Statistical inference about sub-populations made only with pooled data without labels for the sub populations.
+
+With mixture distributions, we care about the overall distribution and don't care about the latent variables.
+
+With mixture modeling, we use the overall distribution to learn about the latent variables/sub populations/clusters in the data.
+
+## Mixture Distributions
+
+::: callout-tip
+## Mixture Distribution
+
+A **mixture distribution** is a probabilistic model that is a linear combination of common probability distributions.
+
+A discrete mixture distribution can be expressed as
+
+$$
+p_{mixture}(x) = \sum_{k = 1}^K \pi_kp(x)
+$$
+
+where $K$ is the number of mixtures and $\pi_k$ is the weight of each PMF included in the mixture distribution.
+
+A continuous mixture distribution can be expressed as 
+
+$$
+p_{mixture}(x) = \sum_{k = 1}^K \pi_kf(x)
+$$
+
+where $K$ is the number of mixtures and $\pi_k$ is the weight of each PDF included in the mixture distribution.
+:::
+
+### Example 1
+
+Let's consider a concrete example with a Bernoulli distribution and two normal distributions.
+
+1.  Sample $X \sim Bern(p = 0.25)$
+2.  Sample from $Y \sim N(\mu = 0, \sigma = 2)$ if $X = 0$ and $Y \sim (\mu = 4, \sigma = 2)$ if $X = 1$.
+
+Now, let's sample from a Bernoulli distribution and then sample from one of two normal distributions using R code.
+
+```{r}
+generate_data <- function(n) {
+  
+  step1 <- sample(x = c(0, 1), size = n, replace = TRUE, prob = c(0.75, 0.25))
+  
+  step1 <- sort(step1)
+  
+  step2 <- c(
+    rnorm(n = sum(step1 == 0), mean = 0, sd = 2),
+    rnorm(n = sum(step1 == 1), mean = 5, sd = 1)
+  )
+  
+  tibble::tibble(
+    x = step1,
+    y = step2
+  )
+
+}
+
+set.seed(1)
+
+generate_data(n = 1000) |>
+  ggplot(aes(x = y, y = after_stat(density))) +
+  geom_histogram()
+```
+
+This marginal distribution looks complex but the process of creating the marginal distribution is simple.
+
+In fact, consider this quote from @bishop2006 (Page 111):
+
+> By using a sufficient number of Gaussians, and by adjusting their means and covariances as well as the coefficients in the linear combination, almost any continuous density can be approximated to arbitrary accuracy.
+
+::: callout-tip
+## Component
+
+A **component** is each common probability distribution that is combined to create a mixture distribution. For example, a mixture of two Gaussian distributions has two components.
+:::
+
+::: callout-tip
+## Mixing Coefficient
+
+A **mixing coefficient** is the probability associated with a component with a component in a mixture distribution. Mixing coefficients must sum to 1.
+
+We'll use $\pi_k$ for population mixing coefficients and $p_k$ for sample mixing coefficients. Mixing coefficients are also called mixing weights and mixing probabilities.
+:::
+
+Mixture distributions are often overparameterized, which means they have an excessive number of parameters. For a univariate mixture of normals with $k$ components, we have $k$ means, $k$ standard deviations, and $k$ mixing coefficients.
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Sample 1,000 observations from a mixture of three normal distributions with the following parameters:
+
+-   $p_1 = p_2 = p_3$
+-   $\mu_1 = -3$, $\mu_2 = 0$, $\mu_3 = 3$
+-   $\sigma_1 = \sigma_2 = \sigma_3 = 1$
+
+2.  Create a relative frequency histogram of the values.
+:::
+
+### Example 2
+
+Suppose we used statistical inference to infer some parameters for the geysers example above. We will describe how to estimate these paramaters later.
+
+-   $p_1 =$ `r gmm_geyser$parameters$pro[1]` and $p_2 =$ `r gmm_geyser$parameters$pro[2]`
+-   $\bar{x_1} =$ `r gmm_geyser$parameters$mean[1]` and $\bar{x_2} =$ `r gmm_geyser$parameters$mean[2]`
+-   $s_1 =$ `r sqrt(gmm_geyser$parameters$variance$sigmasq[1])`and $s_2 =$ `r sqrt(gmm_geyser$parameters$variance$sigmasq[2])`
+
+The mixture density is
+
+$$
+f_{mixture}(x) = p_1f(x|\mu = \bar{x_1}, \sigma = s_1) + p_2f(x|\mu = \bar{x_2},\sigma=s_2)
+$$ {#eq-geyser-mixture}
+
+```{r}
+geyser_density <- function(x, model) {
+  
+  probs <- model$parameters$pro
+  
+  d1 <- dnorm(
+    x, 
+    mean =  model$parameters$mean[1], 
+    sd = sqrt(model$parameters$variance$sigmasq[1])
+  )
+  
+  d2 <- dnorm(
+    x, 
+    mean =  model$parameters$mean[2], 
+    sd = sqrt(model$parameters$variance$sigmasq[2])
+  )
+  
+  probs[1] * d1 + probs[2] * d2
+  
+}
+
+mm <- tibble(
+  x = seq(0, 5, 0.01),
+  f_x = map_dbl(x, geyser_density, model = gmm_geyser)
+) 
+
+ggplot() +
+  geom_histogram(data = faithful, mapping = aes(x = eruptions, y = after_stat(density))) +
+  geom_line(data = mm, mapping = aes(x, f_x), color = "red") + 
+  labs(
+    title = "",
+    subtitles = "Observed data in black, inferred distribution in red"
+  )
+
+```
+
+## Review #2 {#sec-review6b}
+
+### Multivariate Normal Distribution
+
+The [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) is a higher-dimensional version of the univariate normal distribution. The MVN distribution has a vector of means of length $k$ and a $k$-by-$k$ variance-covariance matrix.
+
+We show that a random vector is multivariate normally distributed with
+
+$$
+\vec{X} \sim \mathcal{N}(\vec\mu, \boldsymbol\Sigma)
+$$ {#eq-multivariate-normal}
+
+The PDF of a multivariate normally distributed random variable is
+
+$$
+f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
+$$ {#eq-multivariate-normal-pdf}
+
+### K-Means Clustering
+
+K-Means Clustering is a heuristic-based approach to finding latent groups in data. The algorithm assigns each observation to one and only one group through a two step iteration that minimizes the Euclidean distance between observations and centroids for each group.
+
+::: panel-tabset
+### Setup
+
+Consider the following data set.
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.5
+#| fig-width: 6.5
+
+data <- tibble(x = c(1, 2, 1, 4, 7, 10, 8),
+               y = c(5, 4, 4, 3, 7, 8, 5))
+
+ggplot() +
+  geom_point(data = data, aes(x, y), size = 2) +
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+```
+
+### Step 1
+
+**Step 1:** Randomly place K centroids in your n-dimensional vector space
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.5
+#| fig-width: 6.5
+
+centroids <- tibble(x = c(2, 5),
+                  y = c(5, 5),
+                  cluster = c("a", "b"))
+
+ggplot() +
+  geom_point(data = data, aes(x, y), size = 2) +
+  geom_point(data = centroids, aes(x, y, color = cluster), size = 4) +
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+
+```
+
+### Step 2
+
+**Step 2:** Calculate the nearest centroid for each point using a distance measure
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.5
+#| fig-width: 6.5
+
+centroids <- tibble(x = c(2, 5),
+                  y = c(5, 5),
+                  cluster = c("a", "b"))
+
+ggplot() +
+  geom_point(data = data, aes(x, y), size = 2) +
+  geom_point(data = centroids, aes(x, y, color = cluster), size = 4) +
+  geom_line(aes(x = c(4, 2), y = c(3, 5)), linetype = "dashed") +  
+  geom_line(aes(x = c(4, 5), y = c(3, 5)), linetype = "dashed") +
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+
+```
+
+### Step 3
+
+**Step 3:** Assign each point to the nearest centroid
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.5
+#| fig-width: 6.5
+
+data$cluster <- c("a", "a", "a", "b", "b", "b", "b")
+
+ggplot() +
+  geom_point(data = data, aes(x, y, color = cluster), size = 2) +
+  geom_point(data = centroids, aes(x, y, color = cluster), size = 4) +
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+
+```
+
+### Step 4
+
+**Step 4:** Recalculate the position of the centroids based on the means of the assigned points
+
+```{r}
+#| code-fold: true
+#| fig-width: 6.5
+#| fig-height: 2.5
+#| message: false
+
+centroids2 <- data %>%
+  group_by(cluster) %>%
+  summarize(x = mean(x), y = mean(y))
+
+ggplot() +
+  geom_point(data = data, aes(x, y, color = cluster), size = 2) +
+  geom_point(data = centroids, aes(x, y), size = 4, alpha = 0.25) +
+  geom_point(data = centroids2, aes(x, y, color = cluster), size = 4) +  
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+
+```
+
+### Step 5
+
+**Step 5:** Repeat steps 2-4 until no points change cluster assignments
+
+```{r}
+#| code-fold: true
+#| fig-height: 2.5
+#| fig-width: 6.5
+data$cluster <- c("a", "a", "a", "a", "b", "b", "b")
+
+ggplot() +
+  geom_point(data = data, aes(x, y, color = cluster), size = 2) +
+  geom_point(data = centroids2, aes(x, y, color = cluster), size = 4) +  
+  scale_x_continuous(limits = c(0, 10)) +
+  scale_y_continuous(limits = c(0, 10)) +
+  coord_equal() +
+  theme_minimal()
+
+```
+:::
+
+::: callout
+#### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
+
+```{r}
+#| echo: false
+
+exercise_number <- exercise_number + 1
+```
+
+1.  Use `library(tidyclust)` to cluster the `faithful` data into three clusters.
+:::
+
+## Mixture Modeling/Model-Based Clustering
+
+Until now, we've assumed that we've known all parameters when working with mixture distributions. What if we want to learn these parameters/make inferences about these parameters?
+
+The process of making inferences about latent groups is related to K-Means Clustering. While K-Means Clustering is heuristic based, mixture modeling formalize the process of making inferences about latent groups using probability models. Gaussian mixture models (GMM) are a popular mixture model.
+
+::: callout-tip
+## Mixture Modeling
+
+**Mixture modeling** is the process of making inferences about sub populations using data that contain sub population but no labels for the sub populations.
+:::
+
+## Gaussian Mixture Modeling (GMM)
+
+::: callout-tip
+## Gaussian Mixture Modeling (GMM)
+
+**Gaussian mixture modeling (GMM)** is mixture modeling that uses normal and multivariate normal distributions.
+:::
+
+::: callout-tip
+## Hard Assignment
+
+Hard assignment assigns an observation in a clustering model to one and only one group.
+:::
+
+::: callout-tip
+## Soft Assignment
+
+Soft assignment assigns an observation in a clustering model to all groups with varying weights or probabilities.
+:::
+
+::: callout-tip
+## Responsibilities
+
+Soft assignments are quantified with responsibilities. **Responsibilities** are the probability that a given observation belongs to a given group. The soft assignments for an observation sum to 1.
+
+We quantified responsibilities with $\pi_k$ for mixture distributions. Responsibilities are parameters we will infer during mixture modeling.
+:::
+
+There are two main differences between K-Means Clustering and GMM.
+
+1.  Instead of calculating Euclidean distance from each observation to each group centroid, we use multivariate normal distributions to calculate the probability that an observation belongs to each group.
+    -   Observations close to the means of a mixture will have a high relative probability of belonging to that mixture.
+    -   Observations far from the means of a mixture will have a low relative probability of belonging to that mixture.
+2.  Instead of simply updating $k$ group centroids, we must update $k$ multivariate normal distributions. This requires calculating a vector of means and a variance-covariance matrix for each of the $k$ groups.
+
+### Example 3
+
+The parameters in example 2 were estimated using GMM. Let's repeat a similar exercise with the `faithful` using `eruptions` and `waiting` instead of just `eruptions`. We'll assume there are three groups.
+
+```{r}
+# fit GMM
+gmm2_geyser <- Mclust(faithful, G = 3)
+
+```
+
+Let's plot the multivariate normal distributions. @fig-gmm-uncertainty shows the centroids (stars) and shapes (ellipses) of the distributions in black. The colors represent hard assignments to groups and the size of the points represent the uncertainty of the assignments with larger points having more uncertainty. 
+
+```{r}
+#| label: fig-gmm-uncertainty
+#| fig-cap: "Uncertainty plot from a GMM"
+
+# plot fitted model
+plot(gmm2_geyser, what = "uncertainty")
+
+```
+
+We can also summarize the model with `library(broom)`.
+
+```{r}
+library(broom)
+
+augment(gmm2_geyser)
+
+tidy(gmm2_geyser)
+
+glance(gmm2_geyser)
+
+```
+
+### mclust
+
+The previous example uses `library(mclust)`[^06_advanced-unsupervised-ml-1] and `library(broom)`.
+
+[^06_advanced-unsupervised-ml-1]: `library(tidyclust)` currently doesn't support mixture modeling. I hope this will change in the future.
+
+`Mclust()` is the main function for fitting Gaussian Mixture Models. The function contains several different types of models for the variances of the multivariate normal distributions. The defaults are sensible. `G` is the number of groups. If `G` isn't specified, then `Mclust()` will try `1:9` and pick the `G` with the lowest BIC (defined below).
+
+`plot()` with `what = "uncertainty"` creates a very useful data visualization for seeing the multivariate normal distributions and classifications for low-dimensional GMM.
+
+`glance()`, `tidy()`, and `augment()` from `library(broom)` return important information about the assignments, groups, and model diagnostics.
+
+### Estimation
+
+Suppose we have $n$ observations, $k$ groups, and $p$ variables. A single GMM will have 
+
+* an $n$ by $k$ matrix of responsibilities
+* $k$ vectors of means of length $p$
+* $k$ $p$ by $p$ variance-covariance matrices
+
+We want the maximum likelihood estimates for all of the parameters in the model. For technical reasons, it is very difficult to get these estimates using popular methods like stochastic gradient descent.
+
+Instead, we will use expectations maximization (EM) to find the parameters. We also used EM for K-Means clustering.
+
+::: callout
+1.  Randomly initialize all of the parameters. Calculate the log-likelihood.
+2.  E-Step: Update the responsibilities assuming the means and variance-covariance matrices are known.
+3.  M-Step: Estimate new means and variance-covariance matrices assuming the responsibilities are known. The means and variance-covariance matrices are calculated using weighted MLE where the responsibilities are the weights.
+4.  Calculate the log-likelihood. Go back to step 2 if the log-likelihood improves by at least as much as the stopping threshold.
+:::
+
+This algorithm is computationally efficient, but it is possible for it to find a local maximum log-likelihood without finding the global maximum log-likelihood.
+
+For a more mathematical description of this process, see Elements of Statistical Learning Section 6.8 [@hastie2009]. A highly descriptive comparison to kmeans (with Python code) can be seen [here](https://jakevdp.github.io/PythonDataScienceHandbook/05.12-gaussian-mixtures.html).
+
+### Example 4
+
+Let's consider a policy-relevant example using data from the [Small Area Health Insurance Estimates (SAHIE) Program.](https://www.census.gov/programs-surveys/sahie.html) 
+
+First, we pull the 2016 county-level estimates of the uninsured rate. We label a state as an expansion state if it expanded data before 2015-01-01. We use this date with 2016 data because of policy lags. 
+
+```{r}
+#| message: false
+
+library(censusapi)
+
+sahie <- getCensus(
+  name = "timeseries/healthins/sahie",
+  key = Sys.getenv("CENSUS_KEY"),
+  vars = c("GEOID", "PCTUI_PT"),
+  region = "county:*",
+  time = 2016
+) |>
+  as_tibble()
+
+```
+
+Next, we pull [data](https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/) from the Kaiser Family Foundation about the expansion dates of Medicaid under the Patient Protection and Affordable Care Act. 
+
+```{r}
+states <- tribble(
+  ~state, ~state_fips, ~implementation_date,
+  "Alabama", "01", NA,
+  "Alaska", "02", "2015-09-15",
+  "Arizona", "04", "2014-01-01",
+  "Arkansas", "05", "2014-01-01",
+  "California", "06", "2014-01-01",
+  "Colorado", "08", "2014-01-01",
+  "Connecticut", "09", "2014-01-01",
+  "Delaware", "10", "2014-01-01",
+  "District of Columbia", "11", "2014-01-01",
+  "Florida", "12", NA,
+  "Georgia", "13", NA,
+  "Hawaii", "15", "2014-01-01",
+  "Idaho", "16", "2020-01-01",
+  "Illinois", "17", "2014-01-01",
+  "Indiana", "18", "2015-02-01",
+  "Iowa", "19", "2014-01-01",
+  "Kansas", "20", NA,
+  "Kentucky", "21", "2014-01-01", 
+  "Louisiana", "22", "2016-07-01",
+  "Maine", "23", "2018-07-02",
+  "Maryland", "24", "2014-01-01",
+  "Massachusetts", "25", "2014-01-01",
+  "Michigan", "26", "2014-04-01",
+  "Minnesota", "27", "2014-01-01",
+  "Mississippi", "28", NA,
+  "Missouri", "29", "2021-07-01",
+  "Montana", "30", "2016-01-01",
+  "Nebraska", "31", "2020-10-01",
+  "Nevada", "32", "2014-01-01", 
+  "New Hampshire", "33", "2014-08-15",
+  "New Jersey", "34", "2014-01-01",
+  "New Mexico", "35", "2014-01-01",
+  "New York", "36", "2014-01-01", 
+  "North Carolina", "37", NA,
+  "North Dakota", "38", "2014-01-01", 
+  "Ohio", "39", "2014-01-01",
+  "Oklahoma", "40", "2021-07-01", 
+  "Oregon", "41", "2014-01-01", 
+  "Pennsylvania", "42", "2015-01-01", 
+  "Rhode Island", "44", "2014-01-01", 
+  "South Carolina", "45", NA,
+  "South Dakota", "46", "2023-07-01", 
+  "Tennessee", "47", NA,
+  "Texas", "48", NA,
+  "Utah", "49", "2020-01-01",
+  "Vermont", "50", "2014-01-01",
+  "Virginia", "51", "2019-01-01", 
+  "Washington", "53", "2014-01-01",
+  "West Virginia", "54", "2014-01-01",
+  "Wisconsin", "55", NA,
+  "Wyoming", "56", NA
+) %>%
+  mutate(implementation_date = ymd(implementation_date))
+
+sahie <- left_join(
+  sahie, 
+  states,
+  by = c("state" = "state_fips")
+) |>
+  filter(!is.na(PCTUI_PT)) |> 
+  mutate(expanded = implementation_date < "2015-01-01") %>%
+  mutate(expanded = replace_na(expanded, FALSE))
+
+
+
+```
+
+We use GMM to cluster the data. 
+
+```{r}
+uni <- select(sahie, PCTUI_PT)
+
+set.seed(1)
+uni_mc <- Mclust(uni, G = 2)
+
+glance(uni_mc)
+
+```
+
+When we compare `.class` to `expansion`, we see that the model does an good job of labeling counties' expansion status without observing counties' expansion status. 
+
+```{r}
+bind_cols(
+  sahie,
+  augment(uni_mc)
+) |>
+  count(expanded, .class)
+
+```
+
+### BIC
+
+**Likelihood** quantifies how likely observed data are given a set of parameters. If $\theta$ is a vector of parameters, then $L(\theta |x) = f(x |\theta)$ is the likelihood function.
+
+We often don't know the exact number of latent groups in the data. We need a way to compare models with varying numbers of groups. Simply picking the model with the maximum likelihood will lead to models with too many groups.
+
+The Bayesian information criterion (BIC) is an alternative to likelihoods that penalizes models for having many parameters. Let $L$ be the likelihood, $m$ the number of free parameters, and $n$ the number of observations.
+
+$$
+BIC = -2log(L) + mlog(n)
+$$ {#eq-bic}
+
+We will choose models that minimize BIC. Ideally, we will use v-fold cross validation for this process.
+
+### Example 5
+
+The `Mclust()` function will try `G = 1:9` when `G` isn't specified. `Mclust()` will also try 14 different variance models for the mixture models. 
+
+::: {.callout-important}
+We want to minimize BIC but `library(mclust)` is missing a negative sign. So we want to maximize the BIC plotted by `library(mclust)`. You can read more [here](https://stat.ethz.ch/pipermail/r-help//2009-April/387074.html).
+:::
+
+We can plot the BICs with `plot()` and view the optimal model with `glance()`. 
+
+```{r}
+faithful_gmm <- Mclust(faithful)
+
+plot(faithful_gmm, what = "BIC")
+
+glance(faithful_gmm)
+
+```
+
+```{r}
+#| eval: false
+#| echo: false
+
+library(palmerpenguins)
+
+boom <- penguins |>
+  drop_na() |>
+  select(bill_length_mm, bill_depth_mm, flipper_length_mm, body_mass_g) |>
+  Mclust() |>
+  plot(what = "BIC")
+
+glance(boom)
+
+```
+
+## Bernoulli Mixture Modeling (BMM)
+
+Let's consider a data generation story based on the Bernoulli distribution. Now, each variable, $X_1, X_2, ..., X_D$, is draw from a mixture of $K$ Bernoulli distributions.
+
+$$
+X_d  = \begin{cases}
+Bern(p_1) \text{ with probability }\pi_1 \\
+Bern(p_2) \text{ with probability }\pi_2 \\
+\vdots \\
+Bern(p_K) \text{ with probability }\pi_K
+\end{cases}
+$$ {#eq-bmm-process}
+
+Let $i$ be an index for each mixture that contributes to the random variable. The probability mass function of the random variable is written as
+
+$$
+P(X_d) = \Pi_{i = 1}^Kp_i^{x_i} (1 - p_i)^{1 - x_i}
+$$ {#eq-bmm-pmf}
+
+Let's consider a classic example from @bishop2006 and @murphy2022. The example uses the [MNIST](https://en.wikipedia.org/wiki/MNIST_database) database, which contains 70,000 handwritten digits. The digits are stored in 784 variables, from a 28 by 28 grid, with values ranging from 0 to 255, which indicate the darkness of the pixel.
+
+To prepare the data, we divide each pixel by 255 and then turn the pixels into indicators with values under 0.5 as 0 and values over 0.5 as 1. Figure @fig-digits visualizes the first four digits after reading in the data and applying pre-processing.
+
+```{r}
+#| message: false
+
+source(here::here("R", "visualize_digit.R"))
+
+mnist <- read_csv(here::here("data", "mnist_binary.csv"))
+
+glimpse(dplyr::select(mnist, 1:10))
+
+```
+
+```{r}
+#| label: fig-digits
+#| fig-cap: "First Four Digits"
+#| fig-subcap:
+#|   - "5"
+#|   - "0" 
+#|   - "4"
+#|   - "1"
+#| layout-ncol: 4
+
+visualize_digit(mnist, 1)
+visualize_digit(mnist, 2)
+visualize_digit(mnist, 3)
+visualize_digit(mnist, 4)
+
+```
+
+The digits are labelled in the MNIST data set but we will ignore the labels and use Bernoulli Mixture Modeling to learn the latent labels or groups. We will treat each pixel as its own Bernoulli distribution and cluster observations using mixtures of 784 Bernoulli distributions. This means each cluster will contain $784$ parameters.
+
+### Two Digit Example
+
+Let's start with a simple example using just the digits "1" and "8". We'll use `library(flexmix)` by @leisch2004. `library(flexmix)` is powerful but uses different syntax than we are used to.
+
+1.  The function `flexmix()` expects a matrix.
+2.  The formula expects the entire matrix on the left side of the `~`.
+3.  We specify the distribution used during the maximization (M) step with `model = FLXMCmvbinary()`.
+
+```{r}
+library(flexmix)
+
+mnist_18 <- mnist |>
+  filter(label %in% c("1", "8")) |>
+  dplyr::select(-label) |>
+  as.matrix()
+
+```
+
+The starting assignments are random, so we set a seed.
+
+```{r}
+set.seed(20230612)
+mnist_18_clust <- flexmix(
+  formula = mnist_18 ~ 1, 
+  k = 2, 
+  model = FLXMCmvbinary(), 
+  control = list(iter.max = 100)
+)
+
+```
+
+The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the "soft assignments" to "hard assignments". Note that most applications won't have labels.
+
+```{r}
+mnist |>
+  filter(label %in% c("1", "8")) |>  
+  bind_cols(cluster = mnist_18_clust@cluster) |>
+  count(label, cluster)
+
+```
+
+@fig-bmm2-parameters shows the estimated $p_i$ for each pixel for each cluster. The figure shows 784 $p_i$ for $k = 1$ and 784 $p_i$ for $k = 2$. We see that the estimated parameters closely resemble the digits.
+
+Of course, each digit can differ from these images because everyone writes differently. In some ways, these are average digits across many version of the digits.
+
+```{r}
+means_18 <- rbind(
+  t(parameters(mnist_18_clust, component = 1)),
+  t(parameters(mnist_18_clust, component = 2))
+) |>
+  as_tibble() |>
+  mutate(label = NA)
+
+```
+
+```{r}
+#| label: fig-bmm2-parameters
+#| fig-cap: "Estimated Parameters for Each Cluster"
+#| fig-subcap:
+#|   - "8"
+#|   - "1" 
+#| layout-ncol: 2
+visualize_digit(means_18, 1)
+visualize_digit(means_18, 2)
+
+```
+
+The BMM does a good job of labeling the digits and recovering the average shape of the digits.
+
+### Ten Digit Example
+
+Let's now consider an example that uses all 10 digits.
+
+In most applications, we won't know the number of latent variables. First, we sample 1,000[^06_advanced-unsupervised-ml-2] digits and run the model with $k = 2, 3, ..., 12$. We'll calculate the BIC for each hyperparameter and pick the $k$ with lowest BIC.
+
+[^06_advanced-unsupervised-ml-2]: This is solely to save computation time.
+
+```{r}
+#| output: false
+#| message: false
+
+set.seed(20230613)
+mnist_sample <- mnist |>
+  slice_sample(n = 1000) |>
+  dplyr::select(-label) |>
+  as.matrix()
+
+steps <- stepFlexmix(
+  formula = mnist_sample ~ 1, 
+  model = FLXMCmvbinary(), 
+  control = list(iter.max = 100, minprior = 0),
+  k = 2:12, 
+  nrep = 1
+)
+
+```
+
+$k = 7$ provides the lowest BIC. This is probably because digits like 3 and 8 are very similar.
+
+```{R}
+steps
+
+```
+
+Next, we run the BMM on the full data with $k = 7$.
+
+```{r}
+mnist_full <- mnist |>
+  dplyr::select(-label) |>
+  as.matrix()
+
+mnist_clust <- flexmix(
+  formula = mnist_full ~ 1, 
+  k = 7, 
+  model = FLXMCmvbinary(), 
+  control = list(iter.max = 200, minprior = 0)
+)
+
+```
+
+The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the "soft assignments" to "hard assignments". Note that most applications won't have labels. The rows of the table are the digits. The columns of the table are the clusters. We can see, for example, that most of the 0's are clustered in cluster 5.
+
+```{r}
+labels <- mnist |>
+  bind_cols(cluster = mnist_clust@cluster)
+
+table(labels$label, labels$cluster)
+
+```
+
+@fig-bmm10-parameters shows the estimated $p_i$ for each pixel for each cluster. The following visualize the $784K$ parameters that we estimated. It shows 784 $p_i$ for $k = 1, 2, ..., 7$ clusters. We see that the estimated parameters closely resemble the digits.
+
+```{r}
+#| label: fig-bmm10-parameters
+#| fig-cap: "Estimated Parameters for Each Cluster"
+#| fig-subcap:
+#|   - "3, 7, and 9"
+#|   - "5, 7, and 8" 
+#|   - "3"
+#|   - "6"
+#|   - "0"
+#|   - "1"
+#|   - "2"
+#| layout-ncol: 4
+
+means <- rbind(
+  t(parameters(mnist_clust, component = 1)),
+  t(parameters(mnist_clust, component = 2)),
+  t(parameters(mnist_clust, component = 3)),
+  t(parameters(mnist_clust, component = 4)),
+  t(parameters(mnist_clust, component = 5)),
+  t(parameters(mnist_clust, component = 6)),
+  t(parameters(mnist_clust, component = 7))
+) |>
+  as_tibble() |>
+  mutate(label = NA)
+
+visualize_digit(means, 1)
+visualize_digit(means, 2)
+visualize_digit(means, 3)
+visualize_digit(means, 4)
+visualize_digit(means, 5)
+visualize_digit(means, 6)
+visualize_digit(means, 7)
+
+```
+
+The example with all digits doesn't result in 10 distinct mixtures but it does a fairly good job of structuring finding structure in the data. Without labels and considering the variety of messy handwriting, this is a useful model.
+
+## Considerations
+
+Mixture modeling is difficult for a couple of reasons:
+
+1.  We need to assume a model. It can be difficult to assume a multivariate distribution that fits the data in all dimensions of interest.
+2.  The models are overparameterized and can take a very long time to fit.

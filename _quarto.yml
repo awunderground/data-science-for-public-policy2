@@ -3,16 +3,57 @@ project:
   output-dir: docs
 
 book:
-  title: "Data Science for Public Policy Part II"
-  author: "Aaron R. Williams"
+  title: "Data Science for Public Policy"
+  author: "Aaron R. Williams, Alena Stern, and Gabe Morrison"
   date: today
   chapters:
     - index.qmd
-    - 01_advanced-quarto.qmd
-    - 02_advanced-data-cleaning.qmd
-    - 03_functions.qmd
-    - 04_web-scraping.qmd
-    - 05_simulation-and-sampling.qmd
+    - part: Basics
+      chapters:
+        - 01_intro-r.qmd
+        - 02_tidyverse.qmd
+        - 03_advanced-data-cleaning.qmd
+        - 04_data-viz.qmd
+        - 05_exploratory-data-analysis.qmd 
+      
+    - part: Reproducible Research
+      chapters: 
+        - 06_reproducible-research-with-quarto.qmd
+        - 07_advanced-quarto.qmd
+        - 08_reproducible-research-with-git.qmd
+        - 09_advanced-git.qmd
+    - part: Programming
+      chapters:
+        - 10_functions.qmd
+        # - r packages to be developed??
+        - 12_apis.qmd
+        - 13_web-scraping.qmd
+    - part: Statistics
+      chapters:
+        - 14_simulation-and-sampling.qmd
+        - 15_microsimulation.qmd   
+        - 16_nonparametric-1.qmd
+        - 17_nonparametric-2.qmd   
+        #  18_data-imputation.qmd
+    - part: Supervised Machine Learning
+      chapters:
+        - 19_predictive-modeling-motivation.qmd 
+        - 20_predictive-modeling-concepts.qmd
+        - 21_supervised-classification.qmd
+        - 22_ensembling.qmd
+        - 23_regularization.qmd
+    - part: Unsupervised Machine Learning
+      chapters:
+        # - interpretable-models.qmd
+        # - PART 1: dimension reduction
+        # - PART 1: cluster analysis
+        - 27_advanced-unsupervised-ml.qmd 
+        # - 28_text-analysis.qmd
+        # - 29_text-modeling.qmd
+    - part: Other Topics
+      chapters:
+       - 28_geospatial.qmd
+        # - parallel programming to be developed
     - references.qmd
 
 bibliography: references.bib

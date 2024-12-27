@@ -36,8 +36,6 @@ vignettes/*.pdf
 *.utf8.md
 *.knit.md
 
-# R Environment Variables
-.Renviron
 
 # translation temp files
 po/*~
@@ -46,5 +44,8 @@ po/*~
 /.quarto/
 /_site/
 
-# cache files
-*_files/
+# cached_files:
+*_cache*
+
+# environment file for quarto (render)
+_environment
