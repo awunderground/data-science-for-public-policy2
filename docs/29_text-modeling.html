@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 24&nbsp; Text Modeling</title>
+<title>Data Science for Public Policy - 25&nbsp; Text Modeling</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./30_geospatial.html" rel="next">
+<link href="./references.html" rel="next">
 <link href="./28_text-analysis.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./27_advanced-unsupervised-ml.html">Unsupervised Machine Learning</a></li><li class="breadcrumb-item"><a href="./29_text-modeling.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./29_text-modeling.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -338,18 +338,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
-  </div>
-</li>
       </ul>
   </li>
         <li class="sidebar-item sidebar-item-section">
@@ -364,7 +352,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -385,38 +385,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">25</span> Background</a>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background"><span class="header-section-number">26</span> Background</a>
   <ul class="collapse">
-  <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix"><span class="header-section-number">25.1</span> Document-Term Matrix</a></li>
-  <li><a href="#example-01" id="toc-example-01" class="nav-link" data-scroll-target="#example-01"><span class="header-section-number">25.2</span> Example 01</a></li>
-  <li><a href="#librarybroom" id="toc-librarybroom" class="nav-link" data-scroll-target="#librarybroom"><span class="header-section-number">25.3</span> <code>library(broom)</code></a></li>
-  <li><a href="#example-02" id="toc-example-02" class="nav-link" data-scroll-target="#example-02"><span class="header-section-number">25.4</span> Example 02</a></li>
+  <li><a href="#document-term-matrix" id="toc-document-term-matrix" class="nav-link" data-scroll-target="#document-term-matrix"><span class="header-section-number">26.1</span> Document-Term Matrix</a></li>
+  <li><a href="#example-01" id="toc-example-01" class="nav-link" data-scroll-target="#example-01"><span class="header-section-number">26.2</span> Example 01</a></li>
+  <li><a href="#librarybroom" id="toc-librarybroom" class="nav-link" data-scroll-target="#librarybroom"><span class="header-section-number">26.3</span> <code>library(broom)</code></a></li>
+  <li><a href="#example-02" id="toc-example-02" class="nav-link" data-scroll-target="#example-02"><span class="header-section-number">26.4</span> Example 02</a></li>
   </ul></li>
-  <li><a href="#document-groupingtopic-modeling" id="toc-document-groupingtopic-modeling" class="nav-link" data-scroll-target="#document-groupingtopic-modeling"><span class="header-section-number">26</span> Document Grouping/Topic Modeling</a>
+  <li><a href="#document-groupingtopic-modeling" id="toc-document-groupingtopic-modeling" class="nav-link" data-scroll-target="#document-groupingtopic-modeling"><span class="header-section-number">27</span> Document Grouping/Topic Modeling</a>
   <ul class="collapse">
-  <li><a href="#lda-as-a-generative-model" id="toc-lda-as-a-generative-model" class="nav-link" data-scroll-target="#lda-as-a-generative-model"><span class="header-section-number">26.0.1</span> LDA as a generative model</a></li>
-  <li><a href="#example-03" id="toc-example-03" class="nav-link" data-scroll-target="#example-03"><span class="header-section-number">26.1</span> Example 03</a>
+  <li><a href="#lda-as-a-generative-model" id="toc-lda-as-a-generative-model" class="nav-link" data-scroll-target="#lda-as-a-generative-model"><span class="header-section-number">27.0.1</span> LDA as a generative model</a></li>
+  <li><a href="#example-03" id="toc-example-03" class="nav-link" data-scroll-target="#example-03"><span class="header-section-number">27.1</span> Example 03</a>
   <ul class="collapse">
-  <li><a href="#lda-and-inference" id="toc-lda-and-inference" class="nav-link" data-scroll-target="#lda-and-inference"><span class="header-section-number">26.1.1</span> LDA and inference</a></li>
+  <li><a href="#lda-and-inference" id="toc-lda-and-inference" class="nav-link" data-scroll-target="#lda-and-inference"><span class="header-section-number">27.1.1</span> LDA and inference</a></li>
   </ul></li>
-  <li><a href="#example-04" id="toc-example-04" class="nav-link" data-scroll-target="#example-04"><span class="header-section-number">26.2</span> Example 04</a>
+  <li><a href="#example-04" id="toc-example-04" class="nav-link" data-scroll-target="#example-04"><span class="header-section-number">27.2</span> Example 04</a>
   <ul class="collapse">
-  <li><a href="#word-topic-probabilities" id="toc-word-topic-probabilities" class="nav-link" data-scroll-target="#word-topic-probabilities"><span class="header-section-number">26.2.1</span> Word topic probabilities</a></li>
-  <li><a href="#document-topic-probabilities" id="toc-document-topic-probabilities" class="nav-link" data-scroll-target="#document-topic-probabilities"><span class="header-section-number">26.2.2</span> Document-topic probabilities</a></li>
+  <li><a href="#word-topic-probabilities" id="toc-word-topic-probabilities" class="nav-link" data-scroll-target="#word-topic-probabilities"><span class="header-section-number">27.2.1</span> Word topic probabilities</a></li>
+  <li><a href="#document-topic-probabilities" id="toc-document-topic-probabilities" class="nav-link" data-scroll-target="#document-topic-probabilities"><span class="header-section-number">27.2.2</span> Document-topic probabilities</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#text-classification-supervised-machine-learning" id="toc-text-classification-supervised-machine-learning" class="nav-link" data-scroll-target="#text-classification-supervised-machine-learning"><span class="header-section-number">27</span> Text Classification (supervised machine learning)</a>
+  <li><a href="#text-classification-supervised-machine-learning" id="toc-text-classification-supervised-machine-learning" class="nav-link" data-scroll-target="#text-classification-supervised-machine-learning"><span class="header-section-number">28</span> Text Classification (supervised machine learning)</a>
   <ul class="collapse">
-  <li><a href="#librarytextrecipes" id="toc-librarytextrecipes" class="nav-link" data-scroll-target="#librarytextrecipes"><span class="header-section-number">27.1</span> <code>library(textrecipes)</code></a></li>
-  <li><a href="#example-05" id="toc-example-05" class="nav-link" data-scroll-target="#example-05"><span class="header-section-number">27.2</span> Example 05</a></li>
-  <li><a href="#example-06" id="toc-example-06" class="nav-link" data-scroll-target="#example-06"><span class="header-section-number">27.3</span> Example 06</a></li>
-  <li><a href="#logistic-lasso-regression" id="toc-logistic-lasso-regression" class="nav-link" data-scroll-target="#logistic-lasso-regression"><span class="header-section-number">27.4</span> Logistic LASSO regression</a></li>
-  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">27.5</span> Random forest</a></li>
-  <li><a href="#out-of-sample-error-rate" id="toc-out-of-sample-error-rate" class="nav-link" data-scroll-target="#out-of-sample-error-rate"><span class="header-section-number">27.6</span> Out of sample error rate</a></li>
+  <li><a href="#librarytextrecipes" id="toc-librarytextrecipes" class="nav-link" data-scroll-target="#librarytextrecipes"><span class="header-section-number">28.1</span> <code>library(textrecipes)</code></a></li>
+  <li><a href="#example-05" id="toc-example-05" class="nav-link" data-scroll-target="#example-05"><span class="header-section-number">28.2</span> Example 05</a></li>
+  <li><a href="#example-06" id="toc-example-06" class="nav-link" data-scroll-target="#example-06"><span class="header-section-number">28.3</span> Example 06</a></li>
+  <li><a href="#logistic-lasso-regression" id="toc-logistic-lasso-regression" class="nav-link" data-scroll-target="#logistic-lasso-regression"><span class="header-section-number">28.4</span> Logistic LASSO regression</a></li>
+  <li><a href="#random-forest" id="toc-random-forest" class="nav-link" data-scroll-target="#random-forest"><span class="header-section-number">28.5</span> Random forest</a></li>
+  <li><a href="#out-of-sample-error-rate" id="toc-out-of-sample-error-rate" class="nav-link" data-scroll-target="#out-of-sample-error-rate"><span class="header-section-number">28.6</span> Out of sample error rate</a></li>
   </ul></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">28</span> Resources</a>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">29</span> Resources</a>
   <ul class="collapse">
-  <li><a href="#appendix-a" id="toc-appendix-a" class="nav-link" data-scroll-target="#appendix-a"><span class="header-section-number">28.1</span> Appendix A</a></li>
+  <li><a href="#appendix-a" id="toc-appendix-a" class="nav-link" data-scroll-target="#appendix-a"><span class="header-section-number">29.1</span> Appendix A</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -426,7 +426,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Modeling</span></h1>
+<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></h1>
 </div>
 
 
@@ -447,10 +447,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </header>
 
-<section id="background" class="level1" data-number="25">
-<h1 data-number="25"><span class="header-section-number">25</span> Background</h1>
-<section id="document-term-matrix" class="level2" data-number="25.1">
-<h2 data-number="25.1" class="anchored" data-anchor-id="document-term-matrix"><span class="header-section-number">25.1</span> Document-Term Matrix</h2>
+<section id="background" class="level1" data-number="26">
+<h1 data-number="26"><span class="header-section-number">26</span> Background</h1>
+<section id="document-term-matrix" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="document-term-matrix"><span class="header-section-number">26.1</span> Document-Term Matrix</h2>
 <p>There exist useful alternative formats to tidytext for storing text information. Different applications use different formats.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -479,8 +479,8 @@ One-row-per document
 </div>
 </div>
 </section>
-<section id="example-01" class="level2" data-number="25.2">
-<h2 data-number="25.2" class="anchored" data-anchor-id="example-01"><span class="header-section-number">25.2</span> Example 01</h2>
+<section id="example-01" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="example-01"><span class="header-section-number">26.2</span> Example 01</h2>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-2_2ecd89ce80715fe6f2f54edaecc8c7f7">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -531,8 +531,8 @@ Docs apple orange banana
 </div>
 </div>
 </section>
-<section id="librarybroom" class="level2" data-number="25.3">
-<h2 data-number="25.3" class="anchored" data-anchor-id="librarybroom"><span class="header-section-number">25.3</span> <code>library(broom)</code></h2>
+<section id="librarybroom" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="librarybroom"><span class="header-section-number">26.3</span> <code>library(broom)</code></h2>
 <p><code>library(broom)</code> contains three functions for tidying up the output of models in R. Most models work with <code>library(broom)</code> including <code>lm()</code>, <code>glm()</code>, and <code>kmeans()</code>.</p>
 <ul>
 <li><code>glance()</code> Returns one row per model.</li>
@@ -540,8 +540,8 @@ Docs apple orange banana
 <li><code>augment()</code> Returns one row per observation in the model data set.</li>
 </ul>
 </section>
-<section id="example-02" class="level2" data-number="25.4">
-<h2 data-number="25.4" class="anchored" data-anchor-id="example-02"><span class="header-section-number">25.4</span> Example 02</h2>
+<section id="example-02" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="example-02"><span class="header-section-number">26.4</span> Example 02</h2>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-3_3bbe60a0870022e4c5fa0bdde529be71">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -588,8 +588,8 @@ Docs apple orange banana
 </div>
 </section>
 </section>
-<section id="document-groupingtopic-modeling" class="level1" data-number="26">
-<h1 data-number="26"><span class="header-section-number">26</span> Document Grouping/Topic Modeling</h1>
+<section id="document-groupingtopic-modeling" class="level1" data-number="27">
+<h1 data-number="27"><span class="header-section-number">27</span> Document Grouping/Topic Modeling</h1>
 <p>The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -641,8 +641,8 @@ Latent Dirichlet Allocation (LDA)
 <p>A probabilistic topic model where each document is a mixture of topics and each topic is a mixture of words.</p>
 </div>
 </div>
-<section id="lda-as-a-generative-model" class="level3" data-number="26.0.1">
-<h3 data-number="26.0.1" class="anchored" data-anchor-id="lda-as-a-generative-model"><span class="header-section-number">26.0.1</span> LDA as a generative model</h3>
+<section id="lda-as-a-generative-model" class="level3" data-number="27.0.1">
+<h3 data-number="27.0.1" class="anchored" data-anchor-id="lda-as-a-generative-model"><span class="header-section-number">27.0.1</span> LDA as a generative model</h3>
 <p>LDA is a generative model. The model describes how the documents in a corpus were created. LDA relies on the bag-of-words assumption.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -668,8 +668,8 @@ Bag-of-words assumption
 </ol></li>
 </ol>
 </section>
-<section id="example-03" class="level2" data-number="26.1">
-<h2 data-number="26.1" class="anchored" data-anchor-id="example-03"><span class="header-section-number">26.1</span> Example 03</h2>
+<section id="example-03" class="level2" data-number="27.1">
+<h2 data-number="27.1" class="anchored" data-anchor-id="example-03"><span class="header-section-number">27.1</span> Example 03</h2>
 <p>Let’s demonstrate generating a document using this model. First, let’s define two topics. <code>topic1</code> is about the economy and <code>topic2</code> is about sports. Note that “contract” and “union” are in both topics:</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-4_7d7d6a0aa0cbf5d03a81da596430eda3">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>topic1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -774,8 +774,8 @@ Bag-of-words assumption
 </div>
 <p>We have now generated a document that is a mixture of the two topics. It’s more sports than economics, but contains both topics.</p>
 <p>The topics are also mixtures of words. “Basketball” only shows up in the sports topic but “union” and “contract” are in both topics. When used in practice, LDA generally involves more words, more topics, and more documents.</p>
-<section id="lda-and-inference" class="level3" data-number="26.1.1">
-<h3 data-number="26.1.1" class="anchored" data-anchor-id="lda-and-inference"><span class="header-section-number">26.1.1</span> LDA and inference</h3>
+<section id="lda-and-inference" class="level3" data-number="27.1.1">
+<h3 data-number="27.1.1" class="anchored" data-anchor-id="lda-and-inference"><span class="header-section-number">27.1.1</span> LDA and inference</h3>
 <p>LDA is based on this data generation process, but we don’t know the document-specific topic distribution or the topics for the individual words. Thus, LDA is a statistical inference procedure where we try to make inferences about parameters. In other words, we are trying to reverse engineer the generative process outlined above using a corpus of documents. In practice, we don’t care about the length of the document, so we can ignore step 1.</p>
 <p>The optimization for LDA is similar to the optimization for K-means clustering. First, every word in the corpus is randomly assigned a topic. Then, the model is optimized through a two-step process based on expectation maximization (EM), which is the same optimization algorithm used with K-means clustering:</p>
 <ol type="1">
@@ -785,8 +785,8 @@ Bag-of-words assumption
 </ol>
 </section>
 </section>
-<section id="example-04" class="level2" data-number="26.2">
-<h2 data-number="26.2" class="anchored" data-anchor-id="example-04"><span class="header-section-number">26.2</span> Example 04</h2>
+<section id="example-04" class="level2" data-number="27.2">
+<h2 data-number="27.2" class="anchored" data-anchor-id="example-04"><span class="header-section-number">27.2</span> Example 04</h2>
 <p>Let’s consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on <a href="https://www.tidytextmining.com/topicmodeling.html">Chapter 6 in Text Mining With R</a>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-9_86e698b5b1af45a7d068c5f6f99d2c16">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -888,8 +888,8 @@ date (1): signing_date
 <li>Each topic as a mixture of words</li>
 <li>Each document as a mixture of topics</li>
 </ol>
-<section id="word-topic-probabilities" class="level3" data-number="26.2.1">
-<h3 data-number="26.2.1" class="anchored" data-anchor-id="word-topic-probabilities"><span class="header-section-number">26.2.1</span> Word topic probabilities</h3>
+<section id="word-topic-probabilities" class="level3" data-number="27.2.1">
+<h3 data-number="27.2.1" class="anchored" data-anchor-id="word-topic-probabilities"><span class="header-section-number">27.2.1</span> Word topic probabilities</h3>
 <p>With LDA, each topic is a mixture of words. The model returns estimated parameters called <span class="math inline">\(\beta\)</span>. A <span class="math inline">\(\beta\)</span> represents the estimated probability of a specific word being generated from a particular topic. We can extract <span class="math inline">\(\beta\)</span> from the output of <code>LDA()</code> with <code>tidy()</code>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-12_47600e6ab3d72ef50becaba7104a1321">
 <div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>lda_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span>
@@ -931,8 +931,8 @@ date (1): signing_date
 </div>
 </div>
 </section>
-<section id="document-topic-probabilities" class="level3" data-number="26.2.2">
-<h3 data-number="26.2.2" class="anchored" data-anchor-id="document-topic-probabilities"><span class="header-section-number">26.2.2</span> Document-topic probabilities</h3>
+<section id="document-topic-probabilities" class="level3" data-number="27.2.2">
+<h3 data-number="27.2.2" class="anchored" data-anchor-id="document-topic-probabilities"><span class="header-section-number">27.2.2</span> Document-topic probabilities</h3>
 <p>With LDA, each document is a mixture of topics The model returns estimated parameters called <span class="math inline">\(\gamma\)</span>. A <span class="math inline">\(\gamma\)</span> represents the estimated proportion of words from a specific document that come from a particular topic.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-13_5ed7f04d37cda4aa39a8586867b0a25b">
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>lda_gamma <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"gamma"</span>)</span>
@@ -966,12 +966,12 @@ date (1): signing_date
 </section>
 </section>
 </section>
-<section id="text-classification-supervised-machine-learning" class="level1" data-number="27">
-<h1 data-number="27"><span class="header-section-number">27</span> Text Classification (supervised machine learning)</h1>
+<section id="text-classification-supervised-machine-learning" class="level1" data-number="28">
+<h1 data-number="28"><span class="header-section-number">28</span> Text Classification (supervised machine learning)</h1>
 <p>Sometimes it is useful to create a predictive model that uses text to predict a pre-determined set of labels. For example, if you have a historical corpus of labeled documents and you want to predict labels for new documents. For example, if you have a massive corpus set with a hand-labeled random sample of documents and you want to scale those labels to all documents.</p>
 <p>Fortunately, we can use all of the <code>library(tidymodels)</code> tools we already learned this semester. We simply need a way to convert unstructured text into predictors, which is simple with <code>library(textrecipes)</code>.</p>
-<section id="librarytextrecipes" class="level2" data-number="27.1">
-<h2 data-number="27.1" class="anchored" data-anchor-id="librarytextrecipes"><span class="header-section-number">27.1</span> <code>library(textrecipes)</code></h2>
+<section id="librarytextrecipes" class="level2" data-number="28.1">
+<h2 data-number="28.1" class="anchored" data-anchor-id="librarytextrecipes"><span class="header-section-number">28.1</span> <code>library(textrecipes)</code></h2>
 <p><img src="images/textrecipes.png" class="img-fluid" style="width:1in"></p>
 <p><code>library(textrecipes)</code> augments <code>library(recipes)</code> with <code>step_*()</code> functions that are useful for supervised machine learning with text data.</p>
 <ul>
@@ -984,8 +984,8 @@ date (1): signing_date
 <li><code>step_stopwords()</code> Remove stopwords.</li>
 </ul>
 </section>
-<section id="example-05" class="level2" data-number="27.2">
-<h2 data-number="27.2" class="anchored" data-anchor-id="example-05"><span class="header-section-number">27.2</span> Example 05</h2>
+<section id="example-05" class="level2" data-number="28.2">
+<h2 data-number="28.2" class="anchored" data-anchor-id="example-05"><span class="header-section-number">28.2</span> Example 05</h2>
 <p>Consider the Federalist Papers data set we used in the earlier class notes. After loading the data, the data are in one-row-per-line format. This is the format that we tidied with <code>unnest_tokens()</code>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-14_d8d279d8adebbd955ceef88fa6ee4b1f">
 <div class="cell-output cell-output-stdout">
@@ -1089,8 +1089,8 @@ Attaching package: 'recipes'</code></pre>
 </div>
 </div>
 </section>
-<section id="example-06" class="level2" data-number="27.3">
-<h2 data-number="27.3" class="anchored" data-anchor-id="example-06"><span class="header-section-number">27.3</span> Example 06</h2>
+<section id="example-06" class="level2" data-number="28.3">
+<h2 data-number="28.3" class="anchored" data-anchor-id="example-06"><span class="header-section-number">28.3</span> Example 06</h2>
 <p>Let’s finish with an example using the executive orders data set. The data contain executive orders for presidents Clinton, Bush, Obama, Trump, and Biden. We will build a model that predicts the party of the president associated with each executive order. Even though we know the party, we can</p>
 <ol type="1">
 <li>predict the party of future executive orders</li>
@@ -1142,8 +1142,8 @@ date (1): signing_date
 <span id="cb48-30"><a href="#cb48-30"></a>  <span class="fu">select</span>(<span class="sc">-</span>president, <span class="sc">-</span>signing_date, <span class="sc">-</span>executive_order_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="logistic-lasso-regression" class="level2" data-number="27.4">
-<h2 data-number="27.4" class="anchored" data-anchor-id="logistic-lasso-regression"><span class="header-section-number">27.4</span> Logistic LASSO regression</h2>
+<section id="logistic-lasso-regression" class="level2" data-number="28.4">
+<h2 data-number="28.4" class="anchored" data-anchor-id="logistic-lasso-regression"><span class="header-section-number">28.4</span> Logistic LASSO regression</h2>
 <p>We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-18_70df642bb6bcbb99167c4788d62c91a7">
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1297,8 +1297,8 @@ Attaching package: 'vip'</code></pre>
 </div>
 </div>
 </section>
-<section id="random-forest" class="level2" data-number="27.5">
-<h2 data-number="27.5" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">27.5</span> Random forest</h2>
+<section id="random-forest" class="level2" data-number="28.5">
+<h2 data-number="28.5" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">28.5</span> Random forest</h2>
 <p>Create a workflow.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-24_c7911d4284e62e62e4e7d7a1e6684f4d">
 <div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>rf_mod <span class="ot">&lt;-</span></span>
@@ -1372,8 +1372,8 @@ Attaching package: 'vip'</code></pre>
 </div>
 </div>
 </section>
-<section id="out-of-sample-error-rate" class="level2" data-number="27.6">
-<h2 data-number="27.6" class="anchored" data-anchor-id="out-of-sample-error-rate"><span class="header-section-number">27.6</span> Out of sample error rate</h2>
+<section id="out-of-sample-error-rate" class="level2" data-number="28.6">
+<h2 data-number="28.6" class="anchored" data-anchor-id="out-of-sample-error-rate"><span class="header-section-number">28.6</span> Out of sample error rate</h2>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-28_0dea3d450a84ec0c5e2b04d953d155fe">
 <div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">collect_metrics</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -1387,8 +1387,8 @@ Attaching package: 'vip'</code></pre>
 </div>
 </section>
 </section>
-<section id="resources" class="level1" data-number="28">
-<h1 data-number="28"><span class="header-section-number">28</span> Resources</h1>
+<section id="resources" class="level1" data-number="29">
+<h1 data-number="29"><span class="header-section-number">29</span> Resources</h1>
 <ul>
 <li><a href="https://juliasilge.com/blog/nber-papers/">Multiclass predictive modeling for #TidyTuesday NBER papers</a> by Julia Silge</li>
 <li><a href="https://smltar.com/">Supervised Machine Learning for Text Analysis in R</a> by Emil Hvitfledt and Julia Silge</li>
@@ -1396,8 +1396,8 @@ Attaching package: 'vip'</code></pre>
 <li><a href="http://obphio.us/pdfs/lda_tutorial.pdf">Latent Dirichlet Allocation tutorial</a></li>
 <li><a href="https://cfss.uchicago.edu/notes/text-analysis-workflow/">Computing for the Social Sciences</a></li>
 </ul>
-<section id="appendix-a" class="level2" data-number="28.1">
-<h2 data-number="28.1" class="anchored" data-anchor-id="appendix-a"><span class="header-section-number">28.1</span> Appendix A</h2>
+<section id="appendix-a" class="level2" data-number="29.1">
+<h2 data-number="29.1" class="anchored" data-anchor-id="appendix-a"><span class="header-section-number">29.1</span> Appendix A</h2>
 <p>Like with cluster analysis, we need to identify a sensible number of topics for topic modeling.</p>
 <p>Start with the application:</p>
 <ul>
@@ -1671,12 +1671,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./28_text-analysis.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Text Analysis</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./30_geospatial.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./references.html" class="pagination-link">
+        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

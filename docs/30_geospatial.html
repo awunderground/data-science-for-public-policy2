@@ -64,7 +64,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./references.html" rel="next">
+<link href="./28_text-analysis.html" rel="next">
 <link href="./27_advanced-unsupervised-ml.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./28_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./30_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -351,8 +351,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-7" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./28_geospatial.html" class="sidebar-item-text sidebar-link active">
+  <a href="./30_geospatial.html" class="sidebar-item-text sidebar-link active">
  <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -524,7 +536,7 @@ Points
 <span id="cb5-7"><a href="#cb5-7"></a>    <span class="at">caption =</span> <span class="st">"Amtrak stations from opendata.arcgis.com"</span>) <span class="sc">+</span></span>
 <span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -560,7 +572,7 @@ Linestrings
 <span id="cb6-13"><a href="#cb6-13"></a>  ) <span class="sc">+</span></span>
 <span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -593,7 +605,7 @@ Polygons
 <span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example of polygon data"</span>) <span class="sc">+</span></span>
 <span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Multipoints, multilinestrings, and multipolygons are additional geometries based on points, linestrings, and polygons. The <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a> outlines many geometry types.</p>
@@ -638,7 +650,7 @@ Simple features
 <span id="cb10-18"><a href="#cb10-18"></a></span>
 <span id="cb10-19"><a href="#cb10-19"></a>amtrak_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -710,7 +722,7 @@ in your R script or .Rprofile.</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mi <span class="sc">+</span> mi_cb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="384"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="384"></p>
 </div>
 </div>
 <p><code>library(rgeoboundaries)</code></p>
@@ -728,7 +740,7 @@ in your R script or .Rprofile.</code></pre>
 <span id="cb19-9"><a href="#cb19-9"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
 <span id="cb19-10"><a href="#cb19-10"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -812,7 +824,7 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <pre><code>Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="480"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="480"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -998,7 +1010,7 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Here’s the map from earlier with EPSG 4326 on the left and EPSG 5070 (Alber’s Equal Area Conic Projection) on the right:</p>
 <div class="cell">
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1044,7 +1056,7 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <span id="cb35-13"><a href="#cb35-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb35-14"><a href="#cb35-14"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_geospatial_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+<p><img src="30_geospatial_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 </section>
@@ -1459,8 +1471,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./references.html" class="pagination-link">
-        <span class="nav-page-text">References</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./28_text-analysis.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
