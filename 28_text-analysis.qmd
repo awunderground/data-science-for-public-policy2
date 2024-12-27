@@ -1,0 +1,441 @@
+---
+title: "Text Analysis"
+abstract: In this chapter, we introduce fundamental ideas for text analysis.
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
+---
+
+![]()
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(tidytext)
+library(here)
+
+theme_set(theme_minimal())
+
+```
+
+```{r}
+#| echo: false
+
+exercise_number <- 1
+
+```
+
+## Motivation
+
+::: {.callout-tip}
+## Text Corpus
+
+A set of text. A corpus generally has theme such as "The Federalist Papers" or Jane Austin novels.  
+:::
+
+::: {.callout-tip}
+## Text analysis
+
+The process of deriving information from text using algorithms and statistical analysis.
+:::
+
+Text analysis has broad applications that extend well beyond policy analysis. We will briefly focus on four applications that are related to policy analysis. 
+
+## 1. Document Summarization
+
+The process of condensing the amount of information in a document into a useful subset of information. Techniques range from counting words to using complex machine learning algorithms. 
+
+**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/)) Before estimating any models, they spent months cutting out each word of the Federalist Papers and the counting the frequency of words. 
+
+## 2. Text Classification (supervised)
+
+The process of labeling documents with a predetermined set of labels.
+
+**Example:** Researchers in the Justice Policy Center at the Urban Institute classified millions of tweets with the word "cop" or "police" as "positive", "negative", "neutral", or "not applicable" for sentiment and "crime or incident information", "department or event information", "traffic or weather updates", "person identification", or "other" for topic. The researchers created content and metadata features, manually labeled a few thousand tweets for training data, and used gradient boosting for supervised machine learning for the task. ([blog](https://medium.com/@urban_institute/how-to-categorize-large-amounts-of-text-data-71e1fd590e2a))
+
+**Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/))
+
+## 3. Document Grouping (unsupervised)
+
+The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. Techniques like topic modeling result in lists of important words that can be used to summarize and label the documents while techniques like K-means clustering result in arbitrary cluster labels. 
+
+**Example:** Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives. ([blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455))
+
+## 4. Text Extraction
+
+Text often contains important unstructured information that would be useful to have in a structured format like a table. Text extraction is the process of searching and identifying key entities or concepts from unstructured text and then placing them in a structured format.
+
+**Example:** Researchers from Cornell counted sources of misinformation from 38 million articles. [NYTimes](https://www.nytimes.com/2020/09/30/us/politics/trump-coronavirus-misinformation.html?referringSource=articleShare). [Methodology](https://int.nyt.com/data/documenttools/evanega-et-al-coronavirus-misinformation-submitted-07-23-20-1/080839ac0c22bca8/full.pdf).
+
+## Other
+
+Speech recognition, machine translation, question answering, and text autocompletion are other forms of text analysis and language processing that are common but not implemented with R packages. 
+
+# Tools
+
+## Frequency
+
+::: {.callout-tip}
+## Term Frequency
+
+A count or relative frequency of the most common words in a document or documents.
+:::
+
+::: {.callout-tip}
+## Term Frequency-Inverse Document Frequency (TF-IDF)
+
+Some words are naturally more common than other words. TF-IDF quantifies the importance of words/terms in one document relative to other documents in a corpus.
+
+$$TF-IDF = TF(t, d) \cdot IDF(t)$$
+
+where $TF(t, d)$ is the relative frequency of term $t$ in document $d$ and $IDF(t)$ is the inverse frequency of the number of document where the term appears.
+
+$$TF-IDF = \frac{f_{t, d}}{\sum_{t' \in d} f_{t', d}} \cdot \left(\log\left(\frac{1 + n}{1 + df(d, f)}\right) + 1\right)$$
+
+:::
+
+
+::: {.callout-tip}
+## Word cloud
+
+A method of visualizing word frequency where the frequency of a given word is encoded as the size of the word.
+:::
+
+Word clouds are overused and are tough to interpret. [This 2016 election word cloud](https://news.gallup.com/poll/195596/email-dominates-americans-heard-clinton.aspx) by Gallup is an exceptional word cloud. 
+
+## Collocation
+
+::: {.callout-tip}
+## N-gram
+
+A consecutive sequence of *n* words. Unigrams are words, bigrams are pairs of words, and trigrams are groups of three words.
+:::
+
+::: {.callout-tip}
+## N-gram frequency
+
+A count or relative frequency of n-grams in a document or documents.
+:::
+
+::: {.callout-tip}
+## TF-IDF of N-grams
+
+TF-IDF with n-grams instead of words. 
+:::
+
+::: {.callout-tip}
+## Bigram graph
+
+A directed or undirected graph with individual words as nodes and bigrams as edges. [Example](https://www.tidytextmining.com/ngrams.html)
+:::
+
+## Topic Modeling
+
+::: {.callout-tip}
+## Topic modeling
+
+Unsupervised and semi-supervised methods for grouping documents. [Example](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455)
+
+Popular methods include:
+
+* Latent Dirichlet Allocation (LDA)
+* Non-Negative Matrix Factorization
+* CorEx (Correlation Explanation)
+:::
+
+## Natural Language Processing
+
+::: {.callout-tip}
+## Natural language processing
+
+The algorithmic analysis of text in a way that is rooted in linguistics. [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/) is an important tool for natural language processing.
+:::
+
+::: {.callout-tip}
+## Sentiment analysis
+
+The process of labeling words or sentences as positive, neutral, or negative. 
+:::
+
+::: {.callout-tip}
+## Named entity recognition
+
+The process of identifying names, places, organizations, and more in text. 
+:::
+
+::: {.callout-tip}
+## Parts of speech tagging
+
+The process of identifying the part of speech of each word (noun, verb, etc.). 
+:::
+
+::: {.callout-tip}
+## Lemmatization
+
+The process of shortening words to a base grammar. 
+:::
+
+# Key Challenge
+
+`R` and `Python` have really powerful tools for text analysis. 
+
+**Key challenge:** text contains a lot of useful information but its structure does not match how we have done data analysis up to this point.
+
+# Vocabulary & Tidy Data
+
+```{r}
+#| message: false
+
+library(gutenbergr)
+
+fed_papers <- gutenberg_download(
+  gutenberg_id = 1404, 
+  mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg"
+)
+
+fed_papers
+
+fed_paper1 <- fed_papers |>
+  filter(row_number() >= 8 & row_number() <= 165)
+
+```
+
+::: {.callout-tip}
+## Token
+
+A meaningful unit of text. Tokens include works, phrases, and sentences.
+:::
+
+::: {.callout-tip}
+## Tokenization
+
+Process of splitting a larger unit of text into tokens. For example, "data science is useful" can be "data", "science", "is", "useful".
+:::
+
+
+```{r}
+# tidytext can tokenize text with unnest_tokens()
+tidy_fed_paper1 <- fed_paper1 |>
+  unnest_tokens(output = word, input = text)
+
+tidy_fed_paper1
+
+```
+
+::: {.callout-tip}
+## Stemming
+
+A method of removing the end, and keeping only the root, of a word. Stemming is unaware of the context or use of the word. [Example](https://smltar.com/stemming.html#how-to-stem-text-in-r) 
+:::
+
+
+```{r}
+# SnowballC has a stemmer that works well with tidytext
+library(SnowballC)
+
+tidy_fed_paper1 |>
+  mutate(stem = wordStem(word)) |>
+  filter(word != stem)
+
+```
+
+::: {.callout-tip}
+## Lemmatizing
+
+A method of returning the base of a word. Lemmatization considers the context of a word. [Example](https://smltar.com/stemming.html#lemmatization) Lemmatizing requires natural language processing, so this requires Stanford CoreNLP or the Python package spaCy. 
+:::
+
+::: {.callout-tip}
+## Stop words
+
+Extremely common words that are often not useful for text analysis. `library(tidytext)` contains stop words from the `onix`, `SMART`, and `snowball` lexicons.
+:::
+
+
+```{r}
+stop_words
+
+```
+
+::: {.callout-tip}
+## Tidy text
+
+A table with one token per row." ~ [Text Mining with R](https://www.tidytextmining.com/)
+:::
+
+Text can also be stored as a string, a corpus, and a document-term matrix. 
+
+```{r}
+# tidy text format
+tidy_fed_paper1
+
+```
+
+# Example 1
+
+```{r}
+# load necessary packages
+library(tidyverse)
+library(tidytext)
+library(gutenbergr)
+library(SnowballC)
+
+# download the Federalist Papers from Project Gutenberg
+fed_papers <- gutenberg_download(
+  gutenberg_id = 1404, 
+  mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg"
+)
+
+# this data cleaning comes from Emil Hvitfeldt
+# https://www.hvitfeldt.me/blog/predicting-authorship-in-the-
+# federalist-papers-with-tidytext/
+hamilton <- c(1, 6:9, 11:13, 15:17, 21:36, 59:61, 65:85)
+madison <- c(10, 14, 18:20, 37:48)
+jay <- c(2:5, 64)
+unknown <- c(49:58, 62:63)
+
+fed_papers <- pull(fed_papers, text) |>
+  str_c(collapse = " ") |>
+  str_split(pattern = "\\.|\\?|\\!") |>
+  unlist() %>%
+  tibble(text = .) |>
+  mutate(sentence = row_number())
+
+tidy_fed_papers <- fed_papers |>
+  mutate(
+    paper_number = cumsum(
+      str_detect(
+        text, 
+        regex("FEDERALIST No", ignore_case = TRUE)))
+  ) |>
+  unnest_tokens(word, text) |>
+  mutate(
+    author = case_when(
+      paper_number %in% hamilton ~ "hamilton",
+      paper_number %in% madison ~ "madison",
+      paper_number %in% jay ~ "jay",
+      paper_number %in% unknown ~ "unknown"
+    )
+  )
+
+```
+
+## Approach 1
+
+Here we'll calculate term frequency without stop words and with stemming. 
+
+```{r}
+# filter to main authors
+tidy_fed_papers1 <- tidy_fed_papers |>
+  filter(author %in% c("hamilton", "madison"))
+
+# remove stop words and stem the words
+tidy_fed_papers1 <- tidy_fed_papers1 |>
+  anti_join(stop_words, by = "word") |>
+  mutate(word = wordStem(word))
+
+# count Hamilton's most-frequent words
+tidy_fed_papers1 |>
+  filter(author == "hamilton") |>
+  count(word, sort = TRUE)
+
+# count Madison's most-frequent words
+tidy_fed_papers1 |>
+  filter(author == "madison") |>
+  count(word, sort = TRUE)
+
+```
+
+## Approach 2
+
+Here we'll perform TF-IDF.
+
+```{r}
+# calculate tf-idf
+tf_idf <- tidy_fed_papers |>
+  count(author, word, sort = TRUE) |>
+  bind_tf_idf(term = word, document = author, n = n) 
+
+# plot
+tf_idf |>
+  filter(author %in% c("hamilton", "madison")) |>
+  group_by(author) |>
+  top_n(15, tf_idf) |>
+  mutate(word = reorder(word, tf_idf)) |>
+  ggplot(aes(tf_idf, word, fill = author)) +
+  geom_col() +
+  facet_wrap(~author, scales = "free") +
+  theme_minimal() +
+  guides(fill = "none")
+
+```
+
+## Approach 3
+
+```{r}
+tidy_fed_papers |>
+  count(author, word, sort = TRUE) |>
+  filter(word == "upon")
+
+```
+
+# Example 2
+
+Let's consider ten of Shakespeare's plays.
+
+```{r fig.height = 8}
+ids <- c(
+  2265, # Hamlet 
+  1795, # Macbeth 
+  1522, # Julius Caesar 
+  2235, # The Tempest 
+  1780, # 1 Henry IV 
+  1532, # King Lear
+  1513, # Romeo and Juliet 
+  1110, # King John
+  1519, # Much Ado About Nothing
+  1539  # The Winter's Tale
+)
+
+# download corpus
+shakespeare <- gutenberg_download(
+  gutenberg_id = ids,
+  meta_fields = "title"
+)
+
+# create tokens and drop character cues
+shakespeare_clean <- shakespeare |>
+  unnest_tokens(word, text, to_lower = FALSE) |>
+  filter(word != str_to_upper(word)) 
+
+# calculate TF-IDF
+shakespeare_tf_idf <- shakespeare_clean |>
+  count(title, word, sort = TRUE) |>
+  bind_tf_idf(term = word, document = title, n = n)
+
+# plot
+shakespeare_tf_idf |>
+  group_by(title) |>
+  top_n(8, tf_idf) |>
+  mutate(word = reorder(word, tf_idf)) |>
+  ggplot(aes(tf_idf, word, fill = title)) +
+  geom_col() +
+  facet_wrap(~title, scales = "free", ncol = 2) +
+  theme_minimal() +
+  guides(fill = "none")
+
+```
+
+# Resources
+
+* [Corporate Reporting in the Era of Artificial Intelligence](https://www.nber.org/digest-202012/corporate-reporting-era-artificial-intelligence)
+* [Text Mining with R](https://www.tidytextmining.com/) by Julia Silge and David Robinson
+* [Supervised Machine Learning for Text Analysis in R](https://smltar.com/) by Emil Hvitfledt and Julia Silge
+* [Corpus](http://corpustext.com/index.html)
