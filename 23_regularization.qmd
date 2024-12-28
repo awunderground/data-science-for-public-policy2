@@ -89,7 +89,11 @@ lm_wf |>
 
 ## Regularization
 
-**Regularization/Penalization:** To reduce the magnitude of parameters (coefficients).
+::: {.callout-tip}
+## Regularization/Penalization
+
+To reduce the magnitude of fitted parameters (coefficients).
+:::
 
 Regularization, or penalization, allows linear regression to work with very wide data, to generate stable estimates for data with multicollinearity, and to perform feature selection.
 
