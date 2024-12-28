@@ -43,9 +43,28 @@ exercise_number <- 1
 
 ## `library(sf)` and geospatial data
 
-Geospatial data are multidimensional. The outline of a simple rectangular state like Kansas may have a few vertices and a complex state like West Virginia may have many more vertices. Furthermore, geospatial data have auxiliary information about bounding boxes and projections. Fortunately, `library(sf)` can store all of this information in a rectangular tibble that works well with `library(dplyr)` and `library(ggplot2)`. 
+Geospatial data are multidimensional. The outline of a simple rectangular state like Kansas may have a few vertices and a complex state like West Virginia may have many more vertices. Furthermore, geospatial data have auxiliary information about bounding boxes and projections. Fortunately, `library(sf)` can store all of this information in a rectangular tibble that works well with `library(dplyr)` and `library(ggplot2)`.
 
-`library(sf)` stores geospatial data, which are **points**, **linestrings**, or **polygons** in a `geometry` column. Consider this example:
+:::callout-note
+If you are looking online, you may notice R code written in the (similarly named) `library(sp)` package. `library(sp)` is older than `library(sf)`, and `library(sp)` [is no longer being developed](https://geocompx.org/post/2023/rgdal-retirement/). Among its many advantages, `library(sf)` integrates seamlessly with the tidyverse.
+:::
+
+::: {.callout-tip}
+## Simple features
+
+Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard. 
+:::
+
+`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. You can think of each record in an sf dataframe as having two sets of data:
+1. **Attribute data**: the non-spatial data. These data are stored in all columns except the `geometry` column
+2. **Geographic data**: the geospatial data stored in the `geometry` column. 
+
+:::callout-tip
+## Vector Geospatial data
+Vector geospatial data consist of some combination of **points**, **lines**, or **polygons**. 
+:::
+
+Consider this example of vector geospatial data:
 
 ```{r}
 library(sf)
@@ -74,12 +93,18 @@ amtrak_stations |>
 
 ```
 
+:::callout-note
+The geometry column in a `sf` dataframe is "sticky." Even though `geometry` was not included in `select()`, it is still returned. `sf` works this way because the spatial data stored in the geometry column is essential to the object (it couldn't be a geospatial data set without the geographic component of the data!). 
+
+If you are dead-set on dropping a geometry column, you can use `sf::st_drop_geometry()` which returns a data.frame.
+:::
+
 ### Points
 
 ::: {.callout-tip}
 ## Points
 
-Points are zero-dimensional geometries. Points are coordinates and are frequently represented by a single longitude and latitude. 
+Points, which `library(sf)` calls `POINT`, are zero-dimensional geospatial objects. Points are often a single longitude and latitude.
 :::
 
 Let's map the Amtrak stations from the above example:
@@ -101,7 +126,7 @@ amtrak_stations |>
 ::: {.callout-tip}
 ## Linestrings
 
-Linestrings are one-dimensional geometries. Linestrings are a sequence of points connected by lines. 
+A line (`LINESTRING`) is composed of a sequence of multiple points.
 :::
 
 Here is an example of Amtrak train routes from the [Bureau of Transportation Statistics](https://data-usdot.opendata.arcgis.com/):
@@ -129,7 +154,7 @@ amtrak_routes |>
 ::: {.callout-tip}
 ## Polygons
 
-Polygons are two-dimensional geometries. Polygons are a sequence of points connected by lines that form a closed shape. 
+Polygons (`POLYGON`) are two-dimensional geospatial objects. Like lines, polygons are composed of many points, but the first and last point in a polygon must be the same. 
 :::
 
 Here is a simple example with of the Continental United States:
@@ -147,13 +172,16 @@ states |>
 
 ```
 
-Multipoints, multilinestrings, and multipolygons are additional geometries based on points, linestrings, and polygons. The [sf documentation](https://r-spatial.github.io/sf/articles/sf1.html) outlines many geometry types. 
+### Multi-Geometries
 
-::: {.callout-tip}
-## Simple features
+In practice, many records in a sf dataframe do not have type `LINE`, `POINT` or `POLYGON`, but rather have type `MULTIPOINT`, `MULTILINE` or `MULTIPOLYGON`. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively. 
 
-Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard. 
-:::
+Consider the example of California. California is a single state, so, in the `states` sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the `MULTIPOLYGON` type is most well-suited for representing it.
+
+
+`library(sf)` can represent 18 geometry types. To read about the 12 we do not mention, read the [sf documentation](https://r-spatial.github.io/sf/articles/sf1.html).
+
+If you are struggling with these concepts or want to read about them in greater depth, see [Chapter 2.2.4](https://r.geocompx.org/spatial-class#geometry) of *Geocomputation with R*.
 
 `library(sf)` implements simple features in R and introduces `sf` data. 
 
@@ -161,7 +189,7 @@ Simple features is a standard for storing and accessing geometric features outli
 
 `geom_sf()` plots `sf` data. The function automatically references the `geometry` column and does not require any aesthetic mappings. `geom_sf()` works well with layers and it is simple to combine point, line, and polygon data.
 
-`geom_sf()` works like `geom_point()` for point data, `geom_line()` for linestring data, and `geom_area()` for polygon data (e.g. fill controls the color of shapes and color controls the border colors of shapes for polygons). 
+`geom_sf()` works like `geom_point()` for point data, `geom_line()` for linestring data, and `geom_area()` for polygon data (e.g. the `fill` argument controls the color of shapes and color controls the border colors of shapes for polygons). 
 
 ```{r}
 amtrak_map <- ggplot() +
@@ -192,7 +220,11 @@ amtrak_map
 
 Shapefiles are a proprietary file format created by ESRI, the company that creates ArcGIS. Shapefiles are popular because ESRI dominated the GIS space for a long time. A shapefile is actually usually three or more binary files. 
 
-`st_read()` reads shapefiles into R in the `sf` format. Simply point the function to the file ending in `.shp`. Note that the other binary files associated with the shapefile must also be located in the same directory as the `.shp` file.
+`st_read()` reads shapefiles into R in the `sf` format. Simply point the function to the file ending in `.shp`. 
+
+:::callout-note
+Note that the other binary files associated with the shapefile must also be located in the same directory as the `.shp` file.
+:::
 
 ### GeoJSON
 
@@ -209,7 +241,9 @@ st_as_sf(data, coords = c("lon", "lat"))
 
 ```
 
-**Note:** It is trickier (but far less common) to load line, polygon, and multipolygon data from .csvs.
+::: callout-note
+It is trickier (but far less common) to load line, polygon, and multipolygon data from `.csvs`.
+:::
 
 ### `library(tigris)`
 
@@ -378,12 +412,14 @@ Choropleths are maps that use fill to display the variation in a variable across
 #| fig-width: 5
 #| fig-height: 3
 
-dc_income <- get_acs(geography = "tract", 
-                     variables = "B19013_001", 
-                     state = "DC", 
-                     county = "District of Columbia", 
-                     geometry = TRUE,
-                     progress = FALSE)
+dc_income <- get_acs(
+  geography = "tract", 
+  variables = "B19013_001", 
+  state = "DC", 
+  county = "District of Columbia", 
+  geometry = TRUE,
+  progress = FALSE
+)
 
 dc_income |>
   ggplot() +
@@ -420,7 +456,11 @@ exercise_number <- exercise_number + 1
 
 ## Spatial concepts
 
-Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface. **Note:** the Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
+Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface.
+
+:::callout-note
+The Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
+:::
 
 ::: {.callout-tip}
 ## Geographic coordinate reference systems
@@ -731,7 +771,11 @@ The assumption of independence often falls apart with spatial data. If number of
 
 Spatial regression methods attempt to account for this dependence between observations. 
 
-**Spatial autocorrelation:** Correlation between observations that are geographically close. 
+:::callout-note
+## Spatial autocorrelation
+**Spatial autocorrelation:** Correlation between observations that are geographically close.
+:::
+
 
 Process:
 
@@ -741,14 +785,19 @@ Process:
 
 ## Parting Thoughts
 
-This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons. 
+This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.
 
-Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set may have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+
+This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend *Geocomputation with R* [@geocomp]. [Spatial Data Science](https://r-spatial.org/book/) provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). [Geographical Data Science](https://geographicdata.science/book/intro.html) is also a fantastic place to learn more, but note that it is written in Python. 
 
 ## More Resources
 
-* [Drawing Beautiful Maps with sf - part 1](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html)
-* [Drawing Beautiful Maps with sf - part 2](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
-* [R Spatial Workshop Notes](https://spatialanalysis.github.io/workshop-notes/)
-* [Analyzing US Census Data by Kyle Walker -- Chapter 6](https://walker-data.com/census-r/mapping-census-data-with-r.html)
-* [sf Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf)
+-   [Geocomputation with R](https://r.geocompx.org)
+-   [Spatial Data Science](https://r-spatial.org/book/)
+-   [Geographical Data Science](https://geographicdata.science/book/intro.html)
+-   [Drawing Beautiful Maps with sf - part 1](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html)
+-   [Drawing Beautiful Maps with sf - part 2](https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html)
+-   [R Spatial Workshop Notes](https://spatialanalysis.github.io/workshop-notes/)
+-   [Analyzing US Census Data by Kyle Walker -- Chapter 6](https://walker-data.com/census-r/mapping-census-data-with-r.html)
+-   [sf Cheat Sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf)

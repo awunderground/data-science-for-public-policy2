@@ -20,9 +20,9 @@ options(scipen = 999)
 
 ```
 
-# Background
+## Background
 
-## Document-Term Matrix
+### Document-Term Matrix
 
 There exist useful alternative formats to tidytext for storing text information. Different applications use different formats. 
 
@@ -38,7 +38,7 @@ A matrix where rows are documents, columns are words, and cells are counts. A do
 A data frame with a column where each cell is the entire text for a document. This is useful for predictive modeling. 
 :::
 
-## Example 01
+#### Example 01
 
 ```{r}
 library(tidyverse)
@@ -67,7 +67,7 @@ as.matrix(document_term_matrix)
 
 ```
 
-## `library(broom)`
+### `library(broom)`
 
 `library(broom)` contains three functions for tidying up the output of models in R. Most models work with `library(broom)` including `lm()`, `glm()`, and `kmeans()`. 
 
@@ -75,7 +75,7 @@ as.matrix(document_term_matrix)
 * `tidy()` Returns one row per model component (i.e. regression coefficient or cluster).
 * `augment()` Returns one row per observation in the model data set.
 
-## Example 02
+### Example 02
 
 ```{r}
 library(broom)
@@ -93,7 +93,7 @@ augment(cars_lm)
 
 ```
 
-# Document Grouping/Topic Modeling
+## Document Grouping/Topic Modeling
 
 The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. 
 
@@ -144,7 +144,7 @@ According to the model, any time a document is created:
     a. Randomly choose a topic 
     b. Randomly choose a word conditioned on the topic from a.
 
-## Example 03
+### Example 03
 
 Let's demonstrate generating a document using this model. First, let's define two topics. `topic1` is about the economy and `topic2` is about sports. Note that "contract" and "union" are in both topics:
 
@@ -264,7 +264,7 @@ First, every word in the corpus is randomly assigned a topic. Then, the model is
 2. Find the optimal prior parameters assuming the posterior topic distribution for each document is known
 3. Repeat steps 1. and 2. until some topping criterion is reached
 
-## Example 04
+### Example 04
 
 Let's consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on [Chapter 6 in Text Mining With R](https://www.tidytextmining.com/topicmodeling.html).
 
@@ -365,7 +365,7 @@ Interpreting an estimated LDA model is the tricky work. We will do this by looki
 1. Each topic as a mixture of words
 2. Each document as a mixture of topics
 
-### Word topic probabilities
+#### Word topic probabilities
 
 With LDA, each topic is a mixture of words. The model returns estimated parameters called $\beta$. A $\beta$ represents the estimated probability of a specific word being generated from a particular topic. We can extract $\beta$ from the output of `LDA()` with `tidy()`. 
 
@@ -392,7 +392,7 @@ top_beta |>
 
 ```
 
-### Document-topic probabilities
+#### Document-topic probabilities
 
 With LDA, each document is a mixture of topics The model returns estimated parameters called $\gamma$. A $\gamma$ represents the estimated proportion of words from a specific document that come from a particular topic.
 
@@ -413,7 +413,7 @@ LDA isn't perfect. It can result in topics that are too broad (what [Patrick van
 
 In a [related blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455), van Kessel discusses using a semi-supervised algorithm called CorEx to resolve some of these challenges. With semi-supervised learning, the analyst can provide anchor terms that help the algorithm generate topics that are better cooked than with unsupervised learning. 
 
-# Text Classification (supervised machine learning)
+## Text Classification (supervised machine learning)
 
 Sometimes it is useful to create a predictive model that uses text to predict a pre-determined set of labels. For example, if you have a historical corpus of labeled documents and you want to predict labels for new documents. For example, if you have a massive corpus set with a hand-labeled random sample of documents and you want to scale those labels to all documents. 
 
@@ -433,7 +433,7 @@ Fortunately, we can use all of the `library(tidymodels)` tools we already learne
 * `step_lemma()` Lemmatizes tokens with `library(spacyr)`.
 * `step_stopwords()` Remove stopwords.
 
-## Example 05
+### Example 05
 
 Consider the Federalist Papers data set we used in the earlier class notes. After loading the data, the data are in one-row-per-line format. This is the format that we tidied with `unnest_tokens()`. 
 
@@ -512,7 +512,7 @@ recipe( ~ text, data = fed_papers) |>
 
 ```
 
-## Example 06
+### Example 06
 
 Let's finish with an example using the executive orders data set. The data contain executive orders for presidents Clinton, Bush, Obama, Trump, and Biden. We will build a model that predicts the party of the president associated with each executive order. Even though we know the party, we can 
 
@@ -557,7 +557,7 @@ eos_modeling <- eos |>
 
 ```
 
-## Logistic LASSO regression
+### Logistic LASSO regression
 
 We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection. 
 
@@ -649,7 +649,7 @@ lasso_fit |>
 
 ```
 
-## Random forest
+### Random forest
 
 Create a workflow. 
 
@@ -709,14 +709,14 @@ rf_fit |>
 
 ```
 
-## Out of sample error rate
+### Out-of-sample error rate
 
 ```{r}
 collect_metrics(rf_fit)
 
 ```
 
-# Resources
+## Resources
 
 * [Multiclass predictive modeling for #TidyTuesday NBER papers](https://juliasilge.com/blog/nber-papers/) by Julia Silge
 * [Supervised Machine Learning for Text Analysis in R](https://smltar.com/) by Emil Hvitfledt and Julia Silge

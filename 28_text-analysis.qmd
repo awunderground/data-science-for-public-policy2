@@ -34,6 +34,8 @@ exercise_number <- 1
 
 ## Motivation
 
+Before providing motivation, let's define two key terms.
+
 ::: {.callout-tip}
 ## Text Corpus
 
@@ -48,13 +50,13 @@ The process of deriving information from text using algorithms and statistical a
 
 Text analysis has broad applications that extend well beyond policy analysis. We will briefly focus on four applications that are related to policy analysis. 
 
-## 1. Document Summarization
+### 1. Document Summarization
 
 The process of condensing the amount of information in a document into a useful subset of information. Techniques range from counting words to using complex machine learning algorithms. 
 
 **Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/)) Before estimating any models, they spent months cutting out each word of the Federalist Papers and the counting the frequency of words. 
 
-## 2. Text Classification (supervised)
+### 2. Text Classification (supervised)
 
 The process of labeling documents with a predetermined set of labels.
 
@@ -62,25 +64,25 @@ The process of labeling documents with a predetermined set of labels.
 
 **Example:** Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. ([blog](https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/))
 
-## 3. Document Grouping (unsupervised)
+### 3. Document Grouping (unsupervised)
 
 The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. Techniques like topic modeling result in lists of important words that can be used to summarize and label the documents while techniques like K-means clustering result in arbitrary cluster labels. 
 
 **Example:** Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives. ([blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455))
 
-## 4. Text Extraction
+### 4. Text Extraction
 
 Text often contains important unstructured information that would be useful to have in a structured format like a table. Text extraction is the process of searching and identifying key entities or concepts from unstructured text and then placing them in a structured format.
 
 **Example:** Researchers from Cornell counted sources of misinformation from 38 million articles. [NYTimes](https://www.nytimes.com/2020/09/30/us/politics/trump-coronavirus-misinformation.html?referringSource=articleShare). [Methodology](https://int.nyt.com/data/documenttools/evanega-et-al-coronavirus-misinformation-submitted-07-23-20-1/080839ac0c22bca8/full.pdf).
 
-## Other
+### Other
 
 Speech recognition, machine translation, question answering, and text autocompletion are other forms of text analysis and language processing that are common but not implemented with R packages. 
 
-# Tools
+## Tools
 
-## Frequency
+### Frequency
 
 ::: {.callout-tip}
 ## Term Frequency
@@ -110,7 +112,7 @@ A method of visualizing word frequency where the frequency of a given word is en
 
 Word clouds are overused and are tough to interpret. [This 2016 election word cloud](https://news.gallup.com/poll/195596/email-dominates-americans-heard-clinton.aspx) by Gallup is an exceptional word cloud. 
 
-## Collocation
+### Collocation
 
 ::: {.callout-tip}
 ## N-gram
@@ -182,13 +184,13 @@ The process of identifying the part of speech of each word (noun, verb, etc.).
 The process of shortening words to a base grammar. 
 :::
 
-# Key Challenge
+### Key Challenge
 
-`R` and `Python` have really powerful tools for text analysis. 
+`R` and `Python` have powerful tools for text analysis. 
 
 **Key challenge:** text contains a lot of useful information but its structure does not match how we have done data analysis up to this point.
 
-# Vocabulary & Tidy Data
+## Vocabulary & Tidy Data
 
 ```{r}
 #| message: false
@@ -278,7 +280,7 @@ tidy_fed_paper1
 
 ```
 
-# Example 1
+## Example 1
 
 ```{r}
 # load necessary packages
@@ -327,7 +329,7 @@ tidy_fed_papers <- fed_papers |>
 
 ```
 
-## Approach 1
+### Approach 1
 
 Here we'll calculate term frequency without stop words and with stemming. 
 
@@ -353,7 +355,7 @@ tidy_fed_papers1 |>
 
 ```
 
-## Approach 2
+### Approach 2
 
 Here we'll perform TF-IDF.
 
@@ -377,7 +379,7 @@ tf_idf |>
 
 ```
 
-## Approach 3
+### Approach 3
 
 ```{r}
 tidy_fed_papers |>
@@ -386,7 +388,7 @@ tidy_fed_papers |>
 
 ```
 
-# Example 2
+## Example 2
 
 Let's consider ten of Shakespeare's plays.
 
@@ -433,7 +435,7 @@ shakespeare_tf_idf |>
 
 ```
 
-# Resources
+## Resources
 
 * [Corporate Reporting in the Era of Artificial Intelligence](https://www.nber.org/digest-202012/corporate-reporting-era-artificial-intelligence)
 * [Text Mining with R](https://www.tidytextmining.com/) by Julia Silge and David Robinson

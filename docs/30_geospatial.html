@@ -391,6 +391,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#points" id="toc-points" class="nav-link" data-scroll-target="#points"><span class="header-section-number">23.2.1</span> Points</a></li>
   <li><a href="#linestrings" id="toc-linestrings" class="nav-link" data-scroll-target="#linestrings"><span class="header-section-number">23.2.2</span> Linestrings</a></li>
   <li><a href="#polygons" id="toc-polygons" class="nav-link" data-scroll-target="#polygons"><span class="header-section-number">23.2.3</span> Polygons</a></li>
+  <li><a href="#multi-geometries" id="toc-multi-geometries" class="nav-link" data-scroll-target="#multi-geometries"><span class="header-section-number">23.2.4</span> Multi-Geometries</a></li>
   </ul></li>
   <li><a href="#geom_sf" id="toc-geom_sf" class="nav-link" data-scroll-target="#geom_sf"><span class="header-section-number">23.3</span> <code>geom_sf()</code></a></li>
   <li><a href="#getting-and-loading-spatial-data" id="toc-getting-and-loading-spatial-data" class="nav-link" data-scroll-target="#getting-and-loading-spatial-data"><span class="header-section-number">23.4</span> Getting and loading spatial data</a>
@@ -463,7 +464,47 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="librarysf-and-geospatial-data" class="level2" data-number="23.2">
 <h2 data-number="23.2" class="anchored" data-anchor-id="librarysf-and-geospatial-data"><span class="header-section-number">23.2</span> <code>library(sf)</code> and geospatial data</h2>
 <p>Geospatial data are multidimensional. The outline of a simple rectangular state like Kansas may have a few vertices and a complex state like West Virginia may have many more vertices. Furthermore, geospatial data have auxiliary information about bounding boxes and projections. Fortunately, <code>library(sf)</code> can store all of this information in a rectangular tibble that works well with <code>library(dplyr)</code> and <code>library(ggplot2)</code>.</p>
-<p><code>library(sf)</code> stores geospatial data, which are <strong>points</strong>, <strong>linestrings</strong>, or <strong>polygons</strong> in a <code>geometry</code> column. Consider this example:</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If you are looking online, you may notice R code written in the (similarly named) <code>library(sp)</code> package. <code>library(sp)</code> is older than <code>library(sf)</code>, and <code>library(sp)</code> <a href="https://geocompx.org/post/2023/rgdal-retirement/">is no longer being developed</a>. Among its many advantages, <code>library(sf)</code> integrates seamlessly with the tidyverse.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Simple features
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard.</p>
+</div>
+</div>
+<p><code>library(sf)</code> stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special <code>geometry</code> column that stores vector geospatial data. You can think of each record in an sf dataframe as having two sets of data: 1. <strong>Attribute data</strong>: the non-spatial data. These data are stored in all columns except the <code>geometry</code> column 2. <strong>Geographic data</strong>: the geospatial data stored in the <code>geometry</code> column.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Vector Geospatial data
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Vector geospatial data consist of some combination of <strong>points</strong>, <strong>lines</strong>, or <strong>polygons</strong>.</p>
+</div>
+</div>
+<p>Consider this example of vector geospatial data:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
@@ -510,6 +551,20 @@ First 10 features:
 10           Ardmore, OK POINT (-97.12552 34.17247)</code></pre>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The geometry column in a <code>sf</code> dataframe is “sticky.” Even though <code>geometry</code> was not included in <code>select()</code>, it is still returned. <code>sf</code> works this way because the spatial data stored in the geometry column is essential to the object (it couldn’t be a geospatial data set without the geographic component of the data!).</p>
+<p>If you are dead-set on dropping a geometry column, you can use <code>sf::st_drop_geometry()</code> which returns a data.frame.</p>
+</div>
+</div>
 <section id="points" class="level3" data-number="23.2.1">
 <h3 data-number="23.2.1" class="anchored" data-anchor-id="points"><span class="header-section-number">23.2.1</span> Points</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -522,7 +577,7 @@ Points
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Points are zero-dimensional geometries. Points are coordinates and are frequently represented by a single longitude and latitude.</p>
+<p>Points, which <code>library(sf)</code> calls <code>POINT</code>, are zero-dimensional geospatial objects. Points are often a single longitude and latitude.</p>
 </div>
 </div>
 <p>Let’s map the Amtrak stations from the above example:</p>
@@ -552,7 +607,7 @@ Linestrings
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Linestrings are one-dimensional geometries. Linestrings are a sequence of points connected by lines.</p>
+<p>A line (<code>LINESTRING</code>) is composed of a sequence of multiple points.</p>
 </div>
 </div>
 <p>Here is an example of Amtrak train routes from the <a href="https://data-usdot.opendata.arcgis.com/">Bureau of Transportation Statistics</a>:</p>
@@ -588,7 +643,7 @@ Polygons
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Polygons are two-dimensional geometries. Polygons are a sequence of points connected by lines that form a closed shape.</p>
+<p>Polygons (<code>POLYGON</code>) are two-dimensional geospatial objects. Like lines, polygons are composed of many points, but the first and last point in a polygon must be the same.</p>
 </div>
 </div>
 <p>Here is a simple example with of the Continental United States:</p>
@@ -608,27 +663,20 @@ Polygons
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Multipoints, multilinestrings, and multipolygons are additional geometries based on points, linestrings, and polygons. The <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a> outlines many geometry types.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Simple features
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard.</p>
-</div>
-</div>
+</section>
+<section id="multi-geometries" class="level3" data-number="23.2.4">
+<h3 data-number="23.2.4" class="anchored" data-anchor-id="multi-geometries"><span class="header-section-number">23.2.4</span> Multi-Geometries</h3>
+<p>In practice, many records in a sf dataframe do not have type <code>LINE</code>, <code>POINT</code> or <code>POLYGON</code>, but rather have type <code>MULTIPOINT</code>, <code>MULTILINE</code> or <code>MULTIPOLYGON</code>. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively.</p>
+<p>Consider the example of California. California is a single state, so, in the <code>states</code> sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the <code>MULTIPOLYGON</code> type is most well-suited for representing it.</p>
+<p><code>library(sf)</code> can represent 18 geometry types. To read about the 12 we do not mention, read the <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a>.</p>
+<p>If you are struggling with these concepts or want to read about them in greater depth, see <a href="https://r.geocompx.org/spatial-class#geometry">Chapter 2.2.4</a> of <em>Geocomputation with R</em>.</p>
 <p><code>library(sf)</code> implements simple features in R and introduces <code>sf</code> data.</p>
 </section>
 </section>
 <section id="geom_sf" class="level2" data-number="23.3">
 <h2 data-number="23.3" class="anchored" data-anchor-id="geom_sf"><span class="header-section-number">23.3</span> <code>geom_sf()</code></h2>
 <p><code>geom_sf()</code> plots <code>sf</code> data. The function automatically references the <code>geometry</code> column and does not require any aesthetic mappings. <code>geom_sf()</code> works well with layers and it is simple to combine point, line, and polygon data.</p>
-<p><code>geom_sf()</code> works like <code>geom_point()</code> for point data, <code>geom_line()</code> for linestring data, and <code>geom_area()</code> for polygon data (e.g.&nbsp;fill controls the color of shapes and color controls the border colors of shapes for polygons).</p>
+<p><code>geom_sf()</code> works like <code>geom_point()</code> for point data, <code>geom_line()</code> for linestring data, and <code>geom_area()</code> for polygon data (e.g.&nbsp;the <code>fill</code> argument controls the color of shapes and color controls the border colors of shapes for polygons).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>amtrak_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_sf</span>(</span>
@@ -659,7 +707,20 @@ Simple features
 <section id="shapefiles" class="level3" data-number="23.4.1">
 <h3 data-number="23.4.1" class="anchored" data-anchor-id="shapefiles"><span class="header-section-number">23.4.1</span> Shapefiles</h3>
 <p>Shapefiles are a proprietary file format created by ESRI, the company that creates ArcGIS. Shapefiles are popular because ESRI dominated the GIS space for a long time. A shapefile is actually usually three or more binary files.</p>
-<p><code>st_read()</code> reads shapefiles into R in the <code>sf</code> format. Simply point the function to the file ending in <code>.shp</code>. Note that the other binary files associated with the shapefile must also be located in the same directory as the <code>.shp</code> file.</p>
+<p><code>st_read()</code> reads shapefiles into R in the <code>sf</code> format. Simply point the function to the file ending in <code>.shp</code>.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Note that the other binary files associated with the shapefile must also be located in the same directory as the <code>.shp</code> file.</p>
+</div>
+</div>
 </section>
 <section id="geojson" class="level3" data-number="23.4.2">
 <h3 data-number="23.4.2" class="anchored" data-anchor-id="geojson"><span class="header-section-number">23.4.2</span> GeoJSON</h3>
@@ -670,7 +731,19 @@ Simple features
 <h3 data-number="23.4.3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">23.4.3</span> .csv files</h3>
 <p>Lots of geographic information is stored in .csv files–especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with <code>read_csv()</code>. Second, use <code>st_as_sf()</code> to convert the tibble into an sf object and specify the columns with longitude and latitude with the <code>coords</code> argument:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<p><strong>Note:</strong> It is trickier (but far less common) to load line, polygon, and multipolygon data from .csvs.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is trickier (but far less common) to load line, polygon, and multipolygon data from <code>.csvs</code>.</p>
+</div>
+</div>
 </section>
 <section id="librarytigris" class="level3" data-number="23.4.4">
 <h3 data-number="23.4.4" class="anchored" data-anchor-id="librarytigris"><span class="header-section-number">23.4.4</span> <code>library(tigris)</code></h3>
@@ -847,7 +920,20 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 </section>
 <section id="spatial-concepts" class="level2" data-number="23.6">
 <h2 data-number="23.6" class="anchored" data-anchor-id="spatial-concepts"><span class="header-section-number">23.6</span> Spatial concepts</h2>
-<p>Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface. <strong>Note:</strong> the Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.</p>
+<p>Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.</p>
+</div>
+</div>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1204,7 +1290,19 @@ Projected CRS: NAD83 / Conus Albers
 <p>Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.</p>
 <p>The assumption of independence often falls apart with spatial data. If number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn’t make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina.</p>
 <p>Spatial regression methods attempt to account for this dependence between observations.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Spatial autocorrelation
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Spatial autocorrelation:</strong> Correlation between observations that are geographically close.</p>
+</div>
+</div>
 <p>Process:</p>
 <ol type="1">
 <li>Estimate a non-spatial regression model.</li>
@@ -1215,11 +1313,15 @@ Projected CRS: NAD83 / Conus Albers
 <section id="parting-thoughts" class="level2" data-number="23.9">
 <h2 data-number="23.9" class="anchored" data-anchor-id="parting-thoughts"><span class="header-section-number">23.9</span> Parting Thoughts</h2>
 <p>This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.</p>
-<p>Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set may have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. <a href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/">This website contains good example of raster data.</a></p>
+<p>Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. <a href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/">This website contains good example of raster data.</a></p>
+<p>This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend <em>Geocomputation with R</em> <span class="citation" data-cites="geocomp">(<a href="references.html#ref-geocomp" role="doc-biblioref"><strong>geocomp?</strong></a>)</span>. <a href="https://r-spatial.org/book/">Spatial Data Science</a> provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). <a href="https://geographicdata.science/book/intro.html">Geographical Data Science</a> is also a fantastic place to learn more, but note that it is written in Python.</p>
 </section>
 <section id="more-resources" class="level2" data-number="23.10">
 <h2 data-number="23.10" class="anchored" data-anchor-id="more-resources"><span class="header-section-number">23.10</span> More Resources</h2>
 <ul>
+<li><a href="https://r.geocompx.org">Geocomputation with R</a></li>
+<li><a href="https://r-spatial.org/book/">Spatial Data Science</a></li>
+<li><a href="https://geographicdata.science/book/intro.html">Geographical Data Science</a></li>
 <li><a href="https://www.r-spatial.org/r/2018/10/25/ggplot2-sf.html">Drawing Beautiful Maps with sf - part 1</a></li>
 <li><a href="https://www.r-spatial.org/r/2018/10/25/ggplot2-sf-2.html">Drawing Beautiful Maps with sf - part 2</a></li>
 <li><a href="https://spatialanalysis.github.io/workshop-notes/">R Spatial Workshop Notes</a></li>
