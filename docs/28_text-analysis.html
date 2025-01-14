@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 24&nbsp; Text Analysis</title>
+<title>Data Science for Public Policy - 26&nbsp; Text Analysis</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_text-analysis.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_text-analysis.html"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Analysis</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -334,8 +334,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -352,19 +364,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -385,33 +397,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">24.1</span> Motivation</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">26.1</span> Motivation</a>
   <ul class="collapse">
-  <li><a href="#document-summarization" id="toc-document-summarization" class="nav-link" data-scroll-target="#document-summarization"><span class="header-section-number">24.1.1</span> 1. Document Summarization</a></li>
-  <li><a href="#text-classification-supervised" id="toc-text-classification-supervised" class="nav-link" data-scroll-target="#text-classification-supervised"><span class="header-section-number">24.1.2</span> 2. Text Classification (supervised)</a></li>
-  <li><a href="#document-grouping-unsupervised" id="toc-document-grouping-unsupervised" class="nav-link" data-scroll-target="#document-grouping-unsupervised"><span class="header-section-number">24.1.3</span> 3. Document Grouping (unsupervised)</a></li>
-  <li><a href="#text-extraction" id="toc-text-extraction" class="nav-link" data-scroll-target="#text-extraction"><span class="header-section-number">24.1.4</span> 4. Text Extraction</a></li>
-  <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other"><span class="header-section-number">24.1.5</span> Other</a></li>
+  <li><a href="#document-summarization" id="toc-document-summarization" class="nav-link" data-scroll-target="#document-summarization"><span class="header-section-number">26.1.1</span> 1. Document Summarization</a></li>
+  <li><a href="#text-classification-supervised" id="toc-text-classification-supervised" class="nav-link" data-scroll-target="#text-classification-supervised"><span class="header-section-number">26.1.2</span> 2. Text Classification (supervised)</a></li>
+  <li><a href="#document-grouping-unsupervised" id="toc-document-grouping-unsupervised" class="nav-link" data-scroll-target="#document-grouping-unsupervised"><span class="header-section-number">26.1.3</span> 3. Document Grouping (unsupervised)</a></li>
+  <li><a href="#text-extraction" id="toc-text-extraction" class="nav-link" data-scroll-target="#text-extraction"><span class="header-section-number">26.1.4</span> 4. Text Extraction</a></li>
+  <li><a href="#other" id="toc-other" class="nav-link" data-scroll-target="#other"><span class="header-section-number">26.1.5</span> Other</a></li>
   </ul></li>
-  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools"><span class="header-section-number">24.2</span> Tools</a>
+  <li><a href="#tools" id="toc-tools" class="nav-link" data-scroll-target="#tools"><span class="header-section-number">26.2</span> Tools</a>
   <ul class="collapse">
-  <li><a href="#frequency" id="toc-frequency" class="nav-link" data-scroll-target="#frequency"><span class="header-section-number">24.2.1</span> Frequency</a></li>
-  <li><a href="#collocation" id="toc-collocation" class="nav-link" data-scroll-target="#collocation"><span class="header-section-number">24.2.2</span> Collocation</a></li>
+  <li><a href="#frequency" id="toc-frequency" class="nav-link" data-scroll-target="#frequency"><span class="header-section-number">26.2.1</span> Frequency</a></li>
+  <li><a href="#collocation" id="toc-collocation" class="nav-link" data-scroll-target="#collocation"><span class="header-section-number">26.2.2</span> Collocation</a></li>
   </ul></li>
-  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link" data-scroll-target="#topic-modeling"><span class="header-section-number">24.3</span> Topic Modeling</a></li>
-  <li><a href="#natural-language-processing" id="toc-natural-language-processing" class="nav-link" data-scroll-target="#natural-language-processing"><span class="header-section-number">24.4</span> Natural Language Processing</a>
+  <li><a href="#topic-modeling" id="toc-topic-modeling" class="nav-link" data-scroll-target="#topic-modeling"><span class="header-section-number">26.3</span> Topic Modeling</a></li>
+  <li><a href="#natural-language-processing" id="toc-natural-language-processing" class="nav-link" data-scroll-target="#natural-language-processing"><span class="header-section-number">26.4</span> Natural Language Processing</a>
   <ul class="collapse">
-  <li><a href="#key-challenge" id="toc-key-challenge" class="nav-link" data-scroll-target="#key-challenge"><span class="header-section-number">24.4.1</span> Key Challenge</a></li>
+  <li><a href="#key-challenge" id="toc-key-challenge" class="nav-link" data-scroll-target="#key-challenge"><span class="header-section-number">26.4.1</span> Key Challenge</a></li>
   </ul></li>
-  <li><a href="#vocabulary-tidy-data" id="toc-vocabulary-tidy-data" class="nav-link" data-scroll-target="#vocabulary-tidy-data"><span class="header-section-number">24.5</span> Vocabulary &amp; Tidy Data</a></li>
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">24.6</span> Example 1</a>
+  <li><a href="#vocabulary-tidy-data" id="toc-vocabulary-tidy-data" class="nav-link" data-scroll-target="#vocabulary-tidy-data"><span class="header-section-number">26.5</span> Vocabulary &amp; Tidy Data</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">26.6</span> Example 1</a>
   <ul class="collapse">
-  <li><a href="#approach-1" id="toc-approach-1" class="nav-link" data-scroll-target="#approach-1"><span class="header-section-number">24.6.1</span> Approach 1</a></li>
-  <li><a href="#approach-2" id="toc-approach-2" class="nav-link" data-scroll-target="#approach-2"><span class="header-section-number">24.6.2</span> Approach 2</a></li>
-  <li><a href="#approach-3" id="toc-approach-3" class="nav-link" data-scroll-target="#approach-3"><span class="header-section-number">24.6.3</span> Approach 3</a></li>
+  <li><a href="#approach-1" id="toc-approach-1" class="nav-link" data-scroll-target="#approach-1"><span class="header-section-number">26.6.1</span> Approach 1</a></li>
+  <li><a href="#approach-2" id="toc-approach-2" class="nav-link" data-scroll-target="#approach-2"><span class="header-section-number">26.6.2</span> Approach 2</a></li>
+  <li><a href="#approach-3" id="toc-approach-3" class="nav-link" data-scroll-target="#approach-3"><span class="header-section-number">26.6.3</span> Approach 3</a></li>
   </ul></li>
-  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">24.7</span> Example 2</a></li>
-  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">24.8</span> Resources</a></li>
+  <li><a href="#example-2" id="toc-example-2" class="nav-link" data-scroll-target="#example-2"><span class="header-section-number">26.7</span> Example 2</a></li>
+  <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">26.8</span> Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -420,7 +432,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></h1>
+<h1 class="title"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Analysis</span></h1>
 </div>
 
 
@@ -442,8 +454,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 <p><img src=".png" class="img-fluid"></p>
-<section id="motivation" class="level2" data-number="24.1">
-<h2 data-number="24.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">24.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="26.1">
+<h2 data-number="26.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">26.1</span> Motivation</h2>
 <p>Before providing motivation, let’s define two key terms.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -472,36 +484,36 @@ Text analysis
 </div>
 </div>
 <p>Text analysis has broad applications that extend well beyond policy analysis. We will briefly focus on four applications that are related to policy analysis.</p>
-<section id="document-summarization" class="level3" data-number="24.1.1">
-<h3 data-number="24.1.1" class="anchored" data-anchor-id="document-summarization"><span class="header-section-number">24.1.1</span> 1. Document Summarization</h3>
+<section id="document-summarization" class="level3" data-number="26.1.1">
+<h3 data-number="26.1.1" class="anchored" data-anchor-id="document-summarization"><span class="header-section-number">26.1.1</span> 1. Document Summarization</h3>
 <p>The process of condensing the amount of information in a document into a useful subset of information. Techniques range from counting words to using complex machine learning algorithms.</p>
 <p><strong>Example:</strong> Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. (<a href="https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/">blog</a>) Before estimating any models, they spent months cutting out each word of the Federalist Papers and the counting the frequency of words.</p>
 </section>
-<section id="text-classification-supervised" class="level3" data-number="24.1.2">
-<h3 data-number="24.1.2" class="anchored" data-anchor-id="text-classification-supervised"><span class="header-section-number">24.1.2</span> 2. Text Classification (supervised)</h3>
+<section id="text-classification-supervised" class="level3" data-number="26.1.2">
+<h3 data-number="26.1.2" class="anchored" data-anchor-id="text-classification-supervised"><span class="header-section-number">26.1.2</span> 2. Text Classification (supervised)</h3>
 <p>The process of labeling documents with a predetermined set of labels.</p>
 <p><strong>Example:</strong> Researchers in the Justice Policy Center at the Urban Institute classified millions of tweets with the word “cop” or “police” as “positive”, “negative”, “neutral”, or “not applicable” for sentiment and “crime or incident information”, “department or event information”, “traffic or weather updates”, “person identification”, or “other” for topic. The researchers created content and metadata features, manually labeled a few thousand tweets for training data, and used gradient boosting for supervised machine learning for the task. (<a href="https://medium.com/@urban_institute/how-to-categorize-large-amounts-of-text-data-71e1fd590e2a">blog</a>)</p>
 <p><strong>Example:</strong> Frederick Mosteller and David Wallace used Bayesian statistics and the frequency of certain words to identify the authorship of the twelve unclaimed Federalist papers. (<a href="https://priceonomics.com/how-statistics-solved-a-175-year-old-mystery-about/">blog</a>)</p>
 </section>
-<section id="document-grouping-unsupervised" class="level3" data-number="24.1.3">
-<h3 data-number="24.1.3" class="anchored" data-anchor-id="document-grouping-unsupervised"><span class="header-section-number">24.1.3</span> 3. Document Grouping (unsupervised)</h3>
+<section id="document-grouping-unsupervised" class="level3" data-number="26.1.3">
+<h3 data-number="26.1.3" class="anchored" data-anchor-id="document-grouping-unsupervised"><span class="header-section-number">26.1.3</span> 3. Document Grouping (unsupervised)</h3>
 <p>The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. Techniques like topic modeling result in lists of important words that can be used to summarize and label the documents while techniques like K-means clustering result in arbitrary cluster labels.</p>
 <p><strong>Example:</strong> Pew Research used <em>unsupervised</em> and <em>semi-supervised</em> methods to create topic models of open-ended text responses about where Americans find meaning in their lives. (<a href="https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455">blog</a>)</p>
 </section>
-<section id="text-extraction" class="level3" data-number="24.1.4">
-<h3 data-number="24.1.4" class="anchored" data-anchor-id="text-extraction"><span class="header-section-number">24.1.4</span> 4. Text Extraction</h3>
+<section id="text-extraction" class="level3" data-number="26.1.4">
+<h3 data-number="26.1.4" class="anchored" data-anchor-id="text-extraction"><span class="header-section-number">26.1.4</span> 4. Text Extraction</h3>
 <p>Text often contains important unstructured information that would be useful to have in a structured format like a table. Text extraction is the process of searching and identifying key entities or concepts from unstructured text and then placing them in a structured format.</p>
 <p><strong>Example:</strong> Researchers from Cornell counted sources of misinformation from 38 million articles. <a href="https://www.nytimes.com/2020/09/30/us/politics/trump-coronavirus-misinformation.html?referringSource=articleShare">NYTimes</a>. <a href="https://int.nyt.com/data/documenttools/evanega-et-al-coronavirus-misinformation-submitted-07-23-20-1/080839ac0c22bca8/full.pdf">Methodology</a>.</p>
 </section>
-<section id="other" class="level3" data-number="24.1.5">
-<h3 data-number="24.1.5" class="anchored" data-anchor-id="other"><span class="header-section-number">24.1.5</span> Other</h3>
+<section id="other" class="level3" data-number="26.1.5">
+<h3 data-number="26.1.5" class="anchored" data-anchor-id="other"><span class="header-section-number">26.1.5</span> Other</h3>
 <p>Speech recognition, machine translation, question answering, and text autocompletion are other forms of text analysis and language processing that are common but not implemented with R packages.</p>
 </section>
 </section>
-<section id="tools" class="level2" data-number="24.2">
-<h2 data-number="24.2" class="anchored" data-anchor-id="tools"><span class="header-section-number">24.2</span> Tools</h2>
-<section id="frequency" class="level3" data-number="24.2.1">
-<h3 data-number="24.2.1" class="anchored" data-anchor-id="frequency"><span class="header-section-number">24.2.1</span> Frequency</h3>
+<section id="tools" class="level2" data-number="26.2">
+<h2 data-number="26.2" class="anchored" data-anchor-id="tools"><span class="header-section-number">26.2</span> Tools</h2>
+<section id="frequency" class="level3" data-number="26.2.1">
+<h3 data-number="26.2.1" class="anchored" data-anchor-id="frequency"><span class="header-section-number">26.2.1</span> Frequency</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -546,8 +558,8 @@ Word cloud
 </div>
 <p>Word clouds are overused and are tough to interpret. <a href="https://news.gallup.com/poll/195596/email-dominates-americans-heard-clinton.aspx">This 2016 election word cloud</a> by Gallup is an exceptional word cloud.</p>
 </section>
-<section id="collocation" class="level3" data-number="24.2.2">
-<h3 data-number="24.2.2" class="anchored" data-anchor-id="collocation"><span class="header-section-number">24.2.2</span> Collocation</h3>
+<section id="collocation" class="level3" data-number="26.2.2">
+<h3 data-number="26.2.2" class="anchored" data-anchor-id="collocation"><span class="header-section-number">26.2.2</span> Collocation</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -602,8 +614,8 @@ Bigram graph
 </div>
 </section>
 </section>
-<section id="topic-modeling" class="level2" data-number="24.3">
-<h2 data-number="24.3" class="anchored" data-anchor-id="topic-modeling"><span class="header-section-number">24.3</span> Topic Modeling</h2>
+<section id="topic-modeling" class="level2" data-number="26.3">
+<h2 data-number="26.3" class="anchored" data-anchor-id="topic-modeling"><span class="header-section-number">26.3</span> Topic Modeling</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -624,8 +636,8 @@ Topic modeling
 </div>
 </div>
 </section>
-<section id="natural-language-processing" class="level2" data-number="24.4">
-<h2 data-number="24.4" class="anchored" data-anchor-id="natural-language-processing"><span class="header-section-number">24.4</span> Natural Language Processing</h2>
+<section id="natural-language-processing" class="level2" data-number="26.4">
+<h2 data-number="26.4" class="anchored" data-anchor-id="natural-language-processing"><span class="header-section-number">26.4</span> Natural Language Processing</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -691,14 +703,14 @@ Lemmatization
 <p>The process of shortening words to a base grammar.</p>
 </div>
 </div>
-<section id="key-challenge" class="level3" data-number="24.4.1">
-<h3 data-number="24.4.1" class="anchored" data-anchor-id="key-challenge"><span class="header-section-number">24.4.1</span> Key Challenge</h3>
+<section id="key-challenge" class="level3" data-number="26.4.1">
+<h3 data-number="26.4.1" class="anchored" data-anchor-id="key-challenge"><span class="header-section-number">26.4.1</span> Key Challenge</h3>
 <p><code>R</code> and <code>Python</code> have powerful tools for text analysis.</p>
 <p><strong>Key challenge:</strong> text contains a lot of useful information but its structure does not match how we have done data analysis up to this point.</p>
 </section>
 </section>
-<section id="vocabulary-tidy-data" class="level2" data-number="24.5">
-<h2 data-number="24.5" class="anchored" data-anchor-id="vocabulary-tidy-data"><span class="header-section-number">24.5</span> Vocabulary &amp; Tidy Data</h2>
+<section id="vocabulary-tidy-data" class="level2" data-number="26.5">
+<h2 data-number="26.5" class="anchored" data-anchor-id="vocabulary-tidy-data"><span class="header-section-number">26.5</span> Vocabulary &amp; Tidy Data</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(gutenbergr)</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
@@ -893,8 +905,8 @@ Tidy text
 </div>
 </div>
 </section>
-<section id="example-1" class="level2" data-number="24.6">
-<h2 data-number="24.6" class="anchored" data-anchor-id="example-1"><span class="header-section-number">24.6</span> Example 1</h2>
+<section id="example-1" class="level2" data-number="26.6">
+<h2 data-number="26.6" class="anchored" data-anchor-id="example-1"><span class="header-section-number">26.6</span> Example 1</h2>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># load necessary packages</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a><span class="fu">library</span>(tidyverse)</span>
@@ -940,8 +952,8 @@ Tidy text
 <span id="cb12-42"><a href="#cb12-42"></a>    )</span>
 <span id="cb12-43"><a href="#cb12-43"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<section id="approach-1" class="level3" data-number="24.6.1">
-<h3 data-number="24.6.1" class="anchored" data-anchor-id="approach-1"><span class="header-section-number">24.6.1</span> Approach 1</h3>
+<section id="approach-1" class="level3" data-number="26.6.1">
+<h3 data-number="26.6.1" class="anchored" data-anchor-id="approach-1"><span class="header-section-number">26.6.1</span> Approach 1</h3>
 <p>Here we’ll calculate term frequency without stop words and with stemming.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># filter to main authors</span></span>
@@ -995,8 +1007,8 @@ Tidy text
 </div>
 </div>
 </section>
-<section id="approach-2" class="level3" data-number="24.6.2">
-<h3 data-number="24.6.2" class="anchored" data-anchor-id="approach-2"><span class="header-section-number">24.6.2</span> Approach 2</h3>
+<section id="approach-2" class="level3" data-number="26.6.2">
+<h3 data-number="26.6.2" class="anchored" data-anchor-id="approach-2"><span class="header-section-number">26.6.2</span> Approach 2</h3>
 <p>Here we’ll perform TF-IDF.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># calculate tf-idf</span></span>
@@ -1020,8 +1032,8 @@ Tidy text
 </div>
 </div>
 </section>
-<section id="approach-3" class="level3" data-number="24.6.3">
-<h3 data-number="24.6.3" class="anchored" data-anchor-id="approach-3"><span class="header-section-number">24.6.3</span> Approach 3</h3>
+<section id="approach-3" class="level3" data-number="26.6.3">
+<h3 data-number="26.6.3" class="anchored" data-anchor-id="approach-3"><span class="header-section-number">26.6.3</span> Approach 3</h3>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>tidy_fed_papers <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">count</span>(author, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
@@ -1038,8 +1050,8 @@ Tidy text
 </div>
 </section>
 </section>
-<section id="example-2" class="level2" data-number="24.7">
-<h2 data-number="24.7" class="anchored" data-anchor-id="example-2"><span class="header-section-number">24.7</span> Example 2</h2>
+<section id="example-2" class="level2" data-number="26.7">
+<h2 data-number="26.7" class="anchored" data-anchor-id="example-2"><span class="header-section-number">26.7</span> Example 2</h2>
 <p>Let’s consider ten of Shakespeare’s plays.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
@@ -1127,8 +1139,8 @@ Tidy text
 </div>
 </div>
 </section>
-<section id="resources" class="level2" data-number="24.8">
-<h2 data-number="24.8" class="anchored" data-anchor-id="resources"><span class="header-section-number">24.8</span> Resources</h2>
+<section id="resources" class="level2" data-number="26.8">
+<h2 data-number="26.8" class="anchored" data-anchor-id="resources"><span class="header-section-number">26.8</span> Resources</h2>
 <ul>
 <li><a href="https://www.nber.org/digest-202012/corporate-reporting-era-artificial-intelligence">Corporate Reporting in the Era of Artificial Intelligence</a></li>
 <li><a href="https://www.tidytextmining.com/">Text Mining with R</a> by Julia Silge and David Robinson</li>
@@ -1376,12 +1388,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./30_geospatial.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./29_text-modeling.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Text Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

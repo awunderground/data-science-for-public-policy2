@@ -45,8 +45,8 @@ book:
         # - interpretable-models.qmd (chapter 24)
     - part: Unsupervised Machine Learning
       chapters:
-        # - 25_dimension-reduction.qmd
-        # - 26_unsupervised-ml-cluster-analysis.qmd
+        - 25_dimension-reduction.qmd
+        - 26_unsupervised-ml-cluster-analysis.qmd
         - 27_advanced-unsupervised-ml.qmd 
     - part: Other Topics
       chapters:

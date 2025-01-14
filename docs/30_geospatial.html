@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 23&nbsp; Geospatial Analysis with sf</title>
+<title>Data Science for Public Policy - 25&nbsp; Geospatial Analysis with sf</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -111,7 +111,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./30_geospatial.html"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./30_geospatial.html"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -334,8 +334,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <ul id="quarto-sidebar-section-6" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
+  <a href="./25_dimension-reduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Dimension Reduction</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./26_unsupervised-ml-cluster-analysis.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Cluster Analysis</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -352,19 +364,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -385,38 +397,38 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">23.1</span> Motivation</a></li>
-  <li><a href="#librarysf-and-geospatial-data" id="toc-librarysf-and-geospatial-data" class="nav-link" data-scroll-target="#librarysf-and-geospatial-data"><span class="header-section-number">23.2</span> <code>library(sf)</code> and geospatial data</a>
+  <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">25.1</span> Motivation</a></li>
+  <li><a href="#librarysf-and-geospatial-data" id="toc-librarysf-and-geospatial-data" class="nav-link" data-scroll-target="#librarysf-and-geospatial-data"><span class="header-section-number">25.2</span> <code>library(sf)</code> and geospatial data</a>
   <ul class="collapse">
-  <li><a href="#points" id="toc-points" class="nav-link" data-scroll-target="#points"><span class="header-section-number">23.2.1</span> Points</a></li>
-  <li><a href="#linestrings" id="toc-linestrings" class="nav-link" data-scroll-target="#linestrings"><span class="header-section-number">23.2.2</span> Linestrings</a></li>
-  <li><a href="#polygons" id="toc-polygons" class="nav-link" data-scroll-target="#polygons"><span class="header-section-number">23.2.3</span> Polygons</a></li>
-  <li><a href="#multi-geometries" id="toc-multi-geometries" class="nav-link" data-scroll-target="#multi-geometries"><span class="header-section-number">23.2.4</span> Multi-Geometries</a></li>
+  <li><a href="#points" id="toc-points" class="nav-link" data-scroll-target="#points"><span class="header-section-number">25.2.1</span> Points</a></li>
+  <li><a href="#linestrings" id="toc-linestrings" class="nav-link" data-scroll-target="#linestrings"><span class="header-section-number">25.2.2</span> Linestrings</a></li>
+  <li><a href="#polygons" id="toc-polygons" class="nav-link" data-scroll-target="#polygons"><span class="header-section-number">25.2.3</span> Polygons</a></li>
+  <li><a href="#multi-geometries" id="toc-multi-geometries" class="nav-link" data-scroll-target="#multi-geometries"><span class="header-section-number">25.2.4</span> Multi-Geometries</a></li>
   </ul></li>
-  <li><a href="#geom_sf" id="toc-geom_sf" class="nav-link" data-scroll-target="#geom_sf"><span class="header-section-number">23.3</span> <code>geom_sf()</code></a></li>
-  <li><a href="#getting-and-loading-spatial-data" id="toc-getting-and-loading-spatial-data" class="nav-link" data-scroll-target="#getting-and-loading-spatial-data"><span class="header-section-number">23.4</span> Getting and loading spatial data</a>
+  <li><a href="#geom_sf" id="toc-geom_sf" class="nav-link" data-scroll-target="#geom_sf"><span class="header-section-number">25.3</span> <code>geom_sf()</code></a></li>
+  <li><a href="#getting-and-loading-spatial-data" id="toc-getting-and-loading-spatial-data" class="nav-link" data-scroll-target="#getting-and-loading-spatial-data"><span class="header-section-number">25.4</span> Getting and loading spatial data</a>
   <ul class="collapse">
-  <li><a href="#shapefiles" id="toc-shapefiles" class="nav-link" data-scroll-target="#shapefiles"><span class="header-section-number">23.4.1</span> Shapefiles</a></li>
-  <li><a href="#geojson" id="toc-geojson" class="nav-link" data-scroll-target="#geojson"><span class="header-section-number">23.4.2</span> GeoJSON</a></li>
-  <li><a href="#csv-files" id="toc-csv-files" class="nav-link" data-scroll-target="#csv-files"><span class="header-section-number">23.4.3</span> .csv files</a></li>
-  <li><a href="#librarytigris" id="toc-librarytigris" class="nav-link" data-scroll-target="#librarytigris"><span class="header-section-number">23.4.4</span> <code>library(tigris)</code></a></li>
-  <li><a href="#librarytidycensus" id="toc-librarytidycensus" class="nav-link" data-scroll-target="#librarytidycensus"><span class="header-section-number">23.4.5</span> <code>library(tidycensus)</code></a></li>
+  <li><a href="#shapefiles" id="toc-shapefiles" class="nav-link" data-scroll-target="#shapefiles"><span class="header-section-number">25.4.1</span> Shapefiles</a></li>
+  <li><a href="#geojson" id="toc-geojson" class="nav-link" data-scroll-target="#geojson"><span class="header-section-number">25.4.2</span> GeoJSON</a></li>
+  <li><a href="#csv-files" id="toc-csv-files" class="nav-link" data-scroll-target="#csv-files"><span class="header-section-number">25.4.3</span> .csv files</a></li>
+  <li><a href="#librarytigris" id="toc-librarytigris" class="nav-link" data-scroll-target="#librarytigris"><span class="header-section-number">25.4.4</span> <code>library(tigris)</code></a></li>
+  <li><a href="#librarytidycensus" id="toc-librarytidycensus" class="nav-link" data-scroll-target="#librarytidycensus"><span class="header-section-number">25.4.5</span> <code>library(tidycensus)</code></a></li>
   </ul></li>
-  <li><a href="#choropleths" id="toc-choropleths" class="nav-link" data-scroll-target="#choropleths"><span class="header-section-number">23.5</span> Choropleths</a></li>
-  <li><a href="#spatial-concepts" id="toc-spatial-concepts" class="nav-link" data-scroll-target="#spatial-concepts"><span class="header-section-number">23.6</span> Spatial concepts</a>
+  <li><a href="#choropleths" id="toc-choropleths" class="nav-link" data-scroll-target="#choropleths"><span class="header-section-number">25.5</span> Choropleths</a></li>
+  <li><a href="#spatial-concepts" id="toc-spatial-concepts" class="nav-link" data-scroll-target="#spatial-concepts"><span class="header-section-number">25.6</span> Spatial concepts</a>
   <ul class="collapse">
-  <li><a href="#popular-projections" id="toc-popular-projections" class="nav-link" data-scroll-target="#popular-projections"><span class="header-section-number">23.6.1</span> Popular projections</a></li>
+  <li><a href="#popular-projections" id="toc-popular-projections" class="nav-link" data-scroll-target="#popular-projections"><span class="header-section-number">25.6.1</span> Popular projections</a></li>
   </ul></li>
-  <li><a href="#spatial-operations" id="toc-spatial-operations" class="nav-link" data-scroll-target="#spatial-operations"><span class="header-section-number">23.7</span> Spatial operations</a>
+  <li><a href="#spatial-operations" id="toc-spatial-operations" class="nav-link" data-scroll-target="#spatial-operations"><span class="header-section-number">25.7</span> Spatial operations</a>
   <ul class="collapse">
-  <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation"><span class="header-section-number">23.7.1</span> Aggregation</a></li>
-  <li><a href="#spatial-joins" id="toc-spatial-joins" class="nav-link" data-scroll-target="#spatial-joins"><span class="header-section-number">23.7.2</span> Spatial Joins</a></li>
-  <li><a href="#buffers" id="toc-buffers" class="nav-link" data-scroll-target="#buffers"><span class="header-section-number">23.7.3</span> Buffers</a></li>
-  <li><a href="#distances" id="toc-distances" class="nav-link" data-scroll-target="#distances"><span class="header-section-number">23.7.4</span> Distances</a></li>
+  <li><a href="#aggregation" id="toc-aggregation" class="nav-link" data-scroll-target="#aggregation"><span class="header-section-number">25.7.1</span> Aggregation</a></li>
+  <li><a href="#spatial-joins" id="toc-spatial-joins" class="nav-link" data-scroll-target="#spatial-joins"><span class="header-section-number">25.7.2</span> Spatial Joins</a></li>
+  <li><a href="#buffers" id="toc-buffers" class="nav-link" data-scroll-target="#buffers"><span class="header-section-number">25.7.3</span> Buffers</a></li>
+  <li><a href="#distances" id="toc-distances" class="nav-link" data-scroll-target="#distances"><span class="header-section-number">25.7.4</span> Distances</a></li>
   </ul></li>
-  <li><a href="#geospatial-modeling" id="toc-geospatial-modeling" class="nav-link" data-scroll-target="#geospatial-modeling"><span class="header-section-number">23.8</span> Geospatial modeling</a></li>
-  <li><a href="#parting-thoughts" id="toc-parting-thoughts" class="nav-link" data-scroll-target="#parting-thoughts"><span class="header-section-number">23.9</span> Parting Thoughts</a></li>
-  <li><a href="#more-resources" id="toc-more-resources" class="nav-link" data-scroll-target="#more-resources"><span class="header-section-number">23.10</span> More Resources</a></li>
+  <li><a href="#geospatial-modeling" id="toc-geospatial-modeling" class="nav-link" data-scroll-target="#geospatial-modeling"><span class="header-section-number">25.8</span> Geospatial modeling</a></li>
+  <li><a href="#parting-thoughts" id="toc-parting-thoughts" class="nav-link" data-scroll-target="#parting-thoughts"><span class="header-section-number">25.9</span> Parting Thoughts</a></li>
+  <li><a href="#more-resources" id="toc-more-resources" class="nav-link" data-scroll-target="#more-resources"><span class="header-section-number">25.10</span> More Resources</a></li>
   </ul>
 </nav>
     </div>
@@ -425,7 +437,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></h1>
+<h1 class="title"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></h1>
 </div>
 
 
@@ -452,8 +464,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <figcaption class="figure-caption">The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.</figcaption>
 </figure>
 </div>
-<section id="motivation" class="level2" data-number="23.1">
-<h2 data-number="23.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">23.1</span> Motivation</h2>
+<section id="motivation" class="level2" data-number="25.1">
+<h2 data-number="25.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">25.1</span> Motivation</h2>
 <ul>
 <li>Many data are inherently spatial. We need tools to manipulate, explore, communicate, and model spatial data.</li>
 <li>Point-and-click tools suffer many of the drawbacks outlined in earlier note sets.</li>
@@ -461,8 +473,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Everyone loves maps.</li>
 </ul>
 </section>
-<section id="librarysf-and-geospatial-data" class="level2" data-number="23.2">
-<h2 data-number="23.2" class="anchored" data-anchor-id="librarysf-and-geospatial-data"><span class="header-section-number">23.2</span> <code>library(sf)</code> and geospatial data</h2>
+<section id="librarysf-and-geospatial-data" class="level2" data-number="25.2">
+<h2 data-number="25.2" class="anchored" data-anchor-id="librarysf-and-geospatial-data"><span class="header-section-number">25.2</span> <code>library(sf)</code> and geospatial data</h2>
 <p>Geospatial data are multidimensional. The outline of a simple rectangular state like Kansas may have a few vertices and a complex state like West Virginia may have many more vertices. Furthermore, geospatial data have auxiliary information about bounding boxes and projections. Fortunately, <code>library(sf)</code> can store all of this information in a rectangular tibble that works well with <code>library(dplyr)</code> and <code>library(ggplot2)</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -565,8 +577,8 @@ Note
 <p>If you are dead-set on dropping a geometry column, you can use <code>sf::st_drop_geometry()</code> which returns a data.frame.</p>
 </div>
 </div>
-<section id="points" class="level3" data-number="23.2.1">
-<h3 data-number="23.2.1" class="anchored" data-anchor-id="points"><span class="header-section-number">23.2.1</span> Points</h3>
+<section id="points" class="level3" data-number="25.2.1">
+<h3 data-number="25.2.1" class="anchored" data-anchor-id="points"><span class="header-section-number">25.2.1</span> Points</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -595,8 +607,8 @@ Points
 </div>
 </div>
 </section>
-<section id="linestrings" class="level3" data-number="23.2.2">
-<h3 data-number="23.2.2" class="anchored" data-anchor-id="linestrings"><span class="header-section-number">23.2.2</span> Linestrings</h3>
+<section id="linestrings" class="level3" data-number="25.2.2">
+<h3 data-number="25.2.2" class="anchored" data-anchor-id="linestrings"><span class="header-section-number">25.2.2</span> Linestrings</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -631,8 +643,8 @@ Linestrings
 </div>
 </div>
 </section>
-<section id="polygons" class="level3" data-number="23.2.3">
-<h3 data-number="23.2.3" class="anchored" data-anchor-id="polygons"><span class="header-section-number">23.2.3</span> Polygons</h3>
+<section id="polygons" class="level3" data-number="25.2.3">
+<h3 data-number="25.2.3" class="anchored" data-anchor-id="polygons"><span class="header-section-number">25.2.3</span> Polygons</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -664,8 +676,8 @@ Polygons
 </div>
 </div>
 </section>
-<section id="multi-geometries" class="level3" data-number="23.2.4">
-<h3 data-number="23.2.4" class="anchored" data-anchor-id="multi-geometries"><span class="header-section-number">23.2.4</span> Multi-Geometries</h3>
+<section id="multi-geometries" class="level3" data-number="25.2.4">
+<h3 data-number="25.2.4" class="anchored" data-anchor-id="multi-geometries"><span class="header-section-number">25.2.4</span> Multi-Geometries</h3>
 <p>In practice, many records in a sf dataframe do not have type <code>LINE</code>, <code>POINT</code> or <code>POLYGON</code>, but rather have type <code>MULTIPOINT</code>, <code>MULTILINE</code> or <code>MULTIPOLYGON</code>. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively.</p>
 <p>Consider the example of California. California is a single state, so, in the <code>states</code> sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the <code>MULTIPOLYGON</code> type is most well-suited for representing it.</p>
 <p><code>library(sf)</code> can represent 18 geometry types. To read about the 12 we do not mention, read the <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a>.</p>
@@ -673,8 +685,8 @@ Polygons
 <p><code>library(sf)</code> implements simple features in R and introduces <code>sf</code> data.</p>
 </section>
 </section>
-<section id="geom_sf" class="level2" data-number="23.3">
-<h2 data-number="23.3" class="anchored" data-anchor-id="geom_sf"><span class="header-section-number">23.3</span> <code>geom_sf()</code></h2>
+<section id="geom_sf" class="level2" data-number="25.3">
+<h2 data-number="25.3" class="anchored" data-anchor-id="geom_sf"><span class="header-section-number">25.3</span> <code>geom_sf()</code></h2>
 <p><code>geom_sf()</code> plots <code>sf</code> data. The function automatically references the <code>geometry</code> column and does not require any aesthetic mappings. <code>geom_sf()</code> works well with layers and it is simple to combine point, line, and polygon data.</p>
 <p><code>geom_sf()</code> works like <code>geom_point()</code> for point data, <code>geom_line()</code> for linestring data, and <code>geom_area()</code> for polygon data (e.g.&nbsp;the <code>fill</code> argument controls the color of shapes and color controls the border colors of shapes for polygons).</p>
 <div class="cell">
@@ -702,10 +714,10 @@ Polygons
 </div>
 </div>
 </section>
-<section id="getting-and-loading-spatial-data" class="level2" data-number="23.4">
-<h2 data-number="23.4" class="anchored" data-anchor-id="getting-and-loading-spatial-data"><span class="header-section-number">23.4</span> Getting and loading spatial data</h2>
-<section id="shapefiles" class="level3" data-number="23.4.1">
-<h3 data-number="23.4.1" class="anchored" data-anchor-id="shapefiles"><span class="header-section-number">23.4.1</span> Shapefiles</h3>
+<section id="getting-and-loading-spatial-data" class="level2" data-number="25.4">
+<h2 data-number="25.4" class="anchored" data-anchor-id="getting-and-loading-spatial-data"><span class="header-section-number">25.4</span> Getting and loading spatial data</h2>
+<section id="shapefiles" class="level3" data-number="25.4.1">
+<h3 data-number="25.4.1" class="anchored" data-anchor-id="shapefiles"><span class="header-section-number">25.4.1</span> Shapefiles</h3>
 <p>Shapefiles are a proprietary file format created by ESRI, the company that creates ArcGIS. Shapefiles are popular because ESRI dominated the GIS space for a long time. A shapefile is actually usually three or more binary files.</p>
 <p><code>st_read()</code> reads shapefiles into R in the <code>sf</code> format. Simply point the function to the file ending in <code>.shp</code>.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -722,13 +734,13 @@ Note
 </div>
 </div>
 </section>
-<section id="geojson" class="level3" data-number="23.4.2">
-<h3 data-number="23.4.2" class="anchored" data-anchor-id="geojson"><span class="header-section-number">23.4.2</span> GeoJSON</h3>
+<section id="geojson" class="level3" data-number="25.4.2">
+<h3 data-number="25.4.2" class="anchored" data-anchor-id="geojson"><span class="header-section-number">25.4.2</span> GeoJSON</h3>
 <p>.geojson is an open source file type for storing geospatial data. It is plain text, which means it plays well with version control.</p>
 <p><code>st_read()</code> also reads GeoJSON data. Point the function at a file ending in .geojson to read the data.</p>
 </section>
-<section id="csv-files" class="level3" data-number="23.4.3">
-<h3 data-number="23.4.3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">23.4.3</span> .csv files</h3>
+<section id="csv-files" class="level3" data-number="25.4.3">
+<h3 data-number="25.4.3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">25.4.3</span> .csv files</h3>
 <p>Lots of geographic information is stored in .csv files–especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with <code>read_csv()</code>. Second, use <code>st_as_sf()</code> to convert the tibble into an sf object and specify the columns with longitude and latitude with the <code>coords</code> argument:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -745,8 +757,8 @@ Note
 </div>
 </div>
 </section>
-<section id="librarytigris" class="level3" data-number="23.4.4">
-<h3 data-number="23.4.4" class="anchored" data-anchor-id="librarytigris"><span class="header-section-number">23.4.4</span> <code>library(tigris)</code></h3>
+<section id="librarytigris" class="level3" data-number="25.4.4">
+<h3 data-number="25.4.4" class="anchored" data-anchor-id="librarytigris"><span class="header-section-number">25.4.4</span> <code>library(tigris)</code></h3>
 <p><a href="https://github.com/walkerke/tigris"><code>library(tigris)</code></a> is an exceptional package that downloads and provides TIGER/Line shapefiles from the US Census Bureau. TIGER stands for Topologically Integrated Geographic Encoding and Referencing.</p>
 <p>The package provides lots of data with simple functions (<a href="https://github.com/walkerke/tigris">full list here</a>) like <code>counties()</code> to access counties, <code>tracts()</code> to access census tracts, and <code>roads()</code> to access roads. The <code>state</code> and <code>county</code> arguments accept names and FIPS codes.</p>
 <p><code>library(tigris)</code> has a new <code>shift</code> option that elides Alaska and Hawaii next to the Continental United States.</p>
@@ -857,8 +869,8 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 </div>
 </div>
 </section>
-<section id="librarytidycensus" class="level3" data-number="23.4.5">
-<h3 data-number="23.4.5" class="anchored" data-anchor-id="librarytidycensus"><span class="header-section-number">23.4.5</span> <code>library(tidycensus)</code></h3>
+<section id="librarytidycensus" class="level3" data-number="25.4.5">
+<h3 data-number="25.4.5" class="anchored" data-anchor-id="librarytidycensus"><span class="header-section-number">25.4.5</span> <code>library(tidycensus)</code></h3>
 <p><a href="https://walker-data.com/tidycensus/articles/spatial-data.html"><code>library(tidycensus)</code></a>, which was created by the creator of <code>library(tigris)</code>, is also a valuable source of geographic data. Simply include <code>geometry = TRUE</code> in functions like <code>get_acs()</code> to pull the shapes data as <code>sf</code>. The <code>state</code> and <code>county</code> arguments accept names and FIPS codes.</p>
 <p><code>library(tidycensus)</code> sometimes requires the same Census API Key we used in the API tutorial (<a href="https://api.census.gov/data/key_signup.html">sign up here</a>). You should be able to install your API key into your version of R with <code>census_api_key("your-key-string", install = TRUE)</code>. To obtain your keystring, you can use <code>library(dotenv)</code> and <code>Sys.getenv(&lt;key name in .env file&gt;)</code>.</p>
 <p><code>library(tidycensus)</code> has two big differences from <code>library(tigris)</code>: 1. it can pull Census data with the geographic data, and 2. it only provides cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.</p>
@@ -886,8 +898,8 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p>Both <code>library(tigris)</code> and <code>library(tidycensus)</code> have a <code>year</code> parameter that determines the year of the data obtained in functions like <code>tidycensus::get_acs()</code> or <code>tigris::states()</code>. This parameter currently defaults to 2020 for <code>get_acs()</code> and <code>tigris</code> functions. <code>tidycensus::get_acs()</code> also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.</p>
 </section>
 </section>
-<section id="choropleths" class="level2" data-number="23.5">
-<h2 data-number="23.5" class="anchored" data-anchor-id="choropleths"><span class="header-section-number">23.5</span> Choropleths</h2>
+<section id="choropleths" class="level2" data-number="25.5">
+<h2 data-number="25.5" class="anchored" data-anchor-id="choropleths"><span class="header-section-number">25.5</span> Choropleths</h2>
 <p>Choropleths are maps that use fill to display the variation in a variable across geographies.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
@@ -918,8 +930,8 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 </div>
 </div>
 </section>
-<section id="spatial-concepts" class="level2" data-number="23.6">
-<h2 data-number="23.6" class="anchored" data-anchor-id="spatial-concepts"><span class="header-section-number">23.6</span> Spatial concepts</h2>
+<section id="spatial-concepts" class="level2" data-number="25.6">
+<h2 data-number="25.6" class="anchored" data-anchor-id="spatial-concepts"><span class="header-section-number">25.6</span> Spatial concepts</h2>
 <p>Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -973,8 +985,8 @@ Projection
 <p>A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into a two-dimensions.</p>
 </div>
 </div>
-<section id="popular-projections" class="level3" data-number="23.6.1">
-<h3 data-number="23.6.1" class="anchored" data-anchor-id="popular-projections"><span class="header-section-number">23.6.1</span> Popular projections</h3>
+<section id="popular-projections" class="level3" data-number="25.6.1">
+<h3 data-number="25.6.1" class="anchored" data-anchor-id="popular-projections"><span class="header-section-number">25.6.1</span> Popular projections</h3>
 <p>All projections are wrong, but all projections are wrong in different ways with different uses.</p>
 <p>Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Conic projections distort longitudes and latitudes but maintain areas. Azimuthal projections maintain distances but struggle to project large areas.</p>
 <section id="mercator-projection" class="level4">
@@ -983,7 +995,7 @@ Projection
 <div id="fig-mercator" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/mercator.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;23.1: Mercator</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;25.1: Mercator</figcaption>
 </figure>
 </div>
 <p>Source: <a href="https://www.britannica.com/science/Mercator-projection#/media/1/375638/231099">Encyclopædia Britannica</a></p>
@@ -994,7 +1006,7 @@ Projection
 <div id="fig-albers" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/albers.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;23.2: Albers</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;25.2: Albers</figcaption>
 </figure>
 </div>
 </section>
@@ -1004,7 +1016,7 @@ Projection
 <div id="fig-state-planes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/spcs83.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;23.3: State Planes</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;25.3: State Planes</figcaption>
 </figure>
 </div>
 <p>Source: <a href="https://geodesy.noaa.gov/SPCS/maps.shtml">NOAA</a></p>
@@ -1120,11 +1132,11 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </section>
 </section>
 </section>
-<section id="spatial-operations" class="level2" data-number="23.7">
-<h2 data-number="23.7" class="anchored" data-anchor-id="spatial-operations"><span class="header-section-number">23.7</span> Spatial operations</h2>
+<section id="spatial-operations" class="level2" data-number="25.7">
+<h2 data-number="25.7" class="anchored" data-anchor-id="spatial-operations"><span class="header-section-number">25.7</span> Spatial operations</h2>
 <p>We often want to manipulate spatial data or use spatial data for calculations. This section covers a few common operations.</p>
-<section id="aggregation" class="level3" data-number="23.7.1">
-<h3 data-number="23.7.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">23.7.1</span> Aggregation</h3>
+<section id="aggregation" class="level3" data-number="25.7.1">
+<h3 data-number="25.7.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">25.7.1</span> Aggregation</h3>
 <p>Sometimes we want to aggregate smaller geographies into larger geographies. This is simple with a <code>group_by()</code> and <code>summarize()</code> workflow. Suppose we want to combine North Dakota and South Dakota into Dakota.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># states to combine</span></span>
@@ -1146,8 +1158,8 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
 </div>
 </section>
-<section id="spatial-joins" class="level3" data-number="23.7.2">
-<h3 data-number="23.7.2" class="anchored" data-anchor-id="spatial-joins"><span class="header-section-number">23.7.2</span> Spatial Joins</h3>
+<section id="spatial-joins" class="level3" data-number="25.7.2">
+<h3 data-number="25.7.2" class="anchored" data-anchor-id="spatial-joins"><span class="header-section-number">25.7.2</span> Spatial Joins</h3>
 <p>Spatial joins are joins like <code>left_join()</code> but the join is based on geography instead of “by” variables. <strong>Note:</strong> both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many.</p>
 <p><code>st_join()</code> performs a left spatial join in R. <code>st_intersects</code> means observations will join if the geographies in <code>x</code> touch the geographies in <code>y</code>. The <code>sf</code> package offers a number of different geometric confirmations that can be used for spatial joins, such as <code>st_covered_by</code> (identifies if <code>x</code> is copletely within <code>y</code>), <code>st_within</code> (identifies if <code>x</code> is within a specified distance of <code>y</code>) and many more. The <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">sf cheat sheet</a> provides a good outline of the different options.</p>
 <p>Suppose we want to count the number of Amtrak stations in each state.</p>
@@ -1192,8 +1204,8 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
 </div>
 </section>
-<section id="buffers" class="level3" data-number="23.7.3">
-<h3 data-number="23.7.3" class="anchored" data-anchor-id="buffers"><span class="header-section-number">23.7.3</span> Buffers</h3>
+<section id="buffers" class="level3" data-number="25.7.3">
+<h3 data-number="25.7.3" class="anchored" data-anchor-id="buffers"><span class="header-section-number">25.7.3</span> Buffers</h3>
 <p>Adding buffers to points, lines, and polygons is useful for counting shapes near other shapes. For instance, we may want to count the number of housing units within 500 meters of a metro station or the number of schools more than 5 miles from a fire station.</p>
 <p>Suppose we want to count the number of Amtrak stations within 5 kilometers of each Amtrak station. We can buffer the Amtrak station points, join the unbuffered data to the buffered data, and then count.</p>
 <div class="cell">
@@ -1233,15 +1245,15 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
 </div>
 </section>
-<section id="distances" class="level3" data-number="23.7.4">
-<h3 data-number="23.7.4" class="anchored" data-anchor-id="distances"><span class="header-section-number">23.7.4</span> Distances</h3>
+<section id="distances" class="level3" data-number="25.7.4">
+<h3 data-number="25.7.4" class="anchored" data-anchor-id="distances"><span class="header-section-number">25.7.4</span> Distances</h3>
 <p>Euclidean distance is common for calculating straight line distances but does not make sense for calculating distances on the surface of an ellipsoid like Earth.</p>
 <p><span class="math display">\[d(\vec{p}, \vec{q}) = \sqrt{\sum_{i = 1}^n(q_i - p_i)^2}\]</span></p>
 <p>Instead, it is common to use Haversine distance which accounts for the curvature in the globe.</p>
 <div id="fig-haversine" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/haversine.png" class="img-fluid figure-img" style="width:70.0%"></p>
-<figcaption class="figure-caption">Figure&nbsp;23.4: Haversine Distance</figcaption>
+<figcaption class="figure-caption">Figure&nbsp;25.4: Haversine Distance</figcaption>
 </figure>
 </div>
 <p>Suppose we want to find the closest and furthest Amtrak stations from Washington DC’s Union Station.</p>
@@ -1285,8 +1297,8 @@ Projected CRS: NAD83 / Conus Albers
 </div>
 </section>
 </section>
-<section id="geospatial-modeling" class="level2" data-number="23.8">
-<h2 data-number="23.8" class="anchored" data-anchor-id="geospatial-modeling"><span class="header-section-number">23.8</span> Geospatial modeling</h2>
+<section id="geospatial-modeling" class="level2" data-number="25.8">
+<h2 data-number="25.8" class="anchored" data-anchor-id="geospatial-modeling"><span class="header-section-number">25.8</span> Geospatial modeling</h2>
 <p>Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.</p>
 <p>The assumption of independence often falls apart with spatial data. If number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn’t make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina.</p>
 <p>Spatial regression methods attempt to account for this dependence between observations.</p>
@@ -1310,14 +1322,14 @@ Spatial autocorrelation
 <li>If spatial autocorrelation exists, the use a spatial error model or a spatial lag model.</li>
 </ol>
 </section>
-<section id="parting-thoughts" class="level2" data-number="23.9">
-<h2 data-number="23.9" class="anchored" data-anchor-id="parting-thoughts"><span class="header-section-number">23.9</span> Parting Thoughts</h2>
+<section id="parting-thoughts" class="level2" data-number="25.9">
+<h2 data-number="25.9" class="anchored" data-anchor-id="parting-thoughts"><span class="header-section-number">25.9</span> Parting Thoughts</h2>
 <p>This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.</p>
 <p>Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. <a href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/">This website contains good example of raster data.</a></p>
 <p>This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend <em>Geocomputation with R</em> <span class="citation" data-cites="geocomp">(<a href="references.html#ref-geocomp" role="doc-biblioref"><strong>geocomp?</strong></a>)</span>. <a href="https://r-spatial.org/book/">Spatial Data Science</a> provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). <a href="https://geographicdata.science/book/intro.html">Geographical Data Science</a> is also a fantastic place to learn more, but note that it is written in Python.</p>
 </section>
-<section id="more-resources" class="level2" data-number="23.10">
-<h2 data-number="23.10" class="anchored" data-anchor-id="more-resources"><span class="header-section-number">23.10</span> More Resources</h2>
+<section id="more-resources" class="level2" data-number="25.10">
+<h2 data-number="25.10" class="anchored" data-anchor-id="more-resources"><span class="header-section-number">25.10</span> More Resources</h2>
 <ul>
 <li><a href="https://r.geocompx.org">Geocomputation with R</a></li>
 <li><a href="https://r-spatial.org/book/">Spatial Data Science</a></li>
@@ -1569,12 +1581,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./27_advanced-unsupervised-ml.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./28_text-analysis.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Analysis</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
