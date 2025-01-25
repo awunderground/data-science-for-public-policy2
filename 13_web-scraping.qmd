@@ -555,7 +555,6 @@ exercise_number <- exercise_number + 1
 
 ```{r}
 #| echo: false
-#| eval: false
 
 session <- bow(
   url = "https://en.wikipedia.org/wiki/2008_United_States_presidential_election",

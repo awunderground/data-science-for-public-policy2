@@ -381,7 +381,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#sec-transform" id="toc-sec-transform" class="nav-link" data-scroll-target="#sec-transform"><span class="header-section-number">3.4</span> Transform</a>
   <ul class="collapse">
   <li><a href="#sec-strings" id="toc-sec-strings" class="nav-link" data-scroll-target="#sec-strings"><span class="header-section-number">3.4.1</span> Strings</a></li>
-  <li><a href="#factors-sec-factors" id="toc-factors-sec-factors" class="nav-link" data-scroll-target="#factors-sec-factors"><span class="header-section-number">3.4.2</span> Factors {sec-factors}</a></li>
+  <li><a href="#sec-factors" id="toc-sec-factors" class="nav-link" data-scroll-target="#sec-factors"><span class="header-section-number">3.4.2</span> Factors</a></li>
   <li><a href="#sec-dates" id="toc-sec-dates" class="nav-link" data-scroll-target="#sec-dates"><span class="header-section-number">3.4.3</span> Dates and Date-Times</a></li>
   <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.4.4</span> Missing Data</a></li>
   </ul></li>
@@ -1254,10 +1254,20 @@ date (1): signing_date
 </div>
 </section>
 </section>
-<section id="factors-sec-factors" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="factors-sec-factors"><span class="header-section-number">3.4.2</span> Factors {sec-factors}</h3>
+<section id="sec-factors" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-factors"><span class="header-section-number">3.4.2</span> Factors</h3>
 <p>Check out the <a href="https://forcats.tidyverse.org/">forcats cheat sheet</a>.</p>
 <p>Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains <a href="https://r4ds.had.co.nz/vectors.html#augmented-vectors">augmented vectors</a> like factors.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Factors
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p>Factors are categorical data stored as integers with a levels attribute. Character vectors often work well for categorical data and many of R’s functions convert character vectors to factors. This happens with <code>lm()</code>.</p>
 <p>Factors have many applications:</p>
 <ol type="1">
@@ -1265,6 +1275,8 @@ date (1): signing_date
 <li>Running calculations on data with empty groups.</li>
 <li>Representing categorical outcome variables in classification models.</li>
 </ol>
+</div>
+</div>
 <section id="factor-basics" class="level4">
 <h4 class="anchored" data-anchor-id="factor-basics">Factor Basics</h4>
 <div class="cell">
@@ -1559,7 +1571,20 @@ $class
 <li>14/03/1992</li>
 <li>14th of March ’92</li>
 </ul>
-<p>One way of storing dates is the <strong>best</strong>. The <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date format is an international standard with appealing properties like fixed lengths and self ordering. The format is <code>YYYY-MM-DD</code>.</p>
+<p>One way of storing dates is the <strong>best</strong>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+ISO 8601 Date Standard
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The <a href="https://en.wikipedia.org/wiki/ISO_8601">ISO 8601</a> date format is an international standard with appealing properties like fixed lengths and self ordering. The format is <code>YYYY-MM-DD</code>.</p>
+</div>
+</div>
 <p><code>library(lubridate)</code> has useful functions that will take dates of any format and convert them to the ISO 8601 standard.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">library</span>(lubridate)</span>
@@ -1681,20 +1706,32 @@ $class
 <div class="cell">
 <div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 90684 days</code></pre>
+<pre><code>Time difference of 90785 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 130584960 mins</code></pre>
+<pre><code>Time difference of 130730400 mins</code></pre>
 </div>
 </div>
 </section>
 <section id="periods" class="level4">
 <h4 class="anchored" data-anchor-id="periods">Periods</h4>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Periods
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Periods</strong> track clock time or a calendar time. We use periods when we set a recurring meetings on a calendar and when we set an alarm to wake up in the morning.</p>
+</div>
+</div>
 <p>This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn’t true. Sometimes we add 366 days during leap years. For example,</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
@@ -1712,7 +1749,19 @@ $class
 </section>
 <section id="durations" class="level4">
 <h4 class="anchored" data-anchor-id="durations">Durations</h4>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Durations
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <p><strong>Durations</strong> track the passage of physical time in exact seconds. Durations are like sand falling into an hourglass. Duration functions start with <code>d</code> like <code>dyears()</code> and <code>dminutes()</code>.</p>
+</div>
+</div>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
 <span id="cb126-2"><a href="#cb126-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span>
@@ -1726,7 +1775,20 @@ $class
 </section>
 <section id="intervals" class="level4">
 <h4 class="anchored" data-anchor-id="intervals">Intervals</h4>
-<p>Until now, we’ve focused on points in time. <strong>Intervals</strong> have length and have a starting point and an ending point.</p>
+<p>Until now, we’ve focused on points in time.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Intervals
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Intervals</strong> have length and have a starting point and an ending point.</p>
+</div>
+</div>
 <p>Suppose classes start on August 23rd and proceed every week for a while. Do any of these dates conflict with Georgetown’s fall break?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"2023-08-23"</span>) <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span>

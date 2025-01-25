@@ -667,6 +667,8 @@ Warning
 </section>
 <section id="figures" class="level3" data-number="7.5.2">
 <h3 data-number="7.5.2" class="anchored" data-anchor-id="figures"><span class="header-section-number">7.5.2</span> Figures</h3>
+<p>Linking figures helps readers connect narrative text about figures to the actual figures. Use brackets to label figures after adding the figure and always begin labels with fig-. Then you can reference that section with <span class="citation" data-cites="fig">(<a href="references.html#ref-fig" role="doc-biblioref"><strong>fig?</strong></a>)</span>-.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1"></a><span class="al">![Penguins](images/penguins.png)</span>{#fig-penguins fig-align="center" width=70%}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-penguins" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="images/penguins.png" class="img-fluid figure-img" style="width:70.0%"></p>
@@ -677,11 +679,28 @@ Warning
 </section>
 <section id="tables" class="level3" data-number="7.5.3">
 <h3 data-number="7.5.3" class="anchored" data-anchor-id="tables"><span class="header-section-number">7.5.3</span> Tables</h3>
+<p>Linking tables helps readers connect narrative text about tables to the actual tables. Use brackets to label figures after adding the figure and caption, and always begin labels with tbl-. Then you can reference that section with <span class="citation" data-cites="tbl">(<a href="references.html#ref-tbl" role="doc-biblioref"><strong>tbl?</strong></a>)</span>-.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1"></a>| LaTeX      | Symbol     |</span>
+<span id="cb8-2"><a href="#cb8-2"></a>|------------|------------|</span>
+<span id="cb8-3"><a href="#cb8-3"></a>| <span class="in">`\alpha`</span>   | $\alpha$   |</span>
+<span id="cb8-4"><a href="#cb8-4"></a>| <span class="in">`\beta`</span>    | $\beta$    |</span>
+<span id="cb8-5"><a href="#cb8-5"></a>| <span class="in">`\gamma`</span>   | $\gamma$   |</span>
+<span id="cb8-6"><a href="#cb8-6"></a>| <span class="in">`\Delta`</span>   | $\Delta$   |</span>
+<span id="cb8-7"><a href="#cb8-7"></a>| <span class="in">`\epsilon`</span> | $\epsilon$ |</span>
+<span id="cb8-8"><a href="#cb8-8"></a>| <span class="in">`\theta`</span>   | $\theta$   |</span>
+<span id="cb8-9"><a href="#cb8-9"></a>| <span class="in">`\pi`</span>      | $\pi$      |</span>
+<span id="cb8-10"><a href="#cb8-10"></a>| <span class="in">`\sigma`</span>   | $\sigma$   |</span>
+<span id="cb8-11"><a href="#cb8-11"></a>| <span class="in">`\chi`</span>     | $\chi$     |</span>
+<span id="cb8-12"><a href="#cb8-12"></a></span>
+<span id="cb8-13"><a href="#cb8-13"></a>: My Caption {#tbl-greek}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We can link to tables in our documents. For example, we can link to the greek table with <code>@tbl-greek</code> <a href="#tbl-greek">Table&nbsp;<span>7.1</span></a>.</p>
 </section>
 <section id="equations" class="level3" data-number="7.5.4">
 <h3 data-number="7.5.4" class="anchored" data-anchor-id="equations"><span class="header-section-number">7.5.4</span> Equations</h3>
-<p>We can link to equations in our documents. For example, we can link to the binomial distribution earlier with <code>@eq-binomial</code> <a href="14_simulation-and-sampling.html#eq-binomial">Equation&nbsp;<span>13.4</span></a>.</p>
+<p>We can link to equations in our documents. For example, we can link to the binomial distribution in a different chapter with <code>@eq-binomial</code>: <a href="14_simulation-and-sampling.html#eq-binomial">Equation&nbsp;<span>13.4</span></a>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode numberSource markdown number-lines code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1"></a>$$</span>
+<span id="cb9-2"><a href="#cb9-2"></a>X \sim Bin(n, p)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>$$ {#eq-binomial}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
