@@ -229,7 +229,7 @@ exercise_number <- exercise_number + 1
 
 ### Figures
 
-Linking figures helps readers connect narrative text about figures to the actual figures. Use brackets to label figures after adding the figure and always begin labels with fig-. Then you can reference that section with @fig-.
+Linking figures helps readers connect narrative text about figures to the actual figures. Use brackets to label figures after adding the figure and always begin labels with fig-. Then you can reference that section with `@fig-`.
 
 ``` markdown
 ![Penguins](images/penguins.png){#fig-penguins fig-align="center" width=70%}
@@ -241,7 +241,7 @@ We can reference figures like @fig-penguins with `@fig-penguins`.
 
 ### Tables
 
-Linking tables helps readers connect narrative text about tables to the actual tables. Use brackets to label figures after adding the figure and caption, and always begin labels with tbl-. Then you can reference that section with @tbl-.
+Linking tables helps readers connect narrative text about tables to the actual tables. Use brackets to label figures after adding the figure and caption, and always begin labels with tbl-. Then you can reference that section with `@tbl-`.
 
 ``` markdown
 | LaTeX      | Symbol     |
