@@ -5347,6 +5347,24 @@ Attaching package: 'rvest'</code></pre>
 </ol>
 </div>
 </div>
+<div class="cell" data-hash="13_web-scraping_cache/html/unnamed-chunk-13_987eb88f36e1b351647b8c96f63431d1">
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;polite session&gt; https://en.wikipedia.org/wiki/2008_United_States_presidential_election
+    User-agent: Georgetown students learning scraping -- arw109@georgetown.edu
+    robots.txt: 464 rules are defined for 33 bots
+   Crawl delay: 5 sec
+  The path is scrapable for this user-agent</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 8
+  No.   Date    Time  Host  City  Moderators Participants `Viewership(millions)`
+  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 
+1 P1    Friday… 9:00… Univ… Oxfo… Jim Lehrer Senator Bar… 52.4[112]             
+2 VP    Friday… 9:00… Wash… St. … Gwen Ifill Senator Joe… 69.9[112]             
+3 P2    Tuesda… 9:00… Belm… Nash… Tom Brokaw Senator Bar… 63.2[112]             
+4 P3    Wednes… 9:00… Hofs… Hemp… Bob Schie… Senator Bar… 56.5[112]             </code></pre>
+</div>
+</div>
 </section>
 <section id="other-html-content" class="level3" data-number="12.5.3">
 <h3 data-number="12.5.3" class="anchored" data-anchor-id="other-html-content"><span class="header-section-number">12.5.3</span> Other HTML Content</h3>
@@ -5366,30 +5384,30 @@ Attaching package: 'rvest'</code></pre>
 <li><code>html_text2()</code> retrieves text from HTML elements.</li>
 <li><code>html_attrs()</code> retrieves HTML attributes from HTML elements. <code>html_attrs()</code> can return multiple attributes while <code>html_attr()</code> always returns one attribute.</li>
 </ul>
-<div class="cell" data-hash="13_web-scraping_cache/html/unnamed-chunk-13_1e20c47911fd797b999151140fa8a093">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">tibble</span>(</span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">text =</span> election_page <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>    <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">"p a"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>    <span class="fu">html_text2</span>(),</span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="at">url =</span> election_page <span class="sc">|&gt;</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a>    <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">"p a"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>    <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">"href"</span>)</span>
-<span id="cb24-8"><a href="#cb24-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="13_web-scraping_cache/html/unnamed-chunk-14_cfdc50cd08bdd6b509c6c68f92eae662">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">tibble</span>(</span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="at">text =</span> election_page <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3"></a>    <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">"p a"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-4"><a href="#cb26-4"></a>    <span class="fu">html_text2</span>(),</span>
+<span id="cb26-5"><a href="#cb26-5"></a>  <span class="at">url =</span> election_page <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>    <span class="fu">html_elements</span>(<span class="at">css =</span> <span class="st">"p a"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb26-7"><a href="#cb26-7"></a>    <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">"href"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 355 × 2
-   text                  url                                                    
-   &lt;chr&gt;                 &lt;chr&gt;                                                  
- 1 Barack Obama          /web/20230814004444/https://en.wikipedia.org/wiki/Bara…
- 2 Democratic            /web/20230814004444/https://en.wikipedia.org/wiki/Demo…
- 3 Barack Obama          /web/20230814004444/https://en.wikipedia.org/wiki/Bara…
- 4 Democratic            /web/20230814004444/https://en.wikipedia.org/wiki/Demo…
- 5 presidential election /web/20230814004444/https://en.wikipedia.org/wiki/Unit…
- 6 Democratic            /web/20230814004444/https://en.wikipedia.org/wiki/Demo…
- 7 President             /web/20230814004444/https://en.wikipedia.org/wiki/Pres…
- 8 Barack Obama          /web/20230814004444/https://en.wikipedia.org/wiki/Bara…
- 9 running mate          /web/20230814004444/https://en.wikipedia.org/wiki/Runn…
-10 Vice President        /web/20230814004444/https://en.wikipedia.org/wiki/Vice…
-# ℹ 345 more rows</code></pre>
+<pre><code># A tibble: 631 × 2
+   text                   url                                               
+   &lt;chr&gt;                  &lt;chr&gt;                                             
+ 1 George W. Bush         /wiki/George_W._Bush                              
+ 2 Republican             /wiki/Republican_Party_(United_States)            
+ 3 Barack Obama           /wiki/Barack_Obama                                
+ 4 Democratic             /wiki/Democratic_Party_(United_States)            
+ 5 Presidential elections /wiki/United_States_presidential_election         
+ 6 Democratic             /wiki/Democratic_Party_(United_States)            
+ 7 Barack Obama           /wiki/Barack_Obama                                
+ 8 senator                /wiki/List_of_United_States_senators_from_Illinois
+ 9 Illinois               /wiki/Illinois                                    
+10 Joe Biden              /wiki/Joe_Biden                                   
+# ℹ 621 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
