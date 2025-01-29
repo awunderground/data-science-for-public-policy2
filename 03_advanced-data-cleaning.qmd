@@ -650,11 +650,14 @@ exercise_number <- exercise_number + 1
 
 :::
 
-### Factors {sec-factors}
+### Factors {#sec-factors}
 
 Check out the [forcats cheat sheet](https://forcats.tidyverse.org/).
 
 Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains [augmented vectors](https://r4ds.had.co.nz/vectors.html#augmented-vectors) like factors. 
+
+::: {.callout-tip}
+## Factors
 
 Factors are categorical data stored as integers with a levels attribute. Character vectors often work well for categorical data and many of R's functions convert character vectors to factors. This happens with `lm()`.
 
@@ -663,6 +666,8 @@ Factors have many applications:
 1. Giving the levels of a categorical variable non-alpha numeric order in a ggplot2 data visualization. 
 2. Running calculations on data with empty groups. 
 3. Representing categorical outcome variables in classification models. 
+
+:::
 
 #### Factor Basics
 
@@ -845,7 +850,14 @@ There are many ways to store dates.
 * 14/03/1992
 * 14th of March '92
 
-One way of storing dates is the **best**. The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date format is an international standard with appealing properties like fixed lengths and self ordering. The format is `YYYY-MM-DD`. 
+One way of storing dates is the **best**. 
+
+::: {.callout-tip}
+## ISO 8601 Date Standard
+
+The [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) date format is an international standard with appealing properties like fixed lengths and self ordering. The format is `YYYY-MM-DD`. 
+
+:::
 
 `library(lubridate)` has useful functions that will take dates of any format and convert them to the ISO 8601 standard. 
 
@@ -956,7 +968,12 @@ difftime(today(), as_date("1776-07-04"), units = "mins")
 
 #### Periods
 
+::: {.callout-tip}
+## Periods
+
 **Periods** track clock time or a calendar time. We use periods when we set a recurring meetings on a calendar and when we set an alarm to wake up in the morning. 
+
+:::
 
 This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn't true. Sometimes we add 366 days during leap years. For example,
 
@@ -972,7 +989,12 @@ end - start
 
 #### Durations
 
+::: {.callout-tip}
+## Durations
+
 **Durations** track the passage of physical time in exact seconds. Durations are like sand falling into an hourglass. Duration functions start with `d` like `dyears()` and `dminutes()`. 
+
+:::
 
 ```{r}
 start <- as_date("1999-03-14")
@@ -986,7 +1008,14 @@ Now we always add 365 days, but we see that March 13th is one year after March 1
 
 #### Intervals
 
-Until now, we've focused on points in time. **Intervals** have length and have a starting point and an ending point. 
+Until now, we've focused on points in time. 
+
+::: {.callout-tip}
+## Intervals
+
+**Intervals** have length and have a starting point and an ending point. 
+
+:::
 
 Suppose classes start on August 23rd and proceed every week for a while. Do any of these dates conflict with Georgetown's fall break?
 

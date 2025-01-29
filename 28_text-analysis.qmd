@@ -251,7 +251,7 @@ tidy_fed_paper1 |>
 ::: {.callout-tip}
 ## Lemmatizing
 
-A method of returning the base of a word. Lemmatization considers the context of a word. [Example](https://smltar.com/stemming.html#lemmatization) Lemmatizing requires natural language processing, so this requires Stanford CoreNLP or the Python package spaCy. 
+A method of returning the base of a word. Lemmatization considers the context of a word. [Example](https://smltar.com/stemming.html#lemmatization) Lemmatizing requires natural language processing, so this requires Stanford CoreNLP or the Python package spaCy, which can be accessed in R via `library(spacyr)`. 
 :::
 
 ::: {.callout-tip}

@@ -229,17 +229,47 @@ exercise_number <- exercise_number + 1
 
 ### Figures
 
+Linking figures helps readers connect narrative text about figures to the actual figures. Use brackets to label figures after adding the figure and always begin labels with fig-. Then you can reference that section with `@fig-`.
+
+``` markdown
+![Penguins](images/penguins.png){#fig-penguins fig-align="center" width=70%}
+```
+
 ![Penguins](images/penguins.png){#fig-penguins fig-align="center" width=70%}
 
 We can reference figures like @fig-penguins with `@fig-penguins`.
 
 ### Tables
 
+Linking tables helps readers connect narrative text about tables to the actual tables. Use brackets to label figures after adding the figure and caption, and always begin labels with tbl-. Then you can reference that section with `@tbl-`.
+
+``` markdown
+| LaTeX      | Symbol     |
+|------------|------------|
+| `\alpha`   | $\alpha$   |
+| `\beta`    | $\beta$    |
+| `\gamma`   | $\gamma$   |
+| `\Delta`   | $\Delta$   |
+| `\epsilon` | $\epsilon$ |
+| `\theta`   | $\theta$   |
+| `\pi`      | $\pi$      |
+| `\sigma`   | $\sigma$   |
+| `\chi`     | $\chi$     |
+
+: My Caption {#tbl-greek}
+```
+
 We can link to tables in our documents. For example, we can link to the greek table with `@tbl-greek` @tbl-greek.
 
 ### Equations
 
-We can link to equations in our documents. For example, we can link to the binomial distribution earlier with `@eq-binomial` @eq-binomial.
+We can link to equations in our documents. For example, we can link to the binomial distribution in a different chapter with `@eq-binomial`: @eq-binomial.
+
+``` markdown
+$$
+X \sim Bin(n, p)
+$$ {#eq-binomial}
+```
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
