@@ -42,18 +42,18 @@ book:
         - 21_supervised-classification.qmd
         - 22_ensembling.qmd
         - 23_regularization.qmd
+        # - interpretable-models.qmd (chapter 24)
     - part: Unsupervised Machine Learning
       chapters:
-        # - interpretable-models.qmd
-        # - PART 1: dimension reduction
-        # - PART 1: cluster analysis
+        # - 25_dimension-reduction.qmd
+        # - 26_unsupervised-ml-cluster-analysis.qmd
         - 27_advanced-unsupervised-ml.qmd 
-        # - 28_text-analysis.qmd
-        # - 29_text-modeling.qmd
     - part: Other Topics
       chapters:
-       - 28_geospatial.qmd
-        # - parallel programming to be developed
+       - 30_geospatial.qmd
+       - 28_text-analysis.qmd
+       - 29_text-modeling.qmd
+        # - parallel programming to be developed # chapter 31
     - references.qmd
 
 bibliography: references.bib
