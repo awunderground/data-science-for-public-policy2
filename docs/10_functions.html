@@ -1274,14 +1274,16 @@ $median
 <p>We can’t solve problem 1 with an R package, but we can solve problem 2 by running tests multiple times. <a href="https://cran.r-project.org/web/packages/microbenchmark/index.html"><code>library(microbenchmark)</code></a> makes this very easy.</p>
 <p>Suppose we are interested in the median of a vector of 1 million numbers. We can easily calculate this with <code>median()</code> or <code>quantile()</code>. Suppose we are concerned about computation speed, so lets test the code performance:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">library</span>(microbenchmark)</span>
-<span id="cb102-2"><a href="#cb102-2"></a></span>
-<span id="cb102-3"><a href="#cb102-3"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000000</span></span>
-<span id="cb102-4"><a href="#cb102-4"></a></span>
-<span id="cb102-5"><a href="#cb102-5"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
-<span id="cb102-6"><a href="#cb102-6"></a>  <span class="fu">median</span>(x),</span>
-<span id="cb102-7"><a href="#cb102-7"></a>  <span class="fu">quantile</span>(x, <span class="at">probs =</span> <span class="fl">0.5</span>)</span>
-<span id="cb102-8"><a href="#cb102-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">library</span>(microbenchmark)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'microbenchmark' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a>x <span class="ot">&lt;-</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000000</span></span>
+<span id="cb104-2"><a href="#cb104-2"></a></span>
+<span id="cb104-3"><a href="#cb104-3"></a>microbenchmark<span class="sc">::</span><span class="fu">microbenchmark</span>(</span>
+<span id="cb104-4"><a href="#cb104-4"></a>  <span class="fu">median</span>(x),</span>
+<span id="cb104-5"><a href="#cb104-5"></a>  <span class="fu">quantile</span>(x, <span class="at">probs =</span> <span class="fl">0.5</span>)</span>
+<span id="cb104-6"><a href="#cb104-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in microbenchmark::microbenchmark(median(x), quantile(x, probs = 0.5)):
 less accurate nanosecond times to avoid potential integer overflows</code></pre>
@@ -1289,11 +1291,11 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
                      expr      min       lq     mean   median       uq
-                median(x) 6.722401 7.145808 8.469340 7.353842 9.180064
- quantile(x, probs = 0.5) 3.939895 4.124477 4.817294 4.279170 5.724789
-       max neval
- 46.558165   100
-  7.503574   100</code></pre>
+                median(x) 6.770412 6.968175 8.102538 7.071373 8.640894
+ quantile(x, probs = 0.5) 3.780036 3.959513 4.592676 4.059717 5.215938
+       max neval cld
+ 43.794642   100  a 
+  7.273687   100   b</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1325,40 +1327,40 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <h2 data-number="10.7" class="anchored" data-anchor-id="sec-purrr"><span class="header-section-number">10.7</span> Iteration with <code>library(purrr)</code></h2>
 <p>Most functions in <code>R</code> are vectorized. That means a function operates on every element in a vector by default.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
-<span id="cb105-2"><a href="#cb105-2"></a></span>
-<span id="cb105-3"><a href="#cb105-3"></a><span class="fu">say_hello</span>(<span class="at">name =</span> teacher_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
+<span id="cb107-2"><a href="#cb107-2"></a></span>
+<span id="cb107-3"><a href="#cb107-3"></a><span class="fu">say_hello</span>(<span class="at">name =</span> teacher_names)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello, aaron" "hello, alex"  "hello, alena"</code></pre>
 </div>
 </div>
 <p><code>say_hello()</code> is vectorized. It works without iteration, but let’s just use it as an example to learn about iteration. Let’s start with a simple for loop.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="co"># the vector over which to iterate</span></span>
-<span id="cb107-2"><a href="#cb107-2"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
-<span id="cb107-3"><a href="#cb107-3"></a></span>
-<span id="cb107-4"><a href="#cb107-4"></a><span class="co"># preallocate the output vector</span></span>
-<span id="cb107-5"><a href="#cb107-5"></a>greetings <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"character"</span>, </span>
-<span id="cb107-6"><a href="#cb107-6"></a>                    <span class="at">length =</span> <span class="fu">length</span>(teacher_names)</span>
-<span id="cb107-7"><a href="#cb107-7"></a>                    )</span>
-<span id="cb107-8"><a href="#cb107-8"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(teacher_names)) {</span>
-<span id="cb107-9"><a href="#cb107-9"></a>  </span>
-<span id="cb107-10"><a href="#cb107-10"></a>  greetings[i] <span class="ot">&lt;-</span> <span class="fu">say_hello</span>(teacher_names[i])</span>
-<span id="cb107-11"><a href="#cb107-11"></a>  </span>
-<span id="cb107-12"><a href="#cb107-12"></a>}</span>
-<span id="cb107-13"><a href="#cb107-13"></a></span>
-<span id="cb107-14"><a href="#cb107-14"></a><span class="co"># print the result</span></span>
-<span id="cb107-15"><a href="#cb107-15"></a>greetings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="co"># the vector over which to iterate</span></span>
+<span id="cb109-2"><a href="#cb109-2"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
+<span id="cb109-3"><a href="#cb109-3"></a></span>
+<span id="cb109-4"><a href="#cb109-4"></a><span class="co"># preallocate the output vector</span></span>
+<span id="cb109-5"><a href="#cb109-5"></a>greetings <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"character"</span>, </span>
+<span id="cb109-6"><a href="#cb109-6"></a>                    <span class="at">length =</span> <span class="fu">length</span>(teacher_names)</span>
+<span id="cb109-7"><a href="#cb109-7"></a>                    )</span>
+<span id="cb109-8"><a href="#cb109-8"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(teacher_names)) {</span>
+<span id="cb109-9"><a href="#cb109-9"></a>  </span>
+<span id="cb109-10"><a href="#cb109-10"></a>  greetings[i] <span class="ot">&lt;-</span> <span class="fu">say_hello</span>(teacher_names[i])</span>
+<span id="cb109-11"><a href="#cb109-11"></a>  </span>
+<span id="cb109-12"><a href="#cb109-12"></a>}</span>
+<span id="cb109-13"><a href="#cb109-13"></a></span>
+<span id="cb109-14"><a href="#cb109-14"></a><span class="co"># print the result</span></span>
+<span id="cb109-15"><a href="#cb109-15"></a>greetings</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello, aaron" "hello, alex"  "hello, alena"</code></pre>
 </div>
 </div>
 <p>That’s a lot of typing. It is much more common in R to use <code>library(purrr)</code>, which replaces apply functions.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <code>map()</code> iterates over each element of a data structure called <code>.x</code>, applies a function called <code>.f</code> to each element, and then returns a list.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">library</span>(purrr)</span>
-<span id="cb109-2"><a href="#cb109-2"></a></span>
-<span id="cb109-3"><a href="#cb109-3"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
-<span id="cb109-4"><a href="#cb109-4"></a><span class="fu">map</span>(<span class="at">.x =</span> teacher_names, <span class="at">.f =</span> say_hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb111-2"><a href="#cb111-2"></a></span>
+<span id="cb111-3"><a href="#cb111-3"></a>teacher_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"aaron"</span>, <span class="st">"alex"</span>, <span class="st">"alena"</span>)</span>
+<span id="cb111-4"><a href="#cb111-4"></a><span class="fu">map</span>(<span class="at">.x =</span> teacher_names, <span class="at">.f =</span> say_hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[[1]]
 [1] "hello, aaron"
@@ -1372,14 +1374,14 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <p><code>map()</code> always returns a list. Sometimes we want to do something called map reduce. Functions like <code>map_chr()</code>, <code>map_dbl()</code>, and <code>map_df()</code> will map reduce. In this case, <code>map_chr()</code> returns a character vector instead of a list:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a><span class="fu">map_chr</span>(<span class="at">.x =</span> teacher_names, <span class="at">.f =</span> say_hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a><span class="fu">map_chr</span>(<span class="at">.x =</span> teacher_names, <span class="at">.f =</span> say_hello)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "hello, aaron" "hello, alex"  "hello, alena"</code></pre>
 </div>
 </div>
 <p>We can quickly add anonymous functions in <code>map()</code> and its relatives with <code>~</code>. A tibble is just a list of columns. This function iterates over each column, counts the number of missing values, and then returns a named vector.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a><span class="fu">map_dbl</span>(<span class="at">.x =</span> msleep, <span class="at">.f =</span> <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a><span class="fu">map_dbl</span>(<span class="at">.x =</span> msleep, <span class="at">.f =</span> <span class="sc">~</span><span class="fu">sum</span>(<span class="fu">is.na</span>(.x)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>        name        genus         vore        order conservation  sleep_total 
            0            0            7            0           29            0 

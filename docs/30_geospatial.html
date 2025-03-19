@@ -508,29 +508,32 @@ Vector Geospatial data
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Linking to GEOS 3.11.0, GDAL 3.5.3, PROJ 9.1.0; sf_use_s2() is TRUE</code></pre>
+<pre><code>Warning: package 'sf' was built under R version 4.3.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>amtrak_stations_file <span class="ot">&lt;-</span> </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"amtrak_stations.geojson"</span>)</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># download Amtrak data</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(amtrak_stations_file)) {</span>
-<span id="cb3-6"><a href="#cb3-6"></a>  </span>
-<span id="cb3-7"><a href="#cb3-7"></a>  <span class="fu">download.file</span>(</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    <span class="at">url =</span> <span class="st">"https://opendata.arcgis.com/datasets/628537f4cf774cde8aa9721212226390_0.geojson"</span>,</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="at">destfile =</span> amtrak_stations_file</span>
-<span id="cb3-10"><a href="#cb3-10"></a>  )</span>
-<span id="cb3-11"><a href="#cb3-11"></a>  </span>
-<span id="cb3-12"><a href="#cb3-12"></a>}</span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># read sf data</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_read</span>(amtrak_stations_file, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb3-16"><a href="#cb3-16"></a></span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="co"># print the geometry column</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: geometry columns are "sticky" -- geometry is returned even though it </span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># isn't include in select()</span></span>
-<span id="cb3-20"><a href="#cb3-20"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a>  <span class="fu">select</span>(stationnam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Linking to GEOS 3.13.0, GDAL 3.8.5, PROJ 9.5.1; sf_use_s2() is TRUE</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>amtrak_stations_file <span class="ot">&lt;-</span> </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"amtrak_stations.geojson"</span>)</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="co"># download Amtrak data</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="cf">if</span>(<span class="sc">!</span><span class="fu">file.exists</span>(amtrak_stations_file)) {</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  </span>
+<span id="cb4-7"><a href="#cb4-7"></a>  <span class="fu">download.file</span>(</span>
+<span id="cb4-8"><a href="#cb4-8"></a>    <span class="at">url =</span> <span class="st">"https://opendata.arcgis.com/datasets/628537f4cf774cde8aa9721212226390_0.geojson"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9"></a>    <span class="at">destfile =</span> amtrak_stations_file</span>
+<span id="cb4-10"><a href="#cb4-10"></a>  )</span>
+<span id="cb4-11"><a href="#cb4-11"></a>  </span>
+<span id="cb4-12"><a href="#cb4-12"></a>}</span>
+<span id="cb4-13"><a href="#cb4-13"></a></span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="co"># read sf data</span></span>
+<span id="cb4-15"><a href="#cb4-15"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_read</span>(amtrak_stations_file, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-16"><a href="#cb4-16"></a></span>
+<span id="cb4-17"><a href="#cb4-17"></a><span class="co"># print the geometry column</span></span>
+<span id="cb4-18"><a href="#cb4-18"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: geometry columns are "sticky" -- geometry is returned even though it </span></span>
+<span id="cb4-19"><a href="#cb4-19"></a><span class="co"># isn't include in select()</span></span>
+<span id="cb4-20"><a href="#cb4-20"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb4-21"><a href="#cb4-21"></a>  <span class="fu">select</span>(stationnam)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1096 features and 1 field
 Geometry type: POINT
@@ -582,14 +585,14 @@ Points
 </div>
 <p>Let’s map the Amtrak stations from the above example:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># create a map</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-6"><a href="#cb5-6"></a>    <span class="at">title =</span> <span class="st">"Example of point data"</span>,</span>
-<span id="cb5-7"><a href="#cb5-7"></a>    <span class="at">caption =</span> <span class="st">"Amtrak stations from opendata.arcgis.com"</span>) <span class="sc">+</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># create a map</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">labs</span>(</span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="at">title =</span> <span class="st">"Example of point data"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="at">caption =</span> <span class="st">"Amtrak stations from opendata.arcgis.com"</span>) <span class="sc">+</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -612,20 +615,20 @@ Linestrings
 </div>
 <p>Here is an example of Amtrak train routes from the <a href="https://data-usdot.opendata.arcgis.com/">Bureau of Transportation Statistics</a>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>amtrak_routes_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Amtrak_Routes.geojson"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="co"># load sf data</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>amtrak_routes <span class="ot">&lt;-</span> <span class="fu">st_read</span>(amtrak_routes_file, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co"># create map with lines data</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>amtrak_routes <span class="sc">|&gt;</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb6-10"><a href="#cb6-10"></a>  <span class="fu">labs</span>(</span>
-<span id="cb6-11"><a href="#cb6-11"></a>    <span class="at">title =</span> <span class="st">"Example of line data"</span>,</span>
-<span id="cb6-12"><a href="#cb6-12"></a>    <span class="at">caption =</span> <span class="st">"Amtrak routes from Bureau of Transportation Statistics"</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>  ) <span class="sc">+</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>amtrak_routes_file <span class="ot">&lt;-</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"Amtrak_Routes.geojson"</span>)</span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="co"># load sf data</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>amtrak_routes <span class="ot">&lt;-</span> <span class="fu">st_read</span>(amtrak_routes_file, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb7-5"><a href="#cb7-5"></a></span>
+<span id="cb7-6"><a href="#cb7-6"></a><span class="co"># create map with lines data</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>amtrak_routes <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">labs</span>(</span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="at">title =</span> <span class="st">"Example of line data"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>    <span class="at">caption =</span> <span class="st">"Amtrak routes from Bureau of Transportation Statistics"</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>  ) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -648,17 +651,17 @@ Polygons
 </div>
 <p>Here is a simple example with of the Continental United States:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># load and subset states data</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>states <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span>STATEFP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"78"</span>, <span class="st">"69"</span>, <span class="st">"66"</span>, <span class="st">"60"</span>, <span class="st">"72"</span>, <span class="st">"02"</span>, <span class="st">"15"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># load and subset states data</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a>states <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="fu">filter</span>(<span class="sc">!</span>STATEFP <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"78"</span>, <span class="st">"69"</span>, <span class="st">"66"</span>, <span class="st">"60"</span>, <span class="st">"72"</span>, <span class="st">"02"</span>, <span class="st">"15"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieving data for the year 2021</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>states <span class="sc">|&gt;</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example of polygon data"</span>) <span class="sc">+</span></span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>states <span class="sc">|&gt;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example of polygon data"</span>) <span class="sc">+</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -678,25 +681,25 @@ Polygons
 <p><code>geom_sf()</code> plots <code>sf</code> data. The function automatically references the <code>geometry</code> column and does not require any aesthetic mappings. <code>geom_sf()</code> works well with layers and it is simple to combine point, line, and polygon data.</p>
 <p><code>geom_sf()</code> works like <code>geom_point()</code> for point data, <code>geom_line()</code> for linestring data, and <code>geom_area()</code> for polygon data (e.g.&nbsp;the <code>fill</code> argument controls the color of shapes and color controls the border colors of shapes for polygons).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>amtrak_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb10-2"><a href="#cb10-2"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb10-3"><a href="#cb10-3"></a>    <span class="at">data =</span> states,</span>
-<span id="cb10-4"><a href="#cb10-4"></a>    <span class="at">fill =</span> <span class="cn">NA</span></span>
-<span id="cb10-5"><a href="#cb10-5"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-6"><a href="#cb10-6"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb10-7"><a href="#cb10-7"></a>    <span class="at">data =</span> amtrak_routes, </span>
-<span id="cb10-8"><a href="#cb10-8"></a>    <span class="at">color =</span> <span class="st">"blue"</span></span>
-<span id="cb10-9"><a href="#cb10-9"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">geom_sf</span>(</span>
-<span id="cb10-11"><a href="#cb10-11"></a>    <span class="at">data =</span> amtrak_stations, </span>
-<span id="cb10-12"><a href="#cb10-12"></a>    <span class="at">color =</span> <span class="st">"red"</span>, </span>
-<span id="cb10-13"><a href="#cb10-13"></a>    <span class="at">size =</span> <span class="fl">0.75</span>,</span>
-<span id="cb10-14"><a href="#cb10-14"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
-<span id="cb10-15"><a href="#cb10-15"></a>  ) <span class="sc">+</span></span>
-<span id="cb10-16"><a href="#cb10-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Amtrak stations and train routes"</span>) <span class="sc">+</span></span>
-<span id="cb10-17"><a href="#cb10-17"></a>  <span class="fu">theme_void</span>()</span>
-<span id="cb10-18"><a href="#cb10-18"></a></span>
-<span id="cb10-19"><a href="#cb10-19"></a>amtrak_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>amtrak_map <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb11-3"><a href="#cb11-3"></a>    <span class="at">data =</span> states,</span>
+<span id="cb11-4"><a href="#cb11-4"></a>    <span class="at">fill =</span> <span class="cn">NA</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb11-7"><a href="#cb11-7"></a>    <span class="at">data =</span> amtrak_routes, </span>
+<span id="cb11-8"><a href="#cb11-8"></a>    <span class="at">color =</span> <span class="st">"blue"</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-10"><a href="#cb11-10"></a>  <span class="fu">geom_sf</span>(</span>
+<span id="cb11-11"><a href="#cb11-11"></a>    <span class="at">data =</span> amtrak_stations, </span>
+<span id="cb11-12"><a href="#cb11-12"></a>    <span class="at">color =</span> <span class="st">"red"</span>, </span>
+<span id="cb11-13"><a href="#cb11-13"></a>    <span class="at">size =</span> <span class="fl">0.75</span>,</span>
+<span id="cb11-14"><a href="#cb11-14"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a>  ) <span class="sc">+</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Amtrak stations and train routes"</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>  <span class="fu">theme_void</span>()</span>
+<span id="cb11-18"><a href="#cb11-18"></a></span>
+<span id="cb11-19"><a href="#cb11-19"></a>amtrak_map</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -730,7 +733,7 @@ Note
 <section id="csv-files" class="level3" data-number="23.4.3">
 <h3 data-number="23.4.3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">23.4.3</span> .csv files</h3>
 <p>Lots of geographic information is stored in .csv files–especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with <code>read_csv()</code>. Second, use <code>st_as_sf()</code> to convert the tibble into an sf object and specify the columns with longitude and latitude with the <code>coords</code> argument:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -768,32 +771,34 @@ Note
 </div>
 <p>TIGER line files are high-resolution and follow legal boundaries. Sometimes the maps are counterintuitive. For example, the outline of Michigan will include the Great Lakes, which is uncommon. Cartographic boundary files are quicker to download and are clipped to the coastline, which better aligns with expectations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(tigris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(tigris)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>To enable caching of data, set `options(tigris_use_cache = TRUE)`
 in your R script or .Rprofile.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(patchwork)</span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a>mi <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MI"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"TIGER/Line"</span>) <span class="sc">+</span></span>
-<span id="cb14-8"><a href="#cb14-8"></a>  <span class="fu">theme_void</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">library</span>(patchwork)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'patchwork' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>mi <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MI"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"TIGER/Line"</span>) <span class="sc">+</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">theme_void</span>() </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieving data for the year 2021</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>mi_cb <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MI"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cartographic Boundary"</span>) <span class="sc">+</span>  </span>
-<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>mi_cb <span class="ot">&lt;-</span> <span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">filter</span>(STUSPS <span class="sc">==</span> <span class="st">"MI"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">geom_sf</span>() <span class="sc">+</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Cartographic Boundary"</span>) <span class="sc">+</span>  </span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">theme_void</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Retrieving data for the year 2021</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>mi <span class="sc">+</span> mi_cb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>mi <span class="sc">+</span> mi_cb</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="384"></p>
 </div>
@@ -802,16 +807,16 @@ in your R script or .Rprofile.</code></pre>
 <p>The <a href="https://rspatialdata.github.io/admin_boundaries.html"><code>rgeoboundaries</code></a> package is a client for the <a href="https://www.geoboundaries.org/">geoBoundaries API</a>, providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the <code>remotes</code> package as follows</p>
 <p>The <code>rgeoboundaries</code> package can provide boundaries for countries at different administrative division levels. For example, here we obtain the adm1 boundaries (the first subnational level) for Bangladesh. The <code>type</code> argument of the <code>geoboundaries()</code> function can be set to obtain a simplified version of the boundaries.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(rgeoboundaries)</span>
-<span id="cb19-2"><a href="#cb19-2"></a></span>
-<span id="cb19-3"><a href="#cb19-3"></a>bangladesh <span class="ot">&lt;-</span> <span class="fu">geoboundaries</span>(</span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">country =</span> <span class="st">"Bangladesh"</span>, </span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="at">adm_lvl =</span> <span class="st">"adm1"</span>,</span>
-<span id="cb19-6"><a href="#cb19-6"></a>  <span class="at">type =</span> <span class="st">"SSCGS"</span> <span class="co"># Simplified Single Country Globally Standardized</span></span>
-<span id="cb19-7"><a href="#cb19-7"></a>) </span>
-<span id="cb19-8"><a href="#cb19-8"></a></span>
-<span id="cb19-9"><a href="#cb19-9"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
-<span id="cb19-10"><a href="#cb19-10"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(rgeoboundaries)</span>
+<span id="cb22-2"><a href="#cb22-2"></a></span>
+<span id="cb22-3"><a href="#cb22-3"></a>bangladesh <span class="ot">&lt;-</span> <span class="fu">geoboundaries</span>(</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">country =</span> <span class="st">"Bangladesh"</span>, </span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="at">adm_lvl =</span> <span class="st">"adm1"</span>,</span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="at">type =</span> <span class="st">"SSCGS"</span> <span class="co"># Simplified Single Country Globally Standardized</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>) </span>
+<span id="cb22-8"><a href="#cb22-8"></a></span>
+<span id="cb22-9"><a href="#cb22-9"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -831,12 +836,12 @@ in your R script or .Rprofile.</code></pre>
 <li>Copy the below code into your script to read in <code>aiddata_bangladesh.csv</code> with read_csv().</li>
 </ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>aiddata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb20-3"><a href="#cb20-3"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
-<span id="cb20-4"><a href="#cb20-4"></a>    <span class="st">"main/aiddata/aiddata_bangladesh.csv"</span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>    )</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>aiddata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="st">"main/aiddata/aiddata_bangladesh.csv"</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>    )</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 2648 Columns: 21
 ── Column specification ────────────────────────────────────────────────────────
@@ -863,19 +868,19 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p><code>library(tidycensus)</code> sometimes requires the same Census API Key we used in the API tutorial (<a href="https://api.census.gov/data/key_signup.html">sign up here</a>). You should be able to install your API key into your version of R with <code>census_api_key("your-key-string", install = TRUE)</code>. To obtain your keystring, you can use <code>library(dotenv)</code> and <code>Sys.getenv(&lt;key name in .env file&gt;)</code>.</p>
 <p><code>library(tidycensus)</code> has two big differences from <code>library(tigris)</code>: 1. it can pull Census data with the geographic data, and 2. it only provides cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">library</span>(tidycensus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(tidycensus)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'tidycensus' was built under R version 4.3.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
-<span id="cb24-6"><a href="#cb24-6"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb24-7"><a href="#cb24-7"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
-<span id="cb24-8"><a href="#cb24-8"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
+<span id="cb27-6"><a href="#cb27-6"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb27-7"><a href="#cb27-7"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Getting data from the 2015-2019 5-year ACS</code></pre>
 </div>
@@ -891,7 +896,7 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p>Choropleths are maps that use fill to display the variation in a variable across geographies.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Getting data from the 2018-2022 5-year ACS</code></pre>
+<pre><code>Getting data from the 2019-2023 5-year ACS</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
@@ -1041,12 +1046,12 @@ Datum
 <h4 class="anchored" data-anchor-id="librarycrsuggest"><code>library(crsuggest)</code></h4>
 <p><a href="https://github.com/walkerke/crsuggest"><code>library(crsuggest)</code></a> can simplify the process of picking a CRS.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(crsuggest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">library</span>(crsuggest)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using the EPSG Dataset v10.019, a product of the International Association of Oil &amp; Gas Producers. 
 Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1062,10 +1067,10 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
  9 6922     NAD83 / Kansas LCC              project…    4269 m         +proj=lc…
 10 6467     NAD83(2011) / Kansas North (ft… project…    6318 us-ft     +proj=lc…</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3"></a></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1127,20 +1132,20 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <h3 data-number="23.7.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">23.7.1</span> Aggregation</h3>
 <p>Sometimes we want to aggregate smaller geographies into larger geographies. This is simple with a <code>group_by()</code> and <code>summarize()</code> workflow. Suppose we want to combine North Dakota and South Dakota into Dakota.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># states to combine</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
-<span id="cb35-3"><a href="#cb35-3"></a></span>
-<span id="cb35-4"><a href="#cb35-4"></a><span class="co"># add a projection</span></span>
-<span id="cb35-5"><a href="#cb35-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
-<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb35-7"><a href="#cb35-7"></a></span>
-<span id="cb35-8"><a href="#cb35-8"></a><span class="co"># aggregate states and make a map</span></span>
-<span id="cb35-9"><a href="#cb35-9"></a>states <span class="sc">|&gt;</span></span>
-<span id="cb35-10"><a href="#cb35-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
-<span id="cb35-11"><a href="#cb35-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
-<span id="cb35-12"><a href="#cb35-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
-<span id="cb35-13"><a href="#cb35-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb35-14"><a href="#cb35-14"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># states to combine</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3"></a></span>
+<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># add a projection</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a><span class="co"># aggregate states and make a map</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a>states <span class="sc">|&gt;</span></span>
+<span id="cb38-10"><a href="#cb38-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
+<span id="cb38-12"><a href="#cb38-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb38-14"><a href="#cb38-14"></a>  <span class="fu">geom_sf</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="30_geospatial_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1152,28 +1157,28 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p><code>st_join()</code> performs a left spatial join in R. <code>st_intersects</code> means observations will join if the geographies in <code>x</code> touch the geographies in <code>y</code>. The <code>sf</code> package offers a number of different geometric confirmations that can be used for spatial joins, such as <code>st_covered_by</code> (identifies if <code>x</code> is copletely within <code>y</code>), <code>st_within</code> (identifies if <code>x</code> is within a specified distance of <code>y</code>) and many more. The <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">sf cheat sheet</a> provides a good outline of the different options.</p>
 <p>Suppose we want to count the number of Amtrak stations in each state.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># set states CRS to 4326 to match the Amtrak data</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb36-3"><a href="#cb36-3"></a></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="co"># dimension before join</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># set states CRS to 4326 to match the Amtrak data</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="co"># dimension before join</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1096   12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># spatial join using intersection</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
-<span id="cb38-3"><a href="#cb38-3"></a></span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="fu">dim</span>(amtrak)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># spatial join using intersection</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
+<span id="cb41-3"><a href="#cb41-3"></a></span>
+<span id="cb41-4"><a href="#cb41-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a><span class="fu">dim</span>(amtrak)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1080   21</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># count the number of stations per state</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a>amtrak <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># count the number of stations per state</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>amtrak <span class="sc">|&gt;</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 49 × 2
    NAME         number_of_stations
@@ -1197,24 +1202,24 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Adding buffers to points, lines, and polygons is useful for counting shapes near other shapes. For instance, we may want to count the number of housing units within 500 meters of a metro station or the number of schools more than 5 miles from a fire station.</p>
 <p>Suppose we want to count the number of Amtrak stations within 5 kilometers of each Amtrak station. We can buffer the Amtrak station points, join the unbuffered data to the buffered data, and then count.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
-<span id="cb42-4"><a href="#cb42-4"></a>  amtrak_stations, </span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
-<span id="cb42-6"><a href="#cb42-6"></a>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
-<span id="cb42-10"><a href="#cb42-10"></a>  amtrak_stations_buffered,</span>
-<span id="cb42-11"><a href="#cb42-11"></a>  amtrak_stations, </span>
-<span id="cb42-12"><a href="#cb42-12"></a>  <span class="at">join =</span> st_intersects</span>
-<span id="cb42-13"><a href="#cb42-13"></a>)</span>
-<span id="cb42-14"><a href="#cb42-14"></a></span>
-<span id="cb42-15"><a href="#cb42-15"></a><span class="co"># count the station names</span></span>
-<span id="cb42-16"><a href="#cb42-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
-<span id="cb42-17"><a href="#cb42-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb42-18"><a href="#cb42-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
+<span id="cb45-4"><a href="#cb45-4"></a>  amtrak_stations, </span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
+<span id="cb45-6"><a href="#cb45-6"></a>)</span>
+<span id="cb45-7"><a href="#cb45-7"></a></span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb45-10"><a href="#cb45-10"></a>  amtrak_stations_buffered,</span>
+<span id="cb45-11"><a href="#cb45-11"></a>  amtrak_stations, </span>
+<span id="cb45-12"><a href="#cb45-12"></a>  <span class="at">join =</span> st_intersects</span>
+<span id="cb45-13"><a href="#cb45-13"></a>)</span>
+<span id="cb45-14"><a href="#cb45-14"></a></span>
+<span id="cb45-15"><a href="#cb45-15"></a><span class="co"># count the station names</span></span>
+<span id="cb45-16"><a href="#cb45-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
+<span id="cb45-17"><a href="#cb45-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb45-18"><a href="#cb45-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,007 × 2
    stationnam.x                   n
@@ -1246,20 +1251,20 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
 <p>Suppose we want to find the closest and furthest Amtrak stations from Washington DC’s Union Station.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># create a data frame with just Union Station</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
-<span id="cb44-4"><a href="#cb44-4"></a></span>
-<span id="cb44-5"><a href="#cb44-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
-<span id="cb44-7"><a href="#cb44-7"></a></span>
-<span id="cb44-8"><a href="#cb44-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
-<span id="cb44-9"><a href="#cb44-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
-<span id="cb44-10"><a href="#cb44-10"></a></span>
-<span id="cb44-11"><a href="#cb44-11"></a><span class="co"># find the closest station</span></span>
-<span id="cb44-12"><a href="#cb44-12"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb44-14"><a href="#cb44-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># create a data frame with just Union Station</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
+<span id="cb47-4"><a href="#cb47-4"></a></span>
+<span id="cb47-5"><a href="#cb47-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb47-6"><a href="#cb47-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
+<span id="cb47-7"><a href="#cb47-7"></a></span>
+<span id="cb47-8"><a href="#cb47-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
+<span id="cb47-9"><a href="#cb47-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
+<span id="cb47-10"><a href="#cb47-10"></a></span>
+<span id="cb47-11"><a href="#cb47-11"></a><span class="co"># find the closest station</span></span>
+<span id="cb47-12"><a href="#cb47-12"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb47-13"><a href="#cb47-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb47-14"><a href="#cb47-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
@@ -1269,10 +1274,10 @@ Projected CRS: NAD83 / Conus Albers
       stationnam       city                geometry
 1 Alexandria, VA Alexandria POINT (1618448 1915016)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># find the further station</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="co"># find the further station</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb49-3"><a href="#cb49-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb49-4"><a href="#cb49-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
