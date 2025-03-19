@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2025-02-12">
+<meta name="dcterms.date" content="2025-03-19">
 
 <title>Data Science for Public Policy - 16&nbsp; Nonparametric Inference</title>
 <style>
@@ -446,7 +446,7 @@ div.csl-indent {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 12, 2025</p>
+      <p class="date">March 19, 2025</p>
     </div>
   </div>
   
@@ -940,17 +940,12 @@ Warning
 <span id="cb29-14"><a href="#cb29-14"></a>perm_dist <span class="sc">|&gt;</span></span>
 <span id="cb29-15"><a href="#cb29-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
 <span id="cb29-16"><a href="#cb29-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="17_nonparametric-2_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># calculate the p-value</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
@@ -964,33 +959,28 @@ Warning
 <h4 class="anchored" data-anchor-id="sample-difference-in-medians">2-Sample Difference in Medians</h4>
 <p>Using normal-theory statistics, we don’t have clear strategies for statistical tests about the median. This is simple with nonparametric statistics.</p>
 <div class="cell" data-hash="17_nonparametric-2_cache/html/unnamed-chunk-18_d99ce5c52f63558e95e2149ddcc2f31b">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># calculate the test statistic</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
-<span id="cb33-4"><a href="#cb33-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
-<span id="cb33-5"><a href="#cb33-5"></a></span>
-<span id="cb33-6"><a href="#cb33-6"></a><span class="co"># generate the permutation distribution</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a>perm_dist <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
-<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
-<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-10"><a href="#cb33-10"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb33-11"><a href="#cb33-11"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
-<span id="cb33-12"><a href="#cb33-12"></a></span>
-<span id="cb33-13"><a href="#cb33-13"></a><span class="co"># visualize the p-value</span></span>
-<span id="cb33-14"><a href="#cb33-14"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb33-15"><a href="#cb33-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
-<span id="cb33-16"><a href="#cb33-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># calculate the test statistic</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># generate the permutation distribution</span></span>
+<span id="cb32-7"><a href="#cb32-7"></a>perm_dist <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="fu">specify</span>(balchange <span class="sc">~</span> group2) <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-10"><a href="#cb32-10"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">5000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in medians"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"control"</span>, <span class="st">"treatment"</span>))</span>
+<span id="cb32-12"><a href="#cb32-12"></a></span>
+<span id="cb32-13"><a href="#cb32-13"></a><span class="co"># visualize the p-value</span></span>
+<span id="cb32-14"><a href="#cb32-14"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="17_nonparametric-2_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>perm_dist <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># calculate the p-value</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>perm_dist <span class="sc">|&gt;</span></span>
+<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
@@ -1001,9 +991,9 @@ Warning
 <p>We have sufficient evidence to reject the null hypothesis in favor if the alternative hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population median for group 1 is different than the population median for group 2.</p>
 <p>Interestingly, the median change for the treatment group is slightly less negative than the control group.</p>
 <div class="cell" data-hash="17_nonparametric-2_cache/html/unnamed-chunk-19_36b82e31ac36ca2b1c2d6e6f42eef9bd">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>seed <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">group_by</span>(group2) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(balchange))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>seed <span class="sc">|&gt;</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">group_by</span>(group2) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">summarize</span>(<span class="at">median =</span> <span class="fu">median</span>(balchange))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 2
   group2    median
@@ -1126,20 +1116,20 @@ Confidence interval
 <section id="example" class="level3" data-number="16.3.2">
 <h3 data-number="16.3.2" class="anchored" data-anchor-id="example"><span class="header-section-number">16.3.2</span> Example</h3>
 <div class="cell" data-hash="17_nonparametric-2_cache/html/unnamed-chunk-21_021693bd4579e71e8d18ce8de69b00cd">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>b <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> B)</span>
-<span id="cb39-3"><a href="#cb39-3"></a></span>
-<span id="cb39-4"><a href="#cb39-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(b)) {</span>
-<span id="cb39-5"><a href="#cb39-5"></a>  </span>
-<span id="cb39-6"><a href="#cb39-6"></a>  x_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(seed<span class="sc">$</span>balchange, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb39-7"><a href="#cb39-7"></a>  </span>
-<span id="cb39-8"><a href="#cb39-8"></a>  b[i] <span class="ot">&lt;-</span> <span class="fu">median</span>(x_boot)</span>
-<span id="cb39-9"><a href="#cb39-9"></a>  </span>
-<span id="cb39-10"><a href="#cb39-10"></a>}</span>
-<span id="cb39-11"><a href="#cb39-11"></a></span>
-<span id="cb39-12"><a href="#cb39-12"></a><span class="fu">tibble</span>(b) <span class="sc">|&gt;</span></span>
-<span id="cb39-13"><a href="#cb39-13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(b)) <span class="sc">+</span></span>
-<span id="cb39-14"><a href="#cb39-14"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>b <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> B)</span>
+<span id="cb37-3"><a href="#cb37-3"></a></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(b)) {</span>
+<span id="cb37-5"><a href="#cb37-5"></a>  </span>
+<span id="cb37-6"><a href="#cb37-6"></a>  x_boot <span class="ot">&lt;-</span> <span class="fu">sample</span>(seed<span class="sc">$</span>balchange, <span class="at">replace =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb37-7"><a href="#cb37-7"></a>  </span>
+<span id="cb37-8"><a href="#cb37-8"></a>  b[i] <span class="ot">&lt;-</span> <span class="fu">median</span>(x_boot)</span>
+<span id="cb37-9"><a href="#cb37-9"></a>  </span>
+<span id="cb37-10"><a href="#cb37-10"></a>}</span>
+<span id="cb37-11"><a href="#cb37-11"></a></span>
+<span id="cb37-12"><a href="#cb37-12"></a><span class="fu">tibble</span>(b) <span class="sc">|&gt;</span></span>
+<span id="cb37-13"><a href="#cb37-13"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(b)) <span class="sc">+</span></span>
+<span id="cb37-14"><a href="#cb37-14"></a>  <span class="fu">geom_histogram</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1175,15 +1165,17 @@ Confidence interval
 <h3 data-number="16.3.5" class="anchored" data-anchor-id="example-1"><span class="header-section-number">16.3.5</span> Example</h3>
 <p>First, let’s repeat the SEED example from above using the <code>boot()</code> function. <code>boot()</code> expects a custom function with the argument <code>x</code> for the data and the argument <code>i</code> for the index for statistics. We use<code>R = 5000</code> for <code>B &lt;- 5000</code> in the earlier example.</p>
 <div class="cell" data-hash="17_nonparametric-2_cache/html/unnamed-chunk-22_5ac65f953dc738669e0bd67e99b7efaf">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(boot)</span>
-<span id="cb41-2"><a href="#cb41-2"></a></span>
-<span id="cb41-3"><a href="#cb41-3"></a>seed_bootstrap <span class="ot">&lt;-</span> <span class="fu">boot</span>(</span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="at">data =</span> seed<span class="sc">$</span>balchange, </span>
-<span id="cb41-5"><a href="#cb41-5"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x, i) <span class="fu">median</span>(x[i]), </span>
-<span id="cb41-6"><a href="#cb41-6"></a>  <span class="at">R =</span> <span class="dv">5000</span></span>
-<span id="cb41-7"><a href="#cb41-7"></a>)</span>
-<span id="cb41-8"><a href="#cb41-8"></a></span>
-<span id="cb41-9"><a href="#cb41-9"></a>seed_bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(boot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'boot' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>seed_bootstrap <span class="ot">&lt;-</span> <span class="fu">boot</span>(</span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="at">data =</span> seed<span class="sc">$</span>balchange, </span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="at">statistic =</span> <span class="cf">function</span>(x, i) <span class="fu">median</span>(x[i]), </span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="at">R =</span> <span class="dv">5000</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>)</span>
+<span id="cb41-6"><a href="#cb41-6"></a></span>
+<span id="cb41-7"><a href="#cb41-7"></a>seed_bootstrap</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 ORDINARY NONPARAMETRIC BOOTSTRAP
@@ -1245,16 +1237,11 @@ t1*   -63.04 -0.9602388    7.817336</code></pre>
 <span id="cb44-5"><a href="#cb44-5"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
 <span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
 <span id="cb44-7"><a href="#cb44-7"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in (function (mapping = NULL, data = NULL, stat = "identity", position = "identity", : All aesthetics have length 1, but the data has 5000 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
 <div class="cell-output-display">
 <p><img src="17_nonparametric-2_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> point_estimate, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Please be cautious in reporting a p-value of 0. This result is an approximation
 based on the number of `reps` chosen in the `generate()` step.
@@ -1266,12 +1253,12 @@ based on the number of `reps` chosen in the `generate()` step.
     &lt;dbl&gt;
 1       0</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">get_confidence_interval</span>(</span>
-<span id="cb49-3"><a href="#cb49-3"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
-<span id="cb49-4"><a href="#cb49-4"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb49-5"><a href="#cb49-5"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
-<span id="cb49-6"><a href="#cb49-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">get_confidence_interval</span>(</span>
+<span id="cb48-3"><a href="#cb48-3"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
+<span id="cb48-4"><a href="#cb48-4"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb48-5"><a href="#cb48-5"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci

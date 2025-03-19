@@ -516,9 +516,11 @@ Filtering Joins
 <p>We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it’s a dominant tool for storing data and often enters the data science workflow.</p>
 <p><code>library(readxl)</code> is the premier package for reading data from <code>.xls</code> and <code>.xlsx</code> files. <code>read_excel()</code>, which works like <code>read_csv()</code>, loads data from <code>.xls</code> and <code>.xlsx</code> files. Consider data from the Urban Institute’s <a href="https://apps.urban.org/features/debt-interactive-map/?type=overall&amp;variable=totcoll">Debt in America</a> feature accessed through the <a href="https://datacatalog.urban.org/dataset/debt-america-2022">Urban Institute Data Catalog</a>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb5-2"><a href="#cb5-2"></a></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">read_excel</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"state_dia_delinquency_ 7 Jun 2022.xlsx"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(readxl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'readxl' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">read_excel</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"state_dia_delinquency_ 7 Jun 2022.xlsx"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 51 × 28
    fips  state_name          state Share with Any Debt …¹ Share with Any Debt …²
@@ -552,16 +554,16 @@ Filtering Joins
 <p>Excel encourages bad habits and untidy data, so these arguments are useful for extracting data from messy Excel workbooks.</p>
 <p><code>readxl_example()</code> contains a perfect example. The workbook contains two sheets, which we can see with <code>excel_sheets()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">excel_sheets</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">excel_sheets</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "list-column"    "two-row-header"</code></pre>
 </div>
 </div>
 <p>As is common with many Excel workbooks, the second sheet contains a second row of column names with parenthetical comments about each column.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb9-2"><a href="#cb9-2"></a>  <span class="fu">read_excel</span>(<span class="at">sheet =</span> <span class="st">"two-row-header"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">read_excel</span>(<span class="at">sheet =</span> <span class="st">"two-row-header"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   name       species              death                 weight    
@@ -572,18 +574,18 @@ Filtering Joins
 </div>
 <p><a href="https://readxl.tidyverse.org/articles/multiple-header-rows.html">This vignette</a> suggests a simple solution to this problem.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># extract the column names</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>col_names <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">read_excel</span>(<span class="at">sheet =</span> <span class="st">"two-row-header"</span>, <span class="at">n_max =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">names</span>()</span>
-<span id="cb11-5"><a href="#cb11-5"></a></span>
-<span id="cb11-6"><a href="#cb11-6"></a><span class="co"># load the data and add the column names</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
-<span id="cb11-8"><a href="#cb11-8"></a>    <span class="fu">read_excel</span>(</span>
-<span id="cb11-9"><a href="#cb11-9"></a>      <span class="at">sheet =</span> <span class="st">"two-row-header"</span>, </span>
-<span id="cb11-10"><a href="#cb11-10"></a>      <span class="at">skip =</span> <span class="dv">2</span>,</span>
-<span id="cb11-11"><a href="#cb11-11"></a>      <span class="at">col_names =</span> col_names</span>
-<span id="cb11-12"><a href="#cb11-12"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># extract the column names</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>col_names <span class="ot">&lt;-</span> <span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">read_excel</span>(<span class="at">sheet =</span> <span class="st">"two-row-header"</span>, <span class="at">n_max =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">names</span>()</span>
+<span id="cb13-5"><a href="#cb13-5"></a></span>
+<span id="cb13-6"><a href="#cb13-6"></a><span class="co"># load the data and add the column names</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a><span class="fu">readxl_example</span>(<span class="st">"clippy.xlsx"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="fu">read_excel</span>(</span>
+<span id="cb13-9"><a href="#cb13-9"></a>      <span class="at">sheet =</span> <span class="st">"two-row-header"</span>, </span>
+<span id="cb13-10"><a href="#cb13-10"></a>      <span class="at">skip =</span> <span class="dv">2</span>,</span>
+<span id="cb13-11"><a href="#cb13-11"></a>      <span class="at">col_names =</span> col_names</span>
+<span id="cb13-12"><a href="#cb13-12"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   name   species   death               weight
@@ -644,27 +646,6 @@ Filtering Joins
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
 <p><strong>Why aren’t the data tidy?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi2006, <span class="sc">~</span>agi2016, <span class="sc">~</span>agi2020,</span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>, <span class="dv">114510</span>, <span class="dv">138244</span>,</span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>, <span class="dv">23645</span>, <span class="dv">26445</span>,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span>, <span class="dv">181691</span>, <span class="dv">245258</span></span>
-<span id="cb13-6"><a href="#cb13-6"></a>)</span>
-<span id="cb13-7"><a href="#cb13-7"></a></span>
-<span id="cb13-8"><a href="#cb13-8"></a>table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 4
-  state   agi2006 agi2016 agi2020
-  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 Alabama   95067  114510  138244
-2 Alaska    17458   23645   26445
-3 Arizona  146307  181691  245258</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
-<p>Year is a variable. This data is untidy because year is included in the column names.</p>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi2006, <span class="sc">~</span>agi2016, <span class="sc">~</span>agi2020,</span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>, <span class="dv">114510</span>, <span class="dv">138244</span>,</span>
@@ -681,12 +662,33 @@ Filtering Joins
 2 Alaska    17458   23645   26445
 3 Arizona  146307  181691  245258</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">pivot_longer</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">data =</span> table1, </span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="at">cols =</span> <span class="sc">-</span>state, </span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
-<span id="cb17-5"><a href="#cb17-5"></a>  <span class="at">values_to =</span> <span class="st">"agi"</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p>Year is a variable. This data is untidy because year is included in the column names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>table1 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi2006, <span class="sc">~</span>agi2016, <span class="sc">~</span>agi2020,</span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>, <span class="dv">114510</span>, <span class="dv">138244</span>,</span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>, <span class="dv">23645</span>, <span class="dv">26445</span>,</span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span>, <span class="dv">181691</span>, <span class="dv">245258</span></span>
+<span id="cb17-6"><a href="#cb17-6"></a>)</span>
+<span id="cb17-7"><a href="#cb17-7"></a></span>
+<span id="cb17-8"><a href="#cb17-8"></a>table1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 4
+  state   agi2006 agi2016 agi2020
+  &lt;chr&gt;     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 Alabama   95067  114510  138244
+2 Alaska    17458   23645   26445
+3 Arizona  146307  181691  245258</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">pivot_longer</span>(</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="at">data =</span> table1, </span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="at">cols =</span> <span class="sc">-</span>state, </span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="at">values_to =</span> <span class="st">"agi"</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   state   year       agi
@@ -723,27 +725,6 @@ Filtering Joins
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p><strong>Why aren’t the data tidy?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi2006|2016|2020</span><span class="st">`</span>,</span>
-<span id="cb19-3"><a href="#cb19-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"95067|114510|138244"</span>,</span>
-<span id="cb19-4"><a href="#cb19-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"17458|23645|26445"</span>,</span>
-<span id="cb19-5"><a href="#cb19-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"146307|181691|245258"</span></span>
-<span id="cb19-6"><a href="#cb19-6"></a>)</span>
-<span id="cb19-7"><a href="#cb19-7"></a></span>
-<span id="cb19-8"><a href="#cb19-8"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 3 × 2
-  state   `agi2006|2016|2020` 
-  &lt;chr&gt;   &lt;chr&gt;               
-1 Alabama 95067|114510|138244 
-2 Alaska  17458|23645|26445   
-3 Arizona 146307|181691|245258</code></pre>
-</div>
-</div>
-</div>
-<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
-<p>The values for 2006, 2016, and 2020 are all squished into one cell.</p>
-<div class="cell">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi2006|2016|2020</span><span class="st">`</span>,</span>
 <span id="cb21-3"><a href="#cb21-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"95067|114510|138244"</span>,</span>
@@ -760,17 +741,38 @@ Filtering Joins
 2 Alaska  17458|23645|26445   
 3 Arizona 146307|181691|245258</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">separate_wider_delim</span>(</span>
-<span id="cb23-2"><a href="#cb23-2"></a>  <span class="at">data =</span> table2, </span>
-<span id="cb23-3"><a href="#cb23-3"></a>  <span class="at">cols =</span> <span class="st">`</span><span class="at">agi2006|2016|2020</span><span class="st">`</span>, </span>
-<span id="cb23-4"><a href="#cb23-4"></a>  <span class="at">delim =</span> <span class="st">"|"</span>,</span>
-<span id="cb23-5"><a href="#cb23-5"></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"2006"</span>, <span class="st">"2016"</span>, <span class="st">"2020"</span>)</span>
-<span id="cb23-6"><a href="#cb23-6"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb23-7"><a href="#cb23-7"></a>  <span class="fu">pivot_longer</span>(</span>
-<span id="cb23-8"><a href="#cb23-8"></a>    <span class="at">cols =</span> <span class="sc">-</span>state,</span>
-<span id="cb23-9"><a href="#cb23-9"></a>    <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
-<span id="cb23-10"><a href="#cb23-10"></a>    <span class="at">values_to =</span> <span class="st">"agi"</span></span>
-<span id="cb23-11"><a href="#cb23-11"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<p>The values for 2006, 2016, and 2020 are all squished into one cell.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>table2 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi2006|2016|2020</span><span class="st">`</span>,</span>
+<span id="cb23-3"><a href="#cb23-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"95067|114510|138244"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"17458|23645|26445"</span>,</span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"146307|181691|245258"</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>)</span>
+<span id="cb23-7"><a href="#cb23-7"></a></span>
+<span id="cb23-8"><a href="#cb23-8"></a>table2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 2
+  state   `agi2006|2016|2020` 
+  &lt;chr&gt;   &lt;chr&gt;               
+1 Alabama 95067|114510|138244 
+2 Alaska  17458|23645|26445   
+3 Arizona 146307|181691|245258</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">separate_wider_delim</span>(</span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="at">data =</span> table2, </span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="at">cols =</span> <span class="st">`</span><span class="at">agi2006|2016|2020</span><span class="st">`</span>, </span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="at">delim =</span> <span class="st">"|"</span>,</span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">names =</span> <span class="fu">c</span>(<span class="st">"2006"</span>, <span class="st">"2016"</span>, <span class="st">"2020"</span>)</span>
+<span id="cb25-6"><a href="#cb25-6"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="fu">pivot_longer</span>(</span>
+<span id="cb25-8"><a href="#cb25-8"></a>    <span class="at">cols =</span> <span class="sc">-</span>state,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>    <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
+<span id="cb25-10"><a href="#cb25-10"></a>    <span class="at">values_to =</span> <span class="st">"agi"</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   state   year  agi   
@@ -792,19 +794,19 @@ Filtering Joins
 <p><br></p>
 <p><code>bind_rows()</code> combines data frames by stacking the rows.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>one <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb25-2"><a href="#cb25-2"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var,</span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="st">"1"</span>, <span class="fl">3.14</span>,</span>
-<span id="cb25-4"><a href="#cb25-4"></a>  <span class="st">"2"</span>, <span class="fl">3.15</span>,</span>
-<span id="cb25-5"><a href="#cb25-5"></a>)</span>
-<span id="cb25-6"><a href="#cb25-6"></a></span>
-<span id="cb25-7"><a href="#cb25-7"></a>two <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb25-8"><a href="#cb25-8"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var,</span>
-<span id="cb25-9"><a href="#cb25-9"></a>  <span class="st">"3"</span>, <span class="fl">3.16</span>,</span>
-<span id="cb25-10"><a href="#cb25-10"></a>  <span class="st">"4"</span>, <span class="fl">3.17</span>,</span>
-<span id="cb25-11"><a href="#cb25-11"></a>)</span>
-<span id="cb25-12"><a href="#cb25-12"></a></span>
-<span id="cb25-13"><a href="#cb25-13"></a><span class="fu">bind_rows</span>(one, two)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>one <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb27-2"><a href="#cb27-2"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var,</span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="st">"1"</span>, <span class="fl">3.14</span>,</span>
+<span id="cb27-4"><a href="#cb27-4"></a>  <span class="st">"2"</span>, <span class="fl">3.15</span>,</span>
+<span id="cb27-5"><a href="#cb27-5"></a>)</span>
+<span id="cb27-6"><a href="#cb27-6"></a></span>
+<span id="cb27-7"><a href="#cb27-7"></a>two <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var,</span>
+<span id="cb27-9"><a href="#cb27-9"></a>  <span class="st">"3"</span>, <span class="fl">3.16</span>,</span>
+<span id="cb27-10"><a href="#cb27-10"></a>  <span class="st">"4"</span>, <span class="fl">3.17</span>,</span>
+<span id="cb27-11"><a href="#cb27-11"></a>)</span>
+<span id="cb27-12"><a href="#cb27-12"></a></span>
+<span id="cb27-13"><a href="#cb27-13"></a><span class="fu">bind_rows</span>(one, two)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 2
   id      var
@@ -817,19 +819,19 @@ Filtering Joins
 </div>
 <p><code>bind_cols()</code> combines data frames by appending columns.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>three <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var1,</span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="st">"1"</span>, <span class="fl">3.14</span>,</span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="st">"2"</span>, <span class="fl">3.15</span>,</span>
-<span id="cb27-5"><a href="#cb27-5"></a>)</span>
-<span id="cb27-6"><a href="#cb27-6"></a></span>
-<span id="cb27-7"><a href="#cb27-7"></a>four <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb27-8"><a href="#cb27-8"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var2,</span>
-<span id="cb27-9"><a href="#cb27-9"></a>  <span class="st">"1"</span>, <span class="fl">3.16</span>,</span>
-<span id="cb27-10"><a href="#cb27-10"></a>  <span class="st">"2"</span>, <span class="fl">3.17</span>,</span>
-<span id="cb27-11"><a href="#cb27-11"></a>)</span>
-<span id="cb27-12"><a href="#cb27-12"></a></span>
-<span id="cb27-13"><a href="#cb27-13"></a><span class="fu">bind_cols</span>(three, four)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>three <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb29-2"><a href="#cb29-2"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var1,</span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="st">"1"</span>, <span class="fl">3.14</span>,</span>
+<span id="cb29-4"><a href="#cb29-4"></a>  <span class="st">"2"</span>, <span class="fl">3.15</span>,</span>
+<span id="cb29-5"><a href="#cb29-5"></a>)</span>
+<span id="cb29-6"><a href="#cb29-6"></a></span>
+<span id="cb29-7"><a href="#cb29-7"></a>four <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb29-8"><a href="#cb29-8"></a>  <span class="sc">~</span>id, <span class="sc">~</span>var2,</span>
+<span id="cb29-9"><a href="#cb29-9"></a>  <span class="st">"1"</span>, <span class="fl">3.16</span>,</span>
+<span id="cb29-10"><a href="#cb29-10"></a>  <span class="st">"2"</span>, <span class="fl">3.17</span>,</span>
+<span id="cb29-11"><a href="#cb29-11"></a>)</span>
+<span id="cb29-12"><a href="#cb29-12"></a></span>
+<span id="cb29-13"><a href="#cb29-13"></a><span class="fu">bind_cols</span>(three, four)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `id` -&gt; `id...1`
@@ -845,11 +847,11 @@ Filtering Joins
 </div>
 <p>When possible, we recommend using relational joins like <code>left_join()</code> to combine by columns because it is easy to miss-align rows with <code>bind_cols()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">left_join</span>(</span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="at">x =</span> three,</span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">y =</span> four,</span>
-<span id="cb30-4"><a href="#cb30-4"></a>  <span class="at">by =</span> <span class="st">"id"</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">left_join</span>(</span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="at">x =</span> three,</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">y =</span> four,</span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">by =</span> <span class="st">"id"</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   id     var1  var2
@@ -867,14 +869,14 @@ Filtering Joins
 <div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
 <p><strong>Why aren’t the data tidy?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>table3_2006 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb32-2"><a href="#cb32-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb32-3"><a href="#cb32-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"95067"</span>,</span>
-<span id="cb32-4"><a href="#cb32-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"17458"</span>,</span>
-<span id="cb32-5"><a href="#cb32-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"146307"</span></span>
-<span id="cb32-6"><a href="#cb32-6"></a>)</span>
-<span id="cb32-7"><a href="#cb32-7"></a></span>
-<span id="cb32-8"><a href="#cb32-8"></a>table3_2006</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>table3_2006 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"95067"</span>,</span>
+<span id="cb34-4"><a href="#cb34-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"17458"</span>,</span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"146307"</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>)</span>
+<span id="cb34-7"><a href="#cb34-7"></a></span>
+<span id="cb34-8"><a href="#cb34-8"></a>table3_2006</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state   agi   
@@ -883,14 +885,14 @@ Filtering Joins
 2 Alaska  17458 
 3 Arizona 146307</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>table3_2016 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"114510"</span>,</span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"23645"</span>,</span>
-<span id="cb34-5"><a href="#cb34-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"181691"</span></span>
-<span id="cb34-6"><a href="#cb34-6"></a>)</span>
-<span id="cb34-7"><a href="#cb34-7"></a></span>
-<span id="cb34-8"><a href="#cb34-8"></a>table3_2016</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>table3_2016 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"114510"</span>,</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"23645"</span>,</span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"181691"</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>)</span>
+<span id="cb36-7"><a href="#cb36-7"></a></span>
+<span id="cb36-8"><a href="#cb36-8"></a>table3_2016</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state   agi   
@@ -899,14 +901,14 @@ Filtering Joins
 2 Alaska  23645 
 3 Arizona 181691</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>table3_2020 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi</span><span class="st">`</span>,</span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"138244"</span>,</span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"26445"</span>,</span>
-<span id="cb36-5"><a href="#cb36-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"245258"</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a>)</span>
-<span id="cb36-7"><a href="#cb36-7"></a></span>
-<span id="cb36-8"><a href="#cb36-8"></a>table3_2020</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>table3_2020 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi</span><span class="st">`</span>,</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"138244"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"26445"</span>,</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"245258"</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>)</span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a>table3_2020</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state   agi   
@@ -920,14 +922,14 @@ Filtering Joins
 <div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
 <p>The variable year is contained in the data set names. The <code>.id</code> argument in <code>bind_rows()</code> allows us to create the year variable.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>table3_2006 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
-<span id="cb38-4"><a href="#cb38-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
-<span id="cb38-5"><a href="#cb38-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
-<span id="cb38-6"><a href="#cb38-6"></a>)</span>
-<span id="cb38-7"><a href="#cb38-7"></a></span>
-<span id="cb38-8"><a href="#cb38-8"></a>table3_2006</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>table3_2006 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
+<span id="cb40-5"><a href="#cb40-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
+<span id="cb40-6"><a href="#cb40-6"></a>)</span>
+<span id="cb40-7"><a href="#cb40-7"></a></span>
+<span id="cb40-8"><a href="#cb40-8"></a>table3_2006</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state      agi
@@ -936,14 +938,14 @@ Filtering Joins
 2 Alaska   17458
 3 Arizona 146307</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>table3_2016 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb40-2"><a href="#cb40-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb40-3"><a href="#cb40-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">114510</span>,</span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">23645</span>,</span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">181691</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>)</span>
-<span id="cb40-7"><a href="#cb40-7"></a></span>
-<span id="cb40-8"><a href="#cb40-8"></a>table3_2016</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>table3_2016 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb42-2"><a href="#cb42-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb42-3"><a href="#cb42-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">114510</span>,</span>
+<span id="cb42-4"><a href="#cb42-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">23645</span>,</span>
+<span id="cb42-5"><a href="#cb42-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">181691</span></span>
+<span id="cb42-6"><a href="#cb42-6"></a>)</span>
+<span id="cb42-7"><a href="#cb42-7"></a></span>
+<span id="cb42-8"><a href="#cb42-8"></a>table3_2016</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state      agi
@@ -952,14 +954,14 @@ Filtering Joins
 2 Alaska   23645
 3 Arizona 181691</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>table3_2020 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb42-2"><a href="#cb42-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi</span><span class="st">`</span>,</span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">138244</span>,</span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">26445</span>,</span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">245258</span></span>
-<span id="cb42-6"><a href="#cb42-6"></a>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a>table3_2020</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>table3_2020 <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb44-2"><a href="#cb44-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span><span class="st">`</span><span class="at">agi</span><span class="st">`</span>,</span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">138244</span>,</span>
+<span id="cb44-4"><a href="#cb44-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">26445</span>,</span>
+<span id="cb44-5"><a href="#cb44-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">245258</span></span>
+<span id="cb44-6"><a href="#cb44-6"></a>)</span>
+<span id="cb44-7"><a href="#cb44-7"></a></span>
+<span id="cb44-8"><a href="#cb44-8"></a>table3_2020</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state      agi
@@ -968,12 +970,12 @@ Filtering Joins
 2 Alaska   26445
 3 Arizona 245258</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="st">`</span><span class="at">2006</span><span class="st">`</span> <span class="ot">=</span> table3_2006,</span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="st">`</span><span class="at">2016</span><span class="st">`</span> <span class="ot">=</span> table3_2016,</span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="st">`</span><span class="at">2020</span><span class="st">`</span> <span class="ot">=</span> table3_2020,</span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="at">.id =</span> <span class="st">"year"</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="st">`</span><span class="at">2006</span><span class="st">`</span> <span class="ot">=</span> table3_2006,</span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="st">`</span><span class="at">2016</span><span class="st">`</span> <span class="ot">=</span> table3_2016,</span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="st">`</span><span class="at">2020</span><span class="st">`</span> <span class="ot">=</span> table3_2020,</span>
+<span id="cb46-5"><a href="#cb46-5"></a>  <span class="at">.id =</span> <span class="st">"year"</span></span>
+<span id="cb46-6"><a href="#cb46-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 9 × 3
   year  state      agi
@@ -1003,14 +1005,14 @@ Filtering Joins
 <div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
 <p><strong>Why aren’t the data tidy?</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>table4a <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
-<span id="cb46-5"><a href="#cb46-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a>)</span>
-<span id="cb46-7"><a href="#cb46-7"></a></span>
-<span id="cb46-8"><a href="#cb46-8"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>table4a <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a>)</span>
+<span id="cb48-7"><a href="#cb48-7"></a></span>
+<span id="cb48-8"><a href="#cb48-8"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state      agi
@@ -1019,14 +1021,14 @@ Filtering Joins
 2 Alaska   17458
 3 Arizona 146307</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>table4b <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb48-2"><a href="#cb48-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>returns,</span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">1929941</span>,</span>
-<span id="cb48-4"><a href="#cb48-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">322369</span>,</span>
-<span id="cb48-5"><a href="#cb48-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">2454951</span></span>
-<span id="cb48-6"><a href="#cb48-6"></a>)</span>
-<span id="cb48-7"><a href="#cb48-7"></a></span>
-<span id="cb48-8"><a href="#cb48-8"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>table4b <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>returns,</span>
+<span id="cb50-3"><a href="#cb50-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">1929941</span>,</span>
+<span id="cb50-4"><a href="#cb50-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">322369</span>,</span>
+<span id="cb50-5"><a href="#cb50-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">2454951</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a>)</span>
+<span id="cb50-7"><a href="#cb50-7"></a></span>
+<span id="cb50-8"><a href="#cb50-8"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state   returns
@@ -1040,14 +1042,14 @@ Filtering Joins
 <div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
 <p>These data are tidy! But keeping the data in two separate data frames may not make sense. Let’s use <code>full_join()</code> to combine the data and <code>anti_join()</code> to see if there are mismatches.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>table4a <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb50-2"><a href="#cb50-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
-<span id="cb50-4"><a href="#cb50-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
-<span id="cb50-5"><a href="#cb50-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
-<span id="cb50-6"><a href="#cb50-6"></a>)</span>
-<span id="cb50-7"><a href="#cb50-7"></a></span>
-<span id="cb50-8"><a href="#cb50-8"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>table4a <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb52-2"><a href="#cb52-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>agi,</span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">95067</span>,</span>
+<span id="cb52-4"><a href="#cb52-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">17458</span>,</span>
+<span id="cb52-5"><a href="#cb52-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">146307</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a>)</span>
+<span id="cb52-7"><a href="#cb52-7"></a></span>
+<span id="cb52-8"><a href="#cb52-8"></a>table4a</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state      agi
@@ -1056,14 +1058,14 @@ Filtering Joins
 2 Alaska   17458
 3 Arizona 146307</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>table4b <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>returns,</span>
-<span id="cb52-3"><a href="#cb52-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">1929941</span>,</span>
-<span id="cb52-4"><a href="#cb52-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">322369</span>,</span>
-<span id="cb52-5"><a href="#cb52-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">2454951</span></span>
-<span id="cb52-6"><a href="#cb52-6"></a>)</span>
-<span id="cb52-7"><a href="#cb52-7"></a></span>
-<span id="cb52-8"><a href="#cb52-8"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a>table4b <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb54-2"><a href="#cb54-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>returns,</span>
+<span id="cb54-3"><a href="#cb54-3"></a>  <span class="st">"Alabama"</span>, <span class="dv">1929941</span>,</span>
+<span id="cb54-4"><a href="#cb54-4"></a>  <span class="st">"Alaska"</span>, <span class="dv">322369</span>,</span>
+<span id="cb54-5"><a href="#cb54-5"></a>  <span class="st">"Arizona"</span>, <span class="dv">2454951</span></span>
+<span id="cb54-6"><a href="#cb54-6"></a>)</span>
+<span id="cb54-7"><a href="#cb54-7"></a></span>
+<span id="cb54-8"><a href="#cb54-8"></a>table4b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   state   returns
@@ -1072,7 +1074,7 @@ Filtering Joins
 2 Alaska   322369
 3 Arizona 2454951</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">full_join</span>(table4a, table4b, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">full_join</span>(table4a, table4b, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   state      agi returns
@@ -1081,12 +1083,12 @@ Filtering Joins
 2 Alaska   17458  322369
 3 Arizona 146307 2454951</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a><span class="fu">anti_join</span>(table4a, table4b, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">anti_join</span>(table4a, table4b, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 2
 # ℹ 2 variables: state &lt;chr&gt;, agi &lt;dbl&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">anti_join</span>(table4b, table4a, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a><span class="fu">anti_join</span>(table4b, table4a, <span class="at">by =</span> <span class="st">"state"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 0 × 2
 # ℹ 2 variables: state &lt;chr&gt;, returns &lt;dbl&gt;</code></pre>
@@ -1123,11 +1125,11 @@ Filtering Joins
 <h4 class="anchored" data-anchor-id="detecting-matches">Detecting Matches</h4>
 <p><code>str_detect()</code> is useful for <strong>detecting matches</strong> in strings, which can be useful with <code>filter()</code>. Consider the executive orders data set and suppose we want to return executive orders that contain the word <code>"Virginia"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(text)) <span class="sc">|&gt;</span></span>
-<span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">group_by</span>(executive_order_number) <span class="sc">|&gt;</span></span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">summarize</span>(<span class="at">text =</span> <span class="fu">list</span>(text)) <span class="sc">|&gt;</span></span>
-<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(text, <span class="sc">~</span><span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">" "</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(text)) <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="fu">group_by</span>(executive_order_number) <span class="sc">|&gt;</span></span>
+<span id="cb62-4"><a href="#cb62-4"></a>  <span class="fu">summarize</span>(<span class="at">text =</span> <span class="fu">list</span>(text)) <span class="sc">|&gt;</span></span>
+<span id="cb62-5"><a href="#cb62-5"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(text, <span class="sc">~</span><span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">" "</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 196537 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
@@ -1139,7 +1141,7 @@ date (1): signing_date
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>eos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>eos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,126 × 2
    executive_order_number text                                                  
@@ -1156,8 +1158,8 @@ date (1): signing_date
 10                  12952 "Executive Order 12952 of February 24, 1995 Amendment…
 # ℹ 1,116 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>eos <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="at">string =</span> text, <span class="at">pattern =</span> <span class="st">"Virginia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>eos <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="at">string =</span> text, <span class="at">pattern =</span> <span class="st">"Virginia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   executive_order_number text                                                   
@@ -1175,8 +1177,8 @@ date (1): signing_date
 <h4 class="anchored" data-anchor-id="subsetting-strings">Subsetting Strings</h4>
 <p><code>str_sub()</code> can <strong>subset strings</strong> based on positions within the string. Consider an example where we want to extract state FIPS codes from county FIPS codes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="st">"01001"</span>, <span class="st">"02013"</span>, <span class="st">"04001"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">mutate</span>(<span class="at">state_fips =</span> <span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="st">"01001"</span>, <span class="st">"02013"</span>, <span class="st">"04001"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">mutate</span>(<span class="at">state_fips =</span> <span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fips  state_fips
@@ -1191,8 +1193,8 @@ date (1): signing_date
 <h4 class="anchored" data-anchor-id="managing-lengths">Managing Lengths</h4>
 <p><code>str_pad()</code> is useful for <strong>managing lengths</strong>. Consider the common situation when zeros are dropped from the beginning of FIPS codes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">mutate</span>(<span class="at">fips =</span> <span class="fu">str_pad</span>(fips, <span class="at">side =</span> <span class="st">"left"</span>, <span class="at">pad =</span> <span class="st">"0"</span>, <span class="at">width =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">mutate</span>(<span class="at">fips =</span> <span class="fu">str_pad</span>(fips, <span class="at">side =</span> <span class="st">"left"</span>, <span class="at">pad =</span> <span class="st">"0"</span>, <span class="at">width =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   fips 
@@ -1207,8 +1209,8 @@ date (1): signing_date
 <h4 class="anchored" data-anchor-id="modifying-strings">Modifying Strings</h4>
 <p><code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, and <code>str_remove_all()</code> can delete or <strong>modify</strong> parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">tibble</span>(<span class="at">course =</span> <span class="fu">c</span>(<span class="st">"PPOL 670"</span>, <span class="st">"GOVT 8009"</span>, <span class="st">"PPOL 6819"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">mutate</span>(<span class="at">course =</span> <span class="fu">str_remove</span>(course, <span class="at">pattern =</span> <span class="st">"[:alpha:]*</span><span class="sc">\\</span><span class="st">s"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">tibble</span>(<span class="at">course =</span> <span class="fu">c</span>(<span class="st">"PPOL 670"</span>, <span class="st">"GOVT 8009"</span>, <span class="st">"PPOL 6819"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">mutate</span>(<span class="at">course =</span> <span class="fu">str_remove</span>(course, <span class="at">pattern =</span> <span class="st">"[:alpha:]*</span><span class="sc">\\</span><span class="st">s"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   course
@@ -1220,8 +1222,8 @@ date (1): signing_date
 </div>
 <p><code>str_c()</code> and <code>str_glue()</code> are useful for <strong>joining</strong> strings. Consider an example where we want to “fill in the blank” with a variable in a data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">mutate</span>(<span class="at">sentence =</span> <span class="fu">str_glue</span>(<span class="st">"my favorite fruit is {fruit}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">mutate</span>(<span class="at">sentence =</span> <span class="fu">str_glue</span>(<span class="st">"my favorite fruit is {fruit}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fruit     sentence                      
@@ -1232,11 +1234,11 @@ date (1): signing_date
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb74-3"><a href="#cb74-3"></a>    <span class="at">another_sentence =</span> </span>
-<span id="cb74-4"><a href="#cb74-4"></a>      <span class="fu">str_c</span>(<span class="st">"Who doesn't like a good "</span>, fruit, <span class="st">"."</span>)</span>
-<span id="cb74-5"><a href="#cb74-5"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb76-2"><a href="#cb76-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb76-3"><a href="#cb76-3"></a>    <span class="at">another_sentence =</span> </span>
+<span id="cb76-4"><a href="#cb76-4"></a>      <span class="fu">str_c</span>(<span class="st">"Who doesn't like a good "</span>, fruit, <span class="st">"."</span>)</span>
+<span id="cb76-5"><a href="#cb76-5"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fruit     another_sentence                  
@@ -1292,14 +1294,14 @@ Factors
 <section id="factor-basics" class="level4">
 <h4 class="anchored" data-anchor-id="factor-basics">Factor Basics</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>))</span>
-<span id="cb76-2"><a href="#cb76-2"></a></span>
-<span id="cb76-3"><a href="#cb76-3"></a>x1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>))</span>
+<span id="cb78-2"><a href="#cb78-2"></a></span>
+<span id="cb78-3"><a href="#cb78-3"></a>x1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] a a b c
 Levels: d c b a</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="fu">attributes</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">attributes</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$levels
 [1] "d" "c" "b" "a"
@@ -1307,14 +1309,14 @@ Levels: d c b a</code></pre>
 $class
 [1] "factor"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">levels</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">levels</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "d" "c" "b" "a"</code></pre>
 </div>
 </div>
 <p><code>x1</code> has order but it isn’t ordinal. Sometimes we’ll come across ordinal factor variables, like with the <code>diamonds</code> data set. Unintentional ordinal variables can cause unexpected errors. For example, including ordinal data as predictors in regression models will lead to different estimated coefficients than other variable types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">glimpse</span>(diamonds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a><span class="fu">glimpse</span>(diamonds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 53,940
 Columns: 10
@@ -1331,18 +1333,18 @@ $ z       &lt;dbl&gt; 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), </span>
-<span id="cb84-3"><a href="#cb84-3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>),</span>
-<span id="cb84-4"><a href="#cb84-4"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
-<span id="cb84-5"><a href="#cb84-5"></a>)</span>
-<span id="cb84-6"><a href="#cb84-6"></a></span>
-<span id="cb84-7"><a href="#cb84-7"></a>x2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb86-2"><a href="#cb86-2"></a>  <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), </span>
+<span id="cb86-3"><a href="#cb86-3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>),</span>
+<span id="cb86-4"><a href="#cb86-4"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
+<span id="cb86-5"><a href="#cb86-5"></a>)</span>
+<span id="cb86-6"><a href="#cb86-6"></a></span>
+<span id="cb86-7"><a href="#cb86-7"></a>x2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] a a b c
 Levels: d &lt; c &lt; b &lt; a</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">attributes</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">attributes</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$levels
 [1] "d" "c" "b" "a"
@@ -1350,49 +1352,49 @@ Levels: d &lt; c &lt; b &lt; a</code></pre>
 $class
 [1] "ordered" "factor" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">levels</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="fu">levels</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "d" "c" "b" "a"</code></pre>
 </div>
 </div>
 <p><a href="#fig-factors">Figure&nbsp;<span>3.1</span></a> shows how we can use a factor to give a variable a non-alpha numeric order and preserve empty levels. In this case, February and March have zero tropical depressions, tropical storms, and hurricanes and we want to demonstrate that emptiness.</p>
 <div>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="co"># use case_match to convert integers into month names</span></span>
-<span id="cb90-2"><a href="#cb90-2"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
-<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb90-4"><a href="#cb90-4"></a>    <span class="at">month =</span> <span class="fu">case_match</span>(</span>
-<span id="cb90-5"><a href="#cb90-5"></a>      month,</span>
-<span id="cb90-6"><a href="#cb90-6"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Jan"</span>,</span>
-<span id="cb90-7"><a href="#cb90-7"></a>      <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Apr"</span>,</span>
-<span id="cb90-8"><a href="#cb90-8"></a>      <span class="dv">5</span> <span class="sc">~</span> <span class="st">"May"</span>,</span>
-<span id="cb90-9"><a href="#cb90-9"></a>      <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Jun"</span>,</span>
-<span id="cb90-10"><a href="#cb90-10"></a>      <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Jul"</span>,</span>
-<span id="cb90-11"><a href="#cb90-11"></a>      <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Aug"</span>,</span>
-<span id="cb90-12"><a href="#cb90-12"></a>      <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Sep"</span>,</span>
-<span id="cb90-13"><a href="#cb90-13"></a>      <span class="dv">10</span> <span class="sc">~</span> <span class="st">"Oct"</span>,</span>
-<span id="cb90-14"><a href="#cb90-14"></a>      <span class="dv">11</span> <span class="sc">~</span> <span class="st">"Nov"</span>,</span>
-<span id="cb90-15"><a href="#cb90-15"></a>      <span class="dv">12</span> <span class="sc">~</span> <span class="st">"Dec"</span></span>
-<span id="cb90-16"><a href="#cb90-16"></a>    )</span>
-<span id="cb90-17"><a href="#cb90-17"></a>  )</span>
-<span id="cb90-18"><a href="#cb90-18"></a></span>
-<span id="cb90-19"><a href="#cb90-19"></a><span class="co"># create data viz without factors</span></span>
-<span id="cb90-20"><a href="#cb90-20"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb90-21"><a href="#cb90-21"></a>  <span class="fu">count</span>(month) <span class="sc">|&gt;</span></span>
-<span id="cb90-22"><a href="#cb90-22"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb90-23"><a href="#cb90-23"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb90-24"><a href="#cb90-24"></a></span>
-<span id="cb90-25"><a href="#cb90-25"></a><span class="co"># add factor variable</span></span>
-<span id="cb90-26"><a href="#cb90-26"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
-<span id="cb90-27"><a href="#cb90-27"></a>            <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>)</span>
-<span id="cb90-28"><a href="#cb90-28"></a></span>
-<span id="cb90-29"><a href="#cb90-29"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
-<span id="cb90-30"><a href="#cb90-30"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> months)) </span>
-<span id="cb90-31"><a href="#cb90-31"></a></span>
-<span id="cb90-32"><a href="#cb90-32"></a><span class="co"># create data viz with factors</span></span>
-<span id="cb90-33"><a href="#cb90-33"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb90-34"><a href="#cb90-34"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb90-35"><a href="#cb90-35"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb90-36"><a href="#cb90-36"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a><span class="co"># use case_match to convert integers into month names</span></span>
+<span id="cb92-2"><a href="#cb92-2"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
+<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb92-4"><a href="#cb92-4"></a>    <span class="at">month =</span> <span class="fu">case_match</span>(</span>
+<span id="cb92-5"><a href="#cb92-5"></a>      month,</span>
+<span id="cb92-6"><a href="#cb92-6"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Jan"</span>,</span>
+<span id="cb92-7"><a href="#cb92-7"></a>      <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Apr"</span>,</span>
+<span id="cb92-8"><a href="#cb92-8"></a>      <span class="dv">5</span> <span class="sc">~</span> <span class="st">"May"</span>,</span>
+<span id="cb92-9"><a href="#cb92-9"></a>      <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Jun"</span>,</span>
+<span id="cb92-10"><a href="#cb92-10"></a>      <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Jul"</span>,</span>
+<span id="cb92-11"><a href="#cb92-11"></a>      <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Aug"</span>,</span>
+<span id="cb92-12"><a href="#cb92-12"></a>      <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Sep"</span>,</span>
+<span id="cb92-13"><a href="#cb92-13"></a>      <span class="dv">10</span> <span class="sc">~</span> <span class="st">"Oct"</span>,</span>
+<span id="cb92-14"><a href="#cb92-14"></a>      <span class="dv">11</span> <span class="sc">~</span> <span class="st">"Nov"</span>,</span>
+<span id="cb92-15"><a href="#cb92-15"></a>      <span class="dv">12</span> <span class="sc">~</span> <span class="st">"Dec"</span></span>
+<span id="cb92-16"><a href="#cb92-16"></a>    )</span>
+<span id="cb92-17"><a href="#cb92-17"></a>  )</span>
+<span id="cb92-18"><a href="#cb92-18"></a></span>
+<span id="cb92-19"><a href="#cb92-19"></a><span class="co"># create data viz without factors</span></span>
+<span id="cb92-20"><a href="#cb92-20"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb92-21"><a href="#cb92-21"></a>  <span class="fu">count</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb92-22"><a href="#cb92-22"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb92-23"><a href="#cb92-23"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb92-24"><a href="#cb92-24"></a></span>
+<span id="cb92-25"><a href="#cb92-25"></a><span class="co"># add factor variable</span></span>
+<span id="cb92-26"><a href="#cb92-26"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
+<span id="cb92-27"><a href="#cb92-27"></a>            <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>)</span>
+<span id="cb92-28"><a href="#cb92-28"></a></span>
+<span id="cb92-29"><a href="#cb92-29"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
+<span id="cb92-30"><a href="#cb92-30"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> months)) </span>
+<span id="cb92-31"><a href="#cb92-31"></a></span>
+<span id="cb92-32"><a href="#cb92-32"></a><span class="co"># create data viz with factors</span></span>
+<span id="cb92-33"><a href="#cb92-33"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb92-34"><a href="#cb92-34"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb92-35"><a href="#cb92-35"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb92-36"><a href="#cb92-36"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-factors" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1419,8 +1421,8 @@ $class
 </div>
 <p>Factors also change the behavior of summary functions like <code>count()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">count</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">count</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    month     n
@@ -1436,8 +1438,8 @@ $class
  9 Nov    1170
 10 Dec     212</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
    month     n
@@ -1462,16 +1464,16 @@ $class
 <h4 class="anchored" data-anchor-id="changing-order">Changing Order</h4>
 <p><code>fct_relevel()</code>, <code>fct_rev()</code>, and <code>fct_reorder()</code> are useful functions for modifying the order of factor variables. <a href="#fig-fct_rev">Figure&nbsp;<span>3.2</span></a> demonstrates using <code>fct_rev()</code> to flip the order of a categorical axis in ggplot2.</p>
 <div>
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb95-3"><a href="#cb95-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb95-4"><a href="#cb95-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb95-5"><a href="#cb95-5"></a></span>
-<span id="cb95-6"><a href="#cb95-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb95-7"><a href="#cb95-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_rev</span>(month)) <span class="sc">|&gt;</span></span>
-<span id="cb95-8"><a href="#cb95-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb95-9"><a href="#cb95-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb95-10"><a href="#cb95-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb97-2"><a href="#cb97-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb97-3"><a href="#cb97-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb97-4"><a href="#cb97-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb97-5"><a href="#cb97-5"></a></span>
+<span id="cb97-6"><a href="#cb97-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb97-7"><a href="#cb97-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_rev</span>(month)) <span class="sc">|&gt;</span></span>
+<span id="cb97-8"><a href="#cb97-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb97-9"><a href="#cb97-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb97-10"><a href="#cb97-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_rev" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1498,16 +1500,16 @@ $class
 </div>
 <p><a href="#fig-fct_reorder">Figure&nbsp;<span>3.3</span></a> orders the factor variable based on the number of observations in each category using <code>fct_reorder()</code>. <code>fct_reorder()</code> can order variables based on more sophisticated summaries than just magnitude. For example, it can order box-and-whisker plots based on the median or even something as arbitrary at the 60th percentile.</p>
 <div>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb96-3"><a href="#cb96-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb96-4"><a href="#cb96-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb96-5"><a href="#cb96-5"></a></span>
-<span id="cb96-6"><a href="#cb96-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb96-7"><a href="#cb96-7"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb96-8"><a href="#cb96-8"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_reorder</span>(<span class="at">.f =</span> month, <span class="at">.x =</span> n, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
-<span id="cb96-9"><a href="#cb96-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb96-10"><a href="#cb96-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb98-2"><a href="#cb98-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb98-3"><a href="#cb98-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb98-4"><a href="#cb98-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb98-5"><a href="#cb98-5"></a></span>
+<span id="cb98-6"><a href="#cb98-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb98-7"><a href="#cb98-7"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb98-8"><a href="#cb98-8"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_reorder</span>(<span class="at">.f =</span> month, <span class="at">.x =</span> n, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
+<span id="cb98-9"><a href="#cb98-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb98-10"><a href="#cb98-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_reorder" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1537,16 +1539,16 @@ $class
 <h4 class="anchored" data-anchor-id="changing-values">Changing Values</h4>
 <p>Functions like <code>fct_recode()</code> and <code>fct_lump_min()</code> are useful for changing factor variables. <a href="#fig-fct_lump_min">Figure&nbsp;<span>3.4</span></a> combines categories with fewer than 1,000 observations into an <code>"Other"</code> group.</p>
 <div>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb97-2"><a href="#cb97-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb97-3"><a href="#cb97-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb97-4"><a href="#cb97-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb97-5"><a href="#cb97-5"></a></span>
-<span id="cb97-6"><a href="#cb97-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb97-7"><a href="#cb97-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_lump_min</span>(month, <span class="at">min =</span> <span class="dv">1000</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb97-8"><a href="#cb97-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb97-9"><a href="#cb97-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb97-10"><a href="#cb97-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb99-2"><a href="#cb99-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb99-3"><a href="#cb99-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb99-4"><a href="#cb99-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb99-5"><a href="#cb99-5"></a></span>
+<span id="cb99-6"><a href="#cb99-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb99-7"><a href="#cb99-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_lump_min</span>(month, <span class="at">min =</span> <span class="dv">1000</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb99-8"><a href="#cb99-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb99-9"><a href="#cb99-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb99-10"><a href="#cb99-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_lump_min" class="cell quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1599,43 +1601,43 @@ ISO 8601 Date Standard
 </div>
 <p><code>library(lubridate)</code> has useful functions that will take dates of any format and convert them to the ISO 8601 standard.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb98-2"><a href="#cb98-2"></a></span>
-<span id="cb98-3"><a href="#cb98-3"></a><span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb100-2"><a href="#cb100-2"></a></span>
+<span id="cb100-3"><a href="#cb100-3"></a><span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">mdy</span>(<span class="st">"03/14/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">mdy</span>(<span class="st">"03/14/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">dmy</span>(<span class="st">"14/03/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a><span class="fu">dmy</span>(<span class="st">"14/03/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a><span class="fu">dmy</span>(<span class="st">"14th of March '92"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="fu">dmy</span>(<span class="st">"14th of March '92"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
 </div>
 <p>These functions return variables of class <code>"Date"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="fu">class</span>(<span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">class</span>(<span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Date"</code></pre>
 </div>
 </div>
 <p><code>library(lubridate)</code> also contains functions for parsing date times into ISO 8601 standard. Times are slightly trickier because of time zones.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"EST"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"EST"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 EST"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 CST"</code></pre>
 </div>
@@ -1653,12 +1655,12 @@ ISO 8601 Date Standard
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb114-2"><a href="#cb114-2"></a>  <span class="sc">~</span>date,</span>
-<span id="cb114-3"><a href="#cb114-3"></a>  <span class="st">"12/01/1987"</span>,</span>
-<span id="cb114-4"><a href="#cb114-4"></a>  <span class="st">"12/02/1987"</span>,</span>
-<span id="cb114-5"><a href="#cb114-5"></a>  <span class="st">"12/03/1987"</span></span>
-<span id="cb114-6"><a href="#cb114-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb116-2"><a href="#cb116-2"></a>  <span class="sc">~</span>date,</span>
+<span id="cb116-3"><a href="#cb116-3"></a>  <span class="st">"12/01/1987"</span>,</span>
+<span id="cb116-4"><a href="#cb116-4"></a>  <span class="st">"12/02/1987"</span>,</span>
+<span id="cb116-5"><a href="#cb116-5"></a>  <span class="st">"12/03/1987"</span></span>
+<span id="cb116-6"><a href="#cb116-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>Create the <code>dates</code> data from above with <code>tribble()</code>.</li>
@@ -1670,28 +1672,28 @@ ISO 8601 Date Standard
 <h4 class="anchored" data-anchor-id="extracting-components">Extracting Components</h4>
 <p><code>library(lubridate)</code> contains functions for extracting components from dates like the year, month, day, and weekday. Conisder the follow data set about <a href="https://www.timeanddate.com/moon/phases/usa/washington-dc">full moons</a> in Washington, DC in 2023.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a>full_moons <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb115-2"><a href="#cb115-2"></a>  <span class="sc">~</span>full_moon,</span>
-<span id="cb115-3"><a href="#cb115-3"></a>  <span class="st">"2023-01-06"</span>,</span>
-<span id="cb115-4"><a href="#cb115-4"></a>  <span class="st">"2023-02-05"</span>,</span>
-<span id="cb115-5"><a href="#cb115-5"></a>  <span class="st">"2023-03-07"</span>,</span>
-<span id="cb115-6"><a href="#cb115-6"></a>  <span class="st">"2023-04-06"</span>,</span>
-<span id="cb115-7"><a href="#cb115-7"></a>  <span class="st">"2023-05-05"</span>,</span>
-<span id="cb115-8"><a href="#cb115-8"></a>  <span class="st">"2023-06-03"</span>,</span>
-<span id="cb115-9"><a href="#cb115-9"></a>  <span class="st">"2023-07-03"</span>,</span>
-<span id="cb115-10"><a href="#cb115-10"></a>  <span class="st">"2023-08-01"</span>,</span>
-<span id="cb115-11"><a href="#cb115-11"></a>  <span class="st">"2023-08-30"</span>,</span>
-<span id="cb115-12"><a href="#cb115-12"></a>  <span class="st">"2023-09-29"</span>,</span>
-<span id="cb115-13"><a href="#cb115-13"></a>  <span class="st">"2023-10-28"</span>,</span>
-<span id="cb115-14"><a href="#cb115-14"></a>  <span class="st">"2023-11-27"</span>,</span>
-<span id="cb115-15"><a href="#cb115-15"></a>  <span class="st">"2023-12-26"</span></span>
-<span id="cb115-16"><a href="#cb115-16"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb115-17"><a href="#cb115-17"></a>  <span class="fu">mutate</span>(<span class="at">full_moon =</span> <span class="fu">as_date</span>(full_moon))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a>full_moons <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb117-2"><a href="#cb117-2"></a>  <span class="sc">~</span>full_moon,</span>
+<span id="cb117-3"><a href="#cb117-3"></a>  <span class="st">"2023-01-06"</span>,</span>
+<span id="cb117-4"><a href="#cb117-4"></a>  <span class="st">"2023-02-05"</span>,</span>
+<span id="cb117-5"><a href="#cb117-5"></a>  <span class="st">"2023-03-07"</span>,</span>
+<span id="cb117-6"><a href="#cb117-6"></a>  <span class="st">"2023-04-06"</span>,</span>
+<span id="cb117-7"><a href="#cb117-7"></a>  <span class="st">"2023-05-05"</span>,</span>
+<span id="cb117-8"><a href="#cb117-8"></a>  <span class="st">"2023-06-03"</span>,</span>
+<span id="cb117-9"><a href="#cb117-9"></a>  <span class="st">"2023-07-03"</span>,</span>
+<span id="cb117-10"><a href="#cb117-10"></a>  <span class="st">"2023-08-01"</span>,</span>
+<span id="cb117-11"><a href="#cb117-11"></a>  <span class="st">"2023-08-30"</span>,</span>
+<span id="cb117-12"><a href="#cb117-12"></a>  <span class="st">"2023-09-29"</span>,</span>
+<span id="cb117-13"><a href="#cb117-13"></a>  <span class="st">"2023-10-28"</span>,</span>
+<span id="cb117-14"><a href="#cb117-14"></a>  <span class="st">"2023-11-27"</span>,</span>
+<span id="cb117-15"><a href="#cb117-15"></a>  <span class="st">"2023-12-26"</span></span>
+<span id="cb117-16"><a href="#cb117-16"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb117-17"><a href="#cb117-17"></a>  <span class="fu">mutate</span>(<span class="at">full_moon =</span> <span class="fu">as_date</span>(full_moon))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Suppose we want to know the weekday of each full moon.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a>full_moons <span class="sc">|&gt;</span></span>
-<span id="cb116-2"><a href="#cb116-2"></a>  <span class="fu">mutate</span>(<span class="at">week_day =</span> <span class="fu">wday</span>(full_moon, <span class="at">label =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a>full_moons <span class="sc">|&gt;</span></span>
+<span id="cb118-2"><a href="#cb118-2"></a>  <span class="fu">mutate</span>(<span class="at">week_day =</span> <span class="fu">wday</span>(full_moon, <span class="at">label =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 2
    full_moon  week_day
@@ -1716,16 +1718,16 @@ ISO 8601 Date Standard
 <h4 class="anchored" data-anchor-id="math">Math</h4>
 <p><code>library(lubridate)</code> easily handles math with dates and date-times. Suppose we want to calculate the number of days since American Independence Day:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 90803 days</code></pre>
+<pre><code>Time difference of 90838 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 130756320 mins</code></pre>
+<pre><code>Time difference of 130806720 mins</code></pre>
 </div>
 </div>
 </section>
@@ -1746,14 +1748,14 @@ Periods
 </div>
 <p>This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn’t true. Sometimes we add 366 days during leap years. For example,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
-<span id="cb122-2"><a href="#cb122-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">1</span>)</span>
-<span id="cb122-3"><a href="#cb122-3"></a></span>
-<span id="cb122-4"><a href="#cb122-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
+<span id="cb124-2"><a href="#cb124-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">1</span>)</span>
+<span id="cb124-3"><a href="#cb124-3"></a></span>
+<span id="cb124-4"><a href="#cb124-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2000-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>end <span class="sc">-</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>end <span class="sc">-</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time difference of 366 days</code></pre>
 </div>
@@ -1775,10 +1777,10 @@ Durations
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
-<span id="cb126-2"><a href="#cb126-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span>
-<span id="cb126-3"><a href="#cb126-3"></a></span>
-<span id="cb126-4"><a href="#cb126-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
+<span id="cb128-2"><a href="#cb128-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span>
+<span id="cb128-3"><a href="#cb128-3"></a></span>
+<span id="cb128-4"><a href="#cb128-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2000-03-13 06:00:00 UTC"</code></pre>
 </div>
@@ -1803,11 +1805,11 @@ Intervals
 </div>
 <p>Suppose classes start on August 23rd and proceed every week for a while. Do any of these dates conflict with Georgetown’s fall break?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"2023-08-23"</span>) <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span>
-<span id="cb128-2"><a href="#cb128-2"></a></span>
-<span id="cb128-3"><a href="#cb128-3"></a>fall_break <span class="ot">&lt;-</span> <span class="fu">interval</span>(<span class="fu">as_date</span>(<span class="st">"2023-11-22"</span>), <span class="fu">as_date</span>(<span class="st">"2023-11-26"</span>))</span>
-<span id="cb128-4"><a href="#cb128-4"></a></span>
-<span id="cb128-5"><a href="#cb128-5"></a>classes <span class="sc">%within%</span> fall_break</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"2023-08-23"</span>) <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span>
+<span id="cb130-2"><a href="#cb130-2"></a></span>
+<span id="cb130-3"><a href="#cb130-3"></a>fall_break <span class="ot">&lt;-</span> <span class="fu">interval</span>(<span class="fu">as_date</span>(<span class="st">"2023-11-22"</span>), <span class="fu">as_date</span>(<span class="st">"2023-11-26"</span>))</span>
+<span id="cb130-4"><a href="#cb130-4"></a></span>
+<span id="cb130-5"><a href="#cb130-5"></a>classes <span class="sc">%within%</span> fall_break</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 [13] FALSE  TRUE FALSE FALSE</code></pre>
@@ -1838,13 +1840,13 @@ Intervals
 <p>Missing data are ever present in data analysis. R stores missing values as <code>NA</code>, which are contagious and are fortunately difficult to ignore.</p>
 <p><code>replace_na()</code> is the quickest function to replace missing values. It is a shortcut for a specific instance of <code>if_else()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
-<span id="cb130-2"><a href="#cb130-2"></a></span>
-<span id="cb130-3"><a href="#cb130-3"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">is.na</span>(x), <span class="at">true =</span> <span class="dv">2</span>, <span class="at">false =</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
+<span id="cb132-2"><a href="#cb132-2"></a></span>
+<span id="cb132-3"><a href="#cb132-3"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">is.na</span>(x), <span class="at">true =</span> <span class="dv">2</span>, <span class="at">false =</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb134"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb134-1"><a href="#cb134-1"></a><span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
