@@ -1089,9 +1089,11 @@ Responsibilities
 </div>
 <p>We can also summarize the model with <code>library(broom)</code>.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-22_ef3e00061bea05d24a240a878ff89801">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(broom)</span>
-<span id="cb20-2"><a href="#cb20-2"></a></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="fu">augment</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'broom' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">augment</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 272 × 4
    eruptions waiting .class .uncertainty
@@ -1108,7 +1110,7 @@ Responsibilities
 10      4.35      85 3          5.52e- 2
 # ℹ 262 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">tidy</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">tidy</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 5
   component  size proportion mean.eruptions mean.waiting
@@ -1117,7 +1119,7 @@ Responsibilities
 2         2    97      0.356           2.04         54.5
 3         3   135      0.478           4.46         80.8</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">glance</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">glance</span>(gmm2_geyser)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   model     G    BIC logLik    df hypvol  nobs
@@ -1166,106 +1168,108 @@ Responsibilities
 <p>Let’s consider a policy-relevant example using data from the <a href="https://www.census.gov/programs-surveys/sahie.html">Small Area Health Insurance Estimates (SAHIE) Program.</a></p>
 <p>First, we pull the 2016 county-level estimates of the uninsured rate. We label a state as an expansion state if it expanded data before 2015-01-01. We use this date with 2016 data because of policy lags.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-23_20b9988971b9e41dcbb9521765adc6b1">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">library</span>(censusapi)</span>
-<span id="cb26-2"><a href="#cb26-2"></a></span>
-<span id="cb26-3"><a href="#cb26-3"></a>sahie <span class="ot">&lt;-</span> <span class="fu">getCensus</span>(</span>
-<span id="cb26-4"><a href="#cb26-4"></a>  <span class="at">name =</span> <span class="st">"timeseries/healthins/sahie"</span>,</span>
-<span id="cb26-5"><a href="#cb26-5"></a>  <span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CENSUS_KEY"</span>),</span>
-<span id="cb26-6"><a href="#cb26-6"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"GEOID"</span>, <span class="st">"PCTUI_PT"</span>),</span>
-<span id="cb26-7"><a href="#cb26-7"></a>  <span class="at">region =</span> <span class="st">"county:*"</span>,</span>
-<span id="cb26-8"><a href="#cb26-8"></a>  <span class="at">time =</span> <span class="dv">2016</span></span>
-<span id="cb26-9"><a href="#cb26-9"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb26-10"><a href="#cb26-10"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(censusapi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'censusapi' was built under R version 4.3.3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>sahie <span class="ot">&lt;-</span> <span class="fu">getCensus</span>(</span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="at">name =</span> <span class="st">"timeseries/healthins/sahie"</span>,</span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">key =</span> <span class="fu">Sys.getenv</span>(<span class="st">"CENSUS_KEY"</span>),</span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"GEOID"</span>, <span class="st">"PCTUI_PT"</span>),</span>
+<span id="cb30-5"><a href="#cb30-5"></a>  <span class="at">region =</span> <span class="st">"county:*"</span>,</span>
+<span id="cb30-6"><a href="#cb30-6"></a>  <span class="at">time =</span> <span class="dv">2016</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we pull <a href="https://www.kff.org/medicaid/issue-brief/status-of-state-medicaid-expansion-decisions-interactive-map/">data</a> from the Kaiser Family Foundation about the expansion dates of Medicaid under the Patient Protection and Affordable Care Act.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-24_4b8fc3859a317b2136b258a2fab07280">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>states <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb27-2"><a href="#cb27-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>state_fips, <span class="sc">~</span>implementation_date,</span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"01"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"02"</span>, <span class="st">"2015-09-15"</span>,</span>
-<span id="cb27-5"><a href="#cb27-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"04"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-6"><a href="#cb27-6"></a>  <span class="st">"Arkansas"</span>, <span class="st">"05"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-7"><a href="#cb27-7"></a>  <span class="st">"California"</span>, <span class="st">"06"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-8"><a href="#cb27-8"></a>  <span class="st">"Colorado"</span>, <span class="st">"08"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-9"><a href="#cb27-9"></a>  <span class="st">"Connecticut"</span>, <span class="st">"09"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-10"><a href="#cb27-10"></a>  <span class="st">"Delaware"</span>, <span class="st">"10"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-11"><a href="#cb27-11"></a>  <span class="st">"District of Columbia"</span>, <span class="st">"11"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-12"><a href="#cb27-12"></a>  <span class="st">"Florida"</span>, <span class="st">"12"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-13"><a href="#cb27-13"></a>  <span class="st">"Georgia"</span>, <span class="st">"13"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-14"><a href="#cb27-14"></a>  <span class="st">"Hawaii"</span>, <span class="st">"15"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-15"><a href="#cb27-15"></a>  <span class="st">"Idaho"</span>, <span class="st">"16"</span>, <span class="st">"2020-01-01"</span>,</span>
-<span id="cb27-16"><a href="#cb27-16"></a>  <span class="st">"Illinois"</span>, <span class="st">"17"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-17"><a href="#cb27-17"></a>  <span class="st">"Indiana"</span>, <span class="st">"18"</span>, <span class="st">"2015-02-01"</span>,</span>
-<span id="cb27-18"><a href="#cb27-18"></a>  <span class="st">"Iowa"</span>, <span class="st">"19"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-19"><a href="#cb27-19"></a>  <span class="st">"Kansas"</span>, <span class="st">"20"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-20"><a href="#cb27-20"></a>  <span class="st">"Kentucky"</span>, <span class="st">"21"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-21"><a href="#cb27-21"></a>  <span class="st">"Louisiana"</span>, <span class="st">"22"</span>, <span class="st">"2016-07-01"</span>,</span>
-<span id="cb27-22"><a href="#cb27-22"></a>  <span class="st">"Maine"</span>, <span class="st">"23"</span>, <span class="st">"2018-07-02"</span>,</span>
-<span id="cb27-23"><a href="#cb27-23"></a>  <span class="st">"Maryland"</span>, <span class="st">"24"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-24"><a href="#cb27-24"></a>  <span class="st">"Massachusetts"</span>, <span class="st">"25"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-25"><a href="#cb27-25"></a>  <span class="st">"Michigan"</span>, <span class="st">"26"</span>, <span class="st">"2014-04-01"</span>,</span>
-<span id="cb27-26"><a href="#cb27-26"></a>  <span class="st">"Minnesota"</span>, <span class="st">"27"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-27"><a href="#cb27-27"></a>  <span class="st">"Mississippi"</span>, <span class="st">"28"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-28"><a href="#cb27-28"></a>  <span class="st">"Missouri"</span>, <span class="st">"29"</span>, <span class="st">"2021-07-01"</span>,</span>
-<span id="cb27-29"><a href="#cb27-29"></a>  <span class="st">"Montana"</span>, <span class="st">"30"</span>, <span class="st">"2016-01-01"</span>,</span>
-<span id="cb27-30"><a href="#cb27-30"></a>  <span class="st">"Nebraska"</span>, <span class="st">"31"</span>, <span class="st">"2020-10-01"</span>,</span>
-<span id="cb27-31"><a href="#cb27-31"></a>  <span class="st">"Nevada"</span>, <span class="st">"32"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-32"><a href="#cb27-32"></a>  <span class="st">"New Hampshire"</span>, <span class="st">"33"</span>, <span class="st">"2014-08-15"</span>,</span>
-<span id="cb27-33"><a href="#cb27-33"></a>  <span class="st">"New Jersey"</span>, <span class="st">"34"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-34"><a href="#cb27-34"></a>  <span class="st">"New Mexico"</span>, <span class="st">"35"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-35"><a href="#cb27-35"></a>  <span class="st">"New York"</span>, <span class="st">"36"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-36"><a href="#cb27-36"></a>  <span class="st">"North Carolina"</span>, <span class="st">"37"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-37"><a href="#cb27-37"></a>  <span class="st">"North Dakota"</span>, <span class="st">"38"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-38"><a href="#cb27-38"></a>  <span class="st">"Ohio"</span>, <span class="st">"39"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-39"><a href="#cb27-39"></a>  <span class="st">"Oklahoma"</span>, <span class="st">"40"</span>, <span class="st">"2021-07-01"</span>, </span>
-<span id="cb27-40"><a href="#cb27-40"></a>  <span class="st">"Oregon"</span>, <span class="st">"41"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-41"><a href="#cb27-41"></a>  <span class="st">"Pennsylvania"</span>, <span class="st">"42"</span>, <span class="st">"2015-01-01"</span>, </span>
-<span id="cb27-42"><a href="#cb27-42"></a>  <span class="st">"Rhode Island"</span>, <span class="st">"44"</span>, <span class="st">"2014-01-01"</span>, </span>
-<span id="cb27-43"><a href="#cb27-43"></a>  <span class="st">"South Carolina"</span>, <span class="st">"45"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-44"><a href="#cb27-44"></a>  <span class="st">"South Dakota"</span>, <span class="st">"46"</span>, <span class="st">"2023-07-01"</span>, </span>
-<span id="cb27-45"><a href="#cb27-45"></a>  <span class="st">"Tennessee"</span>, <span class="st">"47"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-46"><a href="#cb27-46"></a>  <span class="st">"Texas"</span>, <span class="st">"48"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-47"><a href="#cb27-47"></a>  <span class="st">"Utah"</span>, <span class="st">"49"</span>, <span class="st">"2020-01-01"</span>,</span>
-<span id="cb27-48"><a href="#cb27-48"></a>  <span class="st">"Vermont"</span>, <span class="st">"50"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-49"><a href="#cb27-49"></a>  <span class="st">"Virginia"</span>, <span class="st">"51"</span>, <span class="st">"2019-01-01"</span>, </span>
-<span id="cb27-50"><a href="#cb27-50"></a>  <span class="st">"Washington"</span>, <span class="st">"53"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-51"><a href="#cb27-51"></a>  <span class="st">"West Virginia"</span>, <span class="st">"54"</span>, <span class="st">"2014-01-01"</span>,</span>
-<span id="cb27-52"><a href="#cb27-52"></a>  <span class="st">"Wisconsin"</span>, <span class="st">"55"</span>, <span class="cn">NA</span>,</span>
-<span id="cb27-53"><a href="#cb27-53"></a>  <span class="st">"Wyoming"</span>, <span class="st">"56"</span>, <span class="cn">NA</span></span>
-<span id="cb27-54"><a href="#cb27-54"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-55"><a href="#cb27-55"></a>  <span class="fu">mutate</span>(<span class="at">implementation_date =</span> <span class="fu">ymd</span>(implementation_date))</span>
-<span id="cb27-56"><a href="#cb27-56"></a></span>
-<span id="cb27-57"><a href="#cb27-57"></a>sahie <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
-<span id="cb27-58"><a href="#cb27-58"></a>  sahie, </span>
-<span id="cb27-59"><a href="#cb27-59"></a>  states,</span>
-<span id="cb27-60"><a href="#cb27-60"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"state"</span> <span class="ot">=</span> <span class="st">"state_fips"</span>)</span>
-<span id="cb27-61"><a href="#cb27-61"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb27-62"><a href="#cb27-62"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PCTUI_PT)) <span class="sc">|&gt;</span> </span>
-<span id="cb27-63"><a href="#cb27-63"></a>  <span class="fu">mutate</span>(<span class="at">expanded =</span> implementation_date <span class="sc">&lt;</span> <span class="st">"2015-01-01"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-64"><a href="#cb27-64"></a>  <span class="fu">mutate</span>(<span class="at">expanded =</span> <span class="fu">replace_na</span>(expanded, <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>states <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="sc">~</span>state, <span class="sc">~</span>state_fips, <span class="sc">~</span>implementation_date,</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  <span class="st">"Alabama"</span>, <span class="st">"01"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="st">"Alaska"</span>, <span class="st">"02"</span>, <span class="st">"2015-09-15"</span>,</span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="st">"Arizona"</span>, <span class="st">"04"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="st">"Arkansas"</span>, <span class="st">"05"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="st">"California"</span>, <span class="st">"06"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-8"><a href="#cb31-8"></a>  <span class="st">"Colorado"</span>, <span class="st">"08"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-9"><a href="#cb31-9"></a>  <span class="st">"Connecticut"</span>, <span class="st">"09"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-10"><a href="#cb31-10"></a>  <span class="st">"Delaware"</span>, <span class="st">"10"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-11"><a href="#cb31-11"></a>  <span class="st">"District of Columbia"</span>, <span class="st">"11"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-12"><a href="#cb31-12"></a>  <span class="st">"Florida"</span>, <span class="st">"12"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-13"><a href="#cb31-13"></a>  <span class="st">"Georgia"</span>, <span class="st">"13"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-14"><a href="#cb31-14"></a>  <span class="st">"Hawaii"</span>, <span class="st">"15"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-15"><a href="#cb31-15"></a>  <span class="st">"Idaho"</span>, <span class="st">"16"</span>, <span class="st">"2020-01-01"</span>,</span>
+<span id="cb31-16"><a href="#cb31-16"></a>  <span class="st">"Illinois"</span>, <span class="st">"17"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-17"><a href="#cb31-17"></a>  <span class="st">"Indiana"</span>, <span class="st">"18"</span>, <span class="st">"2015-02-01"</span>,</span>
+<span id="cb31-18"><a href="#cb31-18"></a>  <span class="st">"Iowa"</span>, <span class="st">"19"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-19"><a href="#cb31-19"></a>  <span class="st">"Kansas"</span>, <span class="st">"20"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-20"><a href="#cb31-20"></a>  <span class="st">"Kentucky"</span>, <span class="st">"21"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-21"><a href="#cb31-21"></a>  <span class="st">"Louisiana"</span>, <span class="st">"22"</span>, <span class="st">"2016-07-01"</span>,</span>
+<span id="cb31-22"><a href="#cb31-22"></a>  <span class="st">"Maine"</span>, <span class="st">"23"</span>, <span class="st">"2018-07-02"</span>,</span>
+<span id="cb31-23"><a href="#cb31-23"></a>  <span class="st">"Maryland"</span>, <span class="st">"24"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-24"><a href="#cb31-24"></a>  <span class="st">"Massachusetts"</span>, <span class="st">"25"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-25"><a href="#cb31-25"></a>  <span class="st">"Michigan"</span>, <span class="st">"26"</span>, <span class="st">"2014-04-01"</span>,</span>
+<span id="cb31-26"><a href="#cb31-26"></a>  <span class="st">"Minnesota"</span>, <span class="st">"27"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-27"><a href="#cb31-27"></a>  <span class="st">"Mississippi"</span>, <span class="st">"28"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-28"><a href="#cb31-28"></a>  <span class="st">"Missouri"</span>, <span class="st">"29"</span>, <span class="st">"2021-07-01"</span>,</span>
+<span id="cb31-29"><a href="#cb31-29"></a>  <span class="st">"Montana"</span>, <span class="st">"30"</span>, <span class="st">"2016-01-01"</span>,</span>
+<span id="cb31-30"><a href="#cb31-30"></a>  <span class="st">"Nebraska"</span>, <span class="st">"31"</span>, <span class="st">"2020-10-01"</span>,</span>
+<span id="cb31-31"><a href="#cb31-31"></a>  <span class="st">"Nevada"</span>, <span class="st">"32"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-32"><a href="#cb31-32"></a>  <span class="st">"New Hampshire"</span>, <span class="st">"33"</span>, <span class="st">"2014-08-15"</span>,</span>
+<span id="cb31-33"><a href="#cb31-33"></a>  <span class="st">"New Jersey"</span>, <span class="st">"34"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-34"><a href="#cb31-34"></a>  <span class="st">"New Mexico"</span>, <span class="st">"35"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-35"><a href="#cb31-35"></a>  <span class="st">"New York"</span>, <span class="st">"36"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-36"><a href="#cb31-36"></a>  <span class="st">"North Carolina"</span>, <span class="st">"37"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-37"><a href="#cb31-37"></a>  <span class="st">"North Dakota"</span>, <span class="st">"38"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-38"><a href="#cb31-38"></a>  <span class="st">"Ohio"</span>, <span class="st">"39"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-39"><a href="#cb31-39"></a>  <span class="st">"Oklahoma"</span>, <span class="st">"40"</span>, <span class="st">"2021-07-01"</span>, </span>
+<span id="cb31-40"><a href="#cb31-40"></a>  <span class="st">"Oregon"</span>, <span class="st">"41"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-41"><a href="#cb31-41"></a>  <span class="st">"Pennsylvania"</span>, <span class="st">"42"</span>, <span class="st">"2015-01-01"</span>, </span>
+<span id="cb31-42"><a href="#cb31-42"></a>  <span class="st">"Rhode Island"</span>, <span class="st">"44"</span>, <span class="st">"2014-01-01"</span>, </span>
+<span id="cb31-43"><a href="#cb31-43"></a>  <span class="st">"South Carolina"</span>, <span class="st">"45"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-44"><a href="#cb31-44"></a>  <span class="st">"South Dakota"</span>, <span class="st">"46"</span>, <span class="st">"2023-07-01"</span>, </span>
+<span id="cb31-45"><a href="#cb31-45"></a>  <span class="st">"Tennessee"</span>, <span class="st">"47"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-46"><a href="#cb31-46"></a>  <span class="st">"Texas"</span>, <span class="st">"48"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-47"><a href="#cb31-47"></a>  <span class="st">"Utah"</span>, <span class="st">"49"</span>, <span class="st">"2020-01-01"</span>,</span>
+<span id="cb31-48"><a href="#cb31-48"></a>  <span class="st">"Vermont"</span>, <span class="st">"50"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-49"><a href="#cb31-49"></a>  <span class="st">"Virginia"</span>, <span class="st">"51"</span>, <span class="st">"2019-01-01"</span>, </span>
+<span id="cb31-50"><a href="#cb31-50"></a>  <span class="st">"Washington"</span>, <span class="st">"53"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-51"><a href="#cb31-51"></a>  <span class="st">"West Virginia"</span>, <span class="st">"54"</span>, <span class="st">"2014-01-01"</span>,</span>
+<span id="cb31-52"><a href="#cb31-52"></a>  <span class="st">"Wisconsin"</span>, <span class="st">"55"</span>, <span class="cn">NA</span>,</span>
+<span id="cb31-53"><a href="#cb31-53"></a>  <span class="st">"Wyoming"</span>, <span class="st">"56"</span>, <span class="cn">NA</span></span>
+<span id="cb31-54"><a href="#cb31-54"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-55"><a href="#cb31-55"></a>  <span class="fu">mutate</span>(<span class="at">implementation_date =</span> <span class="fu">ymd</span>(implementation_date))</span>
+<span id="cb31-56"><a href="#cb31-56"></a></span>
+<span id="cb31-57"><a href="#cb31-57"></a>sahie <span class="ot">&lt;-</span> <span class="fu">left_join</span>(</span>
+<span id="cb31-58"><a href="#cb31-58"></a>  sahie, </span>
+<span id="cb31-59"><a href="#cb31-59"></a>  states,</span>
+<span id="cb31-60"><a href="#cb31-60"></a>  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"state"</span> <span class="ot">=</span> <span class="st">"state_fips"</span>)</span>
+<span id="cb31-61"><a href="#cb31-61"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb31-62"><a href="#cb31-62"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(PCTUI_PT)) <span class="sc">|&gt;</span> </span>
+<span id="cb31-63"><a href="#cb31-63"></a>  <span class="fu">mutate</span>(<span class="at">expanded =</span> implementation_date <span class="sc">&lt;</span> <span class="st">"2015-01-01"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb31-64"><a href="#cb31-64"></a>  <span class="fu">mutate</span>(<span class="at">expanded =</span> <span class="fu">replace_na</span>(expanded, <span class="cn">FALSE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use GMM to cluster the data.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-25_65f31e3849863c6cbe4d4594cc02d3f7">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>uni <span class="ot">&lt;-</span> <span class="fu">select</span>(sahie, PCTUI_PT)</span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb28-4"><a href="#cb28-4"></a>uni_mc <span class="ot">&lt;-</span> <span class="fu">Mclust</span>(uni, <span class="at">G =</span> <span class="dv">2</span>)</span>
-<span id="cb28-5"><a href="#cb28-5"></a></span>
-<span id="cb28-6"><a href="#cb28-6"></a><span class="fu">glance</span>(uni_mc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>uni <span class="ot">&lt;-</span> <span class="fu">select</span>(sahie, PCTUI_PT)</span>
+<span id="cb32-2"><a href="#cb32-2"></a></span>
+<span id="cb32-3"><a href="#cb32-3"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb32-4"><a href="#cb32-4"></a>uni_mc <span class="ot">&lt;-</span> <span class="fu">Mclust</span>(uni, <span class="at">G =</span> <span class="dv">2</span>)</span>
+<span id="cb32-5"><a href="#cb32-5"></a></span>
+<span id="cb32-6"><a href="#cb32-6"></a><span class="fu">glance</span>(uni_mc)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   model     G     BIC logLik    df hypvol  nobs
   &lt;chr&gt; &lt;int&gt;   &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
-1 V         2 -18541. -9251.     5     NA  3141</code></pre>
+1 V         2 -18542. -9251.     5     NA  3141</code></pre>
 </div>
 </div>
 <p>When we compare <code>.class</code> to <code>expansion</code>, we see that the model does an good job of labeling counties’ expansion status without observing counties’ expansion status.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-26_dc94b54c25153e4e9e38d9ab83420957">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb30-2"><a href="#cb30-2"></a>  sahie,</span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">augment</span>(uni_mc)</span>
-<span id="cb30-4"><a href="#cb30-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">count</span>(expanded, .class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  sahie,</span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">augment</span>(uni_mc)</span>
+<span id="cb34-4"><a href="#cb34-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="fu">count</span>(expanded, .class)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>New names:
 • `PCTUI_PT` -&gt; `PCTUI_PT...5`
@@ -1310,13 +1314,13 @@ Important
 </div>
 <p>We can plot the BICs with <code>plot()</code> and view the optimal model with <code>glance()</code>.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-27_aa31140bb17b9746aa7516f5976965e8">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>faithful_gmm <span class="ot">&lt;-</span> <span class="fu">Mclust</span>(faithful)</span>
-<span id="cb33-2"><a href="#cb33-2"></a></span>
-<span id="cb33-3"><a href="#cb33-3"></a><span class="fu">plot</span>(faithful_gmm, <span class="at">what =</span> <span class="st">"BIC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>faithful_gmm <span class="ot">&lt;-</span> <span class="fu">Mclust</span>(faithful)</span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a><span class="fu">plot</span>(faithful_gmm, <span class="at">what =</span> <span class="st">"BIC"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">glance</span>(faithful_gmm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">glance</span>(faithful_gmm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 7
   model     G    BIC logLik    df hypvol  nobs
@@ -1344,11 +1348,11 @@ P(X_d) = \Pi_{i = 1}^Kp_i^{x_i} (1 - p_i)^{1 - x_i}
 <p>Let’s consider a classic example from <span class="citation" data-cites="bishop2006">Bishop (<a href="references.html#ref-bishop2006" role="doc-biblioref">2006</a>)</span> and <span class="citation" data-cites="murphy2022">Murphy (<a href="references.html#ref-murphy2022" role="doc-biblioref">2022</a>)</span>. The example uses the <a href="https://en.wikipedia.org/wiki/MNIST_database">MNIST</a> database, which contains 70,000 handwritten digits. The digits are stored in 784 variables, from a 28 by 28 grid, with values ranging from 0 to 255, which indicate the darkness of the pixel.</p>
 <p>To prepare the data, we divide each pixel by 255 and then turn the pixels into indicators with values under 0.5 as 0 and values over 0.5 as 1. Figure <a href="#fig-digits">Figure&nbsp;<span>22.3</span></a> visualizes the first four digits after reading in the data and applying pre-processing.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-29_1d0cb30dc60c89e1de3753deec5c1cd2">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R"</span>, <span class="st">"visualize_digit.R"</span>))</span>
-<span id="cb36-2"><a href="#cb36-2"></a></span>
-<span id="cb36-3"><a href="#cb36-3"></a>mnist <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"mnist_binary.csv"</span>))</span>
-<span id="cb36-4"><a href="#cb36-4"></a></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">glimpse</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(mnist, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">source</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"R"</span>, <span class="st">"visualize_digit.R"</span>))</span>
+<span id="cb40-2"><a href="#cb40-2"></a></span>
+<span id="cb40-3"><a href="#cb40-3"></a>mnist <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"mnist_binary.csv"</span>))</span>
+<span id="cb40-4"><a href="#cb40-4"></a></span>
+<span id="cb40-5"><a href="#cb40-5"></a><span class="fu">glimpse</span>(dplyr<span class="sc">::</span><span class="fu">select</span>(mnist, <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 60,000
 Columns: 10
@@ -1365,10 +1369,10 @@ $ pix_28_9 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 </div>
 </div>
 <div>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">1</span>)</span>
-<span id="cb38-2"><a href="#cb38-2"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">2</span>)</span>
-<span id="cb38-3"><a href="#cb38-3"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">3</span>)</span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">1</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">2</span>)</span>
+<span id="cb42-3"><a href="#cb42-3"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">3</span>)</span>
+<span id="cb42-4"><a href="#cb42-4"></a><span class="fu">visualize_digit</span>(mnist, <span class="dv">4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-digits" class="cell quarto-layout-panel" data-hash="27_advanced-unsupervised-ml_cache/html/fig-digits_40e800af09743732be5c3ed82e0c187c">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1419,29 +1423,34 @@ $ pix_28_9 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <li>We specify the distribution used during the maximization (M) step with <code>model = FLXMCmvbinary()</code>.</li>
 </ol>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-31_a38a2d368258f0dc8b762eb557b3b407">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(flexmix)</span>
-<span id="cb39-2"><a href="#cb39-2"></a></span>
-<span id="cb39-3"><a href="#cb39-3"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb39-5"><a href="#cb39-5"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">as.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">library</span>(flexmix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'flexmix' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Loading required package: lattice</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">as.matrix</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The starting assignments are random, so we set a seed.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-32_209f6f79b3a193c2ce8f7d6737dc3e9d">
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
-<span id="cb40-2"><a href="#cb40-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb40-3"><a href="#cb40-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
-<span id="cb40-7"><a href="#cb40-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
+<span id="cb47-2"><a href="#cb47-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb47-5"><a href="#cb47-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb47-6"><a href="#cb47-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
+<span id="cb47-7"><a href="#cb47-7"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-33_ea320f07a39383a1b4c32655e0be5fa5">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>mnist <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">count</span>(label, cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mnist <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="fu">count</span>(label, cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   label cluster     n
@@ -1455,16 +1464,16 @@ $ pix_28_9 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <p><a href="#fig-bmm2-parameters">Figure&nbsp;<span>22.4</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The figure shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1\)</span> and 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 2\)</span>. We see that the estimated parameters closely resemble the digits.</p>
 <p>Of course, each digit can differ from these images because everyone writes differently. In some ways, these are average digits across many version of the digits.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-34_e0f5388e717e5f12ace56afba9143969">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
-<span id="cb43-4"><a href="#cb43-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb50-2"><a href="#cb50-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
+<span id="cb50-4"><a href="#cb50-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb50-5"><a href="#cb50-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb50-6"><a href="#cb50-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
+<span id="cb51-2"><a href="#cb51-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-bmm2-parameters" class="cell quarto-layout-panel" data-hash="27_advanced-unsupervised-ml_cache/html/fig-bmm2-parameters_8f98a303d2b01b40fbcfd2aae7c61f49">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -1496,23 +1505,23 @@ $ pix_28_9 &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
 <p>Let’s now consider an example that uses all 10 digits.</p>
 <p>In most applications, we won’t know the number of latent variables. First, we sample 1,000<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> digits and run the model with <span class="math inline">\(k = 2, 3, ..., 12\)</span>. We’ll calculate the BIC for each hyperparameter and pick the <span class="math inline">\(k\)</span> with lowest BIC.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-36_1d619aec60cbc4fb1ff14692cab218d8">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
-<span id="cb45-2"><a href="#cb45-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb45-4"><a href="#cb45-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb45-6"><a href="#cb45-6"></a></span>
-<span id="cb45-7"><a href="#cb45-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
-<span id="cb45-8"><a href="#cb45-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb45-9"><a href="#cb45-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb45-10"><a href="#cb45-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
-<span id="cb45-11"><a href="#cb45-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
-<span id="cb45-12"><a href="#cb45-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
-<span id="cb45-13"><a href="#cb45-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
+<span id="cb52-2"><a href="#cb52-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb52-4"><a href="#cb52-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb52-6"><a href="#cb52-6"></a></span>
+<span id="cb52-7"><a href="#cb52-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
+<span id="cb52-8"><a href="#cb52-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb52-9"><a href="#cb52-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb52-10"><a href="#cb52-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
+<span id="cb52-11"><a href="#cb52-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb52-12"><a href="#cb52-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
+<span id="cb52-13"><a href="#cb52-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><span class="math inline">\(k = 7\)</span> provides the lowest BIC. This is probably because digits like 3 and 8 are very similar.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-37_32a891fdd028c4eaf954a905429478d6">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>steps</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1535,23 +1544,23 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
 </div>
 <p>Next, we run the BMM on the full data with <span class="math inline">\(k = 7\)</span>.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-38_22a230b7e1e0c7834a1801c2888158ec">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb48-4"><a href="#cb48-4"></a></span>
-<span id="cb48-5"><a href="#cb48-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb48-6"><a href="#cb48-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb48-7"><a href="#cb48-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
-<span id="cb48-8"><a href="#cb48-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb48-9"><a href="#cb48-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
-<span id="cb48-10"><a href="#cb48-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb55-2"><a href="#cb55-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb55-3"><a href="#cb55-3"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb55-4"><a href="#cb55-4"></a></span>
+<span id="cb55-5"><a href="#cb55-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb55-6"><a href="#cb55-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb55-7"><a href="#cb55-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
+<span id="cb55-8"><a href="#cb55-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb55-9"><a href="#cb55-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
+<span id="cb55-10"><a href="#cb55-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels. The rows of the table are the digits. The columns of the table are the clusters. We can see, for example, that most of the 0’s are clustered in cluster 5.</p>
 <div class="cell" data-hash="27_advanced-unsupervised-ml_cache/html/unnamed-chunk-39_739907e9e6d8af5900e1258fbbc01e0e">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
-<span id="cb49-3"><a href="#cb49-3"></a></span>
-<span id="cb49-4"><a href="#cb49-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb56-2"><a href="#cb56-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
+<span id="cb56-3"><a href="#cb56-3"></a></span>
+<span id="cb56-4"><a href="#cb56-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
        1    2    3    4    5    6    7
@@ -1569,25 +1578,25 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
 </div>
 <p><a href="#fig-bmm10-parameters">Figure&nbsp;<span>22.5</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The following visualize the <span class="math inline">\(784K\)</span> parameters that we estimated. It shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1, 2, ..., 7\)</span> clusters. We see that the estimated parameters closely resemble the digits.</p>
 <div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
-<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
-<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
-<span id="cb51-6"><a href="#cb51-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
-<span id="cb51-7"><a href="#cb51-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
-<span id="cb51-8"><a href="#cb51-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
-<span id="cb51-9"><a href="#cb51-9"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb51-10"><a href="#cb51-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb51-11"><a href="#cb51-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
-<span id="cb51-12"><a href="#cb51-12"></a></span>
-<span id="cb51-13"><a href="#cb51-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
-<span id="cb51-14"><a href="#cb51-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
-<span id="cb51-15"><a href="#cb51-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
-<span id="cb51-16"><a href="#cb51-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
-<span id="cb51-17"><a href="#cb51-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
-<span id="cb51-18"><a href="#cb51-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
-<span id="cb51-19"><a href="#cb51-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb58-3"><a href="#cb58-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
+<span id="cb58-4"><a href="#cb58-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
+<span id="cb58-5"><a href="#cb58-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
+<span id="cb58-6"><a href="#cb58-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
+<span id="cb58-7"><a href="#cb58-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
+<span id="cb58-8"><a href="#cb58-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
+<span id="cb58-9"><a href="#cb58-9"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb58-10"><a href="#cb58-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb58-11"><a href="#cb58-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
+<span id="cb58-12"><a href="#cb58-12"></a></span>
+<span id="cb58-13"><a href="#cb58-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
+<span id="cb58-14"><a href="#cb58-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
+<span id="cb58-15"><a href="#cb58-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
+<span id="cb58-16"><a href="#cb58-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
+<span id="cb58-17"><a href="#cb58-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
+<span id="cb58-18"><a href="#cb58-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
+<span id="cb58-19"><a href="#cb58-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-bmm10-parameters" class="cell quarto-layout-panel" data-hash="27_advanced-unsupervised-ml_cache/html/fig-bmm10-parameters_de90ee812675d35b3c89e600181805fe">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
