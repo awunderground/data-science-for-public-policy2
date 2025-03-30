@@ -618,11 +618,14 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <span id="cb10-12"><a href="#cb10-12"></a></span>
 <span id="cb10-13"><a href="#cb10-13"></a>dt_resamples <span class="ot">&lt;-</span> dt_wf <span class="sc">|&gt;</span></span>
 <span id="cb10-14"><a href="#cb10-14"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'rpart' was built under R version 4.3.3</code></pre>
+</div>
 </div>
 <p>Again, the model has good, but not great performance.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-10_a4e577f1036343da0663e8867e6ec1a5">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>dt_resamples <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>dt_resamples <span class="sc">|&gt;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
@@ -720,32 +723,32 @@ Bagged Trees Algorithm
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-11_8bee4ed989d07fe55cfd58bb164b9d76">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(tidymodels)</span>
-<span id="cb13-2"><a href="#cb13-2"></a></span>
-<span id="cb13-3"><a href="#cb13-3"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
-<span id="cb13-4"><a href="#cb13-4"></a></span>
-<span id="cb13-5"><a href="#cb13-5"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>data1 <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb13-8"><a href="#cb13-8"></a>  <span class="at">x =</span> x,</span>
-<span id="cb13-9"><a href="#cb13-9"></a>  <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> <span class="fu">sin</span>(x) <span class="sc">+</span> x <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb13-10"><a href="#cb13-10"></a>)</span>
-<span id="cb13-11"><a href="#cb13-11"></a></span>
-<span id="cb13-12"><a href="#cb13-12"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
-<span id="cb13-13"><a href="#cb13-13"></a></span>
-<span id="cb13-14"><a href="#cb13-14"></a><span class="co"># create a split object</span></span>
-<span id="cb13-15"><a href="#cb13-15"></a>data1_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> data1, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
-<span id="cb13-16"><a href="#cb13-16"></a></span>
-<span id="cb13-17"><a href="#cb13-17"></a><span class="co"># create the training and testing data</span></span>
-<span id="cb13-18"><a href="#cb13-18"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
-<span id="cb13-19"><a href="#cb13-19"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span>
-<span id="cb13-20"><a href="#cb13-20"></a></span>
-<span id="cb13-21"><a href="#cb13-21"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb13-22"><a href="#cb13-22"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> data1_train, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb13-23"><a href="#cb13-23"></a>  <span class="fu">labs</span>(</span>
-<span id="cb13-24"><a href="#cb13-24"></a>    <span class="at">title =</span> <span class="st">"Example 1 Data"</span></span>
-<span id="cb13-25"><a href="#cb13-25"></a>  ) <span class="sc">+</span></span>
-<span id="cb13-26"><a href="#cb13-26"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(tidymodels)</span>
+<span id="cb14-2"><a href="#cb14-2"></a></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
+<span id="cb14-4"><a href="#cb14-4"></a></span>
+<span id="cb14-5"><a href="#cb14-5"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
+<span id="cb14-6"><a href="#cb14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7"></a>data1 <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb14-8"><a href="#cb14-8"></a>  <span class="at">x =</span> x,</span>
+<span id="cb14-9"><a href="#cb14-9"></a>  <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> <span class="fu">sin</span>(x) <span class="sc">+</span> x <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>)</span>
+<span id="cb14-11"><a href="#cb14-11"></a></span>
+<span id="cb14-12"><a href="#cb14-12"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
+<span id="cb14-13"><a href="#cb14-13"></a></span>
+<span id="cb14-14"><a href="#cb14-14"></a><span class="co"># create a split object</span></span>
+<span id="cb14-15"><a href="#cb14-15"></a>data1_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> data1, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb14-16"><a href="#cb14-16"></a></span>
+<span id="cb14-17"><a href="#cb14-17"></a><span class="co"># create the training and testing data</span></span>
+<span id="cb14-18"><a href="#cb14-18"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
+<span id="cb14-19"><a href="#cb14-19"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span>
+<span id="cb14-20"><a href="#cb14-20"></a></span>
+<span id="cb14-21"><a href="#cb14-21"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb14-22"><a href="#cb14-22"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> data1_train, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a>  <span class="fu">labs</span>(</span>
+<span id="cb14-24"><a href="#cb14-24"></a>    <span class="at">title =</span> <span class="st">"Example 1 Data"</span></span>
+<span id="cb14-25"><a href="#cb14-25"></a>  ) <span class="sc">+</span></span>
+<span id="cb14-26"><a href="#cb14-26"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -758,74 +761,74 @@ Bagged Trees Algorithm
 </div>
 <p>The syntax for bagged trees is slightly different than other models and requires the use of <code>library(baguette)</code>. Here, <code>times</code> is the number of bootstraps to use for the algorithm. When <code>times = 1</code>, then the algorithm is one regression tree trained on a bootstrap sample of the data.</p>
 <p>Notice how the predicted value line smooths out because of the averaging of many trees.</p>
-<div class="cell" data-hash="22_ensembling_cache/html/bagged-trees-data1_6bf5369a44c320e294c9539ed342a1f7">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">library</span>(baguette)</span>
-<span id="cb14-2"><a href="#cb14-2"></a></span>
-<span id="cb14-3"><a href="#cb14-3"></a>bagged_trees1 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span> <span class="co"># 1 ensemble member</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
-<span id="cb14-7"><a href="#cb14-7"></a></span>
-<span id="cb14-8"><a href="#cb14-8"></a>bagged_trees2<span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">25</span>) <span class="sc">|&gt;</span> <span class="co"># 25 ensemble members </span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-11"><a href="#cb14-11"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
-<span id="cb14-12"><a href="#cb14-12"></a></span>
-<span id="cb14-13"><a href="#cb14-13"></a>bagged_trees3 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-14"><a href="#cb14-14"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># 100 ensemble members </span></span>
-<span id="cb14-15"><a href="#cb14-15"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-16"><a href="#cb14-16"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
-<span id="cb14-17"><a href="#cb14-17"></a></span>
-<span id="cb14-18"><a href="#cb14-18"></a>bagged_trees4 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-19"><a href="#cb14-19"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">500</span>) <span class="sc">|&gt;</span> <span class="co"># 500 ensemble members </span></span>
-<span id="cb14-20"><a href="#cb14-20"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb14-21"><a href="#cb14-21"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
-<span id="cb14-22"><a href="#cb14-22"></a></span>
-<span id="cb14-23"><a href="#cb14-23"></a>  <span class="co"># create a grid of predictions</span></span>
-<span id="cb14-24"><a href="#cb14-24"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>))</span>
-<span id="cb14-25"><a href="#cb14-25"></a></span>
-<span id="cb14-26"><a href="#cb14-26"></a>predictions_grid <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb14-27"><a href="#cb14-27"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>),</span>
-<span id="cb14-28"><a href="#cb14-28"></a>  <span class="st">`</span><span class="at">Trees = 1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees1, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
-<span id="cb14-29"><a href="#cb14-29"></a>  <span class="st">`</span><span class="at">Trees = 25</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees2, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
-<span id="cb14-30"><a href="#cb14-30"></a>  <span class="st">`</span><span class="at">Trees = 100</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees3, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
-<span id="cb14-31"><a href="#cb14-31"></a>  <span class="st">`</span><span class="at">Trees = 500</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees4, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred</span>
-<span id="cb14-32"><a href="#cb14-32"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb14-33"><a href="#cb14-33"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x, <span class="at">names_to =</span> <span class="st">"model"</span>, <span class="at">values_to =</span> <span class="st">".pred"</span>)</span>
-<span id="cb14-34"><a href="#cb14-34"></a></span>
-<span id="cb14-35"><a href="#cb14-35"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb14-36"><a href="#cb14-36"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> data1_train, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb14-37"><a href="#cb14-37"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictions_grid, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .pred), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
-<span id="cb14-38"><a href="#cb14-38"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model) <span class="sc">+</span></span>
-<span id="cb14-39"><a href="#cb14-39"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-40"><a href="#cb14-40"></a>    <span class="at">title =</span> <span class="st">"Example 1: Data with Predictions (Bagged Regression Trees)"</span>,</span>
-<span id="cb14-41"><a href="#cb14-41"></a>    <span class="at">subtitle =</span> <span class="st">"Prediction in red"</span></span>
-<span id="cb14-42"><a href="#cb14-42"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-43"><a href="#cb14-43"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-hash="22_ensembling_cache/html/bagged-trees-data1_272e3a10f28db07500246b50252ce656">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">library</span>(baguette)</span>
+<span id="cb15-2"><a href="#cb15-2"></a></span>
+<span id="cb15-3"><a href="#cb15-3"></a>bagged_trees1 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">2</span>) <span class="sc">|&gt;</span> <span class="co"># 1 ensemble member</span></span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
+<span id="cb15-7"><a href="#cb15-7"></a></span>
+<span id="cb15-8"><a href="#cb15-8"></a>bagged_trees2<span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-9"><a href="#cb15-9"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">25</span>) <span class="sc">|&gt;</span> <span class="co"># 25 ensemble members </span></span>
+<span id="cb15-10"><a href="#cb15-10"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-11"><a href="#cb15-11"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
+<span id="cb15-12"><a href="#cb15-12"></a></span>
+<span id="cb15-13"><a href="#cb15-13"></a>bagged_trees3 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-14"><a href="#cb15-14"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> <span class="co"># 100 ensemble members </span></span>
+<span id="cb15-15"><a href="#cb15-15"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-16"><a href="#cb15-16"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
+<span id="cb15-17"><a href="#cb15-17"></a></span>
+<span id="cb15-18"><a href="#cb15-18"></a>bagged_trees4 <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb15-19"><a href="#cb15-19"></a>  <span class="fu">set_engine</span>(<span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">500</span>) <span class="sc">|&gt;</span> <span class="co"># 500 ensemble members </span></span>
+<span id="cb15-20"><a href="#cb15-20"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb15-21"><a href="#cb15-21"></a>  <span class="fu">fit</span>(y <span class="sc">~</span> ., <span class="at">data =</span> data1)</span>
+<span id="cb15-22"><a href="#cb15-22"></a></span>
+<span id="cb15-23"><a href="#cb15-23"></a>  <span class="co"># create a grid of predictions</span></span>
+<span id="cb15-24"><a href="#cb15-24"></a>new_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>))</span>
+<span id="cb15-25"><a href="#cb15-25"></a></span>
+<span id="cb15-26"><a href="#cb15-26"></a>predictions_grid <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb15-27"><a href="#cb15-27"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">10</span>, <span class="fl">0.1</span>),</span>
+<span id="cb15-28"><a href="#cb15-28"></a>  <span class="st">`</span><span class="at">Trees = 1</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees1, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
+<span id="cb15-29"><a href="#cb15-29"></a>  <span class="st">`</span><span class="at">Trees = 25</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees2, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
+<span id="cb15-30"><a href="#cb15-30"></a>  <span class="st">`</span><span class="at">Trees = 100</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees3, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred,</span>
+<span id="cb15-31"><a href="#cb15-31"></a>  <span class="st">`</span><span class="at">Trees = 500</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">predict</span>(<span class="at">object =</span> bagged_trees4, <span class="at">new_data =</span> new_data)<span class="sc">$</span>.pred</span>
+<span id="cb15-32"><a href="#cb15-32"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb15-33"><a href="#cb15-33"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>x, <span class="at">names_to =</span> <span class="st">"model"</span>, <span class="at">values_to =</span> <span class="st">".pred"</span>)</span>
+<span id="cb15-34"><a href="#cb15-34"></a></span>
+<span id="cb15-35"><a href="#cb15-35"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb15-36"><a href="#cb15-36"></a>  <span class="fu">geom_point</span>(<span class="at">data =</span> data1_train, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb15-37"><a href="#cb15-37"></a>  <span class="fu">geom_path</span>(<span class="at">data =</span> predictions_grid, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> .pred), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb15-38"><a href="#cb15-38"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>model) <span class="sc">+</span></span>
+<span id="cb15-39"><a href="#cb15-39"></a>  <span class="fu">labs</span>(</span>
+<span id="cb15-40"><a href="#cb15-40"></a>    <span class="at">title =</span> <span class="st">"Example 1: Data with Predictions (Bagged Regression Trees)"</span>,</span>
+<span id="cb15-41"><a href="#cb15-41"></a>    <span class="at">subtitle =</span> <span class="st">"Prediction in red"</span></span>
+<span id="cb15-42"><a href="#cb15-42"></a>  ) <span class="sc">+</span></span>
+<span id="cb15-43"><a href="#cb15-43"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="22_ensembling_files/figure-html/bagged-trees-data1-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>Let’s use bagged trees to predict the low response rate from the Census PDB example.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/bagged-trees-pdb_101adf9af6c5f5351b27a3a84ced1738">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>bagged_trees_mod <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">60</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) </span>
-<span id="cb15-4"><a href="#cb15-4"></a></span>
-<span id="cb15-5"><a href="#cb15-5"></a>bagged_trees_mod_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> dt_rec) <span class="sc">|&gt;</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> bagged_trees_mod)</span>
-<span id="cb15-8"><a href="#cb15-8"></a></span>
-<span id="cb15-9"><a href="#cb15-9"></a>bagged_trees_resamples <span class="ot">&lt;-</span> bagged_trees_mod_wf <span class="sc">|&gt;</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span>
-<span id="cb15-11"><a href="#cb15-11"></a></span>
-<span id="cb15-12"><a href="#cb15-12"></a><span class="fu">collect_metrics</span>(bagged_trees_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>bagged_trees_mod <span class="ot">&lt;-</span> <span class="fu">bag_tree</span>(<span class="at">cost_complexity =</span> <span class="fl">0.001</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>, <span class="at">times =</span> <span class="dv">60</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) </span>
+<span id="cb16-4"><a href="#cb16-4"></a></span>
+<span id="cb16-5"><a href="#cb16-5"></a>bagged_trees_mod_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> dt_rec) <span class="sc">|&gt;</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> bagged_trees_mod)</span>
+<span id="cb16-8"><a href="#cb16-8"></a></span>
+<span id="cb16-9"><a href="#cb16-9"></a>bagged_trees_resamples <span class="ot">&lt;-</span> bagged_trees_mod_wf <span class="sc">|&gt;</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span>
+<span id="cb16-11"><a href="#cb16-11"></a></span>
+<span id="cb16-12"><a href="#cb16-12"></a><span class="fu">collect_metrics</span>(bagged_trees_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   5.04      5 0.0389  Preprocessor1_Model1
-2 rsq     standard   0.541     5 0.00472 Preprocessor1_Model1</code></pre>
+1 rmse    standard   5.03      5 0.0392  Preprocessor1_Model1
+2 rsq     standard   0.541     5 0.00483 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
@@ -890,80 +893,83 @@ Regularization
 <div class="cell" data-hash="22_ensembling_cache/html/tune-rf_14615ff03415f691ee097e5660cbcf28">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>rf_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
-<span id="cb17-4"><a href="#cb17-4"></a></span>
-<span id="cb17-5"><a href="#cb17-5"></a>rf_mod <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
-<span id="cb17-6"><a href="#cb17-6"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
-<span id="cb17-7"><a href="#cb17-7"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
-<span id="cb17-8"><a href="#cb17-8"></a>  <span class="at">trees =</span> <span class="dv">200</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">set_engine</span>(</span>
-<span id="cb17-12"><a href="#cb17-12"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
-<span id="cb17-13"><a href="#cb17-13"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
-<span id="cb17-14"><a href="#cb17-14"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a>  )</span>
-<span id="cb17-16"><a href="#cb17-16"></a></span>
-<span id="cb17-17"><a href="#cb17-17"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-18"><a href="#cb17-18"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
-<span id="cb17-19"><a href="#cb17-19"></a>  <span class="fu">add_model</span>(rf_mod)</span>
-<span id="cb17-20"><a href="#cb17-20"></a></span>
-<span id="cb17-21"><a href="#cb17-21"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb17-22"><a href="#cb17-22"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
-<span id="cb17-23"><a href="#cb17-23"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
-<span id="cb17-24"><a href="#cb17-24"></a>  <span class="at">levels =</span> <span class="dv">5</span></span>
-<span id="cb17-25"><a href="#cb17-25"></a>)</span>
-<span id="cb17-26"><a href="#cb17-26"></a></span>
-<span id="cb17-27"><a href="#cb17-27"></a>rf_resamples <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
-<span id="cb17-28"><a href="#cb17-28"></a>  rf_wf,</span>
-<span id="cb17-29"><a href="#cb17-29"></a>  <span class="at">resamples =</span> pdb_folds,</span>
-<span id="cb17-30"><a href="#cb17-30"></a>  <span class="at">grid =</span> rf_grid</span>
-<span id="cb17-31"><a href="#cb17-31"></a>)</span>
-<span id="cb17-32"><a href="#cb17-32"></a></span>
-<span id="cb17-33"><a href="#cb17-33"></a><span class="fu">collect_metrics</span>(rf_resamples)</span>
-<span id="cb17-34"><a href="#cb17-34"></a></span>
-<span id="cb17-35"><a href="#cb17-35"></a><span class="fu">show_best</span>(rf_resamples)</span>
-<span id="cb17-36"><a href="#cb17-36"></a></span>
-<span id="cb17-37"><a href="#cb17-37"></a><span class="fu">autoplot</span>(rf_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</details>
-</div>
-<div class="cell" data-hash="22_ensembling_cache/html/rf_93a12f74ac10e2ef27e49223c4c6e36f">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>rf_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
 <span id="cb18-4"><a href="#cb18-4"></a></span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="co"># we selected these hyperparameters with tuning and cross validation</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a>rf_mod <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="at">trees =</span> <span class="dv">200</span>,</span>
-<span id="cb18-8"><a href="#cb18-8"></a>  <span class="at">mtry =</span> <span class="dv">11</span>,</span>
-<span id="cb18-9"><a href="#cb18-9"></a>  <span class="at">min_n =</span> <span class="dv">4</span></span>
-<span id="cb18-10"><a href="#cb18-10"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-12"><a href="#cb18-12"></a>  <span class="fu">set_engine</span>(</span>
-<span id="cb18-13"><a href="#cb18-13"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
-<span id="cb18-14"><a href="#cb18-14"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
-<span id="cb18-15"><a href="#cb18-15"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
-<span id="cb18-16"><a href="#cb18-16"></a>  )</span>
-<span id="cb18-17"><a href="#cb18-17"></a></span>
-<span id="cb18-18"><a href="#cb18-18"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb18-19"><a href="#cb18-19"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
-<span id="cb18-20"><a href="#cb18-20"></a>  <span class="fu">add_model</span>(rf_mod)</span>
-<span id="cb18-21"><a href="#cb18-21"></a></span>
-<span id="cb18-22"><a href="#cb18-22"></a>rf_resamples <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
-<span id="cb18-23"><a href="#cb18-23"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-5"><a href="#cb18-5"></a>rf_mod <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
+<span id="cb18-6"><a href="#cb18-6"></a>  <span class="at">mtry =</span> <span class="fu">tune</span>(),</span>
+<span id="cb18-7"><a href="#cb18-7"></a>  <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb18-8"><a href="#cb18-8"></a>  <span class="at">trees =</span> <span class="dv">200</span></span>
+<span id="cb18-9"><a href="#cb18-9"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb18-10"><a href="#cb18-10"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb18-12"><a href="#cb18-12"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
+<span id="cb18-13"><a href="#cb18-13"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
+<span id="cb18-14"><a href="#cb18-14"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
+<span id="cb18-15"><a href="#cb18-15"></a>  )</span>
+<span id="cb18-16"><a href="#cb18-16"></a></span>
+<span id="cb18-17"><a href="#cb18-17"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb18-18"><a href="#cb18-18"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
+<span id="cb18-19"><a href="#cb18-19"></a>  <span class="fu">add_model</span>(rf_mod)</span>
+<span id="cb18-20"><a href="#cb18-20"></a></span>
+<span id="cb18-21"><a href="#cb18-21"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb18-22"><a href="#cb18-22"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
+<span id="cb18-23"><a href="#cb18-23"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">15</span>)),</span>
+<span id="cb18-24"><a href="#cb18-24"></a>  <span class="at">levels =</span> <span class="dv">5</span></span>
+<span id="cb18-25"><a href="#cb18-25"></a>)</span>
+<span id="cb18-26"><a href="#cb18-26"></a></span>
+<span id="cb18-27"><a href="#cb18-27"></a>rf_resamples <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb18-28"><a href="#cb18-28"></a>  rf_wf,</span>
+<span id="cb18-29"><a href="#cb18-29"></a>  <span class="at">resamples =</span> pdb_folds,</span>
+<span id="cb18-30"><a href="#cb18-30"></a>  <span class="at">grid =</span> rf_grid</span>
+<span id="cb18-31"><a href="#cb18-31"></a>)</span>
+<span id="cb18-32"><a href="#cb18-32"></a></span>
+<span id="cb18-33"><a href="#cb18-33"></a><span class="fu">collect_metrics</span>(rf_resamples)</span>
+<span id="cb18-34"><a href="#cb18-34"></a></span>
+<span id="cb18-35"><a href="#cb18-35"></a><span class="fu">show_best</span>(rf_resamples)</span>
+<span id="cb18-36"><a href="#cb18-36"></a></span>
+<span id="cb18-37"><a href="#cb18-37"></a><span class="fu">autoplot</span>(rf_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell" data-hash="22_ensembling_cache/html/rf_93a12f74ac10e2ef27e49223c4c6e36f">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>rf_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., pdb_train) <span class="sc">|&gt;</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>))</span>
+<span id="cb19-4"><a href="#cb19-4"></a></span>
+<span id="cb19-5"><a href="#cb19-5"></a><span class="co"># we selected these hyperparameters with tuning and cross validation</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>rf_mod <span class="ot">&lt;-</span> <span class="fu">rand_forest</span>(</span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="at">trees =</span> <span class="dv">200</span>,</span>
+<span id="cb19-8"><a href="#cb19-8"></a>  <span class="at">mtry =</span> <span class="dv">11</span>,</span>
+<span id="cb19-9"><a href="#cb19-9"></a>  <span class="at">min_n =</span> <span class="dv">4</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb19-12"><a href="#cb19-12"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb19-13"><a href="#cb19-13"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
+<span id="cb19-14"><a href="#cb19-14"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
+<span id="cb19-15"><a href="#cb19-15"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
+<span id="cb19-16"><a href="#cb19-16"></a>  )</span>
+<span id="cb19-17"><a href="#cb19-17"></a></span>
+<span id="cb19-18"><a href="#cb19-18"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-19"><a href="#cb19-19"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
+<span id="cb19-20"><a href="#cb19-20"></a>  <span class="fu">add_model</span>(rf_mod)</span>
+<span id="cb19-21"><a href="#cb19-21"></a></span>
+<span id="cb19-22"><a href="#cb19-22"></a>rf_resamples <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
+<span id="cb19-23"><a href="#cb19-23"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ranger' was built under R version 4.3.3</code></pre>
+</div>
 </div>
 <p>The random forest results are great.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-17_116cfeb956f3653051f805a1e33af007">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>rf_resamples <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>rf_resamples <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   4.51      5 0.0468  Preprocessor1_Model1
-2 rsq     standard   0.631     5 0.00583 Preprocessor1_Model1</code></pre>
+1 rmse    standard   4.51      5 0.0460  Preprocessor1_Model1
+2 rsq     standard   0.631     5 0.00568 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 <section id="interpretability" class="level3" data-number="20.5.1">
@@ -1019,28 +1025,28 @@ Variable Importance
 <p>For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but is a valuable tool for understanding a random forest model.</p>
 <p>Here we fit the random forest model on all of the training data and then visualize the variable importance.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-18_9e458f9785d2075adba99c9a20771dbb">
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>rf_final <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">last_fit</span>(pdb_split) </span>
-<span id="cb21-3"><a href="#cb21-3"></a></span>
-<span id="cb21-4"><a href="#cb21-4"></a>rf_final <span class="sc">|&gt;</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>rf_final <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">last_fit</span>(pdb_split) </span>
+<span id="cb23-3"><a href="#cb23-3"></a></span>
+<span id="cb23-4"><a href="#cb23-4"></a>rf_final <span class="sc">|&gt;</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb23-6"><a href="#cb23-6"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="22_ensembling_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <p>It is common to rescale variable importance for random forests so the most important variable has a value of 1.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-19_c44914c740dd6f53a32b286ba272fc0f">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>rf_final <span class="sc">|&gt;</span></span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>  .<span class="sc">$</span>data <span class="sc">|&gt;</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb22-6"><a href="#cb22-6"></a>    <span class="at">Importance =</span> Importance <span class="sc">/</span> <span class="fu">max</span>(Importance),</span>
-<span id="cb22-7"><a href="#cb22-7"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(<span class="at">.x =</span> Importance, <span class="at">.f =</span> Variable)</span>
-<span id="cb22-8"><a href="#cb22-8"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb22-9"><a href="#cb22-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Importance, Variable)) <span class="sc">+</span></span>
-<span id="cb22-10"><a href="#cb22-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>rf_final <span class="sc">|&gt;</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  .<span class="sc">$</span>data <span class="sc">|&gt;</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb24-6"><a href="#cb24-6"></a>    <span class="at">Importance =</span> Importance <span class="sc">/</span> <span class="fu">max</span>(Importance),</span>
+<span id="cb24-7"><a href="#cb24-7"></a>    <span class="at">Variable =</span> <span class="fu">fct_reorder</span>(<span class="at">.x =</span> Importance, <span class="at">.f =</span> Variable)</span>
+<span id="cb24-8"><a href="#cb24-8"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(Importance, Variable)) <span class="sc">+</span></span>
+<span id="cb24-10"><a href="#cb24-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="22_ensembling_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1064,7 +1070,7 @@ Parallelization
 </div>
 <p>Computers have a limited number of cores. The following code counts the number of available cores.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-20_7d989c9767ea1ef15bd964e04ab9eae4">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 8</code></pre>
 </div>
@@ -1084,28 +1090,28 @@ Warning
 </div>
 <p>We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grow. Simply include <code>num.threads</code> in the <code>set_engine()</code> call.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-21_71e6825fe7dab499eeefbbe702a3f4ac">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">set_engine</span>(</span>
-<span id="cb25-2"><a href="#cb25-2"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
-<span id="cb25-3"><a href="#cb25-3"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
-<span id="cb25-4"><a href="#cb25-4"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
-<span id="cb25-5"><a href="#cb25-5"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">set_engine</span>(</span>
+<span id="cb27-2"><a href="#cb27-2"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>
+<span id="cb27-3"><a href="#cb27-3"></a>    <span class="at">importance =</span> <span class="st">"impurity"</span>,</span>
+<span id="cb27-4"><a href="#cb27-4"></a>    <span class="at">num.threads =</span> <span class="dv">4</span></span>
+<span id="cb27-5"><a href="#cb27-5"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Parallelization is more difficult with boosted models, which are sequentially trained. The hyperparameter tuning later in this chapter uses a more complex socket parallelization with the following setup. This should detect a backend built into <code>library(tidymodels)</code> and parallelize the hyperparameter tuning with an entire model fit allocated to each core.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-22_ce0b6124cb0d637a8eb2a77ede9ff5c9">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">library</span>(doFuture)</span>
-<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb26-3"><a href="#cb26-3"></a></span>
-<span id="cb26-4"><a href="#cb26-4"></a><span class="co"># detect the number of cores</span></span>
-<span id="cb26-5"><a href="#cb26-5"></a>all_cores <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb26-6"><a href="#cb26-6"></a></span>
-<span id="cb26-7"><a href="#cb26-7"></a><span class="co"># set up the parallel backend using futures</span></span>
-<span id="cb26-8"><a href="#cb26-8"></a><span class="fu">registerDoFuture</span>()</span>
-<span id="cb26-9"><a href="#cb26-9"></a></span>
-<span id="cb26-10"><a href="#cb26-10"></a><span class="co"># set up socket parallelization</span></span>
-<span id="cb26-11"><a href="#cb26-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
-<span id="cb26-12"><a href="#cb26-12"></a></span>
-<span id="cb26-13"><a href="#cb26-13"></a><span class="co"># plan for parallelization</span></span>
-<span id="cb26-14"><a href="#cb26-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(doFuture)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb28-3"><a href="#cb28-3"></a></span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="co"># detect the number of cores</span></span>
+<span id="cb28-5"><a href="#cb28-5"></a>all_cores <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb28-6"><a href="#cb28-6"></a></span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="co"># set up the parallel backend using futures</span></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="fu">registerDoFuture</span>()</span>
+<span id="cb28-9"><a href="#cb28-9"></a></span>
+<span id="cb28-10"><a href="#cb28-10"></a><span class="co"># set up socket parallelization</span></span>
+<span id="cb28-11"><a href="#cb28-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
+<span id="cb28-12"><a href="#cb28-12"></a></span>
+<span id="cb28-13"><a href="#cb28-13"></a><span class="co"># plan for parallelization</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 </section>
@@ -1197,88 +1203,88 @@ XGBoost Algorithm for Regression
 <div class="cell" data-hash="22_ensembling_cache/html/tune-xgboost_0b30128015b94d535baca409d2bf6876">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(doFuture)</span>
-<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">library</span>(doParallel)</span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a><span class="co"># detect the number of cores</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>all_cores <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb29-6"><a href="#cb29-6"></a></span>
-<span id="cb29-7"><a href="#cb29-7"></a><span class="co"># set up the parallel backend using futures</span></span>
-<span id="cb29-8"><a href="#cb29-8"></a><span class="fu">registerDoFuture</span>()</span>
-<span id="cb29-9"><a href="#cb29-9"></a></span>
-<span id="cb29-10"><a href="#cb29-10"></a><span class="co"># set up socket parallelization</span></span>
-<span id="cb29-11"><a href="#cb29-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
-<span id="cb29-12"><a href="#cb29-12"></a></span>
-<span id="cb29-13"><a href="#cb29-13"></a><span class="co"># plan for parallelization</span></span>
-<span id="cb29-14"><a href="#cb29-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span>
-<span id="cb29-15"><a href="#cb29-15"></a></span>
-<span id="cb29-16"><a href="#cb29-16"></a>xgb_spec <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
-<span id="cb29-17"><a href="#cb29-17"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
-<span id="cb29-18"><a href="#cb29-18"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(), <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
-<span id="cb29-19"><a href="#cb29-19"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>(),                     <span class="do">## first three: model complexity</span></span>
-<span id="cb29-20"><a href="#cb29-20"></a>  <span class="at">sample_size =</span> <span class="fu">tune</span>(), <span class="at">mtry =</span> <span class="fu">tune</span>(),         <span class="do">## randomness</span></span>
-<span id="cb29-21"><a href="#cb29-21"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>()                          <span class="do">## step size</span></span>
-<span id="cb29-22"><a href="#cb29-22"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb29-23"><a href="#cb29-23"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb29-24"><a href="#cb29-24"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb29-25"><a href="#cb29-25"></a></span>
-<span id="cb29-26"><a href="#cb29-26"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
-<span id="cb29-27"><a href="#cb29-27"></a>xgb_grid <span class="ot">&lt;-</span> <span class="fu">grid_latin_hypercube</span>(</span>
-<span id="cb29-28"><a href="#cb29-28"></a>  <span class="fu">tree_depth</span>(),</span>
-<span id="cb29-29"><a href="#cb29-29"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">10</span>)),</span>
-<span id="cb29-30"><a href="#cb29-30"></a>  <span class="fu">loss_reduction</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)),</span>
-<span id="cb29-31"><a href="#cb29-31"></a>  <span class="at">sample_size =</span> <span class="fu">sample_prop</span>(),</span>
-<span id="cb29-32"><a href="#cb29-32"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)),</span>
-<span id="cb29-33"><a href="#cb29-33"></a>  <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
-<span id="cb29-34"><a href="#cb29-34"></a>  <span class="at">size =</span> <span class="dv">30</span></span>
-<span id="cb29-35"><a href="#cb29-35"></a>)</span>
-<span id="cb29-36"><a href="#cb29-36"></a></span>
-<span id="cb29-37"><a href="#cb29-37"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb29-38"><a href="#cb29-38"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
-<span id="cb29-39"><a href="#cb29-39"></a>  <span class="fu">add_model</span>(xgb_spec)</span>
-<span id="cb29-40"><a href="#cb29-40"></a></span>
-<span id="cb29-41"><a href="#cb29-41"></a>xgb_resamples <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
-<span id="cb29-42"><a href="#cb29-42"></a>  xgb_wf,</span>
-<span id="cb29-43"><a href="#cb29-43"></a>  <span class="at">resamples =</span> pdb_folds,</span>
-<span id="cb29-44"><a href="#cb29-44"></a>  <span class="at">grid =</span> xgb_grid</span>
-<span id="cb29-45"><a href="#cb29-45"></a>)</span>
-<span id="cb29-46"><a href="#cb29-46"></a></span>
-<span id="cb29-47"><a href="#cb29-47"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">library</span>(doFuture)</span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">library</span>(doParallel)</span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a><span class="co"># detect the number of cores</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>all_cores <span class="ot">&lt;-</span> parallel<span class="sc">::</span><span class="fu">detectCores</span>(<span class="at">logical =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb31-6"><a href="#cb31-6"></a></span>
+<span id="cb31-7"><a href="#cb31-7"></a><span class="co"># set up the parallel backend using futures</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a><span class="fu">registerDoFuture</span>()</span>
+<span id="cb31-9"><a href="#cb31-9"></a></span>
+<span id="cb31-10"><a href="#cb31-10"></a><span class="co"># set up socket parallelization</span></span>
+<span id="cb31-11"><a href="#cb31-11"></a>cl <span class="ot">&lt;-</span> <span class="fu">makeCluster</span>(all_cores <span class="sc">-</span> 4L)</span>
+<span id="cb31-12"><a href="#cb31-12"></a></span>
+<span id="cb31-13"><a href="#cb31-13"></a><span class="co"># plan for parallelization</span></span>
+<span id="cb31-14"><a href="#cb31-14"></a><span class="fu">plan</span>(cluster, <span class="at">workers =</span> cl)</span>
+<span id="cb31-15"><a href="#cb31-15"></a></span>
+<span id="cb31-16"><a href="#cb31-16"></a>xgb_spec <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
+<span id="cb31-17"><a href="#cb31-17"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb31-18"><a href="#cb31-18"></a>  <span class="at">tree_depth =</span> <span class="fu">tune</span>(), <span class="at">min_n =</span> <span class="fu">tune</span>(),</span>
+<span id="cb31-19"><a href="#cb31-19"></a>  <span class="at">loss_reduction =</span> <span class="fu">tune</span>(),                     <span class="do">## first three: model complexity</span></span>
+<span id="cb31-20"><a href="#cb31-20"></a>  <span class="at">sample_size =</span> <span class="fu">tune</span>(), <span class="at">mtry =</span> <span class="fu">tune</span>(),         <span class="do">## randomness</span></span>
+<span id="cb31-21"><a href="#cb31-21"></a>  <span class="at">learn_rate =</span> <span class="fu">tune</span>()                          <span class="do">## step size</span></span>
+<span id="cb31-22"><a href="#cb31-22"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb31-23"><a href="#cb31-23"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb31-24"><a href="#cb31-24"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb31-25"><a href="#cb31-25"></a></span>
+<span id="cb31-26"><a href="#cb31-26"></a><span class="fu">set.seed</span>(<span class="dv">1</span>)</span>
+<span id="cb31-27"><a href="#cb31-27"></a>xgb_grid <span class="ot">&lt;-</span> <span class="fu">grid_latin_hypercube</span>(</span>
+<span id="cb31-28"><a href="#cb31-28"></a>  <span class="fu">tree_depth</span>(),</span>
+<span id="cb31-29"><a href="#cb31-29"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">10</span>)),</span>
+<span id="cb31-30"><a href="#cb31-30"></a>  <span class="fu">loss_reduction</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">3</span>)),</span>
+<span id="cb31-31"><a href="#cb31-31"></a>  <span class="at">sample_size =</span> <span class="fu">sample_prop</span>(),</span>
+<span id="cb31-32"><a href="#cb31-32"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">10</span>)),</span>
+<span id="cb31-33"><a href="#cb31-33"></a>  <span class="fu">learn_rate</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)),</span>
+<span id="cb31-34"><a href="#cb31-34"></a>  <span class="at">size =</span> <span class="dv">30</span></span>
+<span id="cb31-35"><a href="#cb31-35"></a>)</span>
+<span id="cb31-36"><a href="#cb31-36"></a></span>
+<span id="cb31-37"><a href="#cb31-37"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb31-38"><a href="#cb31-38"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
+<span id="cb31-39"><a href="#cb31-39"></a>  <span class="fu">add_model</span>(xgb_spec)</span>
+<span id="cb31-40"><a href="#cb31-40"></a></span>
+<span id="cb31-41"><a href="#cb31-41"></a>xgb_resamples <span class="ot">&lt;-</span> <span class="fu">tune_grid</span>(</span>
+<span id="cb31-42"><a href="#cb31-42"></a>  xgb_wf,</span>
+<span id="cb31-43"><a href="#cb31-43"></a>  <span class="at">resamples =</span> pdb_folds,</span>
+<span id="cb31-44"><a href="#cb31-44"></a>  <span class="at">grid =</span> xgb_grid</span>
+<span id="cb31-45"><a href="#cb31-45"></a>)</span>
+<span id="cb31-46"><a href="#cb31-46"></a></span>
+<span id="cb31-47"><a href="#cb31-47"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-hash="22_ensembling_cache/html/xgboost_f218d2f31bd8a10c57d448d8e3f79841">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># hyperparameters selected with cross validation and tuning</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>xgb_spec <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
-<span id="cb30-3"><a href="#cb30-3"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
-<span id="cb30-4"><a href="#cb30-4"></a>  <span class="at">tree_depth =</span> <span class="dv">12</span>, </span>
-<span id="cb30-5"><a href="#cb30-5"></a>  <span class="at">min_n =</span> <span class="dv">8</span>,</span>
-<span id="cb30-6"><a href="#cb30-6"></a>  <span class="at">loss_reduction =</span> <span class="fl">0.00007778243</span>,                     </span>
-<span id="cb30-7"><a href="#cb30-7"></a>  <span class="at">sample_size =</span> <span class="fl">0.7604136</span>, </span>
-<span id="cb30-8"><a href="#cb30-8"></a>  <span class="at">mtry =</span> <span class="dv">8</span>,         </span>
-<span id="cb30-9"><a href="#cb30-9"></a>  <span class="at">learn_rate =</span> <span class="fl">0.01237174241</span>                      </span>
-<span id="cb30-10"><a href="#cb30-10"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb30-11"><a href="#cb30-11"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb30-12"><a href="#cb30-12"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
-<span id="cb30-13"><a href="#cb30-13"></a></span>
-<span id="cb30-14"><a href="#cb30-14"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb30-15"><a href="#cb30-15"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
-<span id="cb30-16"><a href="#cb30-16"></a>  <span class="fu">add_model</span>(xgb_spec)</span>
-<span id="cb30-17"><a href="#cb30-17"></a></span>
-<span id="cb30-18"><a href="#cb30-18"></a>xgb_resamples <span class="ot">&lt;-</span> xgb_wf <span class="sc">|&gt;</span></span>
-<span id="cb30-19"><a href="#cb30-19"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># hyperparameters selected with cross validation and tuning</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>xgb_spec <span class="ot">&lt;-</span> <span class="fu">boost_tree</span>(</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="at">trees =</span> <span class="dv">1000</span>,</span>
+<span id="cb32-4"><a href="#cb32-4"></a>  <span class="at">tree_depth =</span> <span class="dv">12</span>, </span>
+<span id="cb32-5"><a href="#cb32-5"></a>  <span class="at">min_n =</span> <span class="dv">8</span>,</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">loss_reduction =</span> <span class="fl">0.00007778243</span>,                     </span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">sample_size =</span> <span class="fl">0.7604136</span>, </span>
+<span id="cb32-8"><a href="#cb32-8"></a>  <span class="at">mtry =</span> <span class="dv">8</span>,         </span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="at">learn_rate =</span> <span class="fl">0.01237174241</span>                      </span>
+<span id="cb32-10"><a href="#cb32-10"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb32-11"><a href="#cb32-11"></a>  <span class="fu">set_engine</span>(<span class="st">"xgboost"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>  <span class="fu">set_mode</span>(<span class="st">"regression"</span>)</span>
+<span id="cb32-13"><a href="#cb32-13"></a></span>
+<span id="cb32-14"><a href="#cb32-14"></a>xgb_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb32-15"><a href="#cb32-15"></a>  <span class="fu">add_recipe</span>(rf_rec) <span class="sc">|&gt;</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a>  <span class="fu">add_model</span>(xgb_spec)</span>
+<span id="cb32-17"><a href="#cb32-17"></a></span>
+<span id="cb32-18"><a href="#cb32-18"></a>xgb_resamples <span class="ot">&lt;-</span> xgb_wf <span class="sc">|&gt;</span></span>
+<span id="cb32-19"><a href="#cb32-19"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'xgboost' was built under R version 4.3.3</code></pre>
 </div>
 </div>
 <p>These results are the best.</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-25_e1be8a4a6255621cb49c65def610e527">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   4.40      5 0.0505  Preprocessor1_Model1
-2 rsq     standard   0.648     5 0.00620 Preprocessor1_Model1</code></pre>
+1 rmse    standard   4.40      5 0.0491  Preprocessor1_Model1
+2 rsq     standard   0.649     5 0.00600 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
@@ -1286,51 +1292,51 @@ XGBoost Algorithm for Regression
 <h2 data-number="20.8" class="anchored" data-anchor-id="final-comparison"><span class="header-section-number">20.8</span> Final Comparison</h2>
 <p>Finally, let’s compare the RMSE and <span class="math inline">\(r\)</span>-squared for linear regression, regression trees, bagged trees, random forests (with hyperparameter tuning), and XGBoost (with hyperparameter tuning).</p>
 <div class="cell" data-hash="22_ensembling_cache/html/unnamed-chunk-26_ccb01d63b9b253bb573a9c108f8336e9">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
-<span id="cb34-6"><a href="#cb34-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb34-8"><a href="#cb34-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb34-9"><a href="#cb34-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb34-10"><a href="#cb34-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb34-11"><a href="#cb34-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb34-12"><a href="#cb34-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb34-13"><a href="#cb34-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 5 × 7
-  model             .metric .estimator  mean     n std_err .config             
-  &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 Linear regression rmse    standard    5.33     5  0.0580 Preprocessor1_Model1
-2 Regression trees  rmse    standard    5.30     5  0.0334 Preprocessor1_Model1
-3 Bagged trees      rmse    standard    5.04     5  0.0389 Preprocessor1_Model1
-4 Random forest     rmse    standard    4.51     5  0.0468 Preprocessor1_Model1
-5 XGBoost           rmse    standard    4.40     5  0.0505 Preprocessor1_Model1</code></pre>
-</div>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="fu">bind_rows</span>(</span>
 <span id="cb36-2"><a href="#cb36-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb36-3"><a href="#cb36-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
 <span id="cb36-4"><a href="#cb36-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
 <span id="cb36-6"><a href="#cb36-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb36-7"><a href="#cb36-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb36-7"><a href="#cb36-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
 <span id="cb36-8"><a href="#cb36-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb36-9"><a href="#cb36-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb36-9"><a href="#cb36-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
 <span id="cb36-10"><a href="#cb36-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb36-11"><a href="#cb36-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
 <span id="cb36-12"><a href="#cb36-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
 <span id="cb36-13"><a href="#cb36-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   model             .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
+1 Linear regression rmse    standard    5.33     5  0.0580 Preprocessor1_Model1
+2 Regression trees  rmse    standard    5.30     5  0.0334 Preprocessor1_Model1
+3 Bagged trees      rmse    standard    5.03     5  0.0392 Preprocessor1_Model1
+4 Random forest     rmse    standard    4.51     5  0.0460 Preprocessor1_Model1
+5 XGBoost           rmse    standard    4.40     5  0.0491 Preprocessor1_Model1</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb38-5"><a href="#cb38-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
+<span id="cb38-6"><a href="#cb38-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb38-7"><a href="#cb38-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb38-8"><a href="#cb38-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb38-10"><a href="#cb38-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb38-11"><a href="#cb38-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb38-12"><a href="#cb38-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb38-13"><a href="#cb38-13"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 7
+  model             .metric .estimator  mean     n std_err .config             
+  &lt;chr&gt;             &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
 1 Linear regression rsq     standard   0.485     5 0.00906 Preprocessor1_Model1
 2 Regression trees  rsq     standard   0.490     5 0.00384 Preprocessor1_Model1
-3 Bagged trees      rsq     standard   0.541     5 0.00472 Preprocessor1_Model1
-4 Random forest     rsq     standard   0.631     5 0.00583 Preprocessor1_Model1
-5 XGBoost           rsq     standard   0.648     5 0.00620 Preprocessor1_Model1</code></pre>
+3 Bagged trees      rsq     standard   0.541     5 0.00483 Preprocessor1_Model1
+4 Random forest     rsq     standard   0.631     5 0.00568 Preprocessor1_Model1
+5 XGBoost           rsq     standard   0.649     5 0.00600 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 

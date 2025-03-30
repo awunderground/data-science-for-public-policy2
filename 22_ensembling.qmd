@@ -315,7 +315,7 @@ Notice how the predicted value line smooths out because of the averaging of many
 library(baguette)
 
 bagged_trees1 <- bag_tree(cost_complexity = 0.001) |>
-  set_engine("rpart", times = 1) |> # 1 ensemble member
+  set_engine("rpart", times = 2) |> # 1 ensemble member
   set_mode("regression") |> 
   fit(y ~ ., data = data1)
 

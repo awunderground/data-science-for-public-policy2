@@ -474,36 +474,42 @@ One-row-per document
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-2_2ecd89ce80715fe6f2f54edaecc8c7f7">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'purrr' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'lubridate' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
 ✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
-<span id="cb3-4"><a href="#cb3-4"></a></span>
-<span id="cb3-5"><a href="#cb3-5"></a>example_doc <span class="ot">&lt;-</span> </span>
-<span id="cb3-6"><a href="#cb3-6"></a>  <span class="fu">tribble</span>(</span>
-<span id="cb3-7"><a href="#cb3-7"></a>    <span class="sc">~</span>document, <span class="sc">~</span>word, <span class="sc">~</span>n,</span>
-<span id="cb3-8"><a href="#cb3-8"></a>    <span class="st">"a"</span>, <span class="st">"apple"</span>, <span class="dv">3</span>,</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="st">"a"</span>, <span class="st">"orange"</span>, <span class="dv">2</span>, </span>
-<span id="cb3-10"><a href="#cb3-10"></a>    <span class="st">"a"</span>, <span class="st">"banana"</span>, <span class="dv">1</span>,</span>
-<span id="cb3-11"><a href="#cb3-11"></a>    <span class="st">"b"</span>, <span class="st">"apple"</span>, <span class="dv">2</span>, </span>
-<span id="cb3-12"><a href="#cb3-12"></a>    <span class="st">"b"</span>, <span class="st">"banana"</span>, <span class="dv">3</span></span>
-<span id="cb3-13"><a href="#cb3-13"></a>  )</span>
-<span id="cb3-14"><a href="#cb3-14"></a></span>
-<span id="cb3-15"><a href="#cb3-15"></a>document_term_matrix <span class="ot">&lt;-</span> example_doc <span class="sc">|&gt;</span></span>
-<span id="cb3-16"><a href="#cb3-16"></a>  <span class="fu">cast_dtm</span>(<span class="at">document =</span> document, <span class="at">term =</span> word, <span class="at">value =</span> n)</span>
-<span id="cb3-17"><a href="#cb3-17"></a></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="co"># document term matrices are large and typically print like this</span></span>
-<span id="cb3-19"><a href="#cb3-19"></a>document_term_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb5-2"><a href="#cb5-2"></a></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="fu">theme_set</span>(<span class="fu">theme_minimal</span>())</span>
+<span id="cb5-4"><a href="#cb5-4"></a></span>
+<span id="cb5-5"><a href="#cb5-5"></a>example_doc <span class="ot">&lt;-</span> </span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="fu">tribble</span>(</span>
+<span id="cb5-7"><a href="#cb5-7"></a>    <span class="sc">~</span>document, <span class="sc">~</span>word, <span class="sc">~</span>n,</span>
+<span id="cb5-8"><a href="#cb5-8"></a>    <span class="st">"a"</span>, <span class="st">"apple"</span>, <span class="dv">3</span>,</span>
+<span id="cb5-9"><a href="#cb5-9"></a>    <span class="st">"a"</span>, <span class="st">"orange"</span>, <span class="dv">2</span>, </span>
+<span id="cb5-10"><a href="#cb5-10"></a>    <span class="st">"a"</span>, <span class="st">"banana"</span>, <span class="dv">1</span>,</span>
+<span id="cb5-11"><a href="#cb5-11"></a>    <span class="st">"b"</span>, <span class="st">"apple"</span>, <span class="dv">2</span>, </span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="st">"b"</span>, <span class="st">"banana"</span>, <span class="dv">3</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a>  )</span>
+<span id="cb5-14"><a href="#cb5-14"></a></span>
+<span id="cb5-15"><a href="#cb5-15"></a>document_term_matrix <span class="ot">&lt;-</span> example_doc <span class="sc">|&gt;</span></span>
+<span id="cb5-16"><a href="#cb5-16"></a>  <span class="fu">cast_dtm</span>(<span class="at">document =</span> document, <span class="at">term =</span> word, <span class="at">value =</span> n)</span>
+<span id="cb5-17"><a href="#cb5-17"></a></span>
+<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># document term matrices are large and typically print like this</span></span>
+<span id="cb5-19"><a href="#cb5-19"></a>document_term_matrix</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;&lt;DocumentTermMatrix (documents: 2, terms: 3)&gt;&gt;
 Non-/sparse entries: 5/1
@@ -511,8 +517,8 @@ Sparsity           : 17%
 Maximal term length: 6
 Weighting          : term frequency (tf)</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># here we can see the actual matrix</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="fu">as.matrix</span>(document_term_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># here we can see the actual matrix</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">as.matrix</span>(document_term_matrix)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>    Terms
 Docs apple orange banana
@@ -534,14 +540,14 @@ Docs apple orange banana
 <section id="example-02" class="level3" data-number="25.1.3">
 <h3 data-number="25.1.3" class="anchored" data-anchor-id="example-02"><span class="header-section-number">25.1.3</span> Example 02</h3>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-3_3bbe60a0870022e4c5fa0bdde529be71">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">library</span>(broom)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'broom' was built under R version 4.3.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>cars_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="co"># one row for the model</span></span>
-<span id="cb9-4"><a href="#cb9-4"></a><span class="fu">glance</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>cars_lm <span class="ot">&lt;-</span> <span class="fu">lm</span>(dist <span class="sc">~</span> speed, <span class="at">data =</span> cars)</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="co"># one row for the model</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="fu">glance</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 12
   r.squared adj.r.squared sigma statistic  p.value    df logLik   AIC   BIC
@@ -549,8 +555,8 @@ Docs apple orange banana
 1     0.651         0.644  15.4      89.6 1.49e-12     1  -207.  419.  425.
 # ℹ 3 more variables: deviance &lt;dbl&gt;, df.residual &lt;int&gt;, nobs &lt;int&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># one row per coefficient</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">tidy</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># one row per coefficient</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">tidy</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   term        estimate std.error statistic  p.value
@@ -558,8 +564,8 @@ Docs apple orange banana
 1 (Intercept)   -17.6      6.76      -2.60 1.23e- 2
 2 speed           3.93     0.416      9.46 1.49e-12</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># one row per observation in the modeling data</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">augment</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># one row per observation in the modeling data</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">augment</span>(cars_lm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 50 × 8
     dist speed .fitted .resid   .hat .sigma  .cooksd .std.resid
@@ -663,100 +669,100 @@ Bag-of-words assumption
 <h3 data-number="25.2.2" class="anchored" data-anchor-id="example-03"><span class="header-section-number">25.2.2</span> Example 03</h3>
 <p>Let’s demonstrate generating a document using this model. First, let’s define two topics. <code>topic1</code> is about the economy and <code>topic2</code> is about sports. Note that “contract” and “union” are in both topics:</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-4_7d7d6a0aa0cbf5d03a81da596430eda3">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>topic1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="st">"inflation"</span>, </span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="st">"unemployment"</span>, </span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="st">"labor"</span>, </span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="st">"force"</span>, </span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="st">"exchange"</span>,</span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="st">"rate"</span>,</span>
-<span id="cb15-8"><a href="#cb15-8"></a>  <span class="st">"dollar"</span>,</span>
-<span id="cb15-9"><a href="#cb15-9"></a>  <span class="st">"bank"</span>,</span>
-<span id="cb15-10"><a href="#cb15-10"></a>  <span class="st">"employer"</span>,</span>
-<span id="cb15-11"><a href="#cb15-11"></a>  <span class="st">"gdp"</span>,</span>
-<span id="cb15-12"><a href="#cb15-12"></a>  <span class="st">"federal"</span>,</span>
-<span id="cb15-13"><a href="#cb15-13"></a>  <span class="st">"reserve"</span>,</span>
-<span id="cb15-14"><a href="#cb15-14"></a>  <span class="st">"return"</span>,</span>
-<span id="cb15-15"><a href="#cb15-15"></a>  <span class="st">"nasdaq"</span>,</span>
-<span id="cb15-16"><a href="#cb15-16"></a>  <span class="st">"startup"</span>,</span>
-<span id="cb15-17"><a href="#cb15-17"></a>  <span class="st">"business"</span>,</span>
-<span id="cb15-18"><a href="#cb15-18"></a>  <span class="st">"insurance"</span>,</span>
-<span id="cb15-19"><a href="#cb15-19"></a>  <span class="st">"labor"</span>,</span>
-<span id="cb15-20"><a href="#cb15-20"></a>  <span class="st">"union"</span>,</span>
-<span id="cb15-21"><a href="#cb15-21"></a>  <span class="st">"contract"</span></span>
-<span id="cb15-22"><a href="#cb15-22"></a>)</span>
-<span id="cb15-23"><a href="#cb15-23"></a></span>
-<span id="cb15-24"><a href="#cb15-24"></a>topic2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb15-25"><a href="#cb15-25"></a>  <span class="st">"basketball"</span>, </span>
-<span id="cb15-26"><a href="#cb15-26"></a>  <span class="st">"basket"</span>, </span>
-<span id="cb15-27"><a href="#cb15-27"></a>  <span class="st">"playoff"</span>, </span>
-<span id="cb15-28"><a href="#cb15-28"></a>  <span class="st">"goal"</span>, </span>
-<span id="cb15-29"><a href="#cb15-29"></a>  <span class="st">"referee"</span>,</span>
-<span id="cb15-30"><a href="#cb15-30"></a>  <span class="st">"win"</span>,</span>
-<span id="cb15-31"><a href="#cb15-31"></a>  <span class="st">"loss"</span>,</span>
-<span id="cb15-32"><a href="#cb15-32"></a>  <span class="st">"score"</span>,</span>
-<span id="cb15-33"><a href="#cb15-33"></a>  <span class="st">"soccer"</span>,</span>
-<span id="cb15-34"><a href="#cb15-34"></a>  <span class="st">"polo"</span>,</span>
-<span id="cb15-35"><a href="#cb15-35"></a>  <span class="st">"run"</span>,</span>
-<span id="cb15-36"><a href="#cb15-36"></a>  <span class="st">"champion"</span>,</span>
-<span id="cb15-37"><a href="#cb15-37"></a>  <span class="st">"trophy"</span>,</span>
-<span id="cb15-38"><a href="#cb15-38"></a>  <span class="st">"contract"</span>,</span>
-<span id="cb15-39"><a href="#cb15-39"></a>  <span class="st">"union"</span>,</span>
-<span id="cb15-40"><a href="#cb15-40"></a>  <span class="st">"arena"</span>,</span>
-<span id="cb15-41"><a href="#cb15-41"></a>  <span class="st">"stadium"</span>,</span>
-<span id="cb15-42"><a href="#cb15-42"></a>  <span class="st">"concession"</span>,</span>
-<span id="cb15-43"><a href="#cb15-43"></a>  <span class="st">"court"</span>,</span>
-<span id="cb15-44"><a href="#cb15-44"></a>  <span class="st">"lights"</span></span>
-<span id="cb15-45"><a href="#cb15-45"></a>)</span>
-<span id="cb15-46"><a href="#cb15-46"></a></span>
-<span id="cb15-47"><a href="#cb15-47"></a>topics <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb15-48"><a href="#cb15-48"></a>  topic1,</span>
-<span id="cb15-49"><a href="#cb15-49"></a>  topic2</span>
-<span id="cb15-50"><a href="#cb15-50"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>topic1 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="st">"inflation"</span>, </span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="st">"unemployment"</span>, </span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="st">"labor"</span>, </span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="st">"force"</span>, </span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="st">"exchange"</span>,</span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="st">"rate"</span>,</span>
+<span id="cb17-8"><a href="#cb17-8"></a>  <span class="st">"dollar"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>  <span class="st">"bank"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10"></a>  <span class="st">"employer"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11"></a>  <span class="st">"gdp"</span>,</span>
+<span id="cb17-12"><a href="#cb17-12"></a>  <span class="st">"federal"</span>,</span>
+<span id="cb17-13"><a href="#cb17-13"></a>  <span class="st">"reserve"</span>,</span>
+<span id="cb17-14"><a href="#cb17-14"></a>  <span class="st">"return"</span>,</span>
+<span id="cb17-15"><a href="#cb17-15"></a>  <span class="st">"nasdaq"</span>,</span>
+<span id="cb17-16"><a href="#cb17-16"></a>  <span class="st">"startup"</span>,</span>
+<span id="cb17-17"><a href="#cb17-17"></a>  <span class="st">"business"</span>,</span>
+<span id="cb17-18"><a href="#cb17-18"></a>  <span class="st">"insurance"</span>,</span>
+<span id="cb17-19"><a href="#cb17-19"></a>  <span class="st">"labor"</span>,</span>
+<span id="cb17-20"><a href="#cb17-20"></a>  <span class="st">"union"</span>,</span>
+<span id="cb17-21"><a href="#cb17-21"></a>  <span class="st">"contract"</span></span>
+<span id="cb17-22"><a href="#cb17-22"></a>)</span>
+<span id="cb17-23"><a href="#cb17-23"></a></span>
+<span id="cb17-24"><a href="#cb17-24"></a>topic2 <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb17-25"><a href="#cb17-25"></a>  <span class="st">"basketball"</span>, </span>
+<span id="cb17-26"><a href="#cb17-26"></a>  <span class="st">"basket"</span>, </span>
+<span id="cb17-27"><a href="#cb17-27"></a>  <span class="st">"playoff"</span>, </span>
+<span id="cb17-28"><a href="#cb17-28"></a>  <span class="st">"goal"</span>, </span>
+<span id="cb17-29"><a href="#cb17-29"></a>  <span class="st">"referee"</span>,</span>
+<span id="cb17-30"><a href="#cb17-30"></a>  <span class="st">"win"</span>,</span>
+<span id="cb17-31"><a href="#cb17-31"></a>  <span class="st">"loss"</span>,</span>
+<span id="cb17-32"><a href="#cb17-32"></a>  <span class="st">"score"</span>,</span>
+<span id="cb17-33"><a href="#cb17-33"></a>  <span class="st">"soccer"</span>,</span>
+<span id="cb17-34"><a href="#cb17-34"></a>  <span class="st">"polo"</span>,</span>
+<span id="cb17-35"><a href="#cb17-35"></a>  <span class="st">"run"</span>,</span>
+<span id="cb17-36"><a href="#cb17-36"></a>  <span class="st">"champion"</span>,</span>
+<span id="cb17-37"><a href="#cb17-37"></a>  <span class="st">"trophy"</span>,</span>
+<span id="cb17-38"><a href="#cb17-38"></a>  <span class="st">"contract"</span>,</span>
+<span id="cb17-39"><a href="#cb17-39"></a>  <span class="st">"union"</span>,</span>
+<span id="cb17-40"><a href="#cb17-40"></a>  <span class="st">"arena"</span>,</span>
+<span id="cb17-41"><a href="#cb17-41"></a>  <span class="st">"stadium"</span>,</span>
+<span id="cb17-42"><a href="#cb17-42"></a>  <span class="st">"concession"</span>,</span>
+<span id="cb17-43"><a href="#cb17-43"></a>  <span class="st">"court"</span>,</span>
+<span id="cb17-44"><a href="#cb17-44"></a>  <span class="st">"lights"</span></span>
+<span id="cb17-45"><a href="#cb17-45"></a>)</span>
+<span id="cb17-46"><a href="#cb17-46"></a></span>
+<span id="cb17-47"><a href="#cb17-47"></a>topics <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb17-48"><a href="#cb17-48"></a>  topic1,</span>
+<span id="cb17-49"><a href="#cb17-49"></a>  topic2</span>
+<span id="cb17-50"><a href="#cb17-50"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, randomly sample a document length. In this case, we will use the <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson distribution</a>, which returns non-negative integers. We use <code>_i</code> to note that this is for the <span class="math inline">\(i^{th}\)</span> document.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-5_f5da687330f5911a7186c5f40795779a">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a>document_length_i <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="dv">10</span>)</span>
-<span id="cb16-4"><a href="#cb16-4"></a></span>
-<span id="cb16-5"><a href="#cb16-5"></a>document_length_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb18-2"><a href="#cb18-2"></a></span>
+<span id="cb18-3"><a href="#cb18-3"></a>document_length_i <span class="ot">&lt;-</span> <span class="fu">rpois</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">lambda =</span> <span class="dv">10</span>)</span>
+<span id="cb18-4"><a href="#cb18-4"></a></span>
+<span id="cb18-5"><a href="#cb18-5"></a>document_length_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 14</code></pre>
 </div>
 </div>
 <p>Each document will have a document-specific topic probability distribution. We use the Dirichlet distribution to generate this vector of probabilities. The <a href="https://en.wikipedia.org/wiki/Dirichlet_distribution">Dirichlet distribution</a> is a multivariate <a href="https://en.wikipedia.org/wiki/Beta_distribution">beta distribution</a>. The beta distribution returns random draws between 0 and 1 and is related to the standard uniform distribution.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-6_3c267e79190ce96c6e3e17118b10a1c2">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>topic_distribution_i <span class="ot">&lt;-</span> MCMCpack<span class="sc">::</span><span class="fu">rdirichlet</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">as.numeric</span>()</span>
-<span id="cb18-3"><a href="#cb18-3"></a></span>
-<span id="cb18-4"><a href="#cb18-4"></a>topic_distribution_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>topic_distribution_i <span class="ot">&lt;-</span> MCMCpack<span class="sc">::</span><span class="fu">rdirichlet</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">alpha =</span> <span class="fu">c</span>(<span class="fl">0.5</span>, <span class="fl">0.5</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">as.numeric</span>()</span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a>topic_distribution_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.1311192 0.8688808</code></pre>
 </div>
 </div>
 <p>Using the document-specific topic distribution, we randomly assign a topic for each of the 14 words in our document.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-7_60989969ba8e74ab82cdc46fd0226a43">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>topic_j <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">size =</span> document_length_i, </span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">prob =</span> topic_distribution_i, </span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">replace =</span> <span class="cn">TRUE</span></span>
-<span id="cb20-6"><a href="#cb20-6"></a>)</span>
-<span id="cb20-7"><a href="#cb20-7"></a></span>
-<span id="cb20-8"><a href="#cb20-8"></a>topic_j</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>topic_j <span class="ot">&lt;-</span> <span class="fu">sample</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">size =</span> document_length_i, </span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">prob =</span> topic_distribution_i, </span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="at">replace =</span> <span class="cn">TRUE</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>)</span>
+<span id="cb22-7"><a href="#cb22-7"></a></span>
+<span id="cb22-8"><a href="#cb22-8"></a>topic_j</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 2 2 2 2 1 2 2 1 1 2 2 2 1 2</code></pre>
 </div>
 </div>
 <p>Finally, we sample each word from the sampled topic.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-8_93366b2784d732fbec0eefd709cf8917">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>document_i <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">.x =</span> topic_j,</span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">.f =</span> <span class="sc">~</span><span class="fu">sample</span>(<span class="at">x =</span> topics[[.x]], <span class="at">size =</span> <span class="dv">1</span>)</span>
-<span id="cb22-4"><a href="#cb22-4"></a>)</span>
-<span id="cb22-5"><a href="#cb22-5"></a></span>
-<span id="cb22-6"><a href="#cb22-6"></a>document_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>document_i <span class="ot">&lt;-</span> <span class="fu">map_chr</span>(</span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">.x =</span> topic_j,</span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">.f =</span> <span class="sc">~</span><span class="fu">sample</span>(<span class="at">x =</span> topics[[.x]], <span class="at">size =</span> <span class="dv">1</span>)</span>
+<span id="cb24-4"><a href="#cb24-4"></a>)</span>
+<span id="cb24-5"><a href="#cb24-5"></a></span>
+<span id="cb24-6"><a href="#cb24-6"></a>document_i</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] "soccer"     "goal"       "referee"    "trophy"     "exchange"  
  [6] "lights"     "basket"     "bank"       "labor"      "basketball"
@@ -780,15 +786,15 @@ Bag-of-words assumption
 <h3 data-number="25.2.4" class="anchored" data-anchor-id="example-04"><span class="header-section-number">25.2.4</span> Example 04</h3>
 <p>Let’s consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on <a href="https://www.tidytextmining.com/topicmodeling.html">Chapter 6 in Text Mining With R</a>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-9_86e698b5b1af45a7d068c5f6f99d2c16">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">library</span>(tidytext)</span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="fu">library</span>(SnowballC)</span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="fu">library</span>(topicmodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">library</span>(tidytext)</span>
+<span id="cb26-3"><a href="#cb26-3"></a><span class="fu">library</span>(SnowballC)</span>
+<span id="cb26-4"><a href="#cb26-4"></a><span class="fu">library</span>(topicmodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'topicmodels' was built under R version 4.3.3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># load one-row-per-line data ----------------------------------------------</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># load one-row-per-line data ----------------------------------------------</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 196537 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
@@ -800,78 +806,78 @@ date (1): signing_date
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">filter</span>(eos, <span class="sc">!</span><span class="fu">is.na</span>(text))</span>
-<span id="cb28-2"><a href="#cb28-2"></a></span>
-<span id="cb28-3"><a href="#cb28-3"></a><span class="co"># tokenize the text -------------------------------------------------------</span></span>
-<span id="cb28-4"><a href="#cb28-4"></a>tidy_eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> text)</span>
-<span id="cb28-6"><a href="#cb28-6"></a></span>
-<span id="cb28-7"><a href="#cb28-7"></a><span class="co"># create domain-specific stop words</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a>domain_stop_words <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb28-9"><a href="#cb28-9"></a>  <span class="sc">~</span>word, </span>
-<span id="cb28-10"><a href="#cb28-10"></a>  <span class="st">"william"</span>,</span>
-<span id="cb28-11"><a href="#cb28-11"></a>  <span class="st">"clinton"</span>,</span>
-<span id="cb28-12"><a href="#cb28-12"></a>  <span class="st">"george"</span>,</span>
-<span id="cb28-13"><a href="#cb28-13"></a>  <span class="st">"bush"</span>, </span>
-<span id="cb28-14"><a href="#cb28-14"></a>  <span class="st">"barack"</span>,</span>
-<span id="cb28-15"><a href="#cb28-15"></a>  <span class="st">"obama"</span>, </span>
-<span id="cb28-16"><a href="#cb28-16"></a>  <span class="st">"donald"</span>,</span>
-<span id="cb28-17"><a href="#cb28-17"></a>  <span class="st">"trump"</span>,</span>
-<span id="cb28-18"><a href="#cb28-18"></a>  <span class="st">"joseph"</span>,</span>
-<span id="cb28-19"><a href="#cb28-19"></a>  <span class="st">"biden"</span>,</span>
-<span id="cb28-20"><a href="#cb28-20"></a>  <span class="st">"signature"</span>,</span>
-<span id="cb28-21"><a href="#cb28-21"></a>  <span class="st">"section"</span>,</span>
-<span id="cb28-22"><a href="#cb28-22"></a>  <span class="st">"authority"</span>,</span>
-<span id="cb28-23"><a href="#cb28-23"></a>  <span class="st">"vested"</span>,</span>
-<span id="cb28-24"><a href="#cb28-24"></a>  <span class="st">"federal"</span>,</span>
-<span id="cb28-25"><a href="#cb28-25"></a>  <span class="st">"president"</span>,</span>
-<span id="cb28-26"><a href="#cb28-26"></a>  <span class="st">"authority"</span>,</span>
-<span id="cb28-27"><a href="#cb28-27"></a>  <span class="st">"constitution"</span>,</span>
-<span id="cb28-28"><a href="#cb28-28"></a>  <span class="st">"laws"</span>,</span>
-<span id="cb28-29"><a href="#cb28-29"></a>  <span class="st">"united"</span>,</span>
-<span id="cb28-30"><a href="#cb28-30"></a>  <span class="st">"states"</span>,</span>
-<span id="cb28-31"><a href="#cb28-31"></a>  <span class="st">"america"</span>,</span>
-<span id="cb28-32"><a href="#cb28-32"></a>  <span class="st">"secretary"</span>,</span>
-<span id="cb28-33"><a href="#cb28-33"></a>  <span class="st">"assistant"</span>,</span>
-<span id="cb28-34"><a href="#cb28-34"></a>  <span class="st">"executive"</span>,</span>
-<span id="cb28-35"><a href="#cb28-35"></a>  <span class="st">"order"</span>,</span>
-<span id="cb28-36"><a href="#cb28-36"></a>  <span class="st">"sec"</span>,</span>
-<span id="cb28-37"><a href="#cb28-37"></a>  <span class="st">"u.s.c"</span>,</span>
-<span id="cb28-38"><a href="#cb28-38"></a>  <span class="st">"pursuant"</span>,</span>
-<span id="cb28-39"><a href="#cb28-39"></a>  <span class="st">"act"</span>,</span>
-<span id="cb28-40"><a href="#cb28-40"></a>  <span class="st">"law"</span></span>
-<span id="cb28-41"><a href="#cb28-41"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb28-42"><a href="#cb28-42"></a>  <span class="fu">mutate</span>(<span class="at">lexicon =</span> <span class="st">"custom"</span>)</span>
-<span id="cb28-43"><a href="#cb28-43"></a></span>
-<span id="cb28-44"><a href="#cb28-44"></a>stop_words <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
-<span id="cb28-45"><a href="#cb28-45"></a>  stop_words,</span>
-<span id="cb28-46"><a href="#cb28-46"></a>  domain_stop_words</span>
-<span id="cb28-47"><a href="#cb28-47"></a>)</span>
-<span id="cb28-48"><a href="#cb28-48"></a></span>
-<span id="cb28-49"><a href="#cb28-49"></a><span class="co"># remove stop words with anti_join() and the stop_words tibble</span></span>
-<span id="cb28-50"><a href="#cb28-50"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
-<span id="cb28-51"><a href="#cb28-51"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) </span>
-<span id="cb28-52"><a href="#cb28-52"></a></span>
-<span id="cb28-53"><a href="#cb28-53"></a><span class="co"># remove words that are entirely numbers</span></span>
-<span id="cb28-54"><a href="#cb28-54"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
-<span id="cb28-55"><a href="#cb28-55"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="at">pattern =</span> <span class="st">"^</span><span class="sc">\\</span><span class="st">d"</span>)) </span>
-<span id="cb28-56"><a href="#cb28-56"></a></span>
-<span id="cb28-57"><a href="#cb28-57"></a><span class="co"># stem words with wordStem()</span></span>
-<span id="cb28-58"><a href="#cb28-58"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
-<span id="cb28-59"><a href="#cb28-59"></a>  <span class="fu">mutate</span>(<span class="at">stem =</span> <span class="fu">wordStem</span>(word))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">filter</span>(eos, <span class="sc">!</span><span class="fu">is.na</span>(text))</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># tokenize the text -------------------------------------------------------</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>tidy_eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">unnest_tokens</span>(<span class="at">output =</span> word, <span class="at">input =</span> text)</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a><span class="co"># create domain-specific stop words</span></span>
+<span id="cb30-8"><a href="#cb30-8"></a>domain_stop_words <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb30-9"><a href="#cb30-9"></a>  <span class="sc">~</span>word, </span>
+<span id="cb30-10"><a href="#cb30-10"></a>  <span class="st">"william"</span>,</span>
+<span id="cb30-11"><a href="#cb30-11"></a>  <span class="st">"clinton"</span>,</span>
+<span id="cb30-12"><a href="#cb30-12"></a>  <span class="st">"george"</span>,</span>
+<span id="cb30-13"><a href="#cb30-13"></a>  <span class="st">"bush"</span>, </span>
+<span id="cb30-14"><a href="#cb30-14"></a>  <span class="st">"barack"</span>,</span>
+<span id="cb30-15"><a href="#cb30-15"></a>  <span class="st">"obama"</span>, </span>
+<span id="cb30-16"><a href="#cb30-16"></a>  <span class="st">"donald"</span>,</span>
+<span id="cb30-17"><a href="#cb30-17"></a>  <span class="st">"trump"</span>,</span>
+<span id="cb30-18"><a href="#cb30-18"></a>  <span class="st">"joseph"</span>,</span>
+<span id="cb30-19"><a href="#cb30-19"></a>  <span class="st">"biden"</span>,</span>
+<span id="cb30-20"><a href="#cb30-20"></a>  <span class="st">"signature"</span>,</span>
+<span id="cb30-21"><a href="#cb30-21"></a>  <span class="st">"section"</span>,</span>
+<span id="cb30-22"><a href="#cb30-22"></a>  <span class="st">"authority"</span>,</span>
+<span id="cb30-23"><a href="#cb30-23"></a>  <span class="st">"vested"</span>,</span>
+<span id="cb30-24"><a href="#cb30-24"></a>  <span class="st">"federal"</span>,</span>
+<span id="cb30-25"><a href="#cb30-25"></a>  <span class="st">"president"</span>,</span>
+<span id="cb30-26"><a href="#cb30-26"></a>  <span class="st">"authority"</span>,</span>
+<span id="cb30-27"><a href="#cb30-27"></a>  <span class="st">"constitution"</span>,</span>
+<span id="cb30-28"><a href="#cb30-28"></a>  <span class="st">"laws"</span>,</span>
+<span id="cb30-29"><a href="#cb30-29"></a>  <span class="st">"united"</span>,</span>
+<span id="cb30-30"><a href="#cb30-30"></a>  <span class="st">"states"</span>,</span>
+<span id="cb30-31"><a href="#cb30-31"></a>  <span class="st">"america"</span>,</span>
+<span id="cb30-32"><a href="#cb30-32"></a>  <span class="st">"secretary"</span>,</span>
+<span id="cb30-33"><a href="#cb30-33"></a>  <span class="st">"assistant"</span>,</span>
+<span id="cb30-34"><a href="#cb30-34"></a>  <span class="st">"executive"</span>,</span>
+<span id="cb30-35"><a href="#cb30-35"></a>  <span class="st">"order"</span>,</span>
+<span id="cb30-36"><a href="#cb30-36"></a>  <span class="st">"sec"</span>,</span>
+<span id="cb30-37"><a href="#cb30-37"></a>  <span class="st">"u.s.c"</span>,</span>
+<span id="cb30-38"><a href="#cb30-38"></a>  <span class="st">"pursuant"</span>,</span>
+<span id="cb30-39"><a href="#cb30-39"></a>  <span class="st">"act"</span>,</span>
+<span id="cb30-40"><a href="#cb30-40"></a>  <span class="st">"law"</span></span>
+<span id="cb30-41"><a href="#cb30-41"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb30-42"><a href="#cb30-42"></a>  <span class="fu">mutate</span>(<span class="at">lexicon =</span> <span class="st">"custom"</span>)</span>
+<span id="cb30-43"><a href="#cb30-43"></a></span>
+<span id="cb30-44"><a href="#cb30-44"></a>stop_words <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
+<span id="cb30-45"><a href="#cb30-45"></a>  stop_words,</span>
+<span id="cb30-46"><a href="#cb30-46"></a>  domain_stop_words</span>
+<span id="cb30-47"><a href="#cb30-47"></a>)</span>
+<span id="cb30-48"><a href="#cb30-48"></a></span>
+<span id="cb30-49"><a href="#cb30-49"></a><span class="co"># remove stop words with anti_join() and the stop_words tibble</span></span>
+<span id="cb30-50"><a href="#cb30-50"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
+<span id="cb30-51"><a href="#cb30-51"></a>  <span class="fu">anti_join</span>(stop_words, <span class="at">by =</span> <span class="st">"word"</span>) </span>
+<span id="cb30-52"><a href="#cb30-52"></a></span>
+<span id="cb30-53"><a href="#cb30-53"></a><span class="co"># remove words that are entirely numbers</span></span>
+<span id="cb30-54"><a href="#cb30-54"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
+<span id="cb30-55"><a href="#cb30-55"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">str_detect</span>(word, <span class="at">pattern =</span> <span class="st">"^</span><span class="sc">\\</span><span class="st">d"</span>)) </span>
+<span id="cb30-56"><a href="#cb30-56"></a></span>
+<span id="cb30-57"><a href="#cb30-57"></a><span class="co"># stem words with wordStem()</span></span>
+<span id="cb30-58"><a href="#cb30-58"></a>tidy_eos <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
+<span id="cb30-59"><a href="#cb30-59"></a>  <span class="fu">mutate</span>(<span class="at">stem =</span> <span class="fu">wordStem</span>(word))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we convert the tidytext executive orders into a document-term matrix with <code>cast_dtm()</code>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-10_bc8ddec9f9d8c8e5dd1a32ca20fc75d9">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>tidy_eos_count <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">count</span>(president, executive_order_number, stem) </span>
-<span id="cb29-3"><a href="#cb29-3"></a></span>
-<span id="cb29-4"><a href="#cb29-4"></a>eos_dtm <span class="ot">&lt;-</span> tidy_eos_count <span class="sc">|&gt;</span></span>
-<span id="cb29-5"><a href="#cb29-5"></a>  <span class="fu">cast_dtm</span>(<span class="at">document =</span> executive_order_number, <span class="at">term =</span> stem, <span class="at">value =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>tidy_eos_count <span class="ot">&lt;-</span> tidy_eos <span class="sc">|&gt;</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">count</span>(president, executive_order_number, stem) </span>
+<span id="cb31-3"><a href="#cb31-3"></a></span>
+<span id="cb31-4"><a href="#cb31-4"></a>eos_dtm <span class="ot">&lt;-</span> tidy_eos_count <span class="sc">|&gt;</span></span>
+<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">cast_dtm</span>(<span class="at">document =</span> executive_order_number, <span class="at">term =</span> stem, <span class="at">value =</span> n)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Once we have a document-term matrix, implementing LDA is straightforward with <code>LDA()</code>, which comes from <code>library(topicmodels)</code>. We must predetermine the number of groups with <code>k</code> and we set the seed because the algorithm is stochastic (not deterministic).</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-11_32c4ca1e863ccf87775a850da2334831">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>eos_lda <span class="ot">&lt;-</span> eos_dtm <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">LDA</span>(<span class="at">k =</span> <span class="dv">22</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">20220417</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>eos_lda <span class="ot">&lt;-</span> eos_dtm <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">LDA</span>(<span class="at">k =</span> <span class="dv">22</span>, <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">20220417</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note: I chose 22 topics using methods outlined in the appendix.</p>
 <p>Interpreting an estimated LDA model is the tricky work. We will do this by looking at</p>
@@ -883,15 +889,15 @@ date (1): signing_date
 <h4 class="anchored" data-anchor-id="word-topic-probabilities">Word topic probabilities</h4>
 <p>With LDA, each topic is a mixture of words. The model returns estimated parameters called <span class="math inline">\(\beta\)</span>. A <span class="math inline">\(\beta\)</span> represents the estimated probability of a specific word being generated from a particular topic. We can extract <span class="math inline">\(\beta\)</span> from the output of <code>LDA()</code> with <code>tidy()</code>.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-12_47600e6ab3d72ef50becaba7104a1321">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>lda_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span>
-<span id="cb31-2"><a href="#cb31-2"></a></span>
-<span id="cb31-3"><a href="#cb31-3"></a>top_beta <span class="ot">&lt;-</span> lda_beta <span class="sc">|&gt;</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">group_by</span>(topic) <span class="sc">|&gt;</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
-<span id="cb31-6"><a href="#cb31-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb31-7"><a href="#cb31-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(beta))</span>
-<span id="cb31-8"><a href="#cb31-8"></a></span>
-<span id="cb31-9"><a href="#cb31-9"></a>top_beta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>lda_beta <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"beta"</span>)</span>
+<span id="cb33-2"><a href="#cb33-2"></a></span>
+<span id="cb33-3"><a href="#cb33-3"></a>top_beta <span class="ot">&lt;-</span> lda_beta <span class="sc">|&gt;</span></span>
+<span id="cb33-4"><a href="#cb33-4"></a>  <span class="fu">group_by</span>(topic) <span class="sc">|&gt;</span></span>
+<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">slice_max</span>(beta, <span class="at">n =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(beta))</span>
+<span id="cb33-8"><a href="#cb33-8"></a></span>
+<span id="cb33-9"><a href="#cb33-9"></a>top_beta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 264 × 3
    topic term       beta
@@ -908,15 +914,15 @@ date (1): signing_date
 10    13 educ     0.0422
 # ℹ 254 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># pick 6 random topics for visualization</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>random_topics <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>, <span class="at">size =</span> <span class="dv">6</span>)</span>
-<span id="cb33-3"><a href="#cb33-3"></a></span>
-<span id="cb33-4"><a href="#cb33-4"></a>top_beta <span class="sc">|&gt;</span></span>
-<span id="cb33-5"><a href="#cb33-5"></a>  <span class="fu">filter</span>(topic <span class="sc">%in%</span> random_topics) <span class="sc">|&gt;</span></span>
-<span id="cb33-6"><a href="#cb33-6"></a>  <span class="fu">mutate</span>(<span class="at">term =</span> <span class="fu">reorder</span>(term, beta)) <span class="sc">|&gt;</span></span>
-<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> beta, <span class="at">y =</span> term)) <span class="sc">+</span></span>
-<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb33-9"><a href="#cb33-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># pick 6 random topics for visualization</span></span>
+<span id="cb35-2"><a href="#cb35-2"></a>random_topics <span class="ot">&lt;-</span> <span class="fu">sample</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">22</span>, <span class="at">size =</span> <span class="dv">6</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a></span>
+<span id="cb35-4"><a href="#cb35-4"></a>top_beta <span class="sc">|&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>  <span class="fu">filter</span>(topic <span class="sc">%in%</span> random_topics) <span class="sc">|&gt;</span></span>
+<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">mutate</span>(<span class="at">term =</span> <span class="fu">reorder</span>(term, beta)) <span class="sc">|&gt;</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> beta, <span class="at">y =</span> term)) <span class="sc">+</span></span>
+<span id="cb35-8"><a href="#cb35-8"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> topic, <span class="at">scales =</span> <span class="st">"free"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="29_text-modeling_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -926,15 +932,15 @@ date (1): signing_date
 <h4 class="anchored" data-anchor-id="document-topic-probabilities">Document-topic probabilities</h4>
 <p>With LDA, each document is a mixture of topics The model returns estimated parameters called <span class="math inline">\(\gamma\)</span>. A <span class="math inline">\(\gamma\)</span> represents the estimated proportion of words from a specific document that come from a particular topic.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-13_5ed7f04d37cda4aa39a8586867b0a25b">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>lda_gamma <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"gamma"</span>)</span>
-<span id="cb34-2"><a href="#cb34-2"></a></span>
-<span id="cb34-3"><a href="#cb34-3"></a>top_gamma <span class="ot">&lt;-</span> lda_gamma <span class="sc">|&gt;</span></span>
-<span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">group_by</span>(topic) <span class="sc">|&gt;</span></span>
-<span id="cb34-5"><a href="#cb34-5"></a>  <span class="fu">slice_max</span>(gamma, <span class="at">n =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
-<span id="cb34-6"><a href="#cb34-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(gamma))</span>
-<span id="cb34-8"><a href="#cb34-8"></a></span>
-<span id="cb34-9"><a href="#cb34-9"></a>top_gamma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>lda_gamma <span class="ot">&lt;-</span> <span class="fu">tidy</span>(eos_lda, <span class="at">matrix =</span> <span class="st">"gamma"</span>)</span>
+<span id="cb36-2"><a href="#cb36-2"></a></span>
+<span id="cb36-3"><a href="#cb36-3"></a>top_gamma <span class="ot">&lt;-</span> lda_gamma <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">group_by</span>(topic) <span class="sc">|&gt;</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>  <span class="fu">slice_max</span>(gamma, <span class="at">n =</span> <span class="dv">12</span>) <span class="sc">|&gt;</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-7"><a href="#cb36-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(gamma))</span>
+<span id="cb36-8"><a href="#cb36-8"></a></span>
+<span id="cb36-9"><a href="#cb36-9"></a>top_gamma</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 266 × 3
    document topic gamma
@@ -999,16 +1005,16 @@ date (1): signing_date
 <p>Predictive modeling uses a slightly different data format than tidytext. We want each row in the data to correspond with the observations we are using for predictions. In this case, we want one row per Federalist paper.</p>
 <p>We can use <code>nest()</code> and <code>paste()</code> to transform the data into this format.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-15_6ae359d59e110a569acefc1e8a06aa89">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>fed_papers <span class="ot">&lt;-</span> fed_papers <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">group_by</span>(paper_number) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">nest</span>(<span class="at">text =</span> text) <span class="sc">|&gt;</span></span>
-<span id="cb37-4"><a href="#cb37-4"></a>  <span class="co"># paste individual lines into one row per document</span></span>
-<span id="cb37-5"><a href="#cb37-5"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(<span class="at">.x =</span> text, <span class="sc">~</span><span class="fu">paste</span>(.x[[<span class="dv">1</span>]], <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb37-6"><a href="#cb37-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
-<span id="cb37-7"><a href="#cb37-7"></a>  <span class="co"># remove white spaces</span></span>
-<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_squish</span>(<span class="fu">str_to_lower</span>(text)))</span>
-<span id="cb37-9"><a href="#cb37-9"></a></span>
-<span id="cb37-10"><a href="#cb37-10"></a>fed_papers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>fed_papers <span class="ot">&lt;-</span> fed_papers <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">group_by</span>(paper_number) <span class="sc">|&gt;</span></span>
+<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">nest</span>(<span class="at">text =</span> text) <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="co"># paste individual lines into one row per document</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(<span class="at">.x =</span> text, <span class="sc">~</span><span class="fu">paste</span>(.x[[<span class="dv">1</span>]], <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span></span>
+<span id="cb39-7"><a href="#cb39-7"></a>  <span class="co"># remove white spaces</span></span>
+<span id="cb39-8"><a href="#cb39-8"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_squish</span>(<span class="fu">str_to_lower</span>(text)))</span>
+<span id="cb39-9"><a href="#cb39-9"></a></span>
+<span id="cb39-10"><a href="#cb39-10"></a>fed_papers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 85 × 3
    paper_number author   text                                                   
@@ -1028,9 +1034,15 @@ date (1): signing_date
 </div>
 <p>Let’s <code>prep()</code> and <code>bake()</code> a recipe. We want to use recipes because most of these <code>step_*()</code> functions are data dependent and need to be repeated during resampling.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-16_ac714fce3853c37e7fec72c73474a980">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(textrecipes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">library</span>(textrecipes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'textrecipes' was built under R version 4.3.3</code></pre>
+</div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Loading required package: recipes</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'recipes' was built under R version 4.3.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
@@ -1046,19 +1058,19 @@ Attaching package: 'recipes'</code></pre>
 
     step</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">recipe</span>( <span class="sc">~</span> text, <span class="at">data =</span> fed_papers) <span class="sc">|&gt;</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="co"># tokenize the text</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">step_tokenize</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="co"># remove stop works</span></span>
-<span id="cb44-5"><a href="#cb44-5"></a>  <span class="fu">step_stopwords</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="co"># stem words</span></span>
-<span id="cb44-7"><a href="#cb44-7"></a>  <span class="fu">step_stem</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb44-8"><a href="#cb44-8"></a>  <span class="co"># remove infrequent tokens</span></span>
-<span id="cb44-9"><a href="#cb44-9"></a>  <span class="fu">step_tokenfilter</span>(text, <span class="at">max_tokens =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
-<span id="cb44-10"><a href="#cb44-10"></a>  <span class="co"># perform TF-IDF</span></span>
-<span id="cb44-11"><a href="#cb44-11"></a>  <span class="fu">step_tfidf</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb44-12"><a href="#cb44-12"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">recipe</span>( <span class="sc">~</span> text, <span class="at">data =</span> fed_papers) <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  <span class="co"># tokenize the text</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">step_tokenize</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb48-4"><a href="#cb48-4"></a>  <span class="co"># remove stop works</span></span>
+<span id="cb48-5"><a href="#cb48-5"></a>  <span class="fu">step_stopwords</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="co"># stem words</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a>  <span class="fu">step_stem</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb48-8"><a href="#cb48-8"></a>  <span class="co"># remove infrequent tokens</span></span>
+<span id="cb48-9"><a href="#cb48-9"></a>  <span class="fu">step_tokenfilter</span>(text, <span class="at">max_tokens =</span> <span class="dv">10</span>) <span class="sc">|&gt;</span></span>
+<span id="cb48-10"><a href="#cb48-10"></a>  <span class="co"># perform TF-IDF</span></span>
+<span id="cb48-11"><a href="#cb48-11"></a>  <span class="fu">step_tfidf</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb48-12"><a href="#cb48-12"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
+<span id="cb48-13"><a href="#cb48-13"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> <span class="cn">NULL</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 85 × 10
    tfidf_text_can tfidf_text_constitut tfidf_text_govern tfidf_text_mai
@@ -1089,7 +1101,7 @@ Attaching package: 'recipes'</code></pre>
 </ol>
 <p>First, we need to load and pre-process the data.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-17_f577b19be078017ea790f4df420a5032">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 196537 Columns: 4
 ── Column specification ────────────────────────────────────────────────────────
@@ -1101,55 +1113,73 @@ date (1): signing_date
 ℹ Use `spec()` to retrieve the full column specification for this data.
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># remove empty rows</span></span>
-<span id="cb48-2"><a href="#cb48-2"></a>eos <span class="ot">&lt;-</span> <span class="fu">filter</span>(eos, <span class="sc">!</span><span class="fu">is.na</span>(text))</span>
-<span id="cb48-3"><a href="#cb48-3"></a></span>
-<span id="cb48-4"><a href="#cb48-4"></a><span class="co"># remove numbers</span></span>
-<span id="cb48-5"><a href="#cb48-5"></a>eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
-<span id="cb48-6"><a href="#cb48-6"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_remove_all</span>(text, <span class="st">"</span><span class="sc">\\</span><span class="st">d"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb48-7"><a href="#cb48-7"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_remove_all</span>(text, <span class="st">"``''"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb48-8"><a href="#cb48-8"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_squish</span>(text))</span>
-<span id="cb48-9"><a href="#cb48-9"></a></span>
-<span id="cb48-10"><a href="#cb48-10"></a><span class="co"># combine rows into one row per document</span></span>
-<span id="cb48-11"><a href="#cb48-11"></a>eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
-<span id="cb48-12"><a href="#cb48-12"></a>  <span class="fu">group_by</span>(executive_order_number) <span class="sc">|&gt;</span></span>
-<span id="cb48-13"><a href="#cb48-13"></a>  <span class="fu">nest</span>(<span class="at">text =</span> text) <span class="sc">|&gt;</span></span>
-<span id="cb48-14"><a href="#cb48-14"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(<span class="at">.x =</span> text, <span class="sc">~</span><span class="fu">paste</span>(.x[[<span class="dv">1</span>]], <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="sc">|&gt;</span></span>
-<span id="cb48-15"><a href="#cb48-15"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb48-16"><a href="#cb48-16"></a></span>
-<span id="cb48-17"><a href="#cb48-17"></a><span class="co"># label the party of each executive order</span></span>
-<span id="cb48-18"><a href="#cb48-18"></a>republicans <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"bush"</span>, <span class="st">"trump"</span>)</span>
-<span id="cb48-19"><a href="#cb48-19"></a></span>
-<span id="cb48-20"><a href="#cb48-20"></a>eos_modeling <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
-<span id="cb48-21"><a href="#cb48-21"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb48-22"><a href="#cb48-22"></a>    <span class="at">party =</span> <span class="fu">if_else</span>(</span>
-<span id="cb48-23"><a href="#cb48-23"></a>      <span class="at">condition =</span> president <span class="sc">%in%</span> republicans, </span>
-<span id="cb48-24"><a href="#cb48-24"></a>      <span class="at">true =</span> <span class="st">"rep"</span>, </span>
-<span id="cb48-25"><a href="#cb48-25"></a>      <span class="at">false =</span> <span class="st">"dem"</span></span>
-<span id="cb48-26"><a href="#cb48-26"></a>    )</span>
-<span id="cb48-27"><a href="#cb48-27"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb48-28"><a href="#cb48-28"></a>  <span class="co"># we can include non-text predictors but we drop predictors that would be too</span></span>
-<span id="cb48-29"><a href="#cb48-29"></a>  <span class="co"># useful (i.e. dates align with individual presidents)</span></span>
-<span id="cb48-30"><a href="#cb48-30"></a>  <span class="fu">select</span>(<span class="sc">-</span>president, <span class="sc">-</span>signing_date, <span class="sc">-</span>executive_order_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="co"># remove empty rows</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a>eos <span class="ot">&lt;-</span> <span class="fu">filter</span>(eos, <span class="sc">!</span><span class="fu">is.na</span>(text))</span>
+<span id="cb52-3"><a href="#cb52-3"></a></span>
+<span id="cb52-4"><a href="#cb52-4"></a><span class="co"># remove numbers</span></span>
+<span id="cb52-5"><a href="#cb52-5"></a>eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
+<span id="cb52-6"><a href="#cb52-6"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_remove_all</span>(text, <span class="st">"</span><span class="sc">\\</span><span class="st">d"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb52-7"><a href="#cb52-7"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_remove_all</span>(text, <span class="st">"``''"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb52-8"><a href="#cb52-8"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">str_squish</span>(text))</span>
+<span id="cb52-9"><a href="#cb52-9"></a></span>
+<span id="cb52-10"><a href="#cb52-10"></a><span class="co"># combine rows into one row per document</span></span>
+<span id="cb52-11"><a href="#cb52-11"></a>eos <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
+<span id="cb52-12"><a href="#cb52-12"></a>  <span class="fu">group_by</span>(executive_order_number) <span class="sc">|&gt;</span></span>
+<span id="cb52-13"><a href="#cb52-13"></a>  <span class="fu">nest</span>(<span class="at">text =</span> text) <span class="sc">|&gt;</span></span>
+<span id="cb52-14"><a href="#cb52-14"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(<span class="at">.x =</span> text, <span class="sc">~</span><span class="fu">paste</span>(.x[[<span class="dv">1</span>]], <span class="at">collapse =</span> <span class="st">" "</span>))) <span class="sc">|&gt;</span></span>
+<span id="cb52-15"><a href="#cb52-15"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb52-16"><a href="#cb52-16"></a></span>
+<span id="cb52-17"><a href="#cb52-17"></a><span class="co"># label the party of each executive order</span></span>
+<span id="cb52-18"><a href="#cb52-18"></a>republicans <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"bush"</span>, <span class="st">"trump"</span>)</span>
+<span id="cb52-19"><a href="#cb52-19"></a></span>
+<span id="cb52-20"><a href="#cb52-20"></a>eos_modeling <span class="ot">&lt;-</span> eos <span class="sc">|&gt;</span></span>
+<span id="cb52-21"><a href="#cb52-21"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-22"><a href="#cb52-22"></a>    <span class="at">party =</span> <span class="fu">if_else</span>(</span>
+<span id="cb52-23"><a href="#cb52-23"></a>      <span class="at">condition =</span> president <span class="sc">%in%</span> republicans, </span>
+<span id="cb52-24"><a href="#cb52-24"></a>      <span class="at">true =</span> <span class="st">"rep"</span>, </span>
+<span id="cb52-25"><a href="#cb52-25"></a>      <span class="at">false =</span> <span class="st">"dem"</span></span>
+<span id="cb52-26"><a href="#cb52-26"></a>    )</span>
+<span id="cb52-27"><a href="#cb52-27"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb52-28"><a href="#cb52-28"></a>  <span class="co"># we can include non-text predictors but we drop predictors that would be too</span></span>
+<span id="cb52-29"><a href="#cb52-29"></a>  <span class="co"># useful (i.e. dates align with individual presidents)</span></span>
+<span id="cb52-30"><a href="#cb52-30"></a>  <span class="fu">select</span>(<span class="sc">-</span>president, <span class="sc">-</span>signing_date, <span class="sc">-</span>executive_order_number)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="logistic-lasso-regression" class="level3" data-number="25.4.3">
 <h3 data-number="25.4.3" class="anchored" data-anchor-id="logistic-lasso-regression"><span class="header-section-number">25.4.3</span> Logistic LASSO regression</h3>
 <p>We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-18_70df642bb6bcbb99167c4788d62c91a7">
-<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">library</span>(tidymodels)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.2.0 ──</code></pre>
+<pre><code>Warning: package 'tidymodels' was built under R version 4.3.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>✔ dials        1.2.1     ✔ tune         1.2.1
-✔ infer        1.0.7     ✔ workflows    1.1.4
+<pre><code>── Attaching packages ────────────────────────────────────── tidymodels 1.3.0 ──</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>✔ dials        1.4.0     ✔ tune         1.3.0
+✔ infer        1.0.7     ✔ workflows    1.2.0
 ✔ modeldata    1.4.0     ✔ workflowsets 1.1.0
-✔ parsnip      1.2.1     ✔ yardstick    1.3.1
+✔ parsnip      1.3.1     ✔ yardstick    1.3.2
 ✔ rsample      1.2.1     </code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'dials' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
 <pre><code>Warning: package 'modeldata' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'parsnip' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'tune' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'workflows' was built under R version 4.3.3</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'yardstick' was built under R version 4.3.3</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Conflicts ───────────────────────────────────────── tidymodels_conflicts() ──
@@ -1158,11 +1188,10 @@ date (1): signing_date
 ✖ recipes::fixed()  masks stringr::fixed()
 ✖ dplyr::lag()      masks stats::lag()
 ✖ yardstick::spec() masks readr::spec()
-✖ recipes::step()   masks stats::step()
-• Use tidymodels_prefer() to resolve common conflicts.</code></pre>
+✖ recipes::step()   masks stats::step()</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">library</span>(textrecipes)</span>
-<span id="cb54-2"><a href="#cb54-2"></a><span class="fu">library</span>(vip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a><span class="fu">library</span>(textrecipes)</span>
+<span id="cb64-2"><a href="#cb64-2"></a><span class="fu">library</span>(vip)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>
 Attaching package: 'vip'</code></pre>
@@ -1172,54 +1201,54 @@ Attaching package: 'vip'</code></pre>
 
     vi</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a><span class="co"># create a training/testing split</span></span>
-<span id="cb57-2"><a href="#cb57-2"></a><span class="fu">set.seed</span>(<span class="dv">43</span>)</span>
-<span id="cb57-3"><a href="#cb57-3"></a></span>
-<span id="cb57-4"><a href="#cb57-4"></a>eos_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(eos_modeling, <span class="at">strata =</span> party)</span>
-<span id="cb57-5"><a href="#cb57-5"></a>eos_train <span class="ot">&lt;-</span> <span class="fu">training</span>(eos_split)</span>
-<span id="cb57-6"><a href="#cb57-6"></a>eos_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(eos_split)</span>
-<span id="cb57-7"><a href="#cb57-7"></a></span>
-<span id="cb57-8"><a href="#cb57-8"></a><span class="co"># set up cross validation</span></span>
-<span id="cb57-9"><a href="#cb57-9"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)</span>
-<span id="cb57-10"><a href="#cb57-10"></a>eos_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(eos_train, <span class="at">strata =</span> party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="co"># create a training/testing split</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a><span class="fu">set.seed</span>(<span class="dv">43</span>)</span>
+<span id="cb67-3"><a href="#cb67-3"></a></span>
+<span id="cb67-4"><a href="#cb67-4"></a>eos_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(eos_modeling, <span class="at">strata =</span> party)</span>
+<span id="cb67-5"><a href="#cb67-5"></a>eos_train <span class="ot">&lt;-</span> <span class="fu">training</span>(eos_split)</span>
+<span id="cb67-6"><a href="#cb67-6"></a>eos_test <span class="ot">&lt;-</span> <span class="fu">testing</span>(eos_split)</span>
+<span id="cb67-7"><a href="#cb67-7"></a></span>
+<span id="cb67-8"><a href="#cb67-8"></a><span class="co"># set up cross validation</span></span>
+<span id="cb67-9"><a href="#cb67-9"></a><span class="fu">set.seed</span>(<span class="dv">34</span>)</span>
+<span id="cb67-10"><a href="#cb67-10"></a>eos_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(eos_train, <span class="at">strata =</span> party)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, let’s create a recipe that will be used by both models.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-19_fd0ab2b3180dc345a13ed9e0110d8cce">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>eos_rec <span class="ot">&lt;-</span></span>
-<span id="cb58-2"><a href="#cb58-2"></a>  <span class="fu">recipe</span>(party <span class="sc">~</span> text, <span class="at">data =</span> eos_train) <span class="sc">|&gt;</span></span>
-<span id="cb58-3"><a href="#cb58-3"></a>  <span class="fu">step_tokenize</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb58-4"><a href="#cb58-4"></a>  <span class="fu">step_stopwords</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb58-5"><a href="#cb58-5"></a>  <span class="fu">step_stem</span>(text) <span class="sc">|&gt;</span></span>
-<span id="cb58-6"><a href="#cb58-6"></a>  <span class="co"># ad hoc testing indicates that increasing max tokens makes a difference</span></span>
-<span id="cb58-7"><a href="#cb58-7"></a>  <span class="fu">step_tokenfilter</span>(text, <span class="at">max_tokens =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb58-8"><a href="#cb58-8"></a>  <span class="fu">step_tfidf</span>(text) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>eos_rec <span class="ot">&lt;-</span></span>
+<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">recipe</span>(party <span class="sc">~</span> text, <span class="at">data =</span> eos_train) <span class="sc">|&gt;</span></span>
+<span id="cb68-3"><a href="#cb68-3"></a>  <span class="fu">step_tokenize</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb68-4"><a href="#cb68-4"></a>  <span class="fu">step_stopwords</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb68-5"><a href="#cb68-5"></a>  <span class="fu">step_stem</span>(text) <span class="sc">|&gt;</span></span>
+<span id="cb68-6"><a href="#cb68-6"></a>  <span class="co"># ad hoc testing indicates that increasing max tokens makes a difference</span></span>
+<span id="cb68-7"><a href="#cb68-7"></a>  <span class="fu">step_tokenfilter</span>(text, <span class="at">max_tokens =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb68-8"><a href="#cb68-8"></a>  <span class="fu">step_tfidf</span>(text) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a workflow.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-20_bf1d4b382a0a7e0ab7c7b8c687e93f19">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>lasso_mod <span class="ot">&lt;-</span></span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="fu">logistic_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(), <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb59-3"><a href="#cb59-3"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb59-4"><a href="#cb59-4"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
-<span id="cb59-5"><a href="#cb59-5"></a></span>
-<span id="cb59-6"><a href="#cb59-6"></a>lasso_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb59-7"><a href="#cb59-7"></a>  <span class="fu">add_recipe</span>(eos_rec) <span class="sc">|&gt;</span></span>
-<span id="cb59-8"><a href="#cb59-8"></a>  <span class="fu">add_model</span>(lasso_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>lasso_mod <span class="ot">&lt;-</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">logistic_reg</span>(<span class="at">penalty =</span> <span class="fu">tune</span>(), <span class="at">mixture =</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb69-4"><a href="#cb69-4"></a>  <span class="fu">set_engine</span>(<span class="st">"glmnet"</span>)</span>
+<span id="cb69-5"><a href="#cb69-5"></a></span>
+<span id="cb69-6"><a href="#cb69-6"></a>lasso_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb69-7"><a href="#cb69-7"></a>  <span class="fu">add_recipe</span>(eos_rec) <span class="sc">|&gt;</span></span>
+<span id="cb69-8"><a href="#cb69-8"></a>  <span class="fu">add_model</span>(lasso_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a grid for hyperparameter tuning and fit the models.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-21_fadd321231076df47660aae05ae18173">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>lasso_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">0</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span>
-<span id="cb60-2"><a href="#cb60-2"></a></span>
-<span id="cb60-3"><a href="#cb60-3"></a>lasso_cv <span class="ot">&lt;-</span></span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb60-5"><a href="#cb60-5"></a>    lasso_wf,</span>
-<span id="cb60-6"><a href="#cb60-6"></a>    eos_folds,</span>
-<span id="cb60-7"><a href="#cb60-7"></a>    <span class="at">grid =</span> lasso_grid</span>
-<span id="cb60-8"><a href="#cb60-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>lasso_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">penalty</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="dv">0</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span>
+<span id="cb70-2"><a href="#cb70-2"></a></span>
+<span id="cb70-3"><a href="#cb70-3"></a>lasso_cv <span class="ot">&lt;-</span></span>
+<span id="cb70-4"><a href="#cb70-4"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb70-5"><a href="#cb70-5"></a>    lasso_wf,</span>
+<span id="cb70-6"><a href="#cb70-6"></a>    eos_folds,</span>
+<span id="cb70-7"><a href="#cb70-7"></a>    <span class="at">grid =</span> lasso_grid</span>
+<span id="cb70-8"><a href="#cb70-8"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Unpack the estimated models.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-22_92bb038042dff71a46001418ee3d76b2">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>lasso_cv <span class="sc">|&gt;</span></span>
-<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a>lasso_cv <span class="sc">|&gt;</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 30 × 7
      penalty .metric     .estimator  mean     n std_err .config              
@@ -1236,12 +1265,12 @@ Attaching package: 'vip'</code></pre>
 10 0.000464  accuracy    binary     0.700    10  0.0160 Preprocessor1_Model04
 # ℹ 20 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">autoplot</span>(lasso_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">autoplot</span>(lasso_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="29_text-modeling_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>lasso_cv <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"roc_auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a>lasso_cv <span class="sc">|&gt;</span></span>
+<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"roc_auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   penalty .config              
@@ -1251,15 +1280,15 @@ Attaching package: 'vip'</code></pre>
 </div>
 <p>Fit the best model on all of the training data and look at the coefficients.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-23_dce8a2938ff4af457bd0385da6b86207">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>lasso_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(<span class="at">x =</span> lasso_wf, <span class="at">parameters =</span> <span class="fu">select_best</span>(lasso_cv, <span class="at">metric =</span> <span class="st">"roc_auc"</span>))</span>
-<span id="cb66-2"><a href="#cb66-2"></a></span>
-<span id="cb66-3"><a href="#cb66-3"></a>lasso_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(lasso_wf, <span class="at">split =</span> eos_split)</span>
-<span id="cb66-4"><a href="#cb66-4"></a></span>
-<span id="cb66-5"><a href="#cb66-5"></a>lasso_fit <span class="sc">|&gt;</span></span>
-<span id="cb66-6"><a href="#cb66-6"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
-<span id="cb66-7"><a href="#cb66-7"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
-<span id="cb66-8"><a href="#cb66-8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(estimate))) <span class="sc">|&gt;</span></span>
-<span id="cb66-9"><a href="#cb66-9"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>lasso_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(<span class="at">x =</span> lasso_wf, <span class="at">parameters =</span> <span class="fu">select_best</span>(lasso_cv, <span class="at">metric =</span> <span class="st">"roc_auc"</span>))</span>
+<span id="cb76-2"><a href="#cb76-2"></a></span>
+<span id="cb76-3"><a href="#cb76-3"></a>lasso_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(lasso_wf, <span class="at">split =</span> eos_split)</span>
+<span id="cb76-4"><a href="#cb76-4"></a></span>
+<span id="cb76-5"><a href="#cb76-5"></a>lasso_fit <span class="sc">|&gt;</span></span>
+<span id="cb76-6"><a href="#cb76-6"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb76-7"><a href="#cb76-7"></a>  <span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
+<span id="cb76-8"><a href="#cb76-8"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="fu">abs</span>(estimate))) <span class="sc">|&gt;</span></span>
+<span id="cb76-9"><a href="#cb76-9"></a>  <span class="fu">print</span>(<span class="at">n =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,001 × 3
    term                estimate penalty
@@ -1292,34 +1321,37 @@ Attaching package: 'vip'</code></pre>
 <h3 data-number="25.4.4" class="anchored" data-anchor-id="random-forest"><span class="header-section-number">25.4.4</span> Random forest</h3>
 <p>Create a workflow.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-24_c7911d4284e62e62e4e7d7a1e6684f4d">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a>rf_mod <span class="ot">&lt;-</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">rand_forest</span>(<span class="at">mtry =</span> <span class="fu">tune</span>(), <span class="at">trees =</span> <span class="dv">100</span>, <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb68-3"><a href="#cb68-3"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb68-4"><a href="#cb68-4"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>)</span>
-<span id="cb68-5"><a href="#cb68-5"></a></span>
-<span id="cb68-6"><a href="#cb68-6"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb68-7"><a href="#cb68-7"></a>  <span class="fu">add_recipe</span>(eos_rec) <span class="sc">|&gt;</span></span>
-<span id="cb68-8"><a href="#cb68-8"></a>  <span class="fu">add_model</span>(rf_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a>rf_mod <span class="ot">&lt;-</span></span>
+<span id="cb78-2"><a href="#cb78-2"></a>  <span class="fu">rand_forest</span>(<span class="at">mtry =</span> <span class="fu">tune</span>(), <span class="at">trees =</span> <span class="dv">100</span>, <span class="at">min_n =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb78-3"><a href="#cb78-3"></a>  <span class="fu">set_mode</span>(<span class="st">"classification"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb78-4"><a href="#cb78-4"></a>  <span class="fu">set_engine</span>(<span class="st">"ranger"</span>, <span class="at">importance =</span> <span class="st">"impurity"</span>)</span>
+<span id="cb78-5"><a href="#cb78-5"></a></span>
+<span id="cb78-6"><a href="#cb78-6"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb78-7"><a href="#cb78-7"></a>  <span class="fu">add_recipe</span>(eos_rec) <span class="sc">|&gt;</span></span>
+<span id="cb78-8"><a href="#cb78-8"></a>  <span class="fu">add_model</span>(rf_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Create a grid for hyperparameter tuning and fit the models.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-25_4e1951be204265cd31f54b56e1852e9c">
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>)),</span>
-<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)),</span>
-<span id="cb69-4"><a href="#cb69-4"></a>  <span class="at">levels =</span> <span class="dv">5</span></span>
-<span id="cb69-5"><a href="#cb69-5"></a>)</span>
-<span id="cb69-6"><a href="#cb69-6"></a></span>
-<span id="cb69-7"><a href="#cb69-7"></a>rf_cv <span class="ot">&lt;-</span></span>
-<span id="cb69-8"><a href="#cb69-8"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb69-9"><a href="#cb69-9"></a>    rf_wf,</span>
-<span id="cb69-10"><a href="#cb69-10"></a>    eos_folds,</span>
-<span id="cb69-11"><a href="#cb69-11"></a>    <span class="at">grid =</span> rf_grid</span>
-<span id="cb69-12"><a href="#cb69-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a>rf_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb79-2"><a href="#cb79-2"></a>  <span class="fu">mtry</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">100</span>)),</span>
+<span id="cb79-3"><a href="#cb79-3"></a>  <span class="fu">min_n</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">8</span>)),</span>
+<span id="cb79-4"><a href="#cb79-4"></a>  <span class="at">levels =</span> <span class="dv">5</span></span>
+<span id="cb79-5"><a href="#cb79-5"></a>)</span>
+<span id="cb79-6"><a href="#cb79-6"></a></span>
+<span id="cb79-7"><a href="#cb79-7"></a>rf_cv <span class="ot">&lt;-</span></span>
+<span id="cb79-8"><a href="#cb79-8"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb79-9"><a href="#cb79-9"></a>    rf_wf,</span>
+<span id="cb79-10"><a href="#cb79-10"></a>    eos_folds,</span>
+<span id="cb79-11"><a href="#cb79-11"></a>    <span class="at">grid =</span> rf_grid</span>
+<span id="cb79-12"><a href="#cb79-12"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'ranger' was built under R version 4.3.3</code></pre>
+</div>
 </div>
 <p>Unpack the estimated models.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-26_6097819606fef5bafa1136d4b972a056">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>rf_cv <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>rf_cv <span class="sc">|&gt;</span></span>
+<span id="cb81-2"><a href="#cb81-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 75 × 8
     mtry min_n .metric     .estimator  mean     n std_err .config              
@@ -1336,12 +1368,12 @@ Attaching package: 'vip'</code></pre>
 10    77     2 accuracy    binary     0.794    10 0.0153  Preprocessor1_Model04
 # ℹ 65 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">autoplot</span>(rf_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">autoplot</span>(rf_cv)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="29_text-modeling_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>rf_cv <span class="sc">|&gt;</span></span>
-<span id="cb73-2"><a href="#cb73-2"></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"roc_auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>rf_cv <span class="sc">|&gt;</span></span>
+<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"roc_auc"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
    mtry min_n .config              
@@ -1351,13 +1383,13 @@ Attaching package: 'vip'</code></pre>
 </div>
 <p>Fit the best model on all of the training data and look at variable importance.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-27_2278aef47525d3ed1dda990e0dbf102c">
-<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(<span class="at">x =</span> rf_wf, <span class="at">parameters =</span> <span class="fu">select_best</span>(rf_cv, <span class="at">metric =</span> <span class="st">"roc_auc"</span>))</span>
-<span id="cb75-2"><a href="#cb75-2"></a></span>
-<span id="cb75-3"><a href="#cb75-3"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(rf_wf, <span class="at">split =</span> eos_split)</span>
-<span id="cb75-4"><a href="#cb75-4"></a></span>
-<span id="cb75-5"><a href="#cb75-5"></a>rf_fit <span class="sc">|&gt;</span> </span>
-<span id="cb75-6"><a href="#cb75-6"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb75-7"><a href="#cb75-7"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a>rf_wf <span class="ot">&lt;-</span> <span class="fu">finalize_workflow</span>(<span class="at">x =</span> rf_wf, <span class="at">parameters =</span> <span class="fu">select_best</span>(rf_cv, <span class="at">metric =</span> <span class="st">"roc_auc"</span>))</span>
+<span id="cb86-2"><a href="#cb86-2"></a></span>
+<span id="cb86-3"><a href="#cb86-3"></a>rf_fit <span class="ot">&lt;-</span> <span class="fu">last_fit</span>(rf_wf, <span class="at">split =</span> eos_split)</span>
+<span id="cb86-4"><a href="#cb86-4"></a></span>
+<span id="cb86-5"><a href="#cb86-5"></a>rf_fit <span class="sc">|&gt;</span> </span>
+<span id="cb86-6"><a href="#cb86-6"></a>  <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb86-7"><a href="#cb86-7"></a>  <span class="fu">vip</span>(<span class="at">num_features =</span> <span class="dv">20</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="29_text-modeling_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1366,7 +1398,7 @@ Attaching package: 'vip'</code></pre>
 <section id="out-of-sample-error-rate" class="level3" data-number="25.4.5">
 <h3 data-number="25.4.5" class="anchored" data-anchor-id="out-of-sample-error-rate"><span class="header-section-number">25.4.5</span> Out-of-sample error rate</h3>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-28_0dea3d450a84ec0c5e2b04d953d155fe">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">collect_metrics</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="fu">collect_metrics</span>(rf_fit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 4
   .metric     .estimator .estimate .config             
@@ -1406,20 +1438,20 @@ Attaching package: 'vip'</code></pre>
 </ul>
 <p>It is computationally expensive. <code>FindTopicsNumber_plot()</code> shows the measures and labels them based on if th measures should be minimized or maximized.</p>
 <div class="cell" data-hash="29_text-modeling_cache/html/unnamed-chunk-29_3bfba710c0cccfb499d3fa3e37ebcb64">
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="fu">library</span>(ldatuning)</span>
-<span id="cb78-2"><a href="#cb78-2"></a></span>
-<span id="cb78-3"><a href="#cb78-3"></a>results <span class="ot">&lt;-</span> <span class="fu">FindTopicsNumber</span>(</span>
-<span id="cb78-4"><a href="#cb78-4"></a>  eos_dtm,</span>
-<span id="cb78-5"><a href="#cb78-5"></a>  <span class="at">topics =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">82</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
-<span id="cb78-6"><a href="#cb78-6"></a>  <span class="co"># note: "Griffiths2004" does not work on Mac M1 chips because of Rmpfr</span></span>
-<span id="cb78-7"><a href="#cb78-7"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"CaoJuan2009"</span>, <span class="st">"Arun2010"</span>, <span class="st">"Deveaud2014"</span>),</span>
-<span id="cb78-8"><a href="#cb78-8"></a>  <span class="at">method =</span> <span class="st">"Gibbs"</span>,</span>
-<span id="cb78-9"><a href="#cb78-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">77</span>),</span>
-<span id="cb78-10"><a href="#cb78-10"></a>  <span class="at">mc.cores =</span> 6L,</span>
-<span id="cb78-11"><a href="#cb78-11"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
-<span id="cb78-12"><a href="#cb78-12"></a>)</span>
-<span id="cb78-13"><a href="#cb78-13"></a></span>
-<span id="cb78-14"><a href="#cb78-14"></a><span class="fu">FindTopicsNumber_plot</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb89"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb89-1"><a href="#cb89-1"></a><span class="fu">library</span>(ldatuning)</span>
+<span id="cb89-2"><a href="#cb89-2"></a></span>
+<span id="cb89-3"><a href="#cb89-3"></a>results <span class="ot">&lt;-</span> <span class="fu">FindTopicsNumber</span>(</span>
+<span id="cb89-4"><a href="#cb89-4"></a>  eos_dtm,</span>
+<span id="cb89-5"><a href="#cb89-5"></a>  <span class="at">topics =</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">2</span>, <span class="at">to =</span> <span class="dv">82</span>, <span class="at">by =</span> <span class="dv">10</span>),</span>
+<span id="cb89-6"><a href="#cb89-6"></a>  <span class="co"># note: "Griffiths2004" does not work on Mac M1 chips because of Rmpfr</span></span>
+<span id="cb89-7"><a href="#cb89-7"></a>  <span class="at">metrics =</span> <span class="fu">c</span>(<span class="st">"CaoJuan2009"</span>, <span class="st">"Arun2010"</span>, <span class="st">"Deveaud2014"</span>),</span>
+<span id="cb89-8"><a href="#cb89-8"></a>  <span class="at">method =</span> <span class="st">"Gibbs"</span>,</span>
+<span id="cb89-9"><a href="#cb89-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">seed =</span> <span class="dv">77</span>),</span>
+<span id="cb89-10"><a href="#cb89-10"></a>  <span class="at">mc.cores =</span> 6L,</span>
+<span id="cb89-11"><a href="#cb89-11"></a>  <span class="at">verbose =</span> <span class="cn">TRUE</span></span>
+<span id="cb89-12"><a href="#cb89-12"></a>)</span>
+<span id="cb89-13"><a href="#cb89-13"></a></span>
+<span id="cb89-14"><a href="#cb89-14"></a><span class="fu">FindTopicsNumber_plot</span>(results)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

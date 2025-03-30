@@ -727,9 +727,14 @@ Classification
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-10_78dfbc2f19f272848c16105e0f7068d7">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(rpart.plot)</span>
-<span id="cb7-2"><a href="#cb7-2"></a></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">rpart.plot</span>(reg_tree_mod1<span class="sc">$</span>fit, <span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">library</span>(rpart.plot)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: package 'rpart' was built under R version 4.3.3</code></pre>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rpart.plot</span>(reg_tree_mod1<span class="sc">$</span>fit, <span class="at">roundint =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
@@ -807,34 +812,34 @@ Bias error
 <div class="cell" data-layout-align="center" data-hash="20_predictive-modeling-concepts_cache/html/model-bias_ab40098784b0584534049fcbfe974363">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">set.seed</span>(<span class="dv">20200225</span>)</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a>sample1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="at">x =</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">max =</span> <span class="dv">10</span>),</span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="at">noise =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb8-6"><a href="#cb8-6"></a>  <span class="at">y =</span> <span class="sc">-</span>(x <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">+</span> noise</span>
-<span id="cb8-7"><a href="#cb8-7"></a>)</span>
-<span id="cb8-8"><a href="#cb8-8"></a></span>
-<span id="cb8-9"><a href="#cb8-9"></a><span class="fu">grid.arrange</span>(</span>
-<span id="cb8-10"><a href="#cb8-10"></a>  sample1 <span class="sc">|&gt;</span></span>
-<span id="cb8-11"><a href="#cb8-11"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb8-13"><a href="#cb8-13"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb8-14"><a href="#cb8-14"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
-<span id="cb8-15"><a href="#cb8-15"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"High Bias"</span>) <span class="sc">+</span></span>
-<span id="cb8-17"><a href="#cb8-17"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
-<span id="cb8-18"><a href="#cb8-18"></a>  </span>
-<span id="cb8-19"><a href="#cb8-19"></a>  sample1 <span class="sc">|&gt;</span></span>
-<span id="cb8-20"><a href="#cb8-20"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb8-21"><a href="#cb8-21"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb8-22"><a href="#cb8-22"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb8-23"><a href="#cb8-23"></a>                <span class="at">span =</span> <span class="fl">0.08</span>) <span class="sc">+</span></span>
-<span id="cb8-24"><a href="#cb8-24"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb8-25"><a href="#cb8-25"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Low Bias"</span>) <span class="sc">+</span></span>
-<span id="cb8-26"><a href="#cb8-26"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
-<span id="cb8-27"><a href="#cb8-27"></a>  <span class="at">ncol =</span> <span class="dv">2</span></span>
-<span id="cb8-28"><a href="#cb8-28"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">set.seed</span>(<span class="dv">20200225</span>)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>sample1 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb10-4"><a href="#cb10-4"></a>  <span class="at">x =</span> <span class="fu">runif</span>(<span class="dv">100</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">max =</span> <span class="dv">10</span>),</span>
+<span id="cb10-5"><a href="#cb10-5"></a>  <span class="at">noise =</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb10-6"><a href="#cb10-6"></a>  <span class="at">y =</span> <span class="sc">-</span>(x <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">+</span> noise</span>
+<span id="cb10-7"><a href="#cb10-7"></a>)</span>
+<span id="cb10-8"><a href="#cb10-8"></a></span>
+<span id="cb10-9"><a href="#cb10-9"></a><span class="fu">grid.arrange</span>(</span>
+<span id="cb10-10"><a href="#cb10-10"></a>  sample1 <span class="sc">|&gt;</span></span>
+<span id="cb10-11"><a href="#cb10-11"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb10-12"><a href="#cb10-12"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb10-13"><a href="#cb10-13"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb10-14"><a href="#cb10-14"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb10-15"><a href="#cb10-15"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb10-16"><a href="#cb10-16"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"High Bias"</span>) <span class="sc">+</span></span>
+<span id="cb10-17"><a href="#cb10-17"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
+<span id="cb10-18"><a href="#cb10-18"></a>  </span>
+<span id="cb10-19"><a href="#cb10-19"></a>  sample1 <span class="sc">|&gt;</span></span>
+<span id="cb10-20"><a href="#cb10-20"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb10-21"><a href="#cb10-21"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb10-22"><a href="#cb10-22"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb10-23"><a href="#cb10-23"></a>                <span class="at">span =</span> <span class="fl">0.08</span>) <span class="sc">+</span></span>
+<span id="cb10-24"><a href="#cb10-24"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb10-25"><a href="#cb10-25"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Low Bias"</span>) <span class="sc">+</span></span>
+<span id="cb10-26"><a href="#cb10-26"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
+<span id="cb10-27"><a href="#cb10-27"></a>  <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb10-28"><a href="#cb10-28"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -862,39 +867,39 @@ Variance error
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/model-variance_0bfdb66a15dd314acc4f6c57052df592">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">set.seed</span>(<span class="dv">20200226</span>)</span>
-<span id="cb9-2"><a href="#cb9-2"></a></span>
-<span id="cb9-3"><a href="#cb9-3"></a>sample2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb9-4"><a href="#cb9-4"></a>  <span class="at">sample_number =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Sample 1"</span>, <span class="st">"Sample 2"</span>, <span class="st">"Sample 3"</span>, <span class="st">"Sample 4"</span>), <span class="dv">100</span>),</span>
-<span id="cb9-5"><a href="#cb9-5"></a>  <span class="at">x =</span> <span class="fu">runif</span>(<span class="dv">400</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">max =</span> <span class="dv">10</span>),</span>
-<span id="cb9-6"><a href="#cb9-6"></a>  <span class="at">noise =</span> <span class="fu">rnorm</span>(<span class="dv">400</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="at">y =</span> <span class="sc">-</span>(x <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">+</span> noise</span>
-<span id="cb9-8"><a href="#cb9-8"></a>)</span>
-<span id="cb9-9"><a href="#cb9-9"></a></span>
-<span id="cb9-10"><a href="#cb9-10"></a><span class="fu">grid.arrange</span>(</span>
-<span id="cb9-11"><a href="#cb9-11"></a>  sample2 <span class="sc">|&gt;</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-14"><a href="#cb9-14"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
-<span id="cb9-15"><a href="#cb9-15"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-16"><a href="#cb9-16"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-17"><a href="#cb9-17"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_number) <span class="sc">+</span></span>
-<span id="cb9-18"><a href="#cb9-18"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb9-19"><a href="#cb9-19"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Low Variance"</span>) <span class="sc">+</span></span>
-<span id="cb9-20"><a href="#cb9-20"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
-<span id="cb9-21"><a href="#cb9-21"></a>  </span>
-<span id="cb9-22"><a href="#cb9-22"></a>  sample2 <span class="sc">|&gt;</span></span>
-<span id="cb9-23"><a href="#cb9-23"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
-<span id="cb9-24"><a href="#cb9-24"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-25"><a href="#cb9-25"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb9-26"><a href="#cb9-26"></a>                <span class="at">span =</span> <span class="fl">0.08</span>,</span>
-<span id="cb9-27"><a href="#cb9-27"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
-<span id="cb9-28"><a href="#cb9-28"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_number) <span class="sc">+</span></span>
-<span id="cb9-29"><a href="#cb9-29"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
-<span id="cb9-30"><a href="#cb9-30"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"High Variance"</span>) <span class="sc">+</span></span>
-<span id="cb9-31"><a href="#cb9-31"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
-<span id="cb9-32"><a href="#cb9-32"></a>  <span class="at">ncol =</span> <span class="dv">2</span></span>
-<span id="cb9-33"><a href="#cb9-33"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20200226</span>)</span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a>sample2 <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb11-4"><a href="#cb11-4"></a>  <span class="at">sample_number =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">"Sample 1"</span>, <span class="st">"Sample 2"</span>, <span class="st">"Sample 3"</span>, <span class="st">"Sample 4"</span>), <span class="dv">100</span>),</span>
+<span id="cb11-5"><a href="#cb11-5"></a>  <span class="at">x =</span> <span class="fu">runif</span>(<span class="dv">400</span>, <span class="at">min =</span> <span class="sc">-</span><span class="dv">10</span>, <span class="at">max =</span> <span class="dv">10</span>),</span>
+<span id="cb11-6"><a href="#cb11-6"></a>  <span class="at">noise =</span> <span class="fu">rnorm</span>(<span class="dv">400</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="at">y =</span> <span class="sc">-</span>(x <span class="sc">^</span> <span class="dv">2</span>) <span class="sc">+</span> noise</span>
+<span id="cb11-8"><a href="#cb11-8"></a>)</span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="fu">grid.arrange</span>(</span>
+<span id="cb11-11"><a href="#cb11-11"></a>  sample2 <span class="sc">|&gt;</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb11-14"><a href="#cb11-14"></a>    <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>,</span>
+<span id="cb11-15"><a href="#cb11-15"></a>                <span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-16"><a href="#cb11-16"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb11-17"><a href="#cb11-17"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_number) <span class="sc">+</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Low Variance"</span>) <span class="sc">+</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
+<span id="cb11-21"><a href="#cb11-21"></a>  </span>
+<span id="cb11-22"><a href="#cb11-22"></a>  sample2 <span class="sc">|&gt;</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(x, y)) <span class="sc">+</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a>    <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb11-25"><a href="#cb11-25"></a>    <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>,</span>
+<span id="cb11-26"><a href="#cb11-26"></a>                <span class="at">span =</span> <span class="fl">0.08</span>,</span>
+<span id="cb11-27"><a href="#cb11-27"></a>                <span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb11-28"><a href="#cb11-28"></a>    <span class="fu">facet_wrap</span>(<span class="sc">~</span>sample_number) <span class="sc">+</span></span>
+<span id="cb11-29"><a href="#cb11-29"></a>    <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb11-30"><a href="#cb11-30"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"High Variance"</span>) <span class="sc">+</span></span>
+<span id="cb11-31"><a href="#cb11-31"></a>    <span class="fu">theme</span>(<span class="at">plot.margin =</span> <span class="fu">unit</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">1</span>), <span class="st">"cm"</span>)),</span>
+<span id="cb11-32"><a href="#cb11-32"></a>  <span class="at">ncol =</span> <span class="dv">2</span></span>
+<span id="cb11-33"><a href="#cb11-33"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -1059,14 +1064,14 @@ Warning
 <section id="split-data-into-training-and-testing-data" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data">1. Split data into training and testing data</h4>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-15_258dd1d109e694264ca2ccd2c6ab7582">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a><span class="co"># create a split object</span></span>
-<span id="cb10-4"><a href="#cb10-4"></a>data1_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> data1, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
-<span id="cb10-5"><a href="#cb10-5"></a></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="co"># create the training and testing data</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
-<span id="cb10-8"><a href="#cb10-8"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">set.seed</span>(<span class="dv">20201007</span>)</span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="co"># create a split object</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>data1_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> data1, <span class="at">prop =</span> <span class="fl">0.75</span>)</span>
+<span id="cb12-5"><a href="#cb12-5"></a></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="co"># create the training and testing data</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>data1_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> data1_split)</span>
+<span id="cb12-8"><a href="#cb12-8"></a>data1_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> data1_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exploratory-data-analysis" class="level4">
@@ -1086,11 +1091,11 @@ Warning
 </div>
 </div>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-16_ae3fe3ab5644a8fd633fb3337ba205b4">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>data1_train <span class="sc">|&gt;</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
-<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
-<span id="cb11-4"><a href="#cb11-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example 1 Data"</span>) <span class="sc">+</span></span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>data1_train <span class="sc">|&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.25</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Example 1 Data"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1101,7 +1106,7 @@ Warning
 <p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are small (750 observations and one predictor), so we will repeat the entire cross validation process five times.</p>
 <p>Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation improves the accuracy of our estimated error rates.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-17_17a2a8a6abaa0056cd918485a1a3e386">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>data1_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> data1_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>data1_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> data1_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-candidate-models" class="level4">
@@ -1114,22 +1119,22 @@ Warning
 </ol>
 <p>It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-18_973e8b9d528574075e02f887f477a071">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>knn_recipe <span class="ot">&lt;-</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> y <span class="sc">~</span> ., <span class="at">data =</span> data1_train) <span class="sc">|&gt;</span></span>
-<span id="cb13-3"><a href="#cb13-3"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>knn_recipe <span class="ot">&lt;-</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> y <span class="sc">~</span> ., <span class="at">data =</span> data1_train) <span class="sc">|&gt;</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>nearest_neighbor()</code> to create a KNN model and we use <code>tune()</code> as a placeholder for <code>k</code>. Note that we can tune many hyperparameters for a given model. The Regression Tree example later in this chapter illustrates this concept.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-19_120f7cdc8dafa3009ebc2bccf30e3156">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>knn_mod <span class="ot">&lt;-</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>knn_mod <span class="ot">&lt;-</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">nearest_neighbor</span>(<span class="at">neighbors =</span> <span class="fu">tune</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"kknn"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>grid_regular()</code> to specify a hyperparameter tuning grid for potential values of <span class="math inline">\(k\)</span>.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-20_13cdf012723a723fd20305ae41f62305">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>knn_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">99</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span>
-<span id="cb15-2"><a href="#cb15-2"></a></span>
-<span id="cb15-3"><a href="#cb15-3"></a>knn_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>knn_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(<span class="fu">neighbors</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">99</span>)), <span class="at">levels =</span> <span class="dv">10</span>)</span>
+<span id="cb17-2"><a href="#cb17-2"></a></span>
+<span id="cb17-3"><a href="#cb17-3"></a>knn_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 1
    neighbors
@@ -1148,28 +1153,28 @@ Warning
 </div>
 <p>Finally, we combine the recipe and model objects into a <code>workflow()</code>.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-21_8d2ad58abb0f041967e532840765d97c">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>knn_workflow <span class="ot">&lt;-</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> knn_recipe) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> knn_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>knn_workflow <span class="ot">&lt;-</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> knn_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> knn_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-and-choose-the-best-model" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model">5. Test and Choose the “Best” Model</h4>
 <p><code>tune_grid()</code> fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each evaluation data set.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-22_41c3bbae3190052fc62666634cf1935b">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>knn_res <span class="ot">&lt;-</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  knn_workflow <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">tune_grid</span>(</span>
-<span id="cb18-4"><a href="#cb18-4"></a>    <span class="at">resamples =</span> data1_folds,</span>
-<span id="cb18-5"><a href="#cb18-5"></a>    <span class="at">grid =</span> knn_grid,</span>
-<span id="cb18-6"><a href="#cb18-6"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse)</span>
-<span id="cb18-7"><a href="#cb18-7"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>knn_res <span class="ot">&lt;-</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  knn_workflow <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">tune_grid</span>(</span>
+<span id="cb20-4"><a href="#cb20-4"></a>    <span class="at">resamples =</span> data1_folds,</span>
+<span id="cb20-5"><a href="#cb20-5"></a>    <span class="at">grid =</span> knn_grid,</span>
+<span id="cb20-6"><a href="#cb20-6"></a>    <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse)</span>
+<span id="cb20-7"><a href="#cb20-7"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We can quickly extract information from the tuned results object with functions like <code>collect_metrics()</code>, <code>show_best()</code>, and <code>autoplot()</code>.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-23_ba75224b152ae1993a9fd462594c9de5">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>knn_res <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 7
    neighbors .metric .estimator  mean     n std_err .config              
@@ -1185,8 +1190,8 @@ Warning
  9        88 rmse    standard    2.17    50  0.0266 Preprocessor1_Model09
 10        99 rmse    standard    2.24    50  0.0291 Preprocessor1_Model10</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>knn_res <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in show_best(knn_res): No value of `metric` was given; "rmse" will be
 used.</code></pre>
@@ -1201,8 +1206,8 @@ used.</code></pre>
 4        55 rmse    standard    2.03    50  0.0205 Preprocessor1_Model06
 5        11 rmse    standard    2.06    50  0.0209 Preprocessor1_Model02</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>knn_res <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1213,9 +1218,9 @@ used.</code></pre>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-24_888eda62ade62d5fa71ca96a07fec21b">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb25-2"><a href="#cb25-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb27-2"><a href="#cb27-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in select_best(knn_res): No value of `metric` was given; "rmse" will be
 used.</code></pre>
@@ -1223,9 +1228,9 @@ used.</code></pre>
 </div>
 <p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-25_13c71bdb635b029ed01f738d4d5c49f4">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">last_fit</span>(data1_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>final_fit <span class="ot">&lt;-</span> </span>
+<span id="cb29-2"><a href="#cb29-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">last_fit</span>(data1_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1247,8 +1252,8 @@ Note
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
 <p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-26_ad3b2e82647a5305b90128966e167476">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
@@ -1268,24 +1273,24 @@ Note
 <h3 data-number="18.5.2" class="anchored" data-anchor-id="example-regression-trees"><span class="header-section-number">18.5.2</span> Example: Regression Trees</h3>
 <p>We’ll next work with a subset of data from the <code>Chicago</code> data set from <code>library(tidymodels)</code>.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-27_4e6b54f07dd33689595c066d035cb87b">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">select</span>(</span>
-<span id="cb30-3"><a href="#cb30-3"></a>    ridership,</span>
-<span id="cb30-4"><a href="#cb30-4"></a>    Clark_Lake,</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    Quincy_Wells,</span>
-<span id="cb30-6"><a href="#cb30-6"></a>    Irving_Park,</span>
-<span id="cb30-7"><a href="#cb30-7"></a>    Monroe,</span>
-<span id="cb30-8"><a href="#cb30-8"></a>    Polk,</span>
-<span id="cb30-9"><a href="#cb30-9"></a>    temp,</span>
-<span id="cb30-10"><a href="#cb30-10"></a>    percip,</span>
-<span id="cb30-11"><a href="#cb30-11"></a>    Bulls_Home,</span>
-<span id="cb30-12"><a href="#cb30-12"></a>    Bears_Home,</span>
-<span id="cb30-13"><a href="#cb30-13"></a>    WhiteSox_Home,</span>
-<span id="cb30-14"><a href="#cb30-14"></a>    Cubs_Home,</span>
-<span id="cb30-15"><a href="#cb30-15"></a>    date</span>
-<span id="cb30-16"><a href="#cb30-16"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-17"><a href="#cb30-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb30-18"><a href="#cb30-18"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">select</span>(</span>
+<span id="cb32-3"><a href="#cb32-3"></a>    ridership,</span>
+<span id="cb32-4"><a href="#cb32-4"></a>    Clark_Lake,</span>
+<span id="cb32-5"><a href="#cb32-5"></a>    Quincy_Wells,</span>
+<span id="cb32-6"><a href="#cb32-6"></a>    Irving_Park,</span>
+<span id="cb32-7"><a href="#cb32-7"></a>    Monroe,</span>
+<span id="cb32-8"><a href="#cb32-8"></a>    Polk,</span>
+<span id="cb32-9"><a href="#cb32-9"></a>    temp,</span>
+<span id="cb32-10"><a href="#cb32-10"></a>    percip,</span>
+<span id="cb32-11"><a href="#cb32-11"></a>    Bulls_Home,</span>
+<span id="cb32-12"><a href="#cb32-12"></a>    Bears_Home,</span>
+<span id="cb32-13"><a href="#cb32-13"></a>    WhiteSox_Home,</span>
+<span id="cb32-14"><a href="#cb32-14"></a>    Cubs_Home,</span>
+<span id="cb32-15"><a href="#cb32-15"></a>    date</span>
+<span id="cb32-16"><a href="#cb32-16"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb32-17"><a href="#cb32-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb32-18"><a href="#cb32-18"></a>  <span class="fu">glimpse</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 5,698
 Columns: 14
@@ -1313,14 +1318,14 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <section id="split-data-into-training-and-testing-data-1" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data-1">1. Split data into training and testing data</h4>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-28_25f3e5383aeada8f0a3f51c06cc2d5d7">
-<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="co"># create a split object</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
-<span id="cb32-5"><a href="#cb32-5"></a></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># create the training and testing data</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
-<span id="cb32-8"><a href="#cb32-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
+<span id="cb34-2"><a href="#cb34-2"></a></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="co"># create a split object</span></span>
+<span id="cb34-4"><a href="#cb34-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb34-5"><a href="#cb34-5"></a></span>
+<span id="cb34-6"><a href="#cb34-6"></a><span class="co"># create the training and testing data</span></span>
+<span id="cb34-7"><a href="#cb34-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
+<span id="cb34-8"><a href="#cb34-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="exploratory-data-analysis-1" class="level4">
@@ -1331,38 +1336,38 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <h4 class="anchored" data-anchor-id="set-up-resampling-for-model-selection-1">3. Set up Resampling for Model Selection</h4>
 <p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger in the previous example, so we skip repeats.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-29_c20a54b8b4af2d1459b93de95ce81d07">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-candidate-models-1" class="level4">
 <h4 class="anchored" data-anchor-id="create-candidate-models-1">4. Create Candidate Models</h4>
 <p>We will use regression trees for this example. For feature and target engineering, we will simply remove the date column.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-30_863d83d38ad9d7e9dfdad93df4d4151a">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">step_rm</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">step_rm</span>(date)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We specify a regression tree with the rpart engine.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-31_95e8fd0f7631233fdac370efe46bf9a3">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">decision_tree</span>(</span>
-<span id="cb35-3"><a href="#cb35-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
-<span id="cb35-4"><a href="#cb35-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
-<span id="cb35-5"><a href="#cb35-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
-<span id="cb35-6"><a href="#cb35-6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb35-8"><a href="#cb35-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">decision_tree</span>(</span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb37-4"><a href="#cb37-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb37-5"><a href="#cb37-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
+<span id="cb37-6"><a href="#cb37-6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb37-7"><a href="#cb37-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We use <code>grid_regular()</code> to specify a hyperparameter tuning grid for potential values of the cost-complexity parameter, tree depth parameter, and minimum n.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-32_39859c949ee4e7afcb4b35e453ebe4c2">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">min_n</span>(),</span>
-<span id="cb36-5"><a href="#cb36-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a>)</span>
-<span id="cb36-7"><a href="#cb36-7"></a></span>
-<span id="cb36-8"><a href="#cb36-8"></a>rpart_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb38-5"><a href="#cb38-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb38-6"><a href="#cb38-6"></a>)</span>
+<span id="cb38-7"><a href="#cb38-7"></a></span>
+<span id="cb38-8"><a href="#cb38-8"></a>rpart_grid</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 3
    cost_complexity tree_depth min_n
@@ -1382,23 +1387,23 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 </div>
 <p>Finally, we combine the recipe and model objects into a <code>workflow()</code>.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-33_23ff38b71b148b6b3686dfbab2cfc241">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
+<span id="cb40-2"><a href="#cb40-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="test-and-choose-the-best-model-1" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model-1">5. Test and Choose the “Best” Model</h4>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-34_0e11cdb937efde0321cde6e6a088f9fd">
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>rpart_res <span class="ot">&lt;-</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
-<span id="cb39-4"><a href="#cb39-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
-<span id="cb39-5"><a href="#cb39-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
-<span id="cb39-6"><a href="#cb39-6"></a></span>
-<span id="cb39-7"><a href="#cb39-7"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb39-8"><a href="#cb39-8"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="ot">&lt;-</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
+<span id="cb41-4"><a href="#cb41-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
+<span id="cb41-5"><a href="#cb41-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
+<span id="cb41-6"><a href="#cb41-6"></a></span>
+<span id="cb41-7"><a href="#cb41-7"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb41-8"><a href="#cb41-8"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 9
    cost_complexity tree_depth min_n .metric .estimator  mean     n std_err
@@ -1416,8 +1421,8 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 # ℹ 990 more rows
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">show_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in show_best(rpart_res): No value of `metric` was given; "rmse" will be
 used.</code></pre>
@@ -1433,8 +1438,8 @@ used.</code></pre>
 5       0.0000774          5    35 rmse    standard    2.37    10  0.0369
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">select_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">select_best</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
 be used.</code></pre>
@@ -1445,8 +1450,8 @@ be used.</code></pre>
             &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  
 1         0.00001          5    40 Preprocessor1_Model0921</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">autoplot</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid" width="672"></p>
 </div>
@@ -1457,9 +1462,9 @@ be used.</code></pre>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-35_d9eecee092d03e6dc154bcf43782c0e8">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb48-2"><a href="#cb48-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb50-2"><a href="#cb50-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
 be used.</code></pre>
@@ -1467,9 +1472,9 @@ be used.</code></pre>
 </div>
 <p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-36_01335787d0c383fae2428fbaa8df8a1c">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb50-2"><a href="#cb50-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">last_fit</span>(chicago_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a>final_fit <span class="ot">&lt;-</span> </span>
+<span id="cb52-2"><a href="#cb52-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="fu">last_fit</span>(chicago_split) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="evaluate-the-final-model-1" class="level4">
@@ -1477,8 +1482,8 @@ be used.</code></pre>
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
 <p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
 <div class="cell" data-hash="20_predictive-modeling-concepts_cache/html/unnamed-chunk-37_b55b6576336addce6407dc0eda67d833">
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">collect_metrics</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
