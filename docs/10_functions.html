@@ -768,7 +768,7 @@ Caution
 </div>
 <p>We can use headers several different ways. Like above, we may just want to repeat the values in the index.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>fruit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)</span>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>fruit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)</span>
 <span id="cb57-2"><a href="#cb57-2"></a><span class="cf">for</span> (b <span class="cf">in</span> fruit) {</span>
 <span id="cb57-3"><a href="#cb57-3"></a>  </span>
 <span id="cb57-4"><a href="#cb57-4"></a>  <span class="fu">print</span>(b)</span>
@@ -777,12 +777,12 @@ Caution
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "apple"
 [1] "banana"
-[1] "cantelope"</code></pre>
+[1] "cantaloupe"</code></pre>
 </div>
 </div>
 <p>We can use the header as an index.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>fruit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)</span>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>fruit <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)</span>
 <span id="cb59-2"><a href="#cb59-2"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>) {</span>
 <span id="cb59-3"><a href="#cb59-3"></a>  </span>
 <span id="cb59-4"><a href="#cb59-4"></a>  <span class="fu">print</span>(fruit[i])</span>
@@ -791,7 +791,7 @@ Caution
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "apple"
 [1] "banana"
-[1] "cantelope"</code></pre>
+[1] "cantaloupe"</code></pre>
 </div>
 </div>
 <p>We can leverage the index to use results from previous iterations.</p>
@@ -1350,11 +1350,11 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
                      expr      min       lq     mean   median       uq
-                median(x) 6.277346 6.519369 7.818390 6.722360 8.228864
- quantile(x, probs = 0.5) 3.279672 3.682682 4.244404 3.743238 3.941125
+                median(x) 6.227080 6.528266 7.620111 6.625887 8.088808
+ quantile(x, probs = 0.5) 3.410421 3.676183 4.130865 3.739692 3.881039
        max neval
- 51.519821   100
-  9.144517   100</code></pre>
+ 50.292240   100
+  7.278156   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">

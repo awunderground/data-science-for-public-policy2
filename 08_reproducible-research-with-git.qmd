@@ -318,7 +318,7 @@ exercise_number <-  1 + exercise_number
 ```
 
 1.  Go to your GitHub repository and select "Settings" on the top right.
-2.  Under the "Code and Automations" menu on the left side, select "Pages".
+2.  Under the "Code and automation" menu on the left side, select "Pages".
 3.  Under "Build and Deployment" and "Branch", use the drop down menu to change the branch to "main". This will trigger the deployment of your GitHub page from the "main" branch of your repository. It will take a bit of time for your GitHub page to be ready.
 4.  Refresh the page, and when you see a box that says "your site is live" at the top of your page, click the link to go to your website!
 :::

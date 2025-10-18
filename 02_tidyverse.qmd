@@ -327,8 +327,29 @@ Conditional logic inside of `mutate()` with functions like `if_else()` and `case
 exercise_number <- exercise_number + 1
 ```
 
-1. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`. *Hint:* `if_else()` is useful and works like the IF command in Microsoft Excel.
+`if_else()` is useful function for conditionally creating or altering values in a variable. It has three main arguments:
 
+1. `condition`: A logical condition
+2. `true`: What to do if the condition evaluates to `TRUE`
+3. `false`: What to do if the condition evaluates to `FALSE`
+
+For example,
+
+```r
+storms |>
+  mutate(
+  storm_decision = if_else(
+    condition = wind > 50,
+    true = "evacuate",
+    false = "stay"
+    )
+  )
+
+```
+
+
+
+1. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`.
 :::
 
 ### `|>`

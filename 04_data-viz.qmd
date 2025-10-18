@@ -83,6 +83,7 @@ ggplot(data = storms) +
 
 ```{r}
 #| label: 1-data
+#| echo: false
 
 storms |>
   select(name, year, category, lat, long, wind, pressure) |>

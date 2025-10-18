@@ -1039,7 +1039,7 @@ Testing data
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A subset of data used to estimate model performance. The testing set usually includes all observations not included in the testing set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.</p>
+<p>A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.</p>
 </div>
 </div>
 <div id="fig-cv" class="quarto-figure quarto-figure-center quarto-float anchored">
@@ -1329,7 +1329,7 @@ Note
 </section>
 <section id="optional-implement-the-final-model" class="level4">
 <h4 class="anchored" data-anchor-id="optional-implement-the-final-model">8. Optional: Implement the Final Model</h4>
-<p><code>final_fit</code> and <code>pedict()</code> can be used to apply the model to new, unseen data.</p>
+<p><code>final_fit</code> and <code>predict()</code> can be used to apply the model to new, unseen data.</p>
 <p>Only implement the model if it achieves the objectives of the final model.</p>
 </section>
 </section>
