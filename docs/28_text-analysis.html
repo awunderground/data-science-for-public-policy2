@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -98,6 +105,33 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 <link rel="stylesheet" href="www/styles.css">
 </head>
@@ -108,12 +142,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_text-analysis.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_text-analysis.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -123,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -378,7 +412,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -418,7 +452,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./30_geospatial.html">Other Topics</a></li><li class="breadcrumb-item"><a href="./28_text-analysis.html"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></h1>
 </div>
@@ -434,12 +468,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 <div>
   <div class="abstract">
-    <div class="abstract-title">Abstract</div>
+    <div class="block-title">Abstract</div>
     In this chapter, we introduce fundamental ideas for text analysis.
   </div>
 </div>
 
+
 </header>
+
 
 <p><img src=".png" class="img-fluid"></p>
 <section id="motivation" class="level2" data-number="24.1">
@@ -709,20 +745,20 @@ Lemmatization
 <span id="cb1-7"><a href="#cb1-7"></a></span>
 <span id="cb1-8"><a href="#cb1-8"></a>fed_papers</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 19,359 × 2
+<pre><code># A tibble: 58,077 × 2
    gutenberg_id text                                                
           &lt;int&gt; &lt;chr&gt;                                               
  1         1404 "THE FEDERALIST PAPERS"                             
- 2         1404 ""                                                  
- 3         1404 "By Alexander Hamilton, John Jay, and James Madison"
+ 2         1404 "THE FEDERALIST PAPERS"                             
+ 3         1404 "THE FEDERALIST PAPERS"                             
  4         1404 ""                                                  
  5         1404 ""                                                  
  6         1404 ""                                                  
- 7         1404 ""                                                  
- 8         1404 "FEDERALIST No. 1"                                  
- 9         1404 ""                                                  
-10         1404 "General Introduction"                              
-# ℹ 19,349 more rows</code></pre>
+ 7         1404 "By Alexander Hamilton, John Jay, and James Madison"
+ 8         1404 "By Alexander Hamilton, John Jay, and James Madison"
+ 9         1404 "By Alexander Hamilton, John Jay, and James Madison"
+10         1404 ""                                                  
+# ℹ 58,067 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>fed_paper1 <span class="ot">&lt;-</span> fed_papers <span class="sc">|&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a>  <span class="fu">filter</span>(<span class="fu">row_number</span>() <span class="sc">&gt;=</span> <span class="dv">8</span> <span class="sc">&amp;</span> <span class="fu">row_number</span>() <span class="sc">&lt;=</span> <span class="dv">165</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -760,20 +796,20 @@ Tokenization
 <span id="cb4-4"><a href="#cb4-4"></a></span>
 <span id="cb4-5"><a href="#cb4-5"></a>tidy_fed_paper1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,612 × 2
-   gutenberg_id word        
-          &lt;int&gt; &lt;chr&gt;       
- 1         1404 federalist  
- 2         1404 no          
- 3         1404 1           
- 4         1404 general     
- 5         1404 introduction
- 6         1404 for         
- 7         1404 the         
- 8         1404 independent 
- 9         1404 journal     
-10         1404 saturday    
-# ℹ 1,602 more rows</code></pre>
+<pre><code># A tibble: 1,297 × 2
+   gutenberg_id word     
+          &lt;int&gt; &lt;chr&gt;    
+ 1         1404 by       
+ 2         1404 alexander
+ 3         1404 hamilton 
+ 4         1404 john     
+ 5         1404 jay      
+ 6         1404 and      
+ 7         1404 james    
+ 8         1404 madison  
+ 9         1404 by       
+10         1404 alexander
+# ℹ 1,287 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -797,20 +833,20 @@ Stemming
 <span id="cb6-5"><a href="#cb6-5"></a>  <span class="fu">mutate</span>(<span class="at">stem =</span> <span class="fu">wordStem</span>(word)) <span class="sc">|&gt;</span></span>
 <span id="cb6-6"><a href="#cb6-6"></a>  <span class="fu">filter</span>(word <span class="sc">!=</span> stem)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 536 × 3
-   gutenberg_id word         stem      
-          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;     
- 1         1404 general      gener     
- 2         1404 introduction introduct 
- 3         1404 independent  independ  
- 4         1404 saturday     saturdai  
- 5         1404 october      octob     
- 6         1404 people       peopl     
- 7         1404 unequivocal  unequivoc 
- 8         1404 experience   experi    
- 9         1404 inefficacy   inefficaci
-10         1404 subsisting   subsist   
-# ℹ 526 more rows</code></pre>
+<pre><code># A tibble: 471 × 3
+   gutenberg_id word         stem     
+          &lt;int&gt; &lt;chr&gt;        &lt;chr&gt;    
+ 1         1404 alexander    alexand  
+ 2         1404 jay          jai      
+ 3         1404 james        jame     
+ 4         1404 alexander    alexand  
+ 5         1404 jay          jai      
+ 6         1404 james        jame     
+ 7         1404 general      gener    
+ 8         1404 introduction introduct
+ 9         1404 general      gener    
+10         1404 introduction introduct
+# ℹ 461 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -876,20 +912,20 @@ Tidy text
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="co"># tidy text format</span></span>
 <span id="cb10-2"><a href="#cb10-2"></a>tidy_fed_paper1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1,612 × 2
-   gutenberg_id word        
-          &lt;int&gt; &lt;chr&gt;       
- 1         1404 federalist  
- 2         1404 no          
- 3         1404 1           
- 4         1404 general     
- 5         1404 introduction
- 6         1404 for         
- 7         1404 the         
- 8         1404 independent 
- 9         1404 journal     
-10         1404 saturday    
-# ℹ 1,602 more rows</code></pre>
+<pre><code># A tibble: 1,297 × 2
+   gutenberg_id word     
+          &lt;int&gt; &lt;chr&gt;    
+ 1         1404 by       
+ 2         1404 alexander
+ 3         1404 hamilton 
+ 4         1404 john     
+ 5         1404 jay      
+ 6         1404 and      
+ 7         1404 james    
+ 8         1404 madison  
+ 9         1404 by       
+10         1404 alexander
+# ℹ 1,287 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -958,40 +994,40 @@ Tidy text
 <span id="cb13-12"><a href="#cb13-12"></a>  <span class="fu">filter</span>(author <span class="sc">==</span> <span class="st">"hamilton"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb13-13"><a href="#cb13-13"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4,073 × 2
-   word          n
-   &lt;chr&gt;     &lt;int&gt;
- 1 power       545
- 2 govern      519
- 3 constitut   372
- 4 nation      370
- 5 peopl       272
- 6 author      251
- 7 union       251
- 8 law         236
- 9 object      223
-10 court       215
-# ℹ 4,063 more rows</code></pre>
+<pre><code># A tibble: 2,728 × 2
+   word            n
+   &lt;chr&gt;       &lt;int&gt;
+ 1 govern        648
+ 2 nation        510
+ 3 peopl         363
+ 4 power         360
+ 5 union         315
+ 6 time          234
+ 7 author        198
+ 8 danger        192
+ 9 confederaci   186
+10 countri       183
+# ℹ 2,718 more rows</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># count Madison's most-frequent words</span></span>
 <span id="cb15-2"><a href="#cb15-2"></a>tidy_fed_papers1 <span class="sc">|&gt;</span></span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">filter</span>(author <span class="sc">==</span> <span class="st">"madison"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">count</span>(word, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 2,863 × 2
-   word          n
-   &lt;chr&gt;     &lt;int&gt;
- 1 govern      318
- 2 power       311
- 3 constitut   213
- 4 peopl       144
- 5 author      125
- 6 execut      120
- 7 feder       118
- 8 form         99
- 9 depart       98
-10 union        97
-# ℹ 2,853 more rows</code></pre>
+<pre><code># A tibble: 1,592 × 2
+   word            n
+   &lt;chr&gt;       &lt;int&gt;
+ 1 govern        174
+ 2 nation        153
+ 3 union         108
+ 4 power          96
+ 5 war            81
+ 6 confederaci    69
+ 7 peopl          69
+ 8 form           63
+ 9 object         63
+10 time           63
+# ℹ 1,582 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -1002,38 +1038,46 @@ Tidy text
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># calculate tf-idf</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>tf_idf <span class="ot">&lt;-</span> tidy_fed_papers <span class="sc">|&gt;</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">count</span>(author, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> author, <span class="at">n =</span> n) </span>
-<span id="cb17-5"><a href="#cb17-5"></a></span>
-<span id="cb17-6"><a href="#cb17-6"></a><span class="co"># plot</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>tf_idf <span class="sc">|&gt;</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>  <span class="fu">filter</span>(author <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"hamilton"</span>, <span class="st">"madison"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a>  <span class="fu">group_by</span>(author) <span class="sc">|&gt;</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>  <span class="fu">top_n</span>(<span class="dv">15</span>, tf_idf) <span class="sc">|&gt;</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> author)) <span class="sc">+</span></span>
-<span id="cb17-13"><a href="#cb17-13"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb17-14"><a href="#cb17-14"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>author, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
-<span id="cb17-15"><a href="#cb17-15"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> author, <span class="at">n =</span> n) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: A value for tf_idf is negative:
+ Input should have exactly one row per document-term combination.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># plot</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>tf_idf <span class="sc">|&gt;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a>  <span class="fu">filter</span>(author <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"hamilton"</span>, <span class="st">"madison"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb19-4"><a href="#cb19-4"></a>  <span class="fu">group_by</span>(author) <span class="sc">|&gt;</span></span>
+<span id="cb19-5"><a href="#cb19-5"></a>  <span class="fu">top_n</span>(<span class="dv">15</span>, tf_idf) <span class="sc">|&gt;</span></span>
+<span id="cb19-6"><a href="#cb19-6"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
+<span id="cb19-7"><a href="#cb19-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> author)) <span class="sc">+</span></span>
+<span id="cb19-8"><a href="#cb19-8"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb19-9"><a href="#cb19-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>author, <span class="at">scales =</span> <span class="st">"free"</span>) <span class="sc">+</span></span>
+<span id="cb19-10"><a href="#cb19-10"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb19-11"><a href="#cb19-11"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_text-analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="28_text-analysis_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
 <section id="approach-3" class="level3" data-number="24.6.3">
 <h3 data-number="24.6.3" class="anchored" data-anchor-id="approach-3"><span class="header-section-number">24.6.3</span> Approach 3</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>tidy_fed_papers <span class="sc">|&gt;</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">count</span>(author, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">filter</span>(word <span class="sc">==</span> <span class="st">"upon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>tidy_fed_papers <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">count</span>(author, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">filter</span>(word <span class="sc">==</span> <span class="st">"upon"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 4 × 3
+<pre><code># A tibble: 5 × 3
   author   word      n
   &lt;chr&gt;    &lt;chr&gt; &lt;int&gt;
-1 hamilton upon    374
-2 madison  upon      9
-3 unknown  upon      3
-4 jay      upon      1</code></pre>
+1 &lt;NA&gt;     upon    813
+2 hamilton upon    225
+3 madison  upon     66
+4 unknown  upon     39
+5 jay      upon     18</code></pre>
 </div>
 </div>
 </section>
@@ -1042,88 +1086,55 @@ Tidy text
 <h2 data-number="24.7" class="anchored" data-anchor-id="example-2"><span class="header-section-number">24.7</span> Example 2</h2>
 <p>Let’s consider ten of Shakespeare’s plays.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="dv">2265</span>, <span class="co"># Hamlet </span></span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="dv">1795</span>, <span class="co"># Macbeth </span></span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="dv">1522</span>, <span class="co"># Julius Caesar </span></span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="dv">2235</span>, <span class="co"># The Tempest </span></span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="dv">1780</span>, <span class="co"># 1 Henry IV </span></span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="dv">1532</span>, <span class="co"># King Lear</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>  <span class="dv">1513</span>, <span class="co"># Romeo and Juliet </span></span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="dv">1110</span>, <span class="co"># King John</span></span>
-<span id="cb20-10"><a href="#cb20-10"></a>  <span class="dv">1519</span>, <span class="co"># Much Ado About Nothing</span></span>
-<span id="cb20-11"><a href="#cb20-11"></a>  <span class="dv">1539</span>  <span class="co"># The Winter's Tale</span></span>
-<span id="cb20-12"><a href="#cb20-12"></a>)</span>
-<span id="cb20-13"><a href="#cb20-13"></a></span>
-<span id="cb20-14"><a href="#cb20-14"></a><span class="co"># download corpus</span></span>
-<span id="cb20-15"><a href="#cb20-15"></a>shakespeare <span class="ot">&lt;-</span> <span class="fu">gutenberg_download</span>(</span>
-<span id="cb20-16"><a href="#cb20-16"></a>  <span class="at">gutenberg_id =</span> ids,</span>
-<span id="cb20-17"><a href="#cb20-17"></a>  <span class="at">meta_fields =</span> <span class="st">"title"</span></span>
-<span id="cb20-18"><a href="#cb20-18"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>ids <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="dv">2265</span>, <span class="co"># Hamlet </span></span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="dv">1795</span>, <span class="co"># Macbeth </span></span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="dv">1522</span>, <span class="co"># Julius Caesar </span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="dv">2235</span>, <span class="co"># The Tempest </span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="dv">1780</span>, <span class="co"># 1 Henry IV </span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="dv">1532</span>, <span class="co"># King Lear</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="dv">1513</span>, <span class="co"># Romeo and Juliet </span></span>
+<span id="cb22-9"><a href="#cb22-9"></a>  <span class="dv">1110</span>, <span class="co"># King John</span></span>
+<span id="cb22-10"><a href="#cb22-10"></a>  <span class="dv">1519</span>, <span class="co"># Much Ado About Nothing</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>  <span class="dv">1539</span>  <span class="co"># The Winter's Tale</span></span>
+<span id="cb22-12"><a href="#cb22-12"></a>)</span>
+<span id="cb22-13"><a href="#cb22-13"></a></span>
+<span id="cb22-14"><a href="#cb22-14"></a><span class="co"># download corpus</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a>shakespeare <span class="ot">&lt;-</span> <span class="fu">gutenberg_download</span>(</span>
+<span id="cb22-16"><a href="#cb22-16"></a>  <span class="at">gutenberg_id =</span> ids,</span>
+<span id="cb22-17"><a href="#cb22-17"></a>  <span class="at">meta_fields =</span> <span class="st">"title"</span></span>
+<span id="cb22-18"><a href="#cb22-18"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Determining mirror for Project Gutenberg from https://www.gutenberg.org/robot/harvest</code></pre>
+<pre><code>Determining mirror for Project Gutenberg from
+https://www.gutenberg.org/robot/harvest.
+Using mirror http://aleph.gutenberg.org.</code></pre>
 </div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Using mirror http://aleph.gutenberg.org</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/2/1522/1522.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/3/1532/1532.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/1/1513/1513.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/1/1/1110/1110.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/1/1519/1519.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: ! Could not download a book at http://aleph.gutenberg.org/1/5/3/1539/1539.zip.
-ℹ The book may have been archived.
-ℹ Alternatively, You may need to select a different mirror.
-→ See https://www.gutenberg.org/MIRRORS.ALL for options.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># create tokens and drop character cues</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>shakespeare_clean <span class="ot">&lt;-</span> shakespeare <span class="sc">|&gt;</span></span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="fu">unnest_tokens</span>(word, text, <span class="at">to_lower =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb29-4"><a href="#cb29-4"></a>  <span class="fu">filter</span>(word <span class="sc">!=</span> <span class="fu">str_to_upper</span>(word)) </span>
-<span id="cb29-5"><a href="#cb29-5"></a></span>
-<span id="cb29-6"><a href="#cb29-6"></a><span class="co"># calculate TF-IDF</span></span>
-<span id="cb29-7"><a href="#cb29-7"></a>shakespeare_tf_idf <span class="ot">&lt;-</span> shakespeare_clean <span class="sc">|&gt;</span></span>
-<span id="cb29-8"><a href="#cb29-8"></a>  <span class="fu">count</span>(title, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb29-9"><a href="#cb29-9"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> title, <span class="at">n =</span> n)</span>
-<span id="cb29-10"><a href="#cb29-10"></a></span>
-<span id="cb29-11"><a href="#cb29-11"></a><span class="co"># plot</span></span>
-<span id="cb29-12"><a href="#cb29-12"></a>shakespeare_tf_idf <span class="sc">|&gt;</span></span>
-<span id="cb29-13"><a href="#cb29-13"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
-<span id="cb29-14"><a href="#cb29-14"></a>  <span class="fu">top_n</span>(<span class="dv">8</span>, tf_idf) <span class="sc">|&gt;</span></span>
-<span id="cb29-15"><a href="#cb29-15"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
-<span id="cb29-16"><a href="#cb29-16"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> title)) <span class="sc">+</span></span>
-<span id="cb29-17"><a href="#cb29-17"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb29-18"><a href="#cb29-18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>title, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb29-19"><a href="#cb29-19"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb29-20"><a href="#cb29-20"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># create tokens and drop character cues</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>shakespeare_clean <span class="ot">&lt;-</span> shakespeare <span class="sc">|&gt;</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">unnest_tokens</span>(word, text, <span class="at">to_lower =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">filter</span>(word <span class="sc">!=</span> <span class="fu">str_to_upper</span>(word)) </span>
+<span id="cb24-5"><a href="#cb24-5"></a></span>
+<span id="cb24-6"><a href="#cb24-6"></a><span class="co"># calculate TF-IDF</span></span>
+<span id="cb24-7"><a href="#cb24-7"></a>shakespeare_tf_idf <span class="ot">&lt;-</span> shakespeare_clean <span class="sc">|&gt;</span></span>
+<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">count</span>(title, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb24-9"><a href="#cb24-9"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> title, <span class="at">n =</span> n)</span>
+<span id="cb24-10"><a href="#cb24-10"></a></span>
+<span id="cb24-11"><a href="#cb24-11"></a><span class="co"># plot</span></span>
+<span id="cb24-12"><a href="#cb24-12"></a>shakespeare_tf_idf <span class="sc">|&gt;</span></span>
+<span id="cb24-13"><a href="#cb24-13"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
+<span id="cb24-14"><a href="#cb24-14"></a>  <span class="fu">top_n</span>(<span class="dv">8</span>, tf_idf) <span class="sc">|&gt;</span></span>
+<span id="cb24-15"><a href="#cb24-15"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
+<span id="cb24-16"><a href="#cb24-16"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> title)) <span class="sc">+</span></span>
+<span id="cb24-17"><a href="#cb24-17"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb24-18"><a href="#cb24-18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>title, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb24-19"><a href="#cb24-19"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb24-20"><a href="#cb24-20"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="28_text-analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+<div>
+<figure class="figure">
+<p><img src="28_text-analysis_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 </section>
@@ -1219,10 +1230,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1232,8 +1260,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1245,7 +1282,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1289,6 +1449,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1314,6 +1475,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1375,17 +1562,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./30_geospatial.html" class="pagination-link">
+      <a href="./30_geospatial.html" class="pagination-link" aria-label="Geospatial Analysis with sf">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./29_text-modeling.html" class="pagination-link">
+      <a href="./29_text-modeling.html" class="pagination-link" aria-label="Text Modeling">
         <span class="nav-page-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

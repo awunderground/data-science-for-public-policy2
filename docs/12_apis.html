@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.4.554">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -22,7 +22,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -81,7 +81,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -90,6 +96,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -106,12 +113,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_functions.html">Programming</a></li><li class="breadcrumb-item"><a href="./12_apis.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_functions.html">Programming</a></li><li class="breadcrumb-item"><a href="./12_apis.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
@@ -121,7 +128,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Data Science for Public Policy</a> 
@@ -376,7 +383,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
         <nav id="TOC" role="doc-toc" class="toc-active">
@@ -426,7 +433,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./10_functions.html">Programming</a></li><li class="breadcrumb-item"><a href="./12_apis.html"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></a></li></ol></nav>
 <div class="quarto-title">
 <h1 class="title"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Web Application Programming Interfaces (Web APIs)</span></h1>
 </div>
@@ -442,17 +449,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   
 <div>
   <div class="abstract">
-    <div class="abstract-title">Abstract</div>
+    <div class="block-title">Abstract</div>
     Many data providers allow public access to data through APIs. Understanding how these work and how to use R to call and gather data from APIs is an important skill for a data scientist.
   </div>
 </div>
 
+
 </header>
+
 
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/header-images/Soemmerring_1810_telegraph_overview.jpg" class="img-fluid figure-img" style="width:50.0%"></p>
-<figcaption class="figure-caption">Sömmering’s electric telegraph in 1809</figcaption>
+<figcaption>Sömmering’s electric telegraph in 1809</figcaption>
 </figure>
 </div>
 <section id="api-background" class="level2" data-number="11.1">
@@ -530,7 +539,7 @@ Web API
 </ul>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/client-server.jpg" class="img-fluid figure-img" style="width:80.0%"></p>
+<p><img src="images/client-server.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
 <p>Source: <a href="https://zapier.com/learn/apis/chapter-2-protocols/">Zapier</a></p>
@@ -638,22 +647,20 @@ JSON
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="fu">library</span>(httr)</span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">library</span>(jsonlite)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'jsonlite' was built under R version 4.3.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># make the URL</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>url <span class="ot">&lt;-</span> </span>
-<span id="cb5-3"><a href="#cb5-3"></a>  <span class="st">"https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&amp;DATE_=7&amp;for=state:*"</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a></span>
-<span id="cb5-5"><a href="#cb5-5"></a><span class="co"># use the URL to make a request from the API</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>pop_json <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url =</span> url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb3-4"><a href="#cb3-4"></a></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="co"># make the URL</span></span>
+<span id="cb3-6"><a href="#cb3-6"></a>url <span class="ot">&lt;-</span> </span>
+<span id="cb3-7"><a href="#cb3-7"></a>  <span class="st">"https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&amp;DATE_=7&amp;for=state:*"</span></span>
+<span id="cb3-8"><a href="#cb3-8"></a></span>
+<span id="cb3-9"><a href="#cb3-9"></a><span class="co"># use the URL to make a request from the API</span></span>
+<span id="cb3-10"><a href="#cb3-10"></a>pop_json <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url =</span> url)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-for-a-server-error-in-the-response-1" class="level3" data-number="11.7.2">
 <h3 data-number="11.7.2" class="anchored" data-anchor-id="check-for-a-server-error-in-the-response-1"><span class="header-section-number">11.7.2</span> Check for a server error in the response</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">http_status</span>(pop_json)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">http_status</span>(pop_json)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$category
 [1] "Success"
@@ -670,20 +677,20 @@ $message
 <section id="parse-the-response-1" class="level2" data-number="11.8">
 <h2 data-number="11.8" class="anchored" data-anchor-id="parse-the-response-1"><span class="header-section-number">11.8</span> 3. Parse the response</h2>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># get the contents of the response as a text string</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a>pop_json <span class="ot">&lt;-</span> <span class="fu">content</span>(pop_json, <span class="at">as =</span> <span class="st">"text"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3"></a></span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># create a character matrix from the JSON</span></span>
-<span id="cb8-5"><a href="#cb8-5"></a>pop_matrix <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pop_json)</span>
-<span id="cb8-6"><a href="#cb8-6"></a></span>
-<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># turn the body of the character matrix into a tibble</span></span>
-<span id="cb8-8"><a href="#cb8-8"></a>pop_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pop_matrix[<span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(pop_matrix), ],</span>
-<span id="cb8-9"><a href="#cb8-9"></a>                      <span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
-<span id="cb8-10"><a href="#cb8-10"></a></span>
-<span id="cb8-11"><a href="#cb8-11"></a><span class="co"># add variable names to the tibble</span></span>
-<span id="cb8-12"><a href="#cb8-12"></a><span class="fu">names</span>(pop_data) <span class="ot">&lt;-</span> pop_matrix[<span class="dv">1</span>, ]</span>
-<span id="cb8-13"><a href="#cb8-13"></a></span>
-<span id="cb8-14"><a href="#cb8-14"></a>pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># get the contents of the response as a text string</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>pop_json <span class="ot">&lt;-</span> <span class="fu">content</span>(pop_json, <span class="at">as =</span> <span class="st">"text"</span>)</span>
+<span id="cb6-3"><a href="#cb6-3"></a></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="co"># create a character matrix from the JSON</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>pop_matrix <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(pop_json)</span>
+<span id="cb6-6"><a href="#cb6-6"></a></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="co"># turn the body of the character matrix into a tibble</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>pop_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(pop_matrix[<span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(pop_matrix), ],</span>
+<span id="cb6-9"><a href="#cb6-9"></a>                      <span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
+<span id="cb6-10"><a href="#cb6-10"></a></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co"># add variable names to the tibble</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="fu">names</span>(pop_data) <span class="ot">&lt;-</span> pop_matrix[<span class="dv">1</span>, ]</span>
+<span id="cb6-13"><a href="#cb6-13"></a></span>
+<span id="cb6-14"><a href="#cb6-14"></a>pop_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 52 × 4
    STNAME               POP      DATE_ state
@@ -708,8 +715,8 @@ $message
 <p>Always read an API’s terms of service to ensure that use of the API conforms to the API’s rules.</p>
 <p>Furthermore, it is a good idea to only run one API request at a time and to identify yourself as a user-agent in the header of the HTTP request. This is simple with <code>user_agent()</code> from <code>library(httr)</code>:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">GET</span>(url_link, </span>
-<span id="cb10-2"><a href="#cb10-2"></a>    <span class="fu">user_agent</span>(<span class="st">"Georgetown Univ. Student Data Collector (student@georgetown.edu)."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">GET</span>(url_link, </span>
+<span id="cb8-2"><a href="#cb8-2"></a>    <span class="fu">user_agent</span>(<span class="st">"Georgetown Univ. Student Data Collector (student@georgetown.edu)."</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -748,16 +755,16 @@ $message
 </code></pre>
 <p>Then, you can access and use credentials as follows:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">library</span>(dotenv)</span>
-<span id="cb13-2"><a href="#cb13-2"></a><span class="fu">library</span>(here)</span>
-<span id="cb13-3"><a href="#cb13-3"></a></span>
-<span id="cb13-4"><a href="#cb13-4"></a><span class="fu">load_dot_env</span>()</span>
-<span id="cb13-5"><a href="#cb13-5"></a>credential <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"census_api_key"</span>)</span>
-<span id="cb13-6"><a href="#cb13-6"></a></span>
-<span id="cb13-7"><a href="#cb13-7"></a>url <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(</span>
-<span id="cb13-8"><a href="#cb13-8"></a>  <span class="fu">paste0</span>(<span class="st">"https://api.census.gov/data/2014/pep/natstprc"</span>,</span>
-<span id="cb13-9"><a href="#cb13-9"></a>         <span class="st">"?get=STNAME,POP&amp;DATE_=7&amp;for=state:*&amp;key={credential}"</span>)</span>
-<span id="cb13-10"><a href="#cb13-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">library</span>(dotenv)</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="fu">library</span>(here)</span>
+<span id="cb11-3"><a href="#cb11-3"></a></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="fu">load_dot_env</span>()</span>
+<span id="cb11-5"><a href="#cb11-5"></a>credential <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"census_api_key"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6"></a></span>
+<span id="cb11-7"><a href="#cb11-7"></a>url <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(</span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="fu">paste0</span>(<span class="st">"https://api.census.gov/data/2014/pep/natstprc"</span>,</span>
+<span id="cb11-9"><a href="#cb11-9"></a>         <span class="st">"?get=STNAME,POP&amp;DATE_=7&amp;for=state:*&amp;key={credential}"</span>)</span>
+<span id="cb11-10"><a href="#cb11-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Note that you may have to restart your R session to load the file. Be sure to add this <code>.env</code> credentials file to your <code>.gitignore</code>!</p>
 </section>
@@ -804,57 +811,57 @@ $message
 <h3 data-number="11.13.1" class="anchored" data-anchor-id="write-a-custom-function"><span class="header-section-number">11.13.1</span> Write a custom function</h3>
 <p>This function 1. builds a URL and requests from the API, 2. checks for a server error, and 3. parses the response</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>get_acs <span class="ot">&lt;-</span> <span class="cf">function</span>(fips, credential) {</span>
-<span id="cb14-2"><a href="#cb14-2"></a>  </span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="co"># build a URL</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="co"># paste0() is only used because the URL was too wide for the PDF</span></span>
-<span id="cb14-5"><a href="#cb14-5"></a>  url <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(</span>
-<span id="cb14-6"><a href="#cb14-6"></a>    <span class="fu">paste0</span>(</span>
-<span id="cb14-7"><a href="#cb14-7"></a>      <span class="st">"https://api.census.gov/data/2018/acs/acs5"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8"></a>      <span class="st">"?get=B01001_002E,B01001_026E&amp;for=tract:*&amp;in=state:{fips}&amp;key={credential}"</span></span>
-<span id="cb14-9"><a href="#cb14-9"></a>    )</span>
-<span id="cb14-10"><a href="#cb14-10"></a>  )</span>
-<span id="cb14-11"><a href="#cb14-11"></a></span>
-<span id="cb14-12"><a href="#cb14-12"></a>  <span class="co"># use the URL to make a request from the API</span></span>
-<span id="cb14-13"><a href="#cb14-13"></a>  acs_json <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url =</span> url)</span>
-<span id="cb14-14"><a href="#cb14-14"></a>  </span>
-<span id="cb14-15"><a href="#cb14-15"></a>  <span class="co"># get the contents of the response as a text string</span></span>
-<span id="cb14-16"><a href="#cb14-16"></a>  acs_json <span class="ot">&lt;-</span> <span class="fu">content</span>(acs_json, <span class="at">as =</span> <span class="st">"text"</span>)</span>
-<span id="cb14-17"><a href="#cb14-17"></a>  </span>
-<span id="cb14-18"><a href="#cb14-18"></a>  <span class="co"># create a character matrix from the JSON</span></span>
-<span id="cb14-19"><a href="#cb14-19"></a>  acs_matrix <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(acs_json)</span>
-<span id="cb14-20"><a href="#cb14-20"></a>  </span>
-<span id="cb14-21"><a href="#cb14-21"></a>  <span class="co"># turn the body of the character matrix into a tibble</span></span>
-<span id="cb14-22"><a href="#cb14-22"></a>  acs_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(acs_matrix[<span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(acs_matrix), ],</span>
-<span id="cb14-23"><a href="#cb14-23"></a>                        <span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
-<span id="cb14-24"><a href="#cb14-24"></a>  </span>
-<span id="cb14-25"><a href="#cb14-25"></a>  <span class="co"># add variable names to the tibble</span></span>
-<span id="cb14-26"><a href="#cb14-26"></a>  <span class="fu">names</span>(acs_data) <span class="ot">&lt;-</span> acs_matrix[<span class="dv">1</span>, ]</span>
-<span id="cb14-27"><a href="#cb14-27"></a>  </span>
-<span id="cb14-28"><a href="#cb14-28"></a>  <span class="co"># pause to be polite</span></span>
-<span id="cb14-29"><a href="#cb14-29"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)</span>
-<span id="cb14-30"><a href="#cb14-30"></a>  </span>
-<span id="cb14-31"><a href="#cb14-31"></a>  <span class="fu">return</span>(acs_data)</span>
-<span id="cb14-32"><a href="#cb14-32"></a></span>
-<span id="cb14-33"><a href="#cb14-33"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>get_acs <span class="ot">&lt;-</span> <span class="cf">function</span>(fips, credential) {</span>
+<span id="cb12-2"><a href="#cb12-2"></a>  </span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="co"># build a URL</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a>  <span class="co"># paste0() is only used because the URL was too wide for the PDF</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  url <span class="ot">&lt;-</span> <span class="fu">str_glue</span>(</span>
+<span id="cb12-6"><a href="#cb12-6"></a>    <span class="fu">paste0</span>(</span>
+<span id="cb12-7"><a href="#cb12-7"></a>      <span class="st">"https://api.census.gov/data/2018/acs/acs5"</span>,</span>
+<span id="cb12-8"><a href="#cb12-8"></a>      <span class="st">"?get=B01001_002E,B01001_026E&amp;for=tract:*&amp;in=state:{fips}&amp;key={credential}"</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a>    )</span>
+<span id="cb12-10"><a href="#cb12-10"></a>  )</span>
+<span id="cb12-11"><a href="#cb12-11"></a></span>
+<span id="cb12-12"><a href="#cb12-12"></a>  <span class="co"># use the URL to make a request from the API</span></span>
+<span id="cb12-13"><a href="#cb12-13"></a>  acs_json <span class="ot">&lt;-</span> <span class="fu">GET</span>(<span class="at">url =</span> url)</span>
+<span id="cb12-14"><a href="#cb12-14"></a>  </span>
+<span id="cb12-15"><a href="#cb12-15"></a>  <span class="co"># get the contents of the response as a text string</span></span>
+<span id="cb12-16"><a href="#cb12-16"></a>  acs_json <span class="ot">&lt;-</span> <span class="fu">content</span>(acs_json, <span class="at">as =</span> <span class="st">"text"</span>)</span>
+<span id="cb12-17"><a href="#cb12-17"></a>  </span>
+<span id="cb12-18"><a href="#cb12-18"></a>  <span class="co"># create a character matrix from the JSON</span></span>
+<span id="cb12-19"><a href="#cb12-19"></a>  acs_matrix <span class="ot">&lt;-</span> <span class="fu">fromJSON</span>(acs_json)</span>
+<span id="cb12-20"><a href="#cb12-20"></a>  </span>
+<span id="cb12-21"><a href="#cb12-21"></a>  <span class="co"># turn the body of the character matrix into a tibble</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a>  acs_data <span class="ot">&lt;-</span> <span class="fu">as_tibble</span>(acs_matrix[<span class="dv">2</span><span class="sc">:</span><span class="fu">nrow</span>(acs_matrix), ],</span>
+<span id="cb12-23"><a href="#cb12-23"></a>                        <span class="at">.name_repair =</span> <span class="st">"minimal"</span>)</span>
+<span id="cb12-24"><a href="#cb12-24"></a>  </span>
+<span id="cb12-25"><a href="#cb12-25"></a>  <span class="co"># add variable names to the tibble</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a>  <span class="fu">names</span>(acs_data) <span class="ot">&lt;-</span> acs_matrix[<span class="dv">1</span>, ]</span>
+<span id="cb12-27"><a href="#cb12-27"></a>  </span>
+<span id="cb12-28"><a href="#cb12-28"></a>  <span class="co"># pause to be polite</span></span>
+<span id="cb12-29"><a href="#cb12-29"></a>  <span class="fu">Sys.sleep</span>(<span class="fl">0.5</span>)</span>
+<span id="cb12-30"><a href="#cb12-30"></a>  </span>
+<span id="cb12-31"><a href="#cb12-31"></a>  <span class="fu">return</span>(acs_data)</span>
+<span id="cb12-32"><a href="#cb12-32"></a></span>
+<span id="cb12-33"><a href="#cb12-33"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="create-a-vector-of-fips" class="level3" data-number="11.13.2">
 <h3 data-number="11.13.2" class="anchored" data-anchor-id="create-a-vector-of-fips"><span class="header-section-number">11.13.2</span> Create a vector of FIPs</h3>
 <p>This could be all states, districts, and territories. It’s only Alabama and Alaska for brevity.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>fips <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01"</span>, <span class="st">"02"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>fips <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"01"</span>, <span class="st">"02"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="iterate-the-functions" class="level3" data-number="11.13.3">
 <h3 data-number="11.13.3" class="anchored" data-anchor-id="iterate-the-functions"><span class="header-section-number">11.13.3</span> Iterate the functions</h3>
 <p><code>map_df()</code> iterates <code>get_acs()</code> along the vector of state FIPs and returns a <code>tibble</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="co"># load credentials</span></span>
-<span id="cb16-2"><a href="#cb16-2"></a>credential <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"census_api_key"</span>)</span>
-<span id="cb16-3"><a href="#cb16-3"></a></span>
-<span id="cb16-4"><a href="#cb16-4"></a><span class="co"># iterate the function over Alabama and Alaska</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a><span class="fu">map_df</span>(fips, <span class="at">.f =</span> get_acs, <span class="at">credential =</span> credential)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="co"># load credentials</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>credential <span class="ot">&lt;-</span> <span class="fu">Sys.getenv</span>(<span class="st">"census_api_key"</span>)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="co"># iterate the function over Alabama and Alaska</span></span>
+<span id="cb14-5"><a href="#cb14-5"></a><span class="fu">map_df</span>(fips, <span class="at">.f =</span> get_acs, <span class="at">credential =</span> credential)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,348 × 5
    B01001_002E B01001_026E state county tract 
@@ -878,33 +885,31 @@ $message
 <h2 data-number="11.14" class="anchored" data-anchor-id="r-packages"><span class="header-section-number">11.14</span> R Packages</h2>
 <p>There are R packages that simplify interacting with many popular APIs. <code>library(tidycensus)</code> (<a href="https://walker-data.com/tidycensus/">tutorial here</a>) and <code>library(censusapi)</code> (<a href="https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html">tutorial here</a>) simplifies navigating Census documentation, checking the status code, building URLs for the Census API, and parsing JSON responses. This can save a lot of time and effort! The following code is one iteration of the advanced example from above!</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">library</span>(censusapi)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: package 'censusapi' was built under R version 4.3.3</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">getCensus</span>(</span>
-<span id="cb20-2"><a href="#cb20-2"></a>  <span class="at">name =</span> <span class="st">"acs/acs5"</span>,</span>
-<span id="cb20-3"><a href="#cb20-3"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"B01001_002E"</span>, <span class="st">"B01001_026E"</span>), </span>
-<span id="cb20-4"><a href="#cb20-4"></a>  <span class="at">region =</span> <span class="st">"tract:*"</span>,</span>
-<span id="cb20-5"><a href="#cb20-5"></a>  <span class="at">regionin =</span> <span class="st">"state:01"</span>,</span>
-<span id="cb20-6"><a href="#cb20-6"></a>  <span class="at">vintage =</span> <span class="dv">2018</span>,</span>
-<span id="cb20-7"><a href="#cb20-7"></a>  <span class="at">key =</span> credential</span>
-<span id="cb20-8"><a href="#cb20-8"></a>) <span class="sc">%&gt;%</span></span>
-<span id="cb20-9"><a href="#cb20-9"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(censusapi)</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="fu">getCensus</span>(</span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="at">name =</span> <span class="st">"acs/acs5"</span>,</span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="at">vars =</span> <span class="fu">c</span>(<span class="st">"B01001_002E"</span>, <span class="st">"B01001_026E"</span>), </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="at">region =</span> <span class="st">"tract:*"</span>,</span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="at">regionin =</span> <span class="st">"state:01"</span>,</span>
+<span id="cb16-8"><a href="#cb16-8"></a>  <span class="at">vintage =</span> <span class="dv">2018</span>,</span>
+<span id="cb16-9"><a href="#cb16-9"></a>  <span class="at">key =</span> credential</span>
+<span id="cb16-10"><a href="#cb16-10"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>  <span class="fu">as_tibble</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,181 × 5
    state county tract  B01001_002E B01001_026E
    &lt;chr&gt; &lt;chr&gt;  &lt;chr&gt;        &lt;int&gt;       &lt;int&gt;
- 1 01    043    965401        1657        1594
- 2 01    043    965402        2180        2057
- 3 01    045    020000        3166        1968
- 4 01    045    020801        1530        1780
- 5 01    045    020802        1952        2405
- 6 01    047    956100        3123        3253
- 7 01    047    956201        1223        1379
- 8 01    047    956202         986        1055
- 9 01    047    956300        1668        2081
-10 01    047    956400        1322        1778
+ 1 01    097    006501        2409        2800
+ 2 01    097    006502        5961        6372
+ 3 01    097    006701        3098        2888
+ 4 01    097    006702        1837        1993
+ 5 01    097    007201        1410        1503
+ 6 01    097    007202        1538        1136
+ 7 01    097    007400        1586        1311
+ 8 01    097    007500         680         705
+ 9 01    097    007600         981         997
+10 01    097    007700         537         691
 # ℹ 1,171 more rows</code></pre>
 </div>
 </div>
@@ -1018,10 +1023,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1031,8 +1053,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1044,7 +1075,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1088,6 +1242,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1113,6 +1268,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1174,17 +1355,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./10_functions.html" class="pagination-link">
+      <a href="./10_functions.html" class="pagination-link" aria-label="Advanced R Programming">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Advanced R Programming</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./13_web-scraping.html" class="pagination-link">
+      <a href="./13_web-scraping.html" class="pagination-link" aria-label="Web Scraping">
         <span class="nav-page-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Web Scraping</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 
