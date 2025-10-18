@@ -52,11 +52,11 @@ and an estimated linear regression model
 
 $$\hat{y_i} = \hat\beta_0 + \hat\beta_1x_{i1} + \cdot\cdot\cdot + \hat\beta_px_{ip}$$ {#eq-regression}
 
-We can use @eq_regression for all three motivations. 
+We can use @eq-regression for all three motivations. 
 
-- @eq_regression is a model of the conditional mean of $y$, which is a statistical summary.
-- @eq_regression allows us to make inference about $\beta_j$ using $\hat\beta_j$.
-- @eq_regression allows us to make predictions, $\hat{y_i}$, given $\vec{x_i}$.
+- @eq-regression is a model of the conditional mean of $y$, which is a statistical summary.
+- @eq-regression allows us to make inference about $\beta_j$ using $\hat\beta_j$.
+- @eq-regression allows us to make predictions, $\hat{y_i}$, given $\vec{x_i}$.
 
 :::{.callout-note}
 The same statistical model can summarize, be used for inference, and make valid and accurate predictions. However, the optimal model for one motivation is rarely best for all three motivations. **Thus, it is important to clearly articulate the motivation for a statistical model before picking which tools and diagnostics to use.**
