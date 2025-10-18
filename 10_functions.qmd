@@ -11,7 +11,7 @@ editor_options:
 
 ![](images/header-images/Lego_Color_Bricks.jpg)
 
-~ Photo by [Alan Chia](https://en.wikipedia.org/wiki/Lego#/media/File:Lego_Color_Bricks.jpg)
+Photo by [Alan Chia](https://en.wikipedia.org/wiki/Lego#/media/File:Lego_Color_Bricks.jpg)
 
 ```{r}
 #| echo: false

@@ -12,6 +12,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+![](images/header-images/Chicago_Elevated_Train.jpg)
+
+Image by [Marcel "lazytom" Marchon](https://en.wikipedia.org/wiki/Chicago_%22L%22#/media/File:Chicago_Elevated_Train.jpg)
+
 ```{r}
 #| echo: false
 

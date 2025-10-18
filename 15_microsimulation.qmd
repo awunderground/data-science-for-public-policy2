@@ -10,6 +10,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+![Microsimulation can model complex systems by modeling the actions of many individual actors](images/header-images/ApisDorsataHive.jpg)
+
+Image by [Bksimonb](https://en.wikipedia.org/wiki/Honey_bee#/media/File:ApisDorsataHive.jpg)
+
 ```{r}
 #| echo: false
 

@@ -1,7 +1,6 @@
 ---
 title: "Classification"
 abstract: "This chapter introduces the second fundamental type of supervised machine learning, classification."
-
 format: 
   html:
     toc: true
@@ -13,6 +12,7 @@ execute:
   warning: false
 ---
 
+![Radar motivated diagnostics that are used for classification models](images/header-images/Early_radar_antenna_-_US_Naval_Research_Laboratory_Anacostia.jpg)
 
 ```{r}
 #| echo: FALSE

@@ -14,7 +14,7 @@ bibliography: references.bib
 
 ![](images/header-images/Temee.jpg)
 
-~ Image by [Yaan](https://en.wikipedia.org/wiki/Bactrian_camel#/media/File:Temee.jpg)
+Image by [Yaan](https://en.wikipedia.org/wiki/Bactrian_camel#/media/File:Temee.jpg)
 
 ```{r}
 #| echo: false

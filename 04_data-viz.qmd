@@ -85,6 +85,8 @@ ggplot(data = storms) +
 #| label: 1-data
 #| echo: false
 
+set.seed(2)
+
 storms |>
   select(name, year, category, lat, long, wind, pressure) |>
   sample_n(10) |>
@@ -109,6 +111,7 @@ storms |>
 #| echo: false
 #| warning: false
 
+set.seed(3)
 recent_storms <- filter(storms, year > 2005) |>
   sample_n(50)
 
@@ -247,6 +250,7 @@ storms |>
 
 recent_storms <- filter(storms, year > 2005)
 
+set.seed(1)
 recent_storms50 <- filter(storms, year > 2005) |>
   sample_n(50)
 
