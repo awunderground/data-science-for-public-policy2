@@ -10,7 +10,9 @@ editor_options:
 bibliography: references.bib
 ---
 
-![]()
+![](images/header-images/SteacieLibrary6.jpg)
+
+Image by [Raysonho](https://en.wikipedia.org/wiki/Bookcase#/media/File:SteacieLibrary6.jpg)
 
 ```{r}
 #| echo: false

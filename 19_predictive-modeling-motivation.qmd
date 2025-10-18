@@ -10,6 +10,10 @@ editor_options:
   chunk_output_type: console
 ---
 
+![](images/header-images/LeadPaint1.jpg)
+
+Image by [Thester11](https://en.wikipedia.org/wiki/Lead_paint#/media/File:LeadPaint1.JPG)
+
 ```{r}
 #| echo: false
 

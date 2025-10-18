@@ -14,6 +14,11 @@ editor_options:
 fig-cap-location: top
 ---
 
+![Nonparametric statistical techniques can be used to evaluate programs like forced savings programs.](images/header-images/WinonaSavingsBankVault.jpg)
+
+Image by [Jonathunder](https://en.wikipedia.org/wiki/Bank_vault#/media/File:WinonaSavingsBankVault.JPG)
+
+
 ```{r}
 #| echo: false
 

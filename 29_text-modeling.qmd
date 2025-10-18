@@ -12,6 +12,10 @@ editor_options:
 bibliography: references.bib
 ---
 
+![](images/header-images/Rainbow_Bookshelf.jpg)
+
+Image by [Craig Conley](https://en.wikipedia.org/wiki/Bookcase#/media/File:Rainbow_Bookshelf.jpg)
+
 ```{r}
 #| labels: quarto-setup
 #| echo: false
@@ -41,6 +45,8 @@ A data frame with a column where each cell is the entire text for a document. Th
 #### Example 01
 
 ```{r}
+#| message: false
+
 library(tidyverse)
 library(tidytext)
 
@@ -269,6 +275,8 @@ First, every word in the corpus is randomly assigned a topic. Then, the model is
 Let's consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on [Chapter 6 in Text Mining With R](https://www.tidytextmining.com/topicmodeling.html).
 
 ```{r}
+#| message: false
+
 library(tidyverse)
 library(tidytext)
 library(SnowballC)
@@ -494,6 +502,8 @@ fed_papers
 Let's `prep()` and `bake()` a recipe. We want to use recipes because most of these `step_*()` functions are data dependent and need to be repeated during resampling. 
 
 ```{r}
+#| message: false
+
 library(textrecipes)
 
 recipe( ~ text, data = fed_papers) |>
@@ -522,6 +532,8 @@ Let's finish with an example using the executive orders data set. The data conta
 First, we need to load and pre-process the data.
 
 ```{r}
+#| message: false
+
 eos <- read_csv(here::here("data", "executive-orders.csv"))
 
 # remove empty rows
@@ -562,6 +574,8 @@ eos_modeling <- eos |>
 We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection. 
 
 ```{r}
+#| message: false
+
 library(tidymodels)
 library(textrecipes)
 library(vip)

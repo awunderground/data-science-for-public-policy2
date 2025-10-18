@@ -9,7 +9,7 @@ format:
 
 ![](images/header-images/Open_Make_Up_For_Ever_2013_-_Combination_-_Czech_Republic_-_20.jpg)
 
-~ Image by [Pierre-Yves Beaudouin](https://en.wikipedia.org/wiki/Synchronized_swimming#/media/File:Open_Make_Up_For_Ever_2013_-_Combination_-_Czech_Republic_-_20.jpg)
+Image by [Pierre-Yves Beaudouin](https://en.wikipedia.org/wiki/Synchronized_swimming#/media/File:Open_Make_Up_For_Ever_2013_-_Combination_-_Czech_Republic_-_20.jpg)
 
 
 ```{r}

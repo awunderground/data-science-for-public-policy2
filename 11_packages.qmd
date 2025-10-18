@@ -11,7 +11,7 @@ editor_options:
 
 ![](images/header-images/ZIM_New_York_(ship,_2002)_002.jpg)
 
-~ Image by [Patrick Denker](https://en.wikipedia.org/wiki/Intermodal_container#/media/File:ZIM_New_York_(ship,_2002)_002.jpg)
+Image by [Patrick Denker](https://en.wikipedia.org/wiki/Intermodal_container#/media/File:ZIM_New_York_(ship,_2002)_002.jpg)
 
 ## Packages
 
