@@ -1233,30 +1233,30 @@ date (1): signing_date
 </div>
 <p><code>str_c()</code> and <code>str_glue()</code> are useful for <strong>joining</strong> strings. Consider an example where we want to “fill in the blank” with a variable in a data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">mutate</span>(<span class="at">sentence =</span> <span class="fu">str_glue</span>(<span class="st">"my favorite fruit is {fruit}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-  fruit     sentence                      
-  &lt;chr&gt;     &lt;glue&gt;                        
-1 apple     my favorite fruit is apple    
-2 banana    my favorite fruit is banana   
-3 cantelope my favorite fruit is cantelope</code></pre>
+  fruit      sentence                       
+  &lt;chr&gt;      &lt;glue&gt;                         
+1 apple      my favorite fruit is apple     
+2 banana     my favorite fruit is banana    
+3 cantaloupe my favorite fruit is cantaloupe</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantelope"</span>)) <span class="sc">|&gt;</span></span>
+<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">mutate</span>(</span>
 <span id="cb74-3"><a href="#cb74-3"></a>    <span class="at">another_sentence =</span> </span>
 <span id="cb74-4"><a href="#cb74-4"></a>      <span class="fu">str_c</span>(<span class="st">"Who doesn't like a good "</span>, fruit, <span class="st">"."</span>)</span>
 <span id="cb74-5"><a href="#cb74-5"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
-  fruit     another_sentence                  
-  &lt;chr&gt;     &lt;chr&gt;                             
-1 apple     Who doesn't like a good apple.    
-2 banana    Who doesn't like a good banana.   
-3 cantelope Who doesn't like a good cantelope.</code></pre>
+  fruit      another_sentence                   
+  &lt;chr&gt;      &lt;chr&gt;                              
+1 apple      Who doesn't like a good apple.     
+2 banana     Who doesn't like a good banana.    
+3 cantaloupe Who doesn't like a good cantaloupe.</code></pre>
 </div>
 </div>
 <p>This workflow is useful for building up URLs when accessing APIs, scraping information from the Internet, and downloading many files.</p>

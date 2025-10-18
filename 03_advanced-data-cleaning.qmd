@@ -619,13 +619,13 @@ tibble(course = c("PPOL 670", "GOVT 8009", "PPOL 6819")) |>
 `str_c()` and `str_glue()` are useful for **joining** strings. Consider an example where we want to "fill in the blank" with a variable in a data frame.
 
 ```{r}
-tibble(fruit = c("apple", "banana", "cantelope")) |>
+tibble(fruit = c("apple", "banana", "cantaloupe")) |>
   mutate(sentence = str_glue("my favorite fruit is {fruit}"))
 
 ```
 
 ```{r}
-tibble(fruit = c("apple", "banana", "cantelope")) |>
+tibble(fruit = c("apple", "banana", "cantaloupe")) |>
   mutate(
     another_sentence = 
       str_c("Who doesn't like a good ", fruit, ".")
