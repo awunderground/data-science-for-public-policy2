@@ -31,8 +31,6 @@ exercise_number <- 1
 
 ## Review {#sec-review2}
 
-*R for Data Science (2e)* [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Recall from the previous lecture techniques for importing data like `read_csv()` and for transforming data like `mutate()`.
-
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
@@ -46,12 +44,16 @@ exercise_number <- exercise_number + 1
 
 :::
 
-In the last lecture, we introduced mutating joins and filtering joins. 
+### Joins
+
+Mutating and filtering joins are essential for combining multiple tables during data analysis.
 
 ::: {.callout-tip}
 ## Mutating Joins
 
 Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame. 
+
+For example, we may have a data frame with student identifiers and math grades, and a data frame with student identifiers and science grades. We can use a mutating join to create a data frame with math and science grades.
 :::
 
 ::: {.callout-tip}
@@ -63,16 +65,22 @@ For example, we may have a list of students in detention and a list of all stude
 
 :::
 
-Let their be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions: 
+Let there be two data frames `x` and `y` and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions: 
 
 * `left_join(x, y)` appends variables from `y` on to `x` but only keeps observations from `x`. 
-* `inner_join(x, y)` appends variables from `y` onto `x` but only keeps observations for which there is a match between the `x` and `y`data frames.
+* `inner_join(x, y)` appends variables from `y` onto `x` but only keeps observations for which there is a match between the `x` and `y` data frames.
 * `full_join(x, y)` appends variables from `y` on to `x` and keeps all observations from `x` and `y`. 
 * `anti_join(x, y)` returns all observations from `x` without a match in `y`. `anti_join()` is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins. 
 
 To learn more, read the [joins chapter](https://r4ds.hadley.nz/joins.html) of R for Data Science (2e). 
 
+## Introduction
+
+*R for Data Science (2e)* [displays](https://r4ds.hadley.nz/intro.html#fig-ds-diagram) the first steps of the data science process as "Import", "Tidy", and "Transform". Recall from the previous lecture techniques for importing data like `read_csv()` and for transforming data like `mutate()`.
+
 ## Import {#sec-import}
+
+Import is the process of loading data into R from files (e.g., .csv or .xlsx), databases, web application programming interfaces ([Chapter @sec-api-intro]), or web pages with web scraping ([Chapter @sec-web-scraping-intro]). 
 
 ### `library(here)`
 
@@ -137,9 +145,9 @@ readxl_example("clippy.xlsx") |>
 
 ```
 
-As is common with many Excel workbooks, the second sheet contains a second row of column names with parenthetical comments about each column.[^02_advanced-data-cleaning-1]
+As is common with many Excel workbooks, the second sheet contains a second row of column names with parenthetical comments about each column.[^1]
 
-[^02_advanced-data-cleaning-1]: The instinct to include these comments is good. The execution is poor because it creates big headaches for people using programming languages. We suggest using a data dictionary instead.
+[^1]: The instinct to include these comments is good. The execution is poor because it creates big headaches for people using programming languages. We suggest using a data dictionary instead.
 
 ```{r}
 readxl_example("clippy.xlsx") |>  
@@ -212,7 +220,7 @@ data <- bind_cols(states, data)
 
 ## Tidy {#sec-tidy}
 
-The defining opinion of the tidyverse is its wholehearted adoption of tidy data. [Tidy data has three features](https://r4ds.hadley.nz/data-tidy#fig-tidy-structure):
+Tidying is the process of reorganizing your data to be in a tidy format. The defining opinion of the tidyverse is its wholehearted adoption of tidy data. [Tidy data has three features](https://r4ds.hadley.nz/data-tidy#fig-tidy-structure):
 
 1. Each variable forms a column.
 2. Each observation forms a row.
@@ -222,7 +230,9 @@ The defining opinion of the tidyverse is its wholehearted adoption of tidy data.
 
 `library(tidyr)` is the main package for tidying untidy data. We'll practice some skills using examples from three workbooks from the [IRS SOI](https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state).
 
-`pivot_longer()` is commonly used for tidying data and for making data longer for `library(ggplot2)`. `pivot_longer()` reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. `pivot_longer()` has three essential arguments:
+### Pivoting
+
+`pivot_longer()` reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. `pivot_longer()` is commonly used for tidying data and for making data longer for `library(ggplot2)`. `pivot_longer()` has three essential arguments:
 
 1. `cols` is a vector of columns to pivot (or not pivot).
 2. `names_to` is a string for the name of the column where the old column names will go (i.e. "series" in the figure).
@@ -236,6 +246,10 @@ knitr::include_graphics(here("images", "pivoting.png"))
 ```
 
 `pivot_wider()` is the inverse of `pivot_longer()`. 
+
+### Tidying Data
+
+Let's walk through a series of examples that show the process of tidying untidy data.
 
 #### Tidying Example 1
 
@@ -560,6 +574,8 @@ To see more examples, read the [tidy data section in *R for Data Science (2e)*](
 
 ## Transform {#sec-transform}
 
+Transforming data includes filtering to observations of interest, creating new variables for analysis, and summarizing data. There are many ways to transform data. We will focus on a few common transformations. 
+
 ### Strings {#sec-strings}
 
 Check out the [stringr cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf). 
@@ -568,9 +584,14 @@ Check out the [stringr cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-s
 
 #### Detecting Matches
 
-`str_detect()` is useful for **detecting matches** in strings, which can be useful with `filter()`. Consider the executive orders data set and suppose we want to return executive orders that contain the word `"Virginia"`. 
+`str_detect()` is useful for **detecting matches** in strings, which can be useful with `filter()`. 
+
+Consider the executive orders data set and suppose we want to return executive orders that contain the word `"Virginia"`. 
 
 ```{r}
+#| echo: false
+#| message: false
+
 eos <- read_csv(here("data", "executive-orders.csv")) |>
   filter(!is.na(text)) |>
   group_by(executive_order_number) |>
@@ -579,6 +600,9 @@ eos <- read_csv(here("data", "executive-orders.csv")) |>
 
 eos
 
+```
+
+```{r}
 eos |>
   filter(str_detect(string = text, pattern = "Virginia"))
 
@@ -586,7 +610,9 @@ eos |>
 
 #### Subsetting Strings
 
-`str_sub()` can **subset strings** based on positions within the string. Consider an example where we want to extract state FIPS codes from county FIPS codes. 
+`str_sub()` can **subset strings** based on positions within the string. 
+
+Consider an example where we want to extract state FIPS codes from county FIPS codes. 
 
 ```{r}
 tibble(fips = c("01001", "02013", "04001")) |>
@@ -596,7 +622,9 @@ tibble(fips = c("01001", "02013", "04001")) |>
 
 #### Managing Lengths
 
-`str_pad()` is useful for **managing lengths**. Consider the common situation when zeros are dropped from the beginning of FIPS codes.
+`str_pad()` is useful for **managing lengths**. 
+
+Consider the common situation when zeros are dropped from the beginning of FIPS codes.
 
 ```{r}
 tibble(fips = c(1, 2, 4)) |>
@@ -606,9 +634,11 @@ tibble(fips = c(1, 2, 4)) |>
 
 #### Modifying Strings
 
-`str_replace()`, `str_replace_all()`, `str_remove()`, and `str_remove_all()` can delete or **modify** parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits.[^regex]
+`str_replace()`, `str_replace_all()`, `str_remove()`, and `str_remove_all()` can delete or **modify** parts of strings. 
 
-[^regex]: This example uses regular expressions (regex). Visit [R4DS (2e)](https://r4ds.hadley.nz/regexps) for a review of regex.
+Consider an example where we have course names and we want to delete everything except numeric digits.[^2]
+
+[^2]: This example uses regular expressions (regex). Visit [R4DS (2e)](https://r4ds.hadley.nz/regexps) for a review of regex.
 
 ```{r}
 tibble(course = c("PPOL 670", "GOVT 8009", "PPOL 6819")) |>
@@ -616,7 +646,9 @@ tibble(course = c("PPOL 670", "GOVT 8009", "PPOL 6819")) |>
 
 ```
 
-`str_c()` and `str_glue()` are useful for **joining** strings. Consider an example where we want to "fill in the blank" with a variable in a data frame.
+`str_c()` and `str_glue()` are useful for **joining** strings. 
+
+Consider an example where we want to "fill in the blank" with a variable in a data frame.
 
 ```{r}
 tibble(fruit = c("apple", "banana", "cantaloupe")) |>
@@ -651,8 +683,6 @@ exercise_number <- exercise_number + 1
 :::
 
 ### Factors {#sec-factors}
-
-Check out the [forcats cheat sheet](https://forcats.tidyverse.org/).
 
 Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains [augmented vectors](https://r4ds.had.co.nz/vectors.html#augmented-vectors) like factors. 
 
@@ -839,6 +869,8 @@ storms |>
 
 ```
 
+The [forcats cheat sheet](https://forcats.tidyverse.org/) is a useful resource for working with factors.
+
 ### Dates and Date-Times {#sec-dates}
 
 Check out the [lubridate cheat sheet](https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf). 
@@ -919,7 +951,7 @@ dates <- tribble(
 
 #### Extracting Components
 
-`library(lubridate)` contains functions for extracting components from dates like the year, month, day, and weekday. Conisder the follow data set about [full moons](https://www.timeanddate.com/moon/phases/usa/washington-dc) in Washington, DC in 2023. 
+`library(lubridate)` contains functions for extracting components from dates like the year, month, day, and weekday. Consider the following data set about [full moons](https://www.timeanddate.com/moon/phases/usa/washington-dc) in Washington, DC in 2023. 
 
 ```{r}
 full_moons <- tribble(
@@ -1086,4 +1118,4 @@ Key takeaways from this chapter are:
 1. `here` is a helpful package for reading data, and it is especially helpful when using `.Rproj`s. 
 2. `readxl` is great for reading excel files into R.
 3. `pivot_wider()` and `pivot_longer()` are functions from the `tidyr` package that are useful for reshaping data into a “tidy” format.
-4. The tidyverse also contains useful package for handing strings (`stringr`) factors (`forecats`), and dates (`lubridate`). 
+4. The tidyverse also contains useful packages for handling strings (`stringr`), factors (`forcats`), and dates (`lubridate`). 

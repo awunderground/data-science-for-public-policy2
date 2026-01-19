@@ -22,7 +22,7 @@ exercise_number <- 1
 ```
 
 
-## API Background
+## API Background {#sec-api-intro}
 
 ::: {.callout-tip title="Application Programming Interface (API)"}
 An *Application Programming Interface (API)* is a set of functions for programmatically accessing and/or processing data. Packages like `library(dplyr)` and `library(ggplot2)` have APIs that were carefully designed to be approachable. The [dplyr](https://dplyr.tidyverse.org/) website says, "dplyr is a part of the tidyverse, an ecosystem of packages designed with common APIs and a shared philosophy."

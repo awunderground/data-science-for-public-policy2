@@ -50,7 +50,7 @@ map(.x = x, .f = times2)
 
 ```
 
-## Introduction and Motivation
+## Introduction and Motivation {#sec-web-scraping-intro}
 
 The Internet is an immense source of information for research. Sometimes we can easily download data of interest in an ideal format with the click of a download button or a single API call.
 
