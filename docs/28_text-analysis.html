@@ -1103,33 +1103,30 @@ Tidy text
 <span id="cb22-14"><a href="#cb22-14"></a><span class="co"># download corpus</span></span>
 <span id="cb22-15"><a href="#cb22-15"></a>shakespeare <span class="ot">&lt;-</span> <span class="fu">gutenberg_download</span>(</span>
 <span id="cb22-16"><a href="#cb22-16"></a>  <span class="at">gutenberg_id =</span> ids,</span>
-<span id="cb22-17"><a href="#cb22-17"></a>  <span class="at">meta_fields =</span> <span class="st">"title"</span></span>
-<span id="cb22-18"><a href="#cb22-18"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Determining mirror for Project Gutenberg from
-https://www.gutenberg.org/robot/harvest.
-Using mirror http://aleph.gutenberg.org.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># create tokens and drop character cues</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>shakespeare_clean <span class="ot">&lt;-</span> shakespeare <span class="sc">|&gt;</span></span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">unnest_tokens</span>(word, text, <span class="at">to_lower =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="fu">filter</span>(word <span class="sc">!=</span> <span class="fu">str_to_upper</span>(word)) </span>
-<span id="cb24-5"><a href="#cb24-5"></a></span>
-<span id="cb24-6"><a href="#cb24-6"></a><span class="co"># calculate TF-IDF</span></span>
-<span id="cb24-7"><a href="#cb24-7"></a>shakespeare_tf_idf <span class="ot">&lt;-</span> shakespeare_clean <span class="sc">|&gt;</span></span>
-<span id="cb24-8"><a href="#cb24-8"></a>  <span class="fu">count</span>(title, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> title, <span class="at">n =</span> n)</span>
-<span id="cb24-10"><a href="#cb24-10"></a></span>
-<span id="cb24-11"><a href="#cb24-11"></a><span class="co"># plot</span></span>
-<span id="cb24-12"><a href="#cb24-12"></a>shakespeare_tf_idf <span class="sc">|&gt;</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a>  <span class="fu">top_n</span>(<span class="dv">8</span>, tf_idf) <span class="sc">|&gt;</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
-<span id="cb24-16"><a href="#cb24-16"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> title)) <span class="sc">+</span></span>
-<span id="cb24-17"><a href="#cb24-17"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb24-18"><a href="#cb24-18"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>title, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb24-19"><a href="#cb24-19"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb24-20"><a href="#cb24-20"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-17"><a href="#cb22-17"></a>  <span class="at">mirror =</span> <span class="st">"https://www.gutenberg.org/"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18"></a>  <span class="at">meta_fields =</span> <span class="st">"title"</span></span>
+<span id="cb22-19"><a href="#cb22-19"></a>)</span>
+<span id="cb22-20"><a href="#cb22-20"></a></span>
+<span id="cb22-21"><a href="#cb22-21"></a><span class="co"># create tokens and drop character cues</span></span>
+<span id="cb22-22"><a href="#cb22-22"></a>shakespeare_clean <span class="ot">&lt;-</span> shakespeare <span class="sc">|&gt;</span></span>
+<span id="cb22-23"><a href="#cb22-23"></a>  <span class="fu">unnest_tokens</span>(word, text, <span class="at">to_lower =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-24"><a href="#cb22-24"></a>  <span class="fu">filter</span>(word <span class="sc">!=</span> <span class="fu">str_to_upper</span>(word)) </span>
+<span id="cb22-25"><a href="#cb22-25"></a></span>
+<span id="cb22-26"><a href="#cb22-26"></a><span class="co"># calculate TF-IDF</span></span>
+<span id="cb22-27"><a href="#cb22-27"></a>shakespeare_tf_idf <span class="ot">&lt;-</span> shakespeare_clean <span class="sc">|&gt;</span></span>
+<span id="cb22-28"><a href="#cb22-28"></a>  <span class="fu">count</span>(title, word, <span class="at">sort =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb22-29"><a href="#cb22-29"></a>  <span class="fu">bind_tf_idf</span>(<span class="at">term =</span> word, <span class="at">document =</span> title, <span class="at">n =</span> n)</span>
+<span id="cb22-30"><a href="#cb22-30"></a></span>
+<span id="cb22-31"><a href="#cb22-31"></a><span class="co"># plot</span></span>
+<span id="cb22-32"><a href="#cb22-32"></a>shakespeare_tf_idf <span class="sc">|&gt;</span></span>
+<span id="cb22-33"><a href="#cb22-33"></a>  <span class="fu">group_by</span>(title) <span class="sc">|&gt;</span></span>
+<span id="cb22-34"><a href="#cb22-34"></a>  <span class="fu">top_n</span>(<span class="dv">8</span>, tf_idf) <span class="sc">|&gt;</span></span>
+<span id="cb22-35"><a href="#cb22-35"></a>  <span class="fu">mutate</span>(<span class="at">word =</span> <span class="fu">reorder</span>(word, tf_idf)) <span class="sc">|&gt;</span></span>
+<span id="cb22-36"><a href="#cb22-36"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(tf_idf, word, <span class="at">fill =</span> title)) <span class="sc">+</span></span>
+<span id="cb22-37"><a href="#cb22-37"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb22-38"><a href="#cb22-38"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>title, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb22-39"><a href="#cb22-39"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb22-40"><a href="#cb22-40"></a>  <span class="fu">guides</span>(<span class="at">fill =</span> <span class="st">"none"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

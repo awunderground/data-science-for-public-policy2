@@ -390,21 +390,29 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#sec-review2" id="toc-sec-review2" class="nav-link active" data-scroll-target="#sec-review2"><span class="header-section-number">3.1</span> Review</a></li>
-  <li><a href="#sec-import" id="toc-sec-import" class="nav-link" data-scroll-target="#sec-import"><span class="header-section-number">3.2</span> Import</a>
+  <li><a href="#sec-review2" id="toc-sec-review2" class="nav-link active" data-scroll-target="#sec-review2"><span class="header-section-number">3.1</span> Review</a>
   <ul class="collapse">
-  <li><a href="#libraryhere" id="toc-libraryhere" class="nav-link" data-scroll-target="#libraryhere"><span class="header-section-number">3.2.1</span> <code>library(here)</code></a></li>
-  <li><a href="#sec-readxl" id="toc-sec-readxl" class="nav-link" data-scroll-target="#sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></a></li>
+  <li><a href="#joins" id="toc-joins" class="nav-link" data-scroll-target="#joins"><span class="header-section-number">3.1.1</span> Joins</a></li>
   </ul></li>
-  <li><a href="#sec-tidy" id="toc-sec-tidy" class="nav-link" data-scroll-target="#sec-tidy"><span class="header-section-number">3.3</span> Tidy</a></li>
-  <li><a href="#sec-transform" id="toc-sec-transform" class="nav-link" data-scroll-target="#sec-transform"><span class="header-section-number">3.4</span> Transform</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link" data-scroll-target="#introduction"><span class="header-section-number">3.2</span> Introduction</a></li>
+  <li><a href="#sec-import" id="toc-sec-import" class="nav-link" data-scroll-target="#sec-import"><span class="header-section-number">3.3</span> Import</a>
   <ul class="collapse">
-  <li><a href="#sec-strings" id="toc-sec-strings" class="nav-link" data-scroll-target="#sec-strings"><span class="header-section-number">3.4.1</span> Strings</a></li>
-  <li><a href="#sec-factors" id="toc-sec-factors" class="nav-link" data-scroll-target="#sec-factors"><span class="header-section-number">3.4.2</span> Factors</a></li>
-  <li><a href="#sec-dates" id="toc-sec-dates" class="nav-link" data-scroll-target="#sec-dates"><span class="header-section-number">3.4.3</span> Dates and Date-Times</a></li>
-  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.4.4</span> Missing Data</a></li>
+  <li><a href="#libraryhere" id="toc-libraryhere" class="nav-link" data-scroll-target="#libraryhere"><span class="header-section-number">3.3.1</span> <code>library(here)</code></a></li>
+  <li><a href="#sec-readxl" id="toc-sec-readxl" class="nav-link" data-scroll-target="#sec-readxl"><span class="header-section-number">3.3.2</span> <code>library(readxl)</code></a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.5</span> Conclusion</a></li>
+  <li><a href="#sec-tidy" id="toc-sec-tidy" class="nav-link" data-scroll-target="#sec-tidy"><span class="header-section-number">3.4</span> Tidy</a>
+  <ul class="collapse">
+  <li><a href="#pivoting" id="toc-pivoting" class="nav-link" data-scroll-target="#pivoting"><span class="header-section-number">3.4.1</span> Pivoting</a></li>
+  <li><a href="#tidying-data" id="toc-tidying-data" class="nav-link" data-scroll-target="#tidying-data"><span class="header-section-number">3.4.2</span> Tidying Data</a></li>
+  </ul></li>
+  <li><a href="#sec-transform" id="toc-sec-transform" class="nav-link" data-scroll-target="#sec-transform"><span class="header-section-number">3.5</span> Transform</a>
+  <ul class="collapse">
+  <li><a href="#sec-strings" id="toc-sec-strings" class="nav-link" data-scroll-target="#sec-strings"><span class="header-section-number">3.5.1</span> Strings</a></li>
+  <li><a href="#sec-factors" id="toc-sec-factors" class="nav-link" data-scroll-target="#sec-factors"><span class="header-section-number">3.5.2</span> Factors</a></li>
+  <li><a href="#sec-dates" id="toc-sec-dates" class="nav-link" data-scroll-target="#sec-dates"><span class="header-section-number">3.5.3</span> Dates and Date-Times</a></li>
+  <li><a href="#missing-data" id="toc-missing-data" class="nav-link" data-scroll-target="#missing-data"><span class="header-section-number">3.5.4</span> Missing Data</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="header-section-number">3.6</span> Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -444,7 +452,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <section id="sec-review2" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="sec-review2"><span class="header-section-number">3.1</span> Review</h2>
-<p><em>R for Data Science (2e)</em> <a href="https://r4ds.hadley.nz/intro.html#fig-ds-diagram">displays</a> the first steps of the data science process as “Import”, “Tidy”, and “Transform”. Recall from the previous lecture techniques for importing data like <code>read_csv()</code> and for transforming data like <code>mutate()</code>.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -460,7 +467,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ol>
 </div>
 </div>
-<p>In the last lecture, we introduced mutating joins and filtering joins.</p>
+<section id="joins" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="joins"><span class="header-section-number">3.1.1</span> Joins</h3>
+<p>Mutating and filtering joins are essential for combining multiple tables during data analysis.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -472,6 +481,7 @@ Mutating Joins
 </div>
 <div class="callout-body-container callout-body">
 <p>Mutating joins add new variables to a data frame by matching observations from one data frame to observations in another data frame.</p>
+<p>For example, we may have a data frame with student identifiers and math grades, and a data frame with student identifiers and science grades. We can use a mutating join to create a data frame with math and science grades.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -488,19 +498,25 @@ Filtering Joins
 <p>For example, we may have a list of students in detention and a list of all students. We can use a filtering join to create a list of student not in detention.</p>
 </div>
 </div>
-<p>Let their be two data frames <code>x</code> and <code>y</code> and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions:</p>
+<p>Let there be two data frames <code>x</code> and <code>y</code> and let both data frames have a key variable that uniquely identifies rows. In practice, in R, we often use the following functions:</p>
 <ul>
 <li><code>left_join(x, y)</code> appends variables from <code>y</code> on to <code>x</code> but only keeps observations from <code>x</code>.</li>
-<li><code>inner_join(x, y)</code> appends variables from <code>y</code> onto <code>x</code> but only keeps observations for which there is a match between the <code>x</code> and <code>y</code>data frames.</li>
+<li><code>inner_join(x, y)</code> appends variables from <code>y</code> onto <code>x</code> but only keeps observations for which there is a match between the <code>x</code> and <code>y</code> data frames.</li>
 <li><code>full_join(x, y)</code> appends variables from <code>y</code> on to <code>x</code> and keeps all observations from <code>x</code> and <code>y</code>.</li>
 <li><code>anti_join(x, y)</code> returns all observations from <code>x</code> without a match in <code>y</code>. <code>anti_join()</code> is traditionally only used for filtering joins, but it is useful for writing tests for mutating joins.</li>
 </ul>
 <p>To learn more, read the <a href="https://r4ds.hadley.nz/joins.html">joins chapter</a> of R for Data Science (2e).</p>
 </section>
-<section id="sec-import" class="level2" data-number="3.2">
-<h2 data-number="3.2" class="anchored" data-anchor-id="sec-import"><span class="header-section-number">3.2</span> Import</h2>
-<section id="libraryhere" class="level3" data-number="3.2.1">
-<h3 data-number="3.2.1" class="anchored" data-anchor-id="libraryhere"><span class="header-section-number">3.2.1</span> <code>library(here)</code></h3>
+</section>
+<section id="introduction" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">3.2</span> Introduction</h2>
+<p><em>R for Data Science (2e)</em> <a href="https://r4ds.hadley.nz/intro.html#fig-ds-diagram">displays</a> the first steps of the data science process as “Import”, “Tidy”, and “Transform”. Recall from the previous lecture techniques for importing data like <code>read_csv()</code> and for transforming data like <code>mutate()</code>.</p>
+</section>
+<section id="sec-import" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-import"><span class="header-section-number">3.3</span> Import</h2>
+<p>Import is the process of loading data into R from files (e.g., .csv or .xlsx), databases, web application programming interfaces (<a href="12_apis.html#sec-api-intro" class="quarto-xref">Chapter&nbsp;<span>11.1</span></a>), or web pages with web scraping (<a href="13_web-scraping.html#sec-web-scraping-intro" class="quarto-xref">Chapter&nbsp;<span>12.2</span></a>).</p>
+<section id="libraryhere" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="libraryhere"><span class="header-section-number">3.3.1</span> <code>library(here)</code></h3>
 <p>Developing Quarto documents in subdirectories is a pain. When interactively running code in the console, file paths are read as if the <code>.qmd</code> file is in the same folder as the <code>.Rproj</code>. When clicking render, paths are treated as if they are in the subdirectory where the <code>.qmd</code> file is.</p>
 <p><a href="https://here.r-lib.org/"><code>library(here)</code></a> resolves headaches around file referencing in <a href="https://www.tidyverse.org/blog/2017/12/workflow-vs-script/">project-oriented workflows</a>.</p>
 <p>Loading <code>library(here)</code> will print your working directory.</p>
@@ -520,8 +536,8 @@ Filtering Joins
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"raw"</span>, <span class="st">"important-data.csv"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="sec-readxl" class="level3" data-number="3.2.2">
-<h3 data-number="3.2.2" class="anchored" data-anchor-id="sec-readxl"><span class="header-section-number">3.2.2</span> <code>library(readxl)</code></h3>
+<section id="sec-readxl" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="sec-readxl"><span class="header-section-number">3.3.2</span> <code>library(readxl)</code></h3>
 <p>We will focus on reading data from Excel workbooks. Excel is a bad tool with bad design that has led to many analytical errors. Unfortunately, it’s a dominant tool for storing data and often enters the data science workflow.</p>
 <p><code>library(readxl)</code> is the premier package for reading data from <code>.xls</code> and <code>.xlsx</code> files. <code>read_excel()</code>, which works like <code>read_csv()</code>, loads data from <code>.xls</code> and <code>.xlsx</code> files. Consider data from the Urban Institute’s <a href="https://apps.urban.org/features/debt-interactive-map/?type=overall&amp;variable=totcoll">Debt in America</a> feature accessed through the <a href="https://datacatalog.urban.org/dataset/debt-america-2022">Urban Institute Data Catalog</a>.</p>
 <div class="cell">
@@ -621,9 +637,9 @@ Filtering Joins
 <p><a href="https://cran.r-project.org/web/packages/tidyxl/index.html"><code>library(tidyxl)</code></a> contains tools for working with messy Excel workbooks, <a href="https://cran.r-project.org/web/packages/openxlsx/index.html"><code>library(openxlsx)</code></a> contains tools for creating Excel workbooks with R, and <a href="https://cran.r-project.org/web/packages/openxlsx/index.html"><code>library(googlesheets4)</code></a> contains tools for working with Google Sheets.</p>
 </section>
 </section>
-<section id="sec-tidy" class="level2" data-number="3.3">
-<h2 data-number="3.3" class="anchored" data-anchor-id="sec-tidy"><span class="header-section-number">3.3</span> Tidy</h2>
-<p>The defining opinion of the tidyverse is its wholehearted adoption of tidy data. <a href="https://r4ds.hadley.nz/data-tidy#fig-tidy-structure">Tidy data has three features</a>:</p>
+<section id="sec-tidy" class="level2" data-number="3.4">
+<h2 data-number="3.4" class="anchored" data-anchor-id="sec-tidy"><span class="header-section-number">3.4</span> Tidy</h2>
+<p>Tidying is the process of reorganizing your data to be in a tidy format. The defining opinion of the tidyverse is its wholehearted adoption of tidy data. <a href="https://r4ds.hadley.nz/data-tidy#fig-tidy-structure">Tidy data has three features</a>:</p>
 <ol type="1">
 <li>Each variable forms a column.</li>
 <li>Each observation forms a row.</li>
@@ -633,7 +649,9 @@ Filtering Joins
 <p>Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ <a href="https://r4ds.had.co.nz/tidy-data.html">Hadley Wickham</a></p>
 </blockquote>
 <p><code>library(tidyr)</code> is the main package for tidying untidy data. We’ll practice some skills using examples from three workbooks from the <a href="https://www.irs.gov/statistics/soi-tax-stats-adjusted-gross-income-agi-percentile-data-by-state">IRS SOI</a>.</p>
-<p><code>pivot_longer()</code> is commonly used for tidying data and for making data longer for <code>library(ggplot2)</code>. <code>pivot_longer()</code> reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. <code>pivot_longer()</code> has three essential arguments:</p>
+<section id="pivoting" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="pivoting"><span class="header-section-number">3.4.1</span> Pivoting</h3>
+<p><code>pivot_longer()</code> reorients data so that key-value pairs expressed as column name-column value are column value-column value in adjacent columns. <code>pivot_longer()</code> is commonly used for tidying data and for making data longer for <code>library(ggplot2)</code>. <code>pivot_longer()</code> has three essential arguments:</p>
 <ol type="1">
 <li><code>cols</code> is a vector of columns to pivot (or not pivot).</li>
 <li><code>names_to</code> is a string for the name of the column where the old column names will go (i.e.&nbsp;“series” in the figure).</li>
@@ -649,6 +667,10 @@ Filtering Joins
 </div>
 </div>
 <p><code>pivot_wider()</code> is the inverse of <code>pivot_longer()</code>.</p>
+</section>
+<section id="tidying-data" class="level3" data-number="3.4.2">
+<h3 data-number="3.4.2" class="anchored" data-anchor-id="tidying-data"><span class="header-section-number">3.4.2</span> Tidying Data</h3>
+<p>Let’s walk through a series of examples that show the process of tidying untidy data.</p>
 <section id="tidying-example-1" class="level4">
 <h4 class="anchored" data-anchor-id="tidying-example-1">Tidying Example 1</h4>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -1126,33 +1148,19 @@ Filtering Joins
 <p>To see more examples, read the <a href="https://r4ds.hadley.nz/data-tidy.html">tidy data section in <em>R for Data Science (2e)</em></a></p>
 </section>
 </section>
-<section id="sec-transform" class="level2" data-number="3.4">
-<h2 data-number="3.4" class="anchored" data-anchor-id="sec-transform"><span class="header-section-number">3.4</span> Transform</h2>
-<section id="sec-strings" class="level3" data-number="3.4.1">
-<h3 data-number="3.4.1" class="anchored" data-anchor-id="sec-strings"><span class="header-section-number">3.4.1</span> Strings</h3>
+</section>
+<section id="sec-transform" class="level2" data-number="3.5">
+<h2 data-number="3.5" class="anchored" data-anchor-id="sec-transform"><span class="header-section-number">3.5</span> Transform</h2>
+<p>Transforming data includes filtering to observations of interest, creating new variables for analysis, and summarizing data. There are many ways to transform data. We will focus on a few common transformations.</p>
+<section id="sec-strings" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="sec-strings"><span class="header-section-number">3.5.1</span> Strings</h3>
 <p>Check out the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_strings.pdf">stringr cheat sheet</a>.</p>
 <p><code>library(stringr)</code> contains powerful functions for working with strings in R. In data analysis, we may need to detect matches, subset strings, work with the lengths of strings, modify strings, and join and split strings.</p>
 <section id="detecting-matches" class="level4">
 <h4 class="anchored" data-anchor-id="detecting-matches">Detecting Matches</h4>
-<p><code>str_detect()</code> is useful for <strong>detecting matches</strong> in strings, which can be useful with <code>filter()</code>. Consider the executive orders data set and suppose we want to return executive orders that contain the word <code>"Virginia"</code>.</p>
+<p><code>str_detect()</code> is useful for <strong>detecting matches</strong> in strings, which can be useful with <code>filter()</code>.</p>
+<p>Consider the executive orders data set and suppose we want to return executive orders that contain the word <code>"Virginia"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>eos <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"executive-orders.csv"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(text)) <span class="sc">|&gt;</span></span>
-<span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">group_by</span>(executive_order_number) <span class="sc">|&gt;</span></span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">summarize</span>(<span class="at">text =</span> <span class="fu">list</span>(text)) <span class="sc">|&gt;</span></span>
-<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">mutate</span>(<span class="at">text =</span> <span class="fu">map_chr</span>(text, <span class="sc">~</span><span class="fu">paste</span>(.x, <span class="at">collapse =</span> <span class="st">" "</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 196537 Columns: 4
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (2): text, president
-dbl  (1): executive_order_number
-date (1): signing_date
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>eos</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,126 × 2
    executive_order_number text                                                  
@@ -1169,8 +1177,10 @@ date (1): signing_date
 10                  12952 "Executive Order 12952 of February 24, 1995 Amendment…
 # ℹ 1,116 more rows</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>eos <span class="sc">|&gt;</span></span>
-<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="at">string =</span> text, <span class="at">pattern =</span> <span class="st">"Virginia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>eos <span class="sc">|&gt;</span></span>
+<span id="cb61-2"><a href="#cb61-2"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(<span class="at">string =</span> text, <span class="at">pattern =</span> <span class="st">"Virginia"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 2
   executive_order_number text                                                   
@@ -1186,10 +1196,11 @@ date (1): signing_date
 </section>
 <section id="subsetting-strings" class="level4">
 <h4 class="anchored" data-anchor-id="subsetting-strings">Subsetting Strings</h4>
-<p><code>str_sub()</code> can <strong>subset strings</strong> based on positions within the string. Consider an example where we want to extract state FIPS codes from county FIPS codes.</p>
+<p><code>str_sub()</code> can <strong>subset strings</strong> based on positions within the string.</p>
+<p>Consider an example where we want to extract state FIPS codes from county FIPS codes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="st">"01001"</span>, <span class="st">"02013"</span>, <span class="st">"04001"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">mutate</span>(<span class="at">state_fips =</span> <span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="st">"01001"</span>, <span class="st">"02013"</span>, <span class="st">"04001"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">mutate</span>(<span class="at">state_fips =</span> <span class="fu">str_sub</span>(fips, <span class="at">start =</span> <span class="dv">1</span>, <span class="at">end =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fips  state_fips
@@ -1202,10 +1213,11 @@ date (1): signing_date
 </section>
 <section id="managing-lengths" class="level4">
 <h4 class="anchored" data-anchor-id="managing-lengths">Managing Lengths</h4>
-<p><code>str_pad()</code> is useful for <strong>managing lengths</strong>. Consider the common situation when zeros are dropped from the beginning of FIPS codes.</p>
+<p><code>str_pad()</code> is useful for <strong>managing lengths</strong>.</p>
+<p>Consider the common situation when zeros are dropped from the beginning of FIPS codes.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb68-2"><a href="#cb68-2"></a>  <span class="fu">mutate</span>(<span class="at">fips =</span> <span class="fu">str_pad</span>(fips, <span class="at">side =</span> <span class="st">"left"</span>, <span class="at">pad =</span> <span class="st">"0"</span>, <span class="at">width =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a><span class="fu">tibble</span>(<span class="at">fips =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">mutate</span>(<span class="at">fips =</span> <span class="fu">str_pad</span>(fips, <span class="at">side =</span> <span class="st">"left"</span>, <span class="at">pad =</span> <span class="st">"0"</span>, <span class="at">width =</span> <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   fips 
@@ -1218,10 +1230,11 @@ date (1): signing_date
 </section>
 <section id="modifying-strings" class="level4">
 <h4 class="anchored" data-anchor-id="modifying-strings">Modifying Strings</h4>
-<p><code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, and <code>str_remove_all()</code> can delete or <strong>modify</strong> parts of strings. Consider an example where we have course names and we want to delete everything except numeric digits.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><code>str_replace()</code>, <code>str_replace_all()</code>, <code>str_remove()</code>, and <code>str_remove_all()</code> can delete or <strong>modify</strong> parts of strings.</p>
+<p>Consider an example where we have course names and we want to delete everything except numeric digits.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a><span class="fu">tibble</span>(<span class="at">course =</span> <span class="fu">c</span>(<span class="st">"PPOL 670"</span>, <span class="st">"GOVT 8009"</span>, <span class="st">"PPOL 6819"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb70-2"><a href="#cb70-2"></a>  <span class="fu">mutate</span>(<span class="at">course =</span> <span class="fu">str_remove</span>(course, <span class="at">pattern =</span> <span class="st">"[:alpha:]*</span><span class="sc">\\</span><span class="st">s"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a><span class="fu">tibble</span>(<span class="at">course =</span> <span class="fu">c</span>(<span class="st">"PPOL 670"</span>, <span class="st">"GOVT 8009"</span>, <span class="st">"PPOL 6819"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">mutate</span>(<span class="at">course =</span> <span class="fu">str_remove</span>(course, <span class="at">pattern =</span> <span class="st">"[:alpha:]*</span><span class="sc">\\</span><span class="st">s"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 1
   course
@@ -1231,10 +1244,11 @@ date (1): signing_date
 3 6819  </code></pre>
 </div>
 </div>
-<p><code>str_c()</code> and <code>str_glue()</code> are useful for <strong>joining</strong> strings. Consider an example where we want to “fill in the blank” with a variable in a data frame.</p>
+<p><code>str_c()</code> and <code>str_glue()</code> are useful for <strong>joining</strong> strings.</p>
+<p>Consider an example where we want to “fill in the blank” with a variable in a data frame.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb72"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb72-1"><a href="#cb72-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb72-2"><a href="#cb72-2"></a>  <span class="fu">mutate</span>(<span class="at">sentence =</span> <span class="fu">str_glue</span>(<span class="st">"my favorite fruit is {fruit}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">mutate</span>(<span class="at">sentence =</span> <span class="fu">str_glue</span>(<span class="st">"my favorite fruit is {fruit}"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fruit      sentence                       
@@ -1245,11 +1259,11 @@ date (1): signing_date
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb74-3"><a href="#cb74-3"></a>    <span class="at">another_sentence =</span> </span>
-<span id="cb74-4"><a href="#cb74-4"></a>      <span class="fu">str_c</span>(<span class="st">"Who doesn't like a good "</span>, fruit, <span class="st">"."</span>)</span>
-<span id="cb74-5"><a href="#cb74-5"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">tibble</span>(<span class="at">fruit =</span> <span class="fu">c</span>(<span class="st">"apple"</span>, <span class="st">"banana"</span>, <span class="st">"cantaloupe"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb71-3"><a href="#cb71-3"></a>    <span class="at">another_sentence =</span> </span>
+<span id="cb71-4"><a href="#cb71-4"></a>      <span class="fu">str_c</span>(<span class="st">"Who doesn't like a good "</span>, fruit, <span class="st">"."</span>)</span>
+<span id="cb71-5"><a href="#cb71-5"></a>    )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 2
   fruit      another_sentence                   
@@ -1279,9 +1293,8 @@ date (1): signing_date
 </div>
 </section>
 </section>
-<section id="sec-factors" class="level3" data-number="3.4.2">
-<h3 data-number="3.4.2" class="anchored" data-anchor-id="sec-factors"><span class="header-section-number">3.4.2</span> Factors</h3>
-<p>Check out the <a href="https://forcats.tidyverse.org/">forcats cheat sheet</a>.</p>
+<section id="sec-factors" class="level3" data-number="3.5.2">
+<h3 data-number="3.5.2" class="anchored" data-anchor-id="sec-factors"><span class="header-section-number">3.5.2</span> Factors</h3>
 <p>Much of our work focuses on four of the six types of atomic vectors: logical, integer, double, and character. R also contains <a href="https://r4ds.had.co.nz/vectors.html#augmented-vectors">augmented vectors</a> like factors.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1305,14 +1318,14 @@ Factors
 <section id="factor-basics" class="level4">
 <h4 class="anchored" data-anchor-id="factor-basics">Factor Basics</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>))</span>
-<span id="cb76-2"><a href="#cb76-2"></a></span>
-<span id="cb76-3"><a href="#cb76-3"></a>x1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>x1 <span class="ot">&lt;-</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>))</span>
+<span id="cb73-2"><a href="#cb73-2"></a></span>
+<span id="cb73-3"><a href="#cb73-3"></a>x1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] a a b c
 Levels: d c b a</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb78"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb78-1"><a href="#cb78-1"></a><span class="fu">attributes</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb75"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb75-1"><a href="#cb75-1"></a><span class="fu">attributes</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$levels
 [1] "d" "c" "b" "a"
@@ -1320,14 +1333,14 @@ Levels: d c b a</code></pre>
 $class
 [1] "factor"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb80"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb80-1"><a href="#cb80-1"></a><span class="fu">levels</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb77"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb77-1"><a href="#cb77-1"></a><span class="fu">levels</span>(x1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "d" "c" "b" "a"</code></pre>
 </div>
 </div>
 <p><code>x1</code> has order but it isn’t ordinal. Sometimes we’ll come across ordinal factor variables, like with the <code>diamonds</code> data set. Unintentional ordinal variables can cause unexpected errors. For example, including ordinal data as predictors in regression models will lead to different estimated coefficients than other variable types.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb82"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb82-1"><a href="#cb82-1"></a><span class="fu">glimpse</span>(diamonds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb79"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb79-1"><a href="#cb79-1"></a><span class="fu">glimpse</span>(diamonds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 53,940
 Columns: 10
@@ -1344,18 +1357,18 @@ $ z       &lt;dbl&gt; 2.43, 2.31, 2.31, 2.63, 2.75, 2.48, 2.47, 2.53, 2.49, 2.39
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb84"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb84-1"><a href="#cb84-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
-<span id="cb84-2"><a href="#cb84-2"></a>  <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), </span>
-<span id="cb84-3"><a href="#cb84-3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>),</span>
-<span id="cb84-4"><a href="#cb84-4"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
-<span id="cb84-5"><a href="#cb84-5"></a>)</span>
-<span id="cb84-6"><a href="#cb84-6"></a></span>
-<span id="cb84-7"><a href="#cb84-7"></a>x2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb81"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb81-1"><a href="#cb81-1"></a>x2 <span class="ot">&lt;-</span> <span class="fu">factor</span>(</span>
+<span id="cb81-2"><a href="#cb81-2"></a>  <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"a"</span>, <span class="st">"b"</span>, <span class="st">"c"</span>), </span>
+<span id="cb81-3"><a href="#cb81-3"></a>  <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"d"</span>, <span class="st">"c"</span>, <span class="st">"b"</span>, <span class="st">"a"</span>),</span>
+<span id="cb81-4"><a href="#cb81-4"></a>  <span class="at">ordered =</span> <span class="cn">TRUE</span></span>
+<span id="cb81-5"><a href="#cb81-5"></a>)</span>
+<span id="cb81-6"><a href="#cb81-6"></a></span>
+<span id="cb81-7"><a href="#cb81-7"></a>x2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] a a b c
 Levels: d &lt; c &lt; b &lt; a</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb86"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb86-1"><a href="#cb86-1"></a><span class="fu">attributes</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb83"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb83-1"><a href="#cb83-1"></a><span class="fu">attributes</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>$levels
 [1] "d" "c" "b" "a"
@@ -1363,48 +1376,48 @@ Levels: d &lt; c &lt; b &lt; a</code></pre>
 $class
 [1] "ordered" "factor" </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a><span class="fu">levels</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb85"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb85-1"><a href="#cb85-1"></a><span class="fu">levels</span>(x2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "d" "c" "b" "a"</code></pre>
 </div>
 </div>
 <p><a href="#fig-factors" class="quarto-xref">Figure&nbsp;<span>3.1</span></a> shows how we can use a factor to give a variable a non-alpha numeric order and preserve empty levels. In this case, February and March have zero tropical depressions, tropical storms, and hurricanes and we want to demonstrate that emptiness.</p>
-<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a><span class="co"># use case_match to convert integers into month names</span></span>
-<span id="cb90-2"><a href="#cb90-2"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
-<span id="cb90-3"><a href="#cb90-3"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb90-4"><a href="#cb90-4"></a>    <span class="at">month =</span> <span class="fu">case_match</span>(</span>
-<span id="cb90-5"><a href="#cb90-5"></a>      month,</span>
-<span id="cb90-6"><a href="#cb90-6"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Jan"</span>,</span>
-<span id="cb90-7"><a href="#cb90-7"></a>      <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Apr"</span>,</span>
-<span id="cb90-8"><a href="#cb90-8"></a>      <span class="dv">5</span> <span class="sc">~</span> <span class="st">"May"</span>,</span>
-<span id="cb90-9"><a href="#cb90-9"></a>      <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Jun"</span>,</span>
-<span id="cb90-10"><a href="#cb90-10"></a>      <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Jul"</span>,</span>
-<span id="cb90-11"><a href="#cb90-11"></a>      <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Aug"</span>,</span>
-<span id="cb90-12"><a href="#cb90-12"></a>      <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Sep"</span>,</span>
-<span id="cb90-13"><a href="#cb90-13"></a>      <span class="dv">10</span> <span class="sc">~</span> <span class="st">"Oct"</span>,</span>
-<span id="cb90-14"><a href="#cb90-14"></a>      <span class="dv">11</span> <span class="sc">~</span> <span class="st">"Nov"</span>,</span>
-<span id="cb90-15"><a href="#cb90-15"></a>      <span class="dv">12</span> <span class="sc">~</span> <span class="st">"Dec"</span></span>
-<span id="cb90-16"><a href="#cb90-16"></a>    )</span>
-<span id="cb90-17"><a href="#cb90-17"></a>  )</span>
-<span id="cb90-18"><a href="#cb90-18"></a></span>
-<span id="cb90-19"><a href="#cb90-19"></a><span class="co"># create data viz without factors</span></span>
-<span id="cb90-20"><a href="#cb90-20"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb90-21"><a href="#cb90-21"></a>  <span class="fu">count</span>(month) <span class="sc">|&gt;</span></span>
-<span id="cb90-22"><a href="#cb90-22"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb90-23"><a href="#cb90-23"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb90-24"><a href="#cb90-24"></a></span>
-<span id="cb90-25"><a href="#cb90-25"></a><span class="co"># add factor variable</span></span>
-<span id="cb90-26"><a href="#cb90-26"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
-<span id="cb90-27"><a href="#cb90-27"></a>            <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>)</span>
-<span id="cb90-28"><a href="#cb90-28"></a></span>
-<span id="cb90-29"><a href="#cb90-29"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
-<span id="cb90-30"><a href="#cb90-30"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> months)) </span>
-<span id="cb90-31"><a href="#cb90-31"></a></span>
-<span id="cb90-32"><a href="#cb90-32"></a><span class="co"># create data viz with factors</span></span>
-<span id="cb90-33"><a href="#cb90-33"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb90-34"><a href="#cb90-34"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb90-35"><a href="#cb90-35"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb90-36"><a href="#cb90-36"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb87"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb87-1"><a href="#cb87-1"></a><span class="co"># use case_match to convert integers into month names</span></span>
+<span id="cb87-2"><a href="#cb87-2"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
+<span id="cb87-3"><a href="#cb87-3"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb87-4"><a href="#cb87-4"></a>    <span class="at">month =</span> <span class="fu">case_match</span>(</span>
+<span id="cb87-5"><a href="#cb87-5"></a>      month,</span>
+<span id="cb87-6"><a href="#cb87-6"></a>      <span class="dv">1</span> <span class="sc">~</span> <span class="st">"Jan"</span>,</span>
+<span id="cb87-7"><a href="#cb87-7"></a>      <span class="dv">4</span> <span class="sc">~</span> <span class="st">"Apr"</span>,</span>
+<span id="cb87-8"><a href="#cb87-8"></a>      <span class="dv">5</span> <span class="sc">~</span> <span class="st">"May"</span>,</span>
+<span id="cb87-9"><a href="#cb87-9"></a>      <span class="dv">6</span> <span class="sc">~</span> <span class="st">"Jun"</span>,</span>
+<span id="cb87-10"><a href="#cb87-10"></a>      <span class="dv">7</span> <span class="sc">~</span> <span class="st">"Jul"</span>,</span>
+<span id="cb87-11"><a href="#cb87-11"></a>      <span class="dv">8</span> <span class="sc">~</span> <span class="st">"Aug"</span>,</span>
+<span id="cb87-12"><a href="#cb87-12"></a>      <span class="dv">9</span> <span class="sc">~</span> <span class="st">"Sep"</span>,</span>
+<span id="cb87-13"><a href="#cb87-13"></a>      <span class="dv">10</span> <span class="sc">~</span> <span class="st">"Oct"</span>,</span>
+<span id="cb87-14"><a href="#cb87-14"></a>      <span class="dv">11</span> <span class="sc">~</span> <span class="st">"Nov"</span>,</span>
+<span id="cb87-15"><a href="#cb87-15"></a>      <span class="dv">12</span> <span class="sc">~</span> <span class="st">"Dec"</span></span>
+<span id="cb87-16"><a href="#cb87-16"></a>    )</span>
+<span id="cb87-17"><a href="#cb87-17"></a>  )</span>
+<span id="cb87-18"><a href="#cb87-18"></a></span>
+<span id="cb87-19"><a href="#cb87-19"></a><span class="co"># create data viz without factors</span></span>
+<span id="cb87-20"><a href="#cb87-20"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb87-21"><a href="#cb87-21"></a>  <span class="fu">count</span>(month) <span class="sc">|&gt;</span></span>
+<span id="cb87-22"><a href="#cb87-22"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb87-23"><a href="#cb87-23"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb87-24"><a href="#cb87-24"></a></span>
+<span id="cb87-25"><a href="#cb87-25"></a><span class="co"># add factor variable</span></span>
+<span id="cb87-26"><a href="#cb87-26"></a>months <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Jan"</span>, <span class="st">"Feb"</span>, <span class="st">"Mar"</span>, <span class="st">"Apr"</span>, <span class="st">"May"</span>, <span class="st">"Jun"</span>,</span>
+<span id="cb87-27"><a href="#cb87-27"></a>            <span class="st">"Jul"</span>, <span class="st">"Aug"</span>, <span class="st">"Sep"</span>, <span class="st">"Oct"</span>, <span class="st">"Nov"</span>, <span class="st">"Dec"</span>)</span>
+<span id="cb87-28"><a href="#cb87-28"></a></span>
+<span id="cb87-29"><a href="#cb87-29"></a>storms <span class="ot">&lt;-</span> storms <span class="sc">|&gt;</span></span>
+<span id="cb87-30"><a href="#cb87-30"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">factor</span>(month, <span class="at">levels =</span> months)) </span>
+<span id="cb87-31"><a href="#cb87-31"></a></span>
+<span id="cb87-32"><a href="#cb87-32"></a><span class="co"># create data viz with factors</span></span>
+<span id="cb87-33"><a href="#cb87-33"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb87-34"><a href="#cb87-34"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb87-35"><a href="#cb87-35"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb87-36"><a href="#cb87-36"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-factors" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-factors-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1442,8 +1455,8 @@ Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
 </div>
 <p>Factors also change the behavior of summary functions like <code>count()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb91"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb91-1"><a href="#cb91-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb91-2"><a href="#cb91-2"></a>  <span class="fu">count</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb88"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb88-1"><a href="#cb88-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb88-2"><a href="#cb88-2"></a>  <span class="fu">count</span>(month)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 2
    month     n
@@ -1459,8 +1472,8 @@ Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
  9 Nov    1170
 10 Dec     212</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb90"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb90-1"><a href="#cb90-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb90-2"><a href="#cb90-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 12 × 2
    month     n
@@ -1484,16 +1497,16 @@ Figure&nbsp;3.1: Hurricane Season Peaks in Late Summer and Early Fall
 <section id="changing-order" class="level4">
 <h4 class="anchored" data-anchor-id="changing-order">Changing Order</h4>
 <p><code>fct_relevel()</code>, <code>fct_rev()</code>, and <code>fct_reorder()</code> are useful functions for modifying the order of factor variables. <a href="#fig-fct_rev" class="quarto-xref">Figure&nbsp;<span>3.2</span></a> demonstrates using <code>fct_rev()</code> to flip the order of a categorical axis in ggplot2.</p>
-<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb95-2"><a href="#cb95-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb95-3"><a href="#cb95-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb95-4"><a href="#cb95-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb95-5"><a href="#cb95-5"></a></span>
-<span id="cb95-6"><a href="#cb95-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb95-7"><a href="#cb95-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_rev</span>(month)) <span class="sc">|&gt;</span></span>
-<span id="cb95-8"><a href="#cb95-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb95-9"><a href="#cb95-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb95-10"><a href="#cb95-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb92"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb92-1"><a href="#cb92-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb92-2"><a href="#cb92-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb92-3"><a href="#cb92-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb92-4"><a href="#cb92-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb92-5"><a href="#cb92-5"></a></span>
+<span id="cb92-6"><a href="#cb92-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb92-7"><a href="#cb92-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_rev</span>(month)) <span class="sc">|&gt;</span></span>
+<span id="cb92-8"><a href="#cb92-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb92-9"><a href="#cb92-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb92-10"><a href="#cb92-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_rev" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fct_rev-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1530,16 +1543,16 @@ Figure&nbsp;3.2: Hurricane Season Peaks in Late Summer and Early Fall
 </figure>
 </div>
 <p><a href="#fig-fct_reorder" class="quarto-xref">Figure&nbsp;<span>3.3</span></a> orders the factor variable based on the number of observations in each category using <code>fct_reorder()</code>. <code>fct_reorder()</code> can order variables based on more sophisticated summaries than just magnitude. For example, it can order box-and-whisker plots based on the median or even something as arbitrary at the 60th percentile.</p>
-<div class="sourceCode cell-code" id="cb96"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb96-1"><a href="#cb96-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb96-2"><a href="#cb96-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb96-3"><a href="#cb96-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb96-4"><a href="#cb96-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb96-5"><a href="#cb96-5"></a></span>
-<span id="cb96-6"><a href="#cb96-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb96-7"><a href="#cb96-7"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb96-8"><a href="#cb96-8"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_reorder</span>(<span class="at">.f =</span> month, <span class="at">.x =</span> n, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
-<span id="cb96-9"><a href="#cb96-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb96-10"><a href="#cb96-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb93"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb93-1"><a href="#cb93-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb93-2"><a href="#cb93-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb93-3"><a href="#cb93-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb93-4"><a href="#cb93-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb93-5"><a href="#cb93-5"></a></span>
+<span id="cb93-6"><a href="#cb93-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb93-7"><a href="#cb93-7"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb93-8"><a href="#cb93-8"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_reorder</span>(<span class="at">.f =</span> month, <span class="at">.x =</span> n, <span class="at">.fun =</span> median)) <span class="sc">|&gt;</span></span>
+<span id="cb93-9"><a href="#cb93-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb93-10"><a href="#cb93-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_reorder" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fct_reorder-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1579,16 +1592,16 @@ Figure&nbsp;3.3: Hurricane Season Peaks in Late Summer and Early Fall
 <section id="changing-values" class="level4">
 <h4 class="anchored" data-anchor-id="changing-values">Changing Values</h4>
 <p>Functions like <code>fct_recode()</code> and <code>fct_lump_min()</code> are useful for changing factor variables. <a href="#fig-fct_lump_min" class="quarto-xref">Figure&nbsp;<span>3.4</span></a> combines categories with fewer than 1,000 observations into an <code>"Other"</code> group.</p>
-<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb97-2"><a href="#cb97-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb97-3"><a href="#cb97-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb97-4"><a href="#cb97-4"></a>  <span class="fu">geom_col</span>()</span>
-<span id="cb97-5"><a href="#cb97-5"></a></span>
-<span id="cb97-6"><a href="#cb97-6"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb97-7"><a href="#cb97-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_lump_min</span>(month, <span class="at">min =</span> <span class="dv">1000</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb97-8"><a href="#cb97-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
-<span id="cb97-9"><a href="#cb97-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
-<span id="cb97-10"><a href="#cb97-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb94"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb94-1"><a href="#cb94-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb94-2"><a href="#cb94-2"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb94-3"><a href="#cb94-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb94-4"><a href="#cb94-4"></a>  <span class="fu">geom_col</span>()</span>
+<span id="cb94-5"><a href="#cb94-5"></a></span>
+<span id="cb94-6"><a href="#cb94-6"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb94-7"><a href="#cb94-7"></a>  <span class="fu">mutate</span>(<span class="at">month =</span> <span class="fu">fct_lump_min</span>(month, <span class="at">min =</span> <span class="dv">1000</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb94-8"><a href="#cb94-8"></a>  <span class="fu">count</span>(month, <span class="at">.drop =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
+<span id="cb94-9"><a href="#cb94-9"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> n, <span class="at">y =</span> month)) <span class="sc">+</span></span>
+<span id="cb94-10"><a href="#cb94-10"></a>  <span class="fu">geom_col</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="fig-fct_lump_min" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-fct_lump_min-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1624,10 +1637,11 @@ Figure&nbsp;3.4: Hurricane Season Peaks in Late Summer and Early Fall
 </figcaption>
 </figure>
 </div>
+<p>The <a href="https://forcats.tidyverse.org/">forcats cheat sheet</a> is a useful resource for working with factors.</p>
 </section>
 </section>
-<section id="sec-dates" class="level3" data-number="3.4.3">
-<h3 data-number="3.4.3" class="anchored" data-anchor-id="sec-dates"><span class="header-section-number">3.4.3</span> Dates and Date-Times</h3>
+<section id="sec-dates" class="level3" data-number="3.5.3">
+<h3 data-number="3.5.3" class="anchored" data-anchor-id="sec-dates"><span class="header-section-number">3.5.3</span> Dates and Date-Times</h3>
 <p>Check out the <a href="https://evoldyn.gitlab.io/evomics-2018/ref-sheets/R_lubridate.pdf">lubridate cheat sheet</a>.</p>
 <p>There are many ways to store dates.</p>
 <ul>
@@ -1652,43 +1666,43 @@ ISO 8601 Date Standard
 </div>
 <p><code>library(lubridate)</code> has useful functions that will take dates of any format and convert them to the ISO 8601 standard.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb98"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb98-1"><a href="#cb98-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb98-2"><a href="#cb98-2"></a></span>
-<span id="cb98-3"><a href="#cb98-3"></a><span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb95"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb95-1"><a href="#cb95-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb95-2"><a href="#cb95-2"></a></span>
+<span id="cb95-3"><a href="#cb95-3"></a><span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb100"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb100-1"><a href="#cb100-1"></a><span class="fu">mdy</span>(<span class="st">"03/14/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb97"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb97-1"><a href="#cb97-1"></a><span class="fu">mdy</span>(<span class="st">"03/14/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb102"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb102-1"><a href="#cb102-1"></a><span class="fu">dmy</span>(<span class="st">"14/03/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb99"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb99-1"><a href="#cb99-1"></a><span class="fu">dmy</span>(<span class="st">"14/03/1992"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb104"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb104-1"><a href="#cb104-1"></a><span class="fu">dmy</span>(<span class="st">"14th of March '92"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb101"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb101-1"><a href="#cb101-1"></a><span class="fu">dmy</span>(<span class="st">"14th of March '92"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "1992-03-14"</code></pre>
 </div>
 </div>
 <p>These functions return variables of class <code>"Date"</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb106"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb106-1"><a href="#cb106-1"></a><span class="fu">class</span>(<span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb103"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb103-1"><a href="#cb103-1"></a><span class="fu">class</span>(<span class="fu">mdy</span>(<span class="st">"March 14, 1992"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "Date"</code></pre>
 </div>
 </div>
 <p><code>library(lubridate)</code> also contains functions for parsing date times into ISO 8601 standard. Times are slightly trickier because of time zones.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb108"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb108-1"><a href="#cb108-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb105"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb105-1"><a href="#cb105-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 UTC"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb110"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb110-1"><a href="#cb110-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"EST"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb107"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb107-1"><a href="#cb107-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"EST"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 EST"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">mdy_hms</span>(<span class="st">"12/02/2021 1:00:00"</span>, <span class="at">tz =</span> <span class="st">"America/Chicago"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2021-12-02 01:00:00 CST"</code></pre>
 </div>
@@ -1706,12 +1720,12 @@ ISO 8601 Date Standard
 </div>
 <div class="callout-body-container callout-body">
 <div class="cell">
-<div class="sourceCode cell-code" id="cb114"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb114-1"><a href="#cb114-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb114-2"><a href="#cb114-2"></a>  <span class="sc">~</span>date,</span>
-<span id="cb114-3"><a href="#cb114-3"></a>  <span class="st">"12/01/1987"</span>,</span>
-<span id="cb114-4"><a href="#cb114-4"></a>  <span class="st">"12/02/1987"</span>,</span>
-<span id="cb114-5"><a href="#cb114-5"></a>  <span class="st">"12/03/1987"</span></span>
-<span id="cb114-6"><a href="#cb114-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb111"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb111-1"><a href="#cb111-1"></a>dates <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb111-2"><a href="#cb111-2"></a>  <span class="sc">~</span>date,</span>
+<span id="cb111-3"><a href="#cb111-3"></a>  <span class="st">"12/01/1987"</span>,</span>
+<span id="cb111-4"><a href="#cb111-4"></a>  <span class="st">"12/02/1987"</span>,</span>
+<span id="cb111-5"><a href="#cb111-5"></a>  <span class="st">"12/03/1987"</span></span>
+<span id="cb111-6"><a href="#cb111-6"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol type="1">
 <li>Create the <code>dates</code> data from above with <code>tribble()</code>.</li>
@@ -1721,30 +1735,30 @@ ISO 8601 Date Standard
 </div>
 <section id="extracting-components" class="level4">
 <h4 class="anchored" data-anchor-id="extracting-components">Extracting Components</h4>
-<p><code>library(lubridate)</code> contains functions for extracting components from dates like the year, month, day, and weekday. Conisder the follow data set about <a href="https://www.timeanddate.com/moon/phases/usa/washington-dc">full moons</a> in Washington, DC in 2023.</p>
+<p><code>library(lubridate)</code> contains functions for extracting components from dates like the year, month, day, and weekday. Consider the following data set about <a href="https://www.timeanddate.com/moon/phases/usa/washington-dc">full moons</a> in Washington, DC in 2023.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a>full_moons <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb115-2"><a href="#cb115-2"></a>  <span class="sc">~</span>full_moon,</span>
-<span id="cb115-3"><a href="#cb115-3"></a>  <span class="st">"2023-01-06"</span>,</span>
-<span id="cb115-4"><a href="#cb115-4"></a>  <span class="st">"2023-02-05"</span>,</span>
-<span id="cb115-5"><a href="#cb115-5"></a>  <span class="st">"2023-03-07"</span>,</span>
-<span id="cb115-6"><a href="#cb115-6"></a>  <span class="st">"2023-04-06"</span>,</span>
-<span id="cb115-7"><a href="#cb115-7"></a>  <span class="st">"2023-05-05"</span>,</span>
-<span id="cb115-8"><a href="#cb115-8"></a>  <span class="st">"2023-06-03"</span>,</span>
-<span id="cb115-9"><a href="#cb115-9"></a>  <span class="st">"2023-07-03"</span>,</span>
-<span id="cb115-10"><a href="#cb115-10"></a>  <span class="st">"2023-08-01"</span>,</span>
-<span id="cb115-11"><a href="#cb115-11"></a>  <span class="st">"2023-08-30"</span>,</span>
-<span id="cb115-12"><a href="#cb115-12"></a>  <span class="st">"2023-09-29"</span>,</span>
-<span id="cb115-13"><a href="#cb115-13"></a>  <span class="st">"2023-10-28"</span>,</span>
-<span id="cb115-14"><a href="#cb115-14"></a>  <span class="st">"2023-11-27"</span>,</span>
-<span id="cb115-15"><a href="#cb115-15"></a>  <span class="st">"2023-12-26"</span></span>
-<span id="cb115-16"><a href="#cb115-16"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb115-17"><a href="#cb115-17"></a>  <span class="fu">mutate</span>(<span class="at">full_moon =</span> <span class="fu">as_date</span>(full_moon))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb112"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb112-1"><a href="#cb112-1"></a>full_moons <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb112-2"><a href="#cb112-2"></a>  <span class="sc">~</span>full_moon,</span>
+<span id="cb112-3"><a href="#cb112-3"></a>  <span class="st">"2023-01-06"</span>,</span>
+<span id="cb112-4"><a href="#cb112-4"></a>  <span class="st">"2023-02-05"</span>,</span>
+<span id="cb112-5"><a href="#cb112-5"></a>  <span class="st">"2023-03-07"</span>,</span>
+<span id="cb112-6"><a href="#cb112-6"></a>  <span class="st">"2023-04-06"</span>,</span>
+<span id="cb112-7"><a href="#cb112-7"></a>  <span class="st">"2023-05-05"</span>,</span>
+<span id="cb112-8"><a href="#cb112-8"></a>  <span class="st">"2023-06-03"</span>,</span>
+<span id="cb112-9"><a href="#cb112-9"></a>  <span class="st">"2023-07-03"</span>,</span>
+<span id="cb112-10"><a href="#cb112-10"></a>  <span class="st">"2023-08-01"</span>,</span>
+<span id="cb112-11"><a href="#cb112-11"></a>  <span class="st">"2023-08-30"</span>,</span>
+<span id="cb112-12"><a href="#cb112-12"></a>  <span class="st">"2023-09-29"</span>,</span>
+<span id="cb112-13"><a href="#cb112-13"></a>  <span class="st">"2023-10-28"</span>,</span>
+<span id="cb112-14"><a href="#cb112-14"></a>  <span class="st">"2023-11-27"</span>,</span>
+<span id="cb112-15"><a href="#cb112-15"></a>  <span class="st">"2023-12-26"</span></span>
+<span id="cb112-16"><a href="#cb112-16"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb112-17"><a href="#cb112-17"></a>  <span class="fu">mutate</span>(<span class="at">full_moon =</span> <span class="fu">as_date</span>(full_moon))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Suppose we want to know the weekday of each full moon.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb116"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb116-1"><a href="#cb116-1"></a>full_moons <span class="sc">|&gt;</span></span>
-<span id="cb116-2"><a href="#cb116-2"></a>  <span class="fu">mutate</span>(<span class="at">week_day =</span> <span class="fu">wday</span>(full_moon, <span class="at">label =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb113"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb113-1"><a href="#cb113-1"></a>full_moons <span class="sc">|&gt;</span></span>
+<span id="cb113-2"><a href="#cb113-2"></a>  <span class="fu">mutate</span>(<span class="at">week_day =</span> <span class="fu">wday</span>(full_moon, <span class="at">label =</span> <span class="cn">TRUE</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 13 × 2
    full_moon  week_day
@@ -1769,16 +1783,16 @@ ISO 8601 Date Standard
 <h4 class="anchored" data-anchor-id="math">Math</h4>
 <p><code>library(lubridate)</code> easily handles math with dates and date-times. Suppose we want to calculate the number of days since American Independence Day:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb118"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb118-1"><a href="#cb118-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 91051 days</code></pre>
+<pre><code>Time difference of 91144 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb120"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb120-1"><a href="#cb120-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 131113440 mins</code></pre>
+<pre><code>Time difference of 131247360 mins</code></pre>
 </div>
 </div>
 </section>
@@ -1799,14 +1813,14 @@ Periods
 </div>
 <p>This can lead to some interesting results. Do we always add 365 days when we add 1 year to a date? With periods, this isn’t true. Sometimes we add 366 days during leap years. For example,</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb122"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb122-1"><a href="#cb122-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
-<span id="cb122-2"><a href="#cb122-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">1</span>)</span>
-<span id="cb122-3"><a href="#cb122-3"></a></span>
-<span id="cb122-4"><a href="#cb122-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb119"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb119-1"><a href="#cb119-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
+<span id="cb119-2"><a href="#cb119-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">years</span>(<span class="dv">1</span>)</span>
+<span id="cb119-3"><a href="#cb119-3"></a></span>
+<span id="cb119-4"><a href="#cb119-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2000-03-14"</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb124"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb124-1"><a href="#cb124-1"></a>end <span class="sc">-</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb121"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb121-1"><a href="#cb121-1"></a>end <span class="sc">-</span> start</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Time difference of 366 days</code></pre>
 </div>
@@ -1828,10 +1842,10 @@ Durations
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb126"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb126-1"><a href="#cb126-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
-<span id="cb126-2"><a href="#cb126-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span>
-<span id="cb126-3"><a href="#cb126-3"></a></span>
-<span id="cb126-4"><a href="#cb126-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb123"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb123-1"><a href="#cb123-1"></a>start <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"1999-03-14"</span>)</span>
+<span id="cb123-2"><a href="#cb123-2"></a>end <span class="ot">&lt;-</span> start <span class="sc">+</span> <span class="fu">dyears</span>(<span class="dv">1</span>)</span>
+<span id="cb123-3"><a href="#cb123-3"></a></span>
+<span id="cb123-4"><a href="#cb123-4"></a>end</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "2000-03-13 06:00:00 UTC"</code></pre>
 </div>
@@ -1856,11 +1870,11 @@ Intervals
 </div>
 <p>Suppose classes start on August 23rd and proceed every week for a while. Do any of these dates conflict with Georgetown’s fall break?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb128"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb128-1"><a href="#cb128-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"2023-08-23"</span>) <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span>
-<span id="cb128-2"><a href="#cb128-2"></a></span>
-<span id="cb128-3"><a href="#cb128-3"></a>fall_break <span class="ot">&lt;-</span> <span class="fu">interval</span>(<span class="fu">as_date</span>(<span class="st">"2023-11-22"</span>), <span class="fu">as_date</span>(<span class="st">"2023-11-26"</span>))</span>
-<span id="cb128-4"><a href="#cb128-4"></a></span>
-<span id="cb128-5"><a href="#cb128-5"></a>classes <span class="sc">%within%</span> fall_break</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb125"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb125-1"><a href="#cb125-1"></a>classes <span class="ot">&lt;-</span> <span class="fu">as_date</span>(<span class="st">"2023-08-23"</span>) <span class="sc">+</span> <span class="fu">weeks</span>(<span class="dv">0</span><span class="sc">:</span><span class="dv">15</span>)</span>
+<span id="cb125-2"><a href="#cb125-2"></a></span>
+<span id="cb125-3"><a href="#cb125-3"></a>fall_break <span class="ot">&lt;-</span> <span class="fu">interval</span>(<span class="fu">as_date</span>(<span class="st">"2023-11-22"</span>), <span class="fu">as_date</span>(<span class="st">"2023-11-26"</span>))</span>
+<span id="cb125-4"><a href="#cb125-4"></a></span>
+<span id="cb125-5"><a href="#cb125-5"></a>classes <span class="sc">%within%</span> fall_break</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
 [13] FALSE  TRUE FALSE FALSE</code></pre>
@@ -1886,18 +1900,18 @@ Intervals
 </div>
 </section>
 </section>
-<section id="missing-data" class="level3" data-number="3.4.4">
-<h3 data-number="3.4.4" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">3.4.4</span> Missing Data</h3>
+<section id="missing-data" class="level3" data-number="3.5.4">
+<h3 data-number="3.5.4" class="anchored" data-anchor-id="missing-data"><span class="header-section-number">3.5.4</span> Missing Data</h3>
 <p>Missing data are ever present in data analysis. R stores missing values as <code>NA</code>, which are contagious and are fortunately difficult to ignore.</p>
 <p><code>replace_na()</code> is the quickest function to replace missing values. It is a shortcut for a specific instance of <code>if_else()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb130"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb130-1"><a href="#cb130-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
-<span id="cb130-2"><a href="#cb130-2"></a></span>
-<span id="cb130-3"><a href="#cb130-3"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">is.na</span>(x), <span class="at">true =</span> <span class="dv">2</span>, <span class="at">false =</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb127"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb127-1"><a href="#cb127-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="cn">NA</span>, <span class="dv">3</span>)</span>
+<span id="cb127-2"><a href="#cb127-2"></a></span>
+<span id="cb127-3"><a href="#cb127-3"></a><span class="fu">if_else</span>(<span class="at">condition =</span> <span class="fu">is.na</span>(x), <span class="at">true =</span> <span class="dv">2</span>, <span class="at">false =</span> x)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb132"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb132-1"><a href="#cb132-1"></a><span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb129"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb129-1"><a href="#cb129-1"></a><span class="fu">replace_na</span>(x, <span class="at">replace =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1 2 3</code></pre>
 </div>
@@ -1923,14 +1937,14 @@ Intervals
 </div>
 </section>
 </section>
-<section id="conclusion" class="level2" data-number="3.5">
-<h2 data-number="3.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.5</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="3.6">
+<h2 data-number="3.6" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">3.6</span> Conclusion</h2>
 <p>Key takeaways from this chapter are:</p>
 <ol type="1">
 <li><code>here</code> is a helpful package for reading data, and it is especially helpful when using <code>.Rproj</code>s.</li>
 <li><code>readxl</code> is great for reading excel files into R.</li>
 <li><code>pivot_wider()</code> and <code>pivot_longer()</code> are functions from the <code>tidyr</code> package that are useful for reshaping data into a “tidy” format.</li>
-<li>The tidyverse also contains useful package for handing strings (<code>stringr</code>) factors (<code>forecats</code>), and dates (<code>lubridate</code>).</li>
+<li>The tidyverse also contains useful packages for handling strings (<code>stringr</code>), factors (<code>forcats</code>), and dates (<code>lubridate</code>).</li>
 </ol>
 
 

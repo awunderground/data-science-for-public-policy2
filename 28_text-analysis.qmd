@@ -411,6 +411,7 @@ ids <- c(
 # download corpus
 shakespeare <- gutenberg_download(
   gutenberg_id = ids,
+  mirror = "https://www.gutenberg.org/",
   meta_fields = "title"
 )
 
