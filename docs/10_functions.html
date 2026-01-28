@@ -484,7 +484,7 @@ window.Quarto = {
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    We’ve mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and iteration.
+    We’ve mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and iteration. Stronger programming skills will be useful for topics like simulation, microsimulation, and web scraping.
   </div>
 </div>
 
@@ -512,7 +512,7 @@ window.Quarto = {
 # ℹ 2 more variables: brainwt &lt;dbl&gt;, bodywt &lt;dbl&gt;</code></pre>
 </div>
 </div>
-<p>Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from row number 5 and column number 4. This idea of using the relations in data reduces the chances of making mistakes and leads to clearer code.</p>
+<p>Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from <strong>row number 5</strong> and <strong>column number 4</strong>. Using relations in data reduces the chances of making mistakes and leads to clearer code.</p>
 </section>
 </section>
 <section id="programming" class="level2" data-number="10.2">
@@ -600,7 +600,7 @@ Caution
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Wow, R recycles the Booleans. Six is divisible by 1, 2, and 3, so there are many ways to recycle the index to subset <code>letters_short</code>. This is dangerous and can quietly cause analtyic errors.</p>
+<p>Wow, R recycles the Booleans. Six is divisible by 1, 2, and 3, so there are many ways to recycle the index to subset <code>letters_short</code>. This is dangerous and can quietly cause analytic errors.</p>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -615,16 +615,24 @@ Caution
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Create <code>letters_short</code>.</li>
-<li>Try subsetting the vectors with indices with length four or five. What happens?</li>
+<li>Try subsetting <code>letters_short</code> with logical vectors with length four or five. What happens?</li>
 </ol>
 </div>
 </div>
 </section>
 <section id="lists" class="level4">
 <h4 class="anchored" data-anchor-id="lists">Lists</h4>
-<p><code>[[]]</code> and <code>$</code> are useful for subsetting lists. Both can be used to subset data frames, but I recommending avoiding this.</p>
-<p>Unlike <code>[]</code>, which returns multiple elements, <code>[[]]</code> and <code>$</code> can only return a single element and <code>[[]]</code> and <code>$</code> simplify objects by removing a layer of hierarchy.</p>
+<p><code>[]</code>, <code>[[]]</code>, and <code>$</code> are useful for subsetting lists. <code>[]</code> subsets lists differently than <code>[[]]</code> and <code>$</code>.</p>
+<p>Unlike <code>[]</code>, which can return multiple elements from a list, <code>[[]]</code> and <code>$</code> can only return a single element and they drill down into the list.</p>
 <p><code>[[]]</code> can select an element by position or name, while <code>$</code> can only select an element by name. Consider a list with the first six letters of the alphabet.</p>
+<p>Let’s start with a visual example.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p>Suppose I have change dish with pennies, quarters, and dimes. In this example, the change dish is a list and the coins are organized into three vectors.</p>
+<p><img src="images/list1.jpeg" class="img-fluid" style="width:50.0%"></p>
+<p>Next, suppose I use <code>[]</code> to subset the change dish to just pennies. That is, I write <code>change["pennies"]</code>. <code>[]</code> returns the pennies AND the dish.</p>
+<p><img src="images/list2.jpeg" class="img-fluid" style="width:50.0%"></p>
+<p>Let’s go back to the original change dish. Now, suppose I use <code>[[]]</code> to subset the dish to just pennies. That is, I write <code>change[["pennies"]]</code>. <code>[[]]</code> returns the pennies without the dish. That’s because <code>[[]]</code> always drills down and drops one layer of list.</p>
+<p><img src="images/list3.jpeg" class="img-fluid" style="width:50.0%"></p>
+<p>Now, let’s consider a code example.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>alphabet <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
 <span id="cb24-2"><a href="#cb24-2"></a>  <span class="at">vowels =</span> <span class="fu">c</span>(<span class="st">"a"</span>, <span class="st">"e"</span>),</span>
@@ -899,7 +907,7 @@ Don’t grow vectors!
 <span id="cb71-5"><a href="#cb71-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <ol start="2" type="1">
-<li>Write a for loop and use <code>str_to_upper()</code> to transform all letters to upper case.</li>
+<li>Write a for loop and use <code>str_to_upper()</code> from <code>library(stringr)</code> to transform all letters to upper case.</li>
 </ol>
 </div>
 </div>
@@ -968,7 +976,7 @@ Don’t grow vectors!
 <span id="cb77-8"><a href="#cb77-8"></a>  </span>
 <span id="cb77-9"><a href="#cb77-9"></a>} <span class="cf">else</span> {</span>
 <span id="cb77-10"><a href="#cb77-10"></a>  </span>
-<span id="cb77-11"><a href="#cb77-11"></a>  <span class="fu">stop</span>(<span class="st">"distribution mast be normal or poissoin"</span>)</span>
+<span id="cb77-11"><a href="#cb77-11"></a>  <span class="fu">stop</span>(<span class="st">"distribution must be normal or poisson"</span>)</span>
 <span id="cb77-12"><a href="#cb77-12"></a>  </span>
 <span id="cb77-13"><a href="#cb77-13"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -981,7 +989,7 @@ Don’t grow vectors!
 <section id="motivation" class="level3" data-number="10.3.1">
 <h3 data-number="10.3.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">10.3.1</span> Motivation</h3>
 <p>Custom functions are an essential building block for good analyses. Custom functions are useful for abiding by the DRY (don’t repeat yourself) principle. Under our conception of DRY, we should create a function any time we do something three times.</p>
-<p>Copying-and-pasting is typically bad because it is easy to make mistakes and we typically want a single source source of truth in a script. Custom functions also promote modular code design and testing.</p>
+<p>Copying-and-pasting is typically bad because it is easy to make mistakes and we typically want a single source of truth in a script. Custom functions also promote modular code design and testing.</p>
 <p>The bottom line: we want to write clear functions that do one and only one thing that are sufficiently tested so we are confident in their correctness.</p>
 </section>
 <section id="examples" class="level3" data-number="10.3.2">
@@ -1020,7 +1028,7 @@ Don’t grow vectors!
 <span id="cb79-3"><a href="#cb79-3"></a><span class="co">#' @param eps Numeric epsilon privacy parameter</span></span>
 <span id="cb79-4"><a href="#cb79-4"></a><span class="co">#' @param gs Numeric global sensitivity for the statistics of interest</span></span>
 <span id="cb79-5"><a href="#cb79-5"></a><span class="co">#'</span></span>
-<span id="cb79-6"><a href="#cb79-6"></a><span class="co">#' @return</span></span>
+<span id="cb79-6"><a href="#cb79-6"></a><span class="co">#' @return A numeric value sampled from the Laplace distribution</span></span>
 <span id="cb79-7"><a href="#cb79-7"></a><span class="co">#' </span></span>
 <span id="cb79-8"><a href="#cb79-8"></a>lap_mech <span class="ot">&lt;-</span> <span class="cf">function</span>(eps, gs) {</span>
 <span id="cb79-9"><a href="#cb79-9"></a>  </span>
@@ -1035,17 +1043,18 @@ Don’t grow vectors!
 <span id="cb79-18"><a href="#cb79-18"></a>  <span class="co"># Calculating the scale</span></span>
 <span id="cb79-19"><a href="#cb79-19"></a>  scale <span class="ot">&lt;-</span> gs <span class="sc">/</span> eps</span>
 <span id="cb79-20"><a href="#cb79-20"></a></span>
-<span id="cb79-21"><a href="#cb79-21"></a>  r <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
-<span id="cb79-22"><a href="#cb79-22"></a></span>
-<span id="cb79-23"><a href="#cb79-23"></a>  <span class="cf">if</span>(r <span class="sc">&gt;</span> <span class="fl">0.5</span>) {</span>
-<span id="cb79-24"><a href="#cb79-24"></a>    r2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> r</span>
-<span id="cb79-25"><a href="#cb79-25"></a>    x <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">-</span> <span class="fu">sign</span>(r <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> scale <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> r2)</span>
-<span id="cb79-26"><a href="#cb79-26"></a>  } <span class="cf">else</span> {</span>
-<span id="cb79-27"><a href="#cb79-27"></a>    x <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">-</span> <span class="fu">sign</span>(r <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> scale <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> r)</span>
-<span id="cb79-28"><a href="#cb79-28"></a>  }</span>
-<span id="cb79-29"><a href="#cb79-29"></a>  </span>
-<span id="cb79-30"><a href="#cb79-30"></a>  <span class="fu">return</span>(x)</span>
-<span id="cb79-31"><a href="#cb79-31"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb79-21"><a href="#cb79-21"></a>  <span class="co"># Sample from the Laplace (double exponential) distribution</span></span>
+<span id="cb79-22"><a href="#cb79-22"></a>  r <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="dv">1</span>)</span>
+<span id="cb79-23"><a href="#cb79-23"></a></span>
+<span id="cb79-24"><a href="#cb79-24"></a>  <span class="cf">if</span>(r <span class="sc">&gt;</span> <span class="fl">0.5</span>) {</span>
+<span id="cb79-25"><a href="#cb79-25"></a>    r2 <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">-</span> r</span>
+<span id="cb79-26"><a href="#cb79-26"></a>    x <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">-</span> <span class="fu">sign</span>(r <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> scale <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> r2)</span>
+<span id="cb79-27"><a href="#cb79-27"></a>  } <span class="cf">else</span> {</span>
+<span id="cb79-28"><a href="#cb79-28"></a>    x <span class="ot">&lt;-</span> <span class="dv">0</span> <span class="sc">-</span> <span class="fu">sign</span>(r <span class="sc">-</span> <span class="fl">0.5</span>) <span class="sc">*</span> scale <span class="sc">*</span> <span class="fu">log</span>(<span class="dv">2</span> <span class="sc">*</span> r)</span>
+<span id="cb79-29"><a href="#cb79-29"></a>  }</span>
+<span id="cb79-30"><a href="#cb79-30"></a>  </span>
+<span id="cb79-31"><a href="#cb79-31"></a>  <span class="fu">return</span>(x)</span>
+<span id="cb79-32"><a href="#cb79-32"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="basics" class="level3" data-number="10.3.3">
@@ -1176,7 +1185,7 @@ $median
 </section>
 <section id="referential-transparency" class="level3" data-number="10.3.5">
 <h3 data-number="10.3.5" class="anchored" data-anchor-id="referential-transparency"><span class="header-section-number">10.3.5</span> Referential Transparency</h3>
-<p>R functions, like mathematical functions, should always return the exact same output for a given set of inputs.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> This is called referential transparency. R will not enforce this idea, so you must write good code.</p>
+<p>R functions, like mathematical functions, should always return the exact same output for a given set of inputs.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> This is called referential transparency. R will not enforce this idea, so you must write good code.</p>
 <section id="bad" class="level4">
 <h4 class="anchored" data-anchor-id="bad">Bad!</h4>
 <div class="cell">
@@ -1226,7 +1235,7 @@ $median
 <h2 data-number="10.4" class="anchored" data-anchor-id="debugging"><span class="header-section-number">10.4</span> Debugging</h2>
 <p>R code inside of custom functions can be tougher to troubleshoot than R code outside of custom functions. Fortunately, R has a powerful debugging tool.</p>
 <p>The debugger requires putting custom functions in their own scripts. This is covered in <a href="#sec-organizing-an-analysis" class="quarto-xref"><span>Section 10.6</span></a>.</p>
-<p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p>To set up the debugger, simply select the red dot to the left of a line of code in a custom function and then source the custom function. After, there should be a red dot next to the defined function in the global environment.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <div id="fig-debuggera" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-debuggera-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1346,11 +1355,11 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
                      expr      min       lq     mean   median       uq
-                median(x) 6.337493 6.455512 7.748601 6.747698 8.279868
- quantile(x, probs = 0.5) 3.322640 3.633584 4.127940 3.772615 3.983191
+                median(x) 6.279027 6.471645 7.559486 6.562767 8.022757
+ quantile(x, probs = 0.5) 3.498530 3.656503 4.089915 3.696171 3.832475
        max neval
- 54.615075   100
-  6.723877   100</code></pre>
+ 49.601308   100
+  6.406906   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -1367,7 +1376,7 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <ol type="1">
 <li>Load <code>library(microbenchmark)</code> and add the <code>microbenchmark()</code> function.</li>
 <li>Create <code>x1 &lt;- 1:1000000</code>, <code>x2 &lt;- 1:1000000</code>, and <code>x3 &lt;- 1:1000000</code></li>
-<li>Test <code>median(x1)</code>, <code>x2 |&gt; median()</code>, and <code>x3 %&gt;% median()</code>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></li>
+<li>Test <code>median(x1)</code>, <code>x2 |&gt; median()</code>, and <code>x3 %&gt;% median()</code>.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></li>
 </ol>
 </div>
 </div>
@@ -1410,7 +1419,7 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 <pre><code>[1] "hello, aaron" "hello, alex"  "hello, alena"</code></pre>
 </div>
 </div>
-<p>That’s a lot of typing. It is much more common in R to use <code>library(purrr)</code>, which replaces apply functions.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> <code>map()</code> iterates over each element of a data structure called <code>.x</code>, applies a function called <code>.f</code> to each element, and then returns a list.</p>
+<p>That’s a lot of typing. It is much more common in R to use <code>library(purrr)</code>, which replaces apply functions.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <code>map()</code> iterates over each element of a data structure called <code>.x</code>, applies a function called <code>.f</code> to each element, and then returns a list.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb109"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb109-1"><a href="#cb109-1"></a><span class="fu">library</span>(purrr)</span>
 <span id="cb109-2"><a href="#cb109-2"></a></span>
@@ -1465,10 +1474,11 @@ Barrientos, Andrés F., Aaron R. Williams, Joshua Snoke, and Claire McKay Bowen.
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>This rule won’t exactly hold if the function contains random or stochastic code. In those cases, the function should return the same output every time if the seed is set with <code>set.seed()</code>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>According to Hadley Wickham, “You can think of an environment as a bag of names. Each name points to an object stored elsewhere in memory.” For more details, see the <a href="http://adv-r.had.co.nz/Environments.html#env-basics">Environments chapter</a> of Advanced R.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Don’t be surprised when <code>microbenchmark::microbenchmark()</code> returns a row with expr <code>median(x2)</code> instead of <code>x2 |&gt; median()</code>. This is expected behavior because the base pipe is implemented as a syntax transformation. You can read more about this in <a href="https://www.r-bloggers.com/2021/05/the-new-r-pipe/">this blog</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>“Apply functions” refers to a family of base R functions like <code>lapply()</code>. The <code>map()</code> family is similar, but it has more helper functions. You can read more in <a href="https://adv-r.hadley.nz/functionals.html"><em>Advanced R</em></a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>This example is heavily based on the popular <a href="https://r4ds.hadley.nz/base-R.html#lists">“salt shaker” example from R4DS</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>This rule won’t exactly hold if the function contains random or stochastic code. In those cases, the function should return the same output every time if the seed is set with <code>set.seed()</code>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>According to Hadley Wickham, “You can think of an environment as a bag of names. Each name points to an object stored elsewhere in memory.” For more details, see the <a href="http://adv-r.had.co.nz/Environments.html#env-basics">Environments chapter</a> of Advanced R.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Don’t be surprised when <code>microbenchmark::microbenchmark()</code> returns a row with expr <code>median(x2)</code> instead of <code>x2 |&gt; median()</code>. This is expected behavior because the base pipe is implemented as a syntax transformation. You can read more about this in <a href="https://www.r-bloggers.com/2021/05/the-new-r-pipe/">this blog</a>.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>“Apply functions” refers to a family of base R functions like <code>lapply()</code>. The <code>map()</code> family is similar, but it has more helper functions. You can read more in <a href="https://adv-r.hadley.nz/functionals.html"><em>Advanced R</em></a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 

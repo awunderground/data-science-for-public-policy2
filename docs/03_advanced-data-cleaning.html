@@ -1785,14 +1785,14 @@ ISO 8601 Date Standard
 <div class="cell">
 <div class="sourceCode cell-code" id="cb115"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb115-1"><a href="#cb115-1"></a><span class="fu">today</span>() <span class="sc">-</span> <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 91144 days</code></pre>
+<pre><code>Time difference of 91153 days</code></pre>
 </div>
 </div>
 <p>In this case, subtraction creates an object of class <code>difftime</code> represented in days. We can use the <code>difftimes()</code> function to calculate differences in other units.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb117"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb117-1"><a href="#cb117-1"></a><span class="fu">difftime</span>(<span class="fu">today</span>(), <span class="fu">as_date</span>(<span class="st">"1776-07-04"</span>), <span class="at">units =</span> <span class="st">"mins"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Time difference of 131247360 mins</code></pre>
+<pre><code>Time difference of 131260320 mins</code></pre>
 </div>
 </div>
 </section>
