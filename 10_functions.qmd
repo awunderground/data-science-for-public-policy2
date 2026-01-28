@@ -1,6 +1,6 @@
 ---
 title: "Advanced R Programming"
-abstract: "We've mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and iteration."
+abstract: "We've mostly focused on the tidyverse and data analysis. This section will dive into advanced R programming topics like custom functions, debugging, and iteration. Stronger programming skills will be useful for topics like simulation, microsimulation, and web scraping."
 format: 
   html:
     toc: true
@@ -37,7 +37,7 @@ msleep |>
 
 ```
 
-Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from row number 5 and column number 4. This idea of using the relations in data reduces the chances of making mistakes and leads to clearer code.
+Importantly, we almost never used indices or selected data by position, which can lead to errors if the underlying data change. An example of using indices and selecting data by position would be to pick data from **row number 5** and **column number 4**. Using relations in data reduces the chances of making mistakes and leads to clearer code.
 
 ## Programming
 
@@ -109,7 +109,7 @@ letters_short[c(TRUE, FALSE, TRUE)]
 ```
 
 ::: callout-caution
-Wow, R recycles the Booleans. Six is divisible by 1, 2, and 3, so there are many ways to recycle the index to subset `letters_short`. This is dangerous and can quietly cause analtyic errors.
+Wow, R recycles the Booleans. Six is divisible by 1, 2, and 3, so there are many ways to recycle the index to subset `letters_short`. This is dangerous and can quietly cause analytic errors.
 :::
 
 ::: callout
@@ -122,16 +122,34 @@ exercise_number <- exercise_number + 1
 ```
 
 1.  Create `letters_short`.
-2.  Try subsetting the vectors with indices with length four or five. What happens?
+2.  Try subsetting `letters_short` with logical vectors with length four or five. What happens?
 :::
 
 #### Lists
 
-`[[]]` and `$` are useful for subsetting lists. Both can be used to subset data frames, but I recommending avoiding this.
+`[]`, `[[]]`, and `$` are useful for subsetting lists. `[]` subsets lists differently than `[[]]` and `$`.
 
-Unlike `[]`, which returns multiple elements, `[[]]` and `$` can only return a single element and `[[]]` and `$` simplify objects by removing a layer of hierarchy.
+Unlike `[]`, which can return multiple elements from a list, `[[]]` and `$` can only return a single element and they drill down into the list.
 
 `[[]]` can select an element by position or name, while `$` can only select an element by name. Consider a list with the first six letters of the alphabet.
+
+Let's start with a visual example.[^r4ds]
+
+[^r4ds]: This example is heavily based on the popular ["salt shaker" example from R4DS](https://r4ds.hadley.nz/base-R.html#lists).
+
+Suppose I have change dish with pennies, quarters, and dimes. In this example, the change dish is a list and the coins are organized into three vectors.
+
+![](images/list1.jpeg){width=50%}
+
+Next, suppose I use `[]` to subset the change dish to just pennies. That is, I write `change["pennies"]`. `[]` returns the pennies AND the dish.
+
+![](images/list2.jpeg){width=50%}
+
+Let's go back to the original change dish. Now, suppose I use `[[]]` to subset the dish to just pennies. That is, I write `change[["pennies"]]`. `[[]]` returns the pennies without the dish. That's because `[[]]` always drills down and drops one layer of list.
+
+![](images/list3.jpeg){width=50%}
+
+Now, let's consider a code example.
 
 ```{r}
 alphabet <- list(
@@ -224,7 +242,6 @@ alphabet[["vowels"]]
 ```
 
 ### Control Flow
-
 
 Loops are a fundamental programming tool for iteration; however, they are less common in R than in other programming languages. We encourage the map-reduce framework in the tidyverse's purrr library which we introduce in @sec-purrr. Even so, understanding the for loop and while loop is important because you will likely see them in other programmers' R code, and they are extremely common in other programming languages. 
 
@@ -363,7 +380,7 @@ alphabet <- list(
 
 ```
 
-2.  Write a for loop and use `str_to_upper()` to transform all letters to upper case.
+2.  Write a for loop and use `str_to_upper()` from `library(stringr)` to transform all letters to upper case.
 :::
 
 #### While Loops
@@ -433,7 +450,7 @@ if (distribution == "normal") {
   
 } else {
   
-  stop("distribution mast be normal or poissoin")
+  stop("distribution must be normal or poisson")
   
 }
 
@@ -448,7 +465,7 @@ This style of using `if`, `else if`, and `else` is fundamental for including opt
 
 Custom functions are an essential building block for good analyses. Custom functions are useful for abiding by the DRY (don't repeat yourself) principle. Under our conception of DRY, we should create a function any time we do something three times.
 
-Copying-and-pasting is typically bad because it is easy to make mistakes and we typically want a single source source of truth in a script. Custom functions also promote modular code design and testing.
+Copying-and-pasting is typically bad because it is easy to make mistakes and we typically want a single source of truth in a script. Custom functions also promote modular code design and testing.
 
 The bottom line: we want to write clear functions that do one and only one thing that are sufficiently tested so we are confident in their correctness.
 
@@ -492,7 +509,7 @@ This function
 #' @param eps Numeric epsilon privacy parameter
 #' @param gs Numeric global sensitivity for the statistics of interest
 #'
-#' @return
+#' @return A numeric value sampled from the Laplace distribution
 #' 
 lap_mech <- function(eps, gs) {
   
@@ -507,6 +524,7 @@ lap_mech <- function(eps, gs) {
   # Calculating the scale
   scale <- gs / eps
 
+  # Sample from the Laplace (double exponential) distribution
   r <- runif(1)
 
   if(r > 0.5) {
