@@ -676,9 +676,9 @@ This workflow is useful for building up URLs when accessing APIs, scraping infor
 exercise_number <- exercise_number + 1
 ```
 
-1. Use `mutate()` and `library(stringr)` to create a variable for `year` from the earlier SOI exercise. For instance, `"agi2006"` should be `"2006"`.
+1. Use `mutate()` and `library(stringr)` to create a variable for `percentile` from the earlier SOI exercise. For instance, `"p99"` should be `"99"`.
 2. Use `as.numeric()` to convert the string from step 1 into a numeric value.
-3. Create a data visualization with `year` on the x-axis. 
+3. Create a data visualization with `percentile` on the x-axis. 
 
 :::
 
