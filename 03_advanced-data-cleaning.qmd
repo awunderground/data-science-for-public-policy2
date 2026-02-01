@@ -1073,7 +1073,7 @@ exercise_number <- exercise_number + 1
 
 1. Create a date object for your birth date. 
 2. Calculate the number of days since your birth date.
-3. Create a vector of your birthdays from your birth date for the next 120 years. *Do you use periods or durations?* 
+3. Create a vector with the dates of your first 120 birth days. *Do you use periods or durations?* 
 
 :::
 
