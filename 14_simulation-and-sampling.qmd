@@ -75,8 +75,10 @@ Parameters are to populations what statistics are to samples. The process of lea
 
 Simulation and sampling are important tools for statistics and data science. After reviewing/introducing basic concepts about probability theory and probability distributions, we will discuss two important applications of simulation and sampling.
 
-1.  **Monte Carlo simulation:** A class of methods where values are repeatedly sampled/simulated from theoretical distributions that model a data generation process. Theoretical distributions, like the normal distribution, have closed-from representations and a finite number of parameters like mean and variance.
+1.  **Monte Carlo simulation:** A class of methods where values are repeatedly sampled/simulated from theoretical distributions that model a data generation process. Theoretical distributions, like the normal distribution, have closed-form representations[^closed-form] and a finite number of parameters like mean and variance.
 2.  **Resampling methods:** A class of methods where values are repeatedly sampled from observed data to approximate repeatedly sampling from a population. Bootstrapping is a common resampling method.
+
+[^closed-form]: A closed-form representation means the distribution can be described by an exact mathematical formula with a finite number of standard operations (addition, multiplication, exponentiation, etc.). For example, the normal distribution has a closed-form PDF, while some complex empirical distributions may not have simple mathematical expressions.
 
 Monte Carlo methods and resampling methods have a wide range of applications. Monte Carlo simulation is used by election forecasters to predict electoral outcomes and econometricians to understand the properties of estimators. Resampling methods are used in machine learning and causal inference. Both are fundamental methods for agent-based models including microsimulation.
 
@@ -113,7 +115,9 @@ A **sample space** is the set of all possible outcomes for an experiment. We wil
 
 A set is countable if there is a one-to-one correspondence from the elements of the set to some (finite) or all (countably infinite) positive integers (i.e. 1 = heads and 2 = tails).
 
-A random variable is discrete if its sample space is countable (finite or countably infinite).
+A random variable is discrete if its sample space is countable (finite or countably infinite). 
+
+In practical terms, discrete random variables have outcomes you can list (even if infinite, like 1, 2, 3, ...).
 :::
 
 ::: {.callout-tip}
@@ -179,7 +183,7 @@ $$ {#eq-bernoulli-pmf}
 
 A [binomial random variable](https://en.wikipedia.org/wiki/Binomial_distribution) is the number of events observed in $n$ repeated Bernoulli trials.
 
-We show that a random variable is Bernoulli distributed with
+We show that a random variable is binomially distributed with
 
 $$
 X \sim Bin(n, p)
@@ -191,10 +195,10 @@ $$
 p(x) = {n \choose x} p^x(1 - p)^{n - x}
 $$ {#eq-binomial-pmf}
 
-We can calculate the theoretical probability of a given draw from a binomial distribution using this PDF. For example, suppose we have a binomial distribution with $10$ trials and $p = \frac{1}{2}$. The probability of drawing exactly six $1$s and four $0$s is 
+We can calculate the theoretical probability of a given draw from a binomial distribution using this PMF. For example, suppose we have a binomial distribution with $10$ trials and $p = \frac{1}{2}$. The probability of drawing exactly six $1$s and four $0$s is 
 
 $$
-p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
+p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} = \frac{10 \times 9 \times 8 \times 7}{4 \times 3 \times 2 \times 1} \approx 0.2051
 $$ {#eq-binomial-example}
 
 We can do similar calculations for each value between $0$ and $10$.
@@ -237,7 +241,7 @@ The difference between the red dots and black bars in @fig-binomial is caused by
 
 Most common distributions have R functions to
 
--   calculate the density of the pdf/pmf for a specific value
+-   calculate the probability (PMF) or density (PDF) for a specific value
 -   calculate the probability of observing a value less than $a$
 -   calculate the value associated with specific quantiles of the pdf/pmf
 -   randomly sample from the probability distribution
@@ -262,7 +266,7 @@ pbinom(q = 3, size = 10, prob = 0.5)
 
 <br>
 
-The following answers the question: "What is a 10th percentile number of events to see in 10 trials when `p = 0.5`?
+The following answers the question: "What is the 10th percentile number of events to see in 10 trials when `p = 0.5`?
 
 ```{r}
 qbinom(p = 0.1, size = 10, prob = 0.5)
@@ -319,21 +323,22 @@ Use `set.seed()` to make pseudo-random sampling reproducible.
 
 ### Poisson Random Variable
 
-A [poisson random variable](https://en.wikipedia.org/wiki/Poisson_distribution) is the number of events that occur in a fixed period of time. For example, a poisson distribution can be used to model the number of visits in an emergency room between 1AM and 2AM.
+A [Poisson random variable](https://en.wikipedia.org/wiki/Poisson_distribution) is the number of events that occur in a fixed period of time. For example, a Poisson distribution can be used to model the number of visits in an emergency room between 1AM and 2AM.
 
-We show that a random variable is poisson-distributed with
+We show that a random variable is Poisson-distributed with
 
 $$
 X \sim Pois(\lambda)
 $$ {#eq-poisson}
 
-The parameter $\lambda$ is both the mean and variance of the poisson distribution. The PMF of a poisson random variable is
+
+For the Poisson distribution, the parameter $\lambda$ is both the theoretical mean and theoretical variance. The PMF of a Poisson random variable is
 
 $$
 p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 $$ {#eq-poisson-pmf}
 
-@fig-poisson shows 1,000 draws from a poisson distribution with $\lambda = 10$.
+@fig-poisson shows 1,000 draws from a Poisson distribution with $\lambda = 10$.
 
 ```{r}
 #| label: fig-poisson
@@ -421,7 +426,7 @@ tibble(
 
 :::
 
-When $\lambda$ is sufficiently large, the normal distribution is a reasonable approximation of the poisson distribution.
+When $\lambda$ is sufficiently large, the normal distribution is a reasonable approximation of the Poisson distribution.
 
 ## Continuous Random Variables
 
@@ -430,15 +435,15 @@ When $\lambda$ is sufficiently large, the normal distribution is a reasonable ap
 
 A **probability density function** is a non-negative, integrable function for each real value $x$ that shows the relative probability of values of $x$ for an absolutely continuous random variable $X$.
 
-We note PDF with $f_X(x)$.
+We denote PDF with $f_X(x)$.
 :::
 
 ::: {.callout-tip}
 ## Cumulative Distribution Function (CDF)
 
-A **cumulative distribution function (cdf)** shows the probability of a random variable $X$ taking on any value less than or equal to $x$.
+A **cumulative distribution function (CDF)** shows the probability of a random variable $X$ taking on any value less than or equal to $x$.
 
-We note CDF with $F_X(x) = P(X \le x)$
+We denote CDF with $F_X(x) = P(X \le x)$
 :::
 
 Here is the PDF for a **standard normal random variable:**
@@ -457,9 +462,7 @@ tibble(x = c(-4, 4)) |>
 
 ```
 
-If we integrate the entire function we get the CDF.
-
-**Cumulative Density Function (CDF):** A function of a random variable $X$ that returns the probability that the value $X < x$.
+If we integrate the PDF from $-\infty$ to $x$ we get the CDF.
 
 ```{r}
 #| code-fold: true
@@ -478,9 +481,9 @@ tibble(x = c(-4, 4)) |>
 
 ### Uniform Distribution
 
-[Uniform random variables](https://en.wikipedia.org/wiki/Continuous_uniform_distribution) have equal probability for every value in the sample space. The distribution has two parameters: minimum and maximum. A standard uniform random has minimum = 0 and maximum = 1.
+[Uniform random variables](https://en.wikipedia.org/wiki/Continuous_uniform_distribution) have equal probability for every value in the sample space. The distribution has two parameters: minimum and maximum. A standard uniform random variable has minimum = 0 and maximum = 1.
 
-We show that a random variable is uniform distributed with
+We show that a random variable is uniformly distributed with
 
 $$
 X \sim U(a, b)
@@ -537,12 +540,14 @@ $$ {#eq-normal-pdf}
 ::: {.callout-tip}
 ## Fundamental Probability Formula for Intervals
 
-The probability that an absolutely continuous random variable takes on any specific value is always zero because the sample space is uncountable. Accordingly, we express the probability of observing events within a region for absolutely continuous random variables.
+The probability that an absolutely continuous random variable takes on any specific value is always zero because the sample space is uncountable. That is, $P(X = a) = 0$. Accordingly, we express the probability of observing events within a region for absolutely continuous random variables.
+
+**This is crucial:** Unlike discrete random variables where $P(X = 3)$ has meaning, for continuous random variables, $P(X = 3.0000...)$ is always exactly 0. We can only calculate probabilities over intervals.
 
 If $X$ has a PDF and $a < b$, then
 
 $$
-P(a \le X \le b) = P(a \le X < b) = P(a < X \le b) = P(a < X < b) = \int_a^bf(x)dx = F_X(b) - F_X(a)
+P(a \le X \le b) = \\P(a \le X < b) = \\P(a < X \le b) =\\ P(a < X < b) =\\ \int_a^bf(x)dx = F_X(b) - F_X(a)
 $$ {#eq-fundamental-probability}
 :::
 
@@ -596,7 +601,7 @@ Observe how the normal distribution becomes a better approximation for Student's
 
 ### Exponential Distribution
 
-An [exponential random variable](https://en.wikipedia.org/wiki/Exponential_distribution) is the wait time between events for a poisson random variable. It is useful for modeling wait time. For example, an exponential distribution can be used to model the wait time between arrivals in an emergency room between 1AM and 2AM. It has one parameter: rate ($\lambda$).
+An [exponential random variable](https://en.wikipedia.org/wiki/Exponential_distribution) is the wait time between events for a Poisson process. It is useful for modeling wait time. For example, an exponential distribution can be used to model the wait time between arrivals in an emergency room between 1AM and 2AM. It has one parameter: rate ($\lambda$).
 
 We show that a random variable is exponentially distributed with
 
@@ -637,7 +642,7 @@ tibble(
 
 A key exercise in statistics is selecting a probability distribution to represent data and then learning the parameters of probability distributions from the data. The process is often called **model fitting**.
 
-We are focused on parametric density estimation. Later, we will focus on nonparameteric density estimation. This section will focus on frequentist inference of population parameters from observed data. Later, we will adopt a Bayesian approach to inference.
+We are focused on parametric density estimation. Later, we will focus on nonparametric density estimation. This section will focus on frequentist inference of population parameters from observed data. Later, we will adopt a Bayesian approach to inference.
 
 ### Maximum Likelihood Estimation
 
@@ -858,13 +863,25 @@ $$
 \vec{X} \sim \mathcal{N}(\vec\mu, \boldsymbol\Sigma)
 $$ {#eq-multivariate-normal}
 
+For a 2-dimensional multivariate normal distribution, the vector of means and variance-covariance matrix are:
+
+$$
+\vec\mu = \begin{bmatrix} \mu_1 \\ \mu_2 \end{bmatrix}, \quad
+\boldsymbol\Sigma = \begin{bmatrix} 
+\sigma_1^2 & \rho\sigma_1\sigma_2 \\
+\rho\sigma_1\sigma_2 & \sigma_2^2
+\end{bmatrix}
+$$
+
+where $\sigma_1^2$ and $\sigma_2^2$ are the variances of the two variables, and $\rho$ is the correlation between them (or equivalently, the off-diagonal terms can be written as $Cov(X_1, X_2)$).
+
 The PDF of a multivariate normally distributed random variable is
 
 $$
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 $$ {#eq-multivariate-normal-pdf}
 
-Functions for working with multi-variate normal distributions from `library(MASS)`. @fig-mvnorm shows three different random samples from 2-dimensional multivariate normal distributions. 
+Functions for working with multivariate normal distributions are available from `library(MASS)`. @fig-mvnorm shows three different random samples from 2-dimensional multivariate normal distributions. 
 
 ```{r}
 #| label: fig-mvnorm
@@ -923,6 +940,9 @@ But we often want to make probabilistic statements about uncommon or complex pro
 **Monte Carlo:** A Monte Carlo method estimates a deterministic quantity using stochastic (random) sampling.
 
 **Monte Carlo but easier this time:** A Monte Carlo method takes hundreds or thousands of independent samples from a random variable or variables and then approximates fixed population quantities with summaries of those draws. The quantities could be population parameters like a population mean or probabilities.
+
+**Monte Carlo but even easier this time:** Instead of solving complex math, we run the random process many times and count what happens.
+
 
 Monte Carlo methods have three major applications:
 
@@ -1073,6 +1093,8 @@ $$ {#eq-pi}
 This is simply solved with Monte Carlo simulation. Randomly sample a bivariate uniform random variables and count how frequently the values are inside of the square or inside the circle.
 
 ```{r}
+#| warning: false
+
 expand_grid(
   x = seq(0, 4, 0.1),
   y = seq(0, 2, 0.1)
@@ -1269,13 +1291,13 @@ coefficients |>
 
 Suppose we have a queue at a Social Security field office. Let $t$ be time. When the office opens, $t = 0$ and the queue is empty.
 
-Let, $T_i$ be the **inter**arrival time and $T_i \sim exp(\lambda_1)$
+Let $T_i$ be the time between arrivales and $T_i \sim exp(\lambda_1)$
 
-Let, $S_i$ be the service time time and $S_I \sim exp(\lambda_2)$
+Let $S_i$ be the service time and $S_i \sim exp(\lambda_2)$
 
 From these two random variables, we can calculate the arrival times, departure times, and wait times for each customer.
 
--   The arrival times are the cumulative sum of the interarrival times.
+-   The arrival times are the cumulative sum of the time between arrivals.
 -   The wait times are zero if a person arrives after the person before them and the difference between the prior person's departure and the current person's arrival otherwise.
 -   The departure time is arrival time plus the wait time plus the service time.
 
@@ -1354,7 +1376,7 @@ This is interesting, but it's still only one draw from a Monte Carlo simulation.
 #'
 #' @param person_number An integer for the person of interest
 #' @param iterations An integer for the number of Monte Carlo iterations
-#' @param t A t for the maximum time
+#' @param t A value for the maximum time
 #'
 #' @return A vector of wait times
 #' 
@@ -1433,7 +1455,7 @@ mean(map_lgl(.x = 1:10000, .f = ~sample_n()))
 
 ### More examples of Monte Carlo simulation
 
--   [fivethirtyeight 2020 election forecast](https://projects.fivethirtyeight.com/2020-election-forecast/) use
+-   [fivethirtyeight 2020 election forecast](https://projects.fivethirtyeight.com/2020-election-forecast/)
 -   [U.S. Census Bureau simulation of data collection operations](https://www.census.gov/topics/research/stat-research/expertise/sim-stat-modeling.html)
 
 #### Markov Chain Monte Carlo

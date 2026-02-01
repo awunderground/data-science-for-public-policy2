@@ -575,7 +575,7 @@ Statistics
 <h2 data-number="13.2" class="anchored" data-anchor-id="introduction"><span class="header-section-number">13.2</span> Introduction</h2>
 <p>Simulation and sampling are important tools for statistics and data science. After reviewing/introducing basic concepts about probability theory and probability distributions, we will discuss two important applications of simulation and sampling.</p>
 <ol type="1">
-<li><strong>Monte Carlo simulation:</strong> A class of methods where values are repeatedly sampled/simulated from theoretical distributions that model a data generation process. Theoretical distributions, like the normal distribution, have closed-from representations and a finite number of parameters like mean and variance.</li>
+<li><strong>Monte Carlo simulation:</strong> A class of methods where values are repeatedly sampled/simulated from theoretical distributions that model a data generation process. Theoretical distributions, like the normal distribution, have closed-form representations<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> and a finite number of parameters like mean and variance.</li>
 <li><strong>Resampling methods:</strong> A class of methods where values are repeatedly sampled from observed data to approximate repeatedly sampling from a population. Bootstrapping is a common resampling method.</li>
 </ol>
 <p>Monte Carlo methods and resampling methods have a wide range of applications. Monte Carlo simulation is used by election forecasters to predict electoral outcomes and econometricians to understand the properties of estimators. Resampling methods are used in machine learning and causal inference. Both are fundamental methods for agent-based models including microsimulation.</p>
@@ -647,6 +647,7 @@ Discrete Random Variable
 <div class="callout-body-container callout-body">
 <p>A set is countable if there is a one-to-one correspondence from the elements of the set to some (finite) or all (countably infinite) positive integers (i.e.&nbsp;1 = heads and 2 = tails).</p>
 <p>A random variable is discrete if its sample space is countable (finite or countably infinite).</p>
+<p>In practical terms, discrete random variables have outcomes you can list (even if infinite, like 1, 2, 3, …).</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -727,7 +728,7 @@ p &amp;\text{ if } x = 1
 <section id="binomial-distribution" class="level3" data-number="13.4.2">
 <h3 data-number="13.4.2" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">13.4.2</span> Binomial Distribution</h3>
 <p>A <a href="https://en.wikipedia.org/wiki/Binomial_distribution">binomial random variable</a> is the number of events observed in <span class="math inline">\(n\)</span> repeated Bernoulli trials.</p>
-<p>We show that a random variable is Bernoulli distributed with</p>
+<p>We show that a random variable is binomially distributed with</p>
 <p><span id="eq-binomial"><span class="math display">\[
 X \sim Bin(n, p)
 \tag{13.4}\]</span></span></p>
@@ -735,9 +736,9 @@ X \sim Bin(n, p)
 <p><span id="eq-binomial-pmf"><span class="math display">\[
 p(x) = {n \choose x} p^x(1 - p)^{n - x}
 \tag{13.5}\]</span></span></p>
-<p>We can calculate the theoretical probability of a given draw from a binomial distribution using this PDF. For example, suppose we have a binomial distribution with <span class="math inline">\(10\)</span> trials and <span class="math inline">\(p = \frac{1}{2}\)</span>. The probability of drawing exactly six <span class="math inline">\(1\)</span>s and four <span class="math inline">\(0\)</span>s is</p>
+<p>We can calculate the theoretical probability of a given draw from a binomial distribution using this PMF. For example, suppose we have a binomial distribution with <span class="math inline">\(10\)</span> trials and <span class="math inline">\(p = \frac{1}{2}\)</span>. The probability of drawing exactly six <span class="math inline">\(1\)</span>s and four <span class="math inline">\(0\)</span>s is</p>
 <p><span id="eq-binomial-example"><span class="math display">\[
-p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} \approx 0.2051
+p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} = \frac{10 \times 9 \times 8 \times 7}{4 \times 3 \times 2 \times 1} \approx 0.2051
 \tag{13.6}\]</span></span></p>
 <p>We can do similar calculations for each value between <span class="math inline">\(0\)</span> and <span class="math inline">\(10\)</span>.</p>
 <p>We can also take random draws from the distribution. <a href="#fig-binomial" class="quarto-xref">Figure&nbsp;<span>13.2</span></a> shows 1,000 random draws from a binomial distribution with 10 trials and <code>p = 0.5</code>. The theoretical distribution is overlaid in red.</p>
@@ -791,7 +792,7 @@ Sampling Error
 <h3 data-number="13.4.3" class="anchored" data-anchor-id="distributions-using-r"><span class="header-section-number">13.4.3</span> Distributions Using R</h3>
 <p>Most common distributions have R functions to</p>
 <ul>
-<li>calculate the density of the pdf/pmf for a specific value</li>
+<li>calculate the probability (PMF) or density (PDF) for a specific value</li>
 <li>calculate the probability of observing a value less than <span class="math inline">\(a\)</span></li>
 <li>calculate the value associated with specific quantiles of the pdf/pmf</li>
 <li>randomly sample from the probability distribution</li>
@@ -813,7 +814,7 @@ Sampling Error
 </div>
 </div>
 <p><br></p>
-<p>The following answers the question: “What is a 10th percentile number of events to see in 10 trials when <code>p = 0.5</code>?</p>
+<p>The following answers the question: “What is the 10th percentile number of events to see in 10 trials when <code>p = 0.5</code>?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">qbinom</span>(<span class="at">p =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -825,7 +826,7 @@ Sampling Error
 <div class="cell">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 6 5 3 6 4 5 4 3 7 3</code></pre>
+<pre><code> [1] 5 5 4 4 6 4 5 4 4 5</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -863,16 +864,16 @@ Pseudo-random numbers
 </section>
 <section id="poisson-random-variable" class="level3" data-number="13.4.4">
 <h3 data-number="13.4.4" class="anchored" data-anchor-id="poisson-random-variable"><span class="header-section-number">13.4.4</span> Poisson Random Variable</h3>
-<p>A <a href="https://en.wikipedia.org/wiki/Poisson_distribution">poisson random variable</a> is the number of events that occur in a fixed period of time. For example, a poisson distribution can be used to model the number of visits in an emergency room between 1AM and 2AM.</p>
-<p>We show that a random variable is poisson-distributed with</p>
+<p>A <a href="https://en.wikipedia.org/wiki/Poisson_distribution">Poisson random variable</a> is the number of events that occur in a fixed period of time. For example, a Poisson distribution can be used to model the number of visits in an emergency room between 1AM and 2AM.</p>
+<p>We show that a random variable is Poisson-distributed with</p>
 <p><span id="eq-poisson"><span class="math display">\[
 X \sim Pois(\lambda)
 \tag{13.7}\]</span></span></p>
-<p>The parameter <span class="math inline">\(\lambda\)</span> is both the mean and variance of the poisson distribution. The PMF of a poisson random variable is</p>
+<p>For the Poisson distribution, the parameter <span class="math inline">\(\lambda\)</span> is both the theoretical mean and theoretical variance. The PMF of a Poisson random variable is</p>
 <p><span id="eq-poisson-pmf"><span class="math display">\[
 p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 \tag{13.8}\]</span></span></p>
-<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> shows 1,000 draws from a poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
+<p><a href="#fig-poisson" class="quarto-xref">Figure&nbsp;<span>13.3</span></a> shows 1,000 draws from a Poisson distribution with <span class="math inline">\(\lambda = 10\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -958,7 +959,7 @@ p(x) =
 </ol>
 </div>
 </div>
-<p>When <span class="math inline">\(\lambda\)</span> is sufficiently large, the normal distribution is a reasonable approximation of the poisson distribution.</p>
+<p>When <span class="math inline">\(\lambda\)</span> is sufficiently large, the normal distribution is a reasonable approximation of the Poisson distribution.</p>
 </section>
 </section>
 <section id="continuous-random-variables" class="level2" data-number="13.5">
@@ -974,7 +975,7 @@ Probability Density Function (PDF)
 </div>
 <div class="callout-body-container callout-body">
 <p>A <strong>probability density function</strong> is a non-negative, integrable function for each real value <span class="math inline">\(x\)</span> that shows the relative probability of values of <span class="math inline">\(x\)</span> for an absolutely continuous random variable <span class="math inline">\(X\)</span>.</p>
-<p>We note PDF with <span class="math inline">\(f_X(x)\)</span>.</p>
+<p>We denote PDF with <span class="math inline">\(f_X(x)\)</span>.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -987,8 +988,8 @@ Cumulative Distribution Function (CDF)
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A <strong>cumulative distribution function (cdf)</strong> shows the probability of a random variable <span class="math inline">\(X\)</span> taking on any value less than or equal to <span class="math inline">\(x\)</span>.</p>
-<p>We note CDF with <span class="math inline">\(F_X(x) = P(X \le x)\)</span></p>
+<p>A <strong>cumulative distribution function (CDF)</strong> shows the probability of a random variable <span class="math inline">\(X\)</span> taking on any value less than or equal to <span class="math inline">\(x\)</span>.</p>
+<p>We denote CDF with <span class="math inline">\(F_X(x) = P(X \le x)\)</span></p>
 </div>
 </div>
 <p>Here is the PDF for a <strong>standard normal random variable:</strong></p>
@@ -1012,8 +1013,7 @@ Cumulative Distribution Function (CDF)
 </div>
 </div>
 </div>
-<p>If we integrate the entire function we get the CDF.</p>
-<p><strong>Cumulative Density Function (CDF):</strong> A function of a random variable <span class="math inline">\(X\)</span> that returns the probability that the value <span class="math inline">\(X &lt; x\)</span>.</p>
+<p>If we integrate the PDF from <span class="math inline">\(-\infty\)</span> to <span class="math inline">\(x\)</span> we get the CDF.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -1037,8 +1037,8 @@ Cumulative Distribution Function (CDF)
 </div>
 <section id="uniform-distribution" class="level3" data-number="13.5.1">
 <h3 data-number="13.5.1" class="anchored" data-anchor-id="uniform-distribution"><span class="header-section-number">13.5.1</span> Uniform Distribution</h3>
-<p><a href="https://en.wikipedia.org/wiki/Continuous_uniform_distribution">Uniform random variables</a> have equal probability for every value in the sample space. The distribution has two parameters: minimum and maximum. A standard uniform random has minimum = 0 and maximum = 1.</p>
-<p>We show that a random variable is uniform distributed with</p>
+<p><a href="https://en.wikipedia.org/wiki/Continuous_uniform_distribution">Uniform random variables</a> have equal probability for every value in the sample space. The distribution has two parameters: minimum and maximum. A standard uniform random variable has minimum = 0 and maximum = 1.</p>
+<p>We show that a random variable is uniformly distributed with</p>
 <p><span id="eq-uniform"><span class="math display">\[
 X \sim U(a, b)
 \tag{13.10}\]</span></span></p>
@@ -1098,10 +1098,11 @@ Fundamental Probability Formula for Intervals
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The probability that an absolutely continuous random variable takes on any specific value is always zero because the sample space is uncountable. Accordingly, we express the probability of observing events within a region for absolutely continuous random variables.</p>
+<p>The probability that an absolutely continuous random variable takes on any specific value is always zero because the sample space is uncountable. That is, <span class="math inline">\(P(X = a) = 0\)</span>. Accordingly, we express the probability of observing events within a region for absolutely continuous random variables.</p>
+<p><strong>This is crucial:</strong> Unlike discrete random variables where <span class="math inline">\(P(X = 3)\)</span> has meaning, for continuous random variables, <span class="math inline">\(P(X = 3.0000...)\)</span> is always exactly 0. We can only calculate probabilities over intervals.</p>
 <p>If <span class="math inline">\(X\)</span> has a PDF and <span class="math inline">\(a &lt; b\)</span>, then</p>
 <p><span id="eq-fundamental-probability"><span class="math display">\[
-P(a \le X \le b) = P(a \le X &lt; b) = P(a &lt; X \le b) = P(a &lt; X &lt; b) = \int_a^bf(x)dx = F_X(b) - F_X(a)
+P(a \le X \le b) = \\P(a \le X &lt; b) = \\P(a &lt; X \le b) =\\ P(a &lt; X &lt; b) =\\ \int_a^bf(x)dx = F_X(b) - F_X(a)
 \tag{13.14}\]</span></span></p>
 </div>
 </div>
@@ -1148,7 +1149,7 @@ P(a \le X \le b) = P(a \le X &lt; b) = P(a &lt; X \le b) = P(a &lt; X &lt; b) = 
 </section>
 <section id="exponential-distribution" class="level3" data-number="13.5.3">
 <h3 data-number="13.5.3" class="anchored" data-anchor-id="exponential-distribution"><span class="header-section-number">13.5.3</span> Exponential Distribution</h3>
-<p>An <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential random variable</a> is the wait time between events for a poisson random variable. It is useful for modeling wait time. For example, an exponential distribution can be used to model the wait time between arrivals in an emergency room between 1AM and 2AM. It has one parameter: rate (<span class="math inline">\(\lambda\)</span>).</p>
+<p>An <a href="https://en.wikipedia.org/wiki/Exponential_distribution">exponential random variable</a> is the wait time between events for a Poisson process. It is useful for modeling wait time. For example, an exponential distribution can be used to model the wait time between arrivals in an emergency room between 1AM and 2AM. It has one parameter: rate (<span class="math inline">\(\lambda\)</span>).</p>
 <p>We show that a random variable is exponentially distributed with</p>
 <p><span id="eq-exponential"><span class="math display">\[
 X \sim Exp(\lambda)
@@ -1193,7 +1194,7 @@ f(x) = \lambda\exp(-\lambda x)
 <section id="parametric-density-estimation" class="level2" data-number="13.6">
 <h2 data-number="13.6" class="anchored" data-anchor-id="parametric-density-estimation"><span class="header-section-number">13.6</span> Parametric Density Estimation</h2>
 <p>A key exercise in statistics is selecting a probability distribution to represent data and then learning the parameters of probability distributions from the data. The process is often called <strong>model fitting</strong>.</p>
-<p>We are focused on parametric density estimation. Later, we will focus on nonparameteric density estimation. This section will focus on frequentist inference of population parameters from observed data. Later, we will adopt a Bayesian approach to inference.</p>
+<p>We are focused on parametric density estimation. Later, we will focus on nonparametric density estimation. This section will focus on frequentist inference of population parameters from observed data. Later, we will adopt a Bayesian approach to inference.</p>
 <section id="maximum-likelihood-estimation" class="level3" data-number="13.6.1">
 <h3 data-number="13.6.1" class="anchored" data-anchor-id="maximum-likelihood-estimation"><span class="header-section-number">13.6.1</span> Maximum Likelihood Estimation</h3>
 <p>All of the probability distributions we have observed have a finite number of parameters. Maximum likelihood estimation is a common method for estimating these parameters.</p>
@@ -1238,7 +1239,7 @@ Maximum Likelihood Estimation
 <p>In other words, MLEs find the estimated parameters that maximize the probability of observing the observed set of data.</p>
 </div>
 </div>
-<p>We won’t unpack how to derive the maximum likelihood estimators<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> but it is easy to look up most MLEs.</p>
+<p>We won’t unpack how to derive the maximum likelihood estimators<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> but it is easy to look up most MLEs.</p>
 <section id="binomial-distribution-mles" class="level4">
 <h4 class="anchored" data-anchor-id="binomial-distribution-mles">Binomial distribution MLEs</h4>
 <p>Suppose we have a sample of data <span class="math inline">\(x_1, ..., x_m\)</span>. If the number of trials <span class="math inline">\(n\)</span> is already known, then <span class="math inline">\(p\)</span> is the only parameter for the binomial distribution that needs to be estimated. The MLE for <span class="math inline">\(p\)</span> is <span class="math inline">\(\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}\)</span>.</p>
@@ -1263,7 +1264,7 @@ Maximum Likelihood Estimation
 </section>
 <section id="normal-distribution-mles" class="level4">
 <h4 class="anchored" data-anchor-id="normal-distribution-mles">Normal distribution MLEs</h4>
-<p><span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are the parameters of a normal distribution. The MLEs for a normal distribution are <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i = \bar{x}\)</span> and <span class="math inline">\(s^2 = \frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<p><span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are the parameters of a normal distribution. The MLEs for a normal distribution are <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i = \bar{x}\)</span> and <span class="math inline">\(s^2 = \frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i\)</span> and <span class="math inline">\(\hat\sigma^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
@@ -1417,16 +1418,25 @@ Multivariate Distribution
 <section id="multivariate-normal-distribution" class="level3" data-number="13.7.1">
 <h3 data-number="13.7.1" class="anchored" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">13.7.1</span> Multivariate Normal Distribution</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> is a higher-dimensional version of the normal distribution.</p>
-<p>Instead of a single mean and a single variance, the <span class="math inline">\(k\)</span>-dimensional multivariate normal distribution has a vector of means of length <span class="math inline">\(k\)</span> and a <span class="math inline">\(k\)</span>-by-<span class="math inline">\(k\)</span> variance-covariance matrix<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describe the variance of the distributions and relationships between the distributions.</p>
+<p>Instead of a single mean and a single variance, the <span class="math inline">\(k\)</span>-dimensional multivariate normal distribution has a vector of means of length <span class="math inline">\(k\)</span> and a <span class="math inline">\(k\)</span>-by-<span class="math inline">\(k\)</span> variance-covariance matrix<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describe the variance of the distributions and relationships between the distributions.</p>
 <p>We show that a random vector is multivariate normally distributed with</p>
 <p><span id="eq-multivariate-normal"><span class="math display">\[
 \vec{X} \sim \mathcal{N}(\vec\mu, \boldsymbol\Sigma)
 \tag{13.19}\]</span></span></p>
+<p>For a 2-dimensional multivariate normal distribution, the vector of means and variance-covariance matrix are:</p>
+<p><span class="math display">\[
+\vec\mu = \begin{bmatrix} \mu_1 \\ \mu_2 \end{bmatrix}, \quad
+\boldsymbol\Sigma = \begin{bmatrix}
+\sigma_1^2 &amp; \rho\sigma_1\sigma_2 \\
+\rho\sigma_1\sigma_2 &amp; \sigma_2^2
+\end{bmatrix}
+\]</span></p>
+<p>where <span class="math inline">\(\sigma_1^2\)</span> and <span class="math inline">\(\sigma_2^2\)</span> are the variances of the two variables, and <span class="math inline">\(\rho\)</span> is the correlation between them (or equivalently, the off-diagonal terms can be written as <span class="math inline">\(Cov(X_1, X_2)\)</span>).</p>
 <p>The PDF of a multivariate normally distributed random variable is</p>
 <p><span id="eq-multivariate-normal-pdf"><span class="math display">\[
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 \tag{13.20}\]</span></span></p>
-<p>Functions for working with multi-variate normal distributions from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
+<p>Functions for working with multivariate normal distributions are available from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
 <span id="cb38-2"><a href="#cb38-2"></a>                   <span class="fl">0.8</span>, <span class="dv">1</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>
@@ -1522,6 +1532,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>But we often want to make probabilistic statements about uncommon or complex probability distributions. Maybe the probability distribution of the random variable doesn’t have a tractable integral (i.e.&nbsp;the area under the curve can’t practically be computed). Or maybe there are too many potential outcomes (e.g.&nbsp;rays of light emitting from a light bulb in the Marble Science video linked at the top).</p>
 <p><strong>Monte Carlo:</strong> A Monte Carlo method estimates a deterministic quantity using stochastic (random) sampling.</p>
 <p><strong>Monte Carlo but easier this time:</strong> A Monte Carlo method takes hundreds or thousands of independent samples from a random variable or variables and then approximates fixed population quantities with summaries of those draws. The quantities could be population parameters like a population mean or probabilities.</p>
+<p><strong>Monte Carlo but even easier this time:</strong> Instead of solving complex math, we run the random process many times and count what happens.</p>
 <p>Monte Carlo methods have three major applications:</p>
 <ol type="1">
 <li><strong>Sampling</strong> – Monte Carlo simulation allows for sampling from complex probability distributions. The samples can be used to model real-world events (queues), to model outcomes with uncertain model inputs (election modeling), to generate fake data with known parameters to evaluate statistical methods (model selection when assumptions fail), and to draw from the posteriors of Bayesian models.</li>
@@ -1644,21 +1655,6 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb52-7"><a href="#cb52-7"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">1</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
 <span id="cb52-8"><a href="#cb52-8"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">2</span>), <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
 <span id="cb52-9"><a href="#cb52-9"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in ggforce::geom_circle(aes(x0 = 2, y0 = 1, r = 1), fill = "blue", : All aesthetics have length 1, but the data has 861 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "red", : All aesthetics have length 1, but the data has 861 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in geom_rect(aes(xmin = 0, xmax = 3, ymin = 0, ymax = 2), fill = NA, : All aesthetics have length 1, but the data has 861 rows.
-ℹ Please consider using `annotate()` or provide this layer with data containing
-  a single row.</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1668,33 +1664,33 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
-<span id="cb56-2"><a href="#cb56-2"></a></span>
-<span id="cb56-3"><a href="#cb56-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
-<span id="cb56-4"><a href="#cb56-4"></a><span class="fu">set.seed</span>(<span class="dv">20210907</span>)</span>
-<span id="cb56-5"><a href="#cb56-5"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb56-6"><a href="#cb56-6"></a>  <span class="at">x =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3</span>),</span>
-<span id="cb56-7"><a href="#cb56-7"></a>  <span class="at">y =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">2</span>)</span>
-<span id="cb56-8"><a href="#cb56-8"></a>)</span>
-<span id="cb56-9"><a href="#cb56-9"></a></span>
-<span id="cb56-10"><a href="#cb56-10"></a><span class="co"># calculate if (x, y) is in the circle, the square, or neither</span></span>
-<span id="cb56-11"><a href="#cb56-11"></a>samples <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
-<span id="cb56-12"><a href="#cb56-12"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb56-13"><a href="#cb56-13"></a>    <span class="at">in_square =</span> <span class="fu">between</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">between</span>(y, <span class="dv">0</span>, <span class="dv">1</span>),</span>
-<span id="cb56-14"><a href="#cb56-14"></a>    <span class="at">in_circle =</span> (x <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> (y <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span></span>
-<span id="cb56-15"><a href="#cb56-15"></a>  ) </span>
-<span id="cb56-16"><a href="#cb56-16"></a></span>
-<span id="cb56-17"><a href="#cb56-17"></a><span class="co"># calculate the proportion of samples in each shape</span></span>
-<span id="cb56-18"><a href="#cb56-18"></a>prop_in_shapes <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
-<span id="cb56-19"><a href="#cb56-19"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb56-20"><a href="#cb56-20"></a>    <span class="at">prop_in_square =</span> <span class="fu">mean</span>(in_square), </span>
-<span id="cb56-21"><a href="#cb56-21"></a>    <span class="at">prop_in_circle =</span> <span class="fu">mean</span>(in_circle)</span>
-<span id="cb56-22"><a href="#cb56-22"></a>  ) </span>
-<span id="cb56-23"><a href="#cb56-23"></a></span>
-<span id="cb56-24"><a href="#cb56-24"></a><span class="co"># calculate the ratio</span></span>
-<span id="cb56-25"><a href="#cb56-25"></a>prop_in_shapes <span class="sc">|&gt;</span></span>
-<span id="cb56-26"><a href="#cb56-26"></a>  <span class="fu">mutate</span>(prop_in_circle <span class="sc">/</span> prop_in_square) <span class="sc">|&gt;</span></span>
-<span id="cb56-27"><a href="#cb56-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
+<span id="cb53-2"><a href="#cb53-2"></a></span>
+<span id="cb53-3"><a href="#cb53-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
+<span id="cb53-4"><a href="#cb53-4"></a><span class="fu">set.seed</span>(<span class="dv">20210907</span>)</span>
+<span id="cb53-5"><a href="#cb53-5"></a>samples <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb53-6"><a href="#cb53-6"></a>  <span class="at">x =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">3</span>),</span>
+<span id="cb53-7"><a href="#cb53-7"></a>  <span class="at">y =</span> <span class="fu">runif</span>(number_of_samples, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">2</span>)</span>
+<span id="cb53-8"><a href="#cb53-8"></a>)</span>
+<span id="cb53-9"><a href="#cb53-9"></a></span>
+<span id="cb53-10"><a href="#cb53-10"></a><span class="co"># calculate if (x, y) is in the circle, the square, or neither</span></span>
+<span id="cb53-11"><a href="#cb53-11"></a>samples <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
+<span id="cb53-12"><a href="#cb53-12"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb53-13"><a href="#cb53-13"></a>    <span class="at">in_square =</span> <span class="fu">between</span>(x, <span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">&amp;</span> <span class="fu">between</span>(y, <span class="dv">0</span>, <span class="dv">1</span>),</span>
+<span id="cb53-14"><a href="#cb53-14"></a>    <span class="at">in_circle =</span> (x <span class="sc">-</span> <span class="dv">2</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">+</span> (y <span class="sc">-</span> <span class="dv">1</span>) <span class="sc">^</span> <span class="dv">2</span> <span class="sc">&lt;</span> <span class="dv">1</span></span>
+<span id="cb53-15"><a href="#cb53-15"></a>  ) </span>
+<span id="cb53-16"><a href="#cb53-16"></a></span>
+<span id="cb53-17"><a href="#cb53-17"></a><span class="co"># calculate the proportion of samples in each shape</span></span>
+<span id="cb53-18"><a href="#cb53-18"></a>prop_in_shapes <span class="ot">&lt;-</span> samples <span class="sc">|&gt;</span></span>
+<span id="cb53-19"><a href="#cb53-19"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb53-20"><a href="#cb53-20"></a>    <span class="at">prop_in_square =</span> <span class="fu">mean</span>(in_square), </span>
+<span id="cb53-21"><a href="#cb53-21"></a>    <span class="at">prop_in_circle =</span> <span class="fu">mean</span>(in_circle)</span>
+<span id="cb53-22"><a href="#cb53-22"></a>  ) </span>
+<span id="cb53-23"><a href="#cb53-23"></a></span>
+<span id="cb53-24"><a href="#cb53-24"></a><span class="co"># calculate the ratio</span></span>
+<span id="cb53-25"><a href="#cb53-25"></a>prop_in_shapes <span class="sc">|&gt;</span></span>
+<span id="cb53-26"><a href="#cb53-26"></a>  <span class="fu">mutate</span>(prop_in_circle <span class="sc">/</span> prop_in_square) <span class="sc">|&gt;</span></span>
+<span id="cb53-27"><a href="#cb53-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   prop_in_square prop_in_circle `prop_in_circle/prop_in_square`
@@ -1748,43 +1744,43 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>We can calculate the above statistics over repeated sampling and confirm their asymptotic properties with Monte Carlo simulation.</p>
 <p>First, create 1,000 random samples from the population.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
-<span id="cb58-2"><a href="#cb58-2"></a></span>
-<span id="cb58-3"><a href="#cb58-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
-<span id="cb58-4"><a href="#cb58-4"></a>  <span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
-<span id="cb58-5"><a href="#cb58-5"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">tibble</span>(</span>
-<span id="cb58-6"><a href="#cb58-6"></a>    <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
-<span id="cb58-7"><a href="#cb58-7"></a>    <span class="at">epsilon =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
-<span id="cb58-8"><a href="#cb58-8"></a>    <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
-<span id="cb58-9"><a href="#cb58-9"></a>  )</span>
-<span id="cb58-10"><a href="#cb58-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
+<span id="cb55-2"><a href="#cb55-2"></a></span>
+<span id="cb55-3"><a href="#cb55-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb55-4"><a href="#cb55-4"></a>  <span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
+<span id="cb55-5"><a href="#cb55-5"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">tibble</span>(</span>
+<span id="cb55-6"><a href="#cb55-6"></a>    <span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>),</span>
+<span id="cb55-7"><a href="#cb55-7"></a>    <span class="at">epsilon =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
+<span id="cb55-8"><a href="#cb55-8"></a>    <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
+<span id="cb55-9"><a href="#cb55-9"></a>  )</span>
+<span id="cb55-10"><a href="#cb55-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, estimate a simple linear regression model for each draw of the population. This step includes calculating <span class="math inline">\(\hat\sigma\)</span>, <span class="math inline">\(\hat\beta_1\)</span>, <span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat{SE}(\hat\beta_1)\)</span>, and <span class="math inline">\(\hat{SE}(\hat\beta_0)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a href="#cb59-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
-<span id="cb59-2"><a href="#cb59-2"></a>  <span class="at">.x =</span> data,</span>
-<span id="cb59-3"><a href="#cb59-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
-<span id="cb59-4"><a href="#cb59-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<span id="cb56-2"><a href="#cb56-2"></a>  <span class="at">.x =</span> data,</span>
+<span id="cb56-3"><a href="#cb56-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
+<span id="cb56-4"><a href="#cb56-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Next, we extract the coefficients and confidence intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
-<span id="cb60-2"><a href="#cb60-2"></a>  <span class="at">.x =</span> estimated_models,</span>
-<span id="cb60-3"><a href="#cb60-3"></a>  <span class="at">.f =</span> tidy,</span>
-<span id="cb60-4"><a href="#cb60-4"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
-<span id="cb60-5"><a href="#cb60-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<span id="cb57-2"><a href="#cb57-2"></a>  <span class="at">.x =</span> estimated_models,</span>
+<span id="cb57-3"><a href="#cb57-3"></a>  <span class="at">.f =</span> tidy,</span>
+<span id="cb57-4"><a href="#cb57-4"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
+<span id="cb57-5"><a href="#cb57-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s look at estimates of the residual standard error. The center of the distribution closely matches the population standard deviation of the error term.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb61"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb61-1"><a href="#cb61-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
-<span id="cb61-2"><a href="#cb61-2"></a>  <span class="at">.x =</span> estimated_models,</span>
-<span id="cb61-3"><a href="#cb61-3"></a>  <span class="at">.f =</span> glance</span>
-<span id="cb61-4"><a href="#cb61-4"></a>) </span>
-<span id="cb61-5"><a href="#cb61-5"></a></span>
-<span id="cb61-6"><a href="#cb61-6"></a>model_metrics <span class="sc">|&gt;</span></span>
-<span id="cb61-7"><a href="#cb61-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
-<span id="cb61-8"><a href="#cb61-8"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb61-9"><a href="#cb61-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<span id="cb58-2"><a href="#cb58-2"></a>  <span class="at">.x =</span> estimated_models,</span>
+<span id="cb58-3"><a href="#cb58-3"></a>  <span class="at">.f =</span> glance</span>
+<span id="cb58-4"><a href="#cb58-4"></a>) </span>
+<span id="cb58-5"><a href="#cb58-5"></a></span>
+<span id="cb58-6"><a href="#cb58-6"></a>model_metrics <span class="sc">|&gt;</span></span>
+<span id="cb58-7"><a href="#cb58-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
+<span id="cb58-8"><a href="#cb58-8"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb58-9"><a href="#cb58-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1798,11 +1794,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s plot the coefficients. The centers approximately match the population intercept of 5 and slope of 15.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb63-1"><a href="#cb63-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb63-2"><a href="#cb63-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
-<span id="cb63-3"><a href="#cb63-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb63-4"><a href="#cb63-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb63-5"><a href="#cb63-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
+<span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
+<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1818,12 +1814,12 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p><span class="math display">\[\hat{SE}(\hat\beta_1) = \sqrt\frac{\hat\sigma^2}{\sum(x_i -\bar{x})^2} = \sqrt\frac{10^2}{40,000} = 0.05\]</span></p>
 <p><span class="math display">\[\hat{SE}(\hat{\beta_0}) = \sqrt{\hat\sigma^2\left[\frac{1}{n} + \frac{\bar{x}^2}{\sum(x_i - \bar{x})^2}\right]} = \sqrt{10^2\left[\frac{1}{10,000} + 0\right]} = 0.1\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb65-1"><a href="#cb65-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb65-2"><a href="#cb65-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
-<span id="cb65-3"><a href="#cb65-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb65-4"><a href="#cb65-4"></a>    <span class="fu">mean</span>(estimate), </span>
-<span id="cb65-5"><a href="#cb65-5"></a>    <span class="fu">sd</span>(estimate)</span>
-<span id="cb65-6"><a href="#cb65-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb62-2"><a href="#cb62-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
+<span id="cb62-3"><a href="#cb62-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb62-4"><a href="#cb62-4"></a>    <span class="fu">mean</span>(estimate), </span>
+<span id="cb62-5"><a href="#cb62-5"></a>    <span class="fu">sd</span>(estimate)</span>
+<span id="cb62-6"><a href="#cb62-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   term        `mean(estimate)` `sd(estimate)`
@@ -1834,18 +1830,18 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s look at how often the true parameter is inside the 95% confidence interval. It’s close although not exactly 95%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb67"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb67-1"><a href="#cb67-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb67-2"><a href="#cb67-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb67-3"><a href="#cb67-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb64-3"><a href="#cb64-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
             &lt;dbl&gt;
 1           0.959</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb69"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb69-1"><a href="#cb69-1"></a>coefficients <span class="sc">|&gt;</span></span>
-<span id="cb69-2"><a href="#cb69-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb69-3"><a href="#cb69-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb66-3"><a href="#cb66-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
@@ -1858,19 +1854,19 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <section id="example-5-queuing-example" class="level3" data-number="13.8.5">
 <h3 data-number="13.8.5" class="anchored" data-anchor-id="example-5-queuing-example"><span class="header-section-number">13.8.5</span> Example 5: Queuing Example</h3>
 <p>Suppose we have a queue at a Social Security field office. Let <span class="math inline">\(t\)</span> be time. When the office opens, <span class="math inline">\(t = 0\)</span> and the queue is empty.</p>
-<p>Let, <span class="math inline">\(T_i\)</span> be the <strong>inter</strong>arrival time and <span class="math inline">\(T_i \sim exp(\lambda_1)\)</span></p>
-<p>Let, <span class="math inline">\(S_i\)</span> be the service time time and <span class="math inline">\(S_I \sim exp(\lambda_2)\)</span></p>
+<p>Let <span class="math inline">\(T_i\)</span> be the time between arrivales and <span class="math inline">\(T_i \sim exp(\lambda_1)\)</span></p>
+<p>Let <span class="math inline">\(S_i\)</span> be the service time and <span class="math inline">\(S_i \sim exp(\lambda_2)\)</span></p>
 <p>From these two random variables, we can calculate the arrival times, departure times, and wait times for each customer.</p>
 <ul>
-<li>The arrival times are the cumulative sum of the interarrival times.</li>
+<li>The arrival times are the cumulative sum of the time between arrivals.</li>
 <li>The wait times are zero if a person arrives after the person before them and the difference between the prior person’s departure and the current person’s arrival otherwise.</li>
 <li>The departure time is arrival time plus the wait time plus the service time.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
-<span id="cb71-2"><a href="#cb71-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
-<span id="cb71-3"><a href="#cb71-3"></a></span>
-<span id="cb71-4"><a href="#cb71-4"></a>queue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
+<span id="cb68-2"><a href="#cb68-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
+<span id="cb68-3"><a href="#cb68-3"></a></span>
+<span id="cb68-4"><a href="#cb68-4"></a>queue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 5
    interarrival_time arrival_time service_time wait_time departure_time
@@ -1889,20 +1885,20 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
-<span id="cb73-2"><a href="#cb73-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
-<span id="cb73-3"><a href="#cb73-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
-<span id="cb73-4"><a href="#cb73-4"></a>           <span class="fu">rep</span>(<span class="st">"departure"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))), </span>
-<span id="cb73-5"><a href="#cb73-5"></a>  <span class="at">change =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))),</span>
-<span id="cb73-6"><a href="#cb73-6"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb73-7"><a href="#cb73-7"></a>  <span class="fu">arrange</span>(time) <span class="sc">|&gt;</span> </span>
-<span id="cb73-8"><a href="#cb73-8"></a>  <span class="fu">filter</span>(time <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb73-9"><a href="#cb73-9"></a>  <span class="fu">mutate</span>(<span class="at">queue =</span> <span class="fu">cumsum</span>(change) <span class="sc">-</span> <span class="dv">1</span>)</span>
-<span id="cb73-10"><a href="#cb73-10"></a></span>
-<span id="cb73-11"><a href="#cb73-11"></a>flow <span class="sc">|&gt;</span></span>
-<span id="cb73-12"><a href="#cb73-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, queue)) <span class="sc">+</span></span>
-<span id="cb73-13"><a href="#cb73-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb73-14"><a href="#cb73-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<span id="cb70-2"><a href="#cb70-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
+<span id="cb70-3"><a href="#cb70-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
+<span id="cb70-4"><a href="#cb70-4"></a>           <span class="fu">rep</span>(<span class="st">"departure"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))), </span>
+<span id="cb70-5"><a href="#cb70-5"></a>  <span class="at">change =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), <span class="fu">rep</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))),</span>
+<span id="cb70-6"><a href="#cb70-6"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb70-7"><a href="#cb70-7"></a>  <span class="fu">arrange</span>(time) <span class="sc">|&gt;</span> </span>
+<span id="cb70-8"><a href="#cb70-8"></a>  <span class="fu">filter</span>(time <span class="sc">&lt;</span> <span class="dv">100</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb70-9"><a href="#cb70-9"></a>  <span class="fu">mutate</span>(<span class="at">queue =</span> <span class="fu">cumsum</span>(change) <span class="sc">-</span> <span class="dv">1</span>)</span>
+<span id="cb70-10"><a href="#cb70-10"></a></span>
+<span id="cb70-11"><a href="#cb70-11"></a>flow <span class="sc">|&gt;</span></span>
+<span id="cb70-12"><a href="#cb70-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, queue)) <span class="sc">+</span></span>
+<span id="cb70-13"><a href="#cb70-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
+<span id="cb70-14"><a href="#cb70-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1913,35 +1909,35 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>This is interesting, but it’s still only one draw from a Monte Carlo simulation. What if we are interested in the distribution of wait times for the fifth customer?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb74"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb74-1"><a href="#cb74-1"></a><span class="co">#' Generate wait times at the queue</span></span>
-<span id="cb74-2"><a href="#cb74-2"></a><span class="co">#'</span></span>
-<span id="cb74-3"><a href="#cb74-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
-<span id="cb74-4"><a href="#cb74-4"></a><span class="co">#' @param iterations An integer for the number of Monte Carlo iterations</span></span>
-<span id="cb74-5"><a href="#cb74-5"></a><span class="co">#' @param t A t for the maximum time</span></span>
-<span id="cb74-6"><a href="#cb74-6"></a><span class="co">#'</span></span>
-<span id="cb74-7"><a href="#cb74-7"></a><span class="co">#' @return A vector of wait times</span></span>
-<span id="cb74-8"><a href="#cb74-8"></a><span class="co">#' </span></span>
-<span id="cb74-9"><a href="#cb74-9"></a>generate_waits <span class="ot">&lt;-</span> <span class="cf">function</span>(person_number, iterations, t) {</span>
-<span id="cb74-10"><a href="#cb74-10"></a>  </span>
-<span id="cb74-11"><a href="#cb74-11"></a>  wait_time <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> iterations)</span>
-<span id="cb74-12"><a href="#cb74-12"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(wait_time)) {</span>
-<span id="cb74-13"><a href="#cb74-13"></a>    </span>
-<span id="cb74-14"><a href="#cb74-14"></a>    wait_time[i] <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> t, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)<span class="sc">$</span>wait_time[person_number]</span>
-<span id="cb74-15"><a href="#cb74-15"></a>    </span>
-<span id="cb74-16"><a href="#cb74-16"></a>  }</span>
-<span id="cb74-17"><a href="#cb74-17"></a>  </span>
-<span id="cb74-18"><a href="#cb74-18"></a>  <span class="fu">return</span>(wait_time)</span>
-<span id="cb74-19"><a href="#cb74-19"></a>  </span>
-<span id="cb74-20"><a href="#cb74-20"></a>}</span>
-<span id="cb74-21"><a href="#cb74-21"></a></span>
-<span id="cb74-22"><a href="#cb74-22"></a><span class="fu">set.seed</span>(<span class="dv">20200908</span>)</span>
-<span id="cb74-23"><a href="#cb74-23"></a>wait_time <span class="ot">&lt;-</span> <span class="fu">generate_waits</span>(<span class="at">person_number =</span> <span class="dv">5</span>, <span class="at">iterations =</span> <span class="dv">10000</span>, <span class="at">t =</span> <span class="dv">50</span>)</span>
-<span id="cb74-24"><a href="#cb74-24"></a></span>
-<span id="cb74-25"><a href="#cb74-25"></a><span class="fu">mean</span>(wait_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="co">#' Generate wait times at the queue</span></span>
+<span id="cb71-2"><a href="#cb71-2"></a><span class="co">#'</span></span>
+<span id="cb71-3"><a href="#cb71-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
+<span id="cb71-4"><a href="#cb71-4"></a><span class="co">#' @param iterations An integer for the number of Monte Carlo iterations</span></span>
+<span id="cb71-5"><a href="#cb71-5"></a><span class="co">#' @param t A value for the maximum time</span></span>
+<span id="cb71-6"><a href="#cb71-6"></a><span class="co">#'</span></span>
+<span id="cb71-7"><a href="#cb71-7"></a><span class="co">#' @return A vector of wait times</span></span>
+<span id="cb71-8"><a href="#cb71-8"></a><span class="co">#' </span></span>
+<span id="cb71-9"><a href="#cb71-9"></a>generate_waits <span class="ot">&lt;-</span> <span class="cf">function</span>(person_number, iterations, t) {</span>
+<span id="cb71-10"><a href="#cb71-10"></a>  </span>
+<span id="cb71-11"><a href="#cb71-11"></a>  wait_time <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> iterations)</span>
+<span id="cb71-12"><a href="#cb71-12"></a>  <span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(wait_time)) {</span>
+<span id="cb71-13"><a href="#cb71-13"></a>    </span>
+<span id="cb71-14"><a href="#cb71-14"></a>    wait_time[i] <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> t, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)<span class="sc">$</span>wait_time[person_number]</span>
+<span id="cb71-15"><a href="#cb71-15"></a>    </span>
+<span id="cb71-16"><a href="#cb71-16"></a>  }</span>
+<span id="cb71-17"><a href="#cb71-17"></a>  </span>
+<span id="cb71-18"><a href="#cb71-18"></a>  <span class="fu">return</span>(wait_time)</span>
+<span id="cb71-19"><a href="#cb71-19"></a>  </span>
+<span id="cb71-20"><a href="#cb71-20"></a>}</span>
+<span id="cb71-21"><a href="#cb71-21"></a></span>
+<span id="cb71-22"><a href="#cb71-22"></a><span class="fu">set.seed</span>(<span class="dv">20200908</span>)</span>
+<span id="cb71-23"><a href="#cb71-23"></a>wait_time <span class="ot">&lt;-</span> <span class="fu">generate_waits</span>(<span class="at">person_number =</span> <span class="dv">5</span>, <span class="at">iterations =</span> <span class="dv">10000</span>, <span class="at">t =</span> <span class="dv">50</span>)</span>
+<span id="cb71-24"><a href="#cb71-24"></a></span>
+<span id="cb71-25"><a href="#cb71-25"></a><span class="fu">mean</span>(wait_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.464371</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb76"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb76-1"><a href="#cb76-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     2.5%       50%     97.5% 
 0.0000000 0.9222193 5.8742015 </code></pre>
@@ -1985,7 +1981,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <section id="more-examples-of-monte-carlo-simulation" class="level3" data-number="13.8.6">
 <h3 data-number="13.8.6" class="anchored" data-anchor-id="more-examples-of-monte-carlo-simulation"><span class="header-section-number">13.8.6</span> More examples of Monte Carlo simulation</h3>
 <ul>
-<li><a href="https://projects.fivethirtyeight.com/2020-election-forecast/">fivethirtyeight 2020 election forecast</a> use</li>
+<li><a href="https://projects.fivethirtyeight.com/2020-election-forecast/">fivethirtyeight 2020 election forecast</a></li>
 <li><a href="https://www.census.gov/topics/research/stat-research/expertise/sim-stat-modeling.html">U.S. Census Bureau simulation of data collection operations</a></li>
 </ul>
 <section id="markov-chain-monte-carlo" class="level4">
@@ -2066,9 +2062,10 @@ Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd 
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p><span class="citation" data-cites="casella2002">(<a href="references.html#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span> offers a robust introduction to deriving maximum likelihood estimators.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn2"><p>Note that the MLE for variance is biased.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn3"><p>Correlation may be more familiar than covariance. Sample correlation is standardized sample covariance. <span class="math inline">\(Corr(\vec{x}, \vec{y}) = \frac{Cov(\vec{x}, \vec{y})}{S_{\vec{x}}S_{\vec{y}}}\)</span>. Correlation is also between -1 and 1 inclusive. Covariance can take on any real value.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>A closed-form representation means the distribution can be described by an exact mathematical formula with a finite number of standard operations (addition, multiplication, exponentiation, etc.). For example, the normal distribution has a closed-form PDF, while some complex empirical distributions may not have simple mathematical expressions.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span class="citation" data-cites="casella2002">(<a href="references.html#ref-casella2002" role="doc-biblioref">Casella and Berger 2002</a>)</span> offers a robust introduction to deriving maximum likelihood estimators.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that the MLE for variance is biased.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Correlation may be more familiar than covariance. Sample correlation is standardized sample covariance. <span class="math inline">\(Corr(\vec{x}, \vec{y}) = \frac{Cov(\vec{x}, \vec{y})}{S_{\vec{x}}S_{\vec{y}}}\)</span>. Correlation is also between -1 and 1 inclusive. Covariance can take on any real value.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
 
