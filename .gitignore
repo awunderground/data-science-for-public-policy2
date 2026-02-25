@@ -49,3 +49,4 @@ po/*~
 
 # environment file for quarto (render)
 _environment
+**/*.quarto_ipynb

@@ -2,13 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-02-01">
+<meta name="dcterms.date" content="2026-02-25">
 
-<title>Data Science for Public Policy - 15&nbsp; Nonparametric Curve Fitting</title>
+<title>15&nbsp; Nonparametric Curve Fitting – Data Science for Public Policy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -22,8 +22,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -87,15 +88,17 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./17_nonparametric-2.html" rel="next">
 <link href="./15_microsimulation.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -124,7 +127,7 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -138,7 +141,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -157,19 +160,19 @@ window.Quarto = {
 <link rel="stylesheet" href="www/styles.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./16_nonparametric-1.html"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Nonparametric Curve Fitting</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -199,9 +202,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Basics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -240,9 +243,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Reproducible Research</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -275,9 +278,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -304,9 +307,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -339,9 +342,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Supervised Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -380,9 +383,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Unsupervised Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -397,9 +400,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Other Topics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -473,7 +476,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 1, 2026</p>
+      <p class="date">February 25, 2026</p>
     </div>
   </div>
   
@@ -519,7 +522,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Parametric Statistics
+<span class="screen-reader-only">Tip</span>Parametric Statistics
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -533,7 +536,7 @@ Parametric Statistics
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Nonparametric Statistics
+<span class="screen-reader-only">Tip</span>Nonparametric Statistics
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -579,7 +582,7 @@ Nonparametric Statistics
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Relative Frequency Histogram
+<span class="screen-reader-only">Tip</span>Relative Frequency Histogram
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -602,28 +605,28 @@ Relative Frequency Histogram
 <h4 class="anchored" data-anchor-id="example">Example</h4>
 <p>Consider three random samples of sizes <span class="math inline">\(n = 40\)</span>, <span class="math inline">\(n = 100\)</span>, and <span class="math inline">\(n = 10,000\)</span> from standard normal distribution. In the code below, we store these samples in an a tibble with two columns, one for the name of the sample set and one for the observation in the sample.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">set.seed</span>(<span class="dv">20230617</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">set.seed</span>(<span class="dv">20230617</span>)</span>
 <span id="cb1-2"><a href="#cb1-2"></a>data <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(</span>
 <span id="cb1-3"><a href="#cb1-3"></a>  <span class="st">`</span><span class="at">n=40</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">40</span>)),</span>
 <span id="cb1-4"><a href="#cb1-4"></a>  <span class="st">`</span><span class="at">n=100</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">100</span>)),</span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="st">`</span><span class="at">n=10,000</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>)),</span>
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="at">.id =</span> <span class="st">"set"</span></span>
 <span id="cb1-7"><a href="#cb1-7"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a>  <span class="fu">mutate</span>(<span class="at">set =</span> <span class="fu">factor</span>(set, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"n=40"</span>, <span class="st">"n=100"</span>, <span class="st">"n=10,000"</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-8"><a href="#cb1-8"></a>  <span class="fu">mutate</span>(<span class="at">set =</span> <span class="fu">factor</span>(set, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"n=40"</span>, <span class="st">"n=100"</span>, <span class="st">"n=10,000"</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s use <code>library(ggplot2)</code> and the <code>after_stat()</code> function to create relative frequency histograms for the three random samples. Remember, the relative frequency histograms are <span class="math inline">\(\hat{f}(x)\)</span>.</p>
 <p>In this example, we know <span class="math inline">\(f_X(x)\)</span>. It is the PDF for <span class="math inline">\(X \sim N(\mu = 0, \sigma = 1)\)</span>. Next, superimpose the known PDF on top of <span class="math inline">\(\hat{f_X}(x)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-5"><a href="#cb2-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-histogram" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-histogram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
@@ -642,13 +645,13 @@ Figure&nbsp;15.1: Relative frequency histograms fit to sample data from standard
 <p>Several papers have developed rules for determining the number of bins or binwidth including <span class="citation" data-cites="scott2005">Scott and Sain (<a href="references.html#ref-scott2005" role="doc-biblioref">2005</a>)</span>.</p>
 <p>An important takeaway is that increasing <span class="math inline">\(k\)</span>, the number of bins, can lead to noisier bars but more precision in the estimate, while decreasing <span class="math inline">\(k\)</span> results in less noisy bars but imprecise estimates. <a href="#fig-histogram-fewer-bins" class="quarto-xref">Figure&nbsp;<span>15.2</span></a> recreates <a href="#fig-histogram" class="quarto-xref">Figure&nbsp;<span>15.1</span></a> with fewer bins.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb4-2"><a href="#cb4-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(<span class="at">y =</span> <span class="fu">after_stat</span>(density)), <span class="at">bins =</span> <span class="dv">10</span>) <span class="sc">+</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> set)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div id="fig-histogram-fewer-bins" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-histogram-fewer-bins" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-histogram-fewer-bins-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard normal distributions with three different sample sizes.
@@ -666,7 +669,7 @@ Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 1</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -699,7 +702,7 @@ Figure&nbsp;15.2: Relative frequency histograms fit to sample data from standard
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Kernel Density Estimators
+<span class="screen-reader-only">Tip</span>Kernel Density Estimators
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -713,7 +716,7 @@ Kernel Density Estimators
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Kernel
+<span class="screen-reader-only">Tip</span>Kernel
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -734,7 +737,7 @@ Kernel
 <p>First, we need to pick a kernel. We will mostly use normal kernels, but there are <a href="https://en.wikipedia.org/wiki/Kernel_%28statistics%29">many potential kernels</a> including the triangular kernel and uniform kernel. <a href="#fig-kernels" class="quarto-xref">Figure&nbsp;<span>15.3</span></a> shows the PDFs for a few kernels.</p>
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="dv">0</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
@@ -752,7 +755,7 @@ Kernel
 <span id="cb5-16"><a href="#cb5-16"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb5-17"><a href="#cb5-17"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(x, d), <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span></span>
 <span id="cb5-18"><a href="#cb5-18"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">3</span>, <span class="dv">3</span>)) <span class="sc">+</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-19"><a href="#cb5-19"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">1.2</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div id="fig-kernels" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
@@ -762,7 +765,7 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 <div aria-describedby="fig-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-kernels-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Normal kernel
@@ -774,7 +777,7 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-kernels-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Uniform kernel (Boxcar function)
@@ -788,7 +791,7 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-kernels" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div id="fig-kernels-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-kernels-3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-kernels-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) Triangular kernel
@@ -808,7 +811,7 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
 <span id="cb6-4"><a href="#cb6-4"></a>)</span>
@@ -831,10 +834,10 @@ Figure&nbsp;15.3: Simple Kernels for Kernel Desnity Estimation
 <span id="cb6-21"><a href="#cb6-21"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>)) <span class="sc">+</span></span>
 <span id="cb6-22"><a href="#cb6-22"></a>  <span class="fu">labs</span>(</span>
 <span id="cb6-23"><a href="#cb6-23"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
-<span id="cb6-24"><a href="#cb6-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-24"><a href="#cb6-24"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-norm-kernels" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.4: Add PDFs centered at each observation in the data
@@ -850,7 +853,7 @@ Figure&nbsp;15.4: Add PDFs centered at each observation in the data
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
 <span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
 <span id="cb7-4"><a href="#cb7-4"></a>)</span>
@@ -873,10 +876,10 @@ Figure&nbsp;15.4: Add PDFs centered at each observation in the data
 <span id="cb7-21"><a href="#cb7-21"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>)) <span class="sc">+</span>  </span>
 <span id="cb7-22"><a href="#cb7-22"></a>  <span class="fu">labs</span>(</span>
 <span id="cb7-23"><a href="#cb7-23"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
-<span id="cb7-24"><a href="#cb7-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-24"><a href="#cb7-24"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-normalized-norm-kernels" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-normalized-norm-kernels" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-normalized-norm-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
@@ -893,7 +896,7 @@ Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) N
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb8-2"><a href="#cb8-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>),</span>
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="at">grid =</span> <span class="fu">seq</span>(<span class="sc">-</span><span class="dv">1</span>, <span class="dv">13</span>, <span class="fl">0.1</span>)</span>
 <span id="cb8-4"><a href="#cb8-4"></a>)</span>
@@ -939,10 +942,10 @@ Figure&nbsp;15.5: The KDE (black) is the Sum of the Normal Distributions (red) N
 <span id="cb8-44"><a href="#cb8-44"></a>    <span class="at">x =</span> <span class="st">"x"</span></span>
 <span id="cb8-45"><a href="#cb8-45"></a>  )</span>
 <span id="cb8-46"><a href="#cb8-46"></a></span>
-<span id="cb8-47"><a href="#cb8-47"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-47"><a href="#cb8-47"></a>kde_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-kde-visually" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-kde-visually" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-visually-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
@@ -983,10 +986,10 @@ Figure&nbsp;15.6: The KDE (black) is the Sum of the Normal Distributions (red) N
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>kde_plot</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>kde_plot</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-kde" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-kde" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-kde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) Normalized by the Number of Observations
@@ -1004,7 +1007,7 @@ Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) N
 <p>There are several ways to use kernel density estimators in R. We will explore <code>geom_density()</code> and <code>density()</code>.</p>
 <p>The use of <code>geom_density()</code> is nearly identical to <code>geom_histogram()</code>. The function has a <code>bw</code> argument to change the bandwidth and a <code>kernel</code> argument to change the kernel.</p>
 <div class="cell" data-layout-nrow="2">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>data <span class="ot">&lt;-</span> <span class="fu">expand_grid</span>(</span>
 <span id="cb10-2"><a href="#cb10-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">4</span>, <span class="fl">4.5</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>)</span>
 <span id="cb10-3"><a href="#cb10-3"></a>)</span>
 <span id="cb10-4"><a href="#cb10-4"></a></span>
@@ -1014,7 +1017,7 @@ Figure&nbsp;15.7: The KDE (black) is the Sum of the Normal Distributions (red) N
 <span id="cb10-8"><a href="#cb10-8"></a></span>
 <span id="cb10-9"><a href="#cb10-9"></a>data <span class="sc">|&gt;</span></span>
 <span id="cb10-10"><a href="#cb10-10"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x)) <span class="sc">+</span></span>
-<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">geom_density</span>(<span class="at">kernel =</span> <span class="st">"triangular"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-11"><a href="#cb10-11"></a>  <span class="fu">geom_density</span>(<span class="at">kernel =</span> <span class="st">"triangular"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-applied-kernels" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1023,7 +1026,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <div aria-describedby="fig-applied-kernels-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-applied-kernels-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-applied-kernels-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Gaussian kernel
@@ -1037,7 +1040,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 </div>
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-applied-kernels" style="flex-basis: 100.0%;justify-content: flex-start;">
-<div id="fig-applied-kernels-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-applied-kernels-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-applied-kernels-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Triangular kernel
@@ -1060,7 +1063,7 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 2</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 2</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1101,19 +1104,19 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <p>is an estimate of the conditional mean of <span class="math inline">\(y\)</span> at point <span class="math inline">\(x_0\)</span>.</p>
 <p>Consider an example with simulated data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20201004</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a></span>
 <span id="cb11-3"><a href="#cb11-3"></a>x <span class="ot">&lt;-</span> <span class="fu">runif</span>(<span class="at">n =</span> <span class="dv">100</span>, <span class="at">min =</span> <span class="dv">0</span>, <span class="at">max =</span> <span class="dv">10</span>)</span>
 <span id="cb11-4"><a href="#cb11-4"></a></span>
 <span id="cb11-5"><a href="#cb11-5"></a>data1 <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
 <span id="cb11-6"><a href="#cb11-6"></a>  <span class="at">x =</span> x,</span>
 <span id="cb11-7"><a href="#cb11-7"></a>  <span class="at">y =</span> <span class="dv">10</span> <span class="sc">*</span> <span class="fu">sin</span>(x) <span class="sc">+</span> x <span class="sc">+</span> <span class="dv">20</span> <span class="sc">+</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="fu">length</span>(x), <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
-<span id="cb11-8"><a href="#cb11-8"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-8"><a href="#cb11-8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(tidymodels)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb12-2"><a href="#cb12-2"></a></span>
 <span id="cb12-3"><a href="#cb12-3"></a><span class="co"># create a recipe</span></span>
 <span id="cb12-4"><a href="#cb12-4"></a>knn_rec <span class="ot">&lt;-</span></span>
@@ -1147,10 +1150,10 @@ Figure&nbsp;15.8: geom_density() with different kernels
 <span id="cb12-32"><a href="#cb12-32"></a>  <span class="fu">labs</span>(</span>
 <span id="cb12-33"><a href="#cb12-33"></a>    <span class="at">title =</span> <span class="st">"Example 1"</span>,</span>
 <span id="cb12-34"><a href="#cb12-34"></a>    <span class="at">subtitle =</span> <span class="st">"Training Data with Predictions"</span></span>
-<span id="cb12-35"><a href="#cb12-35"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-35"><a href="#cb12-35"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-knn" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-knn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\(k = 3\)</span>.
@@ -1198,7 +1201,7 @@ Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>tricube <span class="ot">&lt;-</span> <span class="cf">function</span>(u) {</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>tricube <span class="ot">&lt;-</span> <span class="cf">function</span>(u) {</span>
 <span id="cb13-2"><a href="#cb13-2"></a>  </span>
 <span id="cb13-3"><a href="#cb13-3"></a>  (<span class="dv">1</span> <span class="sc">-</span> u <span class="sc">^</span> <span class="dv">3</span>) <span class="sc">^</span> <span class="dv">3</span></span>
 <span id="cb13-4"><a href="#cb13-4"></a>  </span>
@@ -1269,10 +1272,10 @@ Figure&nbsp;15.9: KNN average on simulated data with <span class="math inline">\
 <span id="cb13-69"><a href="#cb13-69"></a>  ) <span class="sc">+</span></span>
 <span id="cb13-70"><a href="#cb13-70"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line2, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
 <span id="cb13-71"><a href="#cb13-71"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line4, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb13-72"><a href="#cb13-72"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line8, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb13-72"><a href="#cb13-72"></a>  <span class="fu">geom_line</span>(<span class="at">data =</span> line8, <span class="fu">aes</span>(x, y), <span class="at">linetype =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-loess" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-loess" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-loess-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values a <span class="math inline">\(x_0 \in \{2, 4, 8\}\)</span>. Dashed lines are fitted local linear regression models.
@@ -1292,15 +1295,15 @@ Figure&nbsp;15.10: LOESS fit on simulated data. Red points are predicted values 
 <h4 class="anchored" data-anchor-id="geom_smooth"><code>geom_smooth()</code></h4>
 <p>LOESS is not limited to simple linear regression models. For example, <code>geom_smooth()</code> includes a 2nd-order polynomial for each local regression model by default. Let’s fit a</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>data1 <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>data1 <span class="sc">|&gt;</span></span>
 <span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y)) <span class="sc">+</span></span>
 <span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_smooth</span>(<span class="at">se =</span> <span class="cn">FALSE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`geom_smooth()` using method = 'loess' and formula = 'y ~ x'</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-geom_smooth" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-geom_smooth" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-geom_smooth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
@@ -1318,7 +1321,7 @@ Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 3</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 3</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1346,9 +1349,9 @@ Figure&nbsp;15.11: geom_smooth() demonstrated on simulated data
 <h4 class="anchored" data-anchor-id="loess"><code>loess()</code></h4>
 <p><code>loess()</code> can be used to fit a local linear regression model. It contains many arguments than be used to fine-tune the fit include <code>span</code>, <code>degree</code>, and <code>surface</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>data1_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">data =</span> data1, <span class="at">degree =</span> <span class="dv">1</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>data1_loess <span class="ot">&lt;-</span> <span class="fu">loess</span>(<span class="at">formula =</span> y <span class="sc">~</span> x, <span class="at">data =</span> data1, <span class="at">degree =</span> <span class="dv">1</span>)</span>
 <span id="cb17-2"><a href="#cb17-2"></a></span>
-<span id="cb17-3"><a href="#cb17-3"></a>data1_loess</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-3"><a href="#cb17-3"></a>data1_loess</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Call:
 loess(formula = y ~ x, data = data1, degree = 1)
@@ -1360,7 +1363,7 @@ Residual Standard Error: 5.446 </code></pre>
 </div>
 <p>Once we have a LOESS object, we can use <code>predict()</code> to calculate the conditional mean.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">predict</span>(data1_loess, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">8</span>)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">predict</span>(data1_loess, <span class="at">newdata =</span> <span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">5</span>, <span class="dv">8</span>)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>       1        2        3 
 25.78555 22.38631 30.15598 </code></pre>
@@ -1373,7 +1376,7 @@ Residual Standard Error: 5.446 </code></pre>
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 4</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 4</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1416,43 +1419,58 @@ Scott, David W., and Stephan R. Sain. 2005. <span>“Multidimensional Density Es
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -1460,184 +1478,184 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1645,185 +1663,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./15_microsimulation.html" class="pagination-link" aria-label="Microsimulation">
