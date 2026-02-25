@@ -140,9 +140,9 @@ exercise_number <- exercise_number + 1
 ```
 
 1.  Create a new, well-documented function called `alternative_tax_credit()` based on `new_tax_credit()` that models the following proposed tax credit:
-    * Ignore the first $20,000 if family income.
-    * Create a maximum benefits of \$4,000 for one child, \$4,500 for two children, and \$5,000 for three children.
-    * Reduces the benefit by $.05 for every dollar of income in excess of $20,000.
+    * Ignore the first $20,000 of family income.
+    * Create a maximum benefit of \$4,000 for one child, \$4,500 for two children, and \$5,000 for three children.
+    * Reduce the benefit by \$0.05 for every dollar of income in excess of $20,000.
 2.  Use `library(ggplot2)`, `expand_grid()`, and `map2_dbl()` to create a chart like the one in the notes for this alternative tax credit.
 :::
 
@@ -355,7 +355,7 @@ distributional_table |>
   ) +
   labs(
     title = "Distribution of Average Benefits Under the Benefit Proposal",
-    x = "Familiy Income Decile",
+    x = "Family Income Decile",
     y = "Average Benefit"
   )
 
@@ -433,7 +433,7 @@ proposal2 <- asec |>
       .y = ftotval, 
       .f = new_tax_credit
     ),
-    benefit_counteractual = map2_dbl(
+    benefit_counterfactual = map2_dbl(
       .x = nchild, 
       .y = ftotval, 
       .f = newer_tax_credit
@@ -441,7 +441,7 @@ proposal2 <- asec |>
   )
 
 proposal2 |>
-  mutate(benefit_change = benefit_counteractual - benefit_baseline) |>
+  mutate(benefit_change = benefit_counterfactual - benefit_baseline) |>
     mutate(ftotval_decile = ntile(ftotval, n = 10)) |>
   group_by(ftotval_decile) |>
   summarize(
@@ -523,11 +523,11 @@ Transitions from period $t - 1$ to period $t$ are key to dynamic microsimulation
 
 Transition models are fundamental to stochastic transitions. Transition models include transition probability models (categorical variables) and processes based on probability distributions (continuous variables).
 
-Here are are few examples of transitions that could be modeled:
+Here are a few examples of transitions that could be modeled:
 
 -   If an individual will acquire more education.
 -   If an individual will work.
--   If an individual will marry, divorce, or widow.
+-   If an individual will marry, divorce, or become widowed.
 -   If an individual will have children.
 -   If an individual will retire.
 -   If an individual will die.
@@ -789,7 +789,7 @@ Microsimulation models have *many* sources of uncertainty. The starting data and
 
 Across microsimulations for five policy approaches, they estimate modest confidence intervals. This makes sense. First, microsimulation aggregates many units that have their own sources of uncertainty. This is different than earlier examples of Monte Carlo simulation that focused on one observation at a time. Aggregation reduces variance.[^3]
 
-[^3]: The standard error of the mean reduces at a rate of $\sqrt{n}$ as the sample size increases.
+[^3]: The standard error of the mean is proportional to $\frac{1}{\sqrt{n}}$, so it decreases as the sample size increases.
 
 Second, the authors only consider uncertainty because of sampling variation. This fails to capture aleatoric uncertainty from statistical matching, imputation, and projection. Furthermore, these methods fail to capture epistemic uncertainty. The confidence intervals, in other words, assume the model is correct.
 

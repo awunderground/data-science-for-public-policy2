@@ -189,7 +189,7 @@ $$
 X \sim Bin(n, p)
 $$ {#eq-binomial}
 
-The PMF of a Bernoulli random variable is
+The PMF of a binomial random variable is
 
 $$
 p(x) = {n \choose x} p^x(1 - p)^{n - x}
@@ -257,7 +257,7 @@ dbinom(x = 10, size = 10, prob = 0.5)
 
 <br>
 
-The following answers the question: "What's the probability of observing 3 or fewer events in 10 trials when `p = 0.5`"
+The following answers the question: "What's the probability of observing 3 or fewer events in 10 trials when `p = 0.5`?"
 
 ```{r}
 pbinom(q = 3, size = 10, prob = 0.5)
@@ -266,7 +266,7 @@ pbinom(q = 3, size = 10, prob = 0.5)
 
 <br>
 
-The following answers the question: "What is the 10th percentile number of events to see in 10 trials when `p = 0.5`?
+The following answers the question: "What is the 10th percentile number of events in 10 trials when `p = 0.5`?"
 
 ```{r}
 qbinom(p = 0.1, size = 10, prob = 0.5)
@@ -275,7 +275,7 @@ qbinom(p = 0.1, size = 10, prob = 0.5)
 
 <br>
 
-The following randomly draw ten different binomially distributed random variables.
+The following randomly draws ten different binomially distributed random variables.
 
 ```{r}
 rbinom(n = 10, size = 10, prob = 0.5)
@@ -408,7 +408,7 @@ exercise_number <- exercise_number + 1
 
 1.  Sample 1,000 observations from a Poisson distribution with $\lambda = 20$.
 2.  Sample 1,000 observations from a normal distribution with $\mu = 20$ and $\sigma = \sqrt{20}$.
-3.  Visualize and compare both distribution.
+3.  Visualize and compare both distributions.
 
 ```{r}
 #| echo: false
@@ -597,7 +597,7 @@ pt(q = -1, df = 100, ncp = 0)
 
 :::
 
-Observe how the normal distribution becomes a better approximation for Student's t-distribution when the degrees of freedom increases.
+Observe how the normal distribution becomes a better approximation for Student's t-distribution when the degrees of freedom increase.
 
 ### Exponential Distribution
 
@@ -686,7 +686,7 @@ We won't unpack how to derive the maximum likelihood estimators[^mle] but it is 
 
 #### Binomial distribution MLEs
 
-Suppose we have a sample of data $x_1, ..., x_m$. If the number of trials $n$ is already known, then $p$ is the only parameter for the binomial distribution that needs to be estimated. The MLE for $p$ is $\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}$. 
+Suppose we have a sample of data $x_1, ..., x_n$. If the number of trials $n$ is already known, then $p$ is the only parameter for the binomial distribution that needs to be estimated. The MLE for $p$ is $\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}$. 
 
 Suppose we observe the following vector of observed data. Next, we calculate $\hat{p}$. 
 
@@ -853,7 +853,7 @@ Multivariate distributions require describing characteristics of random variable
 
 The [multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution) is a higher-dimensional version of the normal distribution.
 
-Instead of a single mean and a single variance, the $k$-dimensional multivariate normal distribution has a vector of means of length $k$ and a $k$-by-$k$ variance-covariance matrix[^covariance]. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describe the variance of the distributions and relationships between the distributions.
+Instead of a single mean and a single variance, the $k$-dimensional multivariate normal distribution has a vector of means of length $k$ and a $k$-by-$k$ variance-covariance matrix[^covariance]. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describes the variance of the distributions and relationships between the distributions.
 
 [^covariance]: Correlation may be more familiar than covariance. Sample correlation is standardized sample covariance. $Corr(\vec{x}, \vec{y}) = \frac{Cov(\vec{x}, \vec{y})}{S_{\vec{x}}S_{\vec{y}}}$. Correlation is also between -1 and 1 inclusive. Covariance can take on any real value.
 
@@ -947,7 +947,7 @@ But we often want to make probabilistic statements about uncommon or complex pro
 Monte Carlo methods have three major applications:
 
 1.  **Sampling** -- Monte Carlo simulation allows for sampling from complex probability distributions. The samples can be used to model real-world events (queues), to model outcomes with uncertain model inputs (election modeling), to generate fake data with known parameters to evaluate statistical methods (model selection when assumptions fail), and to draw from the posteriors of Bayesian models.
-2.  **Numerical integration** -- Integration, as noted above, is important to calculating probabilities and ultimately calculating quantities like expected value or the intervals. Monte Carlo methods can approximate multidimensional integrals that will never be directly solved by computers or simplify estimating probabilities when there are uncountably many potential outcomes (Solitaire).
+2.  **Numerical integration** -- Integration, as noted above, is important for calculating probabilities and ultimately calculating quantities like expected value or confidence intervals. Monte Carlo methods can approximate multidimensional integrals that will never be directly solved by computers or simplify estimating probabilities when there are uncountably many potential outcomes (Solitaire).
 3.  **Optimization** -- Monte Carlo methods can be used for complex optimization. We will not focus on optimization.
 
 Let's explore some examples:
@@ -1003,7 +1003,7 @@ $$\cdot\cdot\cdot$$
 
 Monte Carlo simulation works because of the **law of large numbers**. The law of large numbers states that the probability that the average of trials differs from the expected value converges to zero as the number of trials goes to infinity.
 
-Monte Carlo simulation basically repeats the ideas behind frequentist inferential statistics. If we can't measure every unit in a population then we can sample a representative population and estimate parameters about that population.
+Monte Carlo simulation basically repeats the ideas behind frequentist inferential statistics. If we can't measure every unit in a population, then we can sample a representative subset and estimate parameters about that population.
 
 The keys to Monte Carlo simulation are **randomness** and independent and identically distributed sampling (**i.i.d.**).
 
@@ -1095,12 +1095,15 @@ This is simply solved with Monte Carlo simulation. Randomly sample a bivariate u
 ```{r}
 #| warning: false
 
-expand_grid(
-  x = seq(0, 4, 0.1),
-  y = seq(0, 2, 0.1)
-) |>
+# Create circle coordinates
+circle_data <- tibble(
+  theta = seq(0, 2 * pi, length.out = 100),
+  x = 2 + cos(theta),
+  y = 1 + sin(theta)
+)
+
 ggplot() +
-  ggforce::geom_circle(aes(x0 = 2, y0 = 1, r = 1), fill = "blue", color = NA) +
+  geom_polygon(data = circle_data, aes(x = x, y = y), fill = "blue", color = NA) +
   geom_rect(aes(xmin = 0, xmax = 1, ymin = 0, ymax = 1), fill = "red", color = NA) +
   geom_rect(aes(xmin = 0, xmax = 3, ymin = 0, ymax = 2), fill = NA, color = "black") +
   coord_fixed()
@@ -1291,14 +1294,14 @@ coefficients |>
 
 Suppose we have a queue at a Social Security field office. Let $t$ be time. When the office opens, $t = 0$ and the queue is empty.
 
-Let $T_i$ be the time between arrivales and $T_i \sim exp(\lambda_1)$
+Let $T_i$ be the time between arrivals and $T_i \sim exp(\lambda_1)$
 
 Let $S_i$ be the service time and $S_i \sim exp(\lambda_2)$
 
 From these two random variables, we can calculate the arrival times, departure times, and wait times for each customer.
 
 -   The arrival times are the cumulative sum of the time between arrivals.
--   The wait times are zero if a person arrives after the person before them and the difference between the prior person's departure and the current person's arrival otherwise.
+-   The wait times are zero if a person arrives after the person before them departs, and otherwise equal the difference between the prior person's departure and the current person's arrival.
 -   The departure time is arrival time plus the wait time plus the service time.
 
 ```{r include = FALSE}
@@ -1470,7 +1473,7 @@ Monte Carlo simulations likely underestimate uncertainty. Monte Carlo simulation
 
 **Epistemic uncertainty:** Uncertainty due to a lack of knowledge
 
-In other words, Monte Carlo simulations estimates assume the model is correct, which is almost certainly never fully true. Be transparent. Be humble.
+In other words, Monte Carlo simulation estimates assume the model is correct, which is almost certainly never fully true. Be transparent. Be humble.
 
 ## Sampling from Observed Data
 
@@ -1505,8 +1508,8 @@ Sampling has many applications:
 
 There are at least three popular resampling methods:
 
-1. **Cross Validation:** Partitioning the data and shuffling the partitions to understand the accuracy of predictive models. 
-2. **Bootstrap sampling:** Repeated sampling with replacement to estimate sampling distributions from observed data. 
+1. **Cross-Validation:** Partitioning the data and shuffling the partitions to understand the accuracy of predictive models. 
+2. **Bootstrap Sampling:** Repeated sampling with replacement to estimate sampling distributions from observed data. 
 3. **Jackknife:** Leave-one-out sampling to estimate the bias and standard error of a statistic.
 
 We focused on cross-validation for machine learning and predictive modeling in data science for public policy. We will use this approach again for predictive modeling. 

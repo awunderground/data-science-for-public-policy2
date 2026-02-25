@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.554">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Data Science for Public Policy - 13&nbsp; Simulation and Sampling</title>
+<title>13&nbsp; Simulation and Sampling – Data Science for Public Policy</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,8 +21,9 @@ ul.task-list li input[type="checkbox"] {
   vertical-align: middle;
 }
 /* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -86,15 +87,17 @@ div.csl-indent {
 <meta name="quarto:offset" content="./">
 <link href="./15_microsimulation.html" rel="next">
 <link href="./13_web-scraping.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-27c261d06b905028a18691de25d09dde.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -123,7 +126,7 @@ div.csl-indent {
   }
 }</script>
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
@@ -137,7 +140,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -156,19 +159,19 @@ window.Quarto = {
 <link rel="stylesheet" href="www/styles.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
         <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html">Statistics</a></li><li class="breadcrumb-item"><a href="./14_simulation-and-sampling.html"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Simulation and Sampling</span></a></li></ol></nav>
-        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -198,9 +201,9 @@ window.Quarto = {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
  <span class="menu-text">Basics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -239,9 +242,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
  <span class="menu-text">Reproducible Research</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -274,9 +277,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
  <span class="menu-text">Programming</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -303,9 +306,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
  <span class="menu-text">Statistics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -338,9 +341,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true">
  <span class="menu-text">Supervised Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-5" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -379,9 +382,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true">
  <span class="menu-text">Unsupervised Machine Learning</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-6" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -396,9 +399,9 @@ window.Quarto = {
   </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true">
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true">
  <span class="menu-text">Other Topics</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" aria-expanded="true" aria-label="Toggle section">
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-7" role="navigation" aria-expanded="true" aria-label="Toggle section">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
       </div>
@@ -519,7 +522,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Population
+<span class="screen-reader-only">Tip</span>Population
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -533,7 +536,7 @@ Population
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Parameter
+<span class="screen-reader-only">Tip</span>Parameter
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -548,7 +551,7 @@ Parameter
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Random Sample
+<span class="screen-reader-only">Tip</span>Random Sample
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -561,7 +564,7 @@ Random Sample
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Statistics
+<span class="screen-reader-only">Tip</span>Statistics
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -588,7 +591,7 @@ Statistics
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Random Variable
+<span class="screen-reader-only">Tip</span>Random Variable
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -602,7 +605,7 @@ Random Variable
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Experiment
+<span class="screen-reader-only">Tip</span>Experiment
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -615,7 +618,7 @@ Experiment
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Set
+<span class="screen-reader-only">Tip</span>Set
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -628,7 +631,7 @@ Set
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Sample Space
+<span class="screen-reader-only">Tip</span>Sample Space
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -641,7 +644,7 @@ Sample Space
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Discrete Random Variable
+<span class="screen-reader-only">Tip</span>Discrete Random Variable
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -656,7 +659,7 @@ Discrete Random Variable
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Continuous Random Variable
+<span class="screen-reader-only">Tip</span>Continuous Random Variable
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -673,7 +676,7 @@ Continuous Random Variable
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Probability Mass Function
+<span class="screen-reader-only">Tip</span>Probability Mass Function
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -687,16 +690,16 @@ p(x) = P(X = x)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">tibble</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb1-2"><a href="#cb1-2"></a>  <span class="at">a =</span> <span class="fu">factor</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>),</span>
 <span id="cb1-3"><a href="#cb1-3"></a>  <span class="st">`</span><span class="at">P(X = a)</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">rep</span>(<span class="dv">1</span> <span class="sc">/</span> <span class="dv">6</span>, <span class="dv">6</span>)</span>
 <span id="cb1-4"><a href="#cb1-4"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb1-5"><a href="#cb1-5"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(a, <span class="st">`</span><span class="at">P(X = a)</span><span class="st">`</span>)) <span class="sc">+</span></span>
 <span id="cb1-6"><a href="#cb1-6"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PMF for rolling a fair die"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-7"><a href="#cb1-7"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"PMF for rolling a fair die"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-die" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-die" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-die-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13.1: PMF for rolling a fair die
@@ -732,7 +735,7 @@ p &amp;\text{ if } x = 1
 <p><span id="eq-binomial"><span class="math display">\[
 X \sim Bin(n, p)
 \tag{13.4}\]</span></span></p>
-<p>The PMF of a Bernoulli random variable is</p>
+<p>The PMF of a binomial random variable is</p>
 <p><span id="eq-binomial-pmf"><span class="math display">\[
 p(x) = {n \choose x} p^x(1 - p)^{n - x}
 \tag{13.5}\]</span></span></p>
@@ -745,7 +748,7 @@ p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} = \frac{10 \times 9 \times 8
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">tibble</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="at">x =</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span>
 <span id="cb2-3"><a href="#cb2-3"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb2-4"><a href="#cb2-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -758,10 +761,10 @@ p(X = 6) = \frac{10!}{6!4!} 0.5^6(1 - 0.5)^{10 - 6} = \frac{10 \times 9 \times 8
 <span id="cb2-11"><a href="#cb2-11"></a>    <span class="at">title =</span> <span class="st">"1,000 samples of a binomial RV"</span>,</span>
 <span id="cb2-12"><a href="#cb2-12"></a>    <span class="at">subtitle =</span> <span class="st">"Size = 10; prob = 0.5"</span>,</span>
 <span id="cb2-13"><a href="#cb2-13"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb2-14"><a href="#cb2-14"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-14"><a href="#cb2-14"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div id="fig-binomial" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-binomial" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-binomial-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13.2: 1,000 random draws from a binomial distribution with 10 trials and p = 0.5
@@ -779,7 +782,7 @@ Figure&nbsp;13.2: 1,000 random draws from a binomial distribution with 10 trials
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Sampling Error
+<span class="screen-reader-only">Tip</span>Sampling Error
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -800,33 +803,33 @@ Sampling Error
 <p>Let’s consider a few examples:</p>
 <p>The following answers the question: “What is the probability of observing 10 events in 10 trials when <code>p = 0.5</code>?”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">dbinom</span>(<span class="at">x =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.0009765625</code></pre>
 </div>
 </div>
 <p><br></p>
-<p>The following answers the question: “What’s the probability of observing 3 or fewer events in 10 trials when <code>p = 0.5</code>”</p>
+<p>The following answers the question: “What’s the probability of observing 3 or fewer events in 10 trials when <code>p = 0.5</code>?”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">pbinom</span>(<span class="at">q =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="fu">pbinom</span>(<span class="at">q =</span> <span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.171875</code></pre>
 </div>
 </div>
 <p><br></p>
-<p>The following answers the question: “What is the 10th percentile number of events to see in 10 trials when <code>p = 0.5</code>?</p>
+<p>The following answers the question: “What is the 10th percentile number of events in 10 trials when <code>p = 0.5</code>?”</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">qbinom</span>(<span class="at">p =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">qbinom</span>(<span class="at">p =</span> <span class="fl">0.1</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
 <p><br></p>
-<p>The following randomly draw ten different binomially distributed random variables.</p>
+<p>The following randomly draws ten different binomially distributed random variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">10</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code> [1] 5 5 4 4 6 4 5 4 4 5</code></pre>
+<pre><code> [1] 4 9 4 5 6 4 2 4 5 3</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -835,7 +838,7 @@ Sampling Error
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 1</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 1</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -853,7 +856,7 @@ Sampling Error
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Pseudo-random numbers
+<span class="screen-reader-only">Tip</span>Pseudo-random numbers
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -877,7 +880,7 @@ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20200905</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">set.seed</span>(<span class="dv">20200905</span>)</span>
 <span id="cb11-2"><a href="#cb11-2"></a></span>
 <span id="cb11-3"><a href="#cb11-3"></a><span class="fu">tibble</span>(</span>
 <span id="cb11-4"><a href="#cb11-4"></a>  <span class="at">x =</span> <span class="fu">rpois</span>(<span class="dv">1000</span>, <span class="at">lambda =</span> <span class="dv">10</span>)</span>
@@ -890,14 +893,14 @@ p(x) = \frac{\lambda^x e^{-\lambda}}{x!}
 <span id="cb11-11"><a href="#cb11-11"></a>    <span class="at">title =</span> <span class="st">"1,000 samples of a Poisson RV"</span>,</span>
 <span id="cb11-12"><a href="#cb11-12"></a>    <span class="at">subtitle =</span> <span class="st">"Observed data in black and theoretical distribution in red"</span>,</span>
 <span id="cb11-13"><a href="#cb11-13"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb11-14"><a href="#cb11-14"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-14"><a href="#cb11-14"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<div id="fig-poisson" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-poisson" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-poisson-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 Figure&nbsp;13.3: 1,000 samples of a Poisson RV
@@ -926,18 +929,18 @@ p(x) =
 \tag{13.9}\]</span></span></p>
 <p>This PMF is visualized in <a href="#fig-die" class="quarto-xref">Figure&nbsp;<span>13.1</span></a>. We can sample from this PMF with</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">sample</span>(<span class="at">x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">6</span>, <span class="at">size =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 3</code></pre>
 </div>
 </div>
 <p>We can also sample with probabilities that differ for each event:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sample</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">sample</span>(</span>
 <span id="cb15-2"><a href="#cb15-2"></a>  <span class="at">x =</span> <span class="fu">c</span>(<span class="st">"rain"</span>, <span class="st">"sunshine"</span>), </span>
 <span id="cb15-3"><a href="#cb15-3"></a>  <span class="at">size =</span> <span class="dv">1</span>, </span>
 <span id="cb15-4"><a href="#cb15-4"></a>  <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.1</span>, <span class="fl">0.9</span>)</span>
-<span id="cb15-5"><a href="#cb15-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb15-5"><a href="#cb15-5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] "sunshine"</code></pre>
 </div>
@@ -948,14 +951,14 @@ p(x) =
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 2</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 2</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Sample 1,000 observations from a Poisson distribution with <span class="math inline">\(\lambda = 20\)</span>.</li>
 <li>Sample 1,000 observations from a normal distribution with <span class="math inline">\(\mu = 20\)</span> and <span class="math inline">\(\sigma = \sqrt{20}\)</span>.</li>
-<li>Visualize and compare both distribution.</li>
+<li>Visualize and compare both distributions.</li>
 </ol>
 </div>
 </div>
@@ -970,7 +973,7 @@ p(x) =
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Probability Density Function (PDF)
+<span class="screen-reader-only">Tip</span>Probability Density Function (PDF)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -984,7 +987,7 @@ Probability Density Function (PDF)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Cumulative Distribution Function (CDF)
+<span class="screen-reader-only">Tip</span>Cumulative Distribution Function (CDF)
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -996,14 +999,14 @@ Cumulative Distribution Function (CDF)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">101</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
 <span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">labs</span>(</span>
 <span id="cb17-5"><a href="#cb17-5"></a>    <span class="at">title =</span> <span class="st">"PDF for a standard normal random variable"</span>,</span>
 <span id="cb17-6"><a href="#cb17-6"></a>    <span class="at">subtitle =</span> <span class="st">"Observed data in black and theoretical distribution in red"</span>,</span>
 <span id="cb17-7"><a href="#cb17-7"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb17-8"><a href="#cb17-8"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1017,7 +1020,7 @@ Cumulative Distribution Function (CDF)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb18-3"><a href="#cb18-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> pnorm, <span class="at">n =</span> <span class="dv">101</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
 <span id="cb18-4"><a href="#cb18-4"></a>  <span class="fu">labs</span>(</span>
@@ -1025,7 +1028,7 @@ Cumulative Distribution Function (CDF)
 <span id="cb18-6"><a href="#cb18-6"></a>    <span class="at">subtitle =</span> <span class="st">"Observed data in black and theoretical distribution in red"</span>,</span>
 <span id="cb18-7"><a href="#cb18-7"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
 <span id="cb18-8"><a href="#cb18-8"></a>  ) <span class="sc">+</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">theme_minimal</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb18-9"><a href="#cb18-9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1054,7 +1057,7 @@ f(x) =
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">set.seed</span>(<span class="dv">20200904</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">set.seed</span>(<span class="dv">20200904</span>)</span>
 <span id="cb19-2"><a href="#cb19-2"></a></span>
 <span id="cb19-3"><a href="#cb19-3"></a><span class="fu">tibble</span>(</span>
 <span id="cb19-4"><a href="#cb19-4"></a>  <span class="at">x =</span> <span class="fu">runif</span>(<span class="dv">1000</span>)</span>
@@ -1066,7 +1069,7 @@ f(x) =
 <span id="cb19-10"><a href="#cb19-10"></a>    <span class="at">title =</span> <span class="st">"1,000 samples of a standard uniform RV"</span>,</span>
 <span id="cb19-11"><a href="#cb19-11"></a>    <span class="at">subtitle =</span> <span class="st">"Observed data in black and theoretical distribution in red"</span>,    </span>
 <span id="cb19-12"><a href="#cb19-12"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb19-13"><a href="#cb19-13"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb19-13"><a href="#cb19-13"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1094,7 +1097,7 @@ f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left[-\frac{1}{2}\left(\frac{x - \mu}{\s
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Fundamental Probability Formula for Intervals
+<span class="screen-reader-only">Tip</span>Fundamental Probability Formula for Intervals
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1110,14 +1113,14 @@ P(a \le X \le b) = \\P(a \le X &lt; b) = \\P(a &lt; X \le b) =\\ P(a &lt; X &lt;
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">4</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
 <span id="cb20-3"><a href="#cb20-3"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">n =</span> <span class="dv">101</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)) <span class="sc">+</span> </span>
 <span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">geom_area</span>(<span class="at">stat =</span> <span class="st">"function"</span>, <span class="at">fun =</span> dnorm, <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">xlim =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="dv">0</span>)) <span class="sc">+</span></span>
 <span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">labs</span>(</span>
 <span id="cb20-6"><a href="#cb20-6"></a>    <span class="at">title =</span> <span class="st">"PDF for a standard normal random variable"</span>,</span>
 <span id="cb20-7"><a href="#cb20-7"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb20-8"><a href="#cb20-8"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-8"><a href="#cb20-8"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1133,7 +1136,7 @@ P(a \le X \le b) = \\P(a \le X &lt; b) = \\P(a &lt; X \le b) =\\ P(a &lt; X &lt;
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 3</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 3</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1145,7 +1148,7 @@ P(a \le X \le b) = \\P(a \le X &lt; b) = \\P(a &lt; X \le b) =\\ P(a &lt; X &lt;
 </ol>
 </div>
 </div>
-<p>Observe how the normal distribution becomes a better approximation for Student’s t-distribution when the degrees of freedom increases.</p>
+<p>Observe how the normal distribution becomes a better approximation for Student’s t-distribution when the degrees of freedom increase.</p>
 </section>
 <section id="exponential-distribution" class="level3" data-number="13.5.3">
 <h3 data-number="13.5.3" class="anchored" data-anchor-id="exponential-distribution"><span class="header-section-number">13.5.3</span> Exponential Distribution</h3>
@@ -1161,7 +1164,7 @@ f(x) = \lambda\exp(-\lambda x)
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">tibble</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="fu">tibble</span>(</span>
 <span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">x =</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">rate =</span> <span class="dv">1</span>)</span>
 <span id="cb21-3"><a href="#cb21-3"></a>) <span class="sc">|&gt;</span></span>
 <span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(x)) <span class="sc">+</span></span>
@@ -1171,7 +1174,7 @@ f(x) = \lambda\exp(-\lambda x)
 <span id="cb21-8"><a href="#cb21-8"></a>    <span class="at">title =</span> <span class="st">"1,000 samples of an exponential RV"</span>,</span>
 <span id="cb21-9"><a href="#cb21-9"></a>    <span class="at">subtitle =</span> <span class="st">"Observed data in black and theoretical distribution in red"</span>,    </span>
 <span id="cb21-10"><a href="#cb21-10"></a>    <span class="at">y =</span> <span class="cn">NULL</span></span>
-<span id="cb21-11"><a href="#cb21-11"></a>  ) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb21-11"><a href="#cb21-11"></a>  ) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
 <div>
@@ -1210,7 +1213,7 @@ f(x) = \lambda\exp(-\lambda x)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Likelihood
+<span class="screen-reader-only">Tip</span>Likelihood
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1231,7 +1234,7 @@ L(\theta) = P(\vec{x}|\theta) = \Pi_{i = 1}^n f(x_i|\theta)
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Maximum Likelihood Estimation
+<span class="screen-reader-only">Tip</span>Maximum Likelihood Estimation
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1242,21 +1245,21 @@ Maximum Likelihood Estimation
 <p>We won’t unpack how to derive the maximum likelihood estimators<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> but it is easy to look up most MLEs.</p>
 <section id="binomial-distribution-mles" class="level4">
 <h4 class="anchored" data-anchor-id="binomial-distribution-mles">Binomial distribution MLEs</h4>
-<p>Suppose we have a sample of data <span class="math inline">\(x_1, ..., x_m\)</span>. If the number of trials <span class="math inline">\(n\)</span> is already known, then <span class="math inline">\(p\)</span> is the only parameter for the binomial distribution that needs to be estimated. The MLE for <span class="math inline">\(p\)</span> is <span class="math inline">\(\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}\)</span>.</p>
+<p>Suppose we have a sample of data <span class="math inline">\(x_1, ..., x_n\)</span>. If the number of trials <span class="math inline">\(n\)</span> is already known, then <span class="math inline">\(p\)</span> is the only parameter for the binomial distribution that needs to be estimated. The MLE for <span class="math inline">\(p\)</span> is <span class="math inline">\(\hat{p} = \frac{\sum_{i = 1}^n x_i}{mn}\)</span>.</p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\hat{p}\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
 <span id="cb22-2"><a href="#cb22-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(<span class="at">n =</span> <span class="dv">8</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span>
 <span id="cb22-3"><a href="#cb22-3"></a></span>
-<span id="cb22-4"><a href="#cb22-4"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-4"><a href="#cb22-4"></a>x</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 4 3 6 3 4 3 3 2</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mle_binom <span class="ot">&lt;-</span> <span class="fu">sum</span>(x) <span class="sc">/</span> (<span class="dv">10</span> <span class="sc">*</span> <span class="dv">8</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>mle_binom <span class="ot">&lt;-</span> <span class="fu">sum</span>(x) <span class="sc">/</span> (<span class="dv">10</span> <span class="sc">*</span> <span class="dv">8</span>)</span>
 <span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a>mle_binom</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb24-3"><a href="#cb24-3"></a>mle_binom</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.35</code></pre>
 </div>
@@ -1267,26 +1270,26 @@ Maximum Likelihood Estimation
 <p><span class="math inline">\(\mu\)</span> and <span class="math inline">\(\sigma\)</span> are the parameters of a normal distribution. The MLEs for a normal distribution are <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i = \bar{x}\)</span> and <span class="math inline">\(s^2 = \frac{1}{n} \sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\hat\mu = \frac{1}{n}\sum_{i = 1}^n x_i\)</span> and <span class="math inline">\(\hat\sigma^2 = \frac{1}{n}\sum_{i = 1}^n (x_i - \bar{x})^2\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
-<span id="cb26-2"><a href="#cb26-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">200</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mean_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>mean_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>(x)</span>
 <span id="cb27-2"><a href="#cb27-2"></a></span>
-<span id="cb27-3"><a href="#cb27-3"></a>mean_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-3"><a href="#cb27-3"></a>mean_hat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.02825125</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>sigma2_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>sigma2_hat <span class="ot">&lt;-</span> <span class="fu">mean</span>((x <span class="sc">-</span> <span class="fu">mean</span>(x)) <span class="sc">^</span> <span class="dv">2</span>)</span>
 <span id="cb29-2"><a href="#cb29-2"></a></span>
-<span id="cb29-3"><a href="#cb29-3"></a>sigma2_hat</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb29-3"><a href="#cb29-3"></a>sigma2_hat</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.8119682</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> x) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> x) <span class="sc">|&gt;</span></span>
 <span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(x, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean_hat, <span class="at">sd =</span> <span class="fu">sqrt</span>(sigma2_hat)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dnorm, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">mean =</span> mean_hat, <span class="at">sd =</span> <span class="fu">sqrt</span>(sigma2_hat)))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1304,19 +1307,19 @@ Maximum Likelihood Estimation
 <p><span class="math inline">\(\lambda\)</span> is the only parameter of an exponential distribution. The MLE for an exponential distribution is <span class="math inline">\(\hat\lambda = \frac{1}{\bar{x}}\)</span>.</p>
 <p>Suppose we observe the following vector of observed data. Next, we calculate <span class="math inline">\(\frac{1}{\bar{x}}\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">set.seed</span>(<span class="dv">20230909</span>)</span>
 <span id="cb33-2"><a href="#cb33-2"></a>x <span class="ot">&lt;-</span> <span class="fu">rexp</span>(<span class="at">n =</span> <span class="dv">200</span>, <span class="at">rate =</span> <span class="dv">10</span>)</span>
 <span id="cb33-3"><a href="#cb33-3"></a></span>
 <span id="cb33-4"><a href="#cb33-4"></a>mle_exp <span class="ot">&lt;-</span> <span class="dv">1</span> <span class="sc">/</span> <span class="fu">mean</span>(x)</span>
 <span id="cb33-5"><a href="#cb33-5"></a></span>
-<span id="cb33-6"><a href="#cb33-6"></a>mle_exp</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb33-6"><a href="#cb33-6"></a>mle_exp</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 10.58221</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> x) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">tibble</span>(<span class="at">x =</span> x) <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">geom_histogram</span>(<span class="fu">aes</span>(x, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
-<span id="cb35-4"><a href="#cb35-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dexp, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">rate =</span> mle_exp))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="fu">stat_function</span>(<span class="at">fun =</span> dexp, <span class="at">color =</span> <span class="st">"red"</span>, <span class="at">args =</span> <span class="fu">list</span>(<span class="at">rate =</span> mle_exp))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1334,7 +1337,7 @@ Maximum Likelihood Estimation
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 4</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 4</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1344,7 +1347,7 @@ Maximum Likelihood Estimation
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>x <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
 <span id="cb37-2"><a href="#cb37-2"></a>  <span class="fl">30970.787</span>, <span class="fl">10901.544</span>, <span class="fl">15070.015</span>, <span class="fl">10445.772</span>, <span class="fl">8972.258</span>, </span>
 <span id="cb37-3"><a href="#cb37-3"></a>  <span class="fl">15759.614</span>, <span class="fl">13341.328</span>, <span class="fl">18498.858</span>, <span class="fl">134462.066</span>, <span class="fl">17498.930</span>, </span>
 <span id="cb37-4"><a href="#cb37-4"></a>  <span class="fl">7112.306</span>, <span class="fl">27336.795</span>, <span class="fl">75526.381</span>, <span class="fl">110123.606</span>, <span class="fl">32910.618</span>, </span>
@@ -1385,7 +1388,7 @@ Maximum Likelihood Estimation
 <span id="cb37-39"><a href="#cb37-39"></a>  <span class="fl">37564.196</span>, <span class="fl">23196.399</span>, <span class="fl">20169.037</span>, <span class="fl">9020.364</span>, <span class="fl">11118.250</span>, </span>
 <span id="cb37-40"><a href="#cb37-40"></a>  <span class="fl">56930.060</span>, <span class="fl">11657.302</span>, <span class="fl">84642.584</span>, <span class="fl">44948.450</span>, <span class="fl">16610.166</span>, </span>
 <span id="cb37-41"><a href="#cb37-41"></a>  <span class="fl">5509.231</span>, <span class="fl">4770.262</span>, <span class="fl">15614.233</span>, <span class="fl">5993.999</span>, <span class="fl">22628.114</span></span>
-<span id="cb37-42"><a href="#cb37-42"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb37-42"><a href="#cb37-42"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 </div>
 <ol start="2" type="1">
@@ -1407,7 +1410,7 @@ Maximum Likelihood Estimation
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Multivariate Distribution
+<span class="screen-reader-only">Tip</span>Multivariate Distribution
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1418,7 +1421,7 @@ Multivariate Distribution
 <section id="multivariate-normal-distribution" class="level3" data-number="13.7.1">
 <h3 data-number="13.7.1" class="anchored" data-anchor-id="multivariate-normal-distribution"><span class="header-section-number">13.7.1</span> Multivariate Normal Distribution</h3>
 <p>The <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">multivariate normal distribution</a> is a higher-dimensional version of the normal distribution.</p>
-<p>Instead of a single mean and a single variance, the <span class="math inline">\(k\)</span>-dimensional multivariate normal distribution has a vector of means of length <span class="math inline">\(k\)</span> and a <span class="math inline">\(k\)</span>-by-<span class="math inline">\(k\)</span> variance-covariance matrix<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describe the variance of the distributions and relationships between the distributions.</p>
+<p>Instead of a single mean and a single variance, the <span class="math inline">\(k\)</span>-dimensional multivariate normal distribution has a vector of means of length <span class="math inline">\(k\)</span> and a <span class="math inline">\(k\)</span>-by-<span class="math inline">\(k\)</span> variance-covariance matrix<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. The vector describes the central tendencies of each dimension of the multivariate distribution and the matrix describes the variance of the distributions and relationships between the distributions.</p>
 <p>We show that a random vector is multivariate normally distributed with</p>
 <p><span id="eq-multivariate-normal"><span class="math display">\[
 \vec{X} \sim \mathcal{N}(\vec\mu, \boldsymbol\Sigma)
@@ -1437,7 +1440,7 @@ Multivariate Distribution
 f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} - \vec\mu)^T\boldsymbol\Sigma^{-1}(\vec{x} - \vec\mu)\right)
 \tag{13.20}\]</span></span></p>
 <p>Functions for working with multivariate normal distributions are available from <code>library(MASS)</code>. <a href="#fig-mvnorm" class="quarto-xref">Figure&nbsp;<span>13.4</span></a> shows three different random samples from 2-dimensional multivariate normal distributions.</p>
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>Sigma1 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.8</span>, </span>
 <span id="cb38-2"><a href="#cb38-2"></a>                   <span class="fl">0.8</span>, <span class="dv">1</span>),</span>
 <span id="cb38-3"><a href="#cb38-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>
 <span id="cb38-4"><a href="#cb38-4"></a>                 <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
@@ -1445,13 +1448,13 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb38-6"><a href="#cb38-6"></a><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">Sigma =</span> Sigma1) <span class="sc">|&gt;</span></span>
 <span id="cb38-7"><a href="#cb38-7"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb38-8"><a href="#cb38-8"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(V1, V2)) <span class="sc">+</span></span>
-<span id="cb38-9"><a href="#cb38-9"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb38-9"><a href="#cb38-9"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: The `x` argument of `as_tibble.matrix()` must have unique column names if
 `.name_repair` is omitted as of tibble 2.0.0.
 ℹ Using compatibility `.name_repair`.</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>Sigma2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.2</span>, </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a>Sigma2 <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="fu">c</span>(<span class="dv">1</span>, <span class="fl">0.2</span>, </span>
 <span id="cb40-2"><a href="#cb40-2"></a>                   <span class="fl">0.2</span>, <span class="dv">1</span>),</span>
 <span id="cb40-3"><a href="#cb40-3"></a>                 <span class="at">nrow =</span> <span class="dv">2</span>,</span>
 <span id="cb40-4"><a href="#cb40-4"></a>                 <span class="at">byrow =</span> <span class="cn">TRUE</span>)</span>
@@ -1469,7 +1472,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <span id="cb40-16"><a href="#cb40-16"></a><span class="fu">mvrnorm</span>(<span class="at">n =</span> <span class="dv">1000</span>, <span class="at">mu =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">0</span>), <span class="at">Sigma =</span> Sigma3) <span class="sc">|&gt;</span></span>
 <span id="cb40-17"><a href="#cb40-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
 <span id="cb40-18"><a href="#cb40-18"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(V1, V2)) <span class="sc">+</span></span>
-<span id="cb40-19"><a href="#cb40-19"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-19"><a href="#cb40-19"></a>  <span class="fu">geom_point</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-mvnorm" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-fig" id="fig-mvnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1478,7 +1481,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <div aria-describedby="fig-mvnorm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="quarto-layout-row">
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-1" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mvnorm-1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (a) Strong Positive Covariance
@@ -1490,7 +1493,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-2" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mvnorm-2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (b) Weak Covariance
@@ -1502,7 +1505,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell-output-display quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-mvnorm" style="flex-basis: 33.3%;justify-content: flex-start;">
-<div id="fig-mvnorm-3" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-mvnorm-3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-subfloat-fig figure">
 <figcaption class="quarto-float-caption-top quarto-subfloat-caption quarto-subfloat-fig" id="fig-mvnorm-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 (c) Strong Negative Covariance
@@ -1536,7 +1539,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>Monte Carlo methods have three major applications:</p>
 <ol type="1">
 <li><strong>Sampling</strong> – Monte Carlo simulation allows for sampling from complex probability distributions. The samples can be used to model real-world events (queues), to model outcomes with uncertain model inputs (election modeling), to generate fake data with known parameters to evaluate statistical methods (model selection when assumptions fail), and to draw from the posteriors of Bayesian models.</li>
-<li><strong>Numerical integration</strong> – Integration, as noted above, is important to calculating probabilities and ultimately calculating quantities like expected value or the intervals. Monte Carlo methods can approximate multidimensional integrals that will never be directly solved by computers or simplify estimating probabilities when there are uncountably many potential outcomes (Solitaire).</li>
+<li><strong>Numerical integration</strong> – Integration, as noted above, is important for calculating probabilities and ultimately calculating quantities like expected value or confidence intervals. Monte Carlo methods can approximate multidimensional integrals that will never be directly solved by computers or simplify estimating probabilities when there are uncountably many potential outcomes (Solitaire).</li>
 <li><strong>Optimization</strong> – Monte Carlo methods can be used for complex optimization. We will not focus on optimization.</li>
 </ol>
 <p>Let’s explore some examples:</p>
@@ -1545,7 +1548,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>We can calculate the proportion of tosses of a fair coin that we expect to turn up heads by finding the expected value of the binomial distribution and dividing by the number of tosses. But suppose we can’t… Or maybe we wish to confirm our calculations with simulations…</p>
 <p>Let’s try repeated sampling from a binomial distribution to approximate this process:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co">#' Count the proportion of n tosses that turn up heads</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co">#' Count the proportion of n tosses that turn up heads</span></span>
 <span id="cb41-2"><a href="#cb41-2"></a><span class="co">#'</span></span>
 <span id="cb41-3"><a href="#cb41-3"></a><span class="co">#' @param n An integer for the number of tosses</span></span>
 <span id="cb41-4"><a href="#cb41-4"></a><span class="co">#'</span></span>
@@ -1563,20 +1566,20 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb41-16"><a href="#cb41-16"></a>  </span>
 <span id="cb41-17"><a href="#cb41-17"></a>  <span class="fu">return</span>(prop_heads)</span>
 <span id="cb41-18"><a href="#cb41-18"></a>  </span>
-<span id="cb41-19"><a href="#cb41-19"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb41-19"><a href="#cb41-19"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s toss the coin ten times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">set.seed</span>(<span class="dv">11</span>)</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.3</code></pre>
 </div>
 </div>
 <p>Ok, we got 0.3, which we know isn’t close to the expected proportion of 0.5. What if we toss the coin 1 million times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
-<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">1000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">set.seed</span>(<span class="dv">20</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">count_heads</span>(<span class="at">n =</span> <span class="dv">1000000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.499872</code></pre>
 </div>
@@ -1584,7 +1587,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>Ok, that’s more like it.</p>
 <p><span class="math display">\[\cdot\cdot\cdot\]</span></p>
 <p>Monte Carlo simulation works because of the <strong>law of large numbers</strong>. The law of large numbers states that the probability that the average of trials differs from the expected value converges to zero as the number of trials goes to infinity.</p>
-<p>Monte Carlo simulation basically repeats the ideas behind frequentist inferential statistics. If we can’t measure every unit in a population then we can sample a representative population and estimate parameters about that population.</p>
+<p>Monte Carlo simulation basically repeats the ideas behind frequentist inferential statistics. If we can’t measure every unit in a population, then we can sample a representative subset and estimate parameters about that population.</p>
 <p>The keys to Monte Carlo simulation are <strong>randomness</strong> and independent and identically distributed sampling (<strong>i.i.d.</strong>).</p>
 </section>
 <section id="example-2-bootstrap-sampling" class="level3" data-number="13.8.2">
@@ -1593,7 +1596,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>So if we bootstrap sample from a vector of length 100, then <span class="math inline">\(\frac{63}{100}\)</span> values will end up in the bootstrap sample on average and <span class="math inline">\(\frac{37}{100}\)</span> of the values will be repeats on average.</p>
 <p>We can explore this fact empirically with Monte Carlo simulation using repeated samples from a categorical distribution. We will use <code>sample()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co">#' Calculate the proportion of unique values from a vector of integers included </span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co">#' Calculate the proportion of unique values from a vector of integers included </span></span>
 <span id="cb46-2"><a href="#cb46-2"></a><span class="co">#' in a bootstrap sample</span></span>
 <span id="cb46-3"><a href="#cb46-3"></a><span class="co">#'</span></span>
 <span id="cb46-4"><a href="#cb46-4"></a><span class="co">#' @param integers A vector of integers</span></span>
@@ -1610,28 +1613,28 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb46-15"><a href="#cb46-15"></a>  </span>
 <span id="cb46-16"><a href="#cb46-16"></a>  <span class="fu">return</span>(prop_unique)</span>
 <span id="cb46-17"><a href="#cb46-17"></a>  </span>
-<span id="cb46-18"><a href="#cb46-18"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb46-18"><a href="#cb46-18"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s bootstrap sample 100,000 times.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># pre-allocate the output vector for efficient computation</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># pre-allocate the output vector for efficient computation</span></span>
 <span id="cb47-2"><a href="#cb47-2"></a>prop_unique <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> <span class="dv">100000</span>)</span>
 <span id="cb47-3"><a href="#cb47-3"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="fu">seq_along</span>(prop_unique)) {</span>
 <span id="cb47-4"><a href="#cb47-4"></a>  </span>
 <span id="cb47-5"><a href="#cb47-5"></a>  prop_unique[i] <span class="ot">&lt;-</span> <span class="fu">count_uniques</span>(<span class="at">integers =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>)</span>
 <span id="cb47-6"><a href="#cb47-6"></a>  </span>
-<span id="cb47-7"><a href="#cb47-7"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb47-7"><a href="#cb47-7"></a>}</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finally, calculate the mean proportion and estimate the expected value.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">mean</span>(prop_unique)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">mean</span>(prop_unique)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0.6337935</code></pre>
 </div>
 </div>
 <p>We can also calculate a 95% confidence interval using the bootstrap samples.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">quantile</span>(prop_unique, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">quantile</span>(prop_unique, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> 2.5% 97.5% 
  0.57  0.69 </code></pre>
@@ -1646,15 +1649,18 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 \tag{13.21}\]</span></span></p>
 <p>This is simply solved with Monte Carlo simulation. Randomly sample a bivariate uniform random variables and count how frequently the values are inside of the square or inside the circle.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">expand_grid</span>(</span>
-<span id="cb52-2"><a href="#cb52-2"></a>  <span class="at">x =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">4</span>, <span class="fl">0.1</span>),</span>
-<span id="cb52-3"><a href="#cb52-3"></a>  <span class="at">y =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span>, <span class="fl">0.1</span>)</span>
-<span id="cb52-4"><a href="#cb52-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb52-5"><a href="#cb52-5"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb52-6"><a href="#cb52-6"></a>  ggforce<span class="sc">::</span><span class="fu">geom_circle</span>(<span class="fu">aes</span>(<span class="at">x0 =</span> <span class="dv">2</span>, <span class="at">y0 =</span> <span class="dv">1</span>, <span class="at">r =</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb52-7"><a href="#cb52-7"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">1</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
-<span id="cb52-8"><a href="#cb52-8"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">2</span>), <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
-<span id="cb52-9"><a href="#cb52-9"></a>  <span class="fu">coord_fixed</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="co"># Create circle coordinates</span></span>
+<span id="cb52-2"><a href="#cb52-2"></a>circle_data <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb52-3"><a href="#cb52-3"></a>  <span class="at">theta =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">2</span> <span class="sc">*</span> pi, <span class="at">length.out =</span> <span class="dv">100</span>),</span>
+<span id="cb52-4"><a href="#cb52-4"></a>  <span class="at">x =</span> <span class="dv">2</span> <span class="sc">+</span> <span class="fu">cos</span>(theta),</span>
+<span id="cb52-5"><a href="#cb52-5"></a>  <span class="at">y =</span> <span class="dv">1</span> <span class="sc">+</span> <span class="fu">sin</span>(theta)</span>
+<span id="cb52-6"><a href="#cb52-6"></a>)</span>
+<span id="cb52-7"><a href="#cb52-7"></a></span>
+<span id="cb52-8"><a href="#cb52-8"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb52-9"><a href="#cb52-9"></a>  <span class="fu">geom_polygon</span>(<span class="at">data =</span> circle_data, <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y), <span class="at">fill =</span> <span class="st">"blue"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb52-10"><a href="#cb52-10"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">1</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">1</span>), <span class="at">fill =</span> <span class="st">"red"</span>, <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span></span>
+<span id="cb52-11"><a href="#cb52-11"></a>  <span class="fu">geom_rect</span>(<span class="fu">aes</span>(<span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">3</span>, <span class="at">ymin =</span> <span class="dv">0</span>, <span class="at">ymax =</span> <span class="dv">2</span>), <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">color =</span> <span class="st">"black"</span>) <span class="sc">+</span></span>
+<span id="cb52-12"><a href="#cb52-12"></a>  <span class="fu">coord_fixed</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1664,7 +1670,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>number_of_samples <span class="ot">&lt;-</span> <span class="dv">2000000</span></span>
 <span id="cb53-2"><a href="#cb53-2"></a></span>
 <span id="cb53-3"><a href="#cb53-3"></a><span class="co"># sample points in a rectangle with x in [0, 3] and y in [0, 2]</span></span>
 <span id="cb53-4"><a href="#cb53-4"></a><span class="fu">set.seed</span>(<span class="dv">20210907</span>)</span>
@@ -1690,7 +1696,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb53-24"><a href="#cb53-24"></a><span class="co"># calculate the ratio</span></span>
 <span id="cb53-25"><a href="#cb53-25"></a>prop_in_shapes <span class="sc">|&gt;</span></span>
 <span id="cb53-26"><a href="#cb53-26"></a>  <span class="fu">mutate</span>(prop_in_circle <span class="sc">/</span> prop_in_square) <span class="sc">|&gt;</span></span>
-<span id="cb53-27"><a href="#cb53-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb53-27"><a href="#cb53-27"></a>  <span class="fu">print</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 3
   prop_in_square prop_in_circle `prop_in_circle/prop_in_square`
@@ -1744,7 +1750,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>We can calculate the above statistics over repeated sampling and confirm their asymptotic properties with Monte Carlo simulation.</p>
 <p>First, create 1,000 random samples from the population.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">set.seed</span>(<span class="dv">20210906</span>)</span>
 <span id="cb55-2"><a href="#cb55-2"></a></span>
 <span id="cb55-3"><a href="#cb55-3"></a>data <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
 <span id="cb55-4"><a href="#cb55-4"></a>  <span class="at">.x =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">1000</span>,</span>
@@ -1753,26 +1759,26 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb55-7"><a href="#cb55-7"></a>    <span class="at">epsilon =</span> <span class="fu">rnorm</span>(<span class="at">n =</span> <span class="dv">10000</span>, <span class="at">mean =</span> <span class="dv">0</span>, <span class="at">sd =</span> <span class="dv">10</span>),</span>
 <span id="cb55-8"><a href="#cb55-8"></a>    <span class="at">y =</span> <span class="dv">5</span> <span class="sc">+</span> <span class="dv">15</span> <span class="sc">*</span> x <span class="sc">+</span> epsilon</span>
 <span id="cb55-9"><a href="#cb55-9"></a>  )</span>
-<span id="cb55-10"><a href="#cb55-10"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb55-10"><a href="#cb55-10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, estimate a simple linear regression model for each draw of the population. This step includes calculating <span class="math inline">\(\hat\sigma\)</span>, <span class="math inline">\(\hat\beta_1\)</span>, <span class="math inline">\(\hat\beta_0\)</span>, <span class="math inline">\(\hat{SE}(\hat\beta_1)\)</span>, and <span class="math inline">\(\hat{SE}(\hat\beta_0)\)</span>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb56"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1"></a>estimated_models <span class="ot">&lt;-</span> <span class="fu">map</span>(</span>
 <span id="cb56-2"><a href="#cb56-2"></a>  <span class="at">.x =</span> data,</span>
 <span id="cb56-3"><a href="#cb56-3"></a>  <span class="at">.f =</span> <span class="sc">~</span> <span class="fu">lm</span>(y <span class="sc">~</span> x, <span class="at">data =</span> .x)</span>
-<span id="cb56-4"><a href="#cb56-4"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb56-4"><a href="#cb56-4"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Next, we extract the coefficients and confidence intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb57"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1"></a>coefficients <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
 <span id="cb57-2"><a href="#cb57-2"></a>  <span class="at">.x =</span> estimated_models,</span>
 <span id="cb57-3"><a href="#cb57-3"></a>  <span class="at">.f =</span> tidy,</span>
 <span id="cb57-4"><a href="#cb57-4"></a>  <span class="at">conf.int =</span> <span class="cn">TRUE</span></span>
-<span id="cb57-5"><a href="#cb57-5"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb57-5"><a href="#cb57-5"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Let’s look at estimates of the residual standard error. The center of the distribution closely matches the population standard deviation of the error term.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb58"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb58-1"><a href="#cb58-1"></a>model_metrics <span class="ot">&lt;-</span> <span class="fu">map_df</span>(</span>
 <span id="cb58-2"><a href="#cb58-2"></a>  <span class="at">.x =</span> estimated_models,</span>
 <span id="cb58-3"><a href="#cb58-3"></a>  <span class="at">.f =</span> glance</span>
 <span id="cb58-4"><a href="#cb58-4"></a>) </span>
@@ -1780,7 +1786,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb58-6"><a href="#cb58-6"></a>model_metrics <span class="sc">|&gt;</span></span>
 <span id="cb58-7"><a href="#cb58-7"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(sigma)) <span class="sc">+</span></span>
 <span id="cb58-8"><a href="#cb58-8"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
-<span id="cb58-9"><a href="#cb58-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb58-9"><a href="#cb58-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Plot of the estimated residual standard errors"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1794,11 +1800,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s plot the coefficients. The centers approximately match the population intercept of 5 and slope of 15.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb60"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb60-1"><a href="#cb60-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb60-2"><a href="#cb60-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(estimate)) <span class="sc">+</span></span>
 <span id="cb60-3"><a href="#cb60-3"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
 <span id="cb60-4"><a href="#cb60-4"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>term, <span class="at">scales =</span> <span class="st">"free_x"</span>) <span class="sc">+</span></span>
-<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb60-5"><a href="#cb60-5"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Coefficients estimates across 10,000 samples"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 </div>
@@ -1814,12 +1820,12 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p><span class="math display">\[\hat{SE}(\hat\beta_1) = \sqrt\frac{\hat\sigma^2}{\sum(x_i -\bar{x})^2} = \sqrt\frac{10^2}{40,000} = 0.05\]</span></p>
 <p><span class="math display">\[\hat{SE}(\hat{\beta_0}) = \sqrt{\hat\sigma^2\left[\frac{1}{n} + \frac{\bar{x}^2}{\sum(x_i - \bar{x})^2}\right]} = \sqrt{10^2\left[\frac{1}{10,000} + 0\right]} = 0.1\]</span></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb62"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb62-1"><a href="#cb62-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb62-2"><a href="#cb62-2"></a>  <span class="fu">group_by</span>(term) <span class="sc">|&gt;</span></span>
 <span id="cb62-3"><a href="#cb62-3"></a>  <span class="fu">summarize</span>(</span>
 <span id="cb62-4"><a href="#cb62-4"></a>    <span class="fu">mean</span>(estimate), </span>
 <span id="cb62-5"><a href="#cb62-5"></a>    <span class="fu">sd</span>(estimate)</span>
-<span id="cb62-6"><a href="#cb62-6"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb62-6"><a href="#cb62-6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 3
   term        `mean(estimate)` `sd(estimate)`
@@ -1830,18 +1836,18 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>Let’s look at how often the true parameter is inside the 95% confidence interval. It’s close although not exactly 95%.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb64"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb64-1"><a href="#cb64-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb64-2"><a href="#cb64-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"x"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb64-3"><a href="#cb64-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb64-3"><a href="#cb64-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">15</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">15</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
             &lt;dbl&gt;
 1           0.959</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>coefficients <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb66"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb66-1"><a href="#cb66-1"></a>coefficients <span class="sc">|&gt;</span></span>
 <span id="cb66-2"><a href="#cb66-2"></a>  <span class="fu">filter</span>(term <span class="sc">==</span> <span class="st">"(Intercept)"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb66-3"><a href="#cb66-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb66-3"><a href="#cb66-3"></a>  <span class="fu">summarize</span>(<span class="at">ci_contain_beta =</span> <span class="fu">mean</span>(conf.low <span class="sc">&lt;=</span> <span class="dv">5</span> <span class="sc">&amp;</span> conf.high <span class="sc">&gt;=</span> <span class="dv">5</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   ci_contain_beta
@@ -1854,19 +1860,19 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <section id="example-5-queuing-example" class="level3" data-number="13.8.5">
 <h3 data-number="13.8.5" class="anchored" data-anchor-id="example-5-queuing-example"><span class="header-section-number">13.8.5</span> Example 5: Queuing Example</h3>
 <p>Suppose we have a queue at a Social Security field office. Let <span class="math inline">\(t\)</span> be time. When the office opens, <span class="math inline">\(t = 0\)</span> and the queue is empty.</p>
-<p>Let <span class="math inline">\(T_i\)</span> be the time between arrivales and <span class="math inline">\(T_i \sim exp(\lambda_1)\)</span></p>
+<p>Let <span class="math inline">\(T_i\)</span> be the time between arrivals and <span class="math inline">\(T_i \sim exp(\lambda_1)\)</span></p>
 <p>Let <span class="math inline">\(S_i\)</span> be the service time and <span class="math inline">\(S_i \sim exp(\lambda_2)\)</span></p>
 <p>From these two random variables, we can calculate the arrival times, departure times, and wait times for each customer.</p>
 <ul>
 <li>The arrival times are the cumulative sum of the time between arrivals.</li>
-<li>The wait times are zero if a person arrives after the person before them and the difference between the prior person’s departure and the current person’s arrival otherwise.</li>
+<li>The wait times are zero if a person arrives after the person before them departs, and otherwise equal the difference between the prior person’s departure and the current person’s arrival.</li>
 <li>The departure time is arrival time plus the wait time plus the service time.</li>
 </ul>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb68"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb68-1"><a href="#cb68-1"></a><span class="fu">set.seed</span>(<span class="dv">19920401</span>)</span>
 <span id="cb68-2"><a href="#cb68-2"></a>queue <span class="ot">&lt;-</span> <span class="fu">generate_queue</span>(<span class="at">t =</span> <span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">1</span>, <span class="at">mu =</span> <span class="dv">1</span>)</span>
 <span id="cb68-3"><a href="#cb68-3"></a></span>
-<span id="cb68-4"><a href="#cb68-4"></a>queue</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb68-4"><a href="#cb68-4"></a>queue</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 100 × 5
    interarrival_time arrival_time service_time wait_time departure_time
@@ -1885,7 +1891,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb70"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb70-1"><a href="#cb70-1"></a>flow <span class="ot">&lt;-</span> tibble<span class="sc">::</span><span class="fu">tibble</span>(</span>
 <span id="cb70-2"><a href="#cb70-2"></a>  <span class="at">time =</span> <span class="fu">c</span>(queue<span class="sc">$</span>arrival_time, queue<span class="sc">$</span>departure_time),</span>
 <span id="cb70-3"><a href="#cb70-3"></a>  <span class="at">type =</span> <span class="fu">c</span>(<span class="fu">rep</span>(<span class="st">"arrival"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>arrival_time)), </span>
 <span id="cb70-4"><a href="#cb70-4"></a>           <span class="fu">rep</span>(<span class="st">"departure"</span>, <span class="fu">length</span>(queue<span class="sc">$</span>departure_time))), </span>
@@ -1898,7 +1904,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb70-11"><a href="#cb70-11"></a>flow <span class="sc">|&gt;</span></span>
 <span id="cb70-12"><a href="#cb70-12"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(time, queue)) <span class="sc">+</span></span>
 <span id="cb70-13"><a href="#cb70-13"></a>  <span class="fu">geom_step</span>() <span class="sc">+</span></span>
-<span id="cb70-14"><a href="#cb70-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb70-14"><a href="#cb70-14"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Simulated queue at the Social Security office"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1909,7 +1915,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 </div>
 <p>This is interesting, but it’s still only one draw from a Monte Carlo simulation. What if we are interested in the distribution of wait times for the fifth customer?</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="co">#' Generate wait times at the queue</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb71"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb71-1"><a href="#cb71-1"></a><span class="co">#' Generate wait times at the queue</span></span>
 <span id="cb71-2"><a href="#cb71-2"></a><span class="co">#'</span></span>
 <span id="cb71-3"><a href="#cb71-3"></a><span class="co">#' @param person_number An integer for the person of interest</span></span>
 <span id="cb71-4"><a href="#cb71-4"></a><span class="co">#' @param iterations An integer for the number of Monte Carlo iterations</span></span>
@@ -1933,11 +1939,11 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <span id="cb71-22"><a href="#cb71-22"></a><span class="fu">set.seed</span>(<span class="dv">20200908</span>)</span>
 <span id="cb71-23"><a href="#cb71-23"></a>wait_time <span class="ot">&lt;-</span> <span class="fu">generate_waits</span>(<span class="at">person_number =</span> <span class="dv">5</span>, <span class="at">iterations =</span> <span class="dv">10000</span>, <span class="at">t =</span> <span class="dv">50</span>)</span>
 <span id="cb71-24"><a href="#cb71-24"></a></span>
-<span id="cb71-25"><a href="#cb71-25"></a><span class="fu">mean</span>(wait_time)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb71-25"><a href="#cb71-25"></a><span class="fu">mean</span>(wait_time)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1.464371</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb73"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb73-1"><a href="#cb73-1"></a><span class="fu">quantile</span>(wait_time, <span class="at">probs =</span> <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.5</span>, <span class="fl">0.975</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>     2.5%       50%     97.5% 
 0.0000000 0.9222193 5.8742015 </code></pre>
@@ -1949,7 +1955,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 5</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 5</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1964,7 +1970,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span style="color:#1696d2;">Exercise 6</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 6</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1994,7 +2000,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <p>Monte Carlo simulations likely underestimate uncertainty. Monte Carlo simulations only capture aleatoric uncertainty and they don’t capture epistemic uncertainty.</p>
 <p><strong>Aleatoric uncertainty:</strong> Uncertainty due to probabilistic variety</p>
 <p><strong>Epistemic uncertainty:</strong> Uncertainty due to a lack of knowledge</p>
-<p>In other words, Monte Carlo simulations estimates assume the model is correct, which is almost certainly never fully true. Be transparent. Be humble.</p>
+<p>In other words, Monte Carlo simulation estimates assume the model is correct, which is almost certainly never fully true. Be transparent. Be humble.</p>
 </section>
 </section>
 <section id="sampling-from-observed-data" class="level2" data-number="13.9">
@@ -2013,7 +2019,7 @@ Figure&nbsp;13.4: Samples from Multivariate Normal Distributions
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Sampling
+<span class="screen-reader-only">Tip</span>Sampling
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2035,7 +2041,7 @@ Sampling
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Resampling
+<span class="screen-reader-only">Tip</span>Resampling
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -2044,8 +2050,8 @@ Resampling
 </div>
 <p>There are at least three popular resampling methods:</p>
 <ol type="1">
-<li><strong>Cross Validation:</strong> Partitioning the data and shuffling the partitions to understand the accuracy of predictive models.</li>
-<li><strong>Bootstrap sampling:</strong> Repeated sampling with replacement to estimate sampling distributions from observed data.</li>
+<li><strong>Cross-Validation:</strong> Partitioning the data and shuffling the partitions to understand the accuracy of predictive models.</li>
+<li><strong>Bootstrap Sampling:</strong> Repeated sampling with replacement to estimate sampling distributions from observed data.</li>
 <li><strong>Jackknife:</strong> Leave-one-out sampling to estimate the bias and standard error of a statistic.</li>
 </ol>
 <p>We focused on cross-validation for machine learning and predictive modeling in data science for public policy. We will use this approach again for predictive modeling.</p>
@@ -2071,43 +2077,58 @@ Casella, George, and Roger L. Berger. 2002. <em>Statistical Inference</em>. 2nd 
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
       }
+      return false;
     }
-    return false;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
       for (const childEl of codeEl.children) {
         if (isCodeAnnotation(childEl)) {
           childEl.remove();
@@ -2115,184 +2136,184 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       }
       return codeEl.innerText;
     }
-  });
-  clipboard.on('success', function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copied!");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copied!");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  });
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
-    };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
     });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
-        }
-      }
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
         }
-        return container.innerHTML
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      // TODO in 1.5, we should make sure this works without a callout special case
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -2300,185 +2321,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./13_web-scraping.html" class="pagination-link" aria-label="Web Scraping">
