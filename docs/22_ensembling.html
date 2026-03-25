@@ -456,9 +456,10 @@ window.Quarto = {
   <li><a href="#bagging" id="toc-bagging" class="nav-link" data-scroll-target="#bagging"><span class="header-section-number">20.4</span> Bagging</a></li>
   <li><a href="#random-forests" id="toc-random-forests" class="nav-link" data-scroll-target="#random-forests"><span class="header-section-number">20.5</span> Random Forests</a>
   <ul class="collapse">
-  <li><a href="#interpretability" id="toc-interpretability" class="nav-link" data-scroll-target="#interpretability"><span class="header-section-number">20.5.1</span> Interpretability</a></li>
-  <li><a href="#variable-importance" id="toc-variable-importance" class="nav-link" data-scroll-target="#variable-importance"><span class="header-section-number">20.5.2</span> Variable Importance</a></li>
-  <li><a href="#parallelization" id="toc-parallelization" class="nav-link" data-scroll-target="#parallelization"><span class="header-section-number">20.5.3</span> Parallelization</a></li>
+  <li><a href="#out-of-bag-error-estimation" id="toc-out-of-bag-error-estimation" class="nav-link" data-scroll-target="#out-of-bag-error-estimation"><span class="header-section-number">20.5.1</span> Out-of-Bag Error Estimation</a></li>
+  <li><a href="#interpretability" id="toc-interpretability" class="nav-link" data-scroll-target="#interpretability"><span class="header-section-number">20.5.2</span> Interpretability</a></li>
+  <li><a href="#variable-importance" id="toc-variable-importance" class="nav-link" data-scroll-target="#variable-importance"><span class="header-section-number">20.5.3</span> Variable Importance</a></li>
+  <li><a href="#parallelization" id="toc-parallelization" class="nav-link" data-scroll-target="#parallelization"><span class="header-section-number">20.5.4</span> Parallelization</a></li>
   </ul></li>
   <li><a href="#boosting" id="toc-boosting" class="nav-link" data-scroll-target="#boosting"><span class="header-section-number">20.6</span> Boosting</a></li>
   <li><a href="#xgboost" id="toc-xgboost" class="nav-link" data-scroll-target="#xgboost"><span class="header-section-number">20.7</span> XGBoost</a></li>
@@ -535,7 +536,7 @@ window.Quarto = {
 <p>In 2012, the US Census Bureau crowd sourced a predictive modeling competition on Kaggle <span class="citation" data-cites="erdman2014 erdman2017">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>, <a href="references.html#ref-erdman2017" role="doc-biblioref">2017</a>)</span>. The competition was motivated by the America COMPETES act. <a href="https://www.kaggle.com/competitions">Kaggle competitions</a> allow teams to compete in predictive modeling tasks for cash prizes.</p>
 <p>The <a href="https://www.kaggle.com/competitions/us-census-bureau-ndsu-and-umn/overview">Census Bureau’s Kaggle Competition</a> tried to answer the question, “Which statistical model best predicts 2010 Census mail return rates?”</p>
 <p>Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
-<p>244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman2014">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>)</span>.</p>
+<p>244 teams and individuals competed. Bill Bame, a software developer from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees <span class="citation" data-cites="erdman2014">(<a href="references.html#ref-erdman2014" role="doc-biblioref">Erdman and Bates 2014</a>)</span>.</p>
 </section>
 <section id="the-low-response-score" class="level3" data-number="20.2.3">
 <h3 data-number="20.2.3" class="anchored" data-anchor-id="the-low-response-score"><span class="header-section-number">20.2.3</span> The Low-Response Score</h3>
@@ -686,10 +687,10 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Ensembling combine predictions from multiple models into one prediction.</p>
+<p>Ensembling combines predictions from multiple models into one prediction.</p>
 </div>
 </div>
-<p>Bagging, boosting, and stacking are three strategies for ensembling. We will cover bagging and boosting in this chapter. Random forests are an implementation bagging. XGBoost is an implementation of boosting.</p>
+<p>Bagging, boosting, and stacking are three strategies for ensembling. We will cover bagging and boosting in this chapter. Random forests are an implementation of bagging. XGBoost is an implementation of boosting.</p>
 </section>
 <section id="bagging" class="level2" data-number="20.4">
 <h2 data-number="20.4" class="anchored" data-anchor-id="bagging"><span class="header-section-number">20.4</span> Bagging</h2>
@@ -707,7 +708,7 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <p>The mean is typically used to ensemble in regression applications and majority vote is typically use to ensemble in classification applications.</p>
 </div>
 </div>
-<p>Averaging a set of observations to reduce variance is a fundamental statistical idea. Recall the standard error of the sample mean. Suppose we have a set of data <span class="math inline">\(x_1, x_2, ...x_n\)</span>. Let each each observations be independent and have variance <span class="math inline">\(\sigma^2\)</span>. The variance of the mean <span class="math inline">\(\bar{x}\)</span> is <span class="math inline">\(\frac{\sigma^2}{n}\)</span>. Averaging the observations reduces variance. Averaging even more observations further reduces variance but at a diminishing rate.</p>
+<p>Averaging a set of observations to reduce variance is a fundamental statistical idea. Recall the standard error of the sample mean. Suppose we have a set of data <span class="math inline">\(x_1, x_2, ...x_n\)</span>. Let each observation be independent and have variance <span class="math inline">\(\sigma^2\)</span>. The variance of the mean <span class="math inline">\(\bar{x}\)</span> is <span class="math inline">\(\frac{\sigma^2}{n}\)</span>. Averaging the observations reduces variance. Averaging even more observations further reduces variance but at a diminishing rate.</p>
 <p>It is possible to reduce variance error by training many predictive models on different sets of data and then ensembling the predictions.</p>
 <p>We typically don’t have enough data to train models on partitions of the data, so we use bootstrap sampling.</p>
 <div class="callout callout-style-default callout-note callout-titled">
@@ -913,11 +914,14 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Regularization is a change to a loss function or algorithm intended to intentionally reduce the intensity of a model fit to reduce variance error.</p>
-<p>LASSO regression (L-1 regularization) and Ridge regression (L-2 regularization) are two popular regularization techniques.</p>
+<p>Regularization is any technique that constrains model complexity to reduce overfitting and improve generalization. There are two main types:</p>
+<ol type="1">
+<li><strong>Loss function regularization</strong> adds a penalty term to the loss function (e.g., LASSO and Ridge regression penalize large coefficients). This is explicit.</li>
+<li><strong>Algorithmic regularization</strong> constrains the model-fitting process itself without changing the loss function. This is implicit.</li>
+</ol>
+<p>Random forests use algorithmic regularization by randomly selecting predictors at each split, which prevents any single predictor from dominating and reduces correlation between trees.</p>
 </div>
 </div>
-<p>Random forests are regularized models, and have similarities to linear regression with ridge regression, even though it is a non-parametric model.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1014,8 +1018,27 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 2 rsq     standard   0.631     5 0.00568 Preprocessor1_Model1</code></pre>
 </div>
 </div>
-<section id="interpretability" class="level3" data-number="20.5.1">
-<h3 data-number="20.5.1" class="anchored" data-anchor-id="interpretability"><span class="header-section-number">20.5.1</span> Interpretability</h3>
+<section id="out-of-bag-error-estimation" class="level3" data-number="20.5.1">
+<h3 data-number="20.5.1" class="anchored" data-anchor-id="out-of-bag-error-estimation"><span class="header-section-number">20.5.1</span> Out-of-Bag Error Estimation</h3>
+<p>Random forests have a built-in method for estimating test error without needing a separate validation set or cross-validation.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Out-of-Bag (OOB) Error
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>When training random forests, each tree is fit on a bootstrap sample of the data. On average, each bootstrap sample contains about 63% of the original observations, leaving 37% “out-of-bag.”</p>
+<p>For each observation, we can predict its value using only the trees that did not include it in their bootstrap sample. The OOB error is the average prediction error across all observations using their respective OOB predictions.</p>
+</div>
+</div>
+<p>This is a significant practical advantage of random forests over other ensemble methods.</p>
+</section>
+<section id="interpretability" class="level3" data-number="20.5.2">
+<h3 data-number="20.5.2" class="anchored" data-anchor-id="interpretability"><span class="header-section-number">20.5.2</span> Interpretability</h3>
 <p>It is important to understand the process for fitting models, how the nature of the data affects fitted models, and how fitted models generate predictions. Models that lack these features are often called “black box.”</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1047,9 +1070,9 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <p>The shift from linear regression and regression trees, which are locally and globally interpretable to ensembled models sacrifices model interpretability. Random forests return neither simple regression coefficients or a clear, visualized tree.</p>
 <p><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a> is a good resource for learning more.</p>
 </section>
-<section id="variable-importance" class="level3" data-number="20.5.2">
-<h3 data-number="20.5.2" class="anchored" data-anchor-id="variable-importance"><span class="header-section-number">20.5.2</span> Variable Importance</h3>
-<p>Linear regression returns coefficients and regression trees return trees that can be visualized. Bagged trees and random forests return neither.</p>
+<section id="variable-importance" class="level3" data-number="20.5.3">
+<h3 data-number="20.5.3" class="anchored" data-anchor-id="variable-importance"><span class="header-section-number">20.5.3</span> Variable Importance</h3>
+<p>Linear regression returns interpretable coefficients, and regression trees produce visualizable tree structures. Bagged trees and random forests return neither.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1063,8 +1086,14 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <p>Variable importance is the contribution each predictor has to a fitted model.</p>
 </div>
 </div>
-<p>Variable importance is an alternative approach that aims to capture the why of a model and prediction. For linear regression, variable importance is typically just the absolute value of the estimated coefficient.</p>
-<p>For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but is a valuable tool for understanding a random forest model.</p>
+<p>Variable importance is an alternative approach that aims to explain which predictors contribute most to model predictions. For linear regression, variable importance is typically just the absolute value of the estimated coefficient.</p>
+<p>For regression with random forests, variable importance measures the total reduction in mean squared error from splits on each predictor across all trees. While valuable, variable importance has important limitations:</p>
+<ol type="1">
+<li>Correlated predictors</li>
+<li>High-cardinality categoricals</li>
+<li>Not causal</li>
+</ol>
+<p>Permutation importance and SHAP values address some of these issues.</p>
 <p>Here we fit the random forest model on all of the training data and then visualize the variable importance.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>rf_final <span class="ot">&lt;-</span> rf_wf <span class="sc">|&gt;</span></span>
@@ -1102,8 +1131,8 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 </div>
 </div>
 </section>
-<section id="parallelization" class="level3" data-number="20.5.3">
-<h3 data-number="20.5.3" class="anchored" data-anchor-id="parallelization"><span class="header-section-number">20.5.3</span> Parallelization</h3>
+<section id="parallelization" class="level3" data-number="20.5.4">
+<h3 data-number="20.5.4" class="anchored" data-anchor-id="parallelization"><span class="header-section-number">20.5.4</span> Parallelization</h3>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1138,7 +1167,7 @@ Warning
 <p>Do not use all available cores. Only use a subset of available cores so other computations (e.g.&nbsp;Spotify and email) can continue on your computer.</p>
 </div>
 </div>
-<p>We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grow. Simply include <code>num.threads</code> in the <code>set_engine()</code> call.</p>
+<p>We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grown. Simply include <code>num.threads</code> in the <code>set_engine()</code> call.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">set_engine</span>(</span>
 <span id="cb27-2"><a href="#cb27-2"></a>    <span class="at">engine =</span> <span class="st">"ranger"</span>, </span>

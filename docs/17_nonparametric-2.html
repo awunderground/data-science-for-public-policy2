@@ -6,7 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="dcterms.date" content="2026-02-25">
+<meta name="dcterms.date" content="2026-03-25">
 
 <title>16&nbsp; Nonparametric Inference – Data Science for Public Policy</title>
 <style>
@@ -457,12 +457,12 @@ window.Quarto = {
   <li><a href="#nonparametric-bootstrap" id="toc-nonparametric-bootstrap" class="nav-link" data-scroll-target="#nonparametric-bootstrap"><span class="header-section-number">16.3</span> Nonparametric Bootstrap</a>
   <ul class="collapse">
   <li><a href="#basic-bootstrap" id="toc-basic-bootstrap" class="nav-link" data-scroll-target="#basic-bootstrap"><span class="header-section-number">16.3.1</span> Basic Bootstrap</a></li>
-  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">16.3.2</span> Example</a></li>
+  <li><a href="#example-bootstrap-distribution-for-median" id="toc-example-bootstrap-distribution-for-median" class="nav-link" data-scroll-target="#example-bootstrap-distribution-for-median"><span class="header-section-number">16.3.2</span> Example: Bootstrap Distribution for Median</a></li>
   <li><a href="#sec-bias" id="toc-sec-bias" class="nav-link" data-scroll-target="#sec-bias"><span class="header-section-number">16.3.3</span> Bias</a></li>
   <li><a href="#sec-standard-errors" id="toc-sec-standard-errors" class="nav-link" data-scroll-target="#sec-standard-errors"><span class="header-section-number">16.3.4</span> Standard errors</a></li>
-  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">16.3.5</span> Example</a></li>
+  <li><a href="#example" id="toc-example" class="nav-link" data-scroll-target="#example"><span class="header-section-number">16.3.5</span> Example</a></li>
   <li><a href="#sec-confidence-intervals" id="toc-sec-confidence-intervals" class="nav-link" data-scroll-target="#sec-confidence-intervals"><span class="header-section-number">16.3.6</span> Confidence intervals</a></li>
-  <li><a href="#example-3" id="toc-example-3" class="nav-link" data-scroll-target="#example-3"><span class="header-section-number">16.3.7</span> Example</a></li>
+  <li><a href="#example-1" id="toc-example-1" class="nav-link" data-scroll-target="#example-1"><span class="header-section-number">16.3.7</span> Example</a></li>
   </ul></li>
   <li><a href="#more-methods" id="toc-more-methods" class="nav-link" data-scroll-target="#more-methods"><span class="header-section-number">16.4</span> More Methods</a></li>
   </ul>
@@ -484,7 +484,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">February 25, 2026</p>
+      <p class="date">March 25, 2026</p>
     </div>
   </div>
   
@@ -608,7 +608,7 @@ Warning
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Important assumptions support the inferences in Example 1. We will unpack these assumptions later.</p>
+<p>Important assumptions support the inferences in Example 1. We will unpack these assumptions in the sections below.</p>
 </div>
 </div>
 </section>
@@ -652,9 +652,9 @@ $ balchange &lt;dbl&gt; -116.70, -125.19, 3609.95, 4.14, -118.04, -169.95, 1725.
 <li><span class="math inline">\(x_1, x_2, ..., x_n\)</span> is an IID random sample from a population.</li>
 <li>The population is normally distributed or the sample size is large enough for the Central Limit Theorem to apply.</li>
 </ol>
-<p>Both assumptions are reasonable. We can assume that the sample is identically distributed because the sample was drawn from one population: clients of the Green Bank of Caraga. It also seems reasonable to assume that a household that received the commitment savings product did not somehow influence a control household’s level of savings. Thus the IID assumption is reasonable.</p>
+<p>Both assumptions are reasonable. We can assume that the sample is identically distributed because the sample was drawn from one population: clients of the Green Bank of Caraga. It is possible that there are spillover effects but it also seems reasonable to assume that a household that received the commitment savings product did not somehow influence a control household’s level of savings. Thus the IID assumption is reasonable.</p>
 <p>The study assessed more than 1,000 households, suggesting that we need not be concerned with the distribution’s normality.</p>
-<p>The average doesn’t represent the experience of the average person. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn’t give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:</p>
+<p>The average experience of the households may be different than the experience of the average household. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn’t give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>seed <span class="sc">|&gt;</span></span>
 <span id="cb12-2"><a href="#cb12-2"></a>  <span class="fu">summarize</span>(</span>
@@ -719,6 +719,7 @@ $ balchange &lt;dbl&gt; -116.70, -125.19, 3609.95, 4.14, -118.04, -169.95, 1725.
 </div>
 </div>
 <p><em>Many</em> applications of 2-sample t-tests incorrectly ignore assumption 3 but situations where we want to make inferences about the difference in means when population variances differ is widespread. This is known as the <a href="https://en.wikipedia.org/wiki/Behrens%E2%80%93Fisher_problem">Behrens-Fisher problem</a>.</p>
+<p>It’s worth noting that <code>t_test()</code> uses Welch’s t-test by default, instead of Student’s t-test, which is a different solution to the Behrens-Fisher problem.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -829,6 +830,24 @@ $ balchange &lt;dbl&gt; -116.70, -125.19, 3609.95, 4.14, -118.04, -169.95, 1725.
 <p>The <strong>permutation principle</strong> states that the permutation distribution is an appropriate reference distribution and can be used to determine p-values and statistical significance. <span class="citation" data-cites="higgins2004a">(<a href="references.html#ref-higgins2004a" role="doc-biblioref">Higgins 2004</a>)</span><a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
 </div>
 </div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Exchangeability Assumption
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If the null hypothesis is true (e.g., there is no difference between treatment and control), then any observation could have equally likely been assigned to either group.</p>
+<p>This assumption holds when:</p>
+<ul>
+<li>Observations are randomly sampled from the same population.</li>
+<li>Data come from a randomized experiments like a randomized control trial (RCT).</li>
+</ul>
+</div>
+</div>
 <div class="callout callout-style-default callout-warning callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -898,10 +917,10 @@ Warning
 <span id="cb21-2"><a href="#cb21-2"></a>D <span class="ot">&lt;-</span> <span class="fu">mean</span>(sim_data[sim_data<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"1"</span>, ]<span class="sc">$</span>x) <span class="sc">-</span></span>
 <span id="cb21-3"><a href="#cb21-3"></a>  <span class="fu">mean</span>(sim_data[sim_data<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"2"</span>, ]<span class="sc">$</span>x)</span>
 <span id="cb21-4"><a href="#cb21-4"></a></span>
-<span id="cb21-5"><a href="#cb21-5"></a><span class="co"># calculate a p-value</span></span>
-<span id="cb21-6"><a href="#cb21-6"></a><span class="fu">mean</span>(D <span class="sc">&gt;</span> permutation_dist)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb21-5"><a href="#cb21-5"></a><span class="co"># calculate a p-value for a two-sided test</span></span>
+<span id="cb21-6"><a href="#cb21-6"></a><span class="fu">mean</span>(<span class="fu">abs</span>(permutation_dist) <span class="sc">&gt;=</span> <span class="fu">abs</span>(D))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.006915307</code></pre>
+<pre><code>[1] 0.01398601</code></pre>
 </div>
 </div>
 <p>The p-value is very small. There is sufficient evidence to reject the null hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population means of the two samples are different.</p>
@@ -952,13 +971,13 @@ Warning
 <span id="cb25-2"><a href="#cb25-2"></a>D <span class="ot">&lt;-</span> <span class="fu">median</span>(sim_data[sim_data<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"1"</span>, ]<span class="sc">$</span>x) <span class="sc">-</span></span>
 <span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">median</span>(sim_data[sim_data<span class="sc">$</span>group <span class="sc">==</span> <span class="st">"2"</span>, ]<span class="sc">$</span>x)</span>
 <span id="cb25-4"><a href="#cb25-4"></a></span>
-<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># calculate the p-value</span></span>
-<span id="cb25-6"><a href="#cb25-6"></a><span class="fu">mean</span>(D <span class="sc">&gt;</span> permutation_dist)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb25-5"><a href="#cb25-5"></a><span class="co"># calculate the p-value for a two-sided test</span></span>
+<span id="cb25-6"><a href="#cb25-6"></a><span class="fu">mean</span>(<span class="fu">abs</span>(permutation_dist) <span class="sc">&gt;=</span> <span class="fu">abs</span>(D))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 0.02206682</code></pre>
+<pre><code>[1] 0.05905206</code></pre>
 </div>
 </div>
-<p>The p-value is small. There is sufficient evidence to reject the null hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population medians (location parameters) of the two samples are different.</p>
+<p>The p-value is small. There is sufficient evidence to reject the null hypothesis at the <span class="math inline">\(\alpha = 0.1\)</span> level but not the <span class="math inline">\(\alpha = 0.05\)</span>. It is likely that the population medians (location parameters) of the two samples are different.</p>
 </section>
 </section>
 <section id="example-2-revisited" class="level3" data-number="16.2.2">
@@ -1051,8 +1070,8 @@ Warning
 1  0.0012</code></pre>
 </div>
 </div>
-<p>We have sufficient evidence to reject the null hypothesis in favor if the alternative hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population median for group 1 is different than the population median for group 2.</p>
-<p>Interestingly, the median change for the treatment group is slightly less negative than the control group.</p>
+<p>We have sufficient evidence to reject the null hypothesis in favor of the alternative hypothesis at the <span class="math inline">\(\alpha = 0.05\)</span> level. It is likely that the population median for group 1 is different than the population median for group 2.</p>
+<p>Interestingly, the median change for the treatment group is less negative than the control group.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>seed <span class="sc">|&gt;</span></span>
 <span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">group_by</span>(group2) <span class="sc">|&gt;</span></span>
@@ -1115,7 +1134,7 @@ Warning
 </div>
 </div>
 <p>We want tests with correct coverage probabilities and high statistical power. If the assumptions are met then parametric tests often have more power than nonparametric tests. The power advantage can often flip when assumptions start failing.</p>
-<p>Some nonparametric tests, which are often variations on the permutation test, have more power than the permutation test. Often, the <a href="https://data.library.virginia.edu/the-wilcoxon-rank-sum-test/">Wilcoxon Rank Sum test</a>, which is uses ranks instead of values, has higher power. Another test to explore is the Kruskal-Wallis test.</p>
+<p>Some nonparametric tests, which are often variations on the permutation test, have more power than the permutation test. Often, the <a href="https://data.library.virginia.edu/the-wilcoxon-rank-sum-test/">Wilcoxon Rank Sum test</a>, which uses ranks instead of values, has higher power. Another test to explore is the Kruskal-Wallis test.</p>
 </section>
 </section>
 <section id="nonparametric-bootstrap" class="level2" data-number="16.3">
@@ -1168,16 +1187,18 @@ Warning
 </ol>
 <section id="basic-bootstrap" class="level3" data-number="16.3.1">
 <h3 data-number="16.3.1" class="anchored" data-anchor-id="basic-bootstrap"><span class="header-section-number">16.3.1</span> Basic Bootstrap</h3>
+<p>The bootstrap assumes the sample is representative of the population.</p>
 <p>Suppose we are interested in an unknown parameter <span class="math inline">\(\theta\)</span>.</p>
 <ol type="1">
 <li>Compute <span class="math inline">\(\hat\theta\)</span> from the original data.</li>
 <li>Take <span class="math inline">\(B\)</span> bootstrap samples of size <span class="math inline">\(n\)</span> from the original data.</li>
-<li>Calculate <span class="math inline">\(\hat\theta_{b,i}\)</span> on each bootstrap sample.</li>
+<li>Calculate <span class="math inline">\(\hat\theta_{b}\)</span> on each bootstrap sample.</li>
 </ol>
-<p>The vector <span class="math inline">\(\hat{\vec\theta_b}\)</span> is the bootstrap distribution and it has multiple uses. Importantly, it is a nonparametric estimate of the sampling distribution of <span class="math inline">\(\hat\theta\)</span>.</p>
+<p>The vector <span class="math inline">\(\hat{\vec\theta_b}\)</span> is the bootstrap distribution and it has multiple uses. Importantly, it is a nonparametric estimate of the sampling distribution of <span class="math inline">\(\hat\theta\)</span> because it does not assume a parametric form of the population distribution.</p>
 </section>
-<section id="example" class="level3" data-number="16.3.2">
-<h3 data-number="16.3.2" class="anchored" data-anchor-id="example"><span class="header-section-number">16.3.2</span> Example</h3>
+<section id="example-bootstrap-distribution-for-median" class="level3" data-number="16.3.2">
+<h3 data-number="16.3.2" class="anchored" data-anchor-id="example-bootstrap-distribution-for-median"><span class="header-section-number">16.3.2</span> Example: Bootstrap Distribution for Median</h3>
+<p>Let’s create a bootstrap distribution for the median of the <code>balchange</code> variable in the SEED data:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>B <span class="ot">&lt;-</span> <span class="dv">5000</span></span>
 <span id="cb37-2"><a href="#cb37-2"></a>b <span class="ot">&lt;-</span> <span class="fu">vector</span>(<span class="at">mode =</span> <span class="st">"numeric"</span>, <span class="at">length =</span> B)</span>
@@ -1204,7 +1225,7 @@ Warning
 </div>
 </div>
 </div>
-<p>We can use this permutation distribution to calculate bias (<a href="#sec-bias" class="quarto-xref"><span>Section 16.3.3</span></a>), standard errors (<a href="#sec-standard-errors" class="quarto-xref"><span>Section 16.3.4</span></a>), and confidence intervals (<a href="#sec-confidence-intervals" class="quarto-xref"><span>Section 16.3.6</span></a>).</p>
+<p>We can use this bootstrap distribution to calculate bias (<a href="#sec-bias" class="quarto-xref"><span>Section 16.3.3</span></a>), standard errors (<a href="#sec-standard-errors" class="quarto-xref"><span>Section 16.3.4</span></a>), and confidence intervals (<a href="#sec-confidence-intervals" class="quarto-xref"><span>Section 16.3.6</span></a>).</p>
 </section>
 <section id="sec-bias" class="level3" data-number="16.3.3">
 <h3 data-number="16.3.3" class="anchored" data-anchor-id="sec-bias"><span class="header-section-number">16.3.3</span> Bias</h3>
@@ -1228,8 +1249,8 @@ Warning
 <p>where <span class="math inline">\(\bar{\hat\theta^*} = \frac{1}{b} \sum_{b = 1}^B \hat\theta_b\)</span>.</p>
 <p>Historically, the bootstrap was used to estimate the standard errors of estimates. The jackknife, another resampling method, can be used to estimate bias and standard errors. We won’t focus on this. Instead, we will estimate confidence intervals <span class="citation" data-cites="chernick2011">(<a href="references.html#ref-chernick2011" role="doc-biblioref">Chernick and LaBudde 2011</a>)</span>.</p>
 </section>
-<section id="example-1" class="level3" data-number="16.3.5">
-<h3 data-number="16.3.5" class="anchored" data-anchor-id="example-1"><span class="header-section-number">16.3.5</span> Example</h3>
+<section id="example" class="level3" data-number="16.3.5">
+<h3 data-number="16.3.5" class="anchored" data-anchor-id="example"><span class="header-section-number">16.3.5</span> Example</h3>
 <p>First, let’s repeat the SEED example from above using the <code>boot()</code> function. <code>boot()</code> expects a custom function with the argument <code>x</code> for the data and the argument <code>i</code> for the index for statistics. We use<code>R = 5000</code> for <code>B &lt;- 5000</code> in the earlier example.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(boot)</span>
@@ -1296,8 +1317,8 @@ t1*   -63.04 -0.9602388    7.817336</code></pre>
 </ol>
 </section>
 </section>
-<section id="example-3" class="level3" data-number="16.3.7">
-<h3 data-number="16.3.7" class="anchored" data-anchor-id="example-3"><span class="header-section-number">16.3.7</span> Example</h3>
+<section id="example-1" class="level3" data-number="16.3.7">
+<h3 data-number="16.3.7" class="anchored" data-anchor-id="example-1"><span class="header-section-number">16.3.7</span> Example</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a>point_estimate <span class="ot">&lt;-</span> seed <span class="sc">|&gt;</span></span>
 <span id="cb42-2"><a href="#cb42-2"></a>  <span class="fu">specify</span>(<span class="at">response =</span> balchange) <span class="sc">|&gt;</span></span>
@@ -1326,22 +1347,46 @@ based on the number of `reps` chosen in the `generate()` step.
     &lt;dbl&gt;
 1       0</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>bootstrap_distribution <span class="sc">|&gt;</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">get_confidence_interval</span>(</span>
-<span id="cb46-3"><a href="#cb46-3"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
-<span id="cb46-5"><a href="#cb46-5"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># For comparison, the SE method (assumes normality of bootstrap distribution)</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>ci_se <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">get_confidence_interval</span>(</span>
+<span id="cb46-4"><a href="#cb46-4"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
+<span id="cb46-5"><a href="#cb46-5"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb46-6"><a href="#cb46-6"></a>    <span class="at">type =</span> <span class="st">"se"</span></span>
+<span id="cb46-7"><a href="#cb46-7"></a>  )</span>
+<span id="cb46-8"><a href="#cb46-8"></a></span>
+<span id="cb46-9"><a href="#cb46-9"></a>ci_se</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   lower_ci upper_ci
      &lt;dbl&gt;    &lt;dbl&gt;
 1    -78.2    -47.8</code></pre>
 </div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="co"># Calculate confidence intervals using the percentile method</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>ci_percentile <span class="ot">&lt;-</span> bootstrap_distribution <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">get_confidence_interval</span>(</span>
+<span id="cb48-4"><a href="#cb48-4"></a>    <span class="at">point_estimate =</span> point_estimate,</span>
+<span id="cb48-5"><a href="#cb48-5"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb48-6"><a href="#cb48-6"></a>    <span class="at">type =</span> <span class="st">"percentile"</span></span>
+<span id="cb48-7"><a href="#cb48-7"></a>  )</span>
+<span id="cb48-8"><a href="#cb48-8"></a></span>
+<span id="cb48-9"><a href="#cb48-9"></a>ci_percentile</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1    -17.0     13.0</code></pre>
 </div>
-<p>The confidence intervals are comparable. We’re good to go.</p>
-<p>Students can take multiple statistics classes and never learn how to calculate a 95% confidence interval for a median. It’s simple with bootstrapping.</p>
+</div>
+<p><code>ci_boot</code> matches the confidence interval from <code>boot()</code> above. <code>ci_percentile</code> yields a very different results. The percentile method could be more reliable here because the bootstrap distribution of the median is likely skewed given the heavy skewness in the original data. The SE method assumes the bootstrap distribution is approximately normal, which may not hold for medians of skewed data.</p>
 <p>In this case, it’s striking that the balance for the median SEED account declined over the period and there is sufficient evidence that the median is statistically significantly different than $0. In fact, it’s negative!</p>
+<p>Non-parametric statistics give us lots of new tools for statistical tests.</p>
+<ol type="1">
+<li>Normal-theory statistical inference does not apply to many statistics. Robust statistics like the median are often more policy relevant than means are robust to outliers and extreme values. Students can take multiple statistics classes and never learn how to calculate a 95% confidence interval for a median. It’s simple with bootstrapping.</li>
+<li>Nonparametric statistics require minimal assumptions and skip the need to figure out the underlying distributional form.</li>
+<li>Nonparametric statistics can help with heavy tailed and skewed distribtuions where normality assumptions are challenging even with larger samples.</li>
+<li>Nonparametric tests frequently have greater statistical power when assumptions fail.</li>
+</ol>
 </section>
 </section>
 <section id="more-methods" class="level2" data-number="16.4">
@@ -1404,10 +1449,10 @@ Rizzo, Maria L. 2008. <em>Statistical Computing with r</em>. Chapman &amp; Hall/
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Base R has excellent tools for statistical inference. <code>library(infer)</code> is useful because it plays well with <code>library(tidyverse)</code>. We can just use <code>t_test()</code> for a one-sample t-test.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>Base R has excellent tools for statistical inference. <code>library(infer)</code> is useful because it plays well with <code>library(tidyverse)</code> and provides a consistent interface for various statistical tests. For simple cases, we can use <code>t_test()</code> directly for a one-sample t-test.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The RCT actually contains a treatment group, a control group that received marketing materials, and a proper control group. In this case, I’ve lumped the marketing group in with the treatment group.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn3"><p>A permutation is the exhaustive reshuffling of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(m\)</span> groups <em>with regard for order</em>. We should probably call the permutation test the combination test. Combinations are the exhaustive reshuffling of <span class="math inline">\(n\)</span> objects into <span class="math inline">\(m\)</span> groups <em>without regard for order</em>. Using permutations generates the same results as combinations but takes much longer because many of the configurations are duplicated.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-<li id="fn4"><p>The permutation test is considered an exact test because the null model will <em>never</em> test more as significant more than the <span class="math inline">\(\alpha\)</span> level of the test.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>The permutation test is considered an exact test because the null model will <em>never</em> identify results as significant more than the <span class="math inline">\(\alpha\)</span> level of the test.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn5"><p><span class="citation" data-cites="brown2001">Brown, Cai, and DasGupta (<a href="references.html#ref-brown2001" role="doc-biblioref">2001</a>)</span> explores the coverage probabilities of different techniques for interval estimation for a binomial proportion. Reading this paper made me question everything I knew about confidence intervals.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn6"><p>Confidence intervals are about a process. There is a distinct difference between confidence and probabilities. It is incorrect to say, “the true parameter is in the interval X% of the time.” This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn7"><p>Recall that <span class="math inline">\(\bar{X}\)</span> is an unbiased estimator of the population mean <span class="math inline">\(\mu\)</span>. On the other hand, <span class="math inline">\(\hat\sigma^2\)</span> is a biased estimator of variance <span class="math inline">\(\sigma^2\)</span>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>

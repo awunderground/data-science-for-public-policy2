@@ -57,9 +57,9 @@ Different tests apply in different applied situations. For example, @higgins2004
 3.  **Use tests based on other common distributions like the exponential distribution.** There may be insufficient data to determine the form or the data may come from a difficult distribution with unknown parameters or characteristics.
 4.  **Use nonparametric statistics.**
 
-We use [`library(infer)`](https://infer.netlify.app/) for statistical inference in R.[^09_nonparametric-2-1]
+We use [`library(infer)`](https://infer.netlify.app/) for statistical inference in R.[^17_nonparametric-2-1]
 
-[^09_nonparametric-2-1]: Base R has excellent tools for statistical inference. `library(infer)` is useful because it plays well with `library(tidyverse)`. We can just use `t_test()` for a one-sample t-test.
+[^17_nonparametric-2-1]: Base R has excellent tools for statistical inference. `library(infer)` is useful because it plays well with `library(tidyverse)` and provides a consistent interface for various statistical tests. For simple cases, we can use `t_test()` directly for a one-sample t-test.
 
 `library(infer)` has a more powerful workflow for other types of tests built around four verbs:
 
@@ -135,7 +135,7 @@ sim_data |>
 Based on the p-value and t-statistic, there is sufficient evidence to reject the null hypothesis at the $\alpha = 0.05$ significance level. It is likely that the population means are different.
 
 ::: callout-warning
-Important assumptions support the inferences in Example 1. We will unpack these assumptions later.
+Important assumptions support the inferences in Example 1. We will unpack these assumptions in the sections below.
 :::
 
 ### Example 2
@@ -174,11 +174,11 @@ We make inferences with data and assumptions. Did our assumptions hold in this c
 1.  $x_1, x_2, ..., x_n$ is an IID random sample from a population.
 2.  The population is normally distributed or the sample size is large enough for the Central Limit Theorem to apply.
 
-Both assumptions are reasonable. We can assume that the sample is identically distributed because the sample was drawn from one population: clients of the Green Bank of Caraga. It also seems reasonable to assume that a household that received the commitment savings product did not somehow influence a control household's level of savings. Thus the IID assumption is reasonable.
+Both assumptions are reasonable. We can assume that the sample is identically distributed because the sample was drawn from one population: clients of the Green Bank of Caraga. It is possible that there are spillover effects but it also seems reasonable to assume that a household that received the commitment savings product did not somehow influence a control household's level of savings. Thus the IID assumption is reasonable.
 
 The study assessed more than 1,000 households, suggesting that we need not be concerned with the distribution's normality.
 
-The average doesn't represent the experience of the average person. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn't give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:
+The average experience of the households may be different than the experience of the average household. Maybe we want to run a statistical test on the median. Unfortunately, normal-theory statistics doesn't give us a tool for this. This could be a big challenge based on key percentiles for the change in account balance:
 
 ```{r}
 #| warning: false
@@ -193,9 +193,9 @@ seed |>
 
 #### 2-Sample T-Test
 
-Next, let's run a 2-sample t-test to compare the means from the control and treatment group.[^09_nonparametric-2-2]
+Next, let's run a 2-sample t-test to compare the means from the control and treatment group.[^17_nonparametric-2-2]
 
-[^09_nonparametric-2-2]: The RCT actually contains a treatment group, a control group that received marketing materials, and a proper control group. In this case, I've lumped the marketing group in with the treatment group.
+[^17_nonparametric-2-2]: The RCT actually contains a treatment group, a control group that received marketing materials, and a proper control group. In this case, I've lumped the marketing group in with the treatment group.
 
 $$H_0: \mu_{control} = \mu_{treatment}$$
 
@@ -229,6 +229,8 @@ seed |>
 ```
 
 *Many* applications of 2-sample t-tests incorrectly ignore assumption 3 but situations where we want to make inferences about the difference in means when population variances differ is widespread. This is known as the [Behrens-Fisher problem](https://en.wikipedia.org/wiki/Behrens%E2%80%93Fisher_problem).
+
+It's worth noting that `t_test()` uses Welch's t-test by default, instead of Student's t-test, which is a different solution to the Behrens-Fisher problem. 
 
 ::: callout
 
@@ -293,10 +295,22 @@ The **permutation distribution** is a vector of statistics calculated on combina
 ::: {.callout-tip}
 ## Permutation principle
 
-The **permutation principle** states that the permutation distribution is an appropriate reference distribution and can be used to determine p-values and statistical significance. [@higgins2004a][^09_nonparametric-2-3]
+The **permutation principle** states that the permutation distribution is an appropriate reference distribution and can be used to determine p-values and statistical significance. [@higgins2004a][^17_nonparametric-2-3]
 :::
 
-[^09_nonparametric-2-3]: The permutation test is considered an exact test because the null model will *never* test more as significant more than the $\alpha$ level of the test.
+[^17_nonparametric-2-3]: The permutation test is considered an exact test because the null model will *never* identify results as significant more than the $\alpha$ level of the test.
+
+::: {.callout-note}
+## Exchangeability Assumption
+
+If the null hypothesis is true (e.g., there is no difference between treatment and control), then any observation could have equally likely been assigned to either group.
+
+This assumption holds when:
+
+- Observations are randomly sampled from the same population.
+- Data come from a randomized experiments like a randomized control trial (RCT). 
+
+:::
 
 ::: {.callout-warning}
 If the data used in a permutation test are selected randomly or come from a designed experiment, then we can make inferences about the population. Otherwise, we can only make inferences about the sample. 
@@ -354,8 +368,8 @@ tibble(x = permutation_dist) |>
 D <- mean(sim_data[sim_data$group == "1", ]$x) -
   mean(sim_data[sim_data$group == "2", ]$x)
 
-# calculate a p-value
-mean(D > permutation_dist)
+# calculate a p-value for a two-sided test
+mean(abs(permutation_dist) >= abs(D))
 
 ```
 
@@ -398,12 +412,12 @@ tibble(x = permutation_dist) |>
 D <- median(sim_data[sim_data$group == "1", ]$x) -
   median(sim_data[sim_data$group == "2", ]$x)
 
-# calculate the p-value
-mean(D > permutation_dist)
+# calculate the p-value for a two-sided test
+mean(abs(permutation_dist) >= abs(D))
 
 ```
 
-The p-value is small. There is sufficient evidence to reject the null hypothesis at the $\alpha = 0.05$ level. It is likely that the population medians (location parameters) of the two samples are different.
+The p-value is small. There is sufficient evidence to reject the null hypothesis at the $\alpha = 0.1$ level but not the $\alpha = 0.05$. It is likely that the population medians (location parameters) of the two samples are different.
 
 ### Example 2 (Revisited)
 
@@ -482,9 +496,9 @@ perm_dist |>
 
 ```
 
-We have sufficient evidence to reject the null hypothesis in favor if the alternative hypothesis at the $\alpha = 0.05$ level. It is likely that the population median for group 1 is different than the population median for group 2.
+We have sufficient evidence to reject the null hypothesis in favor of the alternative hypothesis at the $\alpha = 0.05$ level. It is likely that the population median for group 1 is different than the population median for group 2.
 
-Interestingly, the median change for the treatment group is slightly less negative than the control group.
+Interestingly, the median change for the treatment group is less negative than the control group.
 
 ```{r}
 seed |>
@@ -516,12 +530,12 @@ Statistical tests are often selected because of their coverage probabilities and
 ::: {.callout-tip}
 ## Coverage probability
 
-**Coverage probability** is how close the stated level of confidence is to the actual level of confidence.[^09_nonparametric-2-4]
+**Coverage probability** is how close the stated level of confidence is to the actual level of confidence.[^17_nonparametric-2-4]
 
 For example, a given statistical test, sampling procedure, and population may generate confidence intervals that contain the true parameter of interest 93% of the time for a 95% confidence interval.
 :::
 
-[^09_nonparametric-2-4]: @brown2001 explores the coverage probabilities of different techniques for interval estimation for a binomial proportion. Reading this paper made me question everything I knew about confidence intervals. 
+[^17_nonparametric-2-4]: @brown2001 explores the coverage probabilities of different techniques for interval estimation for a binomial proportion. Reading this paper made me question everything I knew about confidence intervals. 
 
 ::: {.callout-tip}
 ## Power
@@ -531,7 +545,7 @@ For example, a given statistical test, sampling procedure, and population may ge
 
 We want tests with correct coverage probabilities and high statistical power. If the assumptions are met then parametric tests often have more power than nonparametric tests. The power advantage can often flip when assumptions start failing. 
 
-Some nonparametric tests, which are often variations on the permutation test, have more power than the permutation test. Often, the [Wilcoxon Rank Sum test](https://data.library.virginia.edu/the-wilcoxon-rank-sum-test/), which is uses ranks instead of values, has higher power. Another test to explore is the Kruskal-Wallis test. 
+Some nonparametric tests, which are often variations on the permutation test, have more power than the permutation test. Often, the [Wilcoxon Rank Sum test](https://data.library.virginia.edu/the-wilcoxon-rank-sum-test/), which uses ranks instead of values, has higher power. Another test to explore is the Kruskal-Wallis test. 
 
 ## Nonparametric Bootstrap
 
@@ -554,10 +568,10 @@ Sampling distributions are fundamental to statistics. We frequently use the norm
 ::: {.callout-tip}
 ## Confidence interval
 
-Given a sampling procedure and a population, the target parameter is in the confidence interval X% of the time over many random samples.[^09_nonparametric-2-5]
+Given a sampling procedure and a population, the target parameter is in the confidence interval X% of the time over many random samples.[^17_nonparametric-2-5]
 :::
 
-[^09_nonparametric-2-5]: Confidence intervals are about a process. There is a distinct difference between confidence and probabilities. It is incorrect to say, "the true parameter is in the interval X% of the time." This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.
+[^17_nonparametric-2-5]: Confidence intervals are about a process. There is a distinct difference between confidence and probabilities. It is incorrect to say, "the true parameter is in the interval X% of the time." This is what a credible interval is and we will learn more about credible intervals when we learn Bayesian statistics.
 
 The idea of **repeated sampling** is fundamental to sampling distributions, confidence intervals, and statistical inference in frequentist statistics. The nonparametric bootstrap leverages the idea of repeated sampling to allow for statistical inference under a *minimal number of assumptions*. This makes it possible to perform inference:
 
@@ -566,15 +580,19 @@ The idea of **repeated sampling** is fundamental to sampling distributions, conf
 
 ### Basic Bootstrap
 
+The bootstrap assumes the sample is representative of the population. 
+
 Suppose we are interested in an unknown parameter $\theta$.
 
 1.  Compute $\hat\theta$ from the original data.
 2.  Take $B$ bootstrap samples of size $n$ from the original data.
-3.  Calculate $\hat\theta_{b,i}$ on each bootstrap sample.
+3.  Calculate $\hat\theta_{b}$ on each bootstrap sample.
 
-The vector $\hat{\vec\theta_b}$ is the bootstrap distribution and it has multiple uses. Importantly, it is a nonparametric estimate of the sampling distribution of $\hat\theta$.
+The vector $\hat{\vec\theta_b}$ is the bootstrap distribution and it has multiple uses. Importantly, it is a nonparametric estimate of the sampling distribution of $\hat\theta$ because it does not assume a parametric form of the population distribution.
 
-### Example
+### Example: Bootstrap Distribution for Median
+
+Let's create a bootstrap distribution for the median of the `balchange` variable in the SEED data:
 
 ```{r}
 B <- 5000
@@ -594,13 +612,13 @@ tibble(b) |>
 
 ```
 
-We can use this permutation distribution to calculate bias (@sec-bias), standard errors (@sec-standard-errors), and confidence intervals (@sec-confidence-intervals).  
+We can use this bootstrap distribution to calculate bias (@sec-bias), standard errors (@sec-standard-errors), and confidence intervals (@sec-confidence-intervals).  
 
 ### Bias {#sec-bias}
 
-Sometimes estimators of population parameters are biased.[^09_nonparametric-2-6] Bootstrapping can be used to estimate the bias in an estimator.
+Sometimes estimators of population parameters are biased.[^17_nonparametric-2-6] Bootstrapping can be used to estimate the bias in an estimator.
 
-[^09_nonparametric-2-6]: Recall that $\bar{X}$ is an unbiased estimator of the population mean $\mu$. On the other hand, $\hat\sigma^2$ is a biased estimator of variance $\sigma^2$.
+[^17_nonparametric-2-6]: Recall that $\bar{X}$ is an unbiased estimator of the population mean $\mu$. On the other hand, $\hat\sigma^2$ is a biased estimator of variance $\sigma^2$.
 
 Let $\theta$ be the parameter of interest and $\hat\theta$ be an estimator. $\hat\theta$ is unbiased if $E[\hat\theta] = \theta$.
 
@@ -696,20 +714,39 @@ bootstrap_distribution |>
 bootstrap_distribution |>
   get_p_value(obs_stat = point_estimate, direction = "two-sided")
 
-bootstrap_distribution |>
+
+# For comparison, the SE method (assumes normality of bootstrap distribution)
+ci_se <- bootstrap_distribution |>
   get_confidence_interval(
     point_estimate = point_estimate,
     level = 0.95,
     type = "se"
   )
 
+ci_se
+
+# Calculate confidence intervals using the percentile method
+ci_percentile <- bootstrap_distribution |>
+  get_confidence_interval(
+    point_estimate = point_estimate,
+    level = 0.95,
+    type = "percentile"
+  )
+
+ci_percentile
+
 ```
 
-The confidence intervals are comparable. We're good to go.
-
-Students can take multiple statistics classes and never learn how to calculate a 95% confidence interval for a median. It's simple with bootstrapping.
+`ci_boot` matches the confidence interval from `boot()` above. `ci_percentile` yields a very different results. The percentile method could be more reliable here because the bootstrap distribution of the median is likely skewed given the heavy skewness in the original data. The SE method assumes the bootstrap distribution is approximately normal, which may not hold for medians of skewed data.
 
 In this case, it's striking that the balance for the median SEED account declined over the period and there is sufficient evidence that the median is statistically significantly different than \$0. In fact, it's negative!
+
+Non-parametric statistics give us lots of new tools for statistical tests. 
+
+1. Normal-theory statistical inference does not apply to many statistics. Robust statistics like the median are often more policy relevant than means are robust to outliers and extreme values. Students can take multiple statistics classes and never learn how to calculate a 95% confidence interval for a median. It's simple with bootstrapping. 
+2. Nonparametric statistics require minimal assumptions and skip the need to figure out the underlying distributional form. 
+3. Nonparametric statistics can help with heavy tailed and skewed distribtuions where normality assumptions are challenging even with larger samples. 
+4. Nonparametric tests frequently have greater statistical power when assumptions fail. 
 
 ## More Methods
 
