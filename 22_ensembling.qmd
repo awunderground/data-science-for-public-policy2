@@ -87,11 +87,11 @@ In 2012, the US Census Bureau crowd sourced a predictive modeling competition on
 
 The [Census Bureau's Kaggle Competition](https://www.kaggle.com/competitions/us-census-bureau-ndsu-and-umn/overview) tried to answer the question, "Which statistical model best predicts 2010 Census mail return rates?"
 
-Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.[^11_ensembling-1]
+Participants use the 2012 Block-Group-Level Planning Database and were evaluated using mean squared error weighted by 2010 population.[^22_ensembling-1]
 
-[^11_ensembling-1]: The Kaggle competition website says mean absolute error weighed by 2010 population.
+[^22_ensembling-1]: The Kaggle competition website says mean absolute error weighed by 2010 population.
 
-244 teams and individuals competed. Bill Bame, a software develop from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees [@erdman2014].
+244 teams and individuals competed. Bill Bame, a software developer from Maryland, won the competition with a mean squared error of 2.60. The top three finished use ensembled tree-based models like random forests and boosted trees [@erdman2014].
 
 ### The Low-Response Score
 
@@ -213,24 +213,24 @@ Simple predictive models like linear regression, KNN, and regression trees are i
 ::: callout-tip
 ## Ensembling
 
-Ensembling combine predictions from multiple models into one prediction.
+Ensembling combines predictions from multiple models into one prediction.
 :::
 
-Bagging, boosting, and stacking are three strategies for ensembling. We will cover bagging and boosting in this chapter. Random forests are an implementation bagging. XGBoost is an implementation of boosting.
+Bagging, boosting, and stacking are three strategies for ensembling. We will cover bagging and boosting in this chapter. Random forests are an implementation of bagging. XGBoost is an implementation of boosting.
 
 ## Bagging
 
 ::: callout-tip
 ## Bagging
 
-Bagging, short for bootstrap aggregation, is a general purpose ensembling method that reduces the variance of a predictive model by training the model on many bootstrap samples[^11_ensembling-2] and then ensembling the predictions.
+Bagging, short for bootstrap aggregation, is a general purpose ensembling method that reduces the variance of a predictive model by training the model on many bootstrap samples[^22_ensembling-2] and then ensembling the predictions.
 
 The mean is typically used to ensemble in regression applications and majority vote is typically use to ensemble in classification applications.
 :::
 
-[^11_ensembling-2]: This is the same bootstrap sampling used for nonparametric statistical inference.
+[^22_ensembling-2]: This is the same bootstrap sampling used for nonparametric statistical inference.
 
-Averaging a set of observations to reduce variance is a fundamental statistical idea. Recall the standard error of the sample mean. Suppose we have a set of data $x_1, x_2, ...x_n$. Let each each observations be independent and have variance $\sigma^2$. The variance of the mean $\bar{x}$ is $\frac{\sigma^2}{n}$. Averaging the observations reduces variance. Averaging even more observations further reduces variance but at a diminishing rate.
+Averaging a set of observations to reduce variance is a fundamental statistical idea. Recall the standard error of the sample mean. Suppose we have a set of data $x_1, x_2, ...x_n$. Let each observation be independent and have variance $\sigma^2$. The variance of the mean $\bar{x}$ is $\frac{\sigma^2}{n}$. Averaging the observations reduces variance. Averaging even more observations further reduces variance but at a diminishing rate.
 
 It is possible to reduce variance error by training many predictive models on different sets of data and then ensembling the predictions.
 
@@ -400,12 +400,13 @@ Random forests are identical to bagged trees, except each time a split is consid
 ::: callout-tip
 ## Regularization
 
-Regularization is a change to a loss function or algorithm intended to intentionally reduce the intensity of a model fit to reduce variance error.
+Regularization is any technique that constrains model complexity to reduce overfitting and improve generalization. There are two main types:
 
-LASSO regression (L-1 regularization) and Ridge regression (L-2 regularization) are two popular regularization techniques.
+1. **Loss function regularization** adds a penalty term to the loss function (e.g., LASSO and Ridge regression penalize large coefficients). This is explicit.
+2. **Algorithmic regularization** constrains the model-fitting process itself without changing the loss function. This is implicit. 
+
+Random forests use algorithmic regularization by randomly selecting predictors at each split, which prevents any single predictor from dominating and reduces correlation between trees.
 :::
-
-Random forests are regularized models, and have similarities to linear regression with ridge regression, even though it is a non-parametric model.
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
@@ -505,6 +506,21 @@ rf_resamples |>
 
 ```
 
+### Out-of-Bag Error Estimation
+
+Random forests have a built-in method for estimating test error without needing a separate validation set or cross-validation.
+
+::: callout-tip
+## Out-of-Bag (OOB) Error
+
+When training random forests, each tree is fit on a bootstrap sample of the data. On average, each bootstrap sample contains about 63% of the original observations, leaving 37% "out-of-bag."
+
+For each observation, we can predict its value using only the trees that did not include it in their bootstrap sample. The OOB error is the average prediction error across all observations using their respective OOB predictions.
+:::
+
+
+This is a significant practical advantage of random forests over other ensemble methods.
+
 ### Interpretability
 
 It is important to understand the process for fitting models, how the nature of the data affects fitted models, and how fitted models generate predictions. Models that lack these features are often called "black box."
@@ -529,7 +545,7 @@ The shift from linear regression and regression trees, which are locally and glo
 
 ### Variable Importance
 
-Linear regression returns coefficients and regression trees return trees that can be visualized. Bagged trees and random forests return neither. 
+Linear regression returns interpretable coefficients, and regression trees produce visualizable tree structures. Bagged trees and random forests return neither. 
 
 ::: {.callout-tip}
 ## Variable Importance
@@ -537,9 +553,15 @@ Linear regression returns coefficients and regression trees return trees that ca
 Variable importance is the contribution each predictor has to a fitted model.
 :::
 
-Variable importance is an alternative approach that aims to capture the why of a model and prediction. For linear regression, variable importance is typically just the absolute value of the estimated coefficient. 
+Variable importance is an alternative approach that aims to explain which predictors contribute most to model predictions. For linear regression, variable importance is typically just the absolute value of the estimated coefficient. 
 
-For regression with random forests, variable importance is the reduction in mean squared error caused by the addition of each predictor across all of the trees. It can be imprecise for categorical predictors, but is a valuable tool for understanding a random forest model.
+For regression with random forests, variable importance measures the total reduction in mean squared error from splits on each predictor across all trees. While valuable, variable importance has important limitations:
+
+1. Correlated predictors
+2. High-cardinality categoricals
+3. Not causal
+
+Permutation importance and SHAP values address some of these issues. 
 
 Here we fit the random forest model on all of the training data and then visualize the variable importance.
 
@@ -590,7 +612,7 @@ parallel::detectCores()
 Do not use all available cores. Only use a subset of available cores so other computations (e.g. Spotify and email) can continue on your computer.
 :::
 
-We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grow. Simply include `num.threads` in the `set_engine()` call. 
+We will focus on two forms of parallelization. First, parallelization is simple with bagged models because trees are independently grown. Simply include `num.threads` in the `set_engine()` call. 
 
 ```{r}
 #| eval: false
