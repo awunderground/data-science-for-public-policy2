@@ -368,14 +368,20 @@ window.Quarto = {
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./22_ensembling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  <a href="./22_regularization.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">20</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./23_regularization.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Regularization</span></span></a>
+  <a href="./23_ensembling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">21</span>&nbsp; <span class="chapter-title">Ensembling</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./24_interpretable-models.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Interpretable Models</span></span></a>
   </div>
 </li>
       </ul>
@@ -392,7 +398,7 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./27_advanced-unsupervised-ml.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">22</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Mixture Distributions and Mixture Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -409,19 +415,19 @@ window.Quarto = {
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./30_geospatial.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">23</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
+ <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Geospatial Analysis with sf</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./28_text-analysis.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">24</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
+ <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Analysis</span></span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./29_text-modeling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">25</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
+ <span class="menu-text"><span class="chapter-number">26</span>&nbsp; <span class="chapter-title">Text Modeling</span></span></a>
   </div>
 </li>
       </ul>
@@ -1357,12 +1363,12 @@ less accurate nanosecond times to avoid potential integer overflows</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Unit: milliseconds
-                     expr      min       lq     mean   median       uq
-                median(x) 5.972347 6.327263 7.978310 6.613608 8.757703
- quantile(x, probs = 0.5) 3.479219 3.748445 4.475939 3.893175 4.261212
-       max neval
- 63.692721   100
-  7.229981   100</code></pre>
+                     expr      min       lq     mean   median       uq      max
+                median(x) 6.311499 6.805057 9.501098 8.019477 9.767430 68.86434
+ quantile(x, probs = 0.5) 3.528214 3.957935 5.138227 4.216378 6.364491 19.58980
+ neval
+   100
+   100</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">

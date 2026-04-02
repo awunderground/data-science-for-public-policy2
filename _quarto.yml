@@ -40,9 +40,9 @@ book:
         - 19_predictive-modeling-motivation.qmd 
         - 20_predictive-modeling-concepts.qmd
         - 21_supervised-classification.qmd
-        - 22_ensembling.qmd
-        - 23_regularization.qmd
-        # - interpretable-models.qmd (chapter 24)
+        - 22_regularization.qmd
+        - 23_ensembling.qmd
+        - 24_interpretable-models.qmd
     - part: Unsupervised Machine Learning
       chapters:
         # - 25_dimension-reduction.qmd
