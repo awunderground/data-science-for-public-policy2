@@ -782,18 +782,17 @@ enet_rec <- recipe(non_return_rate ~ ., pdb_train) |>
     HHD_Moved_in_ACS_13_17,
     Diff_HU_1yr_Ago_ACS_13_17,
     Pop_5_17_ACS_13_17,
-    Pop_5_17_ACS_13_17,
     Sngl_Prns_HHD_ACS_13_17,
     Not_HS_Grad_ACS_13_17
   ) |>
   step_log(
     Med_HHD_Inc_ACS_13_17,
     Med_House_Value_ACS_13_17,
-    offset = 0.1
+    offset = 0.001
   ) |>
   step_log(
     Tot_Vacant_Units_ACS_13_17,
-    offset = 0.1
+    offset = 0.001
   ) |>
   add_role(
     Renter_Occp_HU_ACS_13_17,
