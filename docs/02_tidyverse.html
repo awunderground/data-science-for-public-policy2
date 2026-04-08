@@ -588,27 +588,17 @@ div.csl-indent {
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We’ll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the <a href="https://cps.ipums.org/cps/about.shtml">Current Population Survey</a> (CPS). Run the following code to load the data.</p>
-<div class="cell" data-messgae="false">
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>asec <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
 <span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">paste0</span>(</span>
 <span id="cb7-3"><a href="#cb7-3"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
 <span id="cb7-4"><a href="#cb7-4"></a>    <span class="st">"main/cps/cps-asec.csv"</span></span>
 <span id="cb7-5"><a href="#cb7-5"></a>  )</span>
 <span id="cb7-6"><a href="#cb7-6"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Rows: 157959 Columns: 17
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: ","
-chr  (4): month, ftype, offpov, offpovuniv
-dbl (13): year, serial, cpsid, asecflag, asecwth, pernum, cpsidp, asecwt, ft...
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-</div>
 </div>
 <p>We can use <code>glimpse(asec)</code> to quickly view the data. We can also use <code>View(asec)</code> to open up <code>asec</code> in RStudio.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">glimpse</span>(<span class="at">x =</span> asec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">glimpse</span>(<span class="at">x =</span> asec)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 157,959
 Columns: 17
@@ -636,7 +626,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="select"><span class="header-section-number">2.4.1</span> <code>select()</code></h3>
 <p><code>select()</code> drops columns from a dataframe and/or reorders the columns in a dataframe. The arguments after the name of the dataframe should be the names of columns you wish to keep, without quotes. All other columns not listed are dropped.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, year, month, serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, year, month, serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 3
     year month serial
@@ -656,7 +646,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 <p>This works great until the goal is to select 99 of 100 variables. Fortunately, <code>-</code> can be used to remove variables. You can also select all but multiple variables by listing them with the <code>-</code> symbol separated by commas.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, <span class="sc">-</span>asecflag)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, <span class="sc">-</span>asecflag)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 16
     year serial month   cpsid asecwth pernum  cpsidp asecwt ftype ftotval inctot
@@ -706,7 +696,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="rename"><span class="header-section-number">2.4.2</span> <code>rename()</code></h3>
 <p><code>rename()</code> renames columns in a data frame. The pattern is <code>new_name = old_name</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="fu">rename</span>(<span class="at">.data =</span> asec, <span class="at">serial_number =</span> serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="fu">rename</span>(<span class="at">.data =</span> asec, <span class="at">serial_number =</span> serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 17
     year serial_number month   cpsid asecflag asecwth pernum  cpsidp asecwt
@@ -728,7 +718,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 <p>You can also rename a selection of variables using <code>rename_with()</code>. The <code>.cols</code> argument is used to select the columns to rename and takes a <code>tidyselect</code> statement like those we introduced above. Here, we’re using the <code>where()</code> selection helper which selects all columns where a given condition is <code>TRUE</code>. The default value for the <code>.cols</code> argument is <code>everything()</code> which selects all columns in the dataset.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="fu">rename_with</span>(<span class="at">.data =</span> asec, <span class="at">.fn =</span> toupper, <span class="at">.cols =</span> <span class="fu">where</span>(is.numeric))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">rename_with</span>(<span class="at">.data =</span> asec, <span class="at">.fn =</span> toupper, <span class="at">.cols =</span> <span class="fu">where</span>(is.numeric))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 17
     YEAR SERIAL month   CPSID ASECFLAG ASECWTH PERNUM  CPSIDP ASECWT ftype      
@@ -750,7 +740,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 <p>Most <code>dplyr</code> functions can rename columns simply by prefacing the operation with <code>new_name =</code>. For example, this can be done with <code>select()</code>:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, year, month, <span class="at">serial_number =</span> serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">select</span>(<span class="at">.data =</span> asec, year, month, <span class="at">serial_number =</span> serial)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 3
     year month serial_number
@@ -774,8 +764,8 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p><code>filter()</code> reduces the number of observations in a dataframe. Every column in a dataframe has a name. Rows do not necessarily have names in a dataframe, so rows need to be filtered based on logical conditions.</p>
 <p><code>==</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code>, <code>!=</code>, <code>%in%</code>, and <code>is.na()</code> are all operators that can be used for logical conditions. <code>!</code> can be used to negate a condition and <code>&amp;</code> and <code>|</code> can be used to combine conditions. <code>|</code> means or.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="co"># return rows with pernum of 1 and incwage &gt; $100,000</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a><span class="fu">filter</span>(<span class="at">.data =</span> asec, pernum <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> incwage <span class="sc">&gt;</span> <span class="dv">100000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="co"># return rows with pernum of 1 and incwage &gt; $100,000</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="fu">filter</span>(<span class="at">.data =</span> asec, pernum <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> incwage <span class="sc">&gt;</span> <span class="dv">100000</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5,551 × 17
     year serial month   cpsid asecflag asecwth pernum  cpsidp asecwt ftype      
@@ -818,8 +808,8 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="arrange"><span class="header-section-number">2.4.4</span> <code>arrange()</code></h3>
 <p><code>arrange()</code> sorts the rows of a data frame in alpha-numeric order based on the values of a variable or variables. The dataframe is sorted by the first variable first and each subsequent variable is used to break ties. <code>desc()</code> is used to reverse the sort order for a given variable.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># sort pernum is descending order because high pernums are interesting</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">arrange</span>(<span class="at">.data =</span> asec, <span class="fu">desc</span>(pernum))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># sort pernum is descending order because high pernums are interesting</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a><span class="fu">arrange</span>(<span class="at">.data =</span> asec, <span class="fu">desc</span>(pernum))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 17
     year serial month   cpsid asecflag asecwth pernum  cpsidp asecwt ftype      
@@ -860,8 +850,8 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p><code>mutate()</code> creates new variables or edits existing variables. We can use arithmetic arguments, such as <code>+</code>, <code>-</code>, <code>*</code>, <code>/</code>, and <code>^</code>. We can also custom functions and functions from packages. For example, we can use <code>library(stringr)</code> for string manipulation and <code>library(lubridate)</code> for date manipulation.</p>
 <p>Variables are created by adding a new column name, like <code>inctot_adjusted</code>, to the left of <code>=</code> in <code>mutate()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="co"># adjust inctot for underreporting</span></span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># adjust inctot for underreporting</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 18
     year serial month   cpsid asecflag asecwth pernum  cpsidp asecwt ftype      
@@ -883,8 +873,8 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 <p>Variables are edited by including an existing column name, like <code>inctot</code>, to the left of <code>=</code> in <code>mutate()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># adjust income because of underreporting</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="co"># adjust income because of underreporting</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 157,959 × 17
     year serial month   cpsid asecflag asecwth pernum  cpsidp asecwt ftype      
@@ -922,14 +912,14 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <li><code>false</code>: What to do if the condition evaluates to <code>FALSE</code></li>
 </ol>
 <p>For example,</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a>storms <span class="sc">|&gt;</span></span>
-<span id="cb29-2"><a href="#cb29-2"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb29-3"><a href="#cb29-3"></a>  <span class="at">storm_decision =</span> <span class="fu">if_else</span>(</span>
-<span id="cb29-4"><a href="#cb29-4"></a>    <span class="at">condition =</span> wind <span class="sc">&gt;</span> <span class="dv">50</span>,</span>
-<span id="cb29-5"><a href="#cb29-5"></a>    <span class="at">true =</span> <span class="st">"evacuate"</span>,</span>
-<span id="cb29-6"><a href="#cb29-6"></a>    <span class="at">false =</span> <span class="st">"stay"</span></span>
-<span id="cb29-7"><a href="#cb29-7"></a>    )</span>
-<span id="cb29-8"><a href="#cb29-8"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>storms <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">storm_decision =</span> <span class="fu">if_else</span>(</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    <span class="at">condition =</span> wind <span class="sc">&gt;</span> <span class="dv">50</span>,</span>
+<span id="cb28-5"><a href="#cb28-5"></a>    <span class="at">true =</span> <span class="st">"evacuate"</span>,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>    <span class="at">false =</span> <span class="st">"stay"</span></span>
+<span id="cb28-7"><a href="#cb28-7"></a>    )</span>
+<span id="cb28-8"><a href="#cb28-8"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <ol type="1">
 <li>Create a new variable called <code>in_poverty</code>. If <code>offtotval</code> is less than <code>offcutoff</code> then use <code>"Below Poverty Line"</code>. Otherwise, use <code>"Above Poverty Line"</code>.</li>
 </ol>
@@ -942,22 +932,22 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p><code>|&gt;</code> passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:</p>
 <p>Legacy R code may use <code>%&gt;%</code>, the pipe from the <code>magrittr</code> package. It was (and remains) popular, particularly in the <code>tidyverse framework</code>. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because <code>|&gt;</code> is new and continues to be developed, developers have increased <code>|&gt;</code>’s abilities over time. To see a list of key differences between <code>%&gt;%</code> and <code>|&gt;</code>, see <a href="https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/">this blog</a>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="co"># old way</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span>
-<span id="cb30-3"><a href="#cb30-3"></a></span>
-<span id="cb30-4"><a href="#cb30-4"></a><span class="co"># new way</span></span>
-<span id="cb30-5"><a href="#cb30-5"></a>asec <span class="sc">|&gt;</span></span>
-<span id="cb30-6"><a href="#cb30-6"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="co"># old way</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a><span class="fu">mutate</span>(<span class="at">.data =</span> asec, <span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span>
+<span id="cb29-3"><a href="#cb29-3"></a></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="co"># new way</span></span>
+<span id="cb29-5"><a href="#cb29-5"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb29-6"><a href="#cb29-6"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>See the power:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>new_asec <span class="ot">&lt;-</span> asec <span class="sc">|&gt;</span></span>
-<span id="cb31-2"><a href="#cb31-2"></a>  <span class="fu">filter</span>(pernum <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb31-3"><a href="#cb31-3"></a>  <span class="fu">select</span>(year, month, pernum, inctot) <span class="sc">|&gt;</span></span>
-<span id="cb31-4"><a href="#cb31-4"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span></span>
-<span id="cb31-5"><a href="#cb31-5"></a>  <span class="fu">select</span>(<span class="sc">-</span>inctot)</span>
-<span id="cb31-6"><a href="#cb31-6"></a></span>
-<span id="cb31-7"><a href="#cb31-7"></a>new_asec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>new_asec <span class="ot">&lt;-</span> asec <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">filter</span>(pernum <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>  <span class="fu">select</span>(year, month, pernum, inctot) <span class="sc">|&gt;</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>  <span class="fu">mutate</span>(<span class="at">inctot_adjusted =</span> inctot <span class="sc">*</span> <span class="fl">1.1</span>) <span class="sc">|&gt;</span></span>
+<span id="cb30-5"><a href="#cb30-5"></a>  <span class="fu">select</span>(<span class="sc">-</span>inctot)</span>
+<span id="cb30-6"><a href="#cb30-6"></a></span>
+<span id="cb30-7"><a href="#cb30-7"></a>new_asec</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 60,460 × 4
     year month pernum inctot_adjusted
@@ -980,18 +970,18 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.7" class="anchored" data-anchor-id="summarize"><span class="header-section-number">2.4.7</span> <code>summarize()</code></h3>
 <p><code>summarize()</code> collapses many rows in a dataframe into fewer rows with summary statistics of the many rows. <code>n()</code>, <code>mean()</code>, and <code>sum()</code> are common summary statistics. Renaming is useful with <code>summarize()</code>!</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="co"># summarize without renaming the statistics</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>asec <span class="sc">|&gt;</span></span>
-<span id="cb33-3"><a href="#cb33-3"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(ftotval), <span class="fu">mean</span>(inctot))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="co"># summarize without renaming the statistics</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">summarize</span>(<span class="fu">mean</span>(ftotval), <span class="fu">mean</span>(inctot))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   `mean(ftotval)` `mean(inctot)`
             &lt;dbl&gt;          &lt;dbl&gt;
 1         105254.     209921275.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># summarize and rename the statistics</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>asec <span class="sc">|&gt;</span></span>
-<span id="cb35-3"><a href="#cb35-3"></a>  <span class="fu">summarize</span>(<span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="co"># summarize and rename the statistics</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">summarize</span>(<span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   mean_ftotval mean_inctot
@@ -1005,13 +995,13 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.8" class="anchored" data-anchor-id="group_by"><span class="header-section-number">2.4.8</span> <code>group_by()</code></h3>
 <p><code>group_by()</code> groups a dataframe based on specified variables. <code>summarize()</code> with grouped dataframes creates subgroup summary statistics. <code>mutate()</code> with <code>group_by()</code> calculates grouped summaries for each row.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>asec <span class="sc">|&gt;</span></span>
-<span id="cb37-2"><a href="#cb37-2"></a>  <span class="fu">group_by</span>(pernum) <span class="sc">|&gt;</span></span>
-<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb37-4"><a href="#cb37-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb37-5"><a href="#cb37-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
-<span id="cb37-6"><a href="#cb37-6"></a>    <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot)</span>
-<span id="cb37-7"><a href="#cb37-7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">group_by</span>(pernum) <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb36-4"><a href="#cb36-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb36-5"><a href="#cb36-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
+<span id="cb36-6"><a href="#cb36-6"></a>    <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot)</span>
+<span id="cb36-7"><a href="#cb36-7"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 4
    pernum     n mean_ftotval mean_inctot
@@ -1037,15 +1027,15 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p>Dataframes can be grouped by multiple variables.</p>
 <p>Grouped tibbles include metadata about groups. For example, <code>Groups:   pernum, offpov [40]</code>. One grouping is dropped each time <code>summarize()</code> is used. It is easy to forget if a dataframe is grouped, so it is safe to include <code>ungroup()</code> at the end of a section of functions.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>asec <span class="sc">|&gt;</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">group_by</span>(pernum, offpov) <span class="sc">|&gt;</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb39-4"><a href="#cb39-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
-<span id="cb39-5"><a href="#cb39-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
-<span id="cb39-6"><a href="#cb39-6"></a>    <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot)</span>
-<span id="cb39-7"><a href="#cb39-7"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb39-8"><a href="#cb39-8"></a>  <span class="fu">arrange</span>(offpov) <span class="sc">|&gt;</span></span>
-<span id="cb39-9"><a href="#cb39-9"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>asec <span class="sc">|&gt;</span></span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">group_by</span>(pernum, offpov) <span class="sc">|&gt;</span></span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb38-4"><a href="#cb38-4"></a>    <span class="at">n =</span> <span class="fu">n</span>(),</span>
+<span id="cb38-5"><a href="#cb38-5"></a>    <span class="at">mean_ftotval =</span> <span class="fu">mean</span>(ftotval), </span>
+<span id="cb38-6"><a href="#cb38-6"></a>    <span class="at">mean_inctot =</span> <span class="fu">mean</span>(inctot)</span>
+<span id="cb38-7"><a href="#cb38-7"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb38-8"><a href="#cb38-8"></a>  <span class="fu">arrange</span>(offpov) <span class="sc">|&gt;</span></span>
+<span id="cb38-9"><a href="#cb38-9"></a>  <span class="fu">ungroup</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`summarise()` has grouped output by 'pernum'. You can override using the
 `.groups` argument.</code></pre>
@@ -1117,7 +1107,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.4.9" class="anchored" data-anchor-id="bonus-count"><span class="header-section-number">2.4.9</span> BONUS: <code>count()</code></h3>
 <p><code>count()</code> is a shortcut to <code>df |&gt; group_by(var) |&gt; summarize(n())</code>. <code>count()</code> counts the number of observations with a level of a variable or levels of several variables. It is too useful to skip:</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">count</span>(asec, pernum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="fu">count</span>(asec, pernum)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 16 × 2
    pernum     n
@@ -1141,7 +1131,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 </div>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">count</span>(<span class="at">x =</span> asec, pernum, offpov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="fu">count</span>(<span class="at">x =</span> asec, pernum, offpov)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 40 × 3
    pernum offpov                 n
@@ -1168,26 +1158,26 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <p>Each function requires an <code>x</code> (or left) dataframe, a <code>y</code> (or right) data frame, and <code>by</code> variables that exist in both dataframes. Note that below we’re creating dataframes using the <code>tribble()</code> function, which creates a tibble using a row-wise layout.</p>
 <p><a href="https://github.com/elbersb/tidylog"><code>library(tidylog)</code></a> is a useful function for monitoring the behavior of joins. It prints out summaries of the number of rows in each dataframe that successfully join.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>math_scores <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb46-2"><a href="#cb46-2"></a>  <span class="sc">~</span>name, <span class="sc">~</span>math_score,</span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="st">"Alec"</span>, <span class="dv">95</span>,</span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="st">"Bart"</span>, <span class="dv">97</span>,</span>
-<span id="cb46-5"><a href="#cb46-5"></a>  <span class="st">"Carrie"</span>, <span class="dv">100</span></span>
-<span id="cb46-6"><a href="#cb46-6"></a>)</span>
-<span id="cb46-7"><a href="#cb46-7"></a></span>
-<span id="cb46-8"><a href="#cb46-8"></a>reading_scores <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
-<span id="cb46-9"><a href="#cb46-9"></a>  <span class="sc">~</span>name, <span class="sc">~</span>reading_score,</span>
-<span id="cb46-10"><a href="#cb46-10"></a>  <span class="st">"Alec"</span>, <span class="dv">88</span>,</span>
-<span id="cb46-11"><a href="#cb46-11"></a>  <span class="st">"Bart"</span>, <span class="dv">67</span>,</span>
-<span id="cb46-12"><a href="#cb46-12"></a>  <span class="st">"Carrie"</span>, <span class="dv">100</span>,</span>
-<span id="cb46-13"><a href="#cb46-13"></a>  <span class="st">"Zeta"</span>, <span class="dv">100</span></span>
-<span id="cb46-14"><a href="#cb46-14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>math_scores <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb45-2"><a href="#cb45-2"></a>  <span class="sc">~</span>name, <span class="sc">~</span>math_score,</span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="st">"Alec"</span>, <span class="dv">95</span>,</span>
+<span id="cb45-4"><a href="#cb45-4"></a>  <span class="st">"Bart"</span>, <span class="dv">97</span>,</span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="st">"Carrie"</span>, <span class="dv">100</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>)</span>
+<span id="cb45-7"><a href="#cb45-7"></a></span>
+<span id="cb45-8"><a href="#cb45-8"></a>reading_scores <span class="ot">&lt;-</span> <span class="fu">tribble</span>(</span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="sc">~</span>name, <span class="sc">~</span>reading_score,</span>
+<span id="cb45-10"><a href="#cb45-10"></a>  <span class="st">"Alec"</span>, <span class="dv">88</span>,</span>
+<span id="cb45-11"><a href="#cb45-11"></a>  <span class="st">"Bart"</span>, <span class="dv">67</span>,</span>
+<span id="cb45-12"><a href="#cb45-12"></a>  <span class="st">"Carrie"</span>, <span class="dv">100</span>,</span>
+<span id="cb45-13"><a href="#cb45-13"></a>  <span class="st">"Zeta"</span>, <span class="dv">100</span></span>
+<span id="cb45-14"><a href="#cb45-14"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="left_join" class="level3" data-number="2.5.1">
 <h3 data-number="2.5.1" class="anchored" data-anchor-id="left_join"><span class="header-section-number">2.5.1</span> <code>left_join()</code></h3>
 <p><code>left_join()</code> matches observations from the <code>y</code> dataframe to the <code>x</code> dataframe. It only keeps observations from the <code>y</code> data frame that have a match in the <code>x</code> dataframe.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> math_scores, <span class="at">y =</span> reading_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> math_scores, <span class="at">y =</span> reading_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   name   math_score reading_score
@@ -1199,7 +1189,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 </div>
 <p>Observations that exist in the <code>x</code> (left) dataframe but not in the <code>y</code> (right) dataframe result in <code>NA</code>s.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a><span class="fu">left_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name   reading_score math_score
@@ -1215,7 +1205,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.5.2" class="anchored" data-anchor-id="inner_join"><span class="header-section-number">2.5.2</span> <code>inner_join()</code></h3>
 <p><code>inner_join()</code> matches observations from the <code>y</code> dataframe to the <code>x</code> dataframe. It only keeps observations from either data frame that have a match.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a><span class="fu">inner_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a><span class="fu">inner_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   name   reading_score math_score
@@ -1230,7 +1220,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.5.3" class="anchored" data-anchor-id="full_join"><span class="header-section-number">2.5.3</span> <code>full_join()</code></h3>
 <p><code>full_join()</code> matches observations from the <code>y</code> dataframe to the <code>x</code> dataframe. It keeps observations from both dataframes.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a><span class="fu">full_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb52"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1"></a><span class="fu">full_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   name   reading_score math_score
@@ -1250,7 +1240,7 @@ $ offcutoff  &lt;dbl&gt; 17120, 17120, 17120, 17120, 13300, 15453, 15453, 26370,
 <h3 data-number="2.6.1" class="anchored" data-anchor-id="anti_join"><span class="header-section-number">2.6.1</span> <code>anti_join()</code></h3>
 <p><code>anti_join()</code> returns all rows from <code>x</code> where there are not matching values in <code>y</code>. <code>anti_join()</code> complements <code>inner_join()</code>. Together, they should exhaust the <code>x</code> dataframe.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb55"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a><span class="fu">anti_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb54"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1"></a><span class="fu">anti_join</span>(<span class="at">x =</span> reading_scores, <span class="at">y =</span> math_scores, <span class="at">by =</span> <span class="st">"name"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
   name  reading_score
