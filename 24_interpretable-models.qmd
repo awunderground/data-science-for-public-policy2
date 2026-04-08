@@ -290,7 +290,7 @@ Consider a few simple basis function:
 Basis functions are advantageous because if we fit a model like
 
 $$
-y_i = \beta_0 + \beta_1b_1(x_i) + \beta_1b_1(x_i) + \cdot\cdot\cdot + \beta_kb_K(x_i) + \epsilon_i
+y_i = \beta_0 + \beta_1b_1(x_i) + \beta_2b_2(x_i) + \cdot\cdot\cdot + \beta_kb_K(x_i) + \epsilon_i
 $$
 
 then we can use least squares estimation and we have access to all of the tools available to linear regression like standard errors and statistical tests. Next, we will explore a few more basis functions.
@@ -471,7 +471,7 @@ In other words, the fitted line/conditional mean is the sum of the contributions
 
 ## Multivariate Adaptive Regression Splines (MARS)
 
-Multivariate Adaptive Regression Splines (MARS) are an alternative to GAMs for capturing non-linear partners in data using linear regression and splines.
+Multivariate Adaptive Regression Splines (MARS) are an alternative to GAMs for capturing non-linear patterns in data using linear regression and splines.
 
 ::: callout-tip
 ## Hinge Function
@@ -588,6 +588,40 @@ mars3$fit$coefficients
 mars4$fit$coefficients
 ```
 
+## Visualization
+
+Visualization is a useful way to unpack model predictions. There are many different approaches to visualizing model predictions, depending on whether you want local or global interpretability.
+
+::: callout-tip
+## Ceteris Paribus Plot
+
+A visualization of predicted values varying one predictor for an observation while holding all other predictors constant. 
+
+:::
+
+::: callout-tip
+## Individual Conditional Expectation (ICE) Plot
+
+A ceteris paribus plot for many different observations at the same time.
+:::
+
+::: callout-tip
+## Additive Component Plot
+
+A visualization of the functional form $f(x_j)$ for one predictor, holding all other predictors at a reference value (typically 0). Valid for additive models only — for additive models, the choice of reference value changes the y-intercept but not the shape of the relationship.
+:::
+
+::: callout-tip
+## Partial Dependence Plot
+
+A visualization of the marginal effect of a predictor. This is equivalent to averaging the ICE curves. 
+
+:::
+
+The first two plots focus on local interpretability because they focus on predictions for individual observations. The last two plots focus on global interpretability because they try to describe average model behavior.
+
+In the following case study we will show ICE plots with PDP plots on top and additive component plots.
+
 ## Case Study
 
 We now return to the PDB example with 25 variables and five fold cross validation.
@@ -626,7 +660,87 @@ lm1_wf |>
 
 ```
 
-The following code creates a grid to visualize the marginal effect of `Renter_Occp_HU_ACS_13_17` while holding other predictors at 0. Because these models are additive, the value of other predictors only shifts the line vertically and doesn't change the shape of the relationship.
+#### ICE Plot + PDP Plot
+
+```{r}
+#| code-fold: true
+
+library(DALEX)
+library(DALEXtra)
+
+#' Create an ICE Plot with a PDP Plot on Top
+#'
+#' @param wf A trained workflow object
+#' @param training_data The training data for the trained workflow object
+#' @param n The number of observations to show in the ICE plot
+#' @return A ggplot object with ICE curves (gray) and PDP (red)
+#'
+ice_and_pdp <- function(wf, training_data, n = 50) {
+  
+  # create an explainer object
+  explainer <- explain_tidymodels(
+    model = wf |> 
+      fit(training_data),
+    data = training_data |> 
+      select(-non_return_rate),
+    y = training_data$non_return_rate
+  )
+  
+  # predict the profiles for randomly sampled observations in the training data
+  ice_data <- predict_profile(
+    explainer,
+    new_observation = slice_sample(training_data, n = n),
+    variables = "Renter_Occp_HU_ACS_13_17"
+  )
+  
+  # predict profiles for every observation for the PDP plot
+  # this is needed because of some issues inside of DALEXtra
+  fitted_model <- wf |> 
+    fit(training_data)
+  
+  x_seq <- seq(0, 7400, length.out = 40)
+  
+  pdp_df <- map(x_seq, \(x_val) {
+    training_data |>
+      mutate(Renter_Occp_HU_ACS_13_17 = x_val) |>
+      predict(fitted_model, new_data = _) |>
+      pull(.pred) |>
+      mean()
+  }) |>
+    list_c() |>
+    tibble(x = x_seq, mean_pred = _)
+  
+  # visualize!
+  ggplot() +
+    geom_line(
+      data = as.data.frame(ice_data),
+      aes(x = Renter_Occp_HU_ACS_13_17, y = `_yhat_`, group = `_ids_`),
+      alpha = 0.2, color = "gray50"
+    ) +
+    geom_line(
+      data = pdp_df,
+      aes(x = x, y = mean_pred),
+      color = "red", linewidth = 1.5
+    ) +
+    labs(
+      title = "ICE Plot with Partial Dependence",
+      subtitle = "Individual profiles (gray) + PDP over all training data (red)",
+      x = "Renter-Occupied Housing Units",
+      y = "Predicted Non-Return Rate"
+    )
+  
+}
+
+```
+
+```{r}
+ice_and_pdp(wf = lm1_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
+The following code creates an additive component plot for `Renter_Occp_HU_ACS_13_17`. Because these models are additive, the value of other predictors only shifts the line vertically and doesn't change the shape of the relationship.
 
 ```{r}
 grid <- expand_grid(
@@ -667,11 +781,11 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for Linear Regression")
+  labs(title = "Additive Component Plot for Linear Regression")
 
 ```
 
-### Linear Regression
+### Linear Regression with Transformations
 
 @erdman2017 included square root and logit transformations in their final specification. We next update the recipe to include their functional form.
 
@@ -710,7 +824,7 @@ lm2_rec <- recipe(non_return_rate ~ ., pdb_train) |>
     NH_Blk_alone_ACS_13_17,
     new_role = "logit"
   ) |>
-step_range(
+  step_range(
     has_role("logit")
   ) |>
   step_logit(
@@ -750,6 +864,15 @@ lm2_wf |>
 
 ```
 
+#### ICE Plot + PDP Plot
+
+```{r}
+ice_and_pdp(wf = lm2_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
 ```{r}
 bind_cols(
   grid,
@@ -760,10 +883,9 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for Linear Regression")
+  labs(title = "Additive Component Plot for Linear Regression with Transformations")
 
 ```
-
 
 ### Elastic Net
 
@@ -852,6 +974,15 @@ enet_resamples |>
 
 ```
 
+#### ICE Plot + PDP Plot
+
+```{r}
+ice_and_pdp(wf = enet_tuned_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
 ```{r}
 bind_cols(
   grid,
@@ -862,7 +993,7 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for Linear Regression")
+  labs(title = "Additive Component Plot for Elastic Net")
 
 ```
 
@@ -895,6 +1026,15 @@ polynomial_resamples |>
   collect_metrics()
 ```
 
+#### ICE Plot + PDP Plot
+
+```{r}
+ice_and_pdp(wf = polynomial_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
 ```{r}
 bind_cols(
   grid,
@@ -905,7 +1045,7 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for Polynomial Regression")
+  labs(title = "Additive Component Plot for Polynomial Regression")
 
 ```
 
@@ -998,19 +1138,16 @@ poly_enet_resamples |>
 
 ```
 
+#### ICE Plot + PDP Plot
+
 ```{r}
-bind_cols(
-  grid,
-  poly_enet_tuned_wf |>
-    last_fit(pdb_split) |>
-    extract_workflow() |>
-    predict(new_data = grid)
-) |>
-  ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
-  geom_line() +
-  labs(title = "Fitted Function for Polynomial Regression")
+ice_and_pdp(wf = poly_enet_tuned_wf, training_data = pdb_train)
 
 ```
+
+#### Additive Component Plot
+
+This model inclues `step_interact()`, so we skip the additive component plot.
 
 ### GAM/Regression Splines
 
@@ -1077,6 +1214,15 @@ collect_metrics(gam_resamples)
 
 ```
 
+#### ICE Plot + PDP Plot
+
+```{r}
+ice_and_pdp(wf = gam_final_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
 ```{r}
 bind_cols(
   grid,
@@ -1087,7 +1233,7 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for GAM/Regression Splines")
+  labs(title = "Additive Component Plot for GAM/Regression Splines")
 
 ```
 
@@ -1161,6 +1307,15 @@ collect_metrics(mars_resamples)
 
 ```
 
+#### ICE Plot + PDP Plot
+
+```{r}
+ice_and_pdp(wf = mars_wf, training_data = pdb_train)
+
+```
+
+#### Additive Component Plot
+
 ```{r}
 bind_cols(
   grid,
@@ -1171,7 +1326,7 @@ bind_cols(
 ) |>
   ggplot(aes(Renter_Occp_HU_ACS_13_17, .pred)) +
   geom_line() +
-  labs(title = "Fitted Function for MARS")
+  labs(title = "Additive Component Plot for MARS")
 
 ```
 

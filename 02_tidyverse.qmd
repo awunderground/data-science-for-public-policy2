@@ -125,7 +125,7 @@ We'll focus on the key dplyr syntax using the March 2020 Annual Social and Econo
 
 ```{r}
 #| label: load-asec
-#| messgae: false
+#| message: false
 
 asec <- read_csv(
   paste0(
