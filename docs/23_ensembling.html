@@ -432,6 +432,23 @@ window.Quarto = {
 </li>
       </ul>
   </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true">
+ <span class="menu-text">Appendices</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-8" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-8" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./99_why-learn-to-program.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">27</span>&nbsp; <span class="chapter-title">Why Learn to Program</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./references.html" class="sidebar-item-text sidebar-link">
@@ -1157,7 +1174,7 @@ Rel_Child_Under_6_ACS_13_17              Males_ACS_13_17
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>parallel<span class="sc">::</span><span class="fu">detectCores</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] 8</code></pre>
+<pre><code>[1] 10</code></pre>
 </div>
 </div>
 <div class="callout callout-style-default callout-warning callout-titled">
@@ -1357,38 +1374,16 @@ Warning
 <span id="cb32-17"><a href="#cb32-17"></a></span>
 <span id="cb32-18"><a href="#cb32-18"></a>xgb_resamples <span class="ot">&lt;-</span> xgb_wf <span class="sc">|&gt;</span></span>
 <span id="cb32-19"><a href="#cb32-19"></a>  <span class="fu">fit_resamples</span>(<span class="at">resamples =</span> pdb_folds)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>→ A | warning: Passed invalid argument 'info' - entries on it should be passed as direct arguments. This warning will become an error in a future version., Passed invalid function arguments: nthread. These should be passed as a list to argument 'params'. Conversion from argument to 'params' entry will be done automatically, but this behavior will become an error in a future version., Parameter 'watchlist' has been renamed to 'evals'. This warning will become an error in a future version., Argument 'objective' is only for custom objectives. For built-in objectives, pass the objective under 'params'. This warning will become an error in a future version.</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x1</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x2</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x3</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x4</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>There were issues with some computations   A: x5
-There were issues with some computations   A: x5</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code></code></pre>
-</div>
 </div>
 <p>These results are the best.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a><span class="fu">collect_metrics</span>(xgb_resamples)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 6
   .metric .estimator  mean     n std_err .config             
   &lt;chr&gt;   &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;               
-1 rmse    standard   4.40      5 0.0480  Preprocessor1_Model1
-2 rsq     standard   0.648     5 0.00583 Preprocessor1_Model1</code></pre>
+1 rmse    standard   4.40      5 0.0491  Preprocessor1_Model1
+2 rsq     standard   0.649     5 0.00600 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 </section>
@@ -1396,19 +1391,19 @@ There were issues with some computations   A: x5</code></pre>
 <h2 data-number="21.8" class="anchored" data-anchor-id="final-comparison"><span class="header-section-number">21.8</span> Final Comparison</h2>
 <p>Finally, let’s compare the RMSE and <span class="math inline">\(r\)</span>-squared for linear regression, regression trees, bagged trees, random forests (with hyperparameter tuning), and XGBoost (with hyperparameter tuning).</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb42-2"><a href="#cb42-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb42-5"><a href="#cb42-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb42-7"><a href="#cb42-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb42-8"><a href="#cb42-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb42-10"><a href="#cb42-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb42-11"><a href="#cb42-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
-<span id="cb42-12"><a href="#cb42-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb42-13"><a href="#cb42-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb35-3"><a href="#cb35-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb35-4"><a href="#cb35-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb35-5"><a href="#cb35-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),  </span>
+<span id="cb35-6"><a href="#cb35-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb35-7"><a href="#cb35-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb35-8"><a href="#cb35-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb35-9"><a href="#cb35-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb35-10"><a href="#cb35-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb35-11"><a href="#cb35-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rmse"</span>),</span>
+<span id="cb35-12"><a href="#cb35-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb35-13"><a href="#cb35-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   model             .metric .estimator  mean     n std_err .config             
@@ -1417,21 +1412,21 @@ There were issues with some computations   A: x5</code></pre>
 2 Regression trees  rmse    standard    5.30     5  0.0334 Preprocessor1_Model1
 3 Bagged trees      rmse    standard    5.03     5  0.0392 Preprocessor1_Model1
 4 Random forest     rmse    standard    4.51     5  0.0460 Preprocessor1_Model1
-5 XGBoost           rmse    standard    4.40     5  0.0480 Preprocessor1_Model1</code></pre>
+5 XGBoost           rmse    standard    4.40     5  0.0491 Preprocessor1_Model1</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">bind_rows</span>(</span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
-<span id="cb44-4"><a href="#cb44-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb44-5"><a href="#cb44-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb44-7"><a href="#cb44-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
-<span id="cb44-8"><a href="#cb44-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb44-9"><a href="#cb44-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
-<span id="cb44-10"><a href="#cb44-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
-<span id="cb44-11"><a href="#cb44-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
-<span id="cb44-12"><a href="#cb44-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="fu">bind_rows</span>(</span>
+<span id="cb37-2"><a href="#cb37-2"></a>  <span class="st">`</span><span class="at">Linear regression</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(lm_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb37-4"><a href="#cb37-4"></a>  <span class="st">`</span><span class="at">Regression trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(dt_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),    </span>
+<span id="cb37-6"><a href="#cb37-6"></a>  <span class="st">`</span><span class="at">Bagged trees</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(bagged_trees_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb37-7"><a href="#cb37-7"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb37-8"><a href="#cb37-8"></a>  <span class="st">`</span><span class="at">Random forest</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(rf_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb37-9"><a href="#cb37-9"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),  </span>
+<span id="cb37-10"><a href="#cb37-10"></a>  <span class="st">`</span><span class="at">XGBoost</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">collect_metrics</span>(xgb_resamples) <span class="sc">|&gt;</span></span>
+<span id="cb37-11"><a href="#cb37-11"></a>    <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"rsq"</span>),</span>
+<span id="cb37-12"><a href="#cb37-12"></a>  <span class="at">.id =</span> <span class="st">"model"</span></span>
+<span id="cb37-13"><a href="#cb37-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   model             .metric .estimator  mean     n std_err .config             
@@ -1440,7 +1435,7 @@ There were issues with some computations   A: x5</code></pre>
 2 Regression trees  rsq     standard   0.490     5 0.00384 Preprocessor1_Model1
 3 Bagged trees      rsq     standard   0.541     5 0.00483 Preprocessor1_Model1
 4 Random forest     rsq     standard   0.631     5 0.00568 Preprocessor1_Model1
-5 XGBoost           rsq     standard   0.648     5 0.00583 Preprocessor1_Model1</code></pre>
+5 XGBoost           rsq     standard   0.649     5 0.00600 Preprocessor1_Model1</code></pre>
 </div>
 </div>
 

@@ -1,0 +1,40 @@
+---
+title: "Why Learn to Program"
+abstract: It's more important than ever to learn to program. 
+format: 
+  html:
+    toc: true
+    code-line-numbers: true
+editor_options: 
+  chunk_output_type: console
+---
+
+## Generative AI
+
+Generative AI models by hyperscalers like Claude, OpenAI, and Google are useful tools. These tools appear so powerful that some may wonder if it's worth learning to program at all for policy analysis. This section tries to make the case that learning to program is still valuable. In fact, it's more important than ever to learn to program for policy analysis. 
+
+## Communicating with Machines
+
+The rapid progress of generative AI raises a core question for every profession that uses computers: "at what level of abstraction should humans operate?" So, at what level of abstraction should a policy analyst or data scientist operate?
+
+Does a policy analyst need to understand everything down to the binary code running on a computer? Can a policy analyst simply vibe code everything—programming exclusively using plain-language prompts and AI models without comprehending the generated code? The sweet spot before ChatGPT launched in November 2022 was somewhere in between these two extremes, and the sweet spot today is still between these two extremes. 
+
+The low abstraction approach of understanding the electrical signals on the computer's processor is unproductive. At the same time, the high abstraction approach of just vibe coding isn't ideal for policy analysis for at least three reasons:
+
+1. **Context:** Policy analysis is highly contextual and it isn't possible to structure all context in machine-readable formats. Humans still need to bring context to detailed decisions in an analysis that can't be abstracted away.
+2. **Accuracy vs. uncertainty:** Generative AI is more accurate than humans at some tasks, but it is also horrible at communicating uncertainty. Good analysis requires correctness but also understanding the unavoidable threats to that correctness. Consider two statements: "I cooked dinner 95% correctly" and "I flew the airplane 95% correctly." If I am vibe coding my personal website and the process is 95% correct, that's probably awesome and I save a bunch of time. If I am vibe coding an analysis of confidential data from a state longitudinal data system and the process is 95% correct, the output is unreliable. Maybe the LLM messed up the initial filter because it didn't understand the cohort definition, making the entire analysis incorrect. When it messed up that initial filter, it didn't ask, didn't second guess, and didn't seek more information. Instead, it confidently introduced an error that only an analyst who can read the code can understand.
+3. **Precision:** Good policy analysis is precise, reproducible, and auditable. Code is what allows stochastic black boxes like large language models to be precise, reproducible, and auditable. But if the policy analyst can't speak machine, then it's just a black box. 
+
+So where does this leave the profession?
+
+Generative AI increases the power of computers. Programming increases the ability of people to work with generative AI and computers. Programming makes policy analysts more powerful. The day-to-day task of working with computers has changed because of generative AI. Policy analysts can produce more code, and sometimes even higher quality code, with less effort, but policy analysts still need to know the code because programming always has been and always will be about effectively communicating with computers.
+
+## Going to the Gym
+
+Students who believe every word in the previous section will still give in to the seduction of just vibe coding their programming assignment or prompting away their essay using AI. These tools are so seductive and life is overwhelming at times. This isn't a hack. It's a shortcut and a waste of time. Simply put by [Bruce Schneier](https://www.theguardian.com/commentisfree/2026/jul/24/should-you-use-ai) (inspired by [Daniel Miessler](https://danielmiessler.com/blog/keep-the-robots-out-of-the-gym)), it's the difference between work and the gym.
+
+>At work, if your job is to move a bunch of heavy things from one side of the room to another, you should use whatever assistive tech you have on hand: a wagon, a forklift ... even an AI-powered robot. But at the gym, it makes no sense for that robot to lift weights for you. The point of weightlifting isn’t to move heavy things across the room; it’s to actually lift those heavy things.
+
+This course is gym tasks. It's a waste of everyone's time to just give an exercise or an assignment to AI because no one learns. 
+
+The learning is in the struggle. Start programming. As Dave Grohl says, "get in [the] garage and just suck." Begin with small programs and work to understand every line. Over time, AI will be a tool that can make you more productive without being a crutch. You will be a clearer thinker and a policy analyst better equipped to work with and without AI. 
