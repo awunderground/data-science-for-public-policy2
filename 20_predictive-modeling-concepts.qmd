@@ -1,6 +1,6 @@
 ---
-title: "Predictive Modeling Concepts"
-abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but introduces complete examples with code at the end."
+title: "Predictive Modeling Concepts and Regression"
+abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focused on regression, one of the two main types of supervised machine learning."
 format: 
   html:
     toc: true
@@ -11,6 +11,10 @@ bibliography: references.bib
 editor_options: 
   chunk_output_type: console
 ---
+
+![](images/header-images/Chicago_Elevated_Train.jpg)
+
+Image by [Marcel "lazytom" Marchon](https://en.wikipedia.org/wiki/Chicago_%22L%22#/media/File:Chicago_Elevated_Train.jpg)
 
 ```{r}
 #| echo: false
@@ -535,7 +539,7 @@ A subset of data used to develop a predictive model. The share of data committed
 ::: callout-tip
 ## Testing data
 
-A subset of data used to estimate model performance. The testing set usually includes all observations not included in the testing set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.
+A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.
 :::
 
 ![](images/cross-validation.jpeg){#fig-cv}
@@ -747,7 +751,7 @@ final_fit |>
 
 #### 8. Optional: Implement the Final Model
 
-`final_fit` and `pedict()` can be used to apply the model to new, unseen data. 
+`final_fit` and `predict()` can be used to apply the model to new, unseen data. 
 
 Only implement the model if it achieves the objectives of the final model. 
 

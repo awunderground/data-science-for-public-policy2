@@ -4,6 +4,9 @@ format:
   html:
     toc: true
     code-line-numbers: true
+execute: 
+  cache: true    
+bibliography: references.bib
 editor_options: 
   chunk_output_type: console
 ---
@@ -44,7 +47,8 @@ options(scipen = 999)
 
 ::: {.callout-tip}
 ## Cluster analysis
-**Cluster analysis:** The process of using algorithms to assign observations to groups by calculating similarity between the observations (rows) using their variables (columns). The goal is to minimize the similarity between groups and maximize the similarity within groups.
+
+The process of using algorithms to assign observations to groups by calculating similarity between the observations (rows) using their variables (columns). The goal is to minimize the similarity between groups and maximize the similarity within groups.
 
 Cluster assignments are the arbitrary labels for the groups (i.e. cluster 1 and cluster 2). Cluster assignments can be used for data visualization and calculating group-wise summary statistics like cluster means.
 

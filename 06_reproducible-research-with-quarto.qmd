@@ -1,5 +1,6 @@
 ---
 title: "Reproducible Research with Quarto"
+abstract: The section provides motivation for and then outlines how to use Quarto, a modern statistical programming tool and the successor of R Markdown. 
 format: 
   html:
     toc: true
@@ -7,6 +8,8 @@ format:
 editor_options: 
   chunk_output_type: console
 ---
+
+![A page from Alexander Graham Bell’s laboratory notebook](images/header-images/AGBell_Notebook.jpg)
 
 ```{r echo = FALSE}
 #| echo: false
@@ -58,14 +61,15 @@ Quarto is a literate statistical programming tool for R, Julia, Python, JavaScri
 
 Quarto builds on the success of R Markdown. In fact, Quarto will Render R Markdown (`.Rmd`) documents without any edits or changes.
 
-Sweave is a competing framework that it is out-of-date, and Jupyter (**Ju**lia, **Py**thon, and **R**) is a competing framework that is popular for Python but has not caught on for R.
+Jupyter (**Ju**lia, **Py**thon, and **R**) is a competing framework that is popular for Python but has not caught on for R.
 
 According to @Wickham2017R [Chapter 27](https://r4ds.had.co.nz/r-markdown.html#introduction-18), there are three main reasons to use R Markdown (they hold for Quarto) :
 
 > 1.  "For communicating to decision makers, who want to focus on the conclusions, not the code behind the analysis."
 > 2.  "For collaborating with other data scientists (including future you!), who are interested in both your conclusions, and how you reached them (i.e. the code)."
 > 3.  "As an environment in which to do data science, as a modern day lab notebook where you can capture not only what you did, but also what you were thinking."
-s
+
+
 Quarto uses
 
 -   plain text files ending in `.qmd` that are similar to `.R` files.
@@ -74,8 +78,7 @@ Quarto uses
 
 [^pandoc]: Pandoc is free software that converts documents between markup formats. For example, Pandoc can convert files to and from markdown, LaTeX, jupyter notebook (ipynb), and Microsoft Word (.docx) formats, among many others. You can see a comprehensive list of files Pandoc can convert on their [About Page](https://pandoc.org/index.html).
 
-Quarto calls `library(knitr)` and "knits" `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded and the entire process is handled by clicking the "Render" button in RStudio.
-
+Quarto calls `library(knitr)` and "knits" `.qmd` (Quarto files) into `.md` (Markdown files), which Pandoc then converts into any specified output type. Quarto and `library(knitr)` don't need to be explicitly loaded, and the entire process is handled by clicking the "Render" button in RStudio.
 
 
 ![](images/rstudio-qmd-how-it-works.png)
@@ -102,7 +105,7 @@ exercise_number <- exercise_number + 1
 
 1.  If you already have a LaTeX distribution like `tinytext` or `MiKTeX`, then skip this exercise.
 2.  Follow [these instructions](https://yihui.org/tinytex/) to install `library(tinytex)`.
-
+:::
 
 The "Render" workflow has a few advantages:
 
@@ -111,7 +114,6 @@ The "Render" workflow has a few advantages:
 3.  The output types are really appealing. By creating publishable documents with code, there is no need to copy-and-paste or transpose results.
 4.  The process is iterable and scalable.
 
-:::
 
 
 ::: {.callout-warning}
@@ -363,14 +365,35 @@ An alternative to rendering a Quarto document with the Render button is to use t
 -   The Urban Institute State and Local Finance Initiative creates [State Fiscal Briefs](https://www.urban.org/policy-centers/cross-center-initiatives/state-and-local-finance-initiative/projects/state-fiscal-briefs) by iterating R Markdown documents.
 -   [Data\@Urban](https://medium.com/@urban_institute/iterated-fact-sheets-with-r-markdown-d685eb4eafce)
 
-## Suggestions
+## Sharing Quarto Documents
+
+We can share documents rendered with Quarto in multiple ways. 
+
+1. We can email/share .pdf and .html documents
+2. We can use GitHub pages to host .html pages as websites
+3. We can host documents on [Posit Connect](https://posit.co/products/enterprise/connect/) or a cloud service like AWS
+
+### embed-resources
+
+::: {.callout-warning}
+Unlike R Markdown, images and other content are not embedded in .html from Quarto by default. Be sure to include `embed-resources: true` in YAML headers to embed content and make documents easier to share.
+
+Suppose we embed an image called `image.png` in a Quarto document called `example.qmd`, which, when rendered, creates `example.html`. If we don't include `embed-resources: true`, then we will need to share `image.png` and `example.html` to see the embedded image. This is also true for other files like `.css` which is useful to provide custom styling for websites. 
+:::
+
+## Conclusion
+
+Quarto is an updated version of R Markdown that can handle not only R but also Python and Julia code (among other languages). Quarto combines a yaml header, markdown text, and code chunks. It can be used in a variety of settings to create technical documents and presentations. We love Quarto and hope you will learn to love it too! 
+
+### Suggestions
 
 -   Render early, and render often.
 -   Select the gear to the right of "Render" and select "Chunk Output in Console"
 -   Learn math mode. Also, `library(equatiomatic)` ([CRAN](https://cran.r-project.org/web/packages/equatiomatic/index.html), [GitHub](https://github.com/datalorax/equatiomatic)) is amazing.
 
-## Resources
+### Resources
 
 -   [Quarto intro](https://quarto.org/)
 -   [R4DS R Quarto chapter](https://r4ds.hadley.nz/quarto)
 -   [Happy Git R Markdown tutorial](https://happygitwithr.com/rmd-test-drive.html)
+

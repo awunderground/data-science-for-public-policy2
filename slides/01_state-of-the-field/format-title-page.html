@@ -1,0 +1,31 @@
+<style>
+    .hide {
+      display: none !important;
+    }
+  </style>
+  
+  
+  <script>
+    function remove() {
+      let footer = document.querySelector('div.footer');
+      let slideNo = document.querySelector('div.slide-number');
+      let slideLogo = document.querySelector('img.slide-logo.r-stretch'); 
+      slideNo.classList.add('hide');
+      footer.classList.add('hide');
+      slideLogo.classList.add('hide');
+    
+      Reveal.on('slidechanged', event => {  
+        if(Reveal.isFirstSlide()) {
+          slideNo.classList.add('hide');
+          footer.classList.add('hide');
+          slideLogo.classList.add('hide');
+        } else {
+          slideNo.classList.remove('hide');
+          footer.classList.remove('hide');
+          slideLogo.classList.remove('hide');
+        }
+      });
+    }
+    
+    window.onload = remove();
+  </script>

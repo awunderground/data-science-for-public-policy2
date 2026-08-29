@@ -1,21 +1,27 @@
 ---
 title: "Text Modeling"
+abstract: In this chapter, we introduce fundamental ideas for text modeling.
 format: 
   html:
     toc: true
     code-line-numbers: true
-    
-execute:
-    warning: false
-    message: false
-    cache: true
-editor: source
+execute: 
+  cache: true
+editor_options: 
+  chunk_output_type: console
+bibliography: references.bib
 ---
 
+![](images/header-images/Rainbow_Bookshelf.jpg)
+
+Image by [Craig Conley](https://en.wikipedia.org/wiki/Bookcase#/media/File:Rainbow_Bookshelf.jpg)
 
 ```{r}
-#| echo: False
+#| labels: quarto-setup
+#| echo: false
+
 options(scipen = 999)
+
 ```
 
 ## Background
@@ -24,21 +30,23 @@ options(scipen = 999)
 
 There exist useful alternative formats to tidytext for storing text information. Different applications use different formats. 
 
-
 ::: {.callout-tip}
 ## Document-Term Matrix
-**Document-Term Matrix:** A matrix where rows are documents, columns are words, and cells are counts. A document-term matrix is typically sparse.
+
+A matrix where rows are documents, columns are words, and cells are counts. A document-term matrix is typically sparse.
 :::
 
-
 ::: {.callout-tip}
-## One-row-per document:
-**One-row-per document:** A data frame with a column where each cell is the entire text for a document. This is useful for predictive modeling. 
+## One-row-per document
+
+A data frame with a column where each cell is the entire text for a document. This is useful for predictive modeling. 
 :::
 
 #### Example 01
 
 ```{r}
+#| message: false
+
 library(tidyverse)
 library(tidytext)
 
@@ -54,7 +62,7 @@ example_doc <-
     "b", "banana", 3
   )
 
-document_term_matrix <- example_doc |> 
+document_term_matrix <- example_doc |>
   cast_dtm(document = document, term = word, value = n)
 
 # document term matrices are large and typically print like this
@@ -98,42 +106,42 @@ The algorithmic grouping or clustering of documents using features extracted fro
 
 ::: {.callout-tip}
 ## Topic modeling
-**Topic modeling:** The unsupervised clustering, or grouping, of text documents based on their content. 
+
+The unsupervised clustering, or grouping, of text documents based on their content. 
 :::
 
-* One of the authors, Alena Stern, used Latent Dirichlet Allocation (LDA) to sort 110,063 public records requests into 60 topics [@Stern2018]
-* Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives [@vanKessel2019]. 
+* Alena Stern used Latent Dirichlet Allocation (LDA) to sort 110,063 public records requests into 60 topics ([blog](https://sunlightfoundation.com/2018/10/16/results-from-analyzing-public-record-requests/))
+* Pew Research used *unsupervised* and *semi-supervised* methods to create topic models of open-ended text responses about where Americans find meaning in their lives. ([blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455))
 
-Leveraging what we already know, we can use K-means clustering on a term-document matrix to cluster documents. This approach has two shortcomings. 
+Leveraging what we already know, we can use K-means clustering on a term-document matrix to cluster documents. This approach has two shortcomings and one advantage. 
 
 1. It takes a lot of work to summarize documents that are grouped with K-means clustering.
 2. K-means clustering creates hard assignments. Each observation belongs to exactly one cluster.
 3. K-means clustering uses Euclidean distance, which is relatively simple when working with text
 
-
 ::: {.callout-tip}
 ## Soft assignment
-**Soft assignment:** Observations are assigned to each cluster or group with probabilities or weights. For example, observation 1 belongs to Group A with 0.9 probability and Group B with 0.1 probability. 
-:::
 
+Observations are assigned to each cluster or group with probabilities or weights. For example, observation 1 belongs to Group A with 0.9 probability and Group B with 0.1 probability. 
+:::
 
 We will focus on a topic modeling algorithm called Latent Dirichlet Allocation (LDA). Non-negative matrix factorization is a different popular algorithm that we will not discuss. 
 
 ::: {.callout-tip}
 ## Latent Dirichlet Allocation (LDA)
-**Latent Dirichlet Allocation (LDA):** A probabilistic topic model where each document is a mixture of topics and each topic is a mixture of words
+
+A probabilistic topic model where each document is a mixture of topics and each topic is a mixture of words.
 :::
 
 ### LDA as a generative model
 
 LDA is a generative model. The model describes how the documents in a corpus were created. LDA relies on the bag-of-words assumption.
 
-
 ::: {.callout-tip}
 ## Bag-of-words assumption
-**Bag-of-words assumption:** Disregard the grammar and order of words. 
-:::
 
+Disregard the grammar and order of words. 
+:::
 
 According to the model, any time a document is created:
 
@@ -148,47 +156,51 @@ According to the model, any time a document is created:
 Let's demonstrate generating a document using this model. First, let's define two topics. `topic1` is about the economy and `topic2` is about sports. Note that "contract" and "union" are in both topics:
 
 ```{r}
-topic1 <- c("inflation", 
-            "unemployment", 
-            "labor", 
-            "force", 
-            "exchange",
-            "rate",
-            "dollar",
-            "bank",
-            "employer",
-            "gdp",
-            "federal",
-            "reserve",
-            "return",
-            "nasdaq",
-            "startup",
-            "business",
-            "insurance",
-            "labor",
-            "union",
-            "contract")
+topic1 <- c(
+  "inflation", 
+  "unemployment", 
+  "labor", 
+  "force", 
+  "exchange",
+  "rate",
+  "dollar",
+  "bank",
+  "employer",
+  "gdp",
+  "federal",
+  "reserve",
+  "return",
+  "nasdaq",
+  "startup",
+  "business",
+  "insurance",
+  "labor",
+  "union",
+  "contract"
+)
 
-topic2 <- c("basketball", 
-            "basket", 
-            "playoff", 
-            "goal", 
-            "referee",
-            "win",
-            "loss",
-            "score",
-            "soccer",
-            "polo",
-            "run",
-            "champion",
-            "trophy",
-            "contract",
-            "union",
-            "arena",
-            "stadium",
-            "concession",
-            "court",
-            "lights")
+topic2 <- c(
+  "basketball", 
+  "basket", 
+  "playoff", 
+  "goal", 
+  "referee",
+  "win",
+  "loss",
+  "score",
+  "soccer",
+  "polo",
+  "run",
+  "champion",
+  "trophy",
+  "contract",
+  "union",
+  "arena",
+  "stadium",
+  "concession",
+  "court",
+  "lights"
+)
 
 topics <- list(
   topic1,
@@ -197,7 +209,7 @@ topics <- list(
 
 ```
 
-Next, randomly sample a document length. In this case, we will use the [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_distribution), which returns integers. We use `_i` to note that this is for the $i^{th}$ document. 
+Next, randomly sample a document length. In this case, we will use the [Poisson distribution](https://en.wikipedia.org/wiki/Poisson_distribution), which returns non-negative integers. We use `_i` to note that this is for the $i^{th}$ document. 
 
 ```{r}
 set.seed(42)
@@ -211,7 +223,7 @@ document_length_i
 Each document will have a document-specific topic probability distribution. We use the Dirichlet distribution to generate this vector of probabilities. The [Dirichlet distribution](https://en.wikipedia.org/wiki/Dirichlet_distribution) is a multivariate [beta distribution](https://en.wikipedia.org/wiki/Beta_distribution). The beta distribution returns random draws between 0 and 1 and is related to the standard uniform distribution. 
 
 ```{r}
-topic_distribution_i <- MCMCpack::rdirichlet(n = 1, alpha = c(0.5, 0.5)) |> 
+topic_distribution_i <- MCMCpack::rdirichlet(n = 1, alpha = c(0.5, 0.5)) |>
   as.numeric()
 
 topic_distribution_i
@@ -244,11 +256,11 @@ document_i
 
 ```
 
-We have now generated a document that is a mixture of the two topics. It's more sports than economics but contains both topics. 
+We have now generated a document that is a mixture of the two topics. It's more sports than economics, but contains both topics. 
 
 The topics are also mixtures of words. "Basketball" only shows up in the sports topic but "union" and "contract" are in both topics. When used in practice, LDA generally involves more words, more topics, and more documents. 
 
-#### LDA and inference
+### LDA and inference
 
 LDA is based on this data generation process, but we don't know the document-specific topic distribution or the topics for the individual words. Thus, LDA is a statistical inference procedure where we try to make inferences about parameters. In other words, we are trying to reverse engineer the generative process outlined above using a corpus of documents. In practice, we don't care about the length of the document, so we can ignore step 1.
 
@@ -261,9 +273,11 @@ First, every word in the corpus is randomly assigned a topic. Then, the model is
 
 ### Example 04
 
-Let's consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on [Chapter 6 in Text Mining With R](https://www.tidytextmining.com/topicmodeling.html) [@Silge2017].
+Let's consider the executive orders data set. We repeat the pre-processing from the past example but with even more domain-specific stop words. Note: this example builds heavily on [Chapter 6 in Text Mining With R](https://www.tidytextmining.com/topicmodeling.html).
 
 ```{r}
+#| message: false
+
 library(tidyverse)
 library(tidytext)
 library(SnowballC)
@@ -275,7 +289,7 @@ eos <- read_csv(here::here("data", "executive-orders.csv"))
 eos <- filter(eos, !is.na(text))
 
 # tokenize the text -------------------------------------------------------
-tidy_eos <- eos |> 
+tidy_eos <- eos |>
   unnest_tokens(output = word, input = text)
 
 # create domain-specific stop words
@@ -312,7 +326,7 @@ domain_stop_words <- tribble(
   "pursuant",
   "act",
   "law"
-) |> 
+) |>
   mutate(lexicon = "custom")
 
 stop_words <- bind_rows(
@@ -321,15 +335,15 @@ stop_words <- bind_rows(
 )
 
 # remove stop words with anti_join() and the stop_words tibble
-tidy_eos <- tidy_eos |> 
+tidy_eos <- tidy_eos |>
   anti_join(stop_words, by = "word") 
 
 # remove words that are entirely numbers
-tidy_eos <- tidy_eos |> 
+tidy_eos <- tidy_eos |>
   filter(!str_detect(word, pattern = "^\\d")) 
 
 # stem words with wordStem()
-tidy_eos <- tidy_eos |> 
+tidy_eos <- tidy_eos |>
   mutate(stem = wordStem(word))
 
 ```
@@ -337,10 +351,10 @@ tidy_eos <- tidy_eos |>
 Next, we convert the tidytext executive orders into a document-term matrix with `cast_dtm()`. 
 
 ```{r}
-tidy_eos_count <- tidy_eos |> 
+tidy_eos_count <- tidy_eos |>
   count(president, executive_order_number, stem) 
 
-eos_dtm <- tidy_eos_count |> 
+eos_dtm <- tidy_eos_count |>
   cast_dtm(document = executive_order_number, term = stem, value = n)
 
 ```
@@ -348,7 +362,7 @@ eos_dtm <- tidy_eos_count |>
 Once we have a document-term matrix, implementing LDA is straightforward with `LDA()`, which comes from `library(topicmodels)`. We must predetermine the number of groups with `k` and we set the seed because the algorithm is stochastic (not deterministic). 
 
 ```{r}
-eos_lda <- eos_dtm |> 
+eos_lda <- eos_dtm |>
   LDA(k = 22, control = list(seed = 20220417))
 
 ```
@@ -367,10 +381,10 @@ With LDA, each topic is a mixture of words. The model returns estimated paramete
 ```{r}
 lda_beta <- tidy(eos_lda, matrix = "beta")
 
-top_beta <- lda_beta |> 
-  group_by(topic) |> 
-  slice_max(beta, n = 12) |> 
-  ungroup() |> 
+top_beta <- lda_beta |>
+  group_by(topic) |>
+  slice_max(beta, n = 12) |>
+  ungroup() |>
   arrange(desc(beta))
 
 top_beta
@@ -378,9 +392,9 @@ top_beta
 # pick 6 random topics for visualization
 random_topics <- sample(1:22, size = 6)
 
-top_beta |> 
-  filter(topic %in% random_topics) |> 
-  mutate(term = reorder(term, beta)) |> 
+top_beta |>
+  filter(topic %in% random_topics) |>
+  mutate(term = reorder(term, beta)) |>
   ggplot(aes(x = beta, y = term)) +
   geom_col() +
   facet_wrap(~ topic, scales = "free")
@@ -394,10 +408,10 @@ With LDA, each document is a mixture of topics The model returns estimated param
 ```{r}
 lda_gamma <- tidy(eos_lda, matrix = "gamma")
 
-top_gamma <- lda_gamma |> 
-  group_by(topic) |> 
-  slice_max(gamma, n = 12) |> 
-  ungroup() |> 
+top_gamma <- lda_gamma |>
+  group_by(topic) |>
+  slice_max(gamma, n = 12) |>
+  ungroup() |>
   arrange(desc(gamma))
 
 top_gamma
@@ -406,7 +420,7 @@ top_gamma
 
 LDA isn't perfect. It can result in topics that are too broad (what [Patrick van Kessel calls](https://medium.com/pew-research-center-decoded/making-sense-of-topic-models-953a5e42854e) "undercooked") or topics that are too granular (what van Kessel calls "overcooked"). 
 
-In a related blog, @vanKessel2017 discusses using a semi-supervised algorithm called CorEx to resolve some of these challenges. With semi-supervised learning, the analyst can provide anchor terms that help the algorithm generate topics that are better cooked than with unsupervised learning. 
+In a [related blog](https://medium.com/pew-research-center-decoded/overcoming-the-limitations-of-topic-models-with-a-semi-supervised-approach-b947374e0455), van Kessel discusses using a semi-supervised algorithm called CorEx to resolve some of these challenges. With semi-supervised learning, the analyst can provide anchor terms that help the algorithm generate topics that are better cooked than with unsupervised learning. 
 
 ## Text Classification (supervised machine learning)
 
@@ -416,11 +430,7 @@ Fortunately, we can use all of the `library(tidymodels)` tools we already learne
 
 ## `library(textrecipes)`
 
-```{r}
-#| echo: FALSE
-knitr::include_graphics(here::here("images", "textrecipes.png"))
-
-```
+![](images/textrecipes.png){width=1in}
 
 `library(textrecipes)` augments `library(recipes)` with `step_*()` functions that are useful for supervised machine learning with text data. 
 
@@ -440,7 +450,10 @@ Consider the Federalist Papers data set we used in the earlier class notes. Afte
 library(gutenbergr)
 
 # download the Federalist Papers from Project Gutenberg
-fed_papers <- gutenberg_download(gutenberg_id = 1404)
+fed_papers <- gutenberg_download(
+  gutenberg_id = 1404,
+  mirror = "http://mirror.csclub.uwaterloo.ca/gutenberg"
+)
 
 # this data cleaning comes from Emil Hvitfeldt
 # https://www.hvitfeldt.me/blog/predicting-authorship-in-the-federalist-papers-with-tidytext/
@@ -449,15 +462,16 @@ madison <- c(10, 14, 18:20, 37:48)
 jay <- c(2:5, 64)
 unknown <- c(49:58, 62:63)
 
-fed_papers <- pull(fed_papers, text) |> 
-  str_c(collapse = " ") |> 
-  str_split(pattern = "\\.|\\?|\\!") |> 
-  unlist() |> 
-  tibble(text = _)
 
-fed_papers <- fed_papers |> 
+fed_papers <- pull(fed_papers, text) |>
+  str_c(collapse = " ") |>
+  str_split(pattern = "\\.|\\?|\\!") |>
+  unlist() %>%
+  tibble(text = .)
+
+fed_papers <- fed_papers |>
   mutate(paper_number = cumsum(str_detect(text, regex("FEDERALIST No",
-                                            ignore_case = TRUE)))) |> 
+                                            ignore_case = TRUE)))) |>
   mutate(author = case_when(
     paper_number %in% hamilton ~ "hamilton",
     paper_number %in% madison ~ "madison",
@@ -474,12 +488,12 @@ Predictive modeling uses a slightly different data format than tidytext. We want
 We can use `nest()` and `paste()` to transform the data into this format. 
 
 ```{r}
-fed_papers <- fed_papers |> 
-  group_by(paper_number) |> 
-  nest(text = text) |> 
+fed_papers <- fed_papers |>
+  group_by(paper_number) |>
+  nest(text = text) |>
   # paste individual lines into one row per document
-  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |> 
-  ungroup() |> 
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |>
+  ungroup() |>
   # remove white spaces
   mutate(text = str_squish(str_to_lower(text)))
 
@@ -490,20 +504,22 @@ fed_papers
 Let's `prep()` and `bake()` a recipe. We want to use recipes because most of these `step_*()` functions are data dependent and need to be repeated during resampling. 
 
 ```{r}
+#| message: false
+
 library(textrecipes)
 
-recipe( ~ text, data = fed_papers) |> 
+recipe( ~ text, data = fed_papers) |>
   # tokenize the text
-  step_tokenize(text) |> 
+  step_tokenize(text) |>
   # remove stop works
-  step_stopwords(text) |> 
+  step_stopwords(text) |>
   # stem words
-  step_stem(text) |> 
+  step_stem(text) |>
   # remove infrequent tokens
-  step_tokenfilter(text, max_tokens = 10) |> 
+  step_tokenfilter(text, max_tokens = 10) |>
   # perform TF-IDF
-  step_tfidf(text) |> 
-  prep() |> 
+  step_tfidf(text) |>
+  prep() |>
   bake(new_data = NULL)
 
 ```
@@ -518,35 +534,37 @@ Let's finish with an example using the executive orders data set. The data conta
 First, we need to load and pre-process the data.
 
 ```{r}
+#| message: false
+
 eos <- read_csv(here::here("data", "executive-orders.csv"))
 
 # remove empty rows
 eos <- filter(eos, !is.na(text))
 
 # remove numbers
-eos <- eos |> 
-  mutate(text = str_remove_all(text, "\\d")) |> 
-  mutate(text = str_remove_all(text, "``''")) |> 
+eos <- eos |>
+  mutate(text = str_remove_all(text, "\\d")) |>
+  mutate(text = str_remove_all(text, "``''")) |>
   mutate(text = str_squish(text))
 
 # combine rows into one row per document
-eos <- eos |> 
-  group_by(executive_order_number) |> 
-  nest(text = text) |> 
-  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |> 
+eos <- eos |>
+  group_by(executive_order_number) |>
+  nest(text = text) |>
+  mutate(text = map_chr(.x = text, ~paste(.x[[1]], collapse = " "))) |>
   ungroup()
 
 # label the party of each executive order
 republicans <- c("bush", "trump")
 
-eos_modeling <- eos |> 
+eos_modeling <- eos |>
   mutate(
     party = if_else(
       condition = president %in% republicans, 
       true = "rep", 
       false = "dem"
     )
-  ) |> 
+  ) |>
   # we can include non-text predictors but we drop predictors that would be too
   # useful (i.e. dates align with individual presidents)
   select(-president, -signing_date, -executive_order_number)
@@ -558,6 +576,8 @@ eos_modeling <- eos |>
 We will test a parametric (logistic LASSO regression) and a non-parametric(random forest) to predict the party using only the text of the executive orders. We will use cross-validation for model selection. 
 
 ```{r}
+#| message: false
+
 library(tidymodels)
 library(textrecipes)
 library(vip)
@@ -579,12 +599,12 @@ Next, let's create a recipe that will be used by both models.
 
 ```{r}
 eos_rec <-
-  recipe(party ~ text, data = eos_train) |> 
-  step_tokenize(text) |> 
-  step_stopwords(text) |> 
-  step_stem(text) |> 
+  recipe(party ~ text, data = eos_train) |>
+  step_tokenize(text) |>
+  step_stopwords(text) |>
+  step_stem(text) |>
   # ad hoc testing indicates that increasing max tokens makes a difference
-  step_tokenfilter(text, max_tokens = 1000) |> 
+  step_tokenfilter(text, max_tokens = 1000) |>
   step_tfidf(text) 
 
 ```
@@ -593,12 +613,12 @@ Create a workflow.
 
 ```{r}
 lasso_mod <-
-  logistic_reg(penalty = tune(), mixture = 1) |> 
-  set_mode("classification") |> 
+  logistic_reg(penalty = tune(), mixture = 1) |>
+  set_mode("classification") |>
   set_engine("glmnet")
 
-lasso_wf <- workflow() |> 
-  add_recipe(eos_rec) |> 
+lasso_wf <- workflow() |>
+  add_recipe(eos_rec) |>
   add_model(lasso_mod)
   
 ```
@@ -620,27 +640,27 @@ lasso_cv <-
 Unpack the estimated models. 
 
 ```{r}
-lasso_cv |> 
+lasso_cv |>
   collect_metrics()
 
 autoplot(lasso_cv)
 
-lasso_cv |> 
-  select_best("roc_auc")
+lasso_cv |>
+  select_best(metric = "roc_auc")
 
 ```
 
 Fit the best model on all of the training data and look at the coefficients. 
 
 ```{r}
-lasso_wf <- finalize_workflow(x = lasso_wf, parameters = select_best(lasso_cv, "roc_auc"))
+lasso_wf <- finalize_workflow(x = lasso_wf, parameters = select_best(lasso_cv, metric = "roc_auc"))
 
 lasso_fit <- last_fit(lasso_wf, split = eos_split)
 
-lasso_fit |> 
-  extract_fit_parsnip() |> 
-  tidy() |> 
-  arrange(desc(abs(estimate))) |> 
+lasso_fit |>
+  extract_fit_parsnip() |>
+  tidy() |>
+  arrange(desc(abs(estimate))) |>
   print(n = 20)
 
 ```
@@ -651,12 +671,12 @@ Create a workflow.
 
 ```{r}
 rf_mod <-
-  rand_forest(mtry = tune(), trees = 100, min_n = tune()) |> 
-  set_mode("classification") |> 
+  rand_forest(mtry = tune(), trees = 100, min_n = tune()) |>
+  set_mode("classification") |>
   set_engine("ranger", importance = "impurity")
 
-rf_wf <- workflow() |> 
-  add_recipe(eos_rec) |> 
+rf_wf <- workflow() |>
+  add_recipe(eos_rec) |>
   add_model(rf_mod)
 
 ```
@@ -682,20 +702,20 @@ rf_cv <-
 Unpack the estimated models. 
 
 ```{r}
-rf_cv |> 
+rf_cv |>
   collect_metrics()
 
 autoplot(rf_cv)
 
-rf_cv |> 
-  select_best("roc_auc")
+rf_cv |>
+  select_best(metric = "roc_auc")
 
 ```
 
 Fit the best model on all of the training data and look at variable importance. 
 
 ```{r}
-rf_wf <- finalize_workflow(x = rf_wf, parameters = select_best(rf_cv, "roc_auc"))
+rf_wf <- finalize_workflow(x = rf_wf, parameters = select_best(rf_cv, metric = "roc_auc"))
 
 rf_fit <- last_fit(rf_wf, split = eos_split)
 
@@ -705,7 +725,7 @@ rf_fit |>
 
 ```
 
-### Out of sample error rate
+### Out-of-sample error rate
 
 ```{r}
 collect_metrics(rf_fit)
@@ -719,7 +739,6 @@ collect_metrics(rf_fit)
 * [Latent Dirichlet Allocation](https://www.jmlr.org/papers/volume3/blei03a/blei03a.pdf)
 * [Latent Dirichlet Allocation tutorial](http://obphio.us/pdfs/lda_tutorial.pdf)
 * [Computing for the Social Sciences](https://cfss.uchicago.edu/notes/text-analysis-workflow/)
-
 
 ## Appendix A
 
@@ -742,7 +761,9 @@ We can use `library(ldatuning)` to determine the optimal number of topics for LD
 
 It is computationally expensive. `FindTopicsNumber_plot()` shows the measures and labels them based on if th measures should be minimized or maximized. 
 
-```{r eval = FALSE}
+```{r}
+#| eval: false
+
 library(ldatuning)
 
 results <- FindTopicsNumber(

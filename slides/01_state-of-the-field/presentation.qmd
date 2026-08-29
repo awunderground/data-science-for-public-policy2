@@ -1,0 +1,253 @@
+---
+title: "State of the Field"
+subtitle: "Data Science for Public Policy"
+author: "Aaron R. Williams and Alex Engler"
+format: 
+  revealjs:
+    menu: false 
+    embed-resources: true
+    theme: urbn.scss    
+    #logo: images/urban-institute-logo-2.png
+    include-after-body: format-title-page.html
+title-slide-attributes: 
+    data-background-image: images/urban-institute-logo-1.png
+    data-background-size: 25%
+    data-background-position: 3% 85%
+---
+
+# Data Science for Public Policy
+
+## What is a Data Scientist?
+
+![](images/venn-diagram.png){fig-align="center"}
+
+Source: [Urban Institute](https://urban-institute.medium.com/what-is-data-science-the-urban-institute-b5e4b3ff9cc2)
+
+## DS in the Context of Public Policy Analysis
+
+:::: {.columns}
+
+::: {.column width="60%"}
+**Expanded Perspectives on Data and Methods**
+
+- Web Scraping
+- Imputation
+- Text Analysis and NLP
+- Computer Vision
+- Data Privacy
+- Cluster Analysis
+- Network Analysis
+- Predictive Modeling
+- Causal Inference +
+:::
+
+::: {.column width="40%"}
+**Modern Tools for Learning about Data**
+
+- Open-Source Programming Languages
+- Reproducible Research
+- Cloud Computing
+- APIs, Databases, and Infrastructure
+- Data Visualization and Interactivity
+- Algorithms from Statistics, Computer - Science, and Cryptography
+:::
+
+::::
+
+## Expanded Perspectives on Data and Methods
+
+:::: {.columns}
+
+::: {.column width="50%"}
+1. Getting Data
+2. Finding Structure in Data
+3. Making Predictions with Data
+4. Causal Inference +
+:::
+
+::: {.column width="50%"}
+![Source: [Valerie Tygart](https://en.wikipedia.org/wiki/Aerial_perspective#/media/File:MonNatForest.jpg)](images/MonNatForest-9413.jpg)
+:::
+
+::::
+
+# 1. Getting Data
+
+## "Don't Sleep on Summary Statistics"
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](images/gun-violance.png)
+:::
+
+::: {.column width="50%"}
+![](images/gun-violence-title.png)
+:::
+
+Source: [Washington Post](https://www.washingtonpost.com/graphics/investigations/police-shootings-database/)
+
+::::
+
+## Web Scraping
+
+![](images/billion-prices.png)
+
+[The Billion Prices Project](https://thebillionpricesproject.com/)
+
+## Hand Coding + Machine Learning
+
+### [How Urban Piloted Data Science Techniques to Collect Land-Use Reform Data](https://urban-institute.medium.com/how-urban-piloted-data-science-techniques-to-collect-land-use-reform-data-475409903b88)
+
+![](images/hand-coding-abstract.png)
+
+## NLP + Summarizing Massive Data
+
+### [Public Perceptions of Police on Social Media](https://www.urban.org/research/publication/public-perceptions-police-social-media)
+
+> The millions of tweets shared on Twitter daily are a rich resource of public sentiment on countless topics. In the wake of highly publicized officer-involved shootings, many people take to social media to express their opinions, both positive and negative, of the police. We collected millions of public tweets and employed machine learning to explore whether we can measure public sentiment toward the police. Specifically, we examine how public sentiment changed over time and in response to one high-profile event, the 2015 death of Freddie Gray in Baltimore. While accounting for the larger trends in the public image of the police on Twitter, we find that sentiment became significantly more negative after Gray’s death and during the subsequent protests.
+
+## Computer Vision
+
+:::: {.columns}
+
+::: {.column width="50%"}
+![](images/computer-vision1.png){width=70%}
+:::
+
+::: {.column width="50%"}
+![](images/computer-vision2.png){width=75%}
+
+![](images/computer-vision3.png){width=75%}
+:::
+
+[Poverty from Space: Using High-Resolution Satellite Imagery for Estimating Economic Well-Being](https://openknowledge.worldbank.org/entities/publication/4d2d0726-ee6e-505d-a278-e36de797787d)
+
+::::
+
+## Data Privacy
+
+:::: {.columns}
+
+::: {.column width="30%"}
+![](images/synth-data1.png)
+:::
+
+::: {.column width="70%"}
+![](images/synth-data2.png)
+
+:::
+
+Source: [Urban Institute](https://www.urban.org/research/publication/synthetic-supplemental-public-use-file-low-income-information-return-data-methodology-utility-and-privacy-implications)
+
+::::
+
+## Data Privacy
+
+:::: {.columns}
+
+::: {.column width="60%"}
+![](images/social-capital1.png)
+:::
+
+::: {.column width="40%"}
+![](images/social-capital2.png)
+
+:::
+
+Source: [Nature](https://www.nature.com/articles/s41586-022-04996-4.pdf)
+
+::::
+
+# 2. Finding Structure in Data
+
+## Cluster Analysis
+
+### [Beyond Red vs. Blue: The Political Typology](https://www.pewresearch.org/politics/2014/06/26/the-political-typology-beyond-red-vs-blue/)
+
+:::: {.columns}
+
+::: {.column width="60%"}
+> This report uses [cluster analysis to sort people into cohesive groups](https://www.pewresearch.org/politics/2014/06/26/appendix-2-about-the-political-typology/), based on their responses to 23 questions covering an array of political attitudes and values. First developed in 1987, the Pew Research Center’s Political Typology has provided a portrait of the electorate at various points across five presidencies; the last typology study was released in [May 2011](https://www.pewresearch.org/politics/2014/06/26/appendix-2-about-the-political-typology/).
+:::
+
+::: {.column width="40%"}
+![](images/red-vs-blue2.png){width=60%}
+
+:::
+
+::::
+
+## Network Analysis
+
+![](images/network-propaganda-explored.jpg)
+
+Source: [Network Propaganda Explored](https://news.harvard.edu/gazette/story/2018/10/network-propaganda-takes-a-closer-look-at-media-and-american-politics/)
+
+# 3. Making Predictions with Data
+
+## Targeting Interventions {.smaller}
+
+> Lead poisoning is a major public health problem that affects hundreds of thousands of children in the United States every year. A common approach to identifying lead hazards is to test all children for elevated blood lead levels and then investigate and remediate the homes of children with elevated tests. This can prevent exposure to lead of future residents, but only after a child has been poisoned. This paper describes joint work with the Chicago Department of Public Health (CDPH) in which we build a model that predicts the risk of a child to being poisoned so that an intervention can take place before that happens. Using two decades of blood lead level tests, home lead inspections, property value assessments, and census data, our model allows inspectors to prioritize houses on an intractably long list of potential hazards and identify children who are at the highest risk. This work has been described by CDPH as pioneering in the use of machine learning and predictive analytics in public health and has the potential to have a significant impact on both health and economic outcomes for communities across the US.
+
+[Predictive Modeling for Public Health:
+Preventing Childhood Lead Poisoning](https://www.dssgfellowship.org/wp-content/uploads/2016/04/cdph-lead-kdd2015.pdf)
+
+## Data Imputation
+
+### [Ethics and Empathy in Using Imputation to Disaggregate Data for Racial Equity, A Case Study Imputing Credit Bureau Data](https://www.urban.org/research/publication/ethics-and-empathy-using-imputation-disaggregate-data-racial-equity-case-study-imputing-credit-bureau-data)
+
+> Disaggregating data by race and ethnicity is a critical method for shining light on racialized systems of privilege and oppression. Imputation is a powerful tool for disaggregating data by generating racial and ethnic identifiers onto datasets lacking this information. But if used without a proactive focus on equity, it can harm Black people, Indigenous people, and other people of color.
+
+# 4. Causal Inference +
+
+## Using Prediction to Add Controls
+
+:::: {.columns}
+
+::: {.column width="30%"}
+![](images/ho1.png)
+:::
+
+::: {.column width="70%"}
+![](images/ho2.png)
+
+:::
+
+::::
+
+## Econometrics +
+
+- Estimating the heterogeneity of treatment effects
+- Using modified regression trees as a standard robustness check for regression analysis
+- Understanding uncertainty when a researcher observes the entire population
+
+Source: “Machine Learning and Causal Inference for Policy Evaluation” by Susan Athey
+
+# Modern Tools for Learning About Data
+
+![](images/bicycle-tool.jpg){fig-align="center"}
+
+## Tools
+
+- Proprietary Programming Languages
+- PDFs and Tables
+- Public Data
+- Causal Inference/Econometrics
+- Local Computing
+- Experimental Design
+- Microsimulation
+
+## Tools
+
+<span style="color:#1696d2"></span>
+
+- ~~Proprietary~~ <span style="color:#1696d2">Open Source</span> Programming Languages
+- PDFs and Tables + <span style="color:#1696d2">DataVisualization and Interactivity</span>
+- Public Data + <span style="color:#1696d2">Private Data</span>
+- Causal Inference/Econometrics + <span style="color:#1696d2">Algorithms from Statistics, Computer Science, and Cryptography</span>
+- Local Computing + <span style="color:#1696d2">Cloud Computing</span>
+- Experimental Design
+- Microsimulation
+- <span style="color:#1696d2">Reproducible Research and Workflows</span>
+- <span style="color:#1696d2">APIs, Databases, and Infrastructure</span>

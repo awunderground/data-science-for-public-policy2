@@ -1,5 +1,6 @@
 ---
 title: "Introduction to the tidyverse"
+abstract: The tidyverse is a popular set of R packages for conducting reproducible data science. Packages in the tidyverse work well together and share the same design philosophy. This chapter introduces the tidyverse and, in particular, its data processing capabilities. 
 format: 
   html:
     toc: true
@@ -7,6 +8,11 @@ format:
 editor_options: 
   chunk_output_type: console
 ---
+
+![A Soviet Apartment that looks like a data frame.](images/header-images/Soviet_apartment.jpg)
+
+Image by [lafleur](https://en.wikipedia.org/wiki/Brutalist_architecture#/media/File:Soviet_apartment.jpg)
+
 
 ```{r rmarkdown-setup, echo = FALSE}
 #| echo: false
@@ -86,7 +92,9 @@ The defining opinion of the tidyverse is its wholehearted adoption of tidy data.
 
 1. Each variable forms a column.
 2. Each observation forms a row.
-3. Each type of observational unit forms a dataframe. (This is from the paper, not the book)
+3. Each type of observational unit forms a dataframe.[^paper]
+
+[^paper]: This definition is from the tidy data paper, not R for Data Science, which uses a slightly different definition.
 
 ![Source: [R4DS](https://r4ds.hadley.nz/data-tidy)](images/tidy-data.png)
 
@@ -94,7 +102,12 @@ Tidy data was formalized by Hadley @Wickhamtidy in the Journal of Statistical So
 
 > Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.hadley.nz/data-tidy.html)
 
-The tidy approach to data science is powerful because it breaks data work into two distinct parts. First, get the data into a tidy format. Second, use tools optimized for tidy data. By standardizing the data structure for most community-created tools, the framework oriented diffuse development and reduced the friction of data work. 
+The tidy approach to data science is powerful because it breaks data work into two distinct parts. 
+
+1. Get the data into a tidy format. 
+2. Use tools optimized for tidy data. 
+
+By standardizing the data structure for most community-created tools, the framework orients diffuse development and reduces the friction of data work. 
 
 ## dplyr
 
@@ -108,13 +121,11 @@ dplyr can be explicitly loaded with `library(dplyr)` or loaded with `library(tid
 library(tidyverse)
 ```
 
-
-
-We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the Current Population Survey (CPS). Run the following code to load the data.
+We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the [Current Population Survey](https://cps.ipums.org/cps/about.shtml) (CPS). Run the following code to load the data.
 
 ```{r}
 #| label: load-asec
-#| messgae: false
+#| message: false
 
 asec <- read_csv(
   paste0(
@@ -125,11 +136,7 @@ asec <- read_csv(
 
 ```
 
-
-
 We can use `glimpse(asec)` to quickly view the data. We can also use `View(asec)` to open up `asec` in RStudio. 
-
-
 
 ```{r glimpse-asec}
 glimpse(x = asec)
@@ -156,7 +163,7 @@ This works great until the goal is to select 99 of 100 variables. Fortunately, `
 select(.data = asec, -asecflag)
 ```
 
-Tidy data generally results in longer, wider data sets than other programming languages so iteratively selecting by column names is less important than in Stata or SAS. Still, `dplyr` contains powerful helper functions that can select variables based on patterns in column names:
+`dplyr` contains powerful helper functions that can select variables based on patterns in column names:
 
 * `contains()`: Contains a given string
 * `starts_with()`: Starts with a prefix
@@ -196,7 +203,7 @@ rename(.data = asec, serial_number = serial)
 
 
 
-You can also rename a selection of variables using `rename_with()`. The `.cols` argument is used to select the columns to rename and takes a `tidyselect` statement like those we introduced above. Here, we're using the `where()` selection helper which selects all columns where a given condition is TRUE. The default value for the `.cols` argument is `everything()` which selects all columns in the dataset.
+You can also rename a selection of variables using `rename_with()`. The `.cols` argument is used to select the columns to rename and takes a `tidyselect` statement like those we introduced above. Here, we're using the `where()` selection helper which selects all columns where a given condition is `TRUE`. The default value for the `.cols` argument is `everything()` which selects all columns in the dataset.
 
 
 
@@ -320,8 +327,29 @@ Conditional logic inside of `mutate()` with functions like `if_else()` and `case
 exercise_number <- exercise_number + 1
 ```
 
-1. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`. *Hint:* `if_else()` is useful and works like the IF command in Microsoft Excel.
+`if_else()` is useful function for conditionally creating or altering values in a variable. It has three main arguments:
 
+1. `condition`: A logical condition
+2. `true`: What to do if the condition evaluates to `TRUE`
+3. `false`: What to do if the condition evaluates to `FALSE`
+
+For example,
+
+```r
+storms |>
+  mutate(
+  storm_decision = if_else(
+    condition = wind > 50,
+    true = "evacuate",
+    false = "stay"
+    )
+  )
+
+```
+
+
+
+1. Create a new variable called `in_poverty`. If `offtotval` is less than `offcutoff` then use `"Below Poverty Line"`. Otherwise, use `"Above Poverty Line"`.
 :::
 
 ### `|>`
@@ -331,7 +359,7 @@ Data munging is tiring when each operation needs to be assigned to a name with `
 `|>` passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:
 
 
-Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) wildly popular, particularly in the `tidyverse framework`. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
+Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) popular, particularly in the `tidyverse framework`. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
 
 
 ```{r pipe-example, eval = FALSE}
@@ -612,9 +640,28 @@ Many `.csv`s can be read without issue with simple syntax `read_csv(file = "rela
 
 [readxl](https://readxl.tidyverse.org/) is a tidyverse package for reading data from Microsoft Excel files. It is not a core tidyverse package so it needs to be explicitly loaded in each R session. 
 
-The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
+We introduce the package more thoroughly in [@sec-readxl]. The [tidyverse website](https://readxl.tidyverse.org/) has a good tutorial on readxl.
 
-## Next Skills
+
+## Conclusion
+This chapter introduced tidy data in which columns reflect a variable, observations reflect a row, and cells reflect an individual observation. It also introduced key functions from `dplyr`, a tidyverse package built to support data cleaning operations: 
+
+- `select()` for removing columns
+- `filter()` for removing rows
+- `rename()` for renaming columns
+- `arrange()` for reordering columns
+- `mutate()` for creating new columns
+- `|>` (the pipe operator) for chaining together multiple functions (part of base, but extremely useful!)
+- `summarize()` for collapsing many rows of a data frame into fewer rows
+- `group_by()` to group a data frame by certain specified variables
+- `count()` a shortcut for `group_by() |> summarize(n())`
+
+The chapter also introduced mutating joins (`left_join()`, `inner_join()`, and `full_join()`) which create new columns and filtering joins (`anti_join()`) which drop observations depending on the presence of their key in another data frame. 
+
+The chapter concluded by introducing the `readr` and `readxl` packages which are useful for reading data into R. 
+
+
+### Next Skills
 
 * `across()` can be used with `library(dplyr)` functions such as `summarise()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
 * `pivot_wider()` and `pivot_longer()` can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization. 

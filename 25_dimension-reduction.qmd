@@ -4,6 +4,7 @@ format:
   html:
     toc: true
     code-line-numbers: true
+bibliography: references.bib
 editor_options: 
   chunk_output_type: console
 ---
@@ -44,9 +45,7 @@ options(scipen = 999)
 **Clustering:** Grouping observations into homogeneous groups.
 :::
 
-## Dimension Reduction
-
-### Background
+## Background
 
 Problems:
 
@@ -105,14 +104,14 @@ s_{31} & s_{32} & s_3^2
 
 We can think of a data set as having a total amount of variance. If variables are identical or highly correlated, then it is easy to capture all or most of the total variance with a subset or linear combination of the variables. We want these new variables to be orthogonal.
 
-### Principal Component Analysis (PCA)
+## Principal Component Analysis (PCA)
 
 ::: {.callout-tip}
 ## Principal Component Analysis:
 **Principal Component Analysis:** A process that transforms many possibly linearly correlated variables into a set of linearly uncorrelated variables called principal components. The components are ordered such that the first component explains the most variance in the original data, the second explains the second most variance in the original data, and so on. A subset of principal components can often be used to represent the original data with limited information loss.
 :::
 
-#### Visual Explanation {#sec-vis}
+### Visual Explanation {#sec-vis}
 
 Assume there are two variables $x_1$ and $x_2$. $x_1$ has mean zero and $x_2$ has mean zero.
 
@@ -249,7 +248,7 @@ pc1$x |>
 rm(plot1, plot2, vec1, vec2, pc1)
 ```
 
-#### Mathematical Explanation
+### Mathematical Explanation
 
 Principal components are weighted combinations of variables in the original data set.
 
@@ -339,13 +338,13 @@ summary(prcomp(bmi_ex))
 rm(bmi_ex, cov_bmi_ex, pca_bmi_ex)
 ```
 
-### 2nd Interpretation
+## 2nd Interpretation
 
 The principal components create the p-dimensional space that is closest to the observations in the data.
 
 The line in @sec-vis above is the line that is closest to all of the data. Two principal components in a data set with 50 variables create a plane that is closest to all observations in the data in 50 dimensions.
 
-### Implementation
+## Implementation
 
 PCA is implemented in R with `prcomp()`. However, we will use `library(recipes)` from the tidymodels framework.
 
@@ -355,7 +354,7 @@ The scale of variables matters. If one variable has a range of $[0, 1000000]$ an
 
 PCA always mean centers data. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. `step_normalize()` centers and scales a variable. `step_range()` converts variables to a scaled numeric range (e.g. 0 to 1).
 
-### Tutorial 1 (continuous variables)
+## Tutorial 1 (continuous variables)
 
 `state_data` includes numeric variables about state household population (`hhpop`), state home ownership rate (`horate`), and state median household income (`medhhincome`). The objective is to plot the three variables in two dimensions.
 
@@ -426,7 +425,7 @@ tidy(recipe2, number = 1, type = "coef")
 
 ```
 
-### Tutorial 2 (categorical variables)
+## Tutorial 2 (categorical variables)
 
 Here we have a data set with 493 votes from two years of the 114th Senate (2015-2017). The data set has 100 rows and 495 variables. An affirmative vote is `1`, a negative vote is `-1`, and an abstention is `0`. The data are from [Bradley Robinson](https://data.world/bradrobinson/us-senate-voting-records) and this example is based on an earlier analysis by Professor Sivan Leviyang.
 
@@ -495,7 +494,7 @@ ggplot() +
 ```
 
 
-### How many principal components should you use?
+## How many principal components should you use?
 
 By default, conducting PCA with `library(recipes)` will return as many principal components as there are variables. Because because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:
 

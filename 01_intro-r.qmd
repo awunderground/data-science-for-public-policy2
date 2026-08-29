@@ -1,5 +1,6 @@
 ---
 title: "Introduction to R"
+abstract: In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
 format: 
   html:
     toc: true
@@ -8,6 +9,7 @@ editor_options:
   chunk_output_type: console
 ---
 
+![English alphabet from 1740](images/header-images/Chart_of_the_English_alphabet_from_1740_(from_James_Hoy,_Irish_Spelling-Book).png){width=50%}
 
 ```{r}
 #| echo: false
@@ -15,8 +17,6 @@ editor_options:
 exercise_number <- 1
 
 ```
-
-In this chapter, we introduce six key concepts for data analysis. We subsequently describe the R programming language and RStudio, its most popular Integrated Development Environment. Finally, we  share key foundational concepts when programming with R. 
 
 
 ## Six Principles for Data Analysis
@@ -128,23 +128,18 @@ In both cases, the code from your `.R` script should move to the R Console and e
 
 :::
 
-
 ## Comments
 
 R will interpret all text in a `.R` script as R code unless the code follows `#`, the comment symbol. Comments are essential to writing clear code in any programming language. 
 
-
-
 ```{r eval = FALSE}
-## Demonstrate the value of a comment and make a simple calculation
+# Demonstrate the value of a comment and make a simple calculation
 2 + 2
 ```
 
 It should be obvious *what* a line of clear R code accomplishes. It isn't always obvious *why* a clear line of R code is included in a script. Comments should focus on the *why* of R code and not the *what* of R code. 
 
 The following comment isn't useful because it just restates the R code, which is clear:
-
-
 
 ```{r eval = FALSE}
 # divide every value by 1.11
@@ -153,11 +148,19 @@ cost / 1.11
 
 The following comment is useful because it adds context to the R code:
 
-
-
 ```{r eval = FALSE}
 # convert costs from dollars to Euros using the 2020-01-13 exchange rate
 cost / 1.11
+```
+
+The following is useful because it avoids [magic numbers](https://www.inf.unibz.it/~calvanese/teaching/05-06-ip/lecture-notes/uni04/node17.html).
+
+```{r eval = FALSE}
+# dollars to Euros 2020-01-13 exchange rate
+exchange_rate <- 1.11
+
+# convert costs from dollars to Euros
+cost / exchange_rate
 ```
 
 ::: callout
@@ -216,8 +219,6 @@ c(1.1, 2.2, 3.3)
 c("District of Columbia", "Virginia", "Maryland")
 ```
 
-
-
 The `class()` function can be used to identify the type, or class, of an object. For example:
 
 ```{r}
@@ -234,14 +235,11 @@ c(TRUE, 1, "District of Columbia")
 class(c(TRUE, 1, "District of Columbia"))
 ```
 
-
 *Lists* are one- or multi-dimensional arrays that are made up of other lists. Lists are *heterogeneous* - they can contain many lists of different types and dimensions. A vector is a list but a list is not necessarily a vector. 
 
 `NULL` is the null object in R. It means a value does not exist.
 
 `NA` is a missing value of length 1 in R. `NA`s are powerful representations in R with special properties. `NA` is a contagious value in R that will override all calculations [@Wickham2017R, Section 20.2].
-
-
 
 ```{r}
 1 + 2 + 3 + NA
@@ -267,10 +265,10 @@ is.na(c(1, 2, NA))
 
 Instead, `data frames`, and their powerful cousins `tibbles`, are the backbone of data science and this course. `Data frames` are two-dimensional arrays where each column is a list (usually a vector). Most times, each column will be of one type while a given row will contain many different types. We usually refer to columns as *variables* and rows as *observations*. 
 
-Here are the first six rows of a data frame with information about diamond prices and diamond characteristics:
+Here are the first six rows of a data frame with information about mammal sleep habits:
 
 ```{r}
-head(ggplot2::diamonds)
+head(ggplot2::msleep)
 ```
 
 ### tibbles
@@ -289,15 +287,15 @@ library(tidyverse)
 ```
 
 ```{r}
+#| echo: false
+
 tibble(
   a = c(TRUE, FALSE, FALSE),
-  b = c(1, 2, 3),
+  b = c(1L, 2L, 3L),
   c = c(1.1, 2.2, 3.3),
   d = c("District of Columbia", "Virginia", "Maryland")
 )
 ```
-
-
 
 From this moment forward, I will use data frame to mean tibble. 
 
@@ -306,8 +304,6 @@ From this moment forward, I will use data frame to mean tibble.
 R can operate on many different vectors and data frames in the same R session. This creates much flexibility. It also means most unique objects in an R session need unique names.
 
 `<-` is the assignment operator. An object created on the right side of an assignment operator is assigned to a name on the left side of an assignment operator. Assignment operators are important for saving the consequences of operations and functions. Without assignment, the result of a calculation is not saved for use in a future calculation. Operations without assignment operators will typically be printed to the console but not saved for future use.
-
-
 
 ```{r}
 # this important calculation is saved to the R environment
@@ -618,3 +614,6 @@ ChatGPT can be a powerful tool. Some helpful tips for using ChatGPT for coding q
 - Provide it detailed questions
 - Give it reproducible example code
 - Refine queries when the initial responses are unsatisfactory
+
+## Conclusion
+R is a powerful programming language that was developed initially for statistics but is now used in a variety of contexts. Key advantages to R include that it has a fantastic, custom-built IDE called RStudio and a large open source community of users that provides help and develops new packages. Like other open source programming languages, conducting data science in R supports the six principles of data analysis introduced at the start of this chapter. 

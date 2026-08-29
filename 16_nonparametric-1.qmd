@@ -13,6 +13,10 @@ editor_options:
 fig-cap-location: top
 ---
 
+![Camels have curvers](images/header-images/07._Camel_Profile,_near_Silverton,_NSW,_07.07.2007.jpg)
+
+Image by [Jjron](https://en.wikipedia.org/wiki/Camel#/media/File:07._Camel_Profile,_near_Silverton,_NSW,_07.07.2007.jpg)
+
 ```{r}
 #| echo: false
 #| message: false
