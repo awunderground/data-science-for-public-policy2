@@ -103,6 +103,7 @@ augment(cars_lm)
 
 The algorithmic grouping or clustering of documents using features extracted from the documents. This includes unsupervised classification of documents into meaningful groups. 
 
+
 ::: {.callout-tip}
 ## Topic modeling
 
@@ -461,6 +462,7 @@ madison <- c(10, 14, 18:20, 37:48)
 jay <- c(2:5, 64)
 unknown <- c(49:58, 62:63)
 
+
 fed_papers <- pull(fed_papers, text) |>
   str_c(collapse = " ") |>
   str_split(pattern = "\\.|\\?|\\!") |>
@@ -779,7 +781,3 @@ FindTopicsNumber_plot(results)
 
 
 ```
-
-
-
-

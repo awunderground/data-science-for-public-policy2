@@ -483,8 +483,8 @@ ggplot() +
 #| fig-height: 2.5
 #| message: false
 
-centroids2 <- data %>%
-  group_by(cluster) %>%
+centroids2 <- data |>
+  group_by(cluster) |>
   summarize(x = mean(x), y = mean(y))
 
 ggplot() +
@@ -725,7 +725,7 @@ states <- tribble(
   "West Virginia", "54", "2014-01-01",
   "Wisconsin", "55", NA,
   "Wyoming", "56", NA
-) %>%
+) |>
   mutate(implementation_date = ymd(implementation_date))
 
 sahie <- left_join(
@@ -734,7 +734,7 @@ sahie <- left_join(
   by = c("state" = "state_fips")
 ) |>
   filter(!is.na(PCTUI_PT)) |> 
-  mutate(expanded = implementation_date < "2015-01-01") %>%
+  mutate(expanded = implementation_date < "2015-01-01") |>
   mutate(expanded = replace_na(expanded, FALSE))
 
 
