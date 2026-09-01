@@ -39,7 +39,7 @@ exercise_number <- 1
 
 `<-` is the assignment operator. An object created on the right side of an assignment operator is assigned to a name on the left side of an assignment operator. Assignment operators are important for saving the consequences of operations and functions. Without assignment, the result of a calculation is not saved for use in future calculations. Operations without assignment operators will typically be printed to the console but not saved for future use.
 
-## Functions
+### Functions
 
 Functions are collections of code that take inputs, perform operations, and return outputs. R functions are similar to mathematical functions. 
 
@@ -98,7 +98,7 @@ The defining opinion of the tidyverse is its wholehearted adoption of tidy data.
 
 ![Source: [R4DS](https://r4ds.hadley.nz/data-tidy)](images/tidy-data.png)
 
-Tidy data was formalized by Hadley @Wickhamtidy in the Journal of Statistical Software It is equivalent to Codd's 3rd normal form ([Codd, 1990](https://pdfs.semanticscholar.org/fed7/727e4864406ad69362f9500c93011dac7005.pdf)) for relational databases.
+Tidy data was formalized by Hadley @Wickhamtidy in the Journal of Statistical Software. It is equivalent to Codd's 3rd normal form ([Codd, 1990](https://pdfs.semanticscholar.org/fed7/727e4864406ad69362f9500c93011dac7005.pdf)) for relational databases.
 
 > Tidy datasets are all alike, but every messy dataset is messy in its own way. ~ [Hadley Wickham](https://r4ds.hadley.nz/data-tidy.html)
 
@@ -121,7 +121,17 @@ dplyr can be explicitly loaded with `library(dplyr)` or loaded with `library(tid
 library(tidyverse)
 ```
 
-We'll focus on the key dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the [Current Population Survey](https://cps.ipums.org/cps/about.shtml) (CPS). Run the following code to load the data.
+
+
+::: {.callout-note}
+## Current Population Survey Annual Social and Economic Supplement
+
+This chapter introduces dplyr syntax using the March 2020 Annual Social and Economic Supplement (ASEC) to the [Current Population Survey](https://cps.ipums.org/cps/about.shtml) (CPS). 
+
+The CPS is a monthly household survey and is the source of the official unemployment rate. The ASEC is a supplement to the CPS, sometimes called the "March Supplement", and is the official source for the poverty rate, household income, and the health insurance rate.
+:::
+
+Run the following code to load the data.
 
 ```{r}
 #| label: load-asec
@@ -136,16 +146,14 @@ asec <- read_csv(
 
 ```
 
-We can use `glimpse(asec)` to quickly view the data. We can also use `View(asec)` to open up `asec` in RStudio. 
+We can use `glimpse(asec)` to quickly view the data. We can also use `View(asec)` to open up `asec` as a spreadsheet in RStudio. 
 
 ```{r glimpse-asec}
 glimpse(x = asec)
 
 ```
 
-
-
-We're going to learn seven functions and one new piece of syntax from `library(dplyr)` that will be our main tools for manipulating tidy frames. These functions and a few extensions outlined in the [Data Transformation Cheat Sheet](https://rstudio.com/resources/cheatsheets/) are the core of data analysis in the Tidyverse. 
+We're going to learn seven functions from `library(dplyr)` and one new piece of base R syntax that will be our main tools for manipulating tidy data frames. These functions and a few extensions outlined in the [Data Transformation Cheat Sheet](https://rstudio.com/resources/cheatsheets/) are the core of data analysis in the tidyverse. 
 
 ### `select()`
 
@@ -157,7 +165,7 @@ select(.data = asec, year, month, serial)
 
 ```
 
-This works great until the goal is to select 99 of 100 variables. Fortunately, `-` can be used to remove variables. You can also select all but multiple variables by listing them with the `-` symbol separated by commas. 
+This works great until the goal is to select 99 of 100 variables. Fortunately, `-` can be used to list variables that should be dropped. You can also select all but multiple variables by listing them with the `-` symbol separated by commas. 
 
 ```{r select-substract-example}
 select(.data = asec, -asecflag)
@@ -208,7 +216,11 @@ You can also rename a selection of variables using `rename_with()`. The `.cols` 
 
 
 ```{r rename_all-example}
-rename_with(.data = asec, .fn = toupper, .cols = where(is.numeric))
+rename_with(
+  .data = asec, 
+  .fn = toupper, 
+  .cols = where(is.numeric)
+)
 
 ```
 
@@ -290,7 +302,7 @@ exercise_number <- exercise_number + 1
 
 ### `mutate()`
 
-`mutate()` creates new variables or edits existing variables. We can use arithmetic arguments, such as `+`, `-`, `*`, `/`, and `^`. We can also custom functions and functions from packages. For example, we can use `library(stringr)` for string manipulation and `library(lubridate)` for date manipulation. 
+`mutate()` creates new variables or edits existing variables. We can use arithmetic arguments, such as `+`, `-`, `*`, `/`, and `^`. We can also use custom functions and functions from packages. For example, we can use `library(stringr)` for string manipulation and `library(lubridate)` for date manipulation. 
 
 
 
@@ -314,7 +326,7 @@ mutate(.data = asec, inctot = inctot * 1.1)
 
 
 
-Conditional logic inside of `mutate()` with functions like `if_else()` and `case_when()` is key to mastering data munging in R. 
+Conditional logic inside of `mutate()` with functions like `if_else()` and `case_when()` is key to working with data in R. 
 
 
 ::: callout
@@ -327,7 +339,7 @@ Conditional logic inside of `mutate()` with functions like `if_else()` and `case
 exercise_number <- exercise_number + 1
 ```
 
-`if_else()` is useful function for conditionally creating or altering values in a variable. It has three main arguments:
+`if_else()` is a useful function for conditionally creating or altering values in a variable. It has three main arguments:
 
 1. `condition`: A logical condition
 2. `true`: What to do if the condition evaluates to `TRUE`
@@ -342,8 +354,8 @@ storms |>
     condition = wind > 50,
     true = "evacuate",
     false = "stay"
-    )
   )
+)
 
 ```
 
@@ -354,12 +366,12 @@ storms |>
 
 ### `|>`
 
-Data munging is tiring when each operation needs to be assigned to a name with `<-`. The pipe, `|>`, allows lines of code to be chained together so the assignment operator only needs to be used once.
+R code can get repetitive when each operation needs to be assigned to a name with `<-`. The pipe, `|>`, allows lines of code to be chained together so the assignment operator only needs to be used once.
 
 `|>` passes the output from function as the first argument in a subsequent function. For example, this line can be rewritten:
 
 
-Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) popular, particularly in the `tidyverse framework`. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
+
 
 
 ```{r pipe-example, eval = FALSE}
@@ -389,19 +401,22 @@ new_asec
 
 ```
 
-
+Legacy R code may use `%>%`, the pipe from the `magrittr` package. It was (and remains) popular, particularly in the `tidyverse` framework. Due to this popularity, base R incorporated a similar concept in the base pipe. In many cases, these pipes work the same way, but there are some differences. Because `|>` is new and continues to be developed, developers have increased `|>`’s abilities over time. To see a list of key differences between `%>%` and `|>`, see [this blog](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/). 
 
 ### `summarize()`
 
-`summarize()` collapses many rows in a dataframe into fewer rows with summary statistics of the many rows. `n()`, `mean()`, and `sum()` are common summary statistics. Renaming is useful with `summarize()`!
-
-
+`summarize()` collapses many rows in a dataframe into fewer rows with summary statistics of the many rows. `n()`, `mean()`, and `sum()` are common summary statistics.
 
 ```{r summarize-example}
 # summarize without renaming the statistics
 asec |>
   summarize(mean(ftotval), mean(inctot))
 
+```
+
+Renaming is useful with `summarize()` because variable names like `mean(ftotval)` and `mean(inctot)` are difficult to work with.
+
+```{r}
 # summarize and rename the statistics
 asec |>
   summarize(mean_ftotval = mean(ftotval), mean_inctot = mean(inctot))
@@ -511,6 +526,11 @@ asec |>
 * `offcutoff` comes from [Census Bureau poverty tables](https://www.census.gov/data/tables/time-series/demo/income-poverty/historical-poverty-thresholds.html) with 48 unique thresholds based on family composition. Do not confuse the tables with HHS poverty tables. 
 * These data come from IPUMS CPS. IPUMS has cleaned and pre-processed the data to include variables like `offcutoff`.
 
+:::
+
+
+::: {.callout-note}
+
 **Are the estimates from the previous two exercises correct?**
 
 Let's look at a [Census Report](https://www.census.gov/library/publications/2020/demo/p60-270.html) to see how many people were in poverty in 2019. We estimated about 16,500 people. The Census Bureau says 34.0 million people. 
@@ -538,16 +558,11 @@ count(x = asec, pernum, offpov)
 
 ```
 
-\newpage
+## Mutating joins
 
-## Mutating Joins
-
-Mutating joins join one dataframe to columns from another dataframe by matching values common in both dataframes. The syntax is derived from *Structured Query Language* (SQL).
+Mutating joins join one dataframe to another dataframe by matching values in variables common to both dataframes. The syntax is derived from *Structured Query Language* (SQL).
 
 Each function requires an `x` (or left) dataframe, a `y` (or right) data frame, and `by` variables that exist in both dataframes. Note that below we're creating dataframes using the `tribble()` function, which creates a tibble using a row-wise layout. 
-
-[`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful function for monitoring the behavior of joins. It prints out summaries of the number of rows in each dataframe that successfully join.
-
 
 ```{r create-join-frames}
 math_scores <- tribble(
@@ -570,7 +585,7 @@ reading_scores <- tribble(
 
 ### `left_join()`
 
-`left_join()` matches observations from the `y` dataframe to the `x` dataframe. It only keeps observations from the `y` data frame that have a match in the `x` dataframe. 
+`left_join()` matches observations from the `y` dataframe to the `x` dataframe. It keeps all observations from the `x` (left) dataframe and adds columns from the `y` (right) dataframe wherever a match exists.
 
 
 ```{r left_join-example}
@@ -578,7 +593,7 @@ left_join(x = math_scores, y = reading_scores, by = "name")
 
 ```
 
-Observations that exist in the `x` (left) dataframe but not in the `y` (right) dataframe result in `NA`s.
+Zeta is in `reading_scores` but not in `math_scores`, so Zeta is dropped entirely because `left_join()` only keeps rows from `x`.
 
 
 ```{r left_join-reverse-example}
@@ -586,12 +601,14 @@ left_join(x = reading_scores, y = math_scores, by = "name")
 
 ```
 
+Reversing `x` and `y` changes the result. Now Zeta is kept because it's in `x` (`reading_scores`), but Zeta gets an `NA` for `math_score` because Zeta isn't in `y` (`math_scores`).
+
 ### `inner_join()`
 
-`inner_join()` matches observations from the `y` dataframe to the `x` dataframe. It only keeps observations from either data frame that have a match. 
+`inner_join()` matches observations from the `y` dataframe to the `x` dataframe. It only keeps observations that have a match in both data frames.
 
 
-```{r inner-_join-example}
+```{r inner_join-example}
 inner_join(x = reading_scores, y = math_scores, by = "name")
 
 ```
@@ -602,12 +619,12 @@ inner_join(x = reading_scores, y = math_scores, by = "name")
 
 
 
-```{r fill_join-example}
+```{r full_join-example}
 full_join(x = reading_scores, y = math_scores, by = "name")
 
 ```
 
-## Filtering Joins
+## Filtering joins
 
 Filtering joins drop observations based on the presence of their key (identifier) in another data frame. They use the same syntax as mutating joins with an `x` (or left) dataframe, a `y` (or right) data frame, and `by` variables that exist in both dataframes.
 
@@ -627,6 +644,10 @@ The Combine Tables column in the [Data Transformation Cheat Sheet](https://www.r
 *R for Data Science (2e)* also has an [excellent chapter](https://r4ds.hadley.nz/joins) covering joins.
 :::
 
+::: {.callout-tip}
+[`library(tidylog)`](https://github.com/elbersb/tidylog) is a useful package for monitoring the behavior of joins. It prints out summaries of the number of rows in each dataframe that successfully join.
+
+:::
 
 ## readr
 
@@ -661,7 +682,7 @@ The chapter also introduced mutating joins (`left_join()`, `inner_join()`, and `
 The chapter concluded by introducing the `readr` and `readxl` packages which are useful for reading data into R. 
 
 
-### Next Skills
+### Next skills
 
-* `across()` can be used with `library(dplyr)` functions such as `summarise()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
+* `across()` can be used with `library(dplyr)` functions such as `summarize()` and `mutate()` to apply the same transformations to multiple columns. For example, it can be used to calculate the mean of many columns with `summarize()`. `across()` uses the same `tidyselect` select language and helpers discussed earlier to select the columns to transform.
 * `pivot_wider()` and `pivot_longer()` can be used to switch between wide and long formats of the data. This is important for tidying data and data visualization. 
