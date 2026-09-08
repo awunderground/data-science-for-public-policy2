@@ -9,7 +9,7 @@ editor_options:
   chunk_output_type: console
 ---
 
-![Charles Minard's famous data visualization of Napolean's Russian Campisng of 1812.](images/header-images/Minard.png)
+![Charles Minard's famous data visualization of Napoleon's Russian Campisng of 1812.](images/header-images/Minard.png)
 
 ```{r}
 #| echo: false
@@ -24,11 +24,17 @@ exercise_number <- 1
 
 ## Motivation
 
-1. Data visualization is exploratory data analysis (EDA)
-2. Data visualization is diagnosis and validation
-3. Data visualization is communication
+### General-purpose tool
 
-## Motivation (going beyond Excel)
+Data visualization is a general-purpose tool with varied uses.
+
+1. Data visualization is exploratory data analysis (EDA).
+2. Data visualization is diagnosis and validation.
+3. Data visualization is communication.
+
+### Programming for data visualization
+
+`library(ggplot2)` has numerous advantages over point-and-click tools like Microsoft Excel.
 
 * Flexibility
 * Reproducibility
@@ -37,14 +43,20 @@ exercise_number <- 1
 
 ## Background
 
-* The toughest part of data visualization is data munging. 
-* Data frames are the only appropriate input for `library(ggplot2)`. 
+`ggplot2` is an R package for data visualization that was developed during Hadley Wickham's graduate studies at Iowa State University. 
 
-ggplot2 is an R package for data visualization that was developed during Hadley Wickham's graduate studies at Iowa State University. ggplot2 is formalized in *A Layered Grammar of Graphics* [@layered-grammar].
+"gg" stands for the grammar of graphics. The grammar of graphics is a theoretical framework that breaks all data visualizations into their component pieces, which was developed by Leland Wilkinson [@wilkinson1999grammar].
 
-The grammar of graphics, originally by Leland Wilkinson, is a theoretical framework that breaks all data visualizations into their component pieces. With the layered grammar of graphics, Wickham extends Wilkinson's grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in any other data viz tool.  
+`ggplot2` is formalized in *A Layered Grammar of Graphics* [@layered-grammar]. With the *layered* grammar of graphics, Wickham extends Wilkinson's grammar of graphics and implements it in R. The cohesion is impressive, and the theory flows to the code which informs the data visualization process in a way not reflected in other data viz tools. Learning the theory helps with learning the code and learning the code helps with learning the theory. 
+
+Good data management is foundational to working with `ggplot2`. 
+
+* Data frames, including tibbles, are the only appropriate input for `ggplot2`. 
+* The toughest part of data visualization is often data munging--the process of cleaning and transforming messy data into the necessary format. We'll sometimes need to use `dplyr` to change our data to change our visualizations.
 
 There are **eight** main ingredients to the grammar of graphics. We will work our way through the ingredients with many hands-on examples. 
+
+## Eight Ingredients in the Grammar of Graphics:
 
 ::: callout
 
@@ -56,8 +68,8 @@ There are **eight** main ingredients to the grammar of graphics. We will work ou
 exercise_number <- exercise_number + 1
 ```
 
-1. Open your `.Rproj`.
-2. Create a new `.R` script in your directory called `03_data-visualization.R`. 
+1. Create a new folder and project.
+2. Create a new `.R` script in your directory called `04_data-visualization.R`. 
 3.  **Type** (don't copy & paste) the following code below `library(tidyverse)` in `03_data-visualization.R`.
 
 ```{r}
@@ -69,9 +81,9 @@ ggplot(data = storms) +
 4. Add a comment above the ggplot2 code that describes the plot we created. 
 :::
 
-## Eight Ingredients in the Grammar of Graphics:
+This example demonstrates *data*, *aesthetic mappings*, and *geometric objects*.
 
-### Data 
+### Data:
 
 :::{.callout-tip}
 **Data** are the values represented in the visualization.
@@ -98,7 +110,7 @@ storms |>
 ### Aesthetic Mappings:
 
 :::{.callout-tip}
-**Aesthetic mappings** are directions for how data are mapped in a plot in a way that we can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size. 
+**Aesthetic mappings** are directions for how data are mapped in a plot in a way that humans can perceive. Aesthetic mappings include linking variables to the x-position, y-position, color, fill, shape, transparency, and size. 
 :::
 
 
@@ -470,7 +482,7 @@ exercise_number <- exercise_number + 1
 
 Faceting breaks data visualizations into meaningful subsets using a variable or variables in the data set. This type of visualization is sometimes called small multiples. 
 
-`facet_wrap` small multiples, in order, until the variable is exhausted. It does not provide much macro structure to the visualization. `facet_grid` creates a macro structure where each panel represents the combination of one level on the maco x-axis with one level on the macro y-axis.[^facet-geo] 
+`facet_wrap` creates small multiples, in order, until the variable is exhausted. It does not provide much macro structure to the visualization. `facet_grid` creates a macro structure where each panel represents the combination of one level on the macro x-axis with one level on the macro y-axis.[^facet-geo] 
 
 [^facet-geo]: `facet_geo` organizes charts in a way that attempts to preserve some geographic component of the data. It is beyond the scope of this course. You can learn more  at the [geofacet package vignette](https://cran.r-project.org/web/packages/geofacet/vignettes/geofacet.html) website. 
 
@@ -487,7 +499,7 @@ You can see a helpful chart illustrating these differences [here](https://ggplot
 storms |>
   ggplot(aes(pressure, wind, color = status)) +
   geom_point(alpha = 0.2) +
-  facet_wrap(~ month, )
+  facet_wrap(~ month)
 
 ```
 
@@ -585,7 +597,7 @@ set_urbn_defaults(style = "print")
 
 ### Themes: 
 
-:::{.callout-note}
+:::{.callout-tip}
 **Themes** control the visual style of plots with font types, font sizes, background colors, margins, and positioning.
 :::
 
@@ -670,7 +682,7 @@ storms |>
 
 ### Layers (bonus!): 
 
-:::{.callout-note}
+:::{.callout-tip}
 **Layers** allow for multiple geometric objects to be plotted in the same data visualization.
 :::
 
@@ -699,7 +711,7 @@ ggplot(data = storms, mapping = aes(x = pressure, y = wind)) +
 
 ### Inheritances (bonus!):
 
-:::{.callout-note}
+:::{.callout-tip}
 **Inheritances** pass aesthetic mappings from `ggplot()` to later `geom_*()` functions.
 :::
 
