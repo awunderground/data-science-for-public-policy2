@@ -505,6 +505,7 @@ We can explore CSS by right clicking and selecting Inspect. Most modern websites
 Consider the [Wikipedia page for the 2012 Presidential Election](https://web.archive.org/web/20230814004444/https://en.wikipedia.org/wiki/2012_United_States_presidential_election). We can scrape all 46 tables from the page with two lines of code. We use the [WayBack Machine](https://archive.org/web/) to ensure the content is stable. 
 
 ```{r}
+#| label: scrape-election-tables
 #| message: false
 
 library(rvest)

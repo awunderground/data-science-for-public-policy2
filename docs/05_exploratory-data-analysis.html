@@ -855,7 +855,7 @@ dttm  (1): EVENT_DATE
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1009,7 +1009,7 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="05_exploratory-data-analysis_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1039,7 +1039,8 @@ Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
 1 verify       NA age &lt; 120     NA     2    NA</code></pre>
 </div>
 <div class="cell-output cell-output-error">
-<pre><code>Error: assertr stopped execution</code></pre>
+<pre><code>Error:
+! assertr stopped execution</code></pre>
 </div>
 </div>
 <p>Critically, adding the test caused the code to return an error <strong>before</strong> calculating the mean of the age variable. This is a feature, not a bug! It can prevent you from introducing errors into your analyses. Moreover, by writing a set of tests in your analysis code, you can run the same checks every time you perform the analysis which can help you catch errors caused by changes in the input data.</p>

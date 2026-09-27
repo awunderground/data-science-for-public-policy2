@@ -428,15 +428,19 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#command-line" id="toc-command-line" class="nav-link active" data-scroll-target="#command-line"><span class="header-section-number">8.1</span> Command Line</a>
+  <li><a href="#why-version-control" id="toc-why-version-control" class="nav-link active" data-scroll-target="#why-version-control"><span class="header-section-number">8.1</span> Why version control?</a></li>
+  <li><a href="#why-distributed-version-control" id="toc-why-distributed-version-control" class="nav-link" data-scroll-target="#why-distributed-version-control"><span class="header-section-number">8.2</span> Why distributed version control?</a></li>
+  <li><a href="#git-vs.-github" id="toc-git-vs.-github" class="nav-link" data-scroll-target="#git-vs.-github"><span class="header-section-number">8.3</span> Git vs.&nbsp;GitHub</a></li>
+  <li><a href="#command-line" id="toc-command-line" class="nav-link" data-scroll-target="#command-line"><span class="header-section-number">8.4</span> Command Line</a>
   <ul class="collapse">
-  <li><a href="#useful-tips" id="toc-useful-tips" class="nav-link" data-scroll-target="#useful-tips"><span class="header-section-number">8.1.1</span> Useful tips</a></li>
-  <li><a href="#programs" id="toc-programs" class="nav-link" data-scroll-target="#programs"><span class="header-section-number">8.1.2</span> Programs</a></li>
+  <li><a href="#useful-tips" id="toc-useful-tips" class="nav-link" data-scroll-target="#useful-tips"><span class="header-section-number">8.4.1</span> Useful tips</a></li>
+  <li><a href="#programs" id="toc-programs" class="nav-link" data-scroll-target="#programs"><span class="header-section-number">8.4.2</span> Programs</a></li>
   </ul></li>
-  <li><a href="#why-version-control" id="toc-why-version-control" class="nav-link" data-scroll-target="#why-version-control"><span class="header-section-number">8.2</span> Why version control?</a></li>
-  <li><a href="#why-distributed-version-control" id="toc-why-distributed-version-control" class="nav-link" data-scroll-target="#why-distributed-version-control"><span class="header-section-number">8.3</span> Why distributed version control?</a></li>
-  <li><a href="#git-vs.-github" id="toc-git-vs.-github" class="nav-link" data-scroll-target="#git-vs.-github"><span class="header-section-number">8.4</span> Git vs.&nbsp;GitHub</a></li>
-  <li><a href="#ssh-keys-for-authentication" id="toc-ssh-keys-for-authentication" class="nav-link" data-scroll-target="#ssh-keys-for-authentication"><span class="header-section-number">8.5</span> SSH Keys for Authentication</a></li>
+  <li><a href="#authentication" id="toc-authentication" class="nav-link" data-scroll-target="#authentication"><span class="header-section-number">8.5</span> Authentication</a>
+  <ul class="collapse">
+  <li><a href="#sec-ap-a" id="toc-sec-ap-a" class="nav-link" data-scroll-target="#sec-ap-a"><span class="header-section-number">8.5.1</span> Personal Access Tokens for Authentication</a></li>
+  <li><a href="#ssh-keys" id="toc-ssh-keys" class="nav-link" data-scroll-target="#ssh-keys"><span class="header-section-number">8.5.2</span> SSH Keys</a></li>
+  </ul></li>
   <li><a href="#git-github-workflow" id="toc-git-github-workflow" class="nav-link" data-scroll-target="#git-github-workflow"><span class="header-section-number">8.6</span> Git + GitHub Workflow</a>
   <ul class="collapse">
   <li><a href="#basic-approach" id="toc-basic-approach" class="nav-link" data-scroll-target="#basic-approach"><span class="header-section-number">8.6.1</span> Basic Approach</a></li>
@@ -449,8 +453,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#git-is-confusing" id="toc-git-is-confusing" class="nav-link" data-scroll-target="#git-is-confusing"><span class="header-section-number">8.9.1</span> Git is Confusing</a></li>
   <li><a href="#resources" id="toc-resources" class="nav-link" data-scroll-target="#resources"><span class="header-section-number">8.9.2</span> Resources</a></li>
   </ul></li>
-  <li><a href="#sec-ap-a" id="toc-sec-ap-a" class="nav-link" data-scroll-target="#sec-ap-a"><span class="header-section-number">8.10</span> Personal Access Tokens for Authentication</a></li>
-  <li><a href="#sec-app-b" id="toc-sec-app-b" class="nav-link" data-scroll-target="#sec-app-b"><span class="header-section-number">8.11</span> Initialize a Repo Locally and Add to GitHub</a></li>
+  <li><a href="#sec-app-b" id="toc-sec-app-b" class="nav-link" data-scroll-target="#sec-app-b"><span class="header-section-number">8.10</span> Initialize a Repo Locally and Add to GitHub</a></li>
   </ul>
 </nav>
     </div>
@@ -474,7 +477,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    Git and Github are powerful software tools used to control different versions of a codebase, track changes, and collaborate with other programmers. This section introduces both tools.
+    Git and GitHub are powerful software tools used to control different versions of a codebase, track changes, and collaborate with other programmers. This section introduces both tools.
   </div>
 </div>
 
@@ -501,23 +504,75 @@ Note
 <p><code>&lt;&gt;</code> are used throughout this chapter to indicate blanks that need to be filled in. Don’t actually submit <code>&lt;&gt;</code>. Instead, replace them with the desired text.</p>
 </div>
 </div>
-<section id="command-line" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="command-line"><span class="header-section-number">8.1</span> Command Line</h2>
+<section id="why-version-control" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="why-version-control"><span class="header-section-number">8.1</span> Why version control?</h2>
+<p>Version control is a system for managing and recording changes to files over time. Version control is essential to managing code and analyses. Good version control can:</p>
+<ul>
+<li>Limit the chance of making a mistake</li>
+<li>Maximize the chance of catching a mistake when it happens</li>
+<li>Create a permanent record of changes to code</li>
+<li>Easily undo mistakes by switching between iterations of code</li>
+<li>Allow multiple paths of development while protecting working versions of code</li>
+<li>Encourage communication between collaborators</li>
+<li>Be used for external communication</li>
+</ul>
+</section>
+<section id="why-distributed-version-control" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="why-distributed-version-control"><span class="header-section-number">8.2</span> Why distributed version control?</h2>
+<p><em>Centralized version control</em> stores all files and the log of those files in one centralized location. <em>Distributed version control</em> stores files and logs in one or many locations and has tools for combining the different versions of files and logs.</p>
+<p>Centralized version control systems like Google Drive or Box are good for sharing a Microsoft Word document, but they are terrible for collaborating on code.</p>
+<p>Distributed version control allows for the simultaneous editing and running of code. It also allows for code development without sacrificing a working version of the code.</p>
+</section>
+<section id="git-vs.-github" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="git-vs.-github"><span class="header-section-number">8.3</span> Git vs.&nbsp;GitHub</h2>
+<p>Git is a distributed version-control system for tracking changes in code. Git is free, open-source software and can be used locally without an internet connection. It’s like a turbo-charged version of Microsoft Word’s track changes for code.</p>
+<p><a href="https://github.com/">GitHub</a>, which is owned by Microsoft, is an online hosting service for version control using Git. It also contains useful tools for collaboration and project management. It’s like a turbo-charged version of Google Drive or Box for sharing repositories created using Git.</p>
+<p>At first, it’s easy to mix up Git and GitHub. Just try to remember that they are separate tools that complement each other well.</p>
+</section>
+<section id="command-line" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="command-line"><span class="header-section-number">8.4</span> Command Line</h2>
+<p>There are several ways to work with Git. We’re going to use the command line, which is a little trickier at first, but will leave us with a broader and more flexible skillset.</p>
 <p>The command line (also known as shell or console) is a way of controlling computers without using a graphical user interface (i.e.&nbsp;pointing-and-clicking). The command line is useful because pointing-and-clicking is tough to reproduce or scale and because lots of useful software is only available through the command line. Furthermore, cloud computing often requires use of the command line.</p>
-<p>We will run Bash, a command line program, using Terminal on Mac and Git Bash on Windows. Open Terminal like any other program on Mac. Right-click in a desired directory and select “Git Bash Here” to access Git Bash on Windows.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/terminal.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="400"></p>
+<p>We have several ways to access Bash:</p>
+<ul>
+<li>RStudio has a Terminal window</li>
+<li>Macs have Terminal shown in <a href="#fig-bash-window" class="quarto-xref">Figure&nbsp;<span>8.1</span></a></li>
+<li>Windows supports Git Bash. To open this, right click in a folder and select “Git Bash Here”</li>
+</ul>
+<div id="fig-bash-window" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-bash-window-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/terminal.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-bash-window-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;8.1: bash-window
+</figcaption>
 </figure>
 </div>
 <p>Fortunately, we only need to know a little Bash for version control with Git and cloud computing.</p>
-<p><code>pwd</code> - print working directory - prints the file path to the current location in the</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Linux and Mac</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Windows</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><code>pwd</code> - print working directory - prints the file path to the current location in the file system.</p>
 <p><code>ls</code> - list - lists files and folders in the current working directory.</p>
 <p><code>cd</code> - change directory - move the current working directory.</p>
 <p><code>mkdir</code> - make directory - creates a directory (folder) in the current working directory.</p>
 <p><code>touch</code> - creates a text file with the provided name.</p>
 <p><code>mv</code> - move - moves a file from one location to the other.</p>
 <p><code>cat</code> - concatenate - concatenate and print a file.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><code>cd</code> (with no path) - print working directory - prints the file path to the current location (Command Prompt equivalent; PowerShell supports <code>pwd</code> directly).</p>
+<p><code>dir</code> - list - lists files and folders in the current working directory (Command Prompt equivalent; PowerShell supports <code>ls</code> directly).</p>
+<p><code>cd</code> - change directory - move the current working directory.</p>
+<p><code>mkdir</code> - make directory - creates a directory (folder) in the current working directory.</p>
+<p><code>type nul &gt; filename.txt</code> (CMD) / <code>New-Item filename.txt</code> (PowerShell) - creates a text file with the provided name (<code>touch</code> equivalent).</p>
+<p><code>move</code> - move - moves a file from one location to the other (PowerShell supports <code>mv</code> directly).</p>
+<p><code>type</code> - concatenate - print a file (PowerShell supports <code>cat</code> directly).</p>
+</div>
+</div>
+</div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -562,7 +617,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Use following to add the haiku “The Old Pond” by Matsuo Basho to <code>haiku.txt</code>.</p>
+<p>Use the following code to add the haiku “The Old Pond” by Matsuo Basho to <code>haiku.txt</code>.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">cat</span> haiku.txt</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="bu">echo</span> <span class="st">"An old silent pond"</span> <span class="op">&gt;&gt;</span> haiku.txt</span>
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">cat</span> haiku.txt</span>
@@ -591,8 +646,8 @@ Note
 <span id="cb3-6"><a href="#cb3-6"></a><span class="fu">cat</span> poems/haiku.txt</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </div>
-<section id="useful-tips" class="level3" data-number="8.1.1">
-<h3 data-number="8.1.1" class="anchored" data-anchor-id="useful-tips"><span class="header-section-number">8.1.1</span> Useful tips</h3>
+<section id="useful-tips" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="useful-tips"><span class="header-section-number">8.4.1</span> Useful tips</h3>
 <ul>
 <li>Tab completion can save a ton of typing. Hitting tab twice shows all of the available options that can complete from the currently typed text.</li>
 <li>Hit the up arrow to cycle through previously submitted commands.</li>
@@ -601,41 +656,42 @@ Note
 <li>Typing just <code>cd</code> changes to the home directory.</li>
 </ul>
 </section>
-<section id="programs" class="level3" data-number="8.1.2">
-<h3 data-number="8.1.2" class="anchored" data-anchor-id="programs"><span class="header-section-number">8.1.2</span> Programs</h3>
-<p>We can run programs from the command line. Commands from programs always start with the name of the program. Running git commands intuitively start with <code>git</code>. For example:</p>
+<section id="programs" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="programs"><span class="header-section-number">8.4.2</span> Programs</h3>
+<p>We can run programs from the command line. Commands from programs always start with the name of the program. Git commands intuitively start with <code>git</code>. For example:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode numberSource bash number-lines code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">git</span> init</span>
 <span id="cb4-2"><a href="#cb4-2"></a><span class="fu">git</span> status</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </section>
 </section>
-<section id="why-version-control" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="why-version-control"><span class="header-section-number">8.2</span> Why version control?</h2>
-<p>Version control is a system for managing and recording changes to files over time. Version control is essential to managing code and analyses. Good version control can:</p>
-<ul>
-<li>Limit the chance of making a mistake</li>
-<li>Maximize the chance of catching a mistake when it happens</li>
-<li>Create a permanent record of changes to code</li>
-<li>Easily undo mistakes by switching between iterations of code</li>
-<li>Allow multiple paths of development while protecting working versions of code</li>
-<li>Encourage communication between collaborators</li>
-<li>Be used for external communication</li>
-</ul>
+<section id="authentication" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="authentication"><span class="header-section-number">8.5</span> Authentication</h2>
+<p>Authentication gives permission to a local Git client to communicate with a remote server like GitHub. Authentication is needed when we read, write, or modify private repositories, or to write to public repositories.</p>
+<p>Secure Shell (SSH) and Personal Access Tokens (PATs) are the two main methods of authentication. The process differs a little based on operating system and Git installation.</p>
+<section id="sec-ap-a" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="sec-ap-a"><span class="header-section-number">8.5.1</span> Personal Access Tokens for Authentication</h3>
+<ol type="1">
+<li>Starting on your GitHub account navigate through the following:
+<ol type="a">
+<li>Click your icon in the far right</li>
+<li>Select <strong>Settings</strong> at the bottom of the drop down menu</li>
+<li>Select <strong>Credentials</strong> on the far left</li>
+<li>Select <strong>Personal access tokens (classic)</strong></li>
+<li>Select <strong>Generate new token</strong> and <strong>Generate new token (classic)</strong></li>
+</ol></li>
+<li>Set up your Personal Access Token (PAT)
+<ol type="a">
+<li>Add a note describing the use of your token. This is useful if you intend to generate multiple tokens for different uses.</li>
+<li>Select “No expiration”. You may want tokens to expire if they access sensitive resources.</li>
+<li>Select scopes. You must select at least the “repo” scope. You may want to add other scopes but they are not required for this course.</li>
+</ol></li>
+<li>Click <strong>Generate token</strong></li>
+<li>This is your only chance to view the token. Copy and paste the token and store it somewhere safe. If you lose the token, you can always generate a new token.</li>
+<li>Git will prompt you for your GitHub username and password sometimes. Use your GitHub username when prompted for username. Use your generated PAT when prompted for password. Note: The cursor will not move when adding the password.</li>
+</ol>
 </section>
-<section id="why-distributed-version-control" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="why-distributed-version-control"><span class="header-section-number">8.3</span> Why distributed version control?</h2>
-<p><em>Centralized version control</em> stores all files and the log of those files in one centralized location. <em>Distributed version control</em> stores files and logs in one or many locations and has tools for combining the different versions of files and logs.</p>
-<p>Centralized version control systems like Google Drive or Box are good for sharing a Microsoft Word document, but they are terrible for collaborating on code.</p>
-<p>Distributed version control allows for the simultaneous editing and running of code. It also allows for code development without sacrificing a working version of the code.</p>
-</section>
-<section id="git-vs.-github" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="git-vs.-github"><span class="header-section-number">8.4</span> Git vs.&nbsp;GitHub</h2>
-<p>Git is a distributed version-control system for tracking changes in code. Git is free, open-source software and can be used locally without an internet connection. It’s like a turbo-charged version of Microsoft Word’s track changes for code.</p>
-<p><a href="https://github.com/">GitHub</a>, which is owned by Microsoft, is an online hosting service for version control using Git. It also contains useful tools for collaboration and project management. It’s like a turbo-charged version of Google Drive or Box for sharing repositories created using Git.</p>
-<p>At first, it’s easy to mix up Git and GitHub. Just try to remember that they are separate tools that complement each other well.</p>
-</section>
-<section id="ssh-keys-for-authentication" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="ssh-keys-for-authentication"><span class="header-section-number">8.5</span> SSH Keys for Authentication</h2>
-<p>GitHub started requiring token-based or SSH-based authentication in <a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/">2021</a>. We will focus on creating SSH keys for authentication. For instructions on creating a personal access token for authentication, see <a href="#sec-ap-a" class="quarto-xref"><span>Section 8.10</span></a> below.</p>
+<section id="ssh-keys" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="ssh-keys"><span class="header-section-number">8.5.2</span> SSH Keys</h3>
+<p>GitHub started requiring token-based or SSH-based authentication in <a href="https://github.blog/2020-12-15-token-authentication-requirements-for-git-operations/">2021</a>. We will focus on creating SSH keys for authentication. For instructions on creating a personal access token for authentication, see <a href="#sec-ap-a" class="quarto-xref"><span>Section 8.5.1</span></a> above.</p>
 <p>We will follow the <a href="https://happygitwithr.com/ssh-keys.html#option-2-set-up-from-the-shell">instructions for setting up SSH keys</a> using the console, or terminal window, from Jenny Bryan’s fantastic <em>Happy Git with R</em>.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -659,9 +715,22 @@ Note
 </div>
 </div>
 </section>
+</section>
 <section id="git-github-workflow" class="level2" data-number="8.6">
 <h2 data-number="8.6" class="anchored" data-anchor-id="git-github-workflow"><span class="header-section-number">8.6</span> Git + GitHub Workflow</h2>
-<p><strong>Repository:</strong> A collection of files, often a directory, where files are organized and logged by Git.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Repository
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A collection of files, often a directory, where files are organized and logged by Git.</p>
+</div>
+</div>
 <p>Git and GitHub organize projects into repositories. Typically, a “repo” will correspond with the place where you started a .Rproj. When working with Git and GitHub, your files will exist in two places: <strong>locally</strong> on your computer and <strong>remotely</strong> on GitHub.</p>
 <p>When creating a new repository, you can use either of the following alternatives:</p>
 <ul>
@@ -678,7 +747,7 @@ Note
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 5</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 6</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -689,9 +758,9 @@ Note
 <li>Call the repo <code>first-repo</code>. Select a public repository and check the box that says <code>Add a README file</code>.</li>
 <li>Click the “Create Repository” button.</li>
 <li>Click the green “Code” button and copy the SSH link.</li>
-<li>Navigate to your <code>cli-exercise</code> folder on the command line using <code>cd</code>. Run <code>git clone &lt; link &gt;</code>, where you replace <code>&lt; link &gt;</code> with the SSH link you copied. This will create a folder called <code>first-repo</code> with your repo files, including the <code>README.md</code> file you created when you initialized the repo.</li>
+<li>Navigate to your <code>cli-exercise</code> folder on the command line using <code>cd</code>. Run <code>git clone &lt;link&gt;</code>, where you replace <code>&lt;link&gt;</code> with the SSH link you copied. This will create a folder called <code>first-repo</code> with your repo files, including the <code>README.md</code> file you created when you initialized the repo.</li>
 </ol>
-<p>See <a href="#sec-app-b" class="quarto-xref"><span>Section 8.11</span></a> for the instructions on initializing a repo locally and then adding to GitHub.</p>
+<p>See <a href="#sec-app-b" class="quarto-xref"><span>Section 8.10</span></a> for the instructions on initializing a repo locally and then adding to GitHub.</p>
 </div>
 </div>
 <section id="basic-approach" class="level3" data-number="8.6.1">
@@ -723,25 +792,20 @@ Note
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 6</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 7</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
-<li>Navigate to your <code>first-repo</code> directory on the command line and run <code>git status</code> to confirm that there is a git repo.</li>
+<li>Navigate to your <code>first-repo</code> directory on the command line and run <code>git status</code> to confirm that there is a Git repo.</li>
 <li>In RStudio, create a new R project. Select the option to associate the R project with an existing directory and select the <code>first-repo</code> directory. This will open the <code>first-repo</code> project.</li>
-<li>Create a quarto document. Select the HTML option and give the document whatever title you’d like. Once the document is created, save the untitled document as “index.qmd”. Edit the YML header of the document to set <code>self-contained</code> to true as follows:</li>
-</ol>
-format: 
-      html:
-        self-contained: true
-<ol start="4" type="1">
+<li>Create a Quarto document. Select the HTML option and give the document whatever title you’d like. Once the document is created, save the untitled document as “index.qmd”. Edit the YAML header of the document to include <code>embed-resources: true</code>.</li>
 <li>In a code chunk, add <code>library(tidyverse)</code> and create any graph with <code>library(ggplot2)</code> and the <code>storms</code> dataset.</li>
-<li>Render the document to html.</li>
+<li>Render the document to HTML.</li>
 <li>In the terminal, run <code>git add index.qmd index.html</code>. Then run <code>git status</code>.</li>
 <li>Then run <code>git commit -m "add first graph"</code> to commit the two files with a commit message. Then run <code>git status</code> again and observe the change.</li>
 <li>Finally, run <code>git push origin main</code> to push the commit to GitHub. Navigate to the repo on GitHub to confirm that the files have been pushed to your remote repo.</li>
-<li>Make some changes to your the graph in your <code>index.qmd</code> file (e.g.&nbsp;change the color of a geometry, add labels, etc.). Then run steps 5-8 again (with a different commit message in step 7).</li>
+<li>Make some changes to the graph in your <code>index.qmd</code> file (e.g.&nbsp;change the color of a geometry, add labels, etc.). Then run steps 5-8 again (with a different commit message in step 7).</li>
 <li>In the GitHub repo, click on <code>index.qmd</code> then click on the History icon in the top right corner. Note that you’ll see your two commits. Click on the most recent commit and notice that you can see the changes that you’ve made to the file.</li>
 </ol>
 </div>
@@ -757,14 +821,14 @@ format:
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 7</span>
+<span class="screen-reader-only">None</span><span style="color:#1696d2;">Exercise 8</span>
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Go to your GitHub repository and select “Settings” on the top right.</li>
-<li>Under the “Code and automation” menu on the left side, select “Pages”.</li>
-<li>Under “Build and Deployment” and “Branch”, use the drop down menu to change the branch to “main”. This will trigger the deployment of your GitHub page from the “main” branch of your repository. It will take a bit of time for your GitHub page to be ready.</li>
+<li>Under the “Code, planning, and automation” menu on the left side, select “Pages”.</li>
+<li>Under “Build and deployment”, make sure “Source” is set to “Deploy from a branch”, then use the branch drop down menu to change the branch to “main” and click “Save”. This will trigger the deployment of your GitHub page from the “main” branch of your repository. It will take a bit of time for your GitHub page to be ready.</li>
 <li>Refresh the page, and when you see a box that says “your site is live” at the top of your page, click the link to go to your website!</li>
 </ol>
 </div>
@@ -784,11 +848,11 @@ format:
 <figcaption>A Common Branching Workflow</figcaption>
 </figure>
 </div>
-<p>To add a collaborator to your repository, under Settings select “Collaborators” under the Access menu on the left. Select the “Add people” button and add your collaborators by entering their GitHub user name.</p>
+<p>To add a collaborator to your repository, under Settings select “Collaborators &amp; teams” under the Access menu on the left. Select the “Add people” button and add your collaborators by entering their GitHub user name.</p>
 </section>
 <section id="conclusion" class="level2" data-number="8.9">
 <h2 data-number="8.9" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.9</span> Conclusion</h2>
-<p>Git is a distributed version-control system. It is used for tracking changes in the code. GitHub is an online hosting service for version control using git. Key workhorse commands are <code>git status</code>, <code>git add</code>, <code>git commit -m &lt;message&gt;</code> <code>git push</code> and <code>git diff</code>. GitHub is also great because it will host websites using GitHub Pages.</p>
+<p>Git is a distributed version-control system. It is used for tracking changes in the code. GitHub is an online hosting service for version control using Git. Key workhorse commands are <code>git status</code>, <code>git add</code>, <code>git commit -m &lt;message&gt;</code>, <code>git push</code> and <code>git diff</code>. GitHub is also great because it will host websites using GitHub Pages.</p>
 <section id="git-is-confusing" class="level3" data-number="8.9.1">
 <h3 data-number="8.9.1" class="anchored" data-anchor-id="git-is-confusing"><span class="header-section-number">8.9.1</span> Git is Confusing</h3>
 <div class="cell" data-layout-align="center">
@@ -806,42 +870,18 @@ format:
 <h3 data-number="8.9.2" class="anchored" data-anchor-id="resources"><span class="header-section-number">8.9.2</span> Resources</h3>
 <ul>
 <li><a href="https://education.github.com/git-cheat-sheet-education.pdf">Git Cheat Sheet</a></li>
-<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the UserR</a></li>
+<li><a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a></li>
 <li><a href="https://www.amazon.com/Git-Pocket-Guide-Working-Introduction/dp/1449325866">Git Pocket Guide</a></li>
 <li><a href="https://www.atlassian.com/git">Getting Git Right</a></li>
-<li><a href="https://lab.github.com/">Git Learning Lab</a></li>
 <li><a href="https://guides.github.com/introduction/git-handbook/">Git Handbook</a></li>
 <li><a href="https://guides.github.com/features/mastering-markdown/">Mastering Markdown</a></li>
 <li><a href="https://guides.github.com/introduction/flow/">Understanding the GitHub Flow</a></li>
 <li><a href="https://guides.github.com/features/wikis/">Documenting Your Projects on GitHub</a></li>
-<li><a href="https://www.katacoda.com/courses/git">Git Tutorial</a></li>
 </ul>
 </section>
 </section>
-<section id="sec-ap-a" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="sec-ap-a"><span class="header-section-number">8.10</span> Personal Access Tokens for Authentication</h2>
-<ol type="1">
-<li>Starting on your GitHub account navigate through the following:
-<ol type="a">
-<li>Click your icon in the far right</li>
-<li>Select <strong>Settings</strong> at the bottom of the drop down menu</li>
-<li>Select <strong>Developer Settings</strong> on the bottom left</li>
-<li>Select <strong>Personal access tokens</strong> on the bottom left</li>
-<li>Select <strong>Generate new token</strong></li>
-</ol></li>
-<li>Set up your Personal Access Token (PAT)
-<ol type="a">
-<li>Add a note describing the use of your token. This is useful if you intend to generate multiple tokens for different uses.</li>
-<li>Select “No expiration”. You may want tokens to expire if that access sensitive resources.</li>
-<li>Select scopes. You must select at least the “repo” scope. You may want to add other scopes but they are not required for this course.</li>
-</ol></li>
-<li>Click <strong>Generate token</strong></li>
-<li>This is your only chance to view the token. Copy and paste the token and store it somewhere safe. If you lose the token, you can always generate a new token.</li>
-<li>Git will prompt you for your GitHub username and password sometimes while cloning repositories or pushing to private repositories. Use your GitHub username when prompted for username. Use your generated PAT when prompted for password.</li>
-</ol>
-</section>
-<section id="sec-app-b" class="level2" data-number="8.11">
-<h2 data-number="8.11" class="anchored" data-anchor-id="sec-app-b"><span class="header-section-number">8.11</span> Initialize a Repo Locally and Add to GitHub</h2>
+<section id="sec-app-b" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="sec-app-b"><span class="header-section-number">8.10</span> Initialize a Repo Locally and Add to GitHub</h2>
 <p><em>This only needs to happen once per repository</em></p>
 <ol type="1">
 <li>Initialize a local repository with <code>git init</code> as outlined above.</li>
@@ -855,7 +895,7 @@ format:
 <section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
 <hr>
 <ol>
-<li id="fn1"><p>Github refuses to store files larger than 100 MiB. This poses a challenge to writing reproducible code. However, many data sources can be downloaded directly from the web or via APIs, allowing code to be reproducible without relying on storing large data sets on Github. Materials later in this book discuss scaping data from the web and using APIs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn1"><p>GitHub refuses to store files larger than 100 MiB. This poses a challenge to writing reproducible code. However, many data sources can be downloaded directly from the web or via APIs, allowing code to be reproducible without relying on storing large data sets on GitHub. Materials later in this book discuss scraping data from the web and using APIs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 <li id="fn2"><p>The <code>-m</code> stands for <code>message</code>. Writing a brief commit message like “fixes bug in data cleaning script” can help collaborators (including your future self) understand the purpose of your commits.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
 </section>
