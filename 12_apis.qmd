@@ -36,8 +36,8 @@ A *web API* is a way to interact with web-based software through code - usually 
 ## Popular Web APIs
 
 * [Google Maps APIs](https://developers.google.com/maps/documentation)
-* [Twitter API](https://developer.twitter.com/en/docs)
-* [GitHub API](https://developer.github.com/v3/)
+* [X (formerly Twitter) API](https://developer.x.com/en/docs)
+* [GitHub API](https://docs.github.com/en/rest)
 * [World Bank](https://datahelpdesk.worldbank.org/knowledgebase/articles/889392-about-the-indicators-api-documentation)
 * [Census API](https://www.census.gov/developers/)
 * [OpenFEC](https://api.open.fec.gov/developers/)
@@ -53,19 +53,19 @@ A *web API* is a way to interact with web-based software through code - usually 
 
 * **The data or method is only available through an API:** Census data and IPEDS are available through point-and-click interfaces and APIs, but many data and methods are only available through APIs. For example, data from the [GoogleMaps API](https://developers.google.com/maps/documentation) and methods from the [Stanford CoreNLP](https://stanfordnlp.github.io/CoreNLP/index.html) software are only available in R through APIs.
 * **APIs promote reproducibility:** Even with good documentation, pointing-and-clicking is tough to reproduce. APIs are useful for writing code to access data in an analysis before processing, modeling, and/or visualizing.
-* **APIs enable scalability:** It's simple to point-and-click data for one state or one county. It's much tougher to point-and-click state or county level data if the data are stored in separate files. APIs can be accessed programtically, which means anything can be iterated to scale. 
+* **APIs enable scalability:** It's simple to point-and-click data for one state or one county. It's much tougher to point-and-click state or county level data if the data are stored in separate files. APIs can be accessed programmatically, which means anything can be iterated to scale. 
 
 ### Why build APIs?
 
-* **APIs enable scalability:** APIs enable scalability for data or methods creators. For example, the Urban Institute builds data visualization applications like [Explore Your School’s Changing Demographics](https://www.urban.org/features/explore-your-schools-changing-demographics) on top of APIS.
+* **APIs enable scalability:** APIs enable scalability for data or methods creators. For example, the Urban Institute builds data visualization applications like [Explore Your School’s Changing Demographics](https://www.urban.org/features/explore-your-schools-changing-demographics) on top of APIs.
 * **APIs create standardization:** APIs standardize the communication between applications. By creating a protocol for a store of data or a model, it makes it simpler for downstream applications to access the data or methods of upstream applications. 
-* **Democratize access to data or methods:** Centralized storage and processing on the cloud are cheaper than personal computing on desktops and laptops. APIs allow users to access subsets of data or summary statistics quicker and cheaper than accessing all data and/or processing that data locally. For example, the new [Urban Institute prototype summary API endpoints](https://medium.com/@urban_institute/democratizing-big-data-processing-for-the-education-data-portal-394529aceb39) allow users to create summary statistics in API calls, which saves time and local storage.
+* **Democratize access to data or methods:** Centralized storage and processing on the cloud are cheaper than personal computing on desktops and laptops. APIs allow users to access subsets of data or summary statistics quicker and cheaper than accessing all data and/or processing that data locally. For example, the [Urban Institute summary API endpoints](https://medium.com/@urban_institute/democratizing-big-data-processing-for-the-education-data-portal-394529aceb39) allow users to create summary statistics in API calls, which saves time and local storage.
 
 ## Technical Background Part I
 
-* **Server:** Remote computer that stores and processes information for an API. Note: This does not need to be a literal server. Many APIs are serverless and hosted in the cloud.
+* **Server:** Remote computer that stores and processes information for an API. Note: This does not need to be a physical machine the API's owner manages. Many APIs are hosted in the cloud.
 * **Client:** Computer requesting information from the API. In our cases, this is your computer.
-* **Hyper-Text Transfer Protocol (HTTP):** Set of rules clients use to communicate with servers via the web (etiquette).
+* **Hypertext Transfer Protocol (HTTP):** Set of rules clients use to communicate with servers via the web (etiquette).
 * **Request:** Contacting a web API with specifics about the information you wish to have returned. In general, this is built up as a URL. 
 * **Response:** A formatted set of information servers return to clients after requests.
 
@@ -76,8 +76,8 @@ Source: [Zapier](https://zapier.com/learn/apis/chapter-2-protocols/)
 
 
 
-::: {.callout-tip title="Uniform Resource Locators (URL)"}
-**Uniform Resource Locators (URL):** Text string that specifies a web location, a method for retrieving information from that web location, and additional parameters. We use these every day!
+::: {.callout-tip title="Uniform Resource Locator (URL)"}
+**Uniform Resource Locator (URL):** Text string that specifies a web location, a method for retrieving information from that web location, and additional parameters. We use these every day!
 :::
 
 ## Process (without R code)
@@ -93,17 +93,17 @@ Let’s walk through an example from the [Census Bureau](https://www.census.gov/
 1. The Census Bureau API contains hundreds of distinct data sets. Copy-and-paste https://api.census.gov/data.html into your web browser to see the list of datasets and documentation. Each one of these data sets is an API resource.
 2. All Census Bureau API datasets are available from the same host name. Copy-and-paste https://api.census.gov/data/ into your browser (the previous link without .html). This contains information about all of the datasets in the previous link, only now the information is stored as JavaScript Object Notation (JSON) instead of HTML. 
 3. Each dataset is accessed through a *base URL* which consists of the host name, the year, and the "dataset name". Copy-and-paste https://api.census.gov/data/2014/pep/natstprc into your web browser. This returns Vintage 2014 Population Estimates: US, State, and PR Total Population and Components of Change. Each base URL corresponds to an API endpoint.
-4. At this point, we're still only seeing metadata. We need to add a query string with a method and parameters. Copy-and-paste https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:* into your browser. Note the query string begins with `?`, includes the get method, and includes three parameters.
+4. At this point, we're still only seeing metadata. We need to add a query string with a method and parameters. Copy-and-paste https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:* into your browser. Note the query string begins with `?` and includes three parameters: `get`, `DATE_`, and `for`. **Note:** The Census API now requires a key for data requests like this one. Append `&key=<your key>` to the end of the URL. See [Authentication](#sec-authentication) below for how to get a key.
 
 ### Check for a server error in the response
 
-1. All of the URLs in part 1 were  correctly specified and all of them returned results. What happens when incorrect URLs are passed to an API? Open a new browser window and copy-and-paste
+1. All of the URLs above were correctly specified and all of them returned results. What happens when incorrect URLs are passed to an API? Open a new browser window and copy-and-paste
 
 ```
-https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:57
+https://api.census.gov/data/2014/pep/natstprc?get=STNAME,POP&DATE_=7&for=state:57&key=<your key>
 ```
 
-Note: this call requests information for FIPs 57, which does not exist.
+Note: this call requests information for FIPS code 57, which does not exist.
 
 ### Parse the response
 
@@ -117,12 +117,12 @@ Some example JSON could be:
 
 ```
 {
-  “Class name”: “Intro to Data Science”,
-  “Class ID”: “PPOL 670”,
-  “Instructors”: [“Aaron R. Williams”, “Alex C. Engler”],
-  “Location”: {
-    “Building”: “Healy Hall”
-    “Room”: “105”
+  "Class name": "Intro to Data Science",
+  "Class ID": "PPOL 670",
+  "Instructors": ["Aaron R. Williams", "Alex C. Engler"],
+  "Location": {
+    "Building": "Healy Hall",
+    "Room": "105"
   }
 }
 
@@ -135,30 +135,30 @@ Web APIs can also return Extensible Markup Language (XML) and HyperText Markup L
 
 ## Technical Background Part II
 
-* **API Resource** An object in an API. In our case, a resource will almost always be a specific data set. 
-* **API endpoint** The point where a client communicates with a web API. 
+* **API Resource:** An object in an API. In our case, a resource will almost always be a specific data set. 
+* **API endpoint:** The point where a client communicates with a web API. 
 * **Method/verb:** A verb that specifies the action the client wants to perform on the resource through an API endpoint:
     * GET - Ask an API to send something to you
     * POST - send something to an API
     * HEAD, PUT, DELETE, TRACE, OPTIONS, CONNECT, PATCH
-* **Query string** Part of a URL that assigns values to parameters. Query strings begin with `?`. The general form is **key=value**.
+* **Query string:** Part of a URL that assigns values to parameters. Query strings begin with `?`. The general form is **key=value**.
 * **Parameters:** Arguments that are passed to APIs. Parameters are separated by `&`.
-* **Headers** Meta-information about GET requests. We will only use the User-Agent HTTP Header. 
-* **Body** Additional information sent to the server. This isn't important for GET requests.
-* **Server response code** (HTTP status code)
+* **Headers:** Meta-information about requests and responses. We will only use the User-Agent HTTP Header. 
+* **Body:** Additional information sent to the server. This isn't important for GET requests.
+* **Server response code:** (HTTP status code)
     * 100s: information responses
     * 200s: success
     * 300s: redirection
     * 400s: client error
     * 500s: server error
 
-## Authentication
+## Authentication {#sec-authentication}
 
-The Census API requires a user-specific API key for all API calls. ([You can sign up here](https://api.census.gov/data/key_signup.html)) This API key is simply passed as part of the path in the HTTP request.
+The Census API requires a user-specific API key for all API calls. ([You can sign up here](https://api.census.gov/data/key_signup.html)) This API key is simply passed as part of the query string in the HTTP request.
 
 It is a bad idea to share API credentials. NEVER post a credential on GitHub. A convenient solution is to use a credentials file with the `library(dotenv)` package as follows:
 
-First, install the package using `install.packages("dotenv")` in the console and create a file called `.env` in the directory where your .Rproj is located. You may get a message that files starting with a "." are reserved for the system, you should hit "ok" to proceed. You can store as many credentials as you want in this file, with each key-value pair on a new line. Note you need to hit enter after the last key-value pair so the file ends with a blank new line. 
+First, install the package using `install.packages("dotenv")` in the console and create a file called `.env` in the directory where your .Rproj is located. You may get a message that files starting with a "." are reserved for the system; you should hit "ok" to proceed. You can store as many credentials as you want in this file, with each key-value pair on a new line. Note you need to hit enter after the last key-value pair so the file ends with a blank new line. 
 
 ```
 census_api_key=<key value>
@@ -174,7 +174,7 @@ load_dot_env()
 census_key <- Sys.getenv("census_api_key")
 ```
 
-Be sure to add this `.env` credentials file to your `.gitignore`!
+Be sure to add this `.env` credentials file to your `.gitignore`: open `.gitignore` in your project folder and add `.env` on its own line!
 
 ## R example 1
 
@@ -184,7 +184,7 @@ Let's walk through the example above using R. First install `library(httr)` and 
 
 ### REQUEST (build up a URL)
 
-Using the final URL from the above example, lets query state names and state population in July 2014 for all states, Washington, D.C., and Puerto Rico. Note, it is good practice to create the link outside of `GET()` because we may need to manipulate the URL string in later examples. Note that `*` is a wildcard character which requests data for all possible values of the parameter.
+Using the final URL from the above example, let's query state names and state population in July 2014 for all states, Washington, D.C., and Puerto Rico. Note, it is good practice to create the link outside of `GET()` because we may need to manipulate the URL string in later examples. Note that `*` is a wildcard character which requests data for all possible values of the parameter.
 
 ```{r}
 #| message: false
@@ -210,7 +210,7 @@ http_status(pop_json)
 
 ```
 
-## 3. Parse the response
+### Parse the response
 
 ```{r}
 # get the contents of the response as a text string
@@ -229,9 +229,9 @@ names(pop_data) <- pop_matrix[1, ]
 pop_data
 ```
 
-Parsing the response can be trickiest step. Here, the data of interest are rectangular and the JSON object is simple to parse. Sometimes, the returned object will be a complicated hierarchical structure, which will demand writing more R code.
+Parsing the response can be the trickiest step. Here, the data of interest are rectangular and the JSON object is simple to parse. Sometimes, the returned object will be a complicated hierarchical structure, which will demand writing more R code.
 
-## Terms of Service of User Agents
+## Terms of Service and User Agents
 
 Always read an API's terms of service to ensure that use of the API conforms to the API's rules. 
 
@@ -256,11 +256,11 @@ exercise_number <- exercise_number + 1
 
 1. Visit the [Urban Institute Education Data Portal API](https://educationdata.urban.org/documentation/).
 2. Read the Terms of Use. 
-3. Let's pull data from IPEDS about full-time equivalent enrollment in graduate schools in 2016 in Washington, DC (FIP = 11). Create a new .R script called get-ed-data.R.
-4. Read the instructions for [direct API access](https://educationdata.urban.org/documentation/#direct_access). Copy-and-paste the generic form of the API call into you .R script. 
+3. Let's pull data from IPEDS about full-time equivalent enrollment in graduate schools in 2016 in Washington, DC (FIPS = 11). Create a new .R script called get-ed-data.R.
+4. Read the instructions for [direct API access](https://educationdata.urban.org/documentation/#direct_access). Copy-and-paste the generic form of the API call into your .R script. 
 5. Navigate to the documentation for [Enrollment - Full time equivalent](https://educationdata.urban.org/documentation/colleges.html#ipeds-enrollment-full-time-equivalent). Note that you may have to click "Full-time equivalent" under "Enrollment" in the menu on the left-hand side of the page to get to the relevant section. The example URL is "/api/v1/college-university/ipeds/enrollment-full-time-equivalent/{year}/{level_of_study}/" **Note:** The Urban Institute created an R package that simplifies this entire process. Let's build our request from scratch just to prove that we can. 
-6. Combine the endpoint URL with the example URL from earlier. This means combining the base URL with the URL and parameters for the endpoint. 
-7. Fill in the necessary parameters and filters. 
+6. Combine the base URL from step 4 (https://educationdata.urban.org) with the example URL for the endpoint from step 5.
+7. Fill in the necessary parameters and filters. Replace `{year}` with `2016` and `{level_of_study}` with `grad`. Filters go in a query string at the end of the URL, just like the Census example (e.g., `?fips=11`).
 8. Make a GET request with `GET()`. Be sure to include the User-Agent.
 9. Check the HTTP status. 
 10. Parse the response.
@@ -271,7 +271,7 @@ exercise_number <- exercise_number + 1
 
 Many other APIs have different authentication methods beyond simple API keys. Some use OAuth, bearer tokens, or other methods. The pattern shown above with `.env` files and `Sys.getenv()` works for most simple API key authentication.
 
-Note that you may have to restart your R session after creating or modifying the `.env` file to load the updated credentials.
+Re-run `load_dot_env()` after creating or modifying the `.env` file to load the updated credentials.
 
 ## Pagination
 
@@ -294,28 +294,28 @@ The example pulls the estimated number of males (B01001_002E) and females (B0100
 Here are a few select columns for the 2018 5-year ACS from the Census API [documentation page](https://api.census.gov/data.html):
 
 Vintage | Dataset Name | Dataset Type | Geography List | Variable List | Group List | Examples 
---------------- | --------------------------- | ----------------------- | ---------------- | ------------- | ------------- | ------------- | 
-2018 | acs>acs5>profile | Aggregate | [geographies](https://api.census.gov/data/2018/acs/acs5/geography.html) | [variables](https://api.census.gov/data/2018/acs/acs5/variables.html) | [groups](https://api.census.gov/data/2018/acs/acs5/groups.html) | [examples](https://api.census.gov/data/2018/acs/acs5/examples.html) 
+--------------- | --------------------------- | ----------------------- | ---------------- | ------------- | ------------- | -------------
+2018 | acs>acs5 | Aggregate | [geographies](https://api.census.gov/data/2018/acs/acs5/geography.html) | [variables](https://api.census.gov/data/2018/acs/acs5/variables.html) | [groups](https://api.census.gov/data/2018/acs/acs5/groups.html) | [examples](https://api.census.gov/data/2018/acs/acs5/examples.html) 
 
-###  Write a custom function
+### Write a custom function
 
 This function 1. builds a URL and requests from the API, 2. checks for a server error, and 3. parses the response
 
 ```{r}
-get_acs <- function(fips, census_key) {
+get_tract_sex <- function(fips, census_key) {
   
   # build a URL
-  # paste0() is only used because the URL was too wide for the PDF
   url <- str_glue(
-    paste0(
-      "https://api.census.gov/data/2018/acs/acs5",
-      "?get=B01001_002E,B01001_026E&for=tract:*&in=state:{fips}&key={census_key}"
-    )
+    "https://api.census.gov/data/2018/acs/acs5",
+    "?get=B01001_002E,B01001_026E&for=tract:*&in=state:{fips}&key={census_key}"
   )
 
   # use the URL to make a request from the API
   acs_json <- GET(url = url)
-  
+
+  # check for a server error
+  stop_for_status(acs_json)
+
   # get the contents of the response as a text string
   acs_json <- content(acs_json, as = "text")
   
@@ -338,7 +338,7 @@ get_acs <- function(fips, census_key) {
 
 ```
 
-### Create a vector of FIPs
+### Create a vector of FIPS codes
 
 This could be all states, districts, and territories. It's only Alabama and Alaska for brevity.
 
@@ -347,20 +347,20 @@ fips <- c("01", "02")
 
 ```
 
-### Iterate the functions
+### Iterate the function
 
-`map_df()` iterates `get_acs()` along the vector of state FIPs and returns a `tibble`.
+`map_df()` iterates `get_tract_sex()` along the vector of state FIPS codes and returns a `tibble`.
 
 ```{r}
 # iterate the function over Alabama and Alaska
-map_df(fips, .f = get_acs, census_key = census_key)
+map_df(fips, .f = get_tract_sex, census_key = census_key)
 
 ```
 
 ## R Packages
 
 There are R packages that simplify interacting with many popular APIs. 
-`library(tidycensus)` ([tutorial here](https://walker-data.com/tidycensus/)) and `library(censusapi)` ([tutorial here](https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html)) simplifies navigating Census documentation, checking the status code, building URLs for the Census API, and parsing JSON responses. This can save a lot of time and effort! The following code is one iteration of the advanced example from above!
+`library(tidycensus)` ([tutorial here](https://walker-data.com/tidycensus/)) and `library(censusapi)` ([tutorial here](https://cran.r-project.org/web/packages/censusapi/vignettes/getting-started.html)) simplify navigating Census documentation, checking the status code, building URLs for the Census API, and parsing JSON responses. This can save a lot of time and effort! The following code is one iteration of the advanced example from above!
 
 ```{r}
 #| message: false
@@ -374,7 +374,7 @@ getCensus(
   regionin = "state:01",
   vintage = 2018,
   key = census_key
-) %>%
+) |>
   as_tibble()
 ```
 
