@@ -27,16 +27,35 @@ exercise_number <- 1
 #| message: false
 
 library(tidyverse)
-library(here)
-library(gridExtra)
 
 theme_set(theme_minimal())
 
 ```
 
-## Review
+## Modeling
 
-There are three distinct reasons to build a statistical model.
+::: {.callout-tip}
+## Statistical Modeling
+
+Statistical modeling is the process of using mathematical equations, probability, and data to represent real-world phenomena. 
+:::
+
+Econometrics and public policy training introduces model fitting for many different applications.
+
+- linear regression
+- logistic regression
+- time series models
+- univariate models
+
+A housing economist can use linear regression to understand how different characteristics of a house contribute to the sale price of the house. For example, $\hat{\beta}_{\text{square foot}}$ can quantify how much the sale price of the home increases on average with each additional square foot, holding other characteristics of the house constant. 
+
+A health economist can use logistic regression to estimate how much the log odds of a behavioral health crisis for a veteran change with financial volatility in their community, holding other characteristics constant.
+
+Statistical models never perfectly explain the complexities of real-world phenomena. But in many applications, the use of imperfect models can elevate our understanding of the world.
+
+## Three Uses of Models
+
+Models have many applications that we will group into three different motivations:
 
 1. Summary
 2. Inference
@@ -46,21 +65,21 @@ There are three distinct reasons to build a statistical model.
  
 **Inference:** With inference, the goal is to use statistics calculated on a sample of data to learn about some unknown parameter from a population. We use data and assumptions for inference. If the assumptions are approximately met, then we can use known sampling distributions to generate test statistics and p-values to make inferences. We can also test formal hypotheses with $H_0$ as the null hypothesis and $H_a$ as the alternative hypothesis.
 
-**Prediction:** With prediction, the goal is make informed and accurate guesses about the value or level of a variable given a set of predictor variables. Unlike inference, which usually focuses on coefficients of predictor variables, the focus here is on the dependent variable.
+**Prediction:** With prediction, the goal is to make informed and accurate guesses about the value or level of a variable given a set of predictor variables. Unlike inference, which usually focuses on coefficients of predictor variables, the focus here is on the outcome variable.
 
 Consider a population linear regression model:
 
-$$y_i = \beta_0 + \beta_1X_{i1} + \cdot\cdot\cdot + \beta_pX_{ip} + \epsilon_i$$
+$$Y_i = \beta_0 + \beta_1X_{i1} + \cdot\cdot\cdot + \beta_pX_{ip} + \epsilon_i$$ {#eq-regression-population}
 
 and an estimated linear regression model 
 
-$$\hat{y_i} = \hat\beta_0 + \hat\beta_1x_{i1} + \cdot\cdot\cdot + \hat\beta_px_{ip}$$ {#eq-regression}
+$$\hat{y}_i = \hat\beta_0 + \hat\beta_1x_{i1} + \cdot\cdot\cdot + \hat\beta_px_{ip}$$ {#eq-regression}
 
 We can use @eq-regression for all three motivations. 
 
-- @eq-regression is a model of the conditional mean of $y$, which is a statistical summary.
+- @eq-regression is an estimate of the conditional mean of $Y$, which is a statistical summary.
 - @eq-regression allows us to make inference about $\beta_j$ using $\hat\beta_j$.
-- @eq-regression allows us to make predictions, $\hat{y_i}$, given $\vec{x_i}$.
+- @eq-regression allows us to make predictions, $\hat{y}_i$, given $\vec{x}_i$.
 
 :::{.callout-note}
 The same statistical model can summarize, be used for inference, and make valid and accurate predictions. However, the optimal model for one motivation is rarely best for all three motivations. **Thus, it is important to clearly articulate the motivation for a statistical model before picking which tools and diagnostics to use.**
@@ -73,7 +92,7 @@ There are many policy applications where it is useful to make accurate predictio
 
 The broad process of developing models to make predictions of a pre-defined variable is predictive modeling or supervised machine learning. The narrower process of developing a specific model with data is called fitting a model, learning a model, or estimating a model. The pre-defined variable the model is intended to predict is the **outcome variable** and the remaining variables used to predict the outcome variable are **predictors**.[^19_predictive-modeling-motivation-1]
 
-[^19_predictive-modeling-motivation-1]: The are many names for outcome variables including target and dependent variable. There are many names for predictors including features and independent variables.
+[^19_predictive-modeling-motivation-1]: There are many names for outcome variables including target and dependent variable. There are many names for predictors including features and independent variables.
 
 In most applications we have **modeling data** that include the outcome of interest and **implementation data** that do not include the outcome of interest. Our objective is to fit, or estimate, some $\hat{f}(\vec{x})$ using the modeling data to predict the missing outcome in the implementation data.
 
@@ -95,7 +114,7 @@ Implementation data contain predictors for predicting the outcome of interest bu
 The implementation data needs to contain all of the predictors used in the modeling data, and the implementation data can't be too different from the modeling data.
 :::
 
-![Using modeling data to fit a model and make predctions on the implementation data](images/predictive-modeling-process.png){#fig-predictive-modeling-process}
+![Using modeling data to fit a model and make predictions on the implementation data](images/predictive-modeling-process.png){#fig-predictive-modeling-process}
 
 Our fitted models never perfectly predict the outcome, $y$. Therefore, we end up with $y = \hat{f}(\vec{x}) + \epsilon$. A major effort in predictive modeling is improving $\hat{f}(\vec{x})$ to reduce $\epsilon$.
 
@@ -182,7 +201,13 @@ A forecast attempts to predict the most-likely future. A nowcast attempts to pre
 
 ### Imputation
 
-Broadly, imputation is the task of using models to assign, or impute, missing values in some dataset. Broadly, imputation can be used for a variety of applications including trying to reduce the consequences of omitted variable bias, generating synthetic data to minimize disclosure risks, and data fusion. Amplified asking and scaled labeling are also examples of imputation tasks.
+::: callout-tip
+## Imputation
+
+Broadly, imputation is the task of using models to assign, or impute, missing values in some data set.
+:::
+
+Imputation can be used for a variety of applications including trying to reduce the consequences of omitted variable bias, generating synthetic data to minimize disclosure risks, and data fusion. Amplified asking and scaled labeling are also examples of imputation tasks.
 
 ## Case Studies
 
@@ -195,8 +220,10 @@ The authors use historical data in Chicago from home lead inspectors and observa
 -   **Motivation:** Lead poisoning is terrible for children, but Chicago has limited lead inspectors.
 -   **Implementation data:** Observed characteristics about homes and neighborhoods in Chicago.
 -   **Modeling data:** Historical characteristics about homes and neighborhoods in Chicago and results from home lead inspections.
--   **Objective:** Predict the probability of a home containing lead. 1. Prioritize sending inspectors to the homes of the most at-risk children before the child suffers from elevated blood lead level (BLL). 2. Create a risk score for children that can be used by parents and health providers.
--   **Tools:** Cross validation and regularized logistic regression, linear SVC, and Random Forests.
+-   **Objective:** Predict the probability of a home containing lead.
+    1.  Prioritize sending inspectors to the homes of the most at-risk children before the child suffers from elevated blood lead level (BLL).
+    2.  Create a risk score for children that can be used by parents and health providers.
+-   **Tools:** Cross validation and regularized logistic regression, linear SVC, and random forests.
 -   **Results:** The precision of the model was two to five times better than the baseline scenario of randomly sending inspectors. The advantage faded over time and in situations where more inspectors were available.
 
 ### Measuring Wealth in Rwanda
@@ -206,8 +233,8 @@ Consider "Calling for Better Measurement: Estimating an Individual's Wealth and 
 -   **Motivation:** Measuring wealth and poverty in developing nations is challenging and expensive.
 -   **Implementation data:** 2005-2009 phone metadata from about 1.5 million phone customers in Rwanda.
 -   **Modeling data:** A follow-up phone stratified survey of 856 phone customers with questions about asset ownership, home ownership, and basic welfare indicators linked to the phone metadata.
--   **Objective:** Use the phone metadata to accurately predict variables about asset ownership, home ownership, and basic welfare indicators. One of their outcomes variables is the first principal component of asset variables.
--   **Tools:** 5-fold cross-validation, elastic net regression and regularized logistic regression, deterministic finite automation.
+-   **Objective:** Use the phone metadata to accurately predict variables about asset ownership, home ownership, and basic welfare indicators. One of their outcome variables is the first principal component of asset variables.
+-   **Tools:** 5-fold cross-validation, elastic net regression and regularized logistic regression, deterministic finite automaton.
 -   **Results:** The results in the first paper were poor, but follow-up work resulted in models with AUC as high as 0.88 and $R^2$ as high as 0.46.
 
 ### Collecting Land-Use Reform Data
@@ -227,12 +254,12 @@ Consider the high-profile Google Flu Trends model by @ginsberg2009.
 
 -   **Motivation:** The CDC tracks flu-like illnesses and releases data on about a two-week lag. Understanding flu-like illnesses on a one-day lag can improve public health responses.
 -   **Implementation data:** Real-time counts of Google search queries.
--   **Modeling data:** 2003-2008 CDC data about flu-like illnesses and counts for 50 million of the most common Google search queries in each state.
+-   **Modeling data:** 2003-2008 CDC data about flu-like illnesses and counts for 50 million of the most common Google search queries in each of the nine CDC regions.
 -   **Objective:** Predict regional-level flu outbreaks on a one-day lag using Google searches to make predictions.
--   **Tools:** Logistic regression and the top 45 influenza related illness query terms.
+-   **Tools:** Linear regression on log-odds and the top 45 influenza-related illness query terms.
 -   **Results:** The in-sample results were very promising. Unfortunately, the model performed poorly when implemented. Google implemented Google Flu Trends but later discontinued the model. The two major issues were:
-    1.  **Drift:** The model decayed over time because of changes to search
-    2.  **Algorithmic confounding:** The model overestimated the 2009 flu season because of fear-induced search traffic during the Swine flu outbreak
+    1.  **Drift:** The model decayed over time because of changes to search behavior and Google's search algorithm
+    2.  **Algorithmic confounding:** The model overestimated the 2012-2013 flu season because of search traffic driven by media coverage
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
