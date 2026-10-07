@@ -541,11 +541,11 @@ window.Quarto = {
 <section id="example-1" class="level4">
 <h4 class="anchored" data-anchor-id="example-1">Example 1</h4>
 <p>Consider the following 10 observations. How might you meaningfully cluster the observations?</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -554,11 +554,11 @@ window.Quarto = {
 <section id="example-2" class="level4">
 <h4 class="anchored" data-anchor-id="example-2">Example 2</h4>
 <p>Consider the following 10 observations. How might you meaningfully cluster the observations?</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -597,61 +597,61 @@ window.Quarto = {
 <div class="callout-body-container callout-body">
 <p>K-means clustering is a popular clustering algorithm. It is different than KNN but uses many of the same mathematical ideas. We walk through the K-means algorithm below.</p>
 <p>Consider the following data set.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Step 1:</strong> Randomly place K centroids in your n-dimensional vector space</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Step 2:</strong> Calculate the nearest centroid for each point using a distance measure</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Step 3:</strong> Assign each point to the nearest centroid</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Step 4:</strong> Recalculate the position of the centroids based on the means of the assigned points</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
 </div>
 <p><strong>Step 5:</strong> Repeat steps 2-4 until no points change cluster assignments</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="624"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -667,7 +667,7 @@ window.Quarto = {
 <section id="librarytidyclust" class="level3" data-number="24.2.1">
 <h3 data-number="24.2.1" class="anchored" data-anchor-id="librarytidyclust"><span class="header-section-number">24.2.1</span> <code>library(tidyclust)</code></h3>
 <p>We will use <code>library(tidyclust)</code> for cluster analysis. The goal of tidyclust is to provide a tidy, unified interface to clustering models. The package is closely modeled after the <code>parsnip</code> package in <code>library(tidymodels)</code>.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># install.packages("tidyclust")</span></span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="fu">library</span>(tidymodels)</span>
 <span id="cb1-3"><a href="#cb1-3"></a><span class="fu">library</span>(tidyclust)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -678,7 +678,7 @@ window.Quarto = {
 <section id="example-1-1" class="level4">
 <h4 class="anchored" data-anchor-id="example-1-1">Example 1</h4>
 <p>Consider the state data from earlier.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyverse)</span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="fu">library</span>(broom)</span>
 <span id="cb2-3"><a href="#cb2-3"></a></span>
@@ -775,7 +775,7 @@ window.Quarto = {
 <section id="example-2-1" class="level4">
 <h4 class="anchored" data-anchor-id="example-2-1">Example 2</h4>
 <p>Recall the votes data set from the previous tutorial.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>votes <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, </span>
 <span id="cb3-2"><a href="#cb3-2"></a>                             <span class="st">"votes.csv"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -792,26 +792,29 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <span id="cb5-2"><a href="#cb5-2"></a>  <span class="at">formula =</span> <span class="sc">~</span> ., </span>
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="at">data =</span> votes</span>
 <span id="cb5-4"><a href="#cb5-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">step_select</span>(<span class="fu">all_numeric</span>()) </span>
-<span id="cb5-6"><a href="#cb5-6"></a></span>
-<span id="cb5-7"><a href="#cb5-7"></a>rec_pca <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
-<span id="cb5-8"><a href="#cb5-8"></a>  <span class="at">formula =</span> <span class="sc">~</span> ., </span>
-<span id="cb5-9"><a href="#cb5-9"></a>  <span class="at">data =</span> votes</span>
-<span id="cb5-10"><a href="#cb5-10"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>(), <span class="at">id =</span> <span class="st">"pca"</span>) </span>
-<span id="cb5-12"><a href="#cb5-12"></a></span>
-<span id="cb5-13"><a href="#cb5-13"></a>votes_pca <span class="ot">&lt;-</span> rec_pca <span class="sc">|&gt;</span></span>
-<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
-<span id="cb5-15"><a href="#cb5-15"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> votes)</span>
-<span id="cb5-16"><a href="#cb5-16"></a></span>
-<span id="cb5-17"><a href="#cb5-17"></a><span class="co"># calculate pct variance explained by components</span></span>
-<span id="cb5-18"><a href="#cb5-18"></a><span class="co"># the first two components explain 45% and 29% of the variance</span></span>
-<span id="cb5-19"><a href="#cb5-19"></a>rec_pca <span class="sc">|&gt;</span> </span>
-<span id="cb5-20"><a href="#cb5-20"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb5-21"><a href="#cb5-21"></a>  <span class="fu">tidy</span>(<span class="at">id =</span> <span class="st">"pca"</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-22"><a href="#cb5-22"></a>  <span class="fu">filter</span>(terms <span class="sc">==</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb5-23"><a href="#cb5-23"></a>  <span class="fu">mutate</span>(<span class="at">pct_var =</span> value<span class="sc">/</span><span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
-<span id="cb5-24"><a href="#cb5-24"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="fu">step_select</span>(<span class="fu">all_numeric</span>()) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: `step_select()` was deprecated in recipes 1.3.0.
+ℹ See `?select_select()` for recommended alternatives.</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>rec_pca <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  <span class="at">formula =</span> <span class="sc">~</span> ., </span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">data =</span> votes</span>
+<span id="cb7-4"><a href="#cb7-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>(), <span class="at">id =</span> <span class="st">"pca"</span>) </span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>votes_pca <span class="ot">&lt;-</span> rec_pca <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> votes)</span>
+<span id="cb7-10"><a href="#cb7-10"></a></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="co"># calculate pct variance explained by components</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a><span class="co"># the first two components explain 45% and 29% of the variance</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>rec_pca <span class="sc">|&gt;</span> </span>
+<span id="cb7-14"><a href="#cb7-14"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb7-15"><a href="#cb7-15"></a>  <span class="fu">tidy</span>(<span class="at">id =</span> <span class="st">"pca"</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>  <span class="fu">filter</span>(terms <span class="sc">==</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">mutate</span>(<span class="at">pct_var =</span> value<span class="sc">/</span><span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   terms    value component id    pct_var
@@ -820,33 +823,33 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 2 variance  142.         2 pca     0.294</code></pre>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># create a kmeans model object with two clusters</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="at">num_clusters =</span> <span class="dv">2</span> <span class="co"># number of clusters</span></span>
-<span id="cb7-4"><a href="#cb7-4"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="fu">set_engine</span>(</span>
-<span id="cb7-6"><a href="#cb7-6"></a>    <span class="st">"stats"</span>, </span>
-<span id="cb7-7"><a href="#cb7-7"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  ) </span>
-<span id="cb7-9"><a href="#cb7-9"></a></span>
-<span id="cb7-10"><a href="#cb7-10"></a><span class="co"># create a workflow</span></span>
-<span id="cb7-11"><a href="#cb7-11"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
-<span id="cb7-12"><a href="#cb7-12"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
-<span id="cb7-13"><a href="#cb7-13"></a>  <span class="at">spec =</span> kmeans_spec</span>
-<span id="cb7-14"><a href="#cb7-14"></a>)</span>
-<span id="cb7-15"><a href="#cb7-15"></a></span>
-<span id="cb7-16"><a href="#cb7-16"></a><span class="co"># fit the model</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a>votes_kmeans_2 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
-<span id="cb7-18"><a href="#cb7-18"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
-<span id="cb7-19"><a href="#cb7-19"></a></span>
-<span id="cb7-20"><a href="#cb7-20"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb7-21"><a href="#cb7-21"></a>  <span class="fu">select</span>(votes, name, party),</span>
-<span id="cb7-22"><a href="#cb7-22"></a>  <span class="at">cluster =</span> votes_kmeans_2 <span class="sc">|&gt;</span> </span>
-<span id="cb7-23"><a href="#cb7-23"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb7-24"><a href="#cb7-24"></a>    <span class="fu">pull</span>(.cluster)</span>
-<span id="cb7-25"><a href="#cb7-25"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb7-26"><a href="#cb7-26"></a>  <span class="fu">count</span>(party, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># create a kmeans model object with two clusters</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  <span class="at">num_clusters =</span> <span class="dv">2</span> <span class="co"># number of clusters</span></span>
+<span id="cb9-4"><a href="#cb9-4"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb9-6"><a href="#cb9-6"></a>    <span class="st">"stats"</span>, </span>
+<span id="cb9-7"><a href="#cb9-7"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
+<span id="cb9-8"><a href="#cb9-8"></a>  ) </span>
+<span id="cb9-9"><a href="#cb9-9"></a></span>
+<span id="cb9-10"><a href="#cb9-10"></a><span class="co"># create a workflow</span></span>
+<span id="cb9-11"><a href="#cb9-11"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
+<span id="cb9-12"><a href="#cb9-12"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
+<span id="cb9-13"><a href="#cb9-13"></a>  <span class="at">spec =</span> kmeans_spec</span>
+<span id="cb9-14"><a href="#cb9-14"></a>)</span>
+<span id="cb9-15"><a href="#cb9-15"></a></span>
+<span id="cb9-16"><a href="#cb9-16"></a><span class="co"># fit the model</span></span>
+<span id="cb9-17"><a href="#cb9-17"></a>votes_kmeans_2 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
+<span id="cb9-18"><a href="#cb9-18"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
+<span id="cb9-19"><a href="#cb9-19"></a></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb9-21"><a href="#cb9-21"></a>  <span class="fu">select</span>(votes, name, party),</span>
+<span id="cb9-22"><a href="#cb9-22"></a>  <span class="at">cluster =</span> votes_kmeans_2 <span class="sc">|&gt;</span> </span>
+<span id="cb9-23"><a href="#cb9-23"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb9-24"><a href="#cb9-24"></a>    <span class="fu">pull</span>(.cluster)</span>
+<span id="cb9-25"><a href="#cb9-25"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb9-26"><a href="#cb9-26"></a>  <span class="fu">count</span>(party, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 3 × 3
   party cluster       n
@@ -872,28 +875,28 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 </div>
 <p>Suppose we didn’t known party. Then cluster analysis is the process of trying to discover a latent variable or latent groups in the data. In general, cluster analyses will be much tidier if there is a strong latent process driving the latent groups. For example, imagine latent groups for children, women, and men when looking at heights and weights without observing age or sex.</p>
 <p>In addition to identifying data and variables that capture latent structure in our data, we also need to choose how many latent groups are in the data! Consider the above example with 3 groups:</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="co"># create a kmeans model object with three clusters</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a>kmeans_spec <span class="ot">&lt;-</span> kmeans_spec <span class="sc">|&gt;</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a>  <span class="fu">set_args</span>(<span class="at">num_clusters =</span> <span class="dv">3</span>)</span>
-<span id="cb9-4"><a href="#cb9-4"></a></span>
-<span id="cb9-5"><a href="#cb9-5"></a><span class="co"># create a workflow</span></span>
-<span id="cb9-6"><a href="#cb9-6"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
-<span id="cb9-7"><a href="#cb9-7"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
-<span id="cb9-8"><a href="#cb9-8"></a>  <span class="at">spec =</span> kmeans_spec</span>
-<span id="cb9-9"><a href="#cb9-9"></a>)</span>
-<span id="cb9-10"><a href="#cb9-10"></a></span>
-<span id="cb9-11"><a href="#cb9-11"></a><span class="co"># fit the model</span></span>
-<span id="cb9-12"><a href="#cb9-12"></a>votes_kmeans_3 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
-<span id="cb9-13"><a href="#cb9-13"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
-<span id="cb9-14"><a href="#cb9-14"></a></span>
-<span id="cb9-15"><a href="#cb9-15"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb9-16"><a href="#cb9-16"></a>  <span class="fu">select</span>(votes, name, party),</span>
-<span id="cb9-17"><a href="#cb9-17"></a>  <span class="at">cluster =</span> votes_kmeans_3 <span class="sc">|&gt;</span> </span>
-<span id="cb9-18"><a href="#cb9-18"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb9-19"><a href="#cb9-19"></a>    <span class="fu">pull</span>(.cluster)</span>
-<span id="cb9-20"><a href="#cb9-20"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb9-21"><a href="#cb9-21"></a>  <span class="fu">count</span>(party, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># create a kmeans model object with three clusters</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a>kmeans_spec <span class="ot">&lt;-</span> kmeans_spec <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a>  <span class="fu">set_args</span>(<span class="at">num_clusters =</span> <span class="dv">3</span>)</span>
+<span id="cb11-4"><a href="#cb11-4"></a></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="co"># create a workflow</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
+<span id="cb11-7"><a href="#cb11-7"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
+<span id="cb11-8"><a href="#cb11-8"></a>  <span class="at">spec =</span> kmeans_spec</span>
+<span id="cb11-9"><a href="#cb11-9"></a>)</span>
+<span id="cb11-10"><a href="#cb11-10"></a></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="co"># fit the model</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a>votes_kmeans_3 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
+<span id="cb11-14"><a href="#cb11-14"></a></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb11-16"><a href="#cb11-16"></a>  <span class="fu">select</span>(votes, name, party),</span>
+<span id="cb11-17"><a href="#cb11-17"></a>  <span class="at">cluster =</span> votes_kmeans_3 <span class="sc">|&gt;</span> </span>
+<span id="cb11-18"><a href="#cb11-18"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb11-19"><a href="#cb11-19"></a>    <span class="fu">pull</span>(.cluster)</span>
+<span id="cb11-20"><a href="#cb11-20"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a>  <span class="fu">count</span>(party, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   party cluster       n
@@ -911,32 +914,32 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <p>The main considerations when picking a number of clusters are theory and application. Is the objective to find three archetypal communities? Does the visualization need five groups?</p>
 <p>Beyond theory and application, there are analytic measures that can help determine the optimal number of clusters. The best number of clusters usually can be picked with the “elbow method” by choosing the number where a kink occurs in the following plots. We can <code>tune()</code> the number of clusters in <code>library(tidyclust)</code> similar to the approach we learned to tune model hyperparameters in <code>library(tidymodels)</code>.</p>
 <p>Consider the votes data where there are two clear clusters.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># set up cross-validation</span></span>
-<span id="cb11-2"><a href="#cb11-2"></a>votes_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(votes, <span class="at">v =</span> <span class="dv">5</span>)</span>
-<span id="cb11-3"><a href="#cb11-3"></a></span>
-<span id="cb11-4"><a href="#cb11-4"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
-<span id="cb11-5"><a href="#cb11-5"></a>  <span class="at">num_clusters =</span> <span class="fu">tune</span>() <span class="co"># set hyperparameter tuning for number of clusters</span></span>
-<span id="cb11-6"><a href="#cb11-6"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb11-7"><a href="#cb11-7"></a>  <span class="fu">set_engine</span>(</span>
-<span id="cb11-8"><a href="#cb11-8"></a>    <span class="st">"stats"</span>, </span>
-<span id="cb11-9"><a href="#cb11-9"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
-<span id="cb11-10"><a href="#cb11-10"></a>  ) </span>
-<span id="cb11-11"><a href="#cb11-11"></a></span>
-<span id="cb11-12"><a href="#cb11-12"></a><span class="co"># create a workflow</span></span>
-<span id="cb11-13"><a href="#cb11-13"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
-<span id="cb11-14"><a href="#cb11-14"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
-<span id="cb11-15"><a href="#cb11-15"></a>  <span class="at">spec =</span> kmeans_spec</span>
-<span id="cb11-16"><a href="#cb11-16"></a>)</span>
-<span id="cb11-17"><a href="#cb11-17"></a></span>
-<span id="cb11-18"><a href="#cb11-18"></a><span class="co"># create tuning grid</span></span>
-<span id="cb11-19"><a href="#cb11-19"></a>clust_num_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb11-20"><a href="#cb11-20"></a>  <span class="fu">num_clusters</span>(), </span>
-<span id="cb11-21"><a href="#cb11-21"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
-<span id="cb11-22"><a href="#cb11-22"></a>)</span>
-<span id="cb11-23"><a href="#cb11-23"></a></span>
-<span id="cb11-24"><a href="#cb11-24"></a><span class="co"># see the tuning grid</span></span>
-<span id="cb11-25"><a href="#cb11-25"></a>clust_num_grid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># set up cross-validation</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>votes_cv <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(votes, <span class="at">v =</span> <span class="dv">5</span>)</span>
+<span id="cb13-3"><a href="#cb13-3"></a></span>
+<span id="cb13-4"><a href="#cb13-4"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
+<span id="cb13-5"><a href="#cb13-5"></a>  <span class="at">num_clusters =</span> <span class="fu">tune</span>() <span class="co"># set hyperparameter tuning for number of clusters</span></span>
+<span id="cb13-6"><a href="#cb13-6"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb13-7"><a href="#cb13-7"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb13-8"><a href="#cb13-8"></a>    <span class="st">"stats"</span>, </span>
+<span id="cb13-9"><a href="#cb13-9"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
+<span id="cb13-10"><a href="#cb13-10"></a>  ) </span>
+<span id="cb13-11"><a href="#cb13-11"></a></span>
+<span id="cb13-12"><a href="#cb13-12"></a><span class="co"># create a workflow</span></span>
+<span id="cb13-13"><a href="#cb13-13"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
+<span id="cb13-14"><a href="#cb13-14"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
+<span id="cb13-15"><a href="#cb13-15"></a>  <span class="at">spec =</span> kmeans_spec</span>
+<span id="cb13-16"><a href="#cb13-16"></a>)</span>
+<span id="cb13-17"><a href="#cb13-17"></a></span>
+<span id="cb13-18"><a href="#cb13-18"></a><span class="co"># create tuning grid</span></span>
+<span id="cb13-19"><a href="#cb13-19"></a>clust_num_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb13-20"><a href="#cb13-20"></a>  <span class="fu">num_clusters</span>(), </span>
+<span id="cb13-21"><a href="#cb13-21"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb13-22"><a href="#cb13-22"></a>)</span>
+<span id="cb13-23"><a href="#cb13-23"></a></span>
+<span id="cb13-24"><a href="#cb13-24"></a><span class="co"># see the tuning grid</span></span>
+<span id="cb13-25"><a href="#cb13-25"></a>clust_num_grid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 1
    num_clusters
@@ -952,38 +955,38 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
  9            9
 10           10</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="co"># tune grid</span></span>
-<span id="cb13-2"><a href="#cb13-2"></a>res <span class="ot">&lt;-</span> <span class="fu">tune_cluster</span>(</span>
-<span id="cb13-3"><a href="#cb13-3"></a>  kmeans_wflow,</span>
-<span id="cb13-4"><a href="#cb13-4"></a>  <span class="at">resamples =</span> votes_cv,</span>
-<span id="cb13-5"><a href="#cb13-5"></a>  <span class="at">grid =</span> clust_num_grid,</span>
-<span id="cb13-6"><a href="#cb13-6"></a>  <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">extract =</span> identity),</span>
-<span id="cb13-7"><a href="#cb13-7"></a>  <span class="at">metrics =</span> <span class="fu">cluster_metric_set</span>(sse_within_total, silhouette_avg)</span>
-<span id="cb13-8"><a href="#cb13-8"></a>) </span>
-<span id="cb13-9"><a href="#cb13-9"></a></span>
-<span id="cb13-10"><a href="#cb13-10"></a><span class="co"># collect metrics</span></span>
-<span id="cb13-11"><a href="#cb13-11"></a>res_metrics <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
-<span id="cb13-12"><a href="#cb13-12"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="co"># tune grid</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>res <span class="ot">&lt;-</span> <span class="fu">tune_cluster</span>(</span>
+<span id="cb15-3"><a href="#cb15-3"></a>  kmeans_wflow,</span>
+<span id="cb15-4"><a href="#cb15-4"></a>  <span class="at">resamples =</span> votes_cv,</span>
+<span id="cb15-5"><a href="#cb15-5"></a>  <span class="at">grid =</span> clust_num_grid,</span>
+<span id="cb15-6"><a href="#cb15-6"></a>  <span class="at">control =</span> <span class="fu">control_grid</span>(<span class="at">save_pred =</span> <span class="cn">TRUE</span>, <span class="at">extract =</span> identity),</span>
+<span id="cb15-7"><a href="#cb15-7"></a>  <span class="at">metrics =</span> <span class="fu">cluster_metric_set</span>(sse_within_total, silhouette_avg)</span>
+<span id="cb15-8"><a href="#cb15-8"></a>) </span>
+<span id="cb15-9"><a href="#cb15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10"></a><span class="co"># collect metrics</span></span>
+<span id="cb15-11"><a href="#cb15-11"></a>res_metrics <span class="ot">&lt;-</span> res <span class="sc">|&gt;</span> </span>
+<span id="cb15-12"><a href="#cb15-12"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="total-within-sum-of-squares" class="level4">
 <h4 class="anchored" data-anchor-id="total-within-sum-of-squares">Total within sum of squares</h4>
 <p>The simplest measure is total within sum of squares. This is simply the sum of squared errors within groups, which should monotonically decrease as the number of clusters increases.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>res_metrics <span class="sc">|&gt;</span></span>
-<span id="cb14-2"><a href="#cb14-2"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"sse_within_total"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb14-3"><a href="#cb14-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_clusters, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
-<span id="cb14-4"><a href="#cb14-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb14-5"><a href="#cb14-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb14-6"><a href="#cb14-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb14-7"><a href="#cb14-7"></a>  <span class="fu">labs</span>(</span>
-<span id="cb14-8"><a href="#cb14-8"></a>    <span class="at">x =</span> <span class="st">"Number of clusters"</span>,</span>
-<span id="cb14-9"><a href="#cb14-9"></a>    <span class="at">y =</span> <span class="st">"mean WSS over 5 folds"</span></span>
-<span id="cb14-10"><a href="#cb14-10"></a>  ) <span class="sc">+</span></span>
-<span id="cb14-11"><a href="#cb14-11"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>res_metrics <span class="sc">|&gt;</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"sse_within_total"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb16-3"><a href="#cb16-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_clusters, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb16-6"><a href="#cb16-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb16-7"><a href="#cb16-7"></a>  <span class="fu">labs</span>(</span>
+<span id="cb16-8"><a href="#cb16-8"></a>    <span class="at">x =</span> <span class="st">"Number of clusters"</span>,</span>
+<span id="cb16-9"><a href="#cb16-9"></a>    <span class="at">y =</span> <span class="st">"mean WSS over 5 folds"</span></span>
+<span id="cb16-10"><a href="#cb16-10"></a>  ) <span class="sc">+</span></span>
+<span id="cb16-11"><a href="#cb16-11"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -992,22 +995,30 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <section id="average-silhouette-width" class="level4">
 <h4 class="anchored" data-anchor-id="average-silhouette-width">Average silhouette width</h4>
 <p>The silhouette score is an observation-level measure of cohesion within an observation’s group and separation from the closest group. It ranges from -1 to +1, with higher numbers representing better clusters. Negative numbers suggest that an observation has been assigned to an incorrect cluster. 0 indicates that an observation is on the boundary.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>res_metrics <span class="sc">|&gt;</span></span>
-<span id="cb15-2"><a href="#cb15-2"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"silhouette_avg"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb15-3"><a href="#cb15-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_clusters, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
-<span id="cb15-4"><a href="#cb15-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb15-5"><a href="#cb15-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb15-6"><a href="#cb15-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
-<span id="cb15-7"><a href="#cb15-7"></a>  <span class="fu">labs</span>(</span>
-<span id="cb15-8"><a href="#cb15-8"></a>    <span class="at">x =</span> <span class="st">"Number of clusters"</span>,</span>
-<span id="cb15-9"><a href="#cb15-9"></a>    <span class="at">y =</span> <span class="st">"avg silhouette width over 5 folds"</span></span>
-<span id="cb15-10"><a href="#cb15-10"></a>  ) <span class="sc">+</span></span>
-<span id="cb15-11"><a href="#cb15-11"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>res_metrics <span class="sc">|&gt;</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="fu">filter</span>(.metric <span class="sc">==</span> <span class="st">"silhouette_avg"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> num_clusters, <span class="at">y =</span> mean)) <span class="sc">+</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
+<span id="cb17-5"><a href="#cb17-5"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
+<span id="cb17-6"><a href="#cb17-6"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">10</span>) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7"></a>  <span class="fu">labs</span>(</span>
+<span id="cb17-8"><a href="#cb17-8"></a>    <span class="at">x =</span> <span class="st">"Number of clusters"</span>,</span>
+<span id="cb17-9"><a href="#cb17-9"></a>    <span class="at">y =</span> <span class="st">"avg silhouette width over 5 folds"</span></span>
+<span id="cb17-10"><a href="#cb17-10"></a>  ) <span class="sc">+</span></span>
+<span id="cb17-11"><a href="#cb17-11"></a>  <span class="fu">theme_minimal</span>() </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 1 row containing missing values or values outside the scale range
+(`geom_line()`).</code></pre>
+</div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1016,100 +1027,100 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <section id="gap-statistics" class="level4">
 <h4 class="anchored" data-anchor-id="gap-statistics">Gap statistics</h4>
 <p>The gap statistic <span class="citation" data-cites="gapstat">(<a href="references.html#ref-gapstat" role="doc-biblioref">Tibshirani, Walther, and Hastie 2002</a>)</span> compares the change in within-cluster dispersion with a reference null distribution that represents data without clear clusters. Higher numbers are better. It takes the longest to calculate because it requires Monte Carlo simulations (bootstrapping) to calculate the null distribution. The gap statistic is not yet implemented within <code>library(tidyclust)</code>, so we use <code>library(factoextra)</code> to calculate the gap statistic. Note that this function fits the cluster model and calculates the metric.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="fu">library</span>(factoextra)</span>
-<span id="cb16-2"><a href="#cb16-2"></a></span>
-<span id="cb16-3"><a href="#cb16-3"></a>votes_numeric <span class="ot">&lt;-</span> kmeans_rec <span class="sc">|&gt;</span></span>
-<span id="cb16-4"><a href="#cb16-4"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
-<span id="cb16-5"><a href="#cb16-5"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> votes)</span>
-<span id="cb16-6"><a href="#cb16-6"></a></span>
-<span id="cb16-7"><a href="#cb16-7"></a><span class="fu">fviz_nbclust</span>(votes_numeric, <span class="at">FUN =</span> kmeans, <span class="at">method =</span> <span class="st">"gap_stat"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(factoextra)</span>
+<span id="cb20-2"><a href="#cb20-2"></a></span>
+<span id="cb20-3"><a href="#cb20-3"></a>votes_numeric <span class="ot">&lt;-</span> kmeans_rec <span class="sc">|&gt;</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
+<span id="cb20-5"><a href="#cb20-5"></a>  <span class="fu">bake</span>(<span class="at">new_data =</span> votes)</span>
+<span id="cb20-6"><a href="#cb20-6"></a></span>
+<span id="cb20-7"><a href="#cb20-7"></a><span class="fu">fviz_nbclust</span>(votes_numeric, <span class="at">FUN =</span> kmeans, <span class="at">method =</span> <span class="st">"gap_stat"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
-<span id="cb17-2"><a href="#cb17-2"></a>  <span class="at">num_clusters =</span> <span class="dv">5</span> <span class="co"># number of clusters</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb17-4"><a href="#cb17-4"></a>  <span class="fu">set_engine</span>(</span>
-<span id="cb17-5"><a href="#cb17-5"></a>    <span class="st">"stats"</span>, </span>
-<span id="cb17-6"><a href="#cb17-6"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
-<span id="cb17-7"><a href="#cb17-7"></a>  ) </span>
-<span id="cb17-8"><a href="#cb17-8"></a></span>
-<span id="cb17-9"><a href="#cb17-9"></a><span class="co"># create a workflow</span></span>
-<span id="cb17-10"><a href="#cb17-10"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
-<span id="cb17-11"><a href="#cb17-11"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
-<span id="cb17-12"><a href="#cb17-12"></a>  <span class="at">spec =</span> kmeans_spec</span>
-<span id="cb17-13"><a href="#cb17-13"></a>)</span>
-<span id="cb17-14"><a href="#cb17-14"></a></span>
-<span id="cb17-15"><a href="#cb17-15"></a><span class="co"># fit the model</span></span>
-<span id="cb17-16"><a href="#cb17-16"></a>votes_kmeans_5 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
-<span id="cb17-17"><a href="#cb17-17"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
-<span id="cb17-18"><a href="#cb17-18"></a></span>
-<span id="cb17-19"><a href="#cb17-19"></a>votes_clusters <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
-<span id="cb17-20"><a href="#cb17-20"></a>  <span class="fu">select</span>(votes, name, party),</span>
-<span id="cb17-21"><a href="#cb17-21"></a>  <span class="fu">select</span>(votes_pca, PC1, PC2),</span>
-<span id="cb17-22"><a href="#cb17-22"></a>  <span class="at">cluster2 =</span> votes_kmeans_2 <span class="sc">|&gt;</span> </span>
-<span id="cb17-23"><a href="#cb17-23"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span></span>
-<span id="cb17-24"><a href="#cb17-24"></a>    <span class="fu">pull</span>(.cluster),</span>
-<span id="cb17-25"><a href="#cb17-25"></a>  <span class="at">cluster5 =</span> votes_kmeans_5 <span class="sc">|&gt;</span> </span>
-<span id="cb17-26"><a href="#cb17-26"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb17-27"><a href="#cb17-27"></a>    <span class="fu">pull</span>(.cluster)</span>
-<span id="cb17-28"><a href="#cb17-28"></a>)</span>
-<span id="cb17-29"><a href="#cb17-29"></a></span>
-<span id="cb17-30"><a href="#cb17-30"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bernie Sanders"</span>, <span class="st">"Ted Cruz"</span>, <span class="st">"Joe Manchin"</span>, <span class="st">"Susan Collins"</span>)</span>
-<span id="cb17-31"><a href="#cb17-31"></a></span>
-<span id="cb17-32"><a href="#cb17-32"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb17-33"><a href="#cb17-33"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb17-34"><a href="#cb17-34"></a>    <span class="at">data =</span> votes_clusters, </span>
-<span id="cb17-35"><a href="#cb17-35"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster2)),</span>
-<span id="cb17-36"><a href="#cb17-36"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
-<span id="cb17-37"><a href="#cb17-37"></a>  ) <span class="sc">+</span></span>
-<span id="cb17-38"><a href="#cb17-38"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb17-39"><a href="#cb17-39"></a>    <span class="at">data =</span> <span class="fu">filter</span>(votes_pca, name <span class="sc">%in%</span> names), </span>
-<span id="cb17-40"><a href="#cb17-40"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">label =</span> name)</span>
-<span id="cb17-41"><a href="#cb17-41"></a>  ) <span class="sc">+</span></span>
-<span id="cb17-42"><a href="#cb17-42"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
-<span id="cb17-43"><a href="#cb17-43"></a>  <span class="fu">labs</span>(</span>
-<span id="cb17-44"><a href="#cb17-44"></a>    <span class="at">title =</span> <span class="st">"K-Means with K=2 and PCA"</span>,</span>
-<span id="cb17-45"><a href="#cb17-45"></a>    <span class="at">x =</span> <span class="st">"PC1 (0.45 of Variation)"</span>,</span>
-<span id="cb17-46"><a href="#cb17-46"></a>    <span class="at">y =</span> <span class="st">"PC2 (0.29 of Variation)"</span></span>
-<span id="cb17-47"><a href="#cb17-47"></a>  ) <span class="sc">+</span></span>
-<span id="cb17-48"><a href="#cb17-48"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb17-49"><a href="#cb17-49"></a>  <span class="fu">guides</span>(<span class="at">text =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>kmeans_spec <span class="ot">&lt;-</span> <span class="fu">k_means</span>(</span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">num_clusters =</span> <span class="dv">5</span> <span class="co"># number of clusters</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb21-4"><a href="#cb21-4"></a>  <span class="fu">set_engine</span>(</span>
+<span id="cb21-5"><a href="#cb21-5"></a>    <span class="st">"stats"</span>, </span>
+<span id="cb21-6"><a href="#cb21-6"></a>    <span class="at">nstart =</span> <span class="dv">100</span> <span class="co"># number of random starts</span></span>
+<span id="cb21-7"><a href="#cb21-7"></a>  ) </span>
+<span id="cb21-8"><a href="#cb21-8"></a></span>
+<span id="cb21-9"><a href="#cb21-9"></a><span class="co"># create a workflow</span></span>
+<span id="cb21-10"><a href="#cb21-10"></a>kmeans_wflow <span class="ot">&lt;-</span> <span class="fu">workflow</span>(</span>
+<span id="cb21-11"><a href="#cb21-11"></a>  <span class="at">preprocessor =</span> kmeans_rec, </span>
+<span id="cb21-12"><a href="#cb21-12"></a>  <span class="at">spec =</span> kmeans_spec</span>
+<span id="cb21-13"><a href="#cb21-13"></a>)</span>
+<span id="cb21-14"><a href="#cb21-14"></a></span>
+<span id="cb21-15"><a href="#cb21-15"></a><span class="co"># fit the model</span></span>
+<span id="cb21-16"><a href="#cb21-16"></a>votes_kmeans_5 <span class="ot">&lt;-</span> kmeans_wflow <span class="sc">|&gt;</span></span>
+<span id="cb21-17"><a href="#cb21-17"></a>  <span class="fu">fit</span>(<span class="at">data =</span> votes)</span>
+<span id="cb21-18"><a href="#cb21-18"></a></span>
+<span id="cb21-19"><a href="#cb21-19"></a>votes_clusters <span class="ot">&lt;-</span> <span class="fu">bind_cols</span>(</span>
+<span id="cb21-20"><a href="#cb21-20"></a>  <span class="fu">select</span>(votes, name, party),</span>
+<span id="cb21-21"><a href="#cb21-21"></a>  <span class="fu">select</span>(votes_pca, PC1, PC2),</span>
+<span id="cb21-22"><a href="#cb21-22"></a>  <span class="at">cluster2 =</span> votes_kmeans_2 <span class="sc">|&gt;</span> </span>
+<span id="cb21-23"><a href="#cb21-23"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span></span>
+<span id="cb21-24"><a href="#cb21-24"></a>    <span class="fu">pull</span>(.cluster),</span>
+<span id="cb21-25"><a href="#cb21-25"></a>  <span class="at">cluster5 =</span> votes_kmeans_5 <span class="sc">|&gt;</span> </span>
+<span id="cb21-26"><a href="#cb21-26"></a>    <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb21-27"><a href="#cb21-27"></a>    <span class="fu">pull</span>(.cluster)</span>
+<span id="cb21-28"><a href="#cb21-28"></a>)</span>
+<span id="cb21-29"><a href="#cb21-29"></a></span>
+<span id="cb21-30"><a href="#cb21-30"></a>names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Bernie Sanders"</span>, <span class="st">"Ted Cruz"</span>, <span class="st">"Joe Manchin"</span>, <span class="st">"Susan Collins"</span>)</span>
+<span id="cb21-31"><a href="#cb21-31"></a></span>
+<span id="cb21-32"><a href="#cb21-32"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb21-33"><a href="#cb21-33"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb21-34"><a href="#cb21-34"></a>    <span class="at">data =</span> votes_clusters, </span>
+<span id="cb21-35"><a href="#cb21-35"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster2)),</span>
+<span id="cb21-36"><a href="#cb21-36"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb21-37"><a href="#cb21-37"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-38"><a href="#cb21-38"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb21-39"><a href="#cb21-39"></a>    <span class="at">data =</span> <span class="fu">filter</span>(votes_pca, name <span class="sc">%in%</span> names), </span>
+<span id="cb21-40"><a href="#cb21-40"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">label =</span> name)</span>
+<span id="cb21-41"><a href="#cb21-41"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-42"><a href="#cb21-42"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>)) <span class="sc">+</span></span>
+<span id="cb21-43"><a href="#cb21-43"></a>  <span class="fu">labs</span>(</span>
+<span id="cb21-44"><a href="#cb21-44"></a>    <span class="at">title =</span> <span class="st">"K-Means with K=2 and PCA"</span>,</span>
+<span id="cb21-45"><a href="#cb21-45"></a>    <span class="at">x =</span> <span class="st">"PC1 (0.45 of Variation)"</span>,</span>
+<span id="cb21-46"><a href="#cb21-46"></a>    <span class="at">y =</span> <span class="st">"PC2 (0.29 of Variation)"</span></span>
+<span id="cb21-47"><a href="#cb21-47"></a>  ) <span class="sc">+</span></span>
+<span id="cb21-48"><a href="#cb21-48"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb21-49"><a href="#cb21-49"></a>  <span class="fu">guides</span>(<span class="at">text =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a>  <span class="fu">geom_point</span>(</span>
-<span id="cb18-3"><a href="#cb18-3"></a>    <span class="at">data =</span> votes_clusters, </span>
-<span id="cb18-4"><a href="#cb18-4"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster5)),</span>
-<span id="cb18-5"><a href="#cb18-5"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a>  ) <span class="sc">+</span></span>
-<span id="cb18-7"><a href="#cb18-7"></a>  <span class="fu">geom_text</span>(</span>
-<span id="cb18-8"><a href="#cb18-8"></a>    <span class="at">data =</span> <span class="fu">filter</span>(votes_pca, name <span class="sc">%in%</span> names), </span>
-<span id="cb18-9"><a href="#cb18-9"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">label =</span> name)</span>
-<span id="cb18-10"><a href="#cb18-10"></a>  ) <span class="sc">+</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a>  <span class="fu">labs</span>(</span>
-<span id="cb18-12"><a href="#cb18-12"></a>    <span class="at">title =</span> <span class="st">"K-Means with K=5 and PCA"</span>,</span>
-<span id="cb18-13"><a href="#cb18-13"></a>    <span class="at">x =</span> <span class="st">"PC1 (0.45 of Variation)"</span>,</span>
-<span id="cb18-14"><a href="#cb18-14"></a>    <span class="at">y =</span> <span class="st">"PC2 (0.29 of Variation)"</span></span>
-<span id="cb18-15"><a href="#cb18-15"></a>  ) <span class="sc">+</span></span>
-<span id="cb18-16"><a href="#cb18-16"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
-<span id="cb18-17"><a href="#cb18-17"></a>  <span class="fu">guides</span>(<span class="at">text =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb22-3"><a href="#cb22-3"></a>    <span class="at">data =</span> votes_clusters, </span>
+<span id="cb22-4"><a href="#cb22-4"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster5)),</span>
+<span id="cb22-5"><a href="#cb22-5"></a>    <span class="at">alpha =</span> <span class="fl">0.5</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-7"><a href="#cb22-7"></a>  <span class="fu">geom_text</span>(</span>
+<span id="cb22-8"><a href="#cb22-8"></a>    <span class="at">data =</span> <span class="fu">filter</span>(votes_pca, name <span class="sc">%in%</span> names), </span>
+<span id="cb22-9"><a href="#cb22-9"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(PC1, PC2, <span class="at">label =</span> name)</span>
+<span id="cb22-10"><a href="#cb22-10"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11"></a>  <span class="fu">labs</span>(</span>
+<span id="cb22-12"><a href="#cb22-12"></a>    <span class="at">title =</span> <span class="st">"K-Means with K=5 and PCA"</span>,</span>
+<span id="cb22-13"><a href="#cb22-13"></a>    <span class="at">x =</span> <span class="st">"PC1 (0.45 of Variation)"</span>,</span>
+<span id="cb22-14"><a href="#cb22-14"></a>    <span class="at">y =</span> <span class="st">"PC2 (0.29 of Variation)"</span></span>
+<span id="cb22-15"><a href="#cb22-15"></a>  ) <span class="sc">+</span></span>
+<span id="cb22-16"><a href="#cb22-16"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb22-17"><a href="#cb22-17"></a>  <span class="fu">guides</span>(<span class="at">text =</span> <span class="cn">NULL</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-19-2.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1121,18 +1132,18 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <section id="picking-variables" class="level4">
 <h4 class="anchored" data-anchor-id="picking-variables">Picking variables</h4>
 <p>Start with a subset of numeric variables based on subject matter expertise. In general, clustering algorithms work well with all continuous variables or all recoded categorical variables. Mixing variable types is possible but requires extra care.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co"># load the tidyverse</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb19-3"><a href="#cb19-3"></a></span>
-<span id="cb19-4"><a href="#cb19-4"></a><span class="co"># load statedata from library(urbnmapr)</span></span>
-<span id="cb19-5"><a href="#cb19-5"></a>state_data <span class="ot">&lt;-</span> urbnmapr<span class="sc">::</span>statedata</span>
-<span id="cb19-6"><a href="#cb19-6"></a></span>
-<span id="cb19-7"><a href="#cb19-7"></a><span class="co"># select numeric variables other than year</span></span>
-<span id="cb19-8"><a href="#cb19-8"></a>state_data <span class="ot">&lt;-</span> state_data <span class="sc">|&gt;</span></span>
-<span id="cb19-9"><a href="#cb19-9"></a>  <span class="fu">select</span>(hhpop, horate, medhhincome) </span>
-<span id="cb19-10"><a href="#cb19-10"></a></span>
-<span id="cb19-11"><a href="#cb19-11"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(state_data), <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="co"># load the tidyverse</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb23-3"><a href="#cb23-3"></a></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="co"># load statedata from library(urbnmapr)</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>state_data <span class="ot">&lt;-</span> urbnmapr<span class="sc">::</span>statedata</span>
+<span id="cb23-6"><a href="#cb23-6"></a></span>
+<span id="cb23-7"><a href="#cb23-7"></a><span class="co"># select numeric variables other than year</span></span>
+<span id="cb23-8"><a href="#cb23-8"></a>state_data <span class="ot">&lt;-</span> state_data <span class="sc">|&gt;</span></span>
+<span id="cb23-9"><a href="#cb23-9"></a>  <span class="fu">select</span>(hhpop, horate, medhhincome) </span>
+<span id="cb23-10"><a href="#cb23-10"></a></span>
+<span id="cb23-11"><a href="#cb23-11"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(state_data), <span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1191,8 +1202,8 @@ dbl (493): v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15,...
 <section id="finding-correlated-variables" class="level4">
 <h4 class="anchored" data-anchor-id="finding-correlated-variables">Finding correlated variables</h4>
 <p>Including highly correlated variables in a clustering algorithm will generally overweight the variability of the highly correlated variables. Use <code>cor()</code> to create a correlation matrix.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">cor</span>(state_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">cor</span>(state_data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                  hhpop     horate medhhincome
 hhpop        1.00000000 -0.2926963  0.01883672
@@ -1218,7 +1229,7 @@ medhhincome  0.01883672 -0.3747771  1.00000000</code></pre>
 <section id="diagnostics" class="level3" data-number="24.2.5">
 <h3 data-number="24.2.5" class="anchored" data-anchor-id="diagnostics"><span class="header-section-number">24.2.5</span> Diagnostics</h3>
 <p>Consider the k-means clusters from the states data.</p>
-<div class="cell" data-layout-align="center">
+<div class="cell">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1271,18 +1282,18 @@ medhhincome  0.01883672 -0.3747771  1.00000000</code></pre>
 <p>There are several ways that we can evaluate the quality of the clusters after the fact.</p>
 <section id="expert-check" class="level4">
 <h4 class="anchored" data-anchor-id="expert-check">Expert check</h4>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  state_data,</span>
-<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
-<span id="cb22-4"><a href="#cb22-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">|&gt;</span></span>
-<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb22-7"><a href="#cb22-7"></a>    <span class="fu">mean</span>(hhpop),</span>
-<span id="cb22-8"><a href="#cb22-8"></a>    <span class="fu">mean</span>(horate),</span>
-<span id="cb22-9"><a href="#cb22-9"></a>    <span class="fu">mean</span>(medhhincome)</span>
-<span id="cb22-10"><a href="#cb22-10"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb22-11"><a href="#cb22-11"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb26-2"><a href="#cb26-2"></a>  state_data,</span>
+<span id="cb26-3"><a href="#cb26-3"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
+<span id="cb26-4"><a href="#cb26-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb26-5"><a href="#cb26-5"></a>  <span class="fu">group_by</span>(cluster) <span class="sc">|&gt;</span></span>
+<span id="cb26-6"><a href="#cb26-6"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb26-7"><a href="#cb26-7"></a>    <span class="fu">mean</span>(hhpop),</span>
+<span id="cb26-8"><a href="#cb26-8"></a>    <span class="fu">mean</span>(horate),</span>
+<span id="cb26-9"><a href="#cb26-9"></a>    <span class="fu">mean</span>(medhhincome)</span>
+<span id="cb26-10"><a href="#cb26-10"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb26-11"><a href="#cb26-11"></a>  knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="at">digits =</span> <span class="dv">3</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
 <thead>
@@ -1357,28 +1368,28 @@ Note
 <p>Every cluster need not differ by every variable for a meaningful multivariate grouping to exist.</p>
 </div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">library</span>(GGally)</span>
-<span id="cb23-2"><a href="#cb23-2"></a></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="co">#add cluster membership to the origin data</span></span>
-<span id="cb23-4"><a href="#cb23-4"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb23-5"><a href="#cb23-5"></a>  state_data,</span>
-<span id="cb23-6"><a href="#cb23-6"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
-<span id="cb23-7"><a href="#cb23-7"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb23-8"><a href="#cb23-8"></a>  <span class="fu">filter</span>(cluster <span class="sc">!=</span> <span class="st">"Cluster_4"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb23-9"><a href="#cb23-9"></a>  <span class="co"># create a scatter plot matrix</span></span>
-<span id="cb23-10"><a href="#cb23-10"></a>  <span class="fu">ggpairs</span>(</span>
-<span id="cb23-11"><a href="#cb23-11"></a>    <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
-<span id="cb23-12"><a href="#cb23-12"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(cluster)),</span>
-<span id="cb23-13"><a href="#cb23-13"></a>    <span class="at">diag =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"densityDiag"</span>,</span>
-<span id="cb23-14"><a href="#cb23-14"></a>                                  <span class="at">alpha =</span> <span class="fl">0.8</span>,</span>
-<span id="cb23-15"><a href="#cb23-15"></a>                                  <span class="at">color =</span> <span class="cn">NA</span>))</span>
-<span id="cb23-16"><a href="#cb23-16"></a>  ) <span class="sc">+</span></span>
-<span id="cb23-17"><a href="#cb23-17"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="fu">library</span>(GGally)</span>
+<span id="cb27-2"><a href="#cb27-2"></a></span>
+<span id="cb27-3"><a href="#cb27-3"></a><span class="co">#add cluster membership to the origin data</span></span>
+<span id="cb27-4"><a href="#cb27-4"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb27-5"><a href="#cb27-5"></a>  state_data,</span>
+<span id="cb27-6"><a href="#cb27-6"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
+<span id="cb27-7"><a href="#cb27-7"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">filter</span>(cluster <span class="sc">!=</span> <span class="st">"Cluster_4"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb27-9"><a href="#cb27-9"></a>  <span class="co"># create a scatter plot matrix</span></span>
+<span id="cb27-10"><a href="#cb27-10"></a>  <span class="fu">ggpairs</span>(</span>
+<span id="cb27-11"><a href="#cb27-11"></a>    <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<span id="cb27-12"><a href="#cb27-12"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> <span class="fu">factor</span>(cluster)),</span>
+<span id="cb27-13"><a href="#cb27-13"></a>    <span class="at">diag =</span> <span class="fu">list</span>(<span class="at">continuous =</span> <span class="fu">wrap</span>(<span class="st">"densityDiag"</span>,</span>
+<span id="cb27-14"><a href="#cb27-14"></a>                                  <span class="at">alpha =</span> <span class="fl">0.8</span>,</span>
+<span id="cb27-15"><a href="#cb27-15"></a>                                  <span class="at">color =</span> <span class="cn">NA</span>))</span>
+<span id="cb27-16"><a href="#cb27-16"></a>  ) <span class="sc">+</span></span>
+<span id="cb27-17"><a href="#cb27-17"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1387,22 +1398,22 @@ Note
 <h4 class="anchored" data-anchor-id="visualizing-clusters-with-pca">Visualizing clusters with PCA</h4>
 <p>A scatter plot matrix requires <span class="math inline">\(\frac{p(p - 1)}{2}\)</span> plots to show <span class="math inline">\(p\)</span> variables. This can quickly grow unwieldy.</p>
 <p>We can use PCA to plot much of the variation in the data in two dimensions. The output shows that the first two components cumulatively explain more than 90% of variation in the data.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="co"># run PCA</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>rec_pca <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
-<span id="cb24-3"><a href="#cb24-3"></a>  <span class="at">formula =</span> <span class="sc">~</span> ., </span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="at">data =</span> state_data_numeric</span>
-<span id="cb24-5"><a href="#cb24-5"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb24-6"><a href="#cb24-6"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>(), <span class="at">id =</span> <span class="st">"pca"</span>) </span>
-<span id="cb24-7"><a href="#cb24-7"></a></span>
-<span id="cb24-8"><a href="#cb24-8"></a><span class="co"># calculate pct variance explained by components</span></span>
-<span id="cb24-9"><a href="#cb24-9"></a><span class="co"># the first two components explain 88% and 8% of the variance</span></span>
-<span id="cb24-10"><a href="#cb24-10"></a>rec_pca <span class="sc">|&gt;</span> </span>
-<span id="cb24-11"><a href="#cb24-11"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span> </span>
-<span id="cb24-12"><a href="#cb24-12"></a>  <span class="fu">tidy</span>(<span class="at">id =</span> <span class="st">"pca"</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-13"><a href="#cb24-13"></a>  <span class="fu">filter</span>(terms <span class="sc">==</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb24-14"><a href="#cb24-14"></a>  <span class="fu">mutate</span>(<span class="at">pct_var =</span> value<span class="sc">/</span><span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
-<span id="cb24-15"><a href="#cb24-15"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="co"># run PCA</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>rec_pca <span class="ot">&lt;-</span> <span class="fu">recipe</span>(</span>
+<span id="cb28-3"><a href="#cb28-3"></a>  <span class="at">formula =</span> <span class="sc">~</span> ., </span>
+<span id="cb28-4"><a href="#cb28-4"></a>  <span class="at">data =</span> state_data_numeric</span>
+<span id="cb28-5"><a href="#cb28-5"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb28-6"><a href="#cb28-6"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>(), <span class="at">id =</span> <span class="st">"pca"</span>) </span>
+<span id="cb28-7"><a href="#cb28-7"></a></span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="co"># calculate pct variance explained by components</span></span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="co"># the first two components explain 88% and 8% of the variance</span></span>
+<span id="cb28-10"><a href="#cb28-10"></a>rec_pca <span class="sc">|&gt;</span> </span>
+<span id="cb28-11"><a href="#cb28-11"></a>  <span class="fu">prep</span>() <span class="sc">|&gt;</span> </span>
+<span id="cb28-12"><a href="#cb28-12"></a>  <span class="fu">tidy</span>(<span class="at">id =</span> <span class="st">"pca"</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-13"><a href="#cb28-13"></a>  <span class="fu">filter</span>(terms <span class="sc">==</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb28-14"><a href="#cb28-14"></a>  <span class="fu">mutate</span>(<span class="at">pct_var =</span> value<span class="sc">/</span><span class="fu">sum</span>(value)) <span class="sc">|&gt;</span></span>
+<span id="cb28-15"><a href="#cb28-15"></a>  <span class="fu">slice_head</span>(<span class="at">n =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 5
   terms     value component id    pct_var
@@ -1410,24 +1421,24 @@ Note
 1 variance 0.860          1 pca    0.882 
 2 variance 0.0750         2 pca    0.0769</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>states_pca <span class="ot">&lt;-</span> rec_pca <span class="sc">|&gt;</span></span>
-<span id="cb26-2"><a href="#cb26-2"></a>   <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
-<span id="cb26-3"><a href="#cb26-3"></a>   <span class="fu">bake</span>(<span class="at">new_data =</span> state_data_numeric)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>states_pca <span class="ot">&lt;-</span> rec_pca <span class="sc">|&gt;</span></span>
+<span id="cb30-2"><a href="#cb30-2"></a>   <span class="fu">prep</span>() <span class="sc">|&gt;</span></span>
+<span id="cb30-3"><a href="#cb30-3"></a>   <span class="fu">bake</span>(<span class="at">new_data =</span> state_data_numeric)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a><span class="co"># create and visualize the group membership of observations in the components</span></span>
-<span id="cb27-2"><a href="#cb27-2"></a><span class="fu">bind_cols</span>(</span>
-<span id="cb27-3"><a href="#cb27-3"></a>  states_pca,</span>
-<span id="cb27-4"><a href="#cb27-4"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
-<span id="cb27-5"><a href="#cb27-5"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb27-6"><a href="#cb27-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster))) <span class="sc">+</span></span>
-<span id="cb27-7"><a href="#cb27-7"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb27-8"><a href="#cb27-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"State Data Clusters and PCA"</span>) <span class="sc">+</span></span>
-<span id="cb27-9"><a href="#cb27-9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="co"># create and visualize the group membership of observations in the components</span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="fu">bind_cols</span>(</span>
+<span id="cb31-3"><a href="#cb31-3"></a>  states_pca,</span>
+<span id="cb31-4"><a href="#cb31-4"></a>  <span class="at">cluster =</span> state_data_kmeans <span class="sc">|&gt;</span> <span class="fu">extract_cluster_assignment</span>() <span class="sc">|&gt;</span> <span class="fu">pull</span>(.cluster)</span>
+<span id="cb31-5"><a href="#cb31-5"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb31-6"><a href="#cb31-6"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(PC1, PC2, <span class="at">color =</span> <span class="fu">factor</span>(cluster))) <span class="sc">+</span></span>
+<span id="cb31-7"><a href="#cb31-7"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb31-8"><a href="#cb31-8"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"State Data Clusters and PCA"</span>) <span class="sc">+</span></span>
+<span id="cb31-9"><a href="#cb31-9"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1480,34 +1491,34 @@ Note
 <section id="hierarchical-models" class="level4">
 <h4 class="anchored" data-anchor-id="hierarchical-models">Hierarchical models</h4>
 <p>Agglomerative hierarchical clustering: Each element starts as a single-element cluster and are combined into bigger clusters.</p>
-<div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="fu">library</span>(cluster)   </span>
-<span id="cb28-2"><a href="#cb28-2"></a><span class="fu">library</span>(dendextend)</span>
-<span id="cb28-3"><a href="#cb28-3"></a></span>
-<span id="cb28-4"><a href="#cb28-4"></a><span class="co"># specify hierarchical cluster model</span></span>
-<span id="cb28-5"><a href="#cb28-5"></a>state_hier_spec <span class="ot">&lt;-</span> <span class="fu">hier_clust</span>(</span>
-<span id="cb28-6"><a href="#cb28-6"></a>  <span class="at">num_clusters =</span> <span class="dv">4</span>,</span>
-<span id="cb28-7"><a href="#cb28-7"></a>  <span class="at">linkage_method =</span> <span class="st">"average"</span></span>
-<span id="cb28-8"><a href="#cb28-8"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb28-9"><a href="#cb28-9"></a>  <span class="fu">set_engine</span>(<span class="st">"stats"</span>)</span>
-<span id="cb28-10"><a href="#cb28-10"></a></span>
-<span id="cb28-11"><a href="#cb28-11"></a><span class="co"># fit the model</span></span>
-<span id="cb28-12"><a href="#cb28-12"></a>hc_fit <span class="ot">&lt;-</span> state_hier_spec <span class="sc">|&gt;</span></span>
-<span id="cb28-13"><a href="#cb28-13"></a>  <span class="fu">fit</span>(<span class="sc">~</span> ., <span class="at">data =</span> state_data_numeric)</span>
-<span id="cb28-14"><a href="#cb28-14"></a></span>
-<span id="cb28-15"><a href="#cb28-15"></a><span class="co"># add state labels</span></span>
-<span id="cb28-16"><a href="#cb28-16"></a><span class="fu">labels</span>(hc_fit<span class="sc">$</span>fit) <span class="ot">&lt;-</span> urbnmapr<span class="sc">::</span>statedata<span class="sc">$</span>state_name[hc_fit<span class="sc">$</span>fit<span class="sc">$</span>order]</span>
-<span id="cb28-17"><a href="#cb28-17"></a></span>
-<span id="cb28-18"><a href="#cb28-18"></a><span class="co"># create a dendrogram of the clusters</span></span>
-<span id="cb28-19"><a href="#cb28-19"></a><span class="fu">plot</span>(</span>
-<span id="cb28-20"><a href="#cb28-20"></a>  hc_fit<span class="sc">$</span>fit,</span>
-<span id="cb28-21"><a href="#cb28-21"></a>  <span class="at">cex =</span> <span class="fl">0.6</span>,</span>
-<span id="cb28-22"><a href="#cb28-22"></a>  <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span></span>
-<span id="cb28-23"><a href="#cb28-23"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">library</span>(cluster)   </span>
+<span id="cb32-2"><a href="#cb32-2"></a><span class="fu">library</span>(dendextend)</span>
+<span id="cb32-3"><a href="#cb32-3"></a></span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="co"># specify hierarchical cluster model</span></span>
+<span id="cb32-5"><a href="#cb32-5"></a>state_hier_spec <span class="ot">&lt;-</span> <span class="fu">hier_clust</span>(</span>
+<span id="cb32-6"><a href="#cb32-6"></a>  <span class="at">num_clusters =</span> <span class="dv">4</span>,</span>
+<span id="cb32-7"><a href="#cb32-7"></a>  <span class="at">linkage_method =</span> <span class="st">"average"</span></span>
+<span id="cb32-8"><a href="#cb32-8"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb32-9"><a href="#cb32-9"></a>  <span class="fu">set_engine</span>(<span class="st">"stats"</span>)</span>
+<span id="cb32-10"><a href="#cb32-10"></a></span>
+<span id="cb32-11"><a href="#cb32-11"></a><span class="co"># fit the model</span></span>
+<span id="cb32-12"><a href="#cb32-12"></a>hc_fit <span class="ot">&lt;-</span> state_hier_spec <span class="sc">|&gt;</span></span>
+<span id="cb32-13"><a href="#cb32-13"></a>  <span class="fu">fit</span>(<span class="sc">~</span> ., <span class="at">data =</span> state_data_numeric)</span>
+<span id="cb32-14"><a href="#cb32-14"></a></span>
+<span id="cb32-15"><a href="#cb32-15"></a><span class="co"># add state labels</span></span>
+<span id="cb32-16"><a href="#cb32-16"></a><span class="fu">labels</span>(hc_fit<span class="sc">$</span>fit) <span class="ot">&lt;-</span> urbnmapr<span class="sc">::</span>statedata<span class="sc">$</span>state_name[hc_fit<span class="sc">$</span>fit<span class="sc">$</span>order]</span>
+<span id="cb32-17"><a href="#cb32-17"></a></span>
+<span id="cb32-18"><a href="#cb32-18"></a><span class="co"># create a dendrogram of the clusters</span></span>
+<span id="cb32-19"><a href="#cb32-19"></a><span class="fu">plot</span>(</span>
+<span id="cb32-20"><a href="#cb32-20"></a>  hc_fit<span class="sc">$</span>fit,</span>
+<span id="cb32-21"><a href="#cb32-21"></a>  <span class="at">cex =</span> <span class="fl">0.6</span>,</span>
+<span id="cb32-22"><a href="#cb32-22"></a>  <span class="at">hang =</span> <span class="sc">-</span><span class="dv">1</span></span>
+<span id="cb32-23"><a href="#cb32-23"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
+<div>
 <figure class="figure">
-<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="672"></p>
+<p><img src="26_unsupervised-ml-cluster-analysis_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>

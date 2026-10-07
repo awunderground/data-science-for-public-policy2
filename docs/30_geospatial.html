@@ -492,7 +492,8 @@ window.Quarto = {
   <li><a href="#geojson" id="toc-geojson" class="nav-link" data-scroll-target="#geojson"><span class="header-section-number">26.4.2</span> GeoJSON</a></li>
   <li><a href="#csv-files" id="toc-csv-files" class="nav-link" data-scroll-target="#csv-files"><span class="header-section-number">26.4.3</span> .csv files</a></li>
   <li><a href="#librarytigris" id="toc-librarytigris" class="nav-link" data-scroll-target="#librarytigris"><span class="header-section-number">26.4.4</span> <code>library(tigris)</code></a></li>
-  <li><a href="#librarytidycensus" id="toc-librarytidycensus" class="nav-link" data-scroll-target="#librarytidycensus"><span class="header-section-number">26.4.5</span> <code>library(tidycensus)</code></a></li>
+  <li><a href="#libraryrgeoboundaries" id="toc-libraryrgeoboundaries" class="nav-link" data-scroll-target="#libraryrgeoboundaries"><span class="header-section-number">26.4.5</span> <code>library(rgeoboundaries)</code></a></li>
+  <li><a href="#librarytidycensus" id="toc-librarytidycensus" class="nav-link" data-scroll-target="#librarytidycensus"><span class="header-section-number">26.4.6</span> <code>library(tidycensus)</code></a></li>
   </ul></li>
   <li><a href="#choropleths" id="toc-choropleths" class="nav-link" data-scroll-target="#choropleths"><span class="header-section-number">26.5</span> Choropleths</a></li>
   <li><a href="#spatial-concepts" id="toc-spatial-concepts" class="nav-link" data-scroll-target="#spatial-concepts"><span class="header-section-number">26.6</span> Spatial concepts</a>
@@ -543,7 +544,7 @@ window.Quarto = {
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg" class="img-fluid figure-img"></p>
-<figcaption>The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.</figcaption>
+<figcaption>The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstitution by Konrad Miller.</figcaption>
 </figure>
 </div>
 <section id="motivation" class="level2" data-number="26.1">
@@ -584,7 +585,7 @@ Note
 <p>Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard.</p>
 </div>
 </div>
-<p><code>library(sf)</code> stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special <code>geometry</code> column that stores vector geospatial data. You can think of each record in an sf dataframe as having two sets of data: 1. <strong>Attribute data</strong>: the non-spatial data. These data are stored in all columns except the <code>geometry</code> column 2. <strong>Geographic data</strong>: the geospatial data stored in the <code>geometry</code> column.</p>
+<p><code>library(sf)</code> stores data in an sf data frame. sf data frames are similar to normal data frames except that, in addition to regular rows and columns, they have a special <code>geometry</code> column that stores vector geospatial data. You can think of each record in an sf data frame as having two sets of data: 1. <strong>Attribute data</strong>: the non-spatial data. These data are stored in all columns except the <code>geometry</code> column 2. <strong>Geographic data</strong>: the geospatial data stored in the <code>geometry</code> column.</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -622,7 +623,7 @@ Note
 <span id="cb3-16"><a href="#cb3-16"></a></span>
 <span id="cb3-17"><a href="#cb3-17"></a><span class="co"># print the geometry column</span></span>
 <span id="cb3-18"><a href="#cb3-18"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: geometry columns are "sticky" -- geometry is returned even though it </span></span>
-<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># isn't include in select()</span></span>
+<span id="cb3-19"><a href="#cb3-19"></a><span class="co"># isn't included in select()</span></span>
 <span id="cb3-20"><a href="#cb3-20"></a>amtrak_stations <span class="sc">|&gt;</span></span>
 <span id="cb3-21"><a href="#cb3-21"></a>  <span class="fu">select</span>(stationnam)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -655,7 +656,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The geometry column in a <code>sf</code> dataframe is “sticky.” Even though <code>geometry</code> was not included in <code>select()</code>, it is still returned. <code>sf</code> works this way because the spatial data stored in the geometry column is essential to the object (it couldn’t be a geospatial data set without the geographic component of the data!).</p>
+<p>The geometry column in a <code>sf</code> data frame is “sticky.” Even though <code>geometry</code> was not included in <code>select()</code>, it is still returned. <code>sf</code> works this way because the spatial data stored in the geometry column is essential to the object (it couldn’t be a geospatial data set without the geographic component of the data!).</p>
 <p>If you are dead-set on dropping a geometry column, you can use <code>sf::st_drop_geometry()</code> which returns a data.frame.</p>
 </div>
 </div>
@@ -748,7 +749,7 @@ Note
 <p>Polygons (<code>POLYGON</code>) are two-dimensional geospatial objects. Like lines, polygons are composed of many points, but the first and last point in a polygon must be the same.</p>
 </div>
 </div>
-<p>Here is a simple example with of the Continental United States:</p>
+<p>Here is a simple example of the Continental United States:</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># load and subset states data</span></span>
 <span id="cb7-2"><a href="#cb7-2"></a>states <span class="ot">&lt;-</span> tigris<span class="sc">::</span><span class="fu">states</span>(<span class="at">cb =</span> <span class="cn">TRUE</span>, <span class="at">progress_bar =</span> <span class="cn">FALSE</span>) <span class="sc">|&gt;</span></span>
@@ -772,8 +773,8 @@ Note
 </section>
 <section id="multi-geometries" class="level3" data-number="26.2.4">
 <h3 data-number="26.2.4" class="anchored" data-anchor-id="multi-geometries"><span class="header-section-number">26.2.4</span> Multi-Geometries</h3>
-<p>In practice, many records in a sf dataframe do not have type <code>LINE</code>, <code>POINT</code> or <code>POLYGON</code>, but rather have type <code>MULTIPOINT</code>, <code>MULTILINE</code> or <code>MULTIPOLYGON</code>. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively.</p>
-<p>Consider the example of California. California is a single state, so, in the <code>states</code> sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the <code>MULTIPOLYGON</code> type is most well-suited for representing it.</p>
+<p>In practice, many records in an sf data frame do not have type <code>LINESTRING</code>, <code>POINT</code> or <code>POLYGON</code>, but rather have type <code>MULTIPOINT</code>, <code>MULTILINESTRING</code> or <code>MULTIPOLYGON</code>. This means that, for any given record in an sf data frame, the non-spatial data is associated with multiple points, lines, or polygons, respectively.</p>
+<p>Consider the example of California. California is a single state, so, in the <code>states</code> sf data frame above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the <code>MULTIPOLYGON</code> type is most well-suited for representing it.</p>
 <p><code>library(sf)</code> can represent 18 geometry types. To read about the 12 we do not mention, read the <a href="https://r-spatial.github.io/sf/articles/sf1.html">sf documentation</a>.</p>
 <p>If you are struggling with these concepts or want to read about them in greater depth, see <a href="https://r.geocompx.org/spatial-class#geometry">Chapter 2.2.4</a> of <em>Geocomputation with R</em>.</p>
 <p><code>library(sf)</code> implements simple features in R and introduces <code>sf</code> data.</p>
@@ -839,7 +840,7 @@ Note
 </section>
 <section id="csv-files" class="level3" data-number="26.4.3">
 <h3 data-number="26.4.3" class="anchored" data-anchor-id="csv-files"><span class="header-section-number">26.4.3</span> .csv files</h3>
-<p>Lots of geographic information is stored in .csv files–especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with <code>read_csv()</code>. Second, use <code>st_as_sf()</code> to convert the tibble into an sf object and specify the columns with longitude and latitude with the <code>coords</code> argument:</p>
+<p>Lots of geographic information is stored in .csv files–especially for point data where it is sensible to have longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with <code>read_csv()</code>. Second, use <code>st_as_sf()</code> to convert the tibble into an sf object and specify the columns with longitude and latitude with the <code>coords</code> argument:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">st_as_sf</span>(data, <span class="at">coords =</span> <span class="fu">c</span>(<span class="st">"lon"</span>, <span class="st">"lat"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -851,7 +852,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>It is trickier (but far less common) to load line, polygon, and multipolygon data from <code>.csvs</code>.</p>
+<p>It is trickier (but far less common) to load line, polygon, and multipolygon data from <code>.csv</code> files.</p>
 </div>
 </div>
 </section>
@@ -912,24 +913,29 @@ in your R script or .Rprofile.</code></pre>
 </div>
 </div>
 </div>
-<p><code>library(rgeoboundaries)</code></p>
-<p>The <a href="https://rspatialdata.github.io/admin_boundaries.html"><code>rgeoboundaries</code></a> package is a client for the <a href="https://www.geoboundaries.org/">geoBoundaries API</a>, providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the <code>remotes</code> package as follows</p>
+</section>
+<section id="libraryrgeoboundaries" class="level3" data-number="26.4.5">
+<h3 data-number="26.4.5" class="anchored" data-anchor-id="libraryrgeoboundaries"><span class="header-section-number">26.4.5</span> <code>library(rgeoboundaries)</code></h3>
+<p>The <a href="https://rspatialdata.github.io/admin_boundaries.html"><code>rgeoboundaries</code></a> package is a client for the <a href="https://www.geoboundaries.org/">geoBoundaries API</a>, providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the <code>remotes</code> package as follows:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#| eval: false</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a></span>
+<span id="cb19-3"><a href="#cb19-3"></a>remotes<span class="sc">::</span><span class="fu">install_github</span>(<span class="st">"wmgeolab/rgeoboundaries"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>The <code>rgeoboundaries</code> package can provide boundaries for countries at different administrative division levels. For example, here we obtain the adm1 boundaries (the first subnational level) for Bangladesh. The <code>type</code> argument of the <code>geoboundaries()</code> function can be set to obtain a simplified version of the boundaries.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="fu">library</span>(rgeoboundaries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="fu">library</span>(rgeoboundaries)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Registered S3 method overwritten by 'hoardr':
   method           from
   print.cache_info httr</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>bangladesh <span class="ot">&lt;-</span> <span class="fu">geoboundaries</span>(</span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="at">country =</span> <span class="st">"Bangladesh"</span>, </span>
-<span id="cb21-3"><a href="#cb21-3"></a>  <span class="at">adm_lvl =</span> <span class="st">"adm1"</span>,</span>
-<span id="cb21-4"><a href="#cb21-4"></a>  <span class="at">type =</span> <span class="st">"SSCGS"</span> <span class="co"># Simplified Single Country Globally Standardized</span></span>
-<span id="cb21-5"><a href="#cb21-5"></a>) </span>
-<span id="cb21-6"><a href="#cb21-6"></a></span>
-<span id="cb21-7"><a href="#cb21-7"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
-<span id="cb21-8"><a href="#cb21-8"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>bangladesh <span class="ot">&lt;-</span> <span class="fu">geoboundaries</span>(</span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="at">country =</span> <span class="st">"Bangladesh"</span>, </span>
+<span id="cb22-3"><a href="#cb22-3"></a>  <span class="at">adm_lvl =</span> <span class="st">"adm1"</span>,</span>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="at">type =</span> <span class="st">"SSCGS"</span> <span class="co"># Simplified Single Country Globally Standardized</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>) </span>
+<span id="cb22-6"><a href="#cb22-6"></a></span>
+<span id="cb22-7"><a href="#cb22-7"></a><span class="fu">ggplot</span>(<span class="at">data =</span> bangladesh) <span class="sc">+</span></span>
+<span id="cb22-8"><a href="#cb22-8"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -953,12 +959,12 @@ in your R script or .Rprofile.</code></pre>
 <li>Copy the below code into your script to read in <code>aiddata_bangladesh.csv</code> with read_csv().</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>aiddata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
-<span id="cb22-2"><a href="#cb22-2"></a>  <span class="fu">paste0</span>(</span>
-<span id="cb22-3"><a href="#cb22-3"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
-<span id="cb22-4"><a href="#cb22-4"></a>    <span class="st">"main/aiddata/aiddata_bangladesh.csv"</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>    )</span>
-<span id="cb22-6"><a href="#cb22-6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>aiddata <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(</span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">paste0</span>(</span>
+<span id="cb23-3"><a href="#cb23-3"></a>    <span class="st">"https://raw.githubusercontent.com/awunderground/awunderground-data/"</span>,</span>
+<span id="cb23-4"><a href="#cb23-4"></a>    <span class="st">"main/aiddata/aiddata_bangladesh.csv"</span></span>
+<span id="cb23-5"><a href="#cb23-5"></a>    )</span>
+<span id="cb23-6"><a href="#cb23-6"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 2648 Columns: 21
 ── Column specification ────────────────────────────────────────────────────────
@@ -979,23 +985,23 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 </div>
 </div>
 </section>
-<section id="librarytidycensus" class="level3" data-number="26.4.5">
-<h3 data-number="26.4.5" class="anchored" data-anchor-id="librarytidycensus"><span class="header-section-number">26.4.5</span> <code>library(tidycensus)</code></h3>
+<section id="librarytidycensus" class="level3" data-number="26.4.6">
+<h3 data-number="26.4.6" class="anchored" data-anchor-id="librarytidycensus"><span class="header-section-number">26.4.6</span> <code>library(tidycensus)</code></h3>
 <p><a href="https://walker-data.com/tidycensus/articles/spatial-data.html"><code>library(tidycensus)</code></a>, which was created by the creator of <code>library(tigris)</code>, is also a valuable source of geographic data. Simply include <code>geometry = TRUE</code> in functions like <code>get_acs()</code> to pull the shapes data as <code>sf</code>. The <code>state</code> and <code>county</code> arguments accept names and FIPS codes.</p>
 <p><code>library(tidycensus)</code> sometimes requires the same Census API Key we used in the API tutorial (<a href="https://api.census.gov/data/key_signup.html">sign up here</a>). You should be able to install your API key into your version of R with <code>census_api_key("your-key-string", install = TRUE)</code>. To obtain your keystring, you can use <code>library(dotenv)</code> and <code>Sys.getenv(&lt;key name in .env file&gt;)</code>.</p>
 <p><code>library(tidycensus)</code> has two big differences from <code>library(tigris)</code>: 1. it can pull Census data with the geographic data, and 2. it only provides cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a><span class="fu">library</span>(tidycensus)</span>
-<span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
-<span id="cb24-4"><a href="#cb24-4"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
-<span id="cb24-5"><a href="#cb24-5"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
-<span id="cb24-6"><a href="#cb24-6"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
-<span id="cb24-7"><a href="#cb24-7"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
-<span id="cb24-8"><a href="#cb24-8"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb24-9"><a href="#cb24-9"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
-<span id="cb24-10"><a href="#cb24-10"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
-<span id="cb24-11"><a href="#cb24-11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">library</span>(tidycensus)</span>
+<span id="cb25-2"><a href="#cb25-2"></a></span>
+<span id="cb25-3"><a href="#cb25-3"></a>dc_income <span class="ot">&lt;-</span> <span class="fu">get_acs</span>(</span>
+<span id="cb25-4"><a href="#cb25-4"></a>  <span class="at">geography =</span> <span class="st">"tract"</span>, </span>
+<span id="cb25-5"><a href="#cb25-5"></a>  <span class="at">variables =</span> <span class="st">"B19013_001"</span>, </span>
+<span id="cb25-6"><a href="#cb25-6"></a>  <span class="at">state =</span> <span class="st">"DC"</span>, </span>
+<span id="cb25-7"><a href="#cb25-7"></a>  <span class="at">county =</span> <span class="st">"District of Columbia"</span>, </span>
+<span id="cb25-8"><a href="#cb25-8"></a>  <span class="at">geometry =</span> <span class="cn">TRUE</span>,</span>
+<span id="cb25-9"><a href="#cb25-9"></a>  <span class="at">year =</span> <span class="dv">2019</span>,</span>
+<span id="cb25-10"><a href="#cb25-10"></a>  <span class="at">progress =</span> <span class="cn">FALSE</span></span>
+<span id="cb25-11"><a href="#cb25-11"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Getting data from the 2015-2019 5-year ACS</code></pre>
 </div>
@@ -1003,7 +1009,7 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <pre><code>Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
 </div>
 </div>
-<p>Both <code>library(tigris)</code> and <code>library(tidycensus)</code> have a <code>year</code> parameter that determines the year of the data obtained in functions like <code>tidycensus::get_acs()</code> or <code>tigris::states()</code>. This parameter currently defaults to 2020 for <code>get_acs()</code> and <code>tigris</code> functions. <code>tidycensus::get_acs()</code> also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.</p>
+<p>Both <code>library(tigris)</code> and <code>library(tidycensus)</code> have a <code>year</code> parameter that determines the year of the data obtained in functions like <code>tidycensus::get_acs()</code> or <code>tigris::states()</code>. This parameter currently defaults to a recent year for <code>get_acs()</code> and <code>tigris</code> functions. <code>tidycensus::get_acs()</code> also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.</p>
 </section>
 </section>
 <section id="choropleths" class="level2" data-number="26.5">
@@ -1011,7 +1017,7 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 <p>Choropleths are maps that use fill to display the variation in a variable across geographies.</p>
 <div class="cell">
 <div class="cell-output cell-output-stderr">
-<pre><code>Getting data from the 2019-2023 5-year ACS</code></pre>
+<pre><code>Getting data from the 2015-2019 5-year ACS</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Downloading feature geometry from the Census website.  To cache shapefiles for use in future sessions, set `options(tigris_use_cache = TRUE)`.</code></pre>
@@ -1044,7 +1050,7 @@ dbl  (6): precision_code, geoname_id, latitude, longitude, location_class, g...
 </section>
 <section id="spatial-concepts" class="level2" data-number="26.6">
 <h2 data-number="26.6" class="anchored" data-anchor-id="spatial-concepts"><span class="header-section-number">26.6</span> Spatial concepts</h2>
-<p>Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface.</p>
+<p>Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three dimensions onto a two-dimensional surface.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1068,7 +1074,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Geographic coordinate reference systems represent geographies with a three-dimensional representation of the Earth. (i.e., The data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.</p>
+<p>Geographic coordinate reference systems represent geographies with a three-dimensional representation of the Earth. (i.e., the data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1081,7 +1087,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Projected coordinate reference system represent geographies with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.</p>
+<p>Projected coordinate reference systems represent geographies with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -1094,13 +1100,13 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into a two-dimensions.</p>
+<p>A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into two dimensions.</p>
 </div>
 </div>
 <section id="popular-projections" class="level3" data-number="26.6.1">
 <h3 data-number="26.6.1" class="anchored" data-anchor-id="popular-projections"><span class="header-section-number">26.6.1</span> Popular projections</h3>
 <p>All projections are wrong, but all projections are wrong in different ways with different uses.</p>
-<p>Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Conic projections distort longitudes and latitudes but maintain areas. Azimuthal projections maintain distances but struggle to project large areas.</p>
+<p>Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Some conic projections, like Albers, distort longitudes and latitudes but maintain areas. Some azimuthal projections maintain distances from a center point but struggle to project large areas.</p>
 <section id="mercator-projection" class="level4">
 <h4 class="anchored" data-anchor-id="mercator-projection">Mercator projection</h4>
 <p>The Mercator projection is widespread because it maintains straight lines for longitude and latitude. This was useful for navigators on the open sea hundreds of years ago. This is less useful in the 21st century. The Mercator projection is conformal, so while it maintains angles, it seriously distorts area. To see this, play the <a href="https://bramus.github.io/mercator-puzzle-redux/">Mercator Puzzle</a>.</p>
@@ -1132,7 +1138,7 @@ Figure&nbsp;26.2: Albers
 </section>
 <section id="state-plane-coordinate-systems-spcs" class="level4">
 <h4 class="anchored" data-anchor-id="state-plane-coordinate-systems-spcs">State Plane Coordinate Systems (SPCS)</h4>
-<p>The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. <a href="https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm">This site</a> has a thorough introduction.</p>
+<p>The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee, use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. <a href="https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm">This site</a> has a thorough introduction.</p>
 <div id="fig-state-planes" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-state-planes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1147,14 +1153,14 @@ Figure&nbsp;26.3: State Planes
 </section>
 <section id="epsg-codes" class="level4">
 <h4 class="anchored" data-anchor-id="epsg-codes">EPSG Codes</h4>
-<p>A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes from the European Petrol Survey Group, which no longer exists. EPSG codes are 4-6 numbers. Always check to see if a CRS is specified after loading spatial data. Here are some defaults:</p>
+<p>A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes from the European Petroleum Survey Group, which no longer exists. EPSG codes are 4-6 numbers. Always check to see if a CRS is specified after loading spatial data. Here are some defaults:</p>
 <ul>
 <li>The EPSG code will always be 4326 for GeoJSONs.</li>
 <li>.csv files with longitude and latitude will typically be 4326.</li>
 <li>R should read the CRS from <code>.prj</code> file when reading shapefiles. If it fails, open the <code>.prj</code> file and use <a href="http://prj2epsg.org">this tool</a> to identify the EPSG code.</li>
 </ul>
 <p>Use <code>st_crs()</code> to see the CRS. Use <code>st_set_crs()</code> to set the CRS. Use <code>st_transform()</code> to transform the CRS. Note that <code>st_set_crs()</code> simply adds or updates CRS information - it does not transform the data. When using multiple different geospatial datasets for mapping (e.g.&nbsp;layering points and polygons), they should have the same CRS prior to mapping.</p>
-<p><a href="epsg.io">epsg.io</a> and <a href="spatialreference.org">spatialreference.org</a> are useful for finding and learning more about EPSG codes.</p>
+<p><a href="https://epsg.io">epsg.io</a> and <a href="https://spatialreference.org">spatialreference.org</a> are useful for finding and learning more about EPSG codes.</p>
 </section>
 <section id="datum" class="level4">
 <h4 class="anchored" data-anchor-id="datum">Datum</h4>
@@ -1177,12 +1183,12 @@ Figure&nbsp;26.3: State Planes
 <h4 class="anchored" data-anchor-id="librarycrsuggest"><code>library(crsuggest)</code></h4>
 <p><a href="https://github.com/walkerke/crsuggest"><code>library(crsuggest)</code></a> can simplify the process of picking a CRS.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb29"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu">library</span>(crsuggest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">library</span>(crsuggest)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Using the EPSG Dataset v10.019, a product of the International Association of Oil &amp; Gas Producers. 
 Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">suggest_crs</span>(amtrak_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1198,10 +1204,10 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
  9 6922     NAD83 / Kansas LCC              project…    4269 m         +proj=lc…
 10 6467     NAD83(2011) / Kansas North (ft… project…    6318 us-ft     +proj=lc…</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
-<span id="cb33-3"><a href="#cb33-3"></a></span>
-<span id="cb33-4"><a href="#cb33-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>virginia_stations <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"VA"</span>)</span>
+<span id="cb34-3"><a href="#cb34-3"></a></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="fu">suggest_crs</span>(virginia_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 10 × 6
    crs_code crs_name                        crs_type crs_gcs crs_units crs_proj4
@@ -1229,7 +1235,7 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <li>Use <code>CRS = 5070</code> if you are mapping the entire Continental US. Other useful EPSG codes are available <a href="https://guides.library.duke.edu/r-geospatial/CRS">here</a>.</li>
 <li>Use the recommended state plane coordinate system for state and local maps.</li>
 </ol>
-<p>Here’s the map from earlier with EPSG 4326 on the left and EPSG 5070 (Alber’s Equal Area Conic Projection) on the right:</p>
+<p>Here’s the map from earlier with EPSG 4326 on the left and EPSG 5070 (Albers Equal Area Conic Projection) on the right:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div>
@@ -1251,9 +1257,9 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <div class="callout-body-container callout-body">
 <ol type="1">
 <li>Copy-and-paste the AidData exercise from exercise 2.</li>
-<li>Repeat the mapping with a EPSG code that makes sense for Bangladesh using <code>st_transform()</code> (<strong>Hint:</strong> you can identify the EPSG code using <code>suggest_crs(aiddata)</code>).</li>
+<li>Repeat the mapping with an EPSG code that makes sense for Bangladesh using <code>st_transform()</code> (<strong>Hint:</strong> you can identify the EPSG code using <code>suggest_crs(aiddata)</code>).</li>
 <li>Copy-and-paste the AidData exercise from exercise 2 again.</li>
-<li>Repeat the mapping with a EPSG code that makes sense for Bangladesh using <code>coord_sf(crs = ####)</code> where <code>####</code> is the EPSG code from step 2 (<strong>Hint:</strong> <code>coord_sf()</code> can be added to your mapping code following a + ). This skips the need for <code>st_transform()</code> when making maps.</li>
+<li>Repeat the mapping with an EPSG code that makes sense for Bangladesh using <code>coord_sf(crs = ####)</code> where <code>####</code> is the EPSG code from step 2 (<strong>Hint:</strong> <code>coord_sf()</code> can be added to your mapping code following a + ). This skips the need for <code>st_transform()</code> when making maps.</li>
 </ol>
 </div>
 </div>
@@ -1267,20 +1273,20 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <h3 data-number="26.7.1" class="anchored" data-anchor-id="aggregation"><span class="header-section-number">26.7.1</span> Aggregation</h3>
 <p>Sometimes we want to aggregate smaller geographies into larger geographies. This is simple with a <code>group_by()</code> and <code>summarize()</code> workflow. Suppose we want to combine North Dakota and South Dakota into Dakota.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a><span class="co"># states to combine</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
-<span id="cb35-3"><a href="#cb35-3"></a></span>
-<span id="cb35-4"><a href="#cb35-4"></a><span class="co"># add a projection</span></span>
-<span id="cb35-5"><a href="#cb35-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
-<span id="cb35-6"><a href="#cb35-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb35-7"><a href="#cb35-7"></a></span>
-<span id="cb35-8"><a href="#cb35-8"></a><span class="co"># aggregate states and make a map</span></span>
-<span id="cb35-9"><a href="#cb35-9"></a>states <span class="sc">|&gt;</span></span>
-<span id="cb35-10"><a href="#cb35-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
-<span id="cb35-11"><a href="#cb35-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
-<span id="cb35-12"><a href="#cb35-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
-<span id="cb35-13"><a href="#cb35-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
-<span id="cb35-14"><a href="#cb35-14"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># states to combine</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>dmv_names <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"South Dakota"</span>, <span class="st">"North Dakota"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3"></a></span>
+<span id="cb36-4"><a href="#cb36-4"></a><span class="co"># add a projection</span></span>
+<span id="cb36-5"><a href="#cb36-5"></a>states <span class="ot">&lt;-</span> states <span class="sc">|&gt;</span></span>
+<span id="cb36-6"><a href="#cb36-6"></a>  <span class="fu">st_transform</span>(<span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb36-7"><a href="#cb36-7"></a></span>
+<span id="cb36-8"><a href="#cb36-8"></a><span class="co"># aggregate states and make a map</span></span>
+<span id="cb36-9"><a href="#cb36-9"></a>states <span class="sc">|&gt;</span></span>
+<span id="cb36-10"><a href="#cb36-10"></a>  <span class="fu">mutate</span>(<span class="at">new_NAME =</span> <span class="fu">if_else</span>(NAME <span class="sc">%in%</span> dmv_names, <span class="st">"Dakota"</span>, NAME)) <span class="sc">|&gt;</span></span>
+<span id="cb36-11"><a href="#cb36-11"></a>  <span class="fu">group_by</span>(new_NAME) <span class="sc">|&gt;</span></span>
+<span id="cb36-12"><a href="#cb36-12"></a>  <span class="fu">summarize</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-13"><a href="#cb36-13"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb36-14"><a href="#cb36-14"></a>  <span class="fu">geom_sf</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -1292,34 +1298,35 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 </section>
 <section id="spatial-joins" class="level3" data-number="26.7.2">
 <h3 data-number="26.7.2" class="anchored" data-anchor-id="spatial-joins"><span class="header-section-number">26.7.2</span> Spatial Joins</h3>
-<p>Spatial joins are joins like <code>left_join()</code> but the join is based on geography instead of “by” variables. <strong>Note:</strong> both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many.</p>
-<p><code>st_join()</code> performs a left spatial join in R. <code>st_intersects</code> means observations will join if the geographies in <code>x</code> touch the geographies in <code>y</code>. The <code>sf</code> package offers a number of different geometric confirmations that can be used for spatial joins, such as <code>st_covered_by</code> (identifies if <code>x</code> is copletely within <code>y</code>), <code>st_within</code> (identifies if <code>x</code> is within a specified distance of <code>y</code>) and many more. The <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">sf cheat sheet</a> provides a good outline of the different options.</p>
+<p>Spatial joins are joins like <code>left_join()</code> but the join is based on geography instead of “by” variables. <strong>Note:</strong> both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one or one-to-many.</p>
+<p><code>st_join()</code> performs a left spatial join in R. <code>st_intersects</code> means observations will join if the geographies in <code>x</code> touch the geographies in <code>y</code>. The <code>sf</code> package offers a number of different geometric confirmations that can be used for spatial joins, such as <code>st_covered_by</code> (identifies if <code>x</code> is completely within <code>y</code>), <code>st_is_within_distance</code> (identifies if <code>x</code> is within a specified distance of <code>y</code>) and many more. The <a href="https://github.com/rstudio/cheatsheets/blob/main/sf.pdf">sf cheat sheet</a> provides a good outline of the different options.</p>
 <p>Suppose we want to count the number of Amtrak stations in each state.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a><span class="co"># set states CRS to 4326 to match the Amtrak data</span></span>
-<span id="cb36-2"><a href="#cb36-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
-<span id="cb36-3"><a href="#cb36-3"></a></span>
-<span id="cb36-4"><a href="#cb36-4"></a><span class="co"># dimension before join</span></span>
-<span id="cb36-5"><a href="#cb36-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="co"># set Amtrak CRS to 5070 to match the states data</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>amtrak_stations <span class="ot">&lt;-</span> <span class="fu">st_transform</span>(amtrak_stations, <span class="at">crs =</span> <span class="dv">5070</span>)</span>
+<span id="cb37-3"><a href="#cb37-3"></a></span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="co"># dimension before join</span></span>
+<span id="cb37-5"><a href="#cb37-5"></a><span class="fu">dim</span>(amtrak_stations)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1096   12</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a><span class="co"># spatial join using intersection</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
-<span id="cb38-3"><a href="#cb38-3"></a></span>
-<span id="cb38-4"><a href="#cb38-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
-<span id="cb38-5"><a href="#cb38-5"></a><span class="fu">dim</span>(amtrak)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="co"># spatial join using intersection</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>amtrak <span class="ot">&lt;-</span> <span class="fu">st_join</span>(states, amtrak_stations, <span class="at">join =</span> st_intersects)</span>
+<span id="cb39-3"><a href="#cb39-3"></a></span>
+<span id="cb39-4"><a href="#cb39-4"></a><span class="co"># dimension after join -- lose international stations</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a><span class="fu">dim</span>(amtrak)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 1080   21</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="co"># count the number of stations per state</span></span>
-<span id="cb40-2"><a href="#cb40-2"></a>amtrak <span class="sc">|&gt;</span></span>
-<span id="cb40-3"><a href="#cb40-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
-<span id="cb40-4"><a href="#cb40-4"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
-<span id="cb40-5"><a href="#cb40-5"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb40-6"><a href="#cb40-6"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a><span class="co"># count the number of stations per state</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>amtrak <span class="sc">|&gt;</span></span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span> <span class="co"># converting from sf to tibble speeds calculations</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(stationnam)) <span class="sc">|&gt;</span> <span class="co"># drop states with no stations</span></span>
+<span id="cb41-5"><a href="#cb41-5"></a>  <span class="fu">group_by</span>(NAME) <span class="sc">|&gt;</span></span>
+<span id="cb41-6"><a href="#cb41-6"></a>  <span class="fu">summarize</span>(<span class="at">number_of_stations =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb41-7"><a href="#cb41-7"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(number_of_stations))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 49 × 2
+<pre><code># A tibble: 48 × 2
    NAME         number_of_stations
    &lt;chr&gt;                     &lt;int&gt;
  1 California                  184
@@ -1332,7 +1339,7 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
  8 Wisconsin                    37
  9 Florida                      31
 10 Texas                        31
-# ℹ 39 more rows</code></pre>
+# ℹ 38 more rows</code></pre>
 </div>
 </div>
 </section>
@@ -1341,24 +1348,24 @@ Please view the terms of use at https://epsg.org/terms-of-use.html.</code></pre>
 <p>Adding buffers to points, lines, and polygons is useful for counting shapes near other shapes. For instance, we may want to count the number of housing units within 500 meters of a metro station or the number of schools more than 5 miles from a fire station.</p>
 <p>Suppose we want to count the number of Amtrak stations within 5 kilometers of each Amtrak station. We can buffer the Amtrak station points, join the unbuffered data to the buffered data, and then count.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
-<span id="cb42-2"><a href="#cb42-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
-<span id="cb42-3"><a href="#cb42-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
-<span id="cb42-4"><a href="#cb42-4"></a>  amtrak_stations, </span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
-<span id="cb42-6"><a href="#cb42-6"></a>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a></span>
-<span id="cb42-8"><a href="#cb42-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
-<span id="cb42-9"><a href="#cb42-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
-<span id="cb42-10"><a href="#cb42-10"></a>  amtrak_stations_buffered,</span>
-<span id="cb42-11"><a href="#cb42-11"></a>  amtrak_stations, </span>
-<span id="cb42-12"><a href="#cb42-12"></a>  <span class="at">join =</span> st_intersects</span>
-<span id="cb42-13"><a href="#cb42-13"></a>)</span>
-<span id="cb42-14"><a href="#cb42-14"></a></span>
-<span id="cb42-15"><a href="#cb42-15"></a><span class="co"># count the station names</span></span>
-<span id="cb42-16"><a href="#cb42-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
-<span id="cb42-17"><a href="#cb42-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb42-18"><a href="#cb42-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="co"># add a buffer of 5 kilometers to each station</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a><span class="co"># the units package is useful for setting buffers with different units</span></span>
+<span id="cb43-3"><a href="#cb43-3"></a>amtrak_stations_buffered <span class="ot">&lt;-</span> <span class="fu">st_buffer</span>(</span>
+<span id="cb43-4"><a href="#cb43-4"></a>  amtrak_stations, </span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="at">dist =</span> units<span class="sc">::</span><span class="fu">set_units</span>(<span class="dv">5</span>, <span class="st">"km"</span>)</span>
+<span id="cb43-6"><a href="#cb43-6"></a>)</span>
+<span id="cb43-7"><a href="#cb43-7"></a></span>
+<span id="cb43-8"><a href="#cb43-8"></a><span class="co"># spatial join the unbuffered shapes to the buffer shapes</span></span>
+<span id="cb43-9"><a href="#cb43-9"></a>amtrak_stations_joined <span class="ot">&lt;-</span> <span class="fu">st_join</span>(</span>
+<span id="cb43-10"><a href="#cb43-10"></a>  amtrak_stations_buffered,</span>
+<span id="cb43-11"><a href="#cb43-11"></a>  amtrak_stations, </span>
+<span id="cb43-12"><a href="#cb43-12"></a>  <span class="at">join =</span> st_intersects</span>
+<span id="cb43-13"><a href="#cb43-13"></a>)</span>
+<span id="cb43-14"><a href="#cb43-14"></a></span>
+<span id="cb43-15"><a href="#cb43-15"></a><span class="co"># count the station names</span></span>
+<span id="cb43-16"><a href="#cb43-16"></a>amtrak_stations_joined <span class="sc">|&gt;</span></span>
+<span id="cb43-17"><a href="#cb43-17"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb43-18"><a href="#cb43-18"></a>  <span class="fu">count</span>(stationnam.x, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,007 × 2
    stationnam.x                   n
@@ -1394,20 +1401,20 @@ Figure&nbsp;26.4: Haversine Distance
 </div>
 <p>Suppose we want to find the closest and furthest Amtrak stations from Washington DC’s Union Station.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="co"># create a data frame with just Union Station</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
-<span id="cb44-4"><a href="#cb44-4"></a></span>
-<span id="cb44-5"><a href="#cb44-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-6"><a href="#cb44-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
-<span id="cb44-7"><a href="#cb44-7"></a></span>
-<span id="cb44-8"><a href="#cb44-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
-<span id="cb44-9"><a href="#cb44-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
-<span id="cb44-10"><a href="#cb44-10"></a></span>
-<span id="cb44-11"><a href="#cb44-11"></a><span class="co"># find the closest station</span></span>
-<span id="cb44-12"><a href="#cb44-12"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb44-13"><a href="#cb44-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb44-14"><a href="#cb44-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="co"># create a data frame with just Union Station</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">filter</span>(state <span class="sc">==</span> <span class="st">"DC"</span>)</span>
+<span id="cb45-4"><a href="#cb45-4"></a></span>
+<span id="cb45-5"><a href="#cb45-5"></a>no_union_station <span class="ot">&lt;-</span> amtrak_stations <span class="sc">|&gt;</span></span>
+<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">filter</span>(state <span class="sc">!=</span> <span class="st">"DC"</span>) </span>
+<span id="cb45-7"><a href="#cb45-7"></a></span>
+<span id="cb45-8"><a href="#cb45-8"></a><span class="co"># calculate the distance from Union Station to all other stations</span></span>
+<span id="cb45-9"><a href="#cb45-9"></a>amtrak_distances <span class="ot">&lt;-</span> <span class="fu">st_distance</span>(union_station, no_union_station)</span>
+<span id="cb45-10"><a href="#cb45-10"></a></span>
+<span id="cb45-11"><a href="#cb45-11"></a><span class="co"># find the closest station</span></span>
+<span id="cb45-12"><a href="#cb45-12"></a>no_union_station <span class="sc">|&gt;</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a>  <span class="fu">slice</span>(<span class="fu">which.min</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb45-14"><a href="#cb45-14"></a>  <span class="fu">select</span>(stationnam, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
@@ -1417,10 +1424,10 @@ Projected CRS: NAD83 / Conus Albers
       stationnam       city                geometry
 1 Alexandria, VA Alexandria POINT (1618448 1915016)</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="co"># find the further station</span></span>
-<span id="cb46-2"><a href="#cb46-2"></a>amtrak_stations <span class="sc">|&gt;</span></span>
-<span id="cb46-3"><a href="#cb46-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
-<span id="cb46-4"><a href="#cb46-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="co"># find the farthest station</span></span>
+<span id="cb47-2"><a href="#cb47-2"></a>no_union_station <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">slice</span>(<span class="fu">which.max</span>(amtrak_distances)) <span class="sc">|&gt;</span></span>
+<span id="cb47-4"><a href="#cb47-4"></a>  <span class="fu">select</span>(stationnam, city)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Simple feature collection with 1 feature and 2 fields
 Geometry type: POINT
@@ -1436,7 +1443,7 @@ Projected CRS: NAD83 / Conus Albers
 <section id="geospatial-modeling" class="level2" data-number="26.8">
 <h2 data-number="26.8" class="anchored" data-anchor-id="geospatial-modeling"><span class="header-section-number">26.8</span> Geospatial modeling</h2>
 <p>Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.</p>
-<p>The assumption of independence often falls apart with spatial data. If number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn’t make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina.</p>
+<p>The assumption of independence often falls apart with spatial data. If the number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn’t make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal-burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina.</p>
 <p>Spatial regression methods attempt to account for this dependence between observations.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1455,13 +1462,13 @@ Projected CRS: NAD83 / Conus Albers
 <ol type="1">
 <li>Estimate a non-spatial regression model.</li>
 <li>Use tests of spatial autocorrelation like Moran’s I, Geary’s c, or Getis and Ord’s G-statistic on the residuals to test for spatial autocorrelation.</li>
-<li>If spatial autocorrelation exists, the use a spatial error model or a spatial lag model.</li>
+<li>If spatial autocorrelation exists, then use a spatial error model or a spatial lag model.</li>
 </ol>
 </section>
 <section id="parting-thoughts" class="level2" data-number="26.9">
 <h2 data-number="26.9" class="anchored" data-anchor-id="parting-thoughts"><span class="header-section-number">26.9</span> Parting Thoughts</h2>
 <p>This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.</p>
-<p>Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. <a href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/">This website contains good example of raster data.</a></p>
+<p>Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. <a href="https://datacarpentry.org/organization-geospatial/01-intro-raster-data/">This website contains a good example of raster data.</a></p>
 <p>This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend <em>Geocomputation with R</em> <span class="citation" data-cites="geocomp">(<a href="references.html#ref-geocomp" role="doc-biblioref">Lovelace, Nowosad, and Muenchow 2022</a>)</span>. <a href="https://r-spatial.org/book/">Spatial Data Science</a> provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). <a href="https://geographicdata.science/book/intro.html">Geographical Data Science</a> is also a fantastic place to learn more, but note that it is written in Python.</p>
 </section>
 <section id="more-resources" class="level2" data-number="26.10">

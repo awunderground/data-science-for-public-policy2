@@ -10,7 +10,7 @@ editor_options:
 bibliography: references.bib
 ---
 
-![The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstituion by Konrad Miller.](images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg)
+![The Tabula Rogeriana was an early world atlas by geographer Al Idrisi. This is a reconstitution by Konrad Miller.](images/header-images/Tabula_Rogeriana_1929_copy_by_Konrad_Miller.jpg)
 
 
 
@@ -55,7 +55,7 @@ If you are looking online, you may notice R code written in the (similarly named
 Simple features is a standard for storing and accessing geometric features outlined in the ISO 19125 standard. 
 :::
 
-`library(sf)` stores data in a sf dataframe. sf dataframes are similar to normal dataframes except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. You can think of each record in an sf dataframe as having two sets of data:
+`library(sf)` stores data in an sf data frame. sf data frames are similar to normal data frames except that, in addition to regular rows and columns, they have a special `geometry` column that stores vector geospatial data. You can think of each record in an sf data frame as having two sets of data:
 1. **Attribute data**: the non-spatial data. These data are stored in all columns except the `geometry` column
 2. **Geographic data**: the geospatial data stored in the `geometry` column. 
 
@@ -87,14 +87,14 @@ amtrak_stations <- st_read(amtrak_stations_file, quiet = TRUE)
 
 # print the geometry column
 # NOTE: geometry columns are "sticky" -- geometry is returned even though it 
-# isn't include in select()
+# isn't included in select()
 amtrak_stations |>
   select(stationnam)
 
 ```
 
 :::callout-note
-The geometry column in a `sf` dataframe is "sticky." Even though `geometry` was not included in `select()`, it is still returned. `sf` works this way because the spatial data stored in the geometry column is essential to the object (it couldn't be a geospatial data set without the geographic component of the data!). 
+The geometry column in a `sf` data frame is "sticky." Even though `geometry` was not included in `select()`, it is still returned. `sf` works this way because the spatial data stored in the geometry column is essential to the object (it couldn't be a geospatial data set without the geographic component of the data!). 
 
 If you are dead-set on dropping a geometry column, you can use `sf::st_drop_geometry()` which returns a data.frame.
 :::
@@ -157,7 +157,7 @@ amtrak_routes |>
 Polygons (`POLYGON`) are two-dimensional geospatial objects. Like lines, polygons are composed of many points, but the first and last point in a polygon must be the same. 
 :::
 
-Here is a simple example with of the Continental United States:
+Here is a simple example of the Continental United States:
 
 ```{r}
 # load and subset states data
@@ -174,9 +174,9 @@ states |>
 
 ### Multi-Geometries
 
-In practice, many records in a sf dataframe do not have type `LINE`, `POINT` or `POLYGON`, but rather have type `MULTIPOINT`, `MULTILINE` or `MULTIPOLYGON`. This means that, for any given record in a sf dataframe, the non-spatial data is associated with multiple points, lines, or polygons, respectively. 
+In practice, many records in an sf data frame do not have type `LINESTRING`, `POINT` or `POLYGON`, but rather have type `MULTIPOINT`, `MULTILINESTRING` or `MULTIPOLYGON`. This means that, for any given record in an sf data frame, the non-spatial data is associated with multiple points, lines, or polygons, respectively. 
 
-Consider the example of California. California is a single state, so, in the `states` sf dataframe above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the `MULTIPOLYGON` type is most well-suited for representing it.
+Consider the example of California. California is a single state, so, in the `states` sf data frame above, it should be a single record. However, California has not only one large landmass but also many small islands, each of which is its own polygon. Given that California is composed of multiple polygons, the `MULTIPOLYGON` type is most well-suited for representing it.
 
 
 `library(sf)` can represent 18 geometry types. To read about the 12 we do not mention, read the [sf documentation](https://r-spatial.github.io/sf/articles/sf1.html).
@@ -234,7 +234,7 @@ Note that the other binary files associated with the shapefile must also be loca
 
 ### .csv files
 
-Lots of geographic information is stored in .csv files--especially for point data where it is sensible to have a longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with `read_csv()`. Second, use `st_as_sf()` to convert the tibble into an sf object and specify the columns with longitude and latitude with the `coords` argument:
+Lots of geographic information is stored in .csv files--especially for point data where it is sensible to have longitude and latitude columns. Loading point data from .csv files requires two steps. First, read the file with `read_csv()`. Second, use `st_as_sf()` to convert the tibble into an sf object and specify the columns with longitude and latitude with the `coords` argument:
 
 ```r
 st_as_sf(data, coords = c("lon", "lat"))
@@ -242,7 +242,7 @@ st_as_sf(data, coords = c("lon", "lat"))
 ```
 
 ::: callout-note
-It is trickier (but far less common) to load line, polygon, and multipolygon data from `.csvs`.
+It is trickier (but far less common) to load line, polygon, and multipolygon data from `.csv` files.
 :::
 
 ### `library(tigris)`
@@ -310,9 +310,15 @@ mi + mi_cb
 
 ```
 
-`library(rgeoboundaries)`
+### `library(rgeoboundaries)`
 
-The [`rgeoboundaries`](https://rspatialdata.github.io/admin_boundaries.html) package is a client for the [geoBoundaries API](https://www.geoboundaries.org/), providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the `remotes` package as follows
+The [`rgeoboundaries`](https://rspatialdata.github.io/admin_boundaries.html) package is a client for the [geoBoundaries API](https://www.geoboundaries.org/), providing country political administrative boundaries for countries around the world. This package can be installed from GitHub using the `remotes` package as follows:
+
+```r
+#| eval: false
+
+remotes::install_github("wmgeolab/rgeoboundaries")
+```
 
 The `rgeoboundaries` package can provide boundaries for countries at different administrative division levels. For example, here we obtain the adm1 boundaries (the first subnational level) for Bangladesh. The `type` argument of the `geoboundaries()` function can be set to obtain a simplified version of the boundaries.
 
@@ -384,7 +390,7 @@ ggplot() +
 
 `library(tidycensus)` sometimes requires the same Census API Key we used in the API tutorial ([sign up here](https://api.census.gov/data/key_signup.html)). You should be able to install your API key into your version of R with `census_api_key("your-key-string", install = TRUE)`. To obtain your keystring, you can use `library(dotenv)` and `Sys.getenv(<key name in .env file>)`.
 
-`library(tidycensus)` has two big differences from `library(tigris)`: 1. it can pull Census data with the geographic data, and 2. it only provides  cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.
+`library(tidycensus)` has two big differences from `library(tigris)`: 1. it can pull Census data with the geographic data, and 2. it only provides cartographic boundary files that are smaller and quicker to load and more familiar than TIGER/Line shapefiles by default.
 
 ```{r}
 library(tidycensus)
@@ -401,7 +407,7 @@ dc_income <- get_acs(
 
 ```
 
-Both `library(tigris)` and `library(tidycensus)` have a `year` parameter that determines the year of the data obtained in functions like `tidycensus::get_acs()` or `tigris::states()`. This parameter currently defaults to 2020 for `get_acs()` and `tigris` functions. `tidycensus::get_acs()` also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.
+Both `library(tigris)` and `library(tidycensus)` have a `year` parameter that determines the year of the data obtained in functions like `tidycensus::get_acs()` or `tigris::states()`. This parameter currently defaults to a recent year for `get_acs()` and `tigris` functions. `tidycensus::get_acs()` also notably defaults to pulling 5-year ACS data. We recommend reading the documentation for these functions to understand the parameter options and their default values.
 
 ## Choropleths
 
@@ -418,12 +424,13 @@ dc_income <- get_acs(
   state = "DC", 
   county = "District of Columbia", 
   geometry = TRUE,
+  year = 2019,
   progress = FALSE
 )
 
 dc_income |>
   ggplot() +
-  geom_sf(aes(fill = estimate), color = "white", size = 0.1) +
+  geom_sf(aes(fill = estimate), color = "white", linewidth = 0.1) +
   scale_fill_gradient(
     low = "#cfe8f3", 
     high = "#062635",
@@ -456,7 +463,7 @@ exercise_number <- exercise_number + 1
 
 ## Spatial concepts
 
-Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three-dimensions on to a two-dimensional surface.
+Geospatial work requires making an assumption about the shape of the Earth and a decision about how to project three dimensions onto a two-dimensional surface.
 
 :::callout-note
 The Earth is an ellipsoid where the diameter from pole-to-pole is smaller than from equator to equator. In other words, it is swollen at the equator.
@@ -465,26 +472,26 @@ The Earth is an ellipsoid where the diameter from pole-to-pole is smaller than f
 ::: {.callout-tip}
 ## Geographic coordinate reference systems
 
-Geographic coordinate reference systems represent geographies with a three-dimensional representation of the Earth. (i.e., The data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.
+Geographic coordinate reference systems represent geographies with a three-dimensional representation of the Earth. (i.e., the data have not been projected from what we think of as a globe to what we think of as a map). Data are typically stored as longitude and latitude.
 :::
 
 ::: {.callout-tip}
 ## Projected coordinate reference system
 
-Projected coordinate reference system represent geographies with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.
+Projected coordinate reference systems represent geographies with a two-dimensional representation of the Earth. A projected CRS is the combination of a geographic CRS and a projection. Data are typically stored in feet or meters, which is useful for distance-based spatial operations like calculating distances and creating buffers.
 :::
 
 ::: {.callout-tip}
 ## Projection
 
-A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into a two-dimensions. 
+A projection is a mathematical transformation that converts three-dimensional coordinates for a spheroid/ellipsoid into two dimensions.
 :::
 
 ### Popular projections
 
 All projections are wrong, but all projections are wrong in different ways with different uses.
 
-Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Conic projections distort longitudes and latitudes but maintain areas. Azimuthal projections maintain distances but struggle to project large areas. 
+Cylindrical projections maintain lines of longitude and latitude but distort areas and distances. Some conic projections, like Albers, distort longitudes and latitudes but maintain areas. Some azimuthal projections maintain distances from a center point but struggle to project large areas. 
 
 #### Mercator projection
 
@@ -502,7 +509,7 @@ The Albers Equal Area projection, which is a conic projection, doesn't maintain 
 
 #### State Plane Coordinate Systems (SPCS)
 
-The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. [This site](https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm) has a thorough introduction.
+The State Plane Coordinate System is a collection of 124 coordinate systems for specific areas of the United States. States with east-west directions, like Tennessee, use the Lambert conformal conic projection. North-south states like Illinois use the transverse Mercator projection. SPCS is not a projection, but the coordinate systems are projected. [This site](https://desktop.arcgis.com/en/arcmap/10.3/guide-books/map-projections/state-plane-coordinate-system.htm) has a thorough introduction.
 
 ![State Planes](images/spcs83.png){#fig-state-planes fig-align="center" width=70%}
 
@@ -510,7 +517,7 @@ Source: [NOAA](https://geodesy.noaa.gov/SPCS/maps.shtml)
 
 #### EPSG Codes
 
-A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes from the European Petrol Survey Group, which no longer exists. EPSG codes are 4-6 numbers. Always check to see if a CRS is specified after loading spatial data. Here are some defaults:
+A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes from the European Petroleum Survey Group, which no longer exists. EPSG codes are 4-6 numbers. Always check to see if a CRS is specified after loading spatial data. Here are some defaults:
 
 * The EPSG code will always be 4326 for GeoJSONs.
 * .csv files with longitude and latitude will typically be 4326.
@@ -518,7 +525,7 @@ A CRS can be uniquely identified by EPSG codes and proj4 strings. EPSG comes fro
 
 Use `st_crs()` to see the CRS. Use `st_set_crs()` to set the CRS. Use `st_transform()` to transform the CRS. Note that `st_set_crs()` simply adds or updates CRS information - it does not transform the data. When using multiple different geospatial datasets for mapping (e.g. layering points and polygons), they should have the same CRS prior to mapping.
 
-[epsg.io](epsg.io) and [spatialreference.org](spatialreference.org) are useful for finding and learning more about EPSG codes. 
+[epsg.io](https://epsg.io) and [spatialreference.org](https://spatialreference.org) are useful for finding and learning more about EPSG codes. 
 
 #### Datum
 
@@ -559,7 +566,7 @@ That's a lot of technical information. When mapping in the US
 2. Use `CRS = 5070` if you are mapping the entire Continental US. Other useful EPSG codes are available [here](https://guides.library.duke.edu/r-geospatial/CRS). 
 3. Use the recommended state plane coordinate system for state and local maps.
 
-Here's the map from earlier with EPSG 4326 on the left and EPSG 5070 (Alber's Equal Area Conic Projection) on the right:
+Here's the map from earlier with EPSG 4326 on the left and EPSG 5070 (Albers Equal Area Conic Projection) on the right:
 
 ```{r}
 #| echo: false
@@ -601,9 +608,9 @@ exercise_number <- exercise_number + 1
 ```
 
 1. Copy-and-paste the AidData exercise from exercise 2.
-2. Repeat the mapping with a EPSG code that makes sense for Bangladesh using `st_transform()` (**Hint:** you can identify the EPSG code using `suggest_crs(aiddata)`).
+2. Repeat the mapping with an EPSG code that makes sense for Bangladesh using `st_transform()` (**Hint:** you can identify the EPSG code using `suggest_crs(aiddata)`).
 3. Copy-and-paste the AidData exercise from exercise 2 again. 
-4. Repeat the mapping with a EPSG code that makes sense for Bangladesh using `coord_sf(crs = ####)` where `####` is the EPSG code from step 2 (**Hint:** `coord_sf()` can be added to your mapping code following a + ). This skips the need for `st_transform()` when making maps. 
+4. Repeat the mapping with an EPSG code that makes sense for Bangladesh using `coord_sf(crs = ####)` where `####` is the EPSG code from step 2 (**Hint:** `coord_sf()` can be added to your mapping code following a + ). This skips the need for `st_transform()` when making maps. 
 
 ```{r}
 #| include: false
@@ -671,14 +678,14 @@ states |>
 
 ### Spatial Joins
 
-Spatial joins are joins like `left_join()` but the join is based on geography instead of "by" variables. **Note:** both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one, one-to-many. 
+Spatial joins are joins like `left_join()` but the join is based on geography instead of "by" variables. **Note:** both geographies must have the same CRS. Like with any join, it is important to track the number of rows before and after joins and to note that joins may be one-to-one or one-to-many.
 
-`st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` touch the geographies in `y`. The `sf` package offers a number of different geometric confirmations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is copletely within `y`), `st_within` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options. 
+`st_join()` performs a left spatial join in R. `st_intersects` means observations will join if the geographies in `x` touch the geographies in `y`. The `sf` package offers a number of different geometric confirmations that can be used for spatial joins, such as `st_covered_by` (identifies if `x` is completely within `y`), `st_is_within_distance` (identifies if `x` is within a specified distance of `y`) and many more. The [sf cheat sheet](https://github.com/rstudio/cheatsheets/blob/main/sf.pdf) provides a good outline of the different options. 
 
 Suppose we want to count the number of Amtrak stations in each state.
 
 ```{r}
-# set states CRS to 4326 to match the Amtrak data
+# set Amtrak CRS to 5070 to match the states data
 amtrak_stations <- st_transform(amtrak_stations, crs = 5070)
 
 # dimension before join
@@ -693,6 +700,7 @@ dim(amtrak)
 # count the number of stations per state
 amtrak |>
   as_tibble() |> # converting from sf to tibble speeds calculations
+  filter(!is.na(stationnam)) |> # drop states with no stations
   group_by(NAME) |>
   summarize(number_of_stations = n()) |>
   arrange(desc(number_of_stations))
@@ -751,13 +759,13 @@ no_union_station <- amtrak_stations |>
 amtrak_distances <- st_distance(union_station, no_union_station)
 
 # find the closest station
-amtrak_stations |>
+no_union_station |>
   slice(which.min(amtrak_distances)) |>
   select(stationnam, city)
 
 
-# find the further station
-amtrak_stations |>
+# find the farthest station
+no_union_station |>
   slice(which.max(amtrak_distances)) |>
   select(stationnam, city)
 
@@ -767,7 +775,7 @@ amtrak_stations |>
 
 Cross-sectional regression models assume that the error term is independently and identically distributed, which in turn means the dependent variable is independently and identically distributed. This is often a reasonable assumption.   
 
-The assumption of independence often falls apart with spatial data. If number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn't make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina. 
+The assumption of independence often falls apart with spatial data. If the number of coal power plants in a state is an independent variable and atmospheric carbon dioxide in a state is the dependent variable, then it doesn't make much sense to assume that North Carolina and South Carolina are independent. If South Carolina has many coal-burning power plants, then the emissions could affect atmospheric carbon dioxide in North Carolina. 
 
 Spatial regression methods attempt to account for this dependence between observations. 
 
@@ -781,13 +789,13 @@ Process:
 
 1. Estimate a non-spatial regression model.
 2. Use tests of spatial autocorrelation like Moran's I, Geary's c, or Getis and Ord's G-statistic on the residuals to test for spatial autocorrelation.
-3. If spatial autocorrelation exists, the use a spatial error model or a spatial lag model. 
+3. If spatial autocorrelation exists, then use a spatial error model or a spatial lag model. 
 
 ## Parting Thoughts
 
 This note set works entirely with vector spatial data. Vector data consists of vertices turned into points, lines, and polygons.
 
-Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
+Some spatial data are raster data, which are stored as pixels or grid cells. For example, a raster data set could have an even one square mile grid over the entire United States with data about the amount of soy crops within each pixel. It is common for satellite data to be converted to rasters. [This website contains a good example of raster data.](https://datacarpentry.org/organization-geospatial/01-intro-raster-data/)
 
 This is a brief introduction to spatial data handling in R. If you are interested in further understanding spatial data handling, processing, visualization, and modeling, we recommend *Geocomputation with R* [@geocomp]. [Spatial Data Science](https://r-spatial.org/book/) provides a great discussion of statistical modeling but is more technical and mathematical (also written in R). [Geographical Data Science](https://geographicdata.science/book/intro.html) is also a fantastic place to learn more, but note that it is written in Python. 
 
