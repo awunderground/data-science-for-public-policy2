@@ -494,7 +494,7 @@ window.Quarto = {
 <div>
   <div class="abstract">
     <div class="block-title">Abstract</div>
-    This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focused on regression, one of the two main types of supervised machine learning.
+    This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focuses on regression, one of the two main types of supervised machine learning.
   </div>
 </div>
 
@@ -540,9 +540,9 @@ window.Quarto = {
 <ul>
 <li>linear</li>
 <li>trees</li>
-<li>naive</li>
+<li>naive and instance-based methods</li>
 <li>kernel</li>
-<li>NN</li>
+<li>neural networks (NN)</li>
 </ul>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -613,7 +613,7 @@ Figure&nbsp;18.1: Simulated training data
 <li>Find the line that minimizes the sum of squared errors between the line and the observed data.</li>
 </ol>
 <p><strong>Note:</strong> Linear regression is linear in its coefficients but can fit non-linear patterns in the data with the inclusion of higher order terms (for example, <span class="math inline">\(x^2\)</span>).</p>
-<p><a href="24_interpretable-models.html#fig-simulated-regression" class="quarto-xref">Figure&nbsp;<span>22.1</span></a> shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model.</p>
+<p><a href="24_interpretable-models.html#fig-simulated-regression" class="quarto-xref">Figure&nbsp;<span>22.1</span></a> shows four different linear regression models fit to the training data. Degree is the exponent of the highest order term included in the model.</p>
 <p>For example, “Degree = 1” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i\)</span> and “Degree = 3” means <span class="math inline">\(\hat{y}_i = b_0 + b_1x_i + b_2x_i^2 + b_3x_i^3\)</span>.</p>
 <div class="cell">
 <details class="code-fold">
@@ -732,10 +732,14 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <span id="cb5-47"><a href="#cb5-47"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/simulated-knn-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Changing k leads to models that under and over fit to the data</figcaption>
+<div id="fig-simulated-knn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-simulated-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-knn-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simulated-knn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.3: Changing k leads to models that under and over fit to the data
+</figcaption>
 </figure>
 </div>
 </div>
@@ -744,10 +748,10 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <section id="regression-trees" class="level3" data-number="18.2.3">
 <h3 data-number="18.2.3" class="anchored" data-anchor-id="regression-trees"><span class="header-section-number">18.2.3</span> Regression Trees</h3>
 <ol type="1">
-<li>Consider all binary splits of all predictors to split the data into two groups. Choose the split that results in groups with the lowest MSE for the outcome variable within each group.</li>
+<li>Consider all binary splits of all predictors to split the data into two groups. Choose the split that minimizes the total sum of squared errors of the outcome variable, where each group’s prediction is its mean.</li>
 <li>Repeat step 1 recursively until a stopping parameter is reached (cost complexity, minimum group size, tree depth).</li>
 </ol>
-<p><a href="https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?scp=5&amp;sq=Decision%20Obama%20clinton&amp;st=cse">Decision Tree: The Obama-Clinton Divide</a> from the New York Times is a clear example of a regression tree.</p>
+<p><a href="https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?scp=5&amp;sq=Decision%20Obama%20clinton&amp;st=cse">Decision Tree: The Obama-Clinton Divide</a> from the New York Times is a clear example of a decision tree.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -805,13 +809,13 @@ Figure&nbsp;18.2: Fitting the non-linear pattern in the data requires higher ord
 <img src="20_predictive-modeling-concepts_files/figure-html/fig-simulated-regression-trees-1.png" class="img-fluid figure-img" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-simulated-regression-trees-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.3: Changing the cost complexity parameter leads to models that are under of over fit to the data
+Figure&nbsp;18.4: Changing the cost complexity parameter leads to models that are under or over fit to the data
 </figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees" class="quarto-xref">Figure&nbsp;<span>18.3</span></a> where <code>cp=0.1</code>.</p>
+<p>Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from <a href="#fig-simulated-regression-trees" class="quarto-xref">Figure&nbsp;<span>18.4</span></a> where <code>cp=0.1</code>.</p>
 <div class="cell">
 <details class="code-fold">
 <summary>Code</summary>
@@ -822,12 +826,12 @@ Figure&nbsp;18.3: Changing the cost complexity parameter leads to models that ar
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
-<p>Linear regression is a parameteric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.</p>
+<p>Linear regression is a parametric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.</p>
 <p>KNN and regression trees are nonparametric approaches to predictive modeling because they do not require an assumption about the functional form of the model. The data-driven approach of nonparametric models is appealing because it requires fewer assumptions, but it often requires more data and care to not overfit the modeling data.</p>
 <p>Regression trees are the simplest tree-based algorithms. Other tree-based algorithms, like gradient-boosted trees and random forests, often have far better performance than regression trees.</p>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">
@@ -858,16 +862,16 @@ RMSE = \sqrt{\frac{1}{n}\sum_{i = 1}^n (y_i - \hat{y}_i)^2}
 <p><span id="eq-mse"><span class="math display">\[
 MSE = \frac{1}{n}\sum_{i = 1}^n (y_i - \hat{y}_i)^2
 \tag{18.2}\]</span></span></p>
-<p>Let’s consider the MSE for a single observation <span class="math inline">\((x_0, y_0)\)</span> and think about the model that generates <span class="math inline">\(\hat{y_0}\)</span>, which we will denote <span class="math inline">\(\hat{f}(x_0)\)</span>.</p>
-<p><span id="eq-mse"><span class="math display">\[
+<p>Let’s consider the MSE for a single observation <span class="math inline">\((x_0, y_0)\)</span> and think about the model that generates <span class="math inline">\(\hat{y}_0\)</span>, which we will denote <span class="math inline">\(\hat{f}(x_0)\)</span>.</p>
+<p><span id="eq-mse-single"><span class="math display">\[
 MSE = (y_0 - \hat{f}(x_0))^2
 \tag{18.3}\]</span></span></p>
-<p>Assuming <span class="math inline">\(y_i\)</span> independent and <span class="math inline">\(y_i - \hat{y}_i \sim N(0, \sigma^2)\)</span>, we can decompose the expected value of MSE into three types of error: irreducible error, bias error, and variance error. Understanding the types of error will inform modeling decisions.</p>
+<p>Assume the data are generated by <span class="math inline">\(y = f(x) + \epsilon\)</span>, where <span class="math inline">\(f\)</span> is the true (unknown) function and <span class="math inline">\(\epsilon\)</span> is independent of <span class="math inline">\(x\)</span> and of the training data with <span class="math inline">\(E[\epsilon] = 0\)</span> and <span class="math inline">\(Var(\epsilon) = \sigma^2\)</span>. Taking expectations over both <span class="math inline">\(\epsilon\)</span> and the training samples used to fit <span class="math inline">\(\hat{f}\)</span>, we can decompose the expected value of MSE into three types of error: irreducible error, bias error, and variance error. Understanding the types of error will inform modeling decisions.</p>
 <p><span id="eq-mse-ev1"><span class="math display">\[
-E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = Var(\epsilon) + [Bias(\hat{f}(x_0))]^2 + Var(\hat{f}(x_0))
+E[MSE] = E[(y_0 - \hat{f}(x_0))^2] = Var(\epsilon) + [Bias(\hat{f}(x_0))]^2 + Var(\hat{f}(x_0))
 \tag{18.4}\]</span></span></p>
 <p><span id="eq-mse-ev2"><span class="math display">\[
-E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{model variance}
+E[MSE] = E[(y_0 - \hat{f}(x_0))^2] = \sigma^2 + (\text{model bias})^2 + \text{model variance}
 \tag{18.5}\]</span></span></p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -929,10 +933,14 @@ E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{mode
 <span id="cb8-28"><a href="#cb8-28"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/model-bias-1.png" class="img-fluid figure-img" width="384"></p>
-<figcaption>Bias</figcaption>
+<div id="fig-model-bias" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-bias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="20_predictive-modeling-concepts_files/figure-html/fig-model-bias-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-bias-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.5: Bias
+</figcaption>
 </figure>
 </div>
 </div>
@@ -989,15 +997,19 @@ E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{mode
 <span id="cb9-33"><a href="#cb9-33"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </details>
 <div class="cell-output-display">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/model-variance-1.png" class="img-fluid figure-img" width="672"></p>
-<figcaption>Variance</figcaption>
+<div id="fig-model-variance" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-model-variance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="20_predictive-modeling-concepts_files/figure-html/fig-model-variance-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-model-variance-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.6: Variance
+</figcaption>
 </figure>
 </div>
 </div>
 </div>
-<p>As can be seen in the error decomposition and plots above, for any given amount of total prediction error, there is a trade-off between bias error and variance error. When one type of error is reduced, the other type of error increases.</p>
+<p>As can be seen in the error decomposition and plots above, there is generally a trade-off between bias error and variance error. As model complexity increases, bias error tends to decrease and variance error tends to increase, so the goal is the level of complexity that minimizes their sum.</p>
 <p>The bias-variance trade-off can generally be reconceived as</p>
 <ul>
 <li>underfitting-overfitting tradeoff</li>
@@ -1007,7 +1019,7 @@ E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{mode
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
 </figure>
 </div>
 </div>
@@ -1079,16 +1091,16 @@ E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{mode
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.</p>
+<p>A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the testing data are used repeatedly to compare or revise models, the final error rate will tend to underestimate the true out-of-sample error rate.</p>
 </div>
 </div>
 <div id="fig-cv" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/cross-validation.jpeg" id="fig-cv" class="img-fluid figure-img">
+<img src="images/cross-validation.jpeg" class="img-fluid figure-img">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig quarto-uncaptioned" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;18.4
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cv-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;18.7: <span class="math inline">\(v\)</span>-fold cross-validation
 </figcaption>
 </figure>
 </div>
@@ -1102,11 +1114,11 @@ Figure&nbsp;18.4
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Break the data into <span class="math inline">\(v\)</span> equal-sized, exclusive groups. Train the model on data from <span class="math inline">\(v - 1\)</span> folds (analysis data) and measure the error metric (i.e.&nbsp;RMSE) on the left-out fold (assessment data). Repeat this process <span class="math inline">\(v\)</span> times, each time leaving out a different fold. Average the <span class="math inline">\(v\)</span> error metrics.</p>
+<p>Break the data into <span class="math inline">\(v\)</span> equal-sized, exclusive groups. Train the model on data from <span class="math inline">\(v - 1\)</span> folds (analysis data) and measure the error metric (e.g.&nbsp;RMSE) on the left-out fold (assessment data). Repeat this process <span class="math inline">\(v\)</span> times, each time leaving out a different fold. Average the <span class="math inline">\(v\)</span> error metrics.</p>
 <p><span class="math inline">\(v\)</span>-fold cross-validation is sometimes called <span class="math inline">\(k\)</span>-fold cross-validation.</p>
 </div>
 </div>
-<p>Strategies for spending data differ based on the application and the size and nature of the data. Ideally, the training-testing split is made at the beginning of the modeling process. The <span class="math inline">\(v\)</span>-fold cross-validation is used on the testing data for comparing</p>
+<p>Strategies for spending data differ based on the application and the size and nature of the data. Ideally, the training-testing split is made at the beginning of the modeling process. The <span class="math inline">\(v\)</span>-fold cross-validation is used on the training data for comparing</p>
 <ol type="1">
 <li>approaches for feature/target engineering</li>
 <li>algorithms</li>
@@ -1136,7 +1148,7 @@ Warning
 </div>
 <div class="callout-body-container callout-body">
 <p>Feature and target engineering is a common source of data leakage.</p>
-<p>For example, regularized regression models expect variables to be normalized (divide each predictor by the sample mean and divide by the sample standard deviation). A naive approach would be to calculate the means and standard deviations once one the full data set and use them on the testing data or use them in cross validation. This causes data leakage and biased underestimates of the out-of-sample error rate.</p>
+<p>For example, regularized regression models expect variables to be normalized (subtract the sample mean from each predictor and divide by the sample standard deviation). A naive approach would be to calculate the means and standard deviations once on the full data set and use them on the testing data or use them in cross validation. This causes data leakage and biased underestimates of the out-of-sample error rate.</p>
 <p>New means and standard deviations need to be estimated every time a model is fit including within each iteration of a resampling method! This is a lot of work, but <code>library(tidymodels)</code> makes this simple.</p>
 </div>
 </div>
@@ -1151,12 +1163,17 @@ Warning
 <li>Set up Resampling for Model Selection</li>
 <li>Create Candidate Models</li>
 <li>Test and Choose the “Best” Model</li>
-<li>Optional: Expand the Model Fit</li>
-<li>Evaluate the Final Model</li>
-<li>Optional: Implement the Final Model</li>
+<li>Optional: Finalize the Model Fit</li>
+<li>Evaluate the Final Model and Make a Go/No Go Decision</li>
+<li>Optional: Deploy the Final Model</li>
+<li>Monitor the Deployed Model</li>
 </ol>
 <section id="example-knn" class="level3" data-number="18.5.1">
 <h3 data-number="18.5.1" class="anchored" data-anchor-id="example-knn"><span class="header-section-number">18.5.1</span> Example: KNN</h3>
+<section id="problem-formulation" class="level4">
+<h4 class="anchored" data-anchor-id="problem-formulation">0. Problem Formulation</h4>
+<p>We need to predict policy-relevant variable <span class="math inline">\(y\)</span> using <span class="math inline">\(x\)</span> as our predictor. Based on some data collection from last year, we have a data set with <span class="math inline">\((y, x)\)</span> and we’ll have <span class="math inline">\(x\)</span> where we’ll deploy the model. We’ll use RMSE as our error metric because we want to minimize errors overall with extra emphasis on avoiding large predictive errors.</p>
+</section>
 <section id="split-data-into-training-and-testing-data" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data">1. Split data into training and testing data</h4>
 <div class="cell">
@@ -1195,7 +1212,7 @@ Warning
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1204,7 +1221,7 @@ Warning
 <section id="set-up-resampling-for-model-selection" class="level4">
 <h4 class="anchored" data-anchor-id="set-up-resampling-for-model-selection">3. Set up Resampling for Model Selection</h4>
 <p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are small (750 observations and one predictor), so we will repeat the entire cross validation process five times.</p>
-<p>Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation improves the accuracy of our estimated error rates.</p>
+<p>Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation reduces the variance of our estimated error rates.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>data1_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> data1_train, <span class="at">v =</span> <span class="dv">10</span>, <span class="at">repeats =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1217,7 +1234,7 @@ Warning
 <li><strong>Switching algorithms.</strong> Algorithms are specified using functions from <code>library(parsnip)</code>.</li>
 <li><strong>Hyperparameter tuning.</strong> Hyperparameter tuning is typically handled by using <code>tune()</code> when picking an algorithm and then creating a hyperparameter tuning grid.</li>
 </ol>
-<p>It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN.</p>
+<p>It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN. Otherwise, predictors measured on larger scales dominate the distance calculation. With only one predictor, normalizing does not change which observations are closest, but we include it because it is standard practice.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>knn_recipe <span class="ot">&lt;-</span></span>
 <span id="cb13-2"><a href="#cb13-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> y <span class="sc">~</span> ., <span class="at">data =</span> data1_train) <span class="sc">|&gt;</span></span>
@@ -1261,7 +1278,7 @@ Warning
 </section>
 <section id="test-and-choose-the-best-model" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model">5. Test and Choose the “Best” Model</h4>
-<p><code>tune_grid()</code> fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each evaluation data set.</p>
+<p><code>tune_grid()</code> fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each assessment data set.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a>knn_res <span class="ot">&lt;-</span></span>
 <span id="cb18-2"><a href="#cb18-2"></a>  knn_workflow <span class="sc">|&gt;</span></span>
@@ -1291,11 +1308,7 @@ Warning
 10        99 rmse    standard    2.24    50  0.0291 Preprocessor1_Model10</code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">show_best</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in show_best(knn_res): No value of `metric` was given; "rmse" will be
-used.</code></pre>
-</div>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="fu">show_best</span>(<span class="at">metric =</span> <span class="st">"rmse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 7
   neighbors .metric .estimator  mean     n std_err .config              
@@ -1306,35 +1319,31 @@ used.</code></pre>
 4        55 rmse    standard    2.03    50  0.0205 Preprocessor1_Model06
 5        11 rmse    standard    2.06    50  0.0209 Preprocessor1_Model02</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>knn_res <span class="sc">|&gt;</span></span>
-<span id="cb24-2"><a href="#cb24-2"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>knn_res <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="optional-expand-the-model-fit" class="level4">
-<h4 class="anchored" data-anchor-id="optional-expand-the-model-fit">6. Optional: Expand the Model Fit</h4>
+<section id="optional-finalize-the-model-fit" class="level4">
+<h4 class="anchored" data-anchor-id="optional-finalize-the-model-fit">6. Optional: Finalize the Model Fit</h4>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb25-2"><a href="#cb25-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in select_best(knn_res): No value of `metric` was given; "rmse" will be
-used.</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb24-2"><a href="#cb24-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res, <span class="at">metric =</span> <span class="st">"rmse"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
+<p>Second, use <code>last_fit()</code> to fit the model on all of the training data and evaluate it once on the testing data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb27"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb27-2"><a href="#cb27-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb27-3"><a href="#cb27-3"></a>  <span class="fu">last_fit</span>(data1_split) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1"></a>final_fit <span class="ot">&lt;-</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="fu">last_fit</span>(data1_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -1351,13 +1360,13 @@ Note
 </div>
 </div>
 </section>
-<section id="evaluate-the-final-model" class="level4">
-<h4 class="anchored" data-anchor-id="evaluate-the-final-model">7. Evaluate the Final Model</h4>
+<section id="evaluate-the-final-model-and-make-a-gono-go-decision" class="level4">
+<h4 class="anchored" data-anchor-id="evaluate-the-final-model-and-make-a-gono-go-decision">7. Evaluate the Final Model and Make a Go/No Go Decision</h4>
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
-<p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
+<p>In this case, the testing data error is slightly higher than the cross-validated error from step 5, which makes sense.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
@@ -1367,34 +1376,38 @@ Note
 </div>
 </div>
 </section>
-<section id="optional-implement-the-final-model" class="level4">
-<h4 class="anchored" data-anchor-id="optional-implement-the-final-model">8. Optional: Implement the Final Model</h4>
+<section id="optional-deploy-the-final-model" class="level4">
+<h4 class="anchored" data-anchor-id="optional-deploy-the-final-model">8. Optional: Deploy the Final Model</h4>
 <p><code>final_fit</code> and <code>predict()</code> can be used to apply the model to new, unseen data.</p>
-<p>Only implement the model if it achieves the objectives of the final model.</p>
+<p>Only implement the model if it achieves the objectives set during problem formulation.</p>
+</section>
+<section id="monitor-the-deployed-model" class="level4">
+<h4 class="anchored" data-anchor-id="monitor-the-deployed-model">9. Monitor the Deployed Model</h4>
+<p>Model performance often decays over time because of changes in the predictors, changes in the outcome variables, and changes in the relationship between predictors and the outcome. It is important to monitor deployed models and make recurring go/no go decisions.</p>
 </section>
 </section>
 <section id="example-regression-trees" class="level3" data-number="18.5.2">
 <h3 data-number="18.5.2" class="anchored" data-anchor-id="example-regression-trees"><span class="header-section-number">18.5.2</span> Example: Regression Trees</h3>
 <p>We’ll next work with a subset of data from the <code>Chicago</code> data set from <code>library(tidymodels)</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
-<span id="cb30-2"><a href="#cb30-2"></a>  <span class="fu">select</span>(</span>
-<span id="cb30-3"><a href="#cb30-3"></a>    ridership,</span>
-<span id="cb30-4"><a href="#cb30-4"></a>    Clark_Lake,</span>
-<span id="cb30-5"><a href="#cb30-5"></a>    Quincy_Wells,</span>
-<span id="cb30-6"><a href="#cb30-6"></a>    Irving_Park,</span>
-<span id="cb30-7"><a href="#cb30-7"></a>    Monroe,</span>
-<span id="cb30-8"><a href="#cb30-8"></a>    Polk,</span>
-<span id="cb30-9"><a href="#cb30-9"></a>    temp,</span>
-<span id="cb30-10"><a href="#cb30-10"></a>    percip,</span>
-<span id="cb30-11"><a href="#cb30-11"></a>    Bulls_Home,</span>
-<span id="cb30-12"><a href="#cb30-12"></a>    Bears_Home,</span>
-<span id="cb30-13"><a href="#cb30-13"></a>    WhiteSox_Home,</span>
-<span id="cb30-14"><a href="#cb30-14"></a>    Cubs_Home,</span>
-<span id="cb30-15"><a href="#cb30-15"></a>    date</span>
-<span id="cb30-16"><a href="#cb30-16"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb30-17"><a href="#cb30-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb30-18"><a href="#cb30-18"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>chicago_small <span class="ot">&lt;-</span> Chicago <span class="sc">|&gt;</span></span>
+<span id="cb28-2"><a href="#cb28-2"></a>  <span class="fu">select</span>(</span>
+<span id="cb28-3"><a href="#cb28-3"></a>    ridership,</span>
+<span id="cb28-4"><a href="#cb28-4"></a>    Clark_Lake,</span>
+<span id="cb28-5"><a href="#cb28-5"></a>    Quincy_Wells,</span>
+<span id="cb28-6"><a href="#cb28-6"></a>    Irving_Park,</span>
+<span id="cb28-7"><a href="#cb28-7"></a>    Monroe,</span>
+<span id="cb28-8"><a href="#cb28-8"></a>    Polk,</span>
+<span id="cb28-9"><a href="#cb28-9"></a>    temp,</span>
+<span id="cb28-10"><a href="#cb28-10"></a>    percip,</span>
+<span id="cb28-11"><a href="#cb28-11"></a>    Bulls_Home,</span>
+<span id="cb28-12"><a href="#cb28-12"></a>    Bears_Home,</span>
+<span id="cb28-13"><a href="#cb28-13"></a>    WhiteSox_Home,</span>
+<span id="cb28-14"><a href="#cb28-14"></a>    Cubs_Home,</span>
+<span id="cb28-15"><a href="#cb28-15"></a>    date</span>
+<span id="cb28-16"><a href="#cb28-16"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb28-17"><a href="#cb28-17"></a>  <span class="fu">mutate</span>(<span class="at">weekend =</span> <span class="fu">wday</span>(date, <span class="at">label =</span> <span class="cn">TRUE</span>) <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Sat"</span>, <span class="st">"Sun"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb28-18"><a href="#cb28-18"></a>  <span class="fu">glimpse</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Rows: 5,698
 Columns: 14
@@ -1414,22 +1427,36 @@ $ date          &lt;date&gt; 2001-01-22, 2001-01-23, 2001-01-24, 2001-01-25, 200
 $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FA…</code></pre>
 </div>
 </div>
-<section id="problem-formulation" class="level4">
-<h4 class="anchored" data-anchor-id="problem-formulation">0. Problem Formulation</h4>
-<p>The variable <code>ridership</code> is the outcome variable. It measures ridership at the Clark/Lake L station in Chicago. The variables <code>Clark_Lake</code>, <code>Quincy_Wells</code>, <code>Irving_Park</code>, <code>Monroe</code>, and <code>Polk</code> measure ridership at several stations <em>14 days before</em> the <code>ridership</code> variable.</p>
-<p>The objective is predict <code>ridership</code> to better allocate staff and resources to the Clark/Lake L station.</p>
+<section id="problem-formulation-1" class="level4">
+<h4 class="anchored" data-anchor-id="problem-formulation-1">0. Problem Formulation</h4>
+<p>The variable <code>ridership</code> is the outcome variable. It measures daily ridership, in thousands of riders, at the Clark/Lake L station in Chicago. The variables <code>Clark_Lake</code>, <code>Quincy_Wells</code>, <code>Irving_Park</code>, <code>Monroe</code>, and <code>Polk</code> measure ridership at several stations <em>14 days before</em> the <code>ridership</code> variable.</p>
+<p>The objective is predict <code>ridership</code> to better allocate staff and resources to the Clark/Lake L station. We have a clear setup between our modeling data and implementation data. Once again, we’ll use RMSE which balances the desire to be right on average and to avoid very large predictive errors.</p>
 </section>
 <section id="split-data-into-training-and-testing-data-1" class="level4">
 <h4 class="anchored" data-anchor-id="split-data-into-training-and-testing-data-1">1. Split data into training and testing data</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
-<span id="cb32-2"><a href="#cb32-2"></a></span>
-<span id="cb32-3"><a href="#cb32-3"></a><span class="co"># create a split object</span></span>
-<span id="cb32-4"><a href="#cb32-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
-<span id="cb32-5"><a href="#cb32-5"></a></span>
-<span id="cb32-6"><a href="#cb32-6"></a><span class="co"># create the training and testing data</span></span>
-<span id="cb32-7"><a href="#cb32-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
-<span id="cb32-8"><a href="#cb32-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb30"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="fu">set.seed</span>(<span class="dv">20231106</span>)</span>
+<span id="cb30-2"><a href="#cb30-2"></a></span>
+<span id="cb30-3"><a href="#cb30-3"></a><span class="co"># create a split object</span></span>
+<span id="cb30-4"><a href="#cb30-4"></a>chicago_split <span class="ot">&lt;-</span> <span class="fu">initial_split</span>(<span class="at">data =</span> chicago_small, <span class="at">prop =</span> <span class="fl">0.8</span>)</span>
+<span id="cb30-5"><a href="#cb30-5"></a></span>
+<span id="cb30-6"><a href="#cb30-6"></a><span class="co"># create the training and testing data</span></span>
+<span id="cb30-7"><a href="#cb30-7"></a>chicago_train <span class="ot">&lt;-</span> <span class="fu">training</span>(<span class="at">x =</span> chicago_split)</span>
+<span id="cb30-8"><a href="#cb30-8"></a>chicago_test  <span class="ot">&lt;-</span> <span class="fu">testing</span>(<span class="at">x =</span> chicago_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Warning</span>Random splits and time series
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>For simplicity, this example splits the data randomly. The Chicago data are a daily time series, so a random split puts days from the future into the training data and lets the model learn from days that sit right next to the testing days. This is a form of data leakage, so the testing error below likely underestimates how the model would perform in deployment.</p>
+<p>In a real application, we would train on earlier dates and test on later dates (for example, with <code>initial_time_split()</code>).</p>
+</div>
 </div>
 </section>
 <section id="exploratory-data-analysis-1" class="level4">
@@ -1438,40 +1465,40 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 </section>
 <section id="set-up-resampling-for-model-selection-1" class="level4">
 <h4 class="anchored" data-anchor-id="set-up-resampling-for-model-selection-1">3. Set up Resampling for Model Selection</h4>
-<p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger in the previous example, so we skip repeats.</p>
+<p>We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger than in the previous example, so we skip repeats.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>chicago_folds <span class="ot">&lt;-</span> <span class="fu">vfold_cv</span>(<span class="at">data =</span> chicago_train, <span class="at">v =</span> <span class="dv">10</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="create-candidate-models-1" class="level4">
 <h4 class="anchored" data-anchor-id="create-candidate-models-1">4. Create Candidate Models</h4>
 <p>We will use regression trees for this example. For feature and target engineering, we will simply remove the date column.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
-<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
-<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">step_rm</span>(date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb32"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>rpart_recipe <span class="ot">&lt;-</span></span>
+<span id="cb32-2"><a href="#cb32-2"></a>  <span class="fu">recipe</span>(<span class="at">formula =</span> ridership <span class="sc">~</span> ., <span class="at">data =</span> chicago_train) <span class="sc">|&gt;</span></span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="fu">step_rm</span>(date)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We specify a regression tree with the rpart engine.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb35"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
-<span id="cb35-2"><a href="#cb35-2"></a>  <span class="fu">decision_tree</span>(</span>
-<span id="cb35-3"><a href="#cb35-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
-<span id="cb35-4"><a href="#cb35-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
-<span id="cb35-5"><a href="#cb35-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
-<span id="cb35-6"><a href="#cb35-6"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb35-7"><a href="#cb35-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
-<span id="cb35-8"><a href="#cb35-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb33"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>rpart_mod <span class="ot">&lt;-</span></span>
+<span id="cb33-2"><a href="#cb33-2"></a>  <span class="fu">decision_tree</span>(</span>
+<span id="cb33-3"><a href="#cb33-3"></a>    <span class="at">cost_complexity =</span> <span class="fu">tune</span>(),</span>
+<span id="cb33-4"><a href="#cb33-4"></a>    <span class="at">tree_depth =</span> <span class="fu">tune</span>(),</span>
+<span id="cb33-5"><a href="#cb33-5"></a>    <span class="at">min_n =</span> <span class="fu">tune</span>()</span>
+<span id="cb33-6"><a href="#cb33-6"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb33-7"><a href="#cb33-7"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb33-8"><a href="#cb33-8"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>We use <code>grid_regular()</code> to specify a hyperparameter tuning grid for potential values of the cost-complexity parameter, tree depth parameter, and minimum n.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
-<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
-<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
-<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">min_n</span>(),</span>
-<span id="cb36-5"><a href="#cb36-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
-<span id="cb36-6"><a href="#cb36-6"></a>)</span>
-<span id="cb36-7"><a href="#cb36-7"></a></span>
-<span id="cb36-8"><a href="#cb36-8"></a>rpart_grid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>rpart_grid <span class="ot">&lt;-</span> <span class="fu">grid_regular</span>(</span>
+<span id="cb34-2"><a href="#cb34-2"></a>  <span class="fu">cost_complexity</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">5</span>, <span class="sc">-</span><span class="dv">1</span>)), </span>
+<span id="cb34-3"><a href="#cb34-3"></a>  <span class="fu">tree_depth</span>(<span class="at">range =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">15</span>)), </span>
+<span id="cb34-4"><a href="#cb34-4"></a>  <span class="fu">min_n</span>(),</span>
+<span id="cb34-5"><a href="#cb34-5"></a>  <span class="at">levels =</span> <span class="dv">10</span></span>
+<span id="cb34-6"><a href="#cb34-6"></a>)</span>
+<span id="cb34-7"><a href="#cb34-7"></a></span>
+<span id="cb34-8"><a href="#cb34-8"></a>rpart_grid</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 3
    cost_complexity tree_depth min_n
@@ -1491,23 +1518,23 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 </div>
 <p>Finally, we combine the recipe and model objects into a <code>workflow()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb38"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
-<span id="cb38-2"><a href="#cb38-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
-<span id="cb38-3"><a href="#cb38-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
-<span id="cb38-4"><a href="#cb38-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb36"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>rpart_workflow <span class="ot">&lt;-</span></span>
+<span id="cb36-2"><a href="#cb36-2"></a>  <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>  <span class="fu">add_recipe</span>(<span class="at">recipe =</span> rpart_recipe) <span class="sc">|&gt;</span></span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="fu">add_model</span>(<span class="at">spec =</span> rpart_mod)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
 <section id="test-and-choose-the-best-model-1" class="level4">
 <h4 class="anchored" data-anchor-id="test-and-choose-the-best-model-1">5. Test and Choose the “Best” Model</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>rpart_res <span class="ot">&lt;-</span></span>
-<span id="cb39-2"><a href="#cb39-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
-<span id="cb39-3"><a href="#cb39-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
-<span id="cb39-4"><a href="#cb39-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
-<span id="cb39-5"><a href="#cb39-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
-<span id="cb39-6"><a href="#cb39-6"></a></span>
-<span id="cb39-7"><a href="#cb39-7"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb39-8"><a href="#cb39-8"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb37"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a>rpart_res <span class="ot">&lt;-</span></span>
+<span id="cb37-2"><a href="#cb37-2"></a>  rpart_workflow <span class="sc">|&gt;</span></span>
+<span id="cb37-3"><a href="#cb37-3"></a>  <span class="fu">tune_grid</span>(<span class="at">resamples =</span> chicago_folds,</span>
+<span id="cb37-4"><a href="#cb37-4"></a>            <span class="at">grid =</span> rpart_grid,</span>
+<span id="cb37-5"><a href="#cb37-5"></a>            <span class="at">metrics =</span> <span class="fu">metric_set</span>(rmse))</span>
+<span id="cb37-6"><a href="#cb37-6"></a></span>
+<span id="cb37-7"><a href="#cb37-7"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb37-8"><a href="#cb37-8"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1,000 × 9
    cost_complexity tree_depth min_n .metric .estimator  mean     n std_err
@@ -1525,12 +1552,8 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 # ℹ 990 more rows
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">show_best</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in show_best(rpart_res): No value of `metric` was given; "rmse" will be
-used.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb39-2"><a href="#cb39-2"></a>  <span class="fu">show_best</span>(<span class="at">metric =</span> <span class="st">"rmse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 9
   cost_complexity tree_depth min_n .metric .estimator  mean     n std_err
@@ -1542,56 +1565,48 @@ used.</code></pre>
 5       0.0000774          5    35 rmse    standard    2.37    10  0.0369
 # ℹ 1 more variable: .config &lt;chr&gt;</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb44-2"><a href="#cb44-2"></a>  <span class="fu">select_best</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
-be used.</code></pre>
-</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">select_best</span>(<span class="at">metric =</span> <span class="st">"rmse"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 4
   cost_complexity tree_depth min_n .config                
             &lt;dbl&gt;      &lt;int&gt; &lt;int&gt; &lt;chr&gt;                  
 1         0.00001          5    40 Preprocessor1_Model0921</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>rpart_res <span class="sc">|&gt;</span></span>
-<span id="cb47-2"><a href="#cb47-2"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>rpart_res <span class="sc">|&gt;</span></span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">autoplot</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
 </div>
 </section>
-<section id="optional-expand-the-model-fit-1" class="level4">
-<h4 class="anchored" data-anchor-id="optional-expand-the-model-fit-1">6. Optional: Expand the Model Fit</h4>
+<section id="optional-finalize-the-model-fit-1" class="level4">
+<h4 class="anchored" data-anchor-id="optional-finalize-the-model-fit-1">6. Optional: Finalize the Model Fit</h4>
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>final_wf <span class="ot">&lt;-</span> </span>
-<span id="cb48-2"><a href="#cb48-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
-<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning in select_best(rpart_res): No value of `metric` was given; "rmse" will
-be used.</code></pre>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<span id="cb44-2"><a href="#cb44-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
+<span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res, <span class="at">metric =</span> <span class="st">"rmse"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-</div>
-<p>Second, use <code>last_fit()</code> to fit the model on all of the data.</p>
+<p>Second, use <code>last_fit()</code> to fit the model on all of the training data and evaluate it once on the testing data.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>final_fit <span class="ot">&lt;-</span> </span>
-<span id="cb50-2"><a href="#cb50-2"></a>  final_wf <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">last_fit</span>(chicago_split) </span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>final_fit <span class="ot">&lt;-</span></span>
+<span id="cb45-2"><a href="#cb45-2"></a>  final_wf <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">last_fit</span>(chicago_split)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 </section>
-<section id="evaluate-the-final-model-1" class="level4">
-<h4 class="anchored" data-anchor-id="evaluate-the-final-model-1">7. Evaluate the Final Model</h4>
+<section id="evaluate-the-final-model-and-make-a-gono-go-decision-1" class="level4">
+<h4 class="anchored" data-anchor-id="evaluate-the-final-model-and-make-a-gono-go-decision-1">7. Evaluate the Final Model and Make a Go/No Go Decision</h4>
 <p>The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data.</p>
-<p>In this case, the testing data error is slightly higher than the training data error, which makes sense.</p>
+<p>In this case, the testing data error is slightly higher than the cross-validated error from step 5, which makes sense.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>final_fit <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>final_fit <span class="sc">|&gt;</span></span>
+<span id="cb46-2"><a href="#cb46-2"></a>  <span class="fu">collect_metrics</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   .metric .estimator .estimate .config             
@@ -1601,10 +1616,20 @@ be used.</code></pre>
 </div>
 </div>
 </section>
-<section id="optional-implement-the-final-model-1" class="level4">
-<h4 class="anchored" data-anchor-id="optional-implement-the-final-model-1">8. Optional: Implement the Final Model</h4>
-<p>If we think an expected error of around 2,340 people is appropriate, we can implement this model for the Chicago Transit Authority.</p>
+<section id="optional-deploy-the-final-model-1" class="level4">
+<h4 class="anchored" data-anchor-id="optional-deploy-the-final-model-1">8. Optional: Deploy the Final Model</h4>
+<p>If we think an RMSE of around 2,340 riders is appropriate, we can implement this model for the Chicago Transit Authority.</p>
 <p>Instead, we’re going back to the drawing board in our class lab to see if we can do better.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+</section>
+<section id="monitor-the-deployed-model-1" class="level4">
+<h4 class="anchored" data-anchor-id="monitor-the-deployed-model-1">9. Monitor the Deployed Model</h4>
+<p>This set up is ideal for monitoring the deployed model because we can compare predicted ridership with observed ridership every day. We can break this monitoring into four distinct steps.</p>
+<ol type="1">
+<li><strong>Structural validity:</strong> Does the implementation data have the same structure as the modeling data? For example, does the delay in the 2025 American Community Survey shrink the set of available predictors?</li>
+<li><strong>Input validation:</strong> Do the predictors in the modeling data look like the implementation data? For example, are folks no longer going to Chicago Bulls games because the Bulls are bad?</li>
+<li><strong>Output distribution:</strong> Do the distributions of predicted and observed values in the implementation data look like the distribution of the outcome in the modeling data? For example, did ridership decline 50% because of a global pandemic?</li>
+<li><strong>Relationship:</strong> Do the predicted values look like the observed values? Is there concept drift? For example, does the RMSE look similar on the implementation data to the modeling data?</li>
+</ol>
 
 
 </section>
