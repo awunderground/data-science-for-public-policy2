@@ -4912,38 +4912,18 @@ window.Quarto = {
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;polite session&gt; https://en.wikipedia.org/wiki/2008_United_States_presidential_election
     User-agent: Georgetown students learning scraping -- arw109@georgetown.edu
-    robots.txt: 464 rules are defined for 34 bots
+    robots.txt: 465 rules are defined for 34 bots
    Crawl delay: 5 sec
   The path is scrapable for this user-agent</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 20 × 5
-   State    .mw-parser-output .t…¹ RealClearPoliticsNov…² 538November 4,2008[1…³
-   &lt;chr&gt;                     &lt;int&gt; &lt;chr&gt;                  &lt;chr&gt;                 
- 1 Arkansas                     11 Lean R                 Safe R                
- 2 Arizona                      10 Lean R                 Tossup                
- 3 Colorado                      9 Lean D (flip)          Lean D (flip)         
- 4 Georgia                      15 Tossup                 Tossup                
- 5 Florida                      27 Tossup                 Tossup                
- 6 Iowa                          7 Safe D (flip)          Lean D (flip)         
- 7 Indiana                      11 Tossup                 Tossup                
- 8 Michigan                     17 Safe D                 Lean D                
- 9 Minneso…                     10 Safe D                 Lean D                
-10 Montana                       3 Tossup                 Tossup                
-11 Missouri                     11 Lean R                 Solid R               
-12 Nevada                        5 Lean D (flip)          Lean D (flip)         
-13 New Mex…                      5 Lean D (flip)          Lean D (flip)         
-14 North D…                      3 Tossup                 Tossup                
-15 North C…                     15 Tossup                 Tossup                
-16 Ohio                         20 Tossup                 Tossup                
-17 Pennsyl…                     21 Lean D                 Lean D                
-18 South D…                      3 Lean R                 Tossup                
-19 West Vi…                      5 Lean R                 Lean R                
-20 Virginia                     13 Tossup                 Lean D (flip)         
-# ℹ abbreviated names:
-#   ¹​`.mw-parser-output .tooltip-dotted{border-bottom:1px dotted;cursor:help}EVs`,
-#   ²​`RealClearPoliticsNovember 4,2008[120]`, ³​`538November 4,2008[121]`
-# ℹ 1 more variable: `Cook Political ReportNovember 4,2008[122]` &lt;chr&gt;</code></pre>
+<pre><code># A tibble: 4 × 8
+  No.   Date    Time  Host  City  Moderators Participants `Viewership(millions)`
+  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;        &lt;chr&gt;                 
+1 P1    Friday… 9:00… Univ… Oxfo… Jim Lehre… Senator Bar… 52.4[112]             
+2 VP    Friday… 9:00… Wash… St. … Gwen Ifil… Senator Joe… 69.9[112]             
+3 P2    Tuesda… 9:00… Belm… Nash… Tom Broka… Senator Bar… 63.2[112]             
+4 P3    Wednes… 9:00… Hofs… Hemp… Bob Schie… Senator Bar… 56.5[112]             </code></pre>
 </div>
 </div>
 </section>
@@ -4975,20 +4955,20 @@ window.Quarto = {
 <span id="cb23-7"><a href="#cb23-7"></a>    <span class="fu">html_attr</span>(<span class="at">name =</span> <span class="st">"href"</span>)</span>
 <span id="cb23-8"><a href="#cb23-8"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 647 × 2
-   text                   url                                                   
-   &lt;chr&gt;                  &lt;chr&gt;                                                 
- 1 George W. Bush         https://en.wikipedia.org/wiki/George_W._Bush          
- 2 Republican             https://en.wikipedia.org/wiki/Republican_Party_(Unite…
- 3 Barack Obama           https://en.wikipedia.org/wiki/Barack_Obama            
- 4 Democratic             https://en.wikipedia.org/wiki/Democratic_Party_(Unite…
- 5 Presidential elections https://en.wikipedia.org/wiki/United_States_president…
- 6 United States          https://en.wikipedia.org/wiki/United_States           
- 7 Democratic             https://en.wikipedia.org/wiki/Democratic_Party_(Unite…
- 8 Illinois               https://en.wikipedia.org/wiki/Illinois                
- 9 senator                https://en.wikipedia.org/wiki/United_States_Senate    
-10 Barack Obama           https://en.wikipedia.org/wiki/Barack_Obama            
-# ℹ 637 more rows</code></pre>
+<pre><code># A tibble: 640 × 2
+   text                   url                                               
+   &lt;chr&gt;                  &lt;chr&gt;                                             
+ 1 George W. Bush         /wiki/George_W._Bush                              
+ 2 Republican             /wiki/Republican_Party_(United_States)            
+ 3 Barack Obama           /wiki/Barack_Obama                                
+ 4 Democratic             /wiki/Democratic_Party_(United_States)            
+ 5 Presidential elections /wiki/United_States_presidential_election         
+ 6 United States          /wiki/United_States                               
+ 7 Democratic             /wiki/Democratic_Party_(United_States)            
+ 8 Barack Obama           /wiki/Barack_Obama                                
+ 9 senator                /wiki/List_of_United_States_senators_from_Illinois
+10 Illinois               /wiki/Illinois                                    
+# ℹ 630 more rows</code></pre>
 </div>
 </div>
 <div class="callout callout-style-simple callout-none no-icon callout-titled">

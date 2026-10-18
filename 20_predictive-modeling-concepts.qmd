@@ -1,6 +1,6 @@
 ---
 title: "Predictive Modeling Concepts and Regression"
-abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focused on regression, one of the two main types of supervised machine learning."
+abstract: "This chapter reviews fundamental concepts for predictive modeling. The chapter focuses on concepts instead of code, but it introduces complete examples with code at the end. It focuses on regression, one of the two main types of supervised machine learning."
 format: 
   html:
     toc: true
@@ -17,6 +17,7 @@ editor_options:
 Image by [Marcel "lazytom" Marchon](https://en.wikipedia.org/wiki/Chicago_%22L%22#/media/File:Chicago_Elevated_Train.jpg)
 
 ```{r}
+#| label: init-exercise-number
 #| echo: false
 
 exercise_number <- 1
@@ -24,6 +25,7 @@ exercise_number <- 1
 ```
 
 ```{r}
+#| label: setup
 #| echo: false
 #| warning: false
 #| message: false
@@ -62,14 +64,15 @@ Families of predictive models:
 
 -   linear
 -   trees
--   naive
+-   naive and instance-based methods
 -   kernel
--   NN
+-   neural networks (NN)
 
 ::: callout
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
 ```{r}
+#| label: increment-exercise-number-1
 #| echo: false
 
 exercise_number <- exercise_number + 1
@@ -83,6 +86,7 @@ exercise_number <- exercise_number + 1
 Let's explore a few algorithms for generating predictions in regression applications. Consider some simulated data with 1,000 observations, one predictor, and one outcome.
 
 ```{r}
+#| label: simulate-data
 #| warning: false
 
 library(tidymodels)
@@ -98,9 +102,11 @@ data1 <- bind_cols(
 
 ```
 
-For reasons explained later, we split the data into a training data set with 750 observations and a testing data set with 250 observations. 
+For reasons explained later, we split the data into a training data set with 750 observations and a testing data set with 250 observations.
 
 ```{r}
+#| label: split-simulated-data
+
 set.seed(20201007)
 
 # create a split object
@@ -133,7 +139,7 @@ data1_train |>
 
 **Note:** Linear regression is linear in its coefficients but can fit non-linear patterns in the data with the inclusion of higher order terms (for example, $x^2$).
 
-@fig-simulated-regression shows four different linear regression models fit to the training data. Degree is the magnitude of the highest order term included in the model. 
+@fig-simulated-regression shows four different linear regression models fit to the training data. Degree is the exponent of the highest order term included in the model.
 
 For example, "Degree = 1" means $\hat{y}_i = b_0 + b_1x_i$ and "Degree = 3" means $\hat{y}_i = b_0 + b_1x_i + b_2x_i^2 + b_3x_i^3$.
 
@@ -193,7 +199,7 @@ ggplot() +
 
 ```{r}
 #| code-fold: true
-#| label: simulated-knn
+#| label: fig-simulated-knn
 #| fig-cap: Changing k leads to models that under and over fit to the data
 
 # create a knn model specification
@@ -248,15 +254,15 @@ ggplot() +
 
 ### Regression Trees
 
-1.  Consider all binary splits of all predictors to split the data into two groups. Choose the split that results in groups with the lowest MSE for the outcome variable within each group.
+1.  Consider all binary splits of all predictors to split the data into two groups. Choose the split that minimizes the total sum of squared errors of the outcome variable, where each group's prediction is its mean.
 2.  Repeat step 1 recursively until a stopping parameter is reached (cost complexity, minimum group size, tree depth).
 
-[Decision Tree: The Obama-Clinton Divide](https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?scp=5&sq=Decision%20Obama%20clinton&st=cse) from the New York Times is a clear example of a regression tree.
+[Decision Tree: The Obama-Clinton Divide](https://archive.nytimes.com/www.nytimes.com/imagepages/2008/04/16/us/20080416_OBAMA_GRAPHIC.html?scp=5&sq=Decision%20Obama%20clinton&st=cse) from the New York Times is a clear example of a decision tree.
 
 ```{r}
 #| code-fold: true
 #| label: fig-simulated-regression-trees
-#| fig-cap: Changing the cost complexity parameter leads to models that are under of over fit to the data
+#| fig-cap: Changing the cost complexity parameter leads to models that are under or over fit to the data
 
 reg_tree_mod1 <- 
   decision_tree(cost_complexity = 0.1) |>
@@ -310,6 +316,7 @@ ggplot() +
 Regression trees generate a series of binary splits that can be visualized. Consider the simple tree from @fig-simulated-regression-trees where `cp=0.1`.
 
 ```{r}
+#| label: plot-regression-tree
 #| code-fold: true
 #| message: false
 
@@ -319,7 +326,7 @@ rpart.plot(reg_tree_mod1$fit, roundint = FALSE)
 
 ```
 
-Linear regression is a parameteric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.
+Linear regression is a parametric approach. It requires making assumptions about the functional form of the data and reducing the model to a finite number of parameters.
 
 KNN and regression trees are nonparametric approaches to predictive modeling because they do not require an assumption about the functional form of the model. The data-driven approach of nonparametric models is appealing because it requires fewer assumptions, but it often requires more data and care to not overfit the modeling data.
 
@@ -329,6 +336,7 @@ Regression trees are the simplest tree-based algorithms. Other tree-based algori
 #### [`r paste("Exercise", exercise_number)`]{style="color:#1696d2;"}
 
 ```{r}
+#| label: increment-exercise-number-2
 #| echo: false
 
 exercise_number <- exercise_number + 1
@@ -351,20 +359,20 @@ $$
 MSE = \frac{1}{n}\sum_{i = 1}^n (y_i - \hat{y}_i)^2
 $$ {#eq-mse}
 
-Let's consider the MSE for a single observation $(x_0, y_0)$ and think about the model that generates $\hat{y_0}$, which we will denote $\hat{f}(x_0)$. 
+Let's consider the MSE for a single observation $(x_0, y_0)$ and think about the model that generates $\hat{y}_0$, which we will denote $\hat{f}(x_0)$.
 
 $$
 MSE = (y_0 - \hat{f}(x_0))^2
-$$ {#eq-mse}
+$$ {#eq-mse-single}
 
-Assuming $y_i$ independent and $y_i - \hat{y}_i \sim N(0, \sigma^2)$, we can decompose the expected value of MSE into three types of error: irreducible error, bias error, and variance error. Understanding the types of error will inform modeling decisions.
+Assume the data are generated by $y = f(x) + \epsilon$, where $f$ is the true (unknown) function and $\epsilon$ is independent of $x$ and of the training data with $E[\epsilon] = 0$ and $Var(\epsilon) = \sigma^2$. Taking expectations over both $\epsilon$ and the training samples used to fit $\hat{f}$, we can decompose the expected value of MSE into three types of error: irreducible error, bias error, and variance error. Understanding the types of error will inform modeling decisions.
 
 $$
-E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = Var(\epsilon) + [Bias(\hat{f}(x_0))]^2 + Var(\hat{f}(x_0))
+E[MSE] = E[(y_0 - \hat{f}(x_0))^2] = Var(\epsilon) + [Bias(\hat{f}(x_0))]^2 + Var(\hat{f}(x_0))
 $$ {#eq-mse-ev1}
 
 $$
-E[MSE] = E[y_0 - \hat{f}(x_0)]^2 = \sigma^2 + (\text{model bias})^2 + \text{model variance}
+E[MSE] = E[(y_0 - \hat{f}(x_0))^2] = \sigma^2 + (\text{model bias})^2 + \text{model variance}
 $$ {#eq-mse-ev2}
 
 ::: callout-tip
@@ -382,7 +390,7 @@ Difference between the expected prediction of a predictive model and the correct
 Here, the model on the left does a poor job fitting the data (high bias) and the model on the right does a decent job fitting the data (low bias).
 
 ```{r}
-#| label: model-bias
+#| label: fig-model-bias
 #| code-fold: true
 #| fig-height: 2.5
 #| fig-width: 4
@@ -429,7 +437,7 @@ How much the predicted value ($\hat{y}$) and fitted model ($\hat{f}$) change for
 Here, the model on the left does not change much as the training data change (low variance) and the model on the right changes a lot when the training data change (high variance).
 
 ```{r}
-#| label: model-variance
+#| label: fig-model-variance
 #| code-fold: true
 #| fig-cap: Variance
 #| message: false
@@ -471,14 +479,14 @@ grid.arrange(
 )
 ```
 
-As can be seen in the error decomposition and plots above, for any given amount of total prediction error, there is a trade-off between bias error and variance error. When one type of error is reduced, the other type of error increases.
+As can be seen in the error decomposition and plots above, there is generally a trade-off between bias error and variance error. As model complexity increases, bias error tends to decrease and variance error tends to increase, so the goal is the level of complexity that minimizes their sum.
 
 The bias-variance trade-off can generally be reconceived as
 
 -   underfitting-overfitting tradeoff
 -   simplicity-complexity tradeoff
 
-```{r echo = FALSE, fig.height = 2.5, fig.width = 4, fig.align = "center"}
+```{r bias-variance-tradeoff, echo = FALSE, fig.height = 2.5, fig.width = 4, fig.align = "center"}
 tribble(
   ~x, ~bias_squared, ~variance,
   0, 10, 3,
@@ -494,7 +502,7 @@ tribble(
   10, 3, 10
   ) |>
   mutate(total_error = bias_squared + variance) |>
-  gather(-x, key = "key", value = "value") |>
+  pivot_longer(-x, names_to = "key", values_to = "value") |>
   ggplot(aes(x, value, color = key)) +
   geom_point() +
   geom_line() +
@@ -539,20 +547,20 @@ A subset of data used to develop a predictive model. The share of data committed
 ::: callout-tip
 ## Testing data
 
-A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the error rate is estimated more than once on the testing data, it will underestimate the error rate.
+A subset of data used to estimate model performance. The testing set usually includes all observations not included in the training set. Do not look at these data until the very end and only estimate the out-of-sample error rate on the testing set once. If the testing data are used repeatedly to compare or revise models, the final error rate will tend to underestimate the true out-of-sample error rate.
 :::
 
-![](images/cross-validation.jpeg){#fig-cv}
+![$v$-fold cross-validation](images/cross-validation.jpeg){#fig-cv}
 
 ::: callout-tip
 ## $v$-fold Cross-Validation
 
-Break the data into $v$ equal-sized, exclusive groups. Train the model on data from $v - 1$ folds (analysis data) and measure the error metric (i.e. RMSE) on the left-out fold (assessment data). Repeat this process $v$ times, each time leaving out a different fold. Average the $v$ error metrics.
+Break the data into $v$ equal-sized, exclusive groups. Train the model on data from $v - 1$ folds (analysis data) and measure the error metric (e.g. RMSE) on the left-out fold (assessment data). Repeat this process $v$ times, each time leaving out a different fold. Average the $v$ error metrics.
 
 $v$-fold cross-validation is sometimes called $k$-fold cross-validation.
 :::
 
-Strategies for spending data differ based on the application and the size and nature of the data. Ideally, the training-testing split is made at the beginning of the modeling process. The $v$-fold cross-validation is used on the testing data for comparing
+Strategies for spending data differ based on the application and the size and nature of the data. Ideally, the training-testing split is made at the beginning of the modeling process. The $v$-fold cross-validation is used on the training data for comparing
 
 1.  approaches for feature/target engineering
 2.  algorithms
@@ -567,7 +575,7 @@ When information that won't be available when the model makes out-of-sample pred
 ::: {.callout-warning}
 Feature and target engineering is a common source of data leakage. 
 
-For example, regularized regression models expect variables to be normalized (divide each predictor by the sample mean and divide by the sample standard deviation). A naive approach would be to calculate the means and standard deviations once one the full data set and use them on the testing data or use them in cross validation. This causes data leakage and biased underestimates of the out-of-sample error rate.
+For example, regularized regression models expect variables to be normalized (subtract the sample mean from each predictor and divide by the sample standard deviation). A naive approach would be to calculate the means and standard deviations once on the full data set and use them on the testing data or use them in cross validation. This causes data leakage and biased underestimates of the out-of-sample error rate.
 
 New means and standard deviations need to be estimated every time a model is fit including within each iteration of a resampling method! This is a lot of work, but `library(tidymodels)` makes this simple.
 :::
@@ -583,16 +591,23 @@ The rest of this chapter focuses on a predictive modeling pipeline applied to th
 3. Set up Resampling for Model Selection
 4. Create Candidate Models
 5. Test and Choose the "Best" Model
-6. Optional: Expand the Model Fit
-7. Evaluate the Final Model
-8. Optional: Implement the Final Model
+6. Optional: Finalize the Model Fit
+7. Evaluate the Final Model and Make a Go/No Go Decision
+8. Optional: Deploy the Final Model
+9. Monitor the Deployed Model
 
 
 ### Example: KNN
 
+#### 0. Problem Formulation
+
+We need to predict policy-relevant variable $y$ using $x$ as our predictor. Based on some data collection from last year, we have a data set with $(y, x)$ and we'll have $x$ where we'll deploy the model. We'll use RMSE as our error metric because we want to minimize errors overall with extra emphasis on avoiding large predictive errors.
+
 #### 1. Split data into training and testing data
 
 ```{r}
+#| label: knn-split-data
+
 set.seed(20201007)
 
 # create a split object
@@ -613,6 +628,8 @@ Exploring the testing data will lead to data leakage.
 :::
 
 ```{r}
+#| label: knn-eda
+
 data1_train |>
   ggplot(aes(x = x, y = y)) +
   geom_point(alpha = 0.25) +
@@ -625,9 +642,11 @@ data1_train |>
 
 We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are small (750 observations and one predictor), so we will repeat the entire cross validation process five times.
 
-Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation improves the accuracy of our estimated error rates.
+Estimating out-of-sample error rates with cross-validation is an uncertain process. Repeated cross-validation reduces the variance of our estimated error rates.
 
 ```{r}
+#| label: knn-resampling
+
 data1_folds <- vfold_cv(data = data1_train, v = 10, repeats = 5)
 
 ```
@@ -640,9 +659,11 @@ We have three main levers for creating candidate models:
 2. **Switching algorithms.** Algorithms are specified using functions from `library(parsnip)`.
 3. **Hyperparameter tuning.** Hyperparameter tuning is typically handled by using `tune()` when picking an algorithm and then creating a hyperparameter tuning grid. 
 
-It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN. 
+It is common to normalize (subtract the sample mean and divide by the sample standard deviation) predictors when using KNN. Otherwise, predictors measured on larger scales dominate the distance calculation. With only one predictor, normalizing does not change which observations are closest, but we include it because it is standard practice.
 
 ```{r}
+#| label: knn-recipe
+
 knn_recipe <-
   recipe(formula = y ~ ., data = data1_train) |>
   step_normalize(all_predictors())
@@ -652,6 +673,8 @@ knn_recipe <-
 We use `nearest_neighbor()` to create a KNN model and we use `tune()` as a placeholder for `k`. Note that we can tune many hyperparameters for a given model. The Regression Tree example later in this chapter illustrates this concept.
 
 ```{r}
+#| label: knn-model
+
 knn_mod <-
   nearest_neighbor(neighbors = tune()) |>
   set_engine(engine = "kknn") |>
@@ -662,6 +685,8 @@ knn_mod <-
 We use `grid_regular()` to specify a hyperparameter tuning grid for potential values of $k$.
 
 ```{r}
+#| label: knn-grid
+
 knn_grid <- grid_regular(neighbors(range = c(1, 99)), levels = 10)
 
 knn_grid
@@ -671,6 +696,8 @@ knn_grid
 Finally, we combine the recipe and model objects into a `workflow()`. 
 
 ```{r}
+#| label: knn-workflow
+
 knn_workflow <-
   workflow() |>
   add_recipe(recipe = knn_recipe) |>
@@ -680,9 +707,11 @@ knn_workflow <-
 
 #### 5. Test and Choose the "Best" Model 
 
-`tune_grid()` fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each evaluation data set. 
+`tune_grid()` fits the models to the repeated cross validation with differing hyperparameters and captures RMSE against each assessment data set. 
 
 ```{r}
+#| label: knn-tune
+
 knn_res <-
   knn_workflow |>
   tune_grid(
@@ -696,36 +725,42 @@ knn_res <-
 We can quickly extract information from the tuned results object with functions like `collect_metrics()`, `show_best()`, and `autoplot()`.
 
 ```{r}
+#| label: knn-tune-results
+
 knn_res |>
   collect_metrics()
 
 knn_res |>
-  show_best()
+  show_best(metric = "rmse")
 
 knn_res |>
   autoplot()
 
 ```
 
-#### 6. Optional: Expand the Model Fit
+#### 6. Optional: Finalize the Model Fit
 
 Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data. 
 
 First, finalize the workflow with the "best" hyperparameters from the tuned results. 
 
 ```{r}
-final_wf <- 
+#| label: knn-finalize-workflow
+
+final_wf <-
   knn_workflow |> 
-  finalize_workflow(select_best(knn_res))
+  finalize_workflow(select_best(knn_res, metric = "rmse"))
 
 ```
 
-Second, use `last_fit()` to fit the model on all of the data. 
+Second, use `last_fit()` to fit the model on all of the training data and evaluate it once on the testing data.
 
 ```{r}
-final_fit <- 
+#| label: knn-last-fit
+
+final_fit <-
   final_wf |>
-  last_fit(data1_split) 
+  last_fit(data1_split)
 
 ```
 
@@ -737,46 +772,37 @@ It is important to consider other elements when picking a "best." Other consider
 
 :::
 
-#### 7. Evaluate the Final Model
+#### 7. Evaluate the Final Model and Make a Go/No Go Decision
 
 The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data. 
 
-In this case, the testing data error is slightly higher than the training data error, which makes sense. 
+In this case, the testing data error is slightly higher than the cross-validated error from step 5, which makes sense.
 
 ```{r}
+#| label: knn-test-metrics
+
 final_fit |>
   collect_metrics()
 
 ```
 
-#### 8. Optional: Implement the Final Model
+#### 8. Optional: Deploy the Final Model
 
 `final_fit` and `predict()` can be used to apply the model to new, unseen data. 
 
-Only implement the model if it achieves the objectives of the final model. 
+Only implement the model if it achieves the objectives set during problem formulation. 
 
+#### 9. Monitor the Deployed Model
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Model performance often decays over time because of changes in the predictors, changes in the outcome variables, and changes in the relationship between predictors and the outcome. It is important to monitor deployed models and make recurring go/no go decisions.
 
 ### Example: Regression Trees
 
 We'll next work with a subset of data from the `Chicago` data set from `library(tidymodels)`. 
 
 ```{r}
+#| label: chicago-data
+
 chicago_small <- Chicago |>
   select(
     ridership,
@@ -800,13 +826,15 @@ chicago_small <- Chicago |>
 
 #### 0. Problem Formulation
 
-The variable `ridership` is the outcome variable. It measures ridership at the Clark/Lake L station in Chicago. The variables `Clark_Lake`, `Quincy_Wells`, `Irving_Park`, `Monroe`, and `Polk` measure ridership at several stations *14 days before* the `ridership` variable. 
+The variable `ridership` is the outcome variable. It measures daily ridership, in thousands of riders, at the Clark/Lake L station in Chicago. The variables `Clark_Lake`, `Quincy_Wells`, `Irving_Park`, `Monroe`, and `Polk` measure ridership at several stations *14 days before* the `ridership` variable. 
 
-The objective is predict `ridership` to better allocate staff and resources to the Clark/Lake L station. 
+The objective is predict `ridership` to better allocate staff and resources to the Clark/Lake L station. We have a clear setup between our modeling data and implementation data. Once again, we'll use RMSE which balances the desire to be right on average and to avoid very large predictive errors.
 
 #### 1. Split data into training and testing data
 
 ```{r}
+#| label: chicago-split-data
+
 set.seed(20231106)
 
 # create a split object
@@ -818,15 +846,25 @@ chicago_test  <- testing(x = chicago_split)
 
 ```
 
+::: {.callout-warning}
+## Random splits and time series
+
+For simplicity, this example splits the data randomly. The Chicago data are a daily time series, so a random split puts days from the future into the training data and lets the model learn from days that sit right next to the testing days. This is a form of data leakage, so the testing error below likely underestimates how the model would perform in deployment.
+
+In a real application, we would train on earlier dates and test on later dates (for example, with `initial_time_split()`).
+:::
+
 #### 2. Exploratory Data Analysis
 
 [This chapter](https://bookdown.org/max/FES/visualizations-for-numeric-data-exploring-train-ridership-data.html) in "**Feature and Target Engineering**" contains EDA for the data set of interest.
 
 #### 3. Set up Resampling for Model Selection
 
-We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger in the previous example, so we skip repeats. 
+We use 10-fold cross validation for hyperparameter tuning and model selection. The training data are larger than in the previous example, so we skip repeats. 
 
 ```{r}
+#| label: chicago-resampling
+
 chicago_folds <- vfold_cv(data = chicago_train, v = 10)
 
 ```
@@ -836,6 +874,8 @@ chicago_folds <- vfold_cv(data = chicago_train, v = 10)
 We will use regression trees for this example. For feature and target engineering, we will simply remove the date column.
 
 ```{r}
+#| label: rpart-recipe
+
 rpart_recipe <-
   recipe(formula = ridership ~ ., data = chicago_train) |>
   step_rm(date)
@@ -845,6 +885,8 @@ rpart_recipe <-
 We specify a regression tree with the rpart engine.
 
 ```{r}
+#| label: rpart-model
+
 rpart_mod <-
   decision_tree(
     cost_complexity = tune(),
@@ -859,6 +901,8 @@ rpart_mod <-
 We use `grid_regular()` to specify a hyperparameter tuning grid for potential values of the cost-complexity parameter, tree depth parameter, and minimum n.
 
 ```{r}
+#| label: rpart-grid
+
 rpart_grid <- grid_regular(
   cost_complexity(range = c(-5, -1)), 
   tree_depth(range = c(3, 15)), 
@@ -873,6 +917,8 @@ rpart_grid
 Finally, we combine the recipe and model objects into a `workflow()`. 
 
 ```{r}
+#| label: rpart-workflow
+
 rpart_workflow <-
   workflow() |>
   add_recipe(recipe = rpart_recipe) |>
@@ -883,6 +929,8 @@ rpart_workflow <-
 #### 5. Test and Choose the "Best" Model
 
 ```{r}
+#| label: rpart-tune
+
 rpart_res <-
   rpart_workflow |>
   tune_grid(resamples = chicago_folds,
@@ -893,54 +941,69 @@ rpart_res |>
   collect_metrics()
 
 rpart_res |>
-  show_best()
+  show_best(metric = "rmse")
 
 rpart_res |>
-  select_best()
+  select_best(metric = "rmse")
 
 rpart_res |>
   autoplot()
 
 ```
 
-#### 6. Optional: Expand the Model Fit
+#### 6. Optional: Finalize the Model Fit
 
 Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data. 
 
 First, finalize the workflow with the "best" hyperparameters from the tuned results. 
 
 ```{r}
-final_wf <- 
+#| label: rpart-finalize-workflow
+
+final_wf <-
   rpart_workflow |> 
-  finalize_workflow(select_best(rpart_res))
+  finalize_workflow(select_best(rpart_res, metric = "rmse"))
 
 ```
 
-Second, use `last_fit()` to fit the model on all of the data. 
+Second, use `last_fit()` to fit the model on all of the training data and evaluate it once on the testing data.
 
 ```{r}
-final_fit <- 
+#| label: rpart-last-fit
+
+final_fit <-
   final_wf |>
-  last_fit(chicago_split) 
+  last_fit(chicago_split)
 
 ```
 
-#### 7. Evaluate the Final Model
+#### 7. Evaluate the Final Model and Make a Go/No Go Decision
 
 The final fit object contains the out-of-sample error metric from the testing data. This metric is our best estimate of model performance on unseen data. 
 
-In this case, the testing data error is slightly higher than the training data error, which makes sense. 
+In this case, the testing data error is slightly higher than the cross-validated error from step 5, which makes sense.
 
 ```{r}
+#| label: rpart-test-metrics
+
 final_fit |>
   collect_metrics()
 
 ```
 
-#### 8. Optional: Implement the Final Model
+#### 8. Optional: Deploy the Final Model
 
-If we think an expected error of around 2,340 people is appropriate, we can implement this model for the Chicago Transit Authority. 
+If we think an RMSE of around 2,340 riders is appropriate, we can implement this model for the Chicago Transit Authority. 
 
 Instead, we're going back to the drawing board in our class lab to see if we can do better.[^testing-data]
 
 [^testing-data]: Pretend we haven't already touched the testing data!
+
+#### 9. Monitor the Deployed Model
+
+This set up is ideal for monitoring the deployed model because we can compare predicted ridership with observed ridership every day. We can break this monitoring into four distinct steps.
+
+1. **Structural validity:** Does the implementation data have the same structure as the modeling data? For example, does the delay in the 2025 American Community Survey shrink the set of available predictors?
+2. **Input validation:** Do the predictors in the modeling data look like the implementation data? For example, are folks no longer going to Chicago Bulls games because the Bulls are bad?
+3. **Output distribution:** Do the distributions of predicted and observed values in the implementation data look like the distribution of the outcome in the modeling data? For example, did ridership decline 50% because of a global pandemic?
+4. **Relationship:** Do the predicted values look like the observed values? Is there concept drift? For example, does the RMSE look similar on the implementation data to the modeling data?
