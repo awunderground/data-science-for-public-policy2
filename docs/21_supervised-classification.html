@@ -472,9 +472,10 @@ window.Quarto = {
   <li><a href="#relative-costs" id="toc-relative-costs" class="nav-link" data-scroll-target="#relative-costs"><span class="header-section-number">19.3.5</span> Relative costs</a></li>
   <li><a href="#multiclass-metrics" id="toc-multiclass-metrics" class="nav-link" data-scroll-target="#multiclass-metrics"><span class="header-section-number">19.3.6</span> Multiclass metrics</a></li>
   </ul></li>
-  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">19.4</span> R Code</a>
+  <li><a href="#putting-it-all-together" id="toc-putting-it-all-together" class="nav-link" data-scroll-target="#putting-it-all-together"><span class="header-section-number">19.4</span> Putting it All Together</a></li>
+  <li><a href="#r-code" id="toc-r-code" class="nav-link" data-scroll-target="#r-code"><span class="header-section-number">19.5</span> R Code</a>
   <ul class="collapse">
-  <li><a href="#example-1-1" id="toc-example-1-1" class="nav-link" data-scroll-target="#example-1-1"><span class="header-section-number">19.4.1</span> Example 1</a></li>
+  <li><a href="#example-1-1" id="toc-example-1-1" class="nav-link" data-scroll-target="#example-1-1"><span class="header-section-number">19.5.1</span> Example 1</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -541,6 +542,7 @@ window.Quarto = {
 <p><strong>Multiclass classification:</strong> Predicting one of three or more classes. For example, single filer, joint filer, or head of household; or on-time, delinquent, or defaulted. Classes can be recoded to integers for models like multinomial logistic regression, but many of the best models can handle factors.</p>
 </div>
 </div>
+<p>Some classification models predict classes. Other classification models predict probabilities, which can be converted into classes. All else equal, predicted probabilities give users more flexibility to evaluate predictive models and for using predictive models.</p>
 </section>
 <section id="metrics" class="level2" data-number="19.2">
 <h2 data-number="19.2" class="anchored" data-anchor-id="metrics"><span class="header-section-number">19.2</span> Metrics</h2>
@@ -594,7 +596,7 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>False negative:</strong> Incorrectly predicting a non-event for an event. Predicting <span class="math inline">\(\hat{y_i} = 0\)</span> when <span class="math inline">\(y = 1\)</span></p>
+<p><strong>False negative:</strong> Incorrectly predicting a non-event for an event. Predicting <span class="math inline">\(\hat{y_i} = 0\)</span> when <span class="math inline">\(y_i = 1\)</span></p>
 </div>
 </div>
 <div class="callout callout-style-default callout-tip callout-titled">
@@ -716,6 +718,7 @@ window.Quarto = {
 </table>
 </div>
 </div>
+<p><br></p>
 <p>The confusion matrix for this data:</p>
 <table class="caption-top table">
 <colgroup>
@@ -789,7 +792,7 @@ window.Quarto = {
 </tr>
 </tbody>
 </table>
-<p>This test only accurately predicted one cancer case. In fact, a person was more likely not to have cancer given a positive test than to have cancer. This example demonstrates the base rate fallacy and the accuracy paradox. Both are the results of high class imbalance. Clearly we need more sophisticated way of evaluating classifiers than just accuracy.</p>
+<p>This test only accurately predicted one cancer case. In fact, a person was more likely not to have cancer given a positive test than to have cancer. This example demonstrates the base rate fallacy and the accuracy paradox. Both are the results of high class imbalance. Clearly, we need a better way of evaluating classifiers than just using accuracy.</p>
 </section>
 </section>
 <section id="more-metrics" class="level2" data-number="19.3">
@@ -874,6 +877,20 @@ window.Quarto = {
 <p>Note that False Positive Rate is sometimes referred to as FPR.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>F1 Score
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The harmonic mean of precision and recall. It symmetrically captures precision and recall in one measure.</p>
+<p><span class="math inline">\(F_1 = \frac{2}{recall^{-1} + precision ^{-1}}\)</span></p>
+</div>
+</div>
 </section>
 <section id="example-2-continued" class="level3" data-number="19.3.3">
 <h3 data-number="19.3.3" class="anchored" data-anchor-id="example-2-continued"><span class="header-section-number">19.3.3</span> Example 2 continued</h3>
@@ -918,12 +935,12 @@ window.Quarto = {
 <p>The breast cancer test has poor precision and recall.</p>
 <p><strong>Specificity:</strong> <span class="math inline">\(\frac{TN}{FP + TN} = \frac{990}{4 + 990} = \frac{990}{994}\)</span></p>
 <p><strong>False Positive Rate (FPR):</strong> <span class="math inline">\(1 - Specificity = \frac{4}{994}\)</span></p>
-<p>The breast cancer cancer test also has poor False Positive Rate.</p>
+<p>The breast cancer test has high specificity and a low False Positive Rate, but only because almost every observation is a non-event. With so few events, even 4 false positives outnumber the 1 true positive.</p>
 </section>
 <section id="using-thresholds-to-predict-classes" class="level3" data-number="19.3.4">
 <h3 data-number="19.3.4" class="anchored" data-anchor-id="using-thresholds-to-predict-classes"><span class="header-section-number">19.3.4</span> Using Thresholds to Predict Classes:</h3>
 <p>Most algorithms for classification generate predicted classes and probabilities of predicted classes. A predicted probability of 0.99 for an event is very different than a predicted probability of 0.51.</p>
-<p>To generate class predictions, usually a threshold is used. For example, if <span class="math inline">\(\hat{P}(event) &gt; 0.5\)</span> then predict event. It is common to adjust the threshold to values other than 0.5. As 0.5 decreases, marginal cases shift from <span class="math inline">\(\hat{y} = 0\)</span> to <span class="math inline">\(\hat{y} = 1\)</span> because the threshold for an event decreases.</p>
+<p>To generate class predictions, usually a threshold is used. For example, if <span class="math inline">\(\hat{P}(event) &gt; 0.5\)</span> then predict event. It is common to adjust the threshold to values other than 0.5. As the threshold decreases from 0.5, marginal cases shift from <span class="math inline">\(\hat{y} = 0\)</span> to <span class="math inline">\(\hat{y} = 1\)</span> because the threshold for an event decreases.</p>
 <p>As the threshold decreases (we are predicting more events and fewer non-events):</p>
 <ul>
 <li>the true positive rate increases and the false positive rate increases</li>
@@ -937,11 +954,11 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Tip</span>Receiver Operating Curve (ROC)
+<span class="screen-reader-only">Tip</span>Receiver Operating Characteristic (ROC) Curve
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Receiver Operating Characteristics (ROC) curve:</strong> A curve that shows the trade-off between the false positive rate and true positive rate as different threshold probabilities are used for classification.</p>
+<p><strong>Receiver Operating Characteristic (ROC) curve:</strong> A curve that shows the trade-off between the false positive rate and true positive rate as different threshold probabilities are used for classification.</p>
 </div>
 </div>
 <div class="cell">
@@ -964,7 +981,7 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Area Under the Curve (AUC):</strong> A one-number summary of an ROC curve where 0.5 is random guessing and the rules of thumb are 0.7 is acceptable, 0.8 is good, and 0.9 is excellent.</p>
-<p>AUC is also sometimes referred to as AUROC (Area under the Receiver Operating Curve).</p>
+<p>AUC is also sometimes referred to as AUROC (Area under the Receiver Operating Characteristic curve).</p>
 </div>
 </div>
 <div class="cell">
@@ -977,15 +994,41 @@ window.Quarto = {
 3 Excellent  roc_auc binary         0.925</code></pre>
 </div>
 </div>
-<ul>
-<li><a href="https://bradleyboehmke.github.io/HOML/process.html#classification-models">ROC Curves and AUC</a></li>
-</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Discriminative Metrics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Discriminative metrics</strong> measure how well a classification model can sort outcomes into distinct, accurate predictions.</p>
+<p>For example, are higher predicted probabilities more often events than non-events and lower predicted probabilities more often non-events than events?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Calibration Metrics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Calibration metrics</strong> measure how well predicted probabilities capture the average event rate for observations.</p>
+<p>For example, is there an event on average 30% of the time for observations with <span class="math inline">\(\hat{p} = 0.3\)</span>?</p>
+</div>
+</div>
+<p>Notice that accuracy, precision, recall, ROC AUC and every other metric we’ve discussed is discriminative and does not directly evaluate the predicted probabilities! Metrics like Brier score and visualizations like calibration plots are useful for evaluating predicted probabilities.</p>
 </section>
 <section id="relative-costs" class="level3" data-number="19.3.5">
 <h3 data-number="19.3.5" class="anchored" data-anchor-id="relative-costs"><span class="header-section-number">19.3.5</span> Relative costs</h3>
 <p>True positives, true negatives, false positives, and false negatives can carry different costs, and it is important to consider the relative costs when creating models and interventions.</p>
 <p>A false positive for a cancer test could result in more diagnostic tests. A false negative for a cancer test could lead to untreated cancer and severe health consequences. The relative differences in these outcomes should be considered.</p>
-<p>A false positive for a rat burrow is a wasted trip for an exterminator. A false negative for an rat burrow is an untreated rat burrow. The difference in these outcomes is small, especially compared to the alternative of the exterminator guessing which alleys to visit.</p>
+<p>A false positive for a rat burrow is a wasted trip for an exterminator. A false negative for a rat burrow is an untreated rat burrow. The difference in these outcomes is small, especially compared to the alternative of the exterminator guessing which alleys to visit.</p>
 </section>
 <section id="multiclass-metrics" class="level3" data-number="19.3.6">
 <h3 data-number="19.3.6" class="anchored" data-anchor-id="multiclass-metrics"><span class="header-section-number">19.3.6</span> Multiclass metrics</h3>
@@ -1091,7 +1134,7 @@ window.Quarto = {
 <td><strong><span class="math inline">\(\hat{y}=b\)</span></strong></td>
 <td style="text-align: center;">0</td>
 <td style="text-align: center;">2</td>
-<td style="text-align: center;">2</td>
+<td style="text-align: center;">1</td>
 </tr>
 <tr class="even">
 <td></td>
@@ -1108,10 +1151,19 @@ window.Quarto = {
 <p>There are multiclass extensions of precision, recall/sensitivity, and specificity. They are beyond the scope of this class.</p>
 </section>
 </section>
-<section id="r-code" class="level2" data-number="19.4">
-<h2 data-number="19.4" class="anchored" data-anchor-id="r-code"><span class="header-section-number">19.4</span> R Code</h2>
-<section id="example-1-1" class="level3" data-number="19.4.1">
-<h3 data-number="19.4.1" class="anchored" data-anchor-id="example-1-1"><span class="header-section-number">19.4.1</span> Example 1</h3>
+<section id="putting-it-all-together" class="level2" data-number="19.4">
+<h2 data-number="19.4" class="anchored" data-anchor-id="putting-it-all-together"><span class="header-section-number">19.4</span> Putting it All Together</h2>
+<p>Most application can use the following process:</p>
+<ol type="1">
+<li>Use a metric like ROC AUC, estimated with resampling on the training data, for model selection.</li>
+<li>Accounting for costs, use the ROC curve (not the testing data) to pick the appropriate threshold for converting probabilities to class predictions.</li>
+<li>With a given threshold, calculate metrics like accuracy, precision, and recall.</li>
+</ol>
+</section>
+<section id="r-code" class="level2" data-number="19.5">
+<h2 data-number="19.5" class="anchored" data-anchor-id="r-code"><span class="header-section-number">19.5</span> R Code</h2>
+<section id="example-1-1" class="level3" data-number="19.5.1">
+<h3 data-number="19.5.1" class="anchored" data-anchor-id="example-1-1"><span class="header-section-number">19.5.1</span> Example 1</h3>
 <p>Example 1 uses data about penguins from the Palmer Archipelago in Antarctica. The data include measurements about three different species of penguins. This example only considers two classes and does not use resampling methods because only one model is estimated.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">library</span>(tidyverse)</span>
@@ -1119,8 +1171,8 @@ window.Quarto = {
 <span id="cb2-3"><a href="#cb2-3"></a><span class="fu">library</span>(palmerpenguins)</span>
 <span id="cb2-4"><a href="#cb2-4"></a></span>
 <span id="cb2-5"><a href="#cb2-5"></a><span class="co"># drop to two species</span></span>
-<span id="cb2-6"><a href="#cb2-6"></a>penguins_small <span class="ot">&lt;-</span> penguins <span class="sc">%&gt;%</span></span>
-<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6"></a>penguins_small <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb2-7"><a href="#cb2-7"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Gentoo"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb2-8"><a href="#cb2-8"></a>  <span class="fu">mutate</span>(<span class="at">species =</span> <span class="fu">factor</span>(species))</span>
 <span id="cb2-9"><a href="#cb2-9"></a></span>
 <span id="cb2-10"><a href="#cb2-10"></a><span class="co"># look at missing data</span></span>
@@ -1132,7 +1184,7 @@ flipper_length_mm       body_mass_g               sex              year
                 2                 2                11                 0 </code></pre>
 </div>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># drop missing values</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>penguins_small <span class="ot">&lt;-</span> penguins_small <span class="sc">%&gt;%</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>penguins_small <span class="ot">&lt;-</span> penguins_small <span class="sc">|&gt;</span></span>
 <span id="cb4-3"><a href="#cb4-3"></a>  <span class="fu">drop_na</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <section id="step-1.-split-the-data-into-training-and-testing-data" class="level4">
@@ -1153,7 +1205,7 @@ flipper_length_mm       body_mass_g               sex              year
 <section id="step-2.-eda" class="level4">
 <h4 class="anchored" data-anchor-id="step-2.-eda">Step 2. EDA</h4>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>penguins_small_train <span class="sc">%&gt;%</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>penguins_small_train <span class="sc">|&gt;</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> bill_length_mm, <span class="at">color =</span> species)) <span class="sc">+</span></span>
 <span id="cb6-3"><a href="#cb6-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb6-4"><a href="#cb6-4"></a>  <span class="fu">theme_minimal</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1175,20 +1227,20 @@ flipper_length_mm       body_mass_g               sex              year
 <span id="cb7-4"><a href="#cb7-4"></a></span>
 <span id="cb7-5"><a href="#cb7-5"></a><span class="co"># create a cart model object</span></span>
 <span id="cb7-6"><a href="#cb7-6"></a>cart_mod <span class="ot">&lt;-</span> </span>
-<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">decision_tree</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="fu">decision_tree</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"rpart"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"classification"</span>)</span>
 <span id="cb7-10"><a href="#cb7-10"></a></span>
-<span id="cb7-11"><a href="#cb7-11"></a>cart_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">add_recipe</span>(cart_rec) <span class="sc">%&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>cart_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  <span class="fu">add_recipe</span>(cart_rec) <span class="sc">|&gt;</span></span>
 <span id="cb7-13"><a href="#cb7-13"></a>  <span class="fu">add_model</span>(cart_mod)</span>
 <span id="cb7-14"><a href="#cb7-14"></a>  </span>
 <span id="cb7-15"><a href="#cb7-15"></a><span class="co"># fit the model</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>cart_fit <span class="ot">&lt;-</span> cart_wf <span class="sc">%&gt;%</span></span>
+<span id="cb7-16"><a href="#cb7-16"></a>cart_fit <span class="ot">&lt;-</span> cart_wf <span class="sc">|&gt;</span></span>
 <span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">fit</span>(<span class="at">data =</span> penguins_small_train)</span>
 <span id="cb7-18"><a href="#cb7-18"></a></span>
 <span id="cb7-19"><a href="#cb7-19"></a><span class="co"># create a tree</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a>rpart.plot<span class="sc">::</span><span class="fu">rpart.plot</span>(<span class="at">x =</span> cart_fit<span class="sc">$</span>fit<span class="sc">$</span>fit<span class="sc">$</span>fit)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb7-20"><a href="#cb7-20"></a>rpart.plot<span class="sc">::</span><span class="fu">rpart.plot</span>(<span class="at">x =</span> <span class="fu">extract_fit_engine</span>(cart_fit))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">

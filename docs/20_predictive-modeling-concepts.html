@@ -826,7 +826,7 @@ Figure&nbsp;18.4: Changing the cost complexity parameter leads to models that ar
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/plot-regression-tree-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1019,7 +1019,7 @@ Figure&nbsp;18.6: Variance
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/bias-variance-tradeoff-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="384"></p>
 </figure>
 </div>
 </div>
@@ -1212,7 +1212,7 @@ Warning
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/knn-eda-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1324,7 +1324,7 @@ Warning
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/knn-tune-results-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1335,7 +1335,7 @@ Warning
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>final_wf <span class="ot">&lt;-</span></span>
 <span id="cb24-2"><a href="#cb24-2"></a>  knn_workflow <span class="sc">|&gt;</span> </span>
 <span id="cb24-3"><a href="#cb24-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(knn_res, <span class="at">metric =</span> <span class="st">"rmse"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
@@ -1578,7 +1578,7 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="20_predictive-modeling-concepts_files/figure-html/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="20_predictive-modeling-concepts_files/figure-html/rpart-tune-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1589,7 +1589,7 @@ $ weekend       &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE
 <p>Sometimes we will pick the best predictive model specification (feature and target engineering + algorithm + hyperparameters) and fit the model on all of the training data.</p>
 <p>First, finalize the workflow with the “best” hyperparameters from the tuned results.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>final_wf <span class="ot">&lt;-</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a>final_wf <span class="ot">&lt;-</span></span>
 <span id="cb44-2"><a href="#cb44-2"></a>  rpart_workflow <span class="sc">|&gt;</span> </span>
 <span id="cb44-3"><a href="#cb44-3"></a>  <span class="fu">finalize_workflow</span>(<span class="fu">select_best</span>(rpart_res, <span class="at">metric =</span> <span class="st">"rmse"</span>))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>

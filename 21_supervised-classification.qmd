@@ -32,6 +32,7 @@ library(tidymodels)
 
 
 ## Types of Classification
+
 :::{.callout-tip}
 ## Binary Classification
 **Binary classification:** Predicting one of two classes. For example, rat burrow or no rat burrow, lead paint or no lead paint, or insured or uninsured. Classes are often recoded to `1` and `0` as in logistic regression.
@@ -42,6 +43,7 @@ library(tidymodels)
 **Multiclass classification:** Predicting one of three or more classes. For example, single filer, joint filer, or head of household; or on-time, delinquent, or defaulted. Classes can be recoded to integers for models like multinomial logistic regression, but many of the best models can handle factors.
 ::: 
 
+Some classification models predict classes. Other classification models predict probabilities, which can be converted into classes. All else equal, predicted probabilities give users more flexibility to evaluate predictive models and for using predictive models. 
 
 ## Metrics
 
@@ -62,9 +64,9 @@ Classification problems require a different set of error metrics and diagnostics
 **False positive:** Incorrectly predicting an event for a non-event. Predicting $\hat{y_i} = 1$ when $y_i = 0$
 :::
 
-:::{.callout-tip}::
+:::{.callout-tip}
 ## False negative
-**False negative:** Incorrectly predicting a non-event for an event. Predicting $\hat{y_i} = 0$ when $y = 1$
+**False negative:** Incorrectly predicting a non-event for an event. Predicting $\hat{y_i} = 0$ when $y_i = 1$
 :::
 
 :::{.callout-tip}
@@ -108,9 +110,11 @@ tribble(
   0, 1,   
   1, 1,
   1, 1
-) %>%
+) |>
   knitr::kable()
 ```
+
+<br>
 
 The confusion matrix for this data:
 
@@ -121,7 +125,6 @@ The confusion matrix for this data:
 |                     |              | **$y=1$**                | **$y=0$**          |
 | **Predicted Value** | **$\hat{y}=1$**        |  4 | 2 |
 |                     | **$\hat{y}=0$**        | 1  | 3 |
-
 
 
 ### Example 2
@@ -138,7 +141,7 @@ A test for breast cancer is 99.1% accurate across 1,000 tests. Is it a good test
 
 
 
-This test only accurately predicted one cancer case. In fact, a person was more likely not to have cancer given a positive test than to have cancer. This example demonstrates the base rate fallacy and the accuracy paradox. Both are the results of high class imbalance. Clearly we need more sophisticated way of evaluating classifiers than just accuracy. 
+This test only accurately predicted one cancer case. In fact, a person was more likely not to have cancer given a positive test than to have cancer. This example demonstrates the base rate fallacy and the accuracy paradox. Both are the results of high class imbalance. Clearly, we need a better way of evaluating classifiers than just using accuracy. 
 
 ## More metrics
 
@@ -184,6 +187,15 @@ Note that False Positive Rate is sometimes referred to as FPR.
 :::
 
 
+:::{.callout-tip}
+## F1 Score
+
+The harmonic mean of precision and recall. It symmetrically captures precision and recall in one measure.
+
+$F_1 = \frac{2}{recall^{-1} + precision ^{-1}}$
+:::
+
+
 ### Example 2 continued
 
 
@@ -210,13 +222,13 @@ The breast cancer test has poor precision and recall.
 
 **False Positive Rate (FPR):** $1 - Specificity = \frac{4}{994}$
 
-The breast cancer cancer test also has poor False Positive Rate.
+The breast cancer test has high specificity and a low False Positive Rate, but only because almost every observation is a non-event. With so few events, even 4 false positives outnumber the 1 true positive.
 
 ### Using Thresholds to Predict Classes: 
 
 Most algorithms for classification generate predicted classes and probabilities of predicted classes. A predicted probability of 0.99 for an event is very different than a predicted probability of 0.51. 
 
-To generate class predictions, usually a threshold is used. For example, if $\hat{P}(event) > 0.5$ then predict event. It is common to adjust the threshold to values other than 0.5. As 0.5 decreases, marginal cases shift from $\hat{y} = 0$ to $\hat{y} = 1$ because the threshold for an event decreases.
+To generate class predictions, usually a threshold is used. For example, if $\hat{P}(event) > 0.5$ then predict event. It is common to adjust the threshold to values other than 0.5. As the threshold decreases from 0.5, marginal cases shift from $\hat{y} = 0$ to $\hat{y} = 1$ because the threshold for an event decreases.
 
 As the threshold decreases (we are predicting more events and fewer non-events):
 
@@ -227,8 +239,8 @@ As the threshold decreases (we are predicting more events and fewer non-events):
 In general, the goal is to create a model that has a high true positive rate and a low false positive rate, high precision and high recall, and high sensitivity and high specificity. Changing the threshold is a movement along these tradeoffs. Estimating "better" models is often a way to improve these tradeoffs. Of course, there is some amount of irreducible error. 
 
 :::callout-tip
-## Receiver Operating Curve (ROC)
-**Receiver Operating Characteristics (ROC) curve:** A curve that shows the trade-off between the false positive rate and true positive rate as different threshold probabilities are used for classification. 
+## Receiver Operating Characteristic (ROC) Curve
+**Receiver Operating Characteristic (ROC) curve:** A curve that shows the trade-off between the false positive rate and true positive rate as different threshold probabilities are used for classification. 
 :::
 
 
@@ -247,13 +259,13 @@ data <- tibble(
   error = rnorm(1000)
 )
 
-data <- data %>%
+data <- data |>
   mutate(
     p_y = exp(b0 + b1 * x1 + b2 * x2 + b3 * x3 + error) /
       (1 + exp(b0 + b1 * x1 + b2 * x2 + b3 * x3 + error))
   )
 
-data <- data %>%
+data <- data |>
   mutate(y = factor(round(p_y), levels = c("1", "0")))
 
 model1 <- glm(y ~ x1, data = data, family = "binomial")
@@ -278,7 +290,7 @@ bind_rows(
                           #estimate = model3
                           model3),
   .id = "Quality"
-) %>%
+) |>
   ggplot(aes(1 - specificity, sensitivity, color = Quality)) +
   geom_abline(intercept = 0, slope = 1, linetype = "dashed") +
   geom_path() +
@@ -302,7 +314,7 @@ bind_rows(
 ## Area Under the Curve
 **Area Under the Curve (AUC):** A one-number summary of an ROC curve where 0.5 is random guessing and the rules of thumb are 0.7 is acceptable, 0.8 is good, and 0.9 is excellent. 
 
-AUC is also sometimes referred to as AUROC (Area under the Receiver Operating Curve).
+AUC is also sometimes referred to as AUROC (Area under the Receiver Operating Characteristic curve).
 :::
 
 
@@ -322,7 +334,24 @@ bind_rows(
 
 ```
 
-* [ROC Curves and AUC](https://bradleyboehmke.github.io/HOML/process.html#classification-models)
+::: {.callout-tip}
+## Discriminative Metrics
+
+**Discriminative metrics** measure how well a classification model can sort outcomes into distinct, accurate predictions.
+
+For example, are higher predicted probabilities more often events than non-events and lower predicted probabilities more often non-events than events?
+:::
+
+
+::: {.callout-tip}
+## Calibration Metrics
+
+**Calibration metrics** measure how well predicted probabilities capture the average event rate for observations. 
+
+For example, is there an event on average 30% of the time for observations with $\hat{p} = 0.3$?
+:::
+
+Notice that accuracy, precision, recall, ROC AUC and every other metric we've discussed is discriminative and does not directly evaluate the predicted probabilities! Metrics like Brier score and visualizations like calibration plots are useful for evaluating predicted probabilities.
 
 ### Relative costs
 
@@ -330,7 +359,7 @@ True positives, true negatives, false positives, and false negatives can carry d
 
 A false positive for a cancer test could result in more diagnostic tests. A false negative for a cancer test could lead to untreated cancer and severe health consequences. The relative differences in these outcomes should be considered. 
 
-A false positive for a rat burrow is a wasted trip for an exterminator. A false negative for an rat burrow is an untreated rat burrow. The difference in these outcomes is small, especially compared to the alternative of the exterminator guessing which alleys to visit. 
+A false positive for a rat burrow is a wasted trip for an exterminator. A false negative for a rat burrow is an untreated rat burrow. The difference in these outcomes is small, especially compared to the alternative of the exterminator guessing which alleys to visit. 
 
 ### Multiclass metrics
 
@@ -351,7 +380,7 @@ tribble(
   "c", "b",
   "c", "a",
   "c", "c"
-) %>%
+) |>
   knitr::kable()
 ```
 
@@ -364,7 +393,7 @@ Create a confusion matrix:
 |---------------------|---------------------|:------------------:|:-----------:|:-----------:|
 |                     |                     | **$y=a$**          | **$y=b$**   | **$y=c$**   |
 | **Predicted Value** | **$\hat{y}=a$**     | 4                  | 1           | 1           |
-|                     | **$\hat{y}=b$**     | 0                  | 2           | 2           |
+|                     | **$\hat{y}=b$**     | 0                  | 2           | 1           |
 |                     | **$\hat{y}=c$**     | 0                  | 1           | 2           |
 
 
@@ -377,6 +406,13 @@ Accuracy: $\frac{4 + 2 + 2}{12} = \frac{8}{12} = \frac{2}{3}$
 
 There are multiclass extensions of precision, recall/sensitivity, and specificity. They are beyond the scope of this class. 
 
+## Putting it All Together
+
+Most application can use the following process:
+
+1. Use a metric like ROC AUC, estimated with resampling on the training data, for model selection.
+2. Accounting for costs, use the ROC curve (not the testing data) to pick the appropriate threshold for converting probabilities to class predictions.
+3. With a given threshold, calculate metrics like accuracy, precision, and recall. 
 
 ## R Code
 
@@ -391,15 +427,15 @@ library(tidymodels)
 library(palmerpenguins)
 
 # drop to two species
-penguins_small <- penguins %>%
-  filter(species %in% c("Adelie", "Gentoo")) %>%
+penguins_small <- penguins |>
+  filter(species %in% c("Adelie", "Gentoo")) |>
   mutate(species = factor(species))
 
 # look at missing data
 map_dbl(.x = penguins_small, .f = ~ sum(is.na(.x)))
 
 # drop missing values
-penguins_small <- penguins_small %>%
+penguins_small <- penguins_small |>
   drop_na()
 
 ```
@@ -423,7 +459,7 @@ rm(penguins_small)
 #### Step 2. EDA
 
 ```{r}
-penguins_small_train %>%
+penguins_small_train |>
   ggplot(aes(x = flipper_length_mm, y = bill_length_mm, color = species)) +
   geom_point(alpha = 0.5) +
   theme_minimal()
@@ -439,20 +475,20 @@ cart_rec <-
 
 # create a cart model object
 cart_mod <- 
-  decision_tree() %>%
-  set_engine(engine = "rpart") %>%
+  decision_tree() |>
+  set_engine(engine = "rpart") |>
   set_mode(mode = "classification")
 
-cart_wf <- workflow() %>%
-  add_recipe(cart_rec) %>%
+cart_wf <- workflow() |>
+  add_recipe(cart_rec) |>
   add_model(cart_mod)
   
 # fit the model
-cart_fit <- cart_wf %>%
+cart_fit <- cart_wf |>
   fit(data = penguins_small_train)
 
 # create a tree
-rpart.plot::rpart.plot(x = cart_fit$fit$fit$fit)
+rpart.plot::rpart.plot(x = extract_fit_engine(cart_fit))
 
 ```
 
