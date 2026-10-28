@@ -43,7 +43,7 @@ options(scipen = 999)
 
 ```
 
-## Motivation
+## Motivation {#sec-ensembling-intro}
 
 A team of mediocre predictive models can often outperform one excellent predictive model.
 
@@ -51,7 +51,7 @@ This chapter introduces ensembling, the process of combining predictions from mu
 
 This chapter also introduces an extended example of predicting a low response rate on the US Census Bureau's decennial census planning database.
 
-## Planning Database
+## Planning Database {#sec-pdb}
 
 -   **Motivation:** The decennial census is used to allocate hundreds of billions of dollars and to redistrict political power. Ensuring an accurate count is imperative. The Census Bureau uses the planning database (PDB) and a modeled low-response score (LRS) to plan outreach to improve response rates.
 -   **Implementation data:** Demographic and housing information for the American Community Survey at the census tract and census block group levels.

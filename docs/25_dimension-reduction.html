@@ -711,7 +711,7 @@ s_{31} &amp; s_{32} &amp; s_3^2
 </div>
 </div>
 </div>
-<p>If we project the data onto the second diagonal, then we can further simplify the data–though less than with the first project. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.</p>
+<p>If we project the data onto the second diagonal, then we can further simplify the data–though less than with the first projection. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <div class="quarto-figure quarto-figure-center">
@@ -739,10 +739,10 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>A more thorough introduction of PCA requires the use of linear algebra which is not assumed for this coursework. If you want to learn more about PCA, you can start with <a href="https://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/">this blog</a> which gives a linear algebraic approach while also provides intuitive graphics.</p>
+<p>A more thorough introduction of PCA requires the use of linear algebra which is not assumed for this coursework. If you want to learn more about PCA, you can start with <a href="https://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/">this blog</a> which gives a linear algebraic approach while also providing intuitive graphics.</p>
 </div>
 </div>
-<p>Take a simple example with 10 observations of <code>body_weight</code> and <code>height</code>. All observations are centered and scaled.</p>
+<p>Take a simple example with 10 observations of <code>body_weight</code> and <code>height</code>. All variables are centered and scaled.</p>
 <div class="cell" data-layout-align="center">
 <div class="cell-output-display">
 <table class="caption-top table table-sm table-striped small">
@@ -904,7 +904,7 @@ $vectors
 </table>
 </div>
 </div>
-<p>The principal components aren’t necessarily interpretable, but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, <code>PC1</code> is essentially the “latent” variable “size” and <code>PC2</code> is essentially body-mass index.</p>
+<p>The principal components aren’t necessarily interpretable, but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, <code>PC1</code> is essentially the “latent” variable “size” and <code>PC2</code> is essentially the inverse of body-mass index.</p>
 </section>
 <section id="variance-explained" class="level3" data-number="23.2.3">
 <h3 data-number="23.2.3" class="anchored" data-anchor-id="variance-explained"><span class="header-section-number">23.2.3</span> Variance Explained</h3>
@@ -933,7 +933,7 @@ $vectors
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Cumulative variance explained (PVE):</strong> The proportion of variation captured by the <span class="math inline">\(1^{st}\)</span> through <span class="math inline">\(k^{th}\)</span> principal components</p>
+<p><strong>Cumulative variance explained (CVE):</strong> The proportion of variation captured by the <span class="math inline">\(1^{st}\)</span> through <span class="math inline">\(k^{th}\)</span> principal components</p>
 </div>
 </div>
 <p>Take the body weight and height example from above. <code>PC1</code> captures more than 90 percent of variation in the original data. This is excellent. We took a two variable data set and captured 90 percent of its variation with one variable!</p>
@@ -951,7 +951,7 @@ Cumulative Proportion  0.9029 1.00000</code></pre>
 </section>
 <section id="nd-interpretation" class="level2" data-number="23.3">
 <h2 data-number="23.3" class="anchored" data-anchor-id="nd-interpretation"><span class="header-section-number">23.3</span> 2nd Interpretation</h2>
-<p>The principal components create the p-dimensional space that is closest to the observations in the data.</p>
+<p>The first <span class="math inline">\(m\)</span> principal components create the <span class="math inline">\(m\)</span>-dimensional space that is closest to the observations in the data.</p>
 <p>The line in <a href="#sec-vis" class="quarto-xref"><span>Section 23.2.1</span></a> above is the line that is closest to all of the data. Two principal components in a data set with 50 variables create a plane that is closest to all observations in the data in 50 dimensions.</p>
 </section>
 <section id="implementation" class="level2" data-number="23.4">
@@ -959,7 +959,7 @@ Cumulative Proportion  0.9029 1.00000</code></pre>
 <p>PCA is implemented in R with <code>prcomp()</code>. However, we will use <code>library(recipes)</code> from the tidymodels framework.</p>
 <p>PCA requires numeric data. Categorical variables need to be recoded with techniques like dummy variable encoding. Use <code>step_dummy()</code> to create dummy variables. Mixing continuous variables and dummy variables in the same PCA is possible but can complicate interpretation.</p>
 <p>The scale of variables matters. If one variable has a range of <span class="math inline">\([0, 1000000]\)</span> and another has a range of <span class="math inline">\([0, 0.1]\)</span>, then the first variable will dominate the second variable. Sometimes this makes sense if the units are the same or the ranges matter. Other times it does not make sense.</p>
-<p>PCA always mean centers data. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. <code>step_normalize()</code> centers and scales a variable. <code>step_range()</code> converts variables to a scaled numeric range (e.g.&nbsp;0 to 1).</p>
+<p>PCA requires mean-centered data. <code>prcomp()</code> centers data by default, but <code>step_pca()</code> does not. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. <code>step_normalize()</code> centers and scales a variable. <code>step_range()</code> converts variables to a scaled numeric range (e.g., 0 to 1).</p>
 </section>
 <section id="tutorial-1-continuous-variables" class="level2" data-number="23.5">
 <h2 data-number="23.5" class="anchored" data-anchor-id="tutorial-1-continuous-variables"><span class="header-section-number">23.5</span> Tutorial 1 (continuous variables)</h2>
@@ -1125,7 +1125,7 @@ medhhincome  0.01883672 -0.3747771  1.00000000</code></pre>
 12 cumulative percent variance 100             3 pca_vPMZE</code></pre>
 </div>
 </div>
-<p>We can look at the loadings (<span class="math inline">\(\phi_{ij}\)</span>s) to determine how much each variable contributes to each principal component. Large loadings (positive or negative) indicate that the variable has a strong relationship to the principal component. The sign of the loading indicates the direction of the relationship. Here, <code>horate</code> contributes the most the <code>PC1</code> and <code>hhpop</code> contributes the most to <code>PC2</code>.</p>
+<p>We can look at the loadings (<span class="math inline">\(\phi_{ij}\)</span>s) to determine how much each variable contributes to each principal component. Large loadings (positive or negative) indicate that the variable has a strong relationship to the principal component. The sign of the loading indicates the direction of the relationship. Here, <code>horate</code> contributes the most to <code>PC1</code> and <code>hhpop</code> contributes the most to <code>PC2</code>.</p>
 <div class="cell" data-layout-align="center">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="fu">tidy</span>(recipe2, <span class="at">number =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"coef"</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -1170,23 +1170,24 @@ medhhincome  0.01883672 -0.3747771  1.00000000</code></pre>
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a><span class="co"># estimate the loadings</span></span>
 <span id="cb22-2"><a href="#cb22-2"></a>votes_rec <span class="ot">&lt;-</span> votes <span class="sc">|&gt;</span></span>
 <span id="cb22-3"><a href="#cb22-3"></a>  <span class="fu">recipe</span>() <span class="sc">|&gt;</span></span>
-<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>()) <span class="sc">|&gt;</span></span>
-<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">prep</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<span id="cb22-4"><a href="#cb22-4"></a>  <span class="fu">step_center</span>(<span class="fu">all_numeric</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb22-5"><a href="#cb22-5"></a>  <span class="fu">step_pca</span>(<span class="fu">all_numeric</span>()) <span class="sc">|&gt;</span></span>
+<span id="cb22-6"><a href="#cb22-6"></a>  <span class="fu">prep</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<p>The first principal component explains about 45 percent of the variation.</p>
+<p>The first principal component explains about 63 percent of the variation.</p>
 <div class="cell" data-layout-align="center">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">tidy</span>(votes_rec, <span class="at">number =</span> <span class="dv">1</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a><span class="fu">tidy</span>(votes_rec, <span class="at">number =</span> <span class="dv">2</span>, <span class="at">type =</span> <span class="st">"variance"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-2"><a href="#cb23-2"></a>  <span class="fu">filter</span>(terms <span class="sc">==</span> <span class="st">"cumulative percent variance"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb23-3"><a href="#cb23-3"></a>  <span class="fu">slice_min</span>(value, <span class="at">n =</span> <span class="dv">5</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 5 × 4
   terms                       value component id       
   &lt;chr&gt;                       &lt;dbl&gt;     &lt;int&gt; &lt;chr&gt;    
-1 cumulative percent variance  45.0         1 pca_U8dzV
-2 cumulative percent variance  74.4         2 pca_U8dzV
-3 cumulative percent variance  77.0         3 pca_U8dzV
-4 cumulative percent variance  78.4         4 pca_U8dzV
-5 cumulative percent variance  79.6         5 pca_U8dzV</code></pre>
+1 cumulative percent variance  62.7         1 pca_U8dzV
+2 cumulative percent variance  67.7         2 pca_U8dzV
+3 cumulative percent variance  69.6         3 pca_U8dzV
+4 cumulative percent variance  71.2         4 pca_U8dzV
+5 cumulative percent variance  72.8         5 pca_U8dzV</code></pre>
 </div>
 </div>
 <p>At this point, we’ve estimated the loadings. Let’s apply the loadings to the original data with <code>bake()</code>.</p>
@@ -1226,7 +1227,7 @@ medhhincome  0.01883672 -0.3747771  1.00000000</code></pre>
 </section>
 <section id="how-many-principal-components-should-you-use" class="level2" data-number="23.7">
 <h2 data-number="23.7" class="anchored" data-anchor-id="how-many-principal-components-should-you-use"><span class="header-section-number">23.7</span> How many principal components should you use?</h2>
-<p>By default, conducting PCA with <code>library(recipes)</code> will return as many principal components as there are variables. Because because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:</p>
+<p>By default, conducting PCA with <code>library(recipes)</code> will return five principal components (<code>num_comp = 5</code>). Because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:</p>
 <ul>
 <li>Ignore principal components at the point at which the next principal component offers little increase in the total explained variation.</li>
 <li>Include all principal components up to a predetermined total percent explained variation, such as 90%.</li>

@@ -126,8 +126,8 @@ ex1 <- tibble(
   x1 = -10:10 + rnorm(21, mean = 0, sd = 2),
   x2 = x1 + rnorm(21, mean = 0, sd = 2)
 ) |>
-  mutate(x1 - mean(x1),
-         x2 - mean(x2))
+  mutate(x1 = x1 - mean(x1),
+         x2 = x2 - mean(x2))
 ```
 
 ```{r}
@@ -154,11 +154,11 @@ plot2 <- ex1 |>
   ggplot(aes(x1, x2)) +
   geom_point(alpha = 0.5) +
   geom_segment(aes(x = 0, xend = vec1[1], y = 0, yend = vec1[2]), 
-               size = 1,
+               linewidth = 1,
                arrow = arrow(length = unit(0.03, "npc")),
                color = "#1696d2") +
   geom_segment(aes(x = 0, xend = vec2[1], y = 0, yend = vec2[2]),
-               size = 1,
+               linewidth = 1,
                arrow = arrow(length = unit(0.03, "npc")),
                color = "#1696d2") +  
   scale_x_continuous(limits = c(-15, 15)) +
@@ -178,7 +178,7 @@ ex1 |>
   geom_abline(slope = vec1[2] / vec1[1], 
               intercept = 0,
               alpha = 0.5,
-              size = 0.2) +  
+              linewidth = 0.2) +  
   geom_point(alpha = 0.5) +
   scale_x_continuous(limits = c(-15, 15)) +
   scale_y_continuous(limits = c(-15, 15)) +
@@ -198,10 +198,10 @@ pc1$x |>
   geom_point(alpha = 0.5,
              size = 3) +
   geom_hline(yintercept = 1,
-             size = 0.2) +
+             linewidth = 0.2) +
   labs(y = NULL) +
   theme_minimal() +
-  labs(title = "Project the Data On To the New Axis") +
+  labs(title = "Project the Data Onto the New Axis") +
   theme(axis.text.y = element_blank(),
         panel.grid = element_blank())
 ```
@@ -214,11 +214,11 @@ ex1 |>
   geom_abline(slope = vec1[2] / vec1[1], 
               intercept = 0,
               alpha = 0.5,
-              size = 0.2) +  
+              linewidth = 0.2) +  
   geom_abline(slope = vec2[2] / vec2[1], 
               intercept = 0,
               alpha = 0.5,
-              size = 0.2) +    
+              linewidth = 0.2) +    
   geom_point(alpha = 0.5) +
   scale_x_continuous(limits = c(-15, 15)) +
   scale_y_continuous(limits = c(-15, 15)) +
@@ -227,7 +227,7 @@ ex1 |>
   theme_bw()
 ```
 
-If we project the data onto the second diagonal, then we can further simplify the data--though less than with the first project. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.
+If we project the data onto the second diagonal, then we can further simplify the data--though less than with the first projection. Again, this means moving the points in 2-D to their closest points on the diagonal and then putting them into 1-D.
 
 ```{r echo = FALSE, fig.height = 2, fig.width = 1.5}
 pc1$x |>
@@ -236,7 +236,7 @@ pc1$x |>
   geom_point(alpha = 0.5,
              size = 3) +
   geom_hline(yintercept = 1,
-             size = 0.2) +
+             linewidth = 0.2) +
   labs(y = NULL) +
   theme_minimal() +
   labs(title = "A 2nd Projection") +
@@ -261,11 +261,11 @@ $$PC_2 = \phi_{12} x_1 + \phi_{22}x_2 \text{ where } \phi_{12}^2 + \phi_{22}^2 =
 $\phi_{12}$ and $\phi_{22}$ are called loadings and they come from the second dominant eigenvector from an eigenvector decomposition of the covariance matrix of the original data set.
 
 :::callout-note
-A more thorough introduction of PCA requires the use of linear algebra which is not assumed for this coursework. If you want to learn more about PCA, you can start with [this blog](https://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/) which gives a linear algebraic approach while also provides intuitive graphics. 
+A more thorough introduction of PCA requires the use of linear algebra which is not assumed for this coursework. If you want to learn more about PCA, you can start with [this blog](https://alexhwilliams.info/itsneuronalblog/2016/03/27/pca/) which gives a linear algebraic approach while also providing intuitive graphics. 
 :::
 
 
-Take a simple example with 10 observations of `body_weight` and `height`. All observations are centered and scaled.
+Take a simple example with 10 observations of `body_weight` and `height`. All variables are centered and scaled.
 
 ```{r echo = FALSE}
 bmi_ex <- tribble(
@@ -309,7 +309,7 @@ pca_bmi_ex <- bmi_ex |>
 knitr::kable(pca_bmi_ex, digits = 2)
 ```
 
-The principal components aren't necessarily interpretable, but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, `PC1` is essentially the "latent" variable "size" and `PC2` is essentially body-mass index.
+The principal components aren't necessarily interpretable, but they capture all of the variance in the data and are orthogonal (linearly uncorrelated). However, in this example, `PC1` is essentially the "latent" variable "size" and `PC2` is essentially the inverse of body-mass index.
 
 ### Variance Explained
 
@@ -324,7 +324,7 @@ It depends on the nature of the data. If variables in the data set have strong l
 
 ::: {.callout-tip}
 ## Cumulative variance explained:
-**Cumulative variance explained (PVE):** The proportion of variation captured by the $1^{st}$ through $k^{th}$ principal components
+**Cumulative variance explained (CVE):** The proportion of variation captured by the $1^{st}$ through $k^{th}$ principal components
 :::
 
 Take the body weight and height example from above. `PC1` captures more than 90 percent of variation in the original data. This is excellent. We took a two variable data set and captured 90 percent of its variation with one variable!
@@ -340,7 +340,7 @@ rm(bmi_ex, cov_bmi_ex, pca_bmi_ex)
 
 ## 2nd Interpretation
 
-The principal components create the p-dimensional space that is closest to the observations in the data.
+The first $m$ principal components create the $m$-dimensional space that is closest to the observations in the data.
 
 The line in @sec-vis above is the line that is closest to all of the data. Two principal components in a data set with 50 variables create a plane that is closest to all observations in the data in 50 dimensions.
 
@@ -352,7 +352,7 @@ PCA requires numeric data. Categorical variables need to be recoded with techniq
 
 The scale of variables matters. If one variable has a range of $[0, 1000000]$ and another has a range of $[0, 0.1]$, then the first variable will dominate the second variable. Sometimes this makes sense if the units are the same or the ranges matter. Other times it does not make sense.
 
-PCA always mean centers data. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. `step_normalize()` centers and scales a variable. `step_range()` converts variables to a scaled numeric range (e.g. 0 to 1).
+PCA requires mean-centered data. `prcomp()` centers data by default, but `step_pca()` does not. In many cases, variables are standardized by dividing by their standard deviations or are min-max scaled. `step_normalize()` centers and scales a variable. `step_range()` converts variables to a scaled numeric range (e.g., 0 to 1).
 
 ## Tutorial 1 (continuous variables)
 
@@ -418,7 +418,7 @@ tidy(recipe2, number = 1, type = "variance")
 
 ```
 
-We can look at the loadings ($\phi_{ij}$s) to determine how much each variable contributes to each principal component. Large loadings (positive or negative) indicate that the variable has a strong relationship to the principal component. The sign of the loading indicates the direction of the relationship. Here, `horate` contributes the most the `PC1` and `hhpop` contributes the most to `PC2`.
+We can look at the loadings ($\phi_{ij}$s) to determine how much each variable contributes to each principal component. Large loadings (positive or negative) indicate that the variable has a strong relationship to the principal component. The sign of the loading indicates the direction of the relationship. Here, `horate` contributes the most to `PC1` and `hhpop` contributes the most to `PC2`.
 
 ```{r}
 tidy(recipe2, number = 1, type = "coef")
@@ -446,15 +446,16 @@ Let's use PCA to create principal components of the 493 votes variables.
 # estimate the loadings
 votes_rec <- votes |>
   recipe() |>
+  step_center(all_numeric()) |>
   step_pca(all_numeric()) |>
   prep()
   
 ```
 
-The first principal component explains about 45 percent of the variation.
+The first principal component explains about 63 percent of the variation.
 
 ```{r}
-tidy(votes_rec, number = 1, type = "variance") |>
+tidy(votes_rec, number = 2, type = "variance") |>
   filter(terms == "cumulative percent variance") |>
   slice_min(value, n = 5)
 
@@ -496,7 +497,7 @@ ggplot() +
 
 ## How many principal components should you use?
 
-By default, conducting PCA with `library(recipes)` will return as many principal components as there are variables. Because because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:
+By default, conducting PCA with `library(recipes)` will return five principal components (`num_comp = 5`). Because our goal is dimensionality reduction, we need a way to determine how many principal components to keep for analysis. Several different criteria have been suggested:
 
 -   Ignore principal components at the point at which the next principal component offers little increase in the total explained variation.
 -   Include all principal components up to a predetermined total percent explained variation, such as 90%.

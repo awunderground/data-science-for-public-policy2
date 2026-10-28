@@ -637,7 +637,7 @@ window.Quarto = {
 <span id="cb5-3"><a href="#cb5-3"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(eruptions, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
 <div id="fig-geyser-eruptions" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -677,7 +677,7 @@ Figure&nbsp;25.1: Distribution of waiting times between eruptions at the Old Fai
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -779,12 +779,12 @@ p_{mixture}(x) = \sum_{k = 1}^K \pi_kf(x)
 <span id="cb8-22"><a href="#cb8-22"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> y, <span class="at">y =</span> <span class="fu">after_stat</span>(density))) <span class="sc">+</span></span>
 <span id="cb8-23"><a href="#cb8-23"></a>  <span class="fu">geom_histogram</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -892,12 +892,14 @@ f_{mixture}(x) = p_1f(x|\mu = \bar{x_1}, \sigma = s_1) + p_2f(x|\mu = \bar{x_2},
 <span id="cb10-31"><a href="#cb10-31"></a>    <span class="at">subtitles =</span> <span class="st">"Observed data in black, inferred distribution in red"</span></span>
 <span id="cb10-32"><a href="#cb10-32"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<pre><code>Ignoring unknown labels:
+• subtitles : "Observed data in black, inferred distribution in red"
+`stat_bin()` using `bins = 30`. Pick better value `binwidth`.</code></pre>
 </div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -942,7 +944,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -968,7 +970,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -996,7 +998,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1020,7 +1022,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1047,7 +1049,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1071,7 +1073,7 @@ f(x) = (2\pi)^{-k/2}det(\boldsymbol\Sigma)^{-1/2}\exp\left(-\frac{1}{2}(\vec{x} 
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="624"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="624"></p>
 </figure>
 </div>
 </div>
@@ -1431,7 +1433,7 @@ Important
 <div class="cell-output-display">
 <div>
 <figure class="figure">
-<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-27-1.png" class="img-fluid figure-img" width="672"></p>
+<p><img src="27_advanced-unsupervised-ml_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid figure-img" width="672"></p>
 </figure>
 </div>
 </div>
@@ -1556,31 +1558,29 @@ Figure&nbsp;25.3: First Four Digits
 <li>We specify the distribution used during the maximization (M) step with <code>model = FLXMCmvbinary()</code>.</li>
 </ol>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(flexmix)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Loading required package: lattice</code></pre>
-</div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb41-3"><a href="#cb41-3"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb39"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1"></a><span class="fu">library</span>(flexmix)</span>
+<span id="cb39-2"><a href="#cb39-2"></a></span>
+<span id="cb39-3"><a href="#cb39-3"></a>mnist_18 <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb39-4"><a href="#cb39-4"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb39-5"><a href="#cb39-5"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb39-6"><a href="#cb39-6"></a>  <span class="fu">as.matrix</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The starting assignments are random, so we set a seed.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb42"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
-<span id="cb42-2"><a href="#cb42-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb42-3"><a href="#cb42-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb42-4"><a href="#cb42-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
-<span id="cb42-5"><a href="#cb42-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb42-6"><a href="#cb42-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
-<span id="cb42-7"><a href="#cb42-7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb40"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="fu">set.seed</span>(<span class="dv">20230612</span>)</span>
+<span id="cb40-2"><a href="#cb40-2"></a>mnist_18_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb40-3"><a href="#cb40-3"></a>  <span class="at">formula =</span> mnist_18 <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb40-4"><a href="#cb40-4"></a>  <span class="at">k =</span> <span class="dv">2</span>, </span>
+<span id="cb40-5"><a href="#cb40-5"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb40-6"><a href="#cb40-6"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>)</span>
+<span id="cb40-7"><a href="#cb40-7"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>mnist <span class="sc">|&gt;</span></span>
-<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
-<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
-<span id="cb43-4"><a href="#cb43-4"></a>  <span class="fu">count</span>(label, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb41"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1"></a>mnist <span class="sc">|&gt;</span></span>
+<span id="cb41-2"><a href="#cb41-2"></a>  <span class="fu">filter</span>(label <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"1"</span>, <span class="st">"8"</span>)) <span class="sc">|&gt;</span>  </span>
+<span id="cb41-3"><a href="#cb41-3"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_18_clust<span class="sc">@</span>cluster) <span class="sc">|&gt;</span></span>
+<span id="cb41-4"><a href="#cb41-4"></a>  <span class="fu">count</span>(label, cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 4 × 3
   label cluster     n
@@ -1594,15 +1594,15 @@ Figure&nbsp;25.3: First Four Digits
 <p><a href="#fig-bmm2-parameters" class="quarto-xref">Figure&nbsp;<span>25.4</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The figure shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1\)</span> and 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 2\)</span>. We see that the estimated parameters closely resemble the digits.</p>
 <p>Of course, each digit can differ from these images because everyone writes differently. In some ways, these are average digits across many version of the digits.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb45-2"><a href="#cb45-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
-<span id="cb45-4"><a href="#cb45-4"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb45-6"><a href="#cb45-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb43"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a>means_18 <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_18_clust, <span class="at">component =</span> <span class="dv">2</span>))</span>
+<span id="cb43-4"><a href="#cb43-4"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb43-5"><a href="#cb43-5"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb43-6"><a href="#cb43-6"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
-<span id="cb46-2"><a href="#cb46-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb44"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">1</span>)</span>
+<span id="cb44-2"><a href="#cb44-2"></a><span class="fu">visualize_digit</span>(means_18, <span class="dv">2</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-bmm2-parameters" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bmm2-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1645,23 +1645,23 @@ Figure&nbsp;25.4: Estimated Parameters for Each Cluster
 <p>Let’s now consider an example that uses all 10 digits.</p>
 <p>In most applications, we won’t know the number of latent variables. First, we sample 1,000<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> digits and run the model with <span class="math inline">\(k = 2, 3, ..., 12\)</span>. We’ll calculate the BIC for each hyperparameter and pick the <span class="math inline">\(k\)</span> with lowest BIC.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb47"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
-<span id="cb47-2"><a href="#cb47-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb47-3"><a href="#cb47-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
-<span id="cb47-4"><a href="#cb47-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb47-5"><a href="#cb47-5"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb47-6"><a href="#cb47-6"></a></span>
-<span id="cb47-7"><a href="#cb47-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
-<span id="cb47-8"><a href="#cb47-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb47-9"><a href="#cb47-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb47-10"><a href="#cb47-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
-<span id="cb47-11"><a href="#cb47-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
-<span id="cb47-12"><a href="#cb47-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
-<span id="cb47-13"><a href="#cb47-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb45"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a><span class="fu">set.seed</span>(<span class="dv">20230613</span>)</span>
+<span id="cb45-2"><a href="#cb45-2"></a>mnist_sample <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb45-3"><a href="#cb45-3"></a>  <span class="fu">slice_sample</span>(<span class="at">n =</span> <span class="dv">1000</span>) <span class="sc">|&gt;</span></span>
+<span id="cb45-4"><a href="#cb45-4"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb45-5"><a href="#cb45-5"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb45-6"><a href="#cb45-6"></a></span>
+<span id="cb45-7"><a href="#cb45-7"></a>steps <span class="ot">&lt;-</span> <span class="fu">stepFlexmix</span>(</span>
+<span id="cb45-8"><a href="#cb45-8"></a>  <span class="at">formula =</span> mnist_sample <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb45-9"><a href="#cb45-9"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb45-10"><a href="#cb45-10"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">100</span>, <span class="at">minprior =</span> <span class="dv">0</span>),</span>
+<span id="cb45-11"><a href="#cb45-11"></a>  <span class="at">k =</span> <span class="dv">2</span><span class="sc">:</span><span class="dv">12</span>, </span>
+<span id="cb45-12"><a href="#cb45-12"></a>  <span class="at">nrep =</span> <span class="dv">1</span></span>
+<span id="cb45-13"><a href="#cb45-13"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p><span class="math inline">\(k = 7\)</span> provides the lowest BIC. This is probably because digits like 3 and 8 are very similar.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>steps</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb46"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1"></a>steps</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Call:
@@ -1684,23 +1684,23 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
 </div>
 <p>Next, we run the BMM on the full data with <span class="math inline">\(k = 7\)</span>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb50-2"><a href="#cb50-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
-<span id="cb50-3"><a href="#cb50-3"></a>  <span class="fu">as.matrix</span>()</span>
-<span id="cb50-4"><a href="#cb50-4"></a></span>
-<span id="cb50-5"><a href="#cb50-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
-<span id="cb50-6"><a href="#cb50-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
-<span id="cb50-7"><a href="#cb50-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
-<span id="cb50-8"><a href="#cb50-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
-<span id="cb50-9"><a href="#cb50-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
-<span id="cb50-10"><a href="#cb50-10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb48"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>mnist_full <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb48-2"><a href="#cb48-2"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>label) <span class="sc">|&gt;</span></span>
+<span id="cb48-3"><a href="#cb48-3"></a>  <span class="fu">as.matrix</span>()</span>
+<span id="cb48-4"><a href="#cb48-4"></a></span>
+<span id="cb48-5"><a href="#cb48-5"></a>mnist_clust <span class="ot">&lt;-</span> <span class="fu">flexmix</span>(</span>
+<span id="cb48-6"><a href="#cb48-6"></a>  <span class="at">formula =</span> mnist_full <span class="sc">~</span> <span class="dv">1</span>, </span>
+<span id="cb48-7"><a href="#cb48-7"></a>  <span class="at">k =</span> <span class="dv">7</span>, </span>
+<span id="cb48-8"><a href="#cb48-8"></a>  <span class="at">model =</span> <span class="fu">FLXMCmvbinary</span>(), </span>
+<span id="cb48-9"><a href="#cb48-9"></a>  <span class="at">control =</span> <span class="fu">list</span>(<span class="at">iter.max =</span> <span class="dv">200</span>, <span class="at">minprior =</span> <span class="dv">0</span>)</span>
+<span id="cb48-10"><a href="#cb48-10"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>The MNIST data are already labelled, so we can compare our assignments to the labels if we convert the “soft assignments” to “hard assignments”. Note that most applications won’t have labels. The rows of the table are the digits. The columns of the table are the clusters. We can see, for example, that most of the 0’s are clustered in cluster 5.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
-<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
-<span id="cb51-3"><a href="#cb51-3"></a></span>
-<span id="cb51-4"><a href="#cb51-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb49"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>labels <span class="ot">&lt;-</span> mnist <span class="sc">|&gt;</span></span>
+<span id="cb49-2"><a href="#cb49-2"></a>  <span class="fu">bind_cols</span>(<span class="at">cluster =</span> mnist_clust<span class="sc">@</span>cluster)</span>
+<span id="cb49-3"><a href="#cb49-3"></a></span>
+<span id="cb49-4"><a href="#cb49-4"></a><span class="fu">table</span>(labels<span class="sc">$</span>label, labels<span class="sc">$</span>cluster)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>   
        1    2    3    4    5    6    7
@@ -1717,25 +1717,25 @@ stepFlexmix(formula = mnist_sample ~ 1, model = FLXMCmvbinary(),
 </div>
 </div>
 <p><a href="#fig-bmm10-parameters" class="quarto-xref">Figure&nbsp;<span>25.5</span></a> shows the estimated <span class="math inline">\(p_i\)</span> for each pixel for each cluster. The following visualize the <span class="math inline">\(784K\)</span> parameters that we estimated. It shows 784 <span class="math inline">\(p_i\)</span> for <span class="math inline">\(k = 1, 2, ..., 7\)</span> clusters. We see that the estimated parameters closely resemble the digits.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
-<span id="cb53-2"><a href="#cb53-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
-<span id="cb53-3"><a href="#cb53-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
-<span id="cb53-4"><a href="#cb53-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
-<span id="cb53-5"><a href="#cb53-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
-<span id="cb53-6"><a href="#cb53-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
-<span id="cb53-7"><a href="#cb53-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
-<span id="cb53-8"><a href="#cb53-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
-<span id="cb53-9"><a href="#cb53-9"></a>) <span class="sc">|&gt;</span></span>
-<span id="cb53-10"><a href="#cb53-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
-<span id="cb53-11"><a href="#cb53-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
-<span id="cb53-12"><a href="#cb53-12"></a></span>
-<span id="cb53-13"><a href="#cb53-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
-<span id="cb53-14"><a href="#cb53-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
-<span id="cb53-15"><a href="#cb53-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
-<span id="cb53-16"><a href="#cb53-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
-<span id="cb53-17"><a href="#cb53-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
-<span id="cb53-18"><a href="#cb53-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
-<span id="cb53-19"><a href="#cb53-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb51"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>means <span class="ot">&lt;-</span> <span class="fu">rbind</span>(</span>
+<span id="cb51-2"><a href="#cb51-2"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">1</span>)),</span>
+<span id="cb51-3"><a href="#cb51-3"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">2</span>)),</span>
+<span id="cb51-4"><a href="#cb51-4"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">3</span>)),</span>
+<span id="cb51-5"><a href="#cb51-5"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">4</span>)),</span>
+<span id="cb51-6"><a href="#cb51-6"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">5</span>)),</span>
+<span id="cb51-7"><a href="#cb51-7"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">6</span>)),</span>
+<span id="cb51-8"><a href="#cb51-8"></a>  <span class="fu">t</span>(<span class="fu">parameters</span>(mnist_clust, <span class="at">component =</span> <span class="dv">7</span>))</span>
+<span id="cb51-9"><a href="#cb51-9"></a>) <span class="sc">|&gt;</span></span>
+<span id="cb51-10"><a href="#cb51-10"></a>  <span class="fu">as_tibble</span>() <span class="sc">|&gt;</span></span>
+<span id="cb51-11"><a href="#cb51-11"></a>  <span class="fu">mutate</span>(<span class="at">label =</span> <span class="cn">NA</span>)</span>
+<span id="cb51-12"><a href="#cb51-12"></a></span>
+<span id="cb51-13"><a href="#cb51-13"></a><span class="fu">visualize_digit</span>(means, <span class="dv">1</span>)</span>
+<span id="cb51-14"><a href="#cb51-14"></a><span class="fu">visualize_digit</span>(means, <span class="dv">2</span>)</span>
+<span id="cb51-15"><a href="#cb51-15"></a><span class="fu">visualize_digit</span>(means, <span class="dv">3</span>)</span>
+<span id="cb51-16"><a href="#cb51-16"></a><span class="fu">visualize_digit</span>(means, <span class="dv">4</span>)</span>
+<span id="cb51-17"><a href="#cb51-17"></a><span class="fu">visualize_digit</span>(means, <span class="dv">5</span>)</span>
+<span id="cb51-18"><a href="#cb51-18"></a><span class="fu">visualize_digit</span>(means, <span class="dv">6</span>)</span>
+<span id="cb51-19"><a href="#cb51-19"></a><span class="fu">visualize_digit</span>(means, <span class="dv">7</span>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div id="fig-bmm10-parameters" class="quarto-layout-panel">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bmm10-parameters-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">

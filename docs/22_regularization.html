@@ -459,7 +459,7 @@ window.Quarto = {
   <ul>
   <li><a href="#motivation" id="toc-motivation" class="nav-link active" data-scroll-target="#motivation"><span class="header-section-number">20.1</span> Motivation</a></li>
   <li><a href="#linear-regression" id="toc-linear-regression" class="nav-link" data-scroll-target="#linear-regression"><span class="header-section-number">20.2</span> Linear regression</a></li>
-  <li><a href="#regularization" id="toc-regularization" class="nav-link" data-scroll-target="#regularization"><span class="header-section-number">20.3</span> Regularization</a></li>
+  <li><a href="#regularization-1" id="toc-regularization-1" class="nav-link" data-scroll-target="#regularization-1"><span class="header-section-number">20.3</span> Regularization</a></li>
   <li><a href="#ridge-regression" id="toc-ridge-regression" class="nav-link" data-scroll-target="#ridge-regression"><span class="header-section-number">20.4</span> Ridge Regression</a>
   <ul class="collapse">
   <li><a href="#ridge-regression-reduces-but-does-not-eliminate-coefficients" id="toc-ridge-regression-reduces-but-does-not-eliminate-coefficients" class="nav-link" data-scroll-target="#ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">20.4.1</span> Ridge regression reduces but does not eliminate coefficients</a></li>
@@ -470,7 +470,7 @@ window.Quarto = {
   </ul></li>
   <li><a href="#elastic-net-regression" id="toc-elastic-net-regression" class="nav-link" data-scroll-target="#elastic-net-regression"><span class="header-section-number">20.6</span> Elastic Net Regression</a>
   <ul class="collapse">
-  <li><a href="#elastic-net-blends-ridge-regression-and-lasso-regression" id="toc-elastic-net-blends-ridge-regression-and-lasso-regression" class="nav-link" data-scroll-target="#elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends Ridge regression and LASSO regression</a></li>
+  <li><a href="#elastic-net-blends-ridge-regression-and-lasso-regression" id="toc-elastic-net-blends-ridge-regression-and-lasso-regression" class="nav-link" data-scroll-target="#elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends ridge regression and LASSO regression</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -505,15 +505,31 @@ window.Quarto = {
 </div>
 <section id="motivation" class="level2" data-number="20.1">
 <h2 data-number="20.1" class="anchored" data-anchor-id="motivation"><span class="header-section-number">20.1</span> Motivation</h2>
-<p>The previous chapter introduced the idea of regularization in the context of random forests. Regularization is a powerful technique for parametric regression models.</p>
-<p>This section takes the PDB examples and explores three types of regularized regression models: ridge regression, LASSO regression, and elastic net regression.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Regularization
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Regularization is any technique that constrains model complexity to reduce overfitting and improve generalization. There are two main types:</p>
+<ol type="1">
+<li><strong>Loss function regularization</strong> adds a penalty term to the loss function (e.g., LASSO and Ridge regression penalize large coefficients). This is explicit.</li>
+<li><strong>Algorithmic regularization</strong> constrains the model-fitting process itself without changing the loss function. This is implicit.</li>
+</ol>
+</div>
+</div>
+<p>This chapter introduces loss function regularization in regression models like ridge regression, LASSO regression, and elastic net regression. <a href="23_ensembling.html#sec-ensembling-intro" class="quarto-xref">Chapter&nbsp;<span>21.1</span></a> introduces algorithmic regularization through ensembled models.</p>
 </section>
 <section id="linear-regression" class="level2" data-number="20.2">
 <h2 data-number="20.2" class="anchored" data-anchor-id="linear-regression"><span class="header-section-number">20.2</span> Linear regression</h2>
 <p>Ordinary least squares (OLS) linear regression generates coefficients that minimize the sum of squared residuals.</p>
 <p><span class="math display">\[\min(SSE) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2\right)\]</span></p>
 <p>It is impossible to solve for OLS when <span class="math inline">\(p &gt; n\)</span> where <span class="math inline">\(p\)</span> is the number of predictors and <span class="math inline">\(n\)</span> is the number of observations. Additionally, OLS is unstable when data contain multicollinearity.</p>
-<p>Let’s fit a linear regression model on the PDB data set.</p>
+<p>Let’s fit a linear regression model on the PDB data set. <a href="23_ensembling.html#sec-pdb" class="quarto-xref"><span>Section 21.2</span></a> introduces the PDB data in more detail.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>pdb_small <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(here<span class="sc">::</span><span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"pdb_small.csv"</span>))</span>
 <span id="cb1-2"><a href="#cb1-2"></a></span>
@@ -571,8 +587,8 @@ window.Quarto = {
 </div>
 </div>
 </section>
-<section id="regularization" class="level2" data-number="20.3">
-<h2 data-number="20.3" class="anchored" data-anchor-id="regularization"><span class="header-section-number">20.3</span> Regularization</h2>
+<section id="regularization-1" class="level2" data-number="20.3">
+<h2 data-number="20.3" class="anchored" data-anchor-id="regularization-1"><span class="header-section-number">20.3</span> Regularization</h2>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -593,15 +609,15 @@ window.Quarto = {
 <section id="ridge-regression" class="level2" data-number="20.4">
 <h2 data-number="20.4" class="anchored" data-anchor-id="ridge-regression"><span class="header-section-number">20.4</span> Ridge Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p\beta_j^2\right)\]</span></p>
-<p>Ridge regression adds an L2 penalty to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
-<p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
+<p>Ridge regression adds an L2 penalty (<span class="math inline">\(\lambda\sum_{j = 1}^p\beta_j^2\)</span>) to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
+<p>All predictors should be centered and scaled (standardized) before estimation. Thus the coefficients will be per standard deviation of each predictor.</p>
 <p>Ridge regression reduces coefficients but it does not eliminate coefficients.</p>
 <section id="ridge-regression-reduces-but-does-not-eliminate-coefficients" class="level3" data-number="20.4.1">
 <h3 data-number="20.4.1" class="anchored" data-anchor-id="ridge-regression-reduces-but-does-not-eliminate-coefficients"><span class="header-section-number">20.4.1</span> Ridge regression reduces but does not eliminate coefficients</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>fit_ridge <span class="ot">&lt;-</span> <span class="cf">function</span>(data, penalty) {</span>
 <span id="cb4-2"><a href="#cb4-2"></a>  </span>
-<span id="cb4-3"><a href="#cb4-3"></a>  ridge_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., <span class="at">data =</span> pdb_train) <span class="sc">|&gt;</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a>  ridge_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., <span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
 <span id="cb4-4"><a href="#cb4-4"></a>    <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb4-5"><a href="#cb4-5"></a>    <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb4-6"><a href="#cb4-6"></a>    <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
@@ -615,7 +631,7 @@ window.Quarto = {
 <span id="cb4-14"><a href="#cb4-14"></a>    <span class="fu">add_model</span>(<span class="at">spec =</span> ridge_mod)</span>
 <span id="cb4-15"><a href="#cb4-15"></a>  </span>
 <span id="cb4-16"><a href="#cb4-16"></a>  ridge_wf <span class="sc">|&gt;</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a>    <span class="fu">fit</span>(<span class="at">data =</span> pdb_train) <span class="sc">|&gt;</span></span>
+<span id="cb4-17"><a href="#cb4-17"></a>    <span class="fu">fit</span>(<span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
 <span id="cb4-18"><a href="#cb4-18"></a>    <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
 <span id="cb4-19"><a href="#cb4-19"></a>    <span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
 <span id="cb4-20"><a href="#cb4-20"></a>    <span class="fu">mutate</span>(<span class="at">penalty =</span> penalty)</span>
@@ -644,21 +660,22 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Note that regularized regression models expect standardized predictors (mean = 0 and standard deviation = 1). This changes this starting estimated parameters.</p>
+<p>The red points show the estimated coefficients when <span class="math inline">\(\lambda = 0\)</span>, which is OLS on the standardized predictors. Each gray line traces how one coefficient changes as the penalty increases. The LASSO and elastic net plots below use the same layout.</p>
+<p>Note that regularized regression models expect standardized predictors (mean = 0 and standard deviation = 1). This changes the starting estimated parameters.</p>
 </section>
 </section>
 <section id="lasso-regression" class="level2" data-number="20.5">
 <h2 data-number="20.5" class="anchored" data-anchor-id="lasso-regression"><span class="header-section-number">20.5</span> LASSO Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda\sum_{j = 1}^p|\beta_j|\right)\]</span></p>
-<p>Least Absolute Shrinkage and Selection Operator (LASSO) regression adds an L1 penalty to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
-<p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
+<p>Least Absolute Shrinkage and Selection Operator (LASSO) regression adds an L1 penalty (<span class="math inline">\(\lambda\sum_{j = 1}^p|\beta_j|\)</span>) to the optimization routine. The model has one hyperparameter, <span class="math inline">\(\lambda\)</span>, which determines how much penalty to add. There is no penalty when <span class="math inline">\(\lambda = 0\)</span> (just OLS).</p>
+<p>All predictors should be centered and scaled (standardized) before estimation. Thus the coefficients will be per standard deviation of each predictor.</p>
 <p>LASSO regression can regularize coefficients all the way to zero.</p>
 <section id="lasso-regression-eliminates-coefficients" class="level3" data-number="20.5.1">
 <h3 data-number="20.5.1" class="anchored" data-anchor-id="lasso-regression-eliminates-coefficients"><span class="header-section-number">20.5.1</span> LASSO regression eliminates coefficients</h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>fit_lasso <span class="ot">&lt;-</span> <span class="cf">function</span>(data, penalty) {</span>
 <span id="cb5-2"><a href="#cb5-2"></a>  </span>
-<span id="cb5-3"><a href="#cb5-3"></a>  lasso_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., <span class="at">data =</span> pdb_train) <span class="sc">|&gt;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  lasso_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., <span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
 <span id="cb5-4"><a href="#cb5-4"></a>    <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
 <span id="cb5-5"><a href="#cb5-5"></a>    <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>)) <span class="sc">|&gt;</span></span>
 <span id="cb5-6"><a href="#cb5-6"></a>    <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
@@ -672,7 +689,7 @@ window.Quarto = {
 <span id="cb5-14"><a href="#cb5-14"></a>    <span class="fu">add_model</span>(<span class="at">spec =</span> lasso_mod)</span>
 <span id="cb5-15"><a href="#cb5-15"></a>  </span>
 <span id="cb5-16"><a href="#cb5-16"></a>  lasso_wf <span class="sc">|&gt;</span></span>
-<span id="cb5-17"><a href="#cb5-17"></a>    <span class="fu">fit</span>(<span class="at">data =</span> pdb_train) <span class="sc">|&gt;</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a>    <span class="fu">fit</span>(<span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
 <span id="cb5-18"><a href="#cb5-18"></a>    <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
 <span id="cb5-19"><a href="#cb5-19"></a>    <span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
 <span id="cb5-20"><a href="#cb5-20"></a>    <span class="fu">mutate</span>(<span class="at">penalty =</span> penalty)</span>
@@ -706,11 +723,58 @@ window.Quarto = {
 <section id="elastic-net-regression" class="level2" data-number="20.6">
 <h2 data-number="20.6" class="anchored" data-anchor-id="elastic-net-regression"><span class="header-section-number">20.6</span> Elastic Net Regression</h2>
 <p><span class="math display">\[\min(SSE + P) = \min\left(\sum_{i = 1}^n (y_i - \hat{y_i}) ^ 2 + \lambda_1\sum_{j = 1}^p\beta_j^2 + \lambda_2\sum_{j = 1}^p|\beta_j|\right)\]</span></p>
-<p>Elastic net regression combines ridge regression and LASSO regression. It has two hyperparameters, <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>. Sometimes the hyperparameters are <span class="math inline">\(\lambda\)</span> and mixture, which determines how much of <span class="math inline">\(\lambda\)</span> to apply to each penalty (i.e.&nbsp;mixture = 0 is ridge regression and mixture = 1 is LASSO regression).</p>
-<p>All variables should be centered and scaled (standardized) before estimation. Thus the coefficients will be in standardized units.</p>
+<p>Elastic net regression combines ridge regression and LASSO regression. It has two hyperparameters, <span class="math inline">\(\lambda_1\)</span> and <span class="math inline">\(\lambda_2\)</span>. Sometimes the hyperparameters are <span class="math inline">\(\lambda\)</span> and mixture, which determines how much of <span class="math inline">\(\lambda\)</span> to apply to each penalty (e.g., mixture = 0 is ridge regression and mixture = 1 is LASSO regression).</p>
+<p>All predictors should be centered and scaled (standardized) before estimation. Thus the coefficients will be per standard deviation of each predictor.</p>
 <p>Elastic net regression can perform feature selection, but in a less dramatic fashion than LASSO regression.</p>
 <section id="elastic-net-blends-ridge-regression-and-lasso-regression" class="level3" data-number="20.6.1">
-<h3 data-number="20.6.1" class="anchored" data-anchor-id="elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends Ridge regression and LASSO regression</h3>
+<h3 data-number="20.6.1" class="anchored" data-anchor-id="elastic-net-blends-ridge-regression-and-lasso-regression"><span class="header-section-number">20.6.1</span> Elastic net blends ridge regression and LASSO regression</h3>
+<p>This example is contrained to make <span class="math inline">\(\lambda_1\)</span> = <span class="math inline">\(\lambda_2\)</span>.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>fit_enet <span class="ot">&lt;-</span> <span class="cf">function</span>(data, penalty) {</span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  enet_rec <span class="ot">&lt;-</span> <span class="fu">recipe</span>(non_return_rate <span class="sc">~</span> ., <span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="fu">add_role</span>(State_name, County_name, Low_Response_Score, <span class="at">new_role =</span> <span class="st">"id"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>    <span class="fu">step_rm</span>(<span class="fu">has_role</span>(<span class="st">"id"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="fu">step_normalize</span>(<span class="fu">all_predictors</span>())</span>
+<span id="cb6-7"><a href="#cb6-7"></a></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  enet_mod <span class="ot">&lt;-</span> <span class="fu">linear_reg</span>(<span class="at">penalty =</span> penalty, <span class="at">mixture =</span> <span class="fl">0.5</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="fu">set_mode</span>(<span class="at">mode =</span> <span class="st">"regression"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="fu">set_engine</span>(<span class="at">engine =</span> <span class="st">"glmnet"</span>)</span>
+<span id="cb6-11"><a href="#cb6-11"></a></span>
+<span id="cb6-12"><a href="#cb6-12"></a>  enet_wf <span class="ot">&lt;-</span> <span class="fu">workflow</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>    <span class="fu">add_recipe</span>(<span class="at">recipe =</span> enet_rec) <span class="sc">|&gt;</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>    <span class="fu">add_model</span>(<span class="at">spec =</span> enet_mod)</span>
+<span id="cb6-15"><a href="#cb6-15"></a></span>
+<span id="cb6-16"><a href="#cb6-16"></a>  enet_wf <span class="sc">|&gt;</span></span>
+<span id="cb6-17"><a href="#cb6-17"></a>    <span class="fu">fit</span>(<span class="at">data =</span> data) <span class="sc">|&gt;</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a>    <span class="fu">extract_fit_parsnip</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a>    <span class="fu">tidy</span>() <span class="sc">|&gt;</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>    <span class="fu">mutate</span>(<span class="at">penalty =</span> penalty)</span>
+<span id="cb6-21"><a href="#cb6-21"></a></span>
+<span id="cb6-22"><a href="#cb6-22"></a>}</span>
+<span id="cb6-23"><a href="#cb6-23"></a></span>
+<span id="cb6-24"><a href="#cb6-24"></a>enet_fit <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">7</span>, <span class="fl">0.2</span>) <span class="sc">|&gt;</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>  <span class="fu">map_dfr</span>(<span class="at">.f =</span> <span class="sc">~</span> <span class="fu">fit_enet</span>(pdb_train, .x))</span>
+<span id="cb6-26"><a href="#cb6-26"></a></span>
+<span id="cb6-27"><a href="#cb6-27"></a><span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>  <span class="fu">geom_line</span>(</span>
+<span id="cb6-29"><a href="#cb6-29"></a>    <span class="at">data =</span> <span class="fu">filter</span>(enet_fit, term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>),</span>
+<span id="cb6-30"><a href="#cb6-30"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(penalty, estimate, <span class="at">group =</span> term),</span>
+<span id="cb6-31"><a href="#cb6-31"></a>    <span class="at">alpha =</span> <span class="fl">0.4</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a>  ) <span class="sc">+</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a>  <span class="fu">geom_point</span>(</span>
+<span id="cb6-34"><a href="#cb6-34"></a>    <span class="at">data =</span> <span class="fu">filter</span>(enet_fit, term <span class="sc">!=</span> <span class="st">"(Intercept)"</span>, penalty <span class="sc">==</span> <span class="dv">0</span>),</span>
+<span id="cb6-35"><a href="#cb6-35"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(penalty, estimate),</span>
+<span id="cb6-36"><a href="#cb6-36"></a>    <span class="at">color =</span> <span class="st">"red"</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="22_regularization_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 
 
 </section>
