@@ -50,7 +50,7 @@ options(scipen = 999)
 
 The process of using algorithms to assign observations to groups by calculating similarity between the observations (rows) using their variables (columns). The goal is to minimize the similarity between groups and maximize the similarity within groups.
 
-Cluster assignments are the arbitrary labels for the groups (i.e. cluster 1 and cluster 2). Cluster assignments can be used for data visualization and calculating group-wise summary statistics like cluster means.
+Cluster assignments are the arbitrary labels for the groups (e.g., cluster 1 and cluster 2). Cluster assignments can be used for data visualization and calculating group-wise summary statistics like cluster means.
 
 In practice, clusters can be used to create typologies and to summarize rows in a complicated data set. At the Urban Institute, researchers have used cluster analysis to create neighborhood types [@change14real] and to categorize counties based on financial wellness indicators.
 :::
@@ -115,19 +115,19 @@ Euclidean distance is very popular for cluster analysis. It offers one formal me
 
 One variable:
 
-$$Dist_{ij} = \sqrt{(x_i - x_j)^2}$$
+$$Distance_{ij} = \sqrt{(x_i - x_j)^2}$$
 
 Multiple variables:
 
 $$Distance_{ij} = \sqrt{\sum_{k = 1}^p(x_{ik} - x_{jk})^2}$$
 
-Where $i$ is the first observation, $j$ is the second observation, $k$ is the $k^{th}$ variables, and $p$ is the number of variables.
+Where $i$ is the first observation, $j$ is the second observation, $k$ is the $k^{th}$ variable, and $p$ is the number of variables.
 
 ## Clustering Process
 
 When the clusters are clear and there aren't many variables, we can intuit reasonable groups (like above). But what if there are 30 variables? Or 500 observations?
 
-Fortunately, there are numerous algorithms to address these issues and that answer the question "How can we scale up a process to many observations and many variables?" 
+Fortunately, there are numerous algorithms that address these issues and answer the question "How can we scale up a process to many observations and many variables?" 
 
 
 ::: {.callout-tip}
@@ -303,13 +303,13 @@ state_kmeans_rec <- recipe(
   formula = ~ ., 
   data = state_data
 ) |>
-  step_range(all_predictors()) #scale between 0 and 1
+  step_range(all_predictors()) # scale between 0 and 1
 
 state_data_numeric <- state_kmeans_rec |>
   prep() |>
   bake(new_data = state_data)
 
-# create a kmeans model object four clusters
+# create a kmeans model object with four clusters
 state_kmeans_spec <- k_means(
   num_clusters = 4 # number of clusters
 ) |>
@@ -338,7 +338,7 @@ tidy(state_data_kmeans) |>
 
 #### Example 2
 
-Recall the votes data set from the previous tutorial.
+Recall the votes data set from the previous chapter.
 
 ```{r}
 votes <- read_csv(here::here("data", 
@@ -348,7 +348,7 @@ kmeans_rec <- recipe(
   formula = ~ ., 
   data = votes
 ) |>
-  step_select(all_numeric()) 
+  step_rm(name, party)
 
 rec_pca <- recipe(
   formula = ~ ., 
@@ -366,7 +366,7 @@ rec_pca |>
   prep() |> 
   tidy(id = "pca", type = "variance") |>
   filter(terms == "variance") |>
-  mutate(pct_var = value/sum(value)) |>
+  mutate(pct_var = value / sum(value)) |>
   slice_head(n = 2)
 ```
 
@@ -409,7 +409,7 @@ We see that the estimated clusters fit the party variable even though it wasn't 
 :::
 
 
-Suppose we didn't known party. Then cluster analysis is the process of trying to discover a latent variable or latent groups in the data. In general, cluster analyses will be much tidier if there is a strong latent process driving the latent groups. For example, imagine latent groups for children, women, and men when looking at heights and weights without observing age or sex.
+Suppose we didn't know party. Then cluster analysis is the process of trying to discover a latent variable or latent groups in the data. In general, cluster analyses will be much tidier if there is a strong latent process driving the latent groups. For example, imagine latent groups for children, women, and men when looking at heights and weights without observing age or sex.
 
 In addition to identifying data and variables that capture latent structure in our data, we also need to choose how many latent groups are in the data! Consider the above example with 3 groups:
 
@@ -442,7 +442,7 @@ bind_cols(
 
 The main considerations when picking a number of clusters are theory and application. Is the objective to find three archetypal communities? Does the visualization need five groups?
 
-Beyond theory and application, there are analytic measures that can help determine the optimal number of clusters. The best number of clusters usually can be picked with the "elbow method" by choosing the number where a kink occurs in the following plots. We can `tune()` the number of clusters in `library(tidyclust)` similar to the approach we learned to tune model hyperparameters in `library(tidymodels)`.
+Beyond theory and application, there are analytic measures that can help determine the optimal number of clusters. The following plots show three common measures, and each one has its own rule for picking the number of clusters. We can `tune()` the number of clusters in `library(tidyclust)` similar to the approach we learned to tune model hyperparameters in `library(tidymodels)`.
 
 Consider the votes data where there are two clear clusters.
 
@@ -490,7 +490,7 @@ res_metrics <- res |>
 
 #### Total within sum of squares
 
-The simplest measure is total within sum of squares. This is simply the sum of squared errors within groups, which should monotonically decrease as the number of clusters increases.
+The simplest measure is total within sum of squares. This is simply the sum of squared errors within groups, which should monotonically decrease as the number of clusters increases. Use the "elbow method" to pick the number of clusters by choosing the number where a kink occurs in the plot.
 
 ```{r}
 res_metrics |>
@@ -509,7 +509,7 @@ res_metrics |>
 
 #### Average silhouette width
 
-The silhouette score is an observation-level measure of cohesion within an observation's group and separation from the closest group. It ranges from -1 to +1, with higher numbers representing better clusters. Negative numbers suggest that an observation has been assigned to an incorrect cluster. 0 indicates that an observation is on the boundary.
+The silhouette score is an observation-level measure of cohesion within an observation's group and separation from the closest group. It ranges from -1 to +1, with higher numbers representing better clusters. Negative numbers suggest that an observation has been assigned to an incorrect cluster. 0 indicates that an observation is on the boundary. Average the scores across observations and pick the number of clusters with the highest average.
 
 ```{r}
 res_metrics |>
@@ -526,9 +526,9 @@ res_metrics |>
 
 ```
 
-#### Gap statistics
+#### Gap statistic
 
-The gap statistic [@gapstat] compares the change in within-cluster dispersion with a reference null distribution that represents data without clear clusters. Higher numbers are better. It takes the longest to calculate because it requires Monte Carlo simulations (bootstrapping) to calculate the null distribution. The gap statistic is not yet implemented within `library(tidyclust)`, so we use `library(factoextra)` to calculate the gap statistic. Note that this function fits the cluster model and calculates the metric.
+The gap statistic [@gapstat] compares the change in within-cluster dispersion with a reference null distribution that represents data without clear clusters. Higher numbers are better, but we don't simply pick the highest value. A common rule is to pick the smallest number of clusters within one standard error of the first peak, which is what the dashed line shows. The gap statistic takes the longest to calculate because it requires Monte Carlo simulations (bootstrapping) to calculate the null distribution. The gap statistic is not yet implemented within `library(tidyclust)`, so we use `library(factoextra)` to calculate the gap statistic. Note that this function fits the cluster model and calculates the metric.
 
 ```{r}
 #| message: false
@@ -542,6 +542,7 @@ fviz_nbclust(votes_numeric, FUN = kmeans, method = "gap_stat")
 
 ```
 
+K=2 makes sense because there are two major political parties. Suppose we want to do K=5 to see if we can identify factions.
 
 ```{r}
 kmeans_spec <- k_means(
@@ -585,7 +586,7 @@ ggplot() +
     data = filter(votes_pca, name %in% names), 
     mapping = aes(PC1, PC2, label = name)
   ) +
-  scale_color_manual(values = c("blue", "red")) +
+  scale_color_manual(values = c("red", "blue")) +
   labs(
     title = "K-Means with K=2 and PCA",
     x = "PC1 (0.45 of Variation)",
@@ -642,7 +643,7 @@ The variable `hhpop` will swamp `horate` and `medhhincome` because of its scale.
 
 $$\tilde{x_i} = \frac{x_i - \bar{x}}{s_{x}}$$
 
-`step_normalize()` rescales variables to have mean of 0 and standard deviation of 1.
+`step_normalize()` rescales variables to have a mean of 0 and standard deviation of 1.
 
 The second option is to min-max rescale the variable to a 0 to 1 or 0 to 100 scale.
 
@@ -662,18 +663,18 @@ cor(state_data)
 
 ```
 
-In the presence of highly-correlated variables, there are several options of recourse:
+In the presence of highly correlated variables, there are several options of recourse:
 
 1.  Drop all but one of the highly correlated variables.
 2.  Combine highly correlated variables.
-    -   `sum()`, `mean()`, or principle components
+    -   `sum()`, `mean()`, or principal components
 3.  Re-weight the variables.
-    -   Duplicate all variables `n` times and add or subtract duplicates based on if the variable is correlated (i.e. Pearson's correlation coefficient \> 0.6) or highly correlated (i.e. Pearson's correlation coefficient \> 0.9).
+    -   Duplicate all variables `n` times and add or subtract duplicates based on whether the variable is correlated (e.g., Pearson's correlation coefficient \> 0.6) or highly correlated (e.g., Pearson's correlation coefficient \> 0.9).
 4.  Use dimension reduction techniques like PCA.
 
 ### Diagnostics
 
-Consider the k-means clusters from the states data.
+Consider the K-means clusters from the states data.
 
 ```{r}
 #| echo: false
@@ -705,7 +706,7 @@ bind_cols(
 
 It is important to conduct a stability (sensitivity) analysis, in which the final specification of the cluster analysis is run $p$ times, where $p$ is the number of variables in the cluster analysis, each time removing one variable and checking how many observations remain in similar groups as a result.
 
-### Visualizing clusters with a scatter plot matrix
+#### Visualizing clusters with a scatter plot matrix
 
 A scatter plot matrix allows for the pairwise comparison of all numeric variables. Adding cluster membership as colors shows the membership of each point in the scatter plots.
 
@@ -724,7 +725,7 @@ Every cluster need not differ by every variable for a meaningful multivariate gr
 #| warning: false
 library(GGally)
 
-#add cluster membership to the origin data
+# add cluster membership to the original data
 bind_cols(
   state_data,
   cluster = state_data_kmeans |> extract_cluster_assignment() |> pull(.cluster)
@@ -762,7 +763,7 @@ rec_pca |>
   prep() |> 
   tidy(id = "pca", type = "variance") |>
   filter(terms == "variance") |>
-  mutate(pct_var = value/sum(value)) |>
+  mutate(pct_var = value / sum(value)) |>
   slice_head(n = 2)
 
 states_pca <- rec_pca |>
@@ -803,7 +804,7 @@ bind_cols(
 
 -   Disrupting Food Insecurity ([feature](https://apps.urban.org/features/disrupting-food-insecurity/), [technical appendix](https://apps.urban.org/features/disrupting-food-insecurity/Disrupting%20Food%20Insecurity%20Technical%20Appendix.pdf))
     -   This is a good example of explaining the clusters after assigning cluster membership.
--   Residential Mobility and Neighborhood Change: Real Neighborhoods Under the Microscope (@change14real)
+-   Residential Mobility and Neighborhood Change: Real Neighborhoods Under the Microscope [@change14real]
 -   Beyond Red vs. Blue: The Political Typology ([blog](https://www.people-press.org/2014/06/26/the-political-typology-beyond-red-vs-blue/))
 -   [Who Profits from Amateurism? Rent Sharing in Modern College Sports](https://www.nber.org/system/files/working_papers/w27734/w27734.pdf) Page 52
 
@@ -811,13 +812,13 @@ bind_cols(
 
 ## Appendix
 
-#### Partition-based algorithms
+### Partition-based algorithms
 
 [This blog post](https://uc-r.github.io/kmeans_clustering) is a thorough background on K-means clustering.
 
-#### Hierarchical models
+### Hierarchical models
 
-Agglomerative hierarchical clustering: Each element starts as a single-element cluster and are combined into bigger clusters.
+Agglomerative hierarchical clustering: Each element starts as a single-element cluster and elements are combined into bigger clusters.
 
 ```{r}
 #| message: false 
@@ -853,16 +854,16 @@ plot(
 
 Use `cutree()` to pick a height and assign group membership to observations based on the height. The height should be determined by the number of desired clusters.
 
-Divisive hierarchical clustering begins with a single cluster and divides it into smaller clusters. Agglomerative hierarchical clusters is good at finding small groups. Divisive hierarchical clustering is good at finding large groups. Divisive hierarchical clustering is not currently implemented in `library(tidyclust)`. It can be run using the `diana()` (for Divisive Analysis) function in `library(cluster)`.
+Divisive hierarchical clustering begins with a single cluster and divides it into smaller clusters. Agglomerative hierarchical clustering is good at finding small groups. Divisive hierarchical clustering is good at finding large groups. Divisive hierarchical clustering is not currently implemented in `library(tidyclust)`. It can be run using the `diana()` (for Divisive Analysis) function in `library(cluster)`.
 
 [This blog post](https://uc-r.github.io/hc_clustering) is a good deeper dive into hierarchical clustering.
 
-#### Density-based algorithms
+### Density-based algorithms
 
 DBSCAN can be implemented with `library(dbscan)`.
 
-[Animation of DBScan](https://www.youtube.com/watch?v=h53WMIImUuc)
+[Animation of DBSCAN](https://www.youtube.com/watch?v=h53WMIImUuc)
 
-#### Model-based algorithms
+### Model-based algorithms
 
 Gaussian Mixture Modeling can be implemented with `library(mclust)`. [This blog](https://towardsdatascience.com/mixture-modelling-from-scratch-in-r-5ab7bfc83eef) is a thorough introduction.
